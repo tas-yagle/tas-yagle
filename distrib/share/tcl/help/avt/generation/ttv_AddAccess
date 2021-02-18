@@ -1,0 +1,23 @@
+
+       TimingLine  *ttv_AddAccess(char *input, char *output, double max_delay,
+       double max_slop, double min_delay, double min_slope, char *dir);
+
+DDEESSCCRRIIPPTTIIOONN
+       Creates a data access delay line
+
+AARRGGUUMMEENNTTSS
+       iinnppuutt         Data access line start point
+
+       oouuttppuutt        Data access line end point
+
+       mmaaxx__ssllooppee     Maximum slope associated with delay line
+
+       mmiinn__ssllooppee     Minimum slope associated with delay line
+
+       mmaaxx__ddeellaayy     Maximum propagation delay associated with delay line
+
+       mmiinn__ddeellaayy     Minimum propagation delay associated with delay line
+
+       ddiirr           Transitions on start and end timing signals: _u_u,  _u_d,  _d_d
+                     or _d_u.
+

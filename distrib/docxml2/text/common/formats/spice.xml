@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>SPICE</title>
+
+<p>The syntax of the SPICE subset supported by &tool; is given here in Backus-Naur Form.
+The meta-symbols of BNF are:</p>
+<glossary>
+<row><article><f>::= </f></article><def>meaning "is defined as"</def></row> 
+<row><article><f>|</f></article><def>meaning "or"</def></row> 
+<row><article><f>&lt;&gt;</f></article><def>angle brackets used to surround category names.
+The angle brackets distinguish syntax rules names (also called non-terminal symbols) from terminal 
+symbols which are written exactly as they are to be represented.</def></row> 
+<row><article><f>[]</f></article><def>Enclose optional items</def></row> 
+<row><article><f>{}</f></article><def>Enclose repetitive items (zero or more times)</def></row> 
+</glossary>
+
+<section niv='4'><title>Expressions and Values</title>
+<p>A value is refered to as <f>&lt;val&gt;</f>. A value can be associated with the following units, and is scaled accordingly:</p>
+<glossary>
+<row><article><f>ff</f></article><def>1e-15</def></row>
+<row><article><f>pf</f></article><def>1e-12</def></row>
+<row><article><f>f</f></article><def>1e-15</def></row>
+<row><article><f>p</f></article><def>1e-12</def></row>
+<row><article><f>n</f></article><def>1e-9</def></row>
+<row><article><f>u</f></article><def>1e-6</def></row>
+<row><article><f>m</f></article><def>1e-3</def></row>
+<row><article><f>k</f></article><def>1e+3</def></row>
+<row><article><f>meg</f></article><def>1e+6</def></row>
+<row><article><f>mi</f></article><def>25.4e+6</def></row>
+<row><article><f>g</f></article><def>1e+9</def></row>
+<row><article><f>v</f></article><def>1</def></row>
+<row><article><f>ns</f></article><def>1e-9</def></row>
+<row><article><f>ps</f></article><def>1e-12</def></row>
+<row><article><f>s</f></article><def>1</def></row>
+</glossary>
+
+<p>An expression is refered to as <f>&lt;expr&gt;</f>, and should appear enclosed in <f>''</f>, <f>()</f> or <f>{}</f>. Carriage returns are
+ignored within expressions and treated as white spaces, which means that an expression can be continued on subsequent lines without
+using the <f>+</f> sign.</p>
+<p>The following mathematical functions supported within <f>&lt;expr&gt;</f> are <f>valif</f>, <f>max</f>, 
+<f>dmax</f>, <f>min</f>, <f>dmin</f>, <f>trunc</f>, <f>int</f>, <f>sqrt</f>, <f>exp</f>, <f>log</f>, <f>sin</f>,
+<f>cos</f>, <f>tan</f>, <f>asin</f>, <f>acos</f>, <f>atan</f>, <f>atan2</f>, <f>sinh</f>, <f>cosh</f>, <f>tanh</f>,
+<f>log10</f>, <f>ceil</f>, <f>floor</f>, <f>fabs</f>, <f>abs</f>, <f>pow</f> and <f>pwr</f></p>
+</section>
+
+<section niv='4'><title>User-defined Functions</title>
+<p>&tool; supports user-defined functions when specified through the <f>.FUNC</f> card. The example below illustrates the syntax 
+supported:</p>
+<code>
+<cl>.FUNC my_func(a,b) a*b+pow(2,a)</cl> 
+</code>
+</section>
+
+<section niv='4'><title>MOSFET</title>
+<bnf>
+<cl>Mxx &lt;ND&gt; &lt;NG&gt; &lt;NS&gt; &lt;NB&gt; &lt;MNAME&gt; [L=&lt;val&gt;] [W=&lt;val&gt;] </cl>
+<cl>+ [AD=&lt;val&gt;] [AS=&lt;val&gt;] [PD=&lt;val&gt;] [PS=&lt;val&gt;] </cl>
+<cl>+ {[&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;]} [$X=&lt;val&gt;] [$Y=&lt;val&gt;]</cl>
+</bnf>
+
+<p>Parameters:</p>
+<glossary>
+<row><article><f>xx</f></article><def>MOS transistor name</def></row>
+<row><article><f>&lt;ND&gt;</f></article><def>Drain node</def></row>
+<row><article><f>&lt;NG&gt;</f></article><def>Gate node</def></row>
+<row><article><f>&lt;NS&gt;</f></article><def>Source node</def></row>
+<row><article><f>&lt;NB&gt;</f></article><def>Bulk node</def></row>
+<row><article><f>&lt;MNAME&gt;</f></article><def>Model name, described in a .MODEL card</def></row>
+</glossary>
+<p>Optional parameters:</p>
+<glossary>
+<row><article><f>L=&lt;val&gt;</f></article><def>Channel length in meters (unless specified unit)</def></row>
+<row><article><f>W=&lt;val&gt;</f></article><def>Channel width in meters (unless specified unit)</def></row>
+<row><article><f>AD=&lt;val&gt;</f></article><def>Drain area in sq. meters (unless specified unit)</def></row>
+<row><article><f>AS=&lt;val&gt;</f></article><def>Source area in sq. meters (unless specified unit)</def></row>
+<row><article><f>PD=&lt;val&gt;</f></article><def>Drain Perimeter in meters (unless specified unit)</def></row>
+<row><article><f>PS=&lt;val&gt;</f></article><def>Source Perimeter in meters (unless specified unit)</def></row>
+<row><article><f>$X=&lt;val&gt;</f></article><def>X coordinate</def></row>
+<row><article><f>$Y=&lt;val&gt;</f></article><def>Y coordinate</def></row>
+<row><article><f>&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;</f></article><def>Instantiation specific parameters, for example <f>nrs</f>, <f>nrd</f>, <f>mulu0</f>, <f>delvt0</f>, <f>sa</f>, <f>sb</f>, <f>sd</f>, <f>nf</f>, <f>nfing</f>, <f>m</f></def></row>
+</glossary>
+<p>If <f>AD</f>, <f>AS</f>, <f>PD</f> or <f>PS</f> are not specified, they are calculated with the <f>GEOMOD</f>
+parameter (only BSIM4, otherwise value is 0).</p>
+
+</section>
+
+<section niv='4'><title>MOSFET Models</title>
+<bnf>
+<cl>.MODEL &lt;MNAME&gt; &lt;nmostype&gt;|&lt;pmostype&gt;</cl>
+<cl>+ [(] [&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;] [)]</cl>
+<cl> </cl>
+<cl>&lt;nmostype&gt; ::= NMOS|NMOSBSIM3|NMOSBS32|NMOSBS4|</cl>
+<cl>+ NMOSBS41|NMOSBS42|NMOSBS43|NMOSBS44|NMOSBS45|NMOSBS46</cl>
+<cl> </cl>
+<cl>&lt;pmostype&gt; ::= PMOS|PMOSBSIM3|PMOSBS32|</cl>
+<cl>+ PMOSBS4|PMOSBS41|PMOSBS42|PMOSBS43|PMOSBS44|PMOSBS45|PMOSBS46</cl>
+</bnf>
+<p>MOS types</p>
+<glossary>
+<row><article><f>NMOS,PMOS</f></article><def>N-Channel, P-Channel MOSFET model</def></row>
+<row><article><f>NMOSBSIM3,PMOSBSIM3</f></article><def>N-Channel, P-Channel BSIM3v3.0 Berkeley MOSFET model</def></row>
+<row><article><f>NMOSBS32,PMOSBS32</f></article><def>N-Channel, P-Channel BSIM3v3.2.4 Berkeley MOSFET model</def></row>
+<row><article><f>NMOSBS4,PMOSBS4</f></article><def>N-Channel, P-Channel BSIM4.0 Berkeley MOSFET model</def></row>
+<row><article><f>NMOSBS41,PMOSBS41</f></article><def>N-Channel, P-Channel BSIM4.1 Berkeley MOSFET model</def></row>
+<row><article><f>NMOSBS42,PMOSBS42</f></article><def>N-Channel, P-Channel BSIM4.2 Berkeley MOSFET model</def></row>
+<row><article><f>NMOSBS43,PMOSBS43</f></article><def>N-Channel, P-Channel BSIM4.3 Berkeley MOSFET model</def></row>
+<row><article><f>NMOSBS44,PMOSBS44</f></article><def>N-Channel, P-Channel BSIM4.4 Berkeley MOSFET model</def></row>
+<row><article><f>NMOSBS45,PMOSBS45</f></article><def>N-Channel, P-Channel BSIM4.5 Berkeley MOSFET model</def></row>
+<row><article><f>NMOSBS46,PMOSBS46</f></article><def>N-Channel, P-Channel BSIM4.6 Berkeley MOSFET model</def></row>
+</glossary>
+<p>Supported BSIM and PSP levels:</p>
+<glossary>
+<row><article><f>LEVEL=8</f></article><def>NGSPICE Berkeley BSIM3v3 model, up to BSIM3v3.2.4 (<f>VERSION=32</f>)</def></row>
+<row><article><f>LEVEL=49</f></article><def>HSPICE BSIM3v3 model, up to BSIM3v3.2.4 (<f>VERSION=32</f>)</def></row>
+<row><article><f>LEVEL=53</f></article><def>ELDO BSIM3v3 model, up to BSIM3v3.2.4 (<f>VERSION=32</f>)</def></row>
+<row><article><f>LEVEL=14</f></article><def>NGSPICE Berkeley BSIM4 model, up to BSIM4.3 (<f>VERSION=43</f>)</def></row>
+<row><article><f>LEVEL=54</f></article><def>HSPICE BSIM4 model, up to BSIM4.3 (<f>VERSION=43</f>)</def></row>
+<row><article><f>LEVEL=60</f></article><def>ELDO BSIM4 model, up to BSIM4.3 (<f>VERSION=43</f>)</def></row>
+</glossary>
+
+<code>
+<cl>TOOL hspice </cl>
+<cl>BSIM3V3  param level   49 </cl>
+<cl>BSIM3V3  param level   53 </cl>
+<cl>BSIM4    param level   54 </cl>
+<cl>PSP      param level 1020 </cl>
+<cl>PSPB     param level 1021 </cl>
+<cl> </cl>
+<cl>TOOL eldo </cl>
+<cl>BSIM3V3  param level   49 </cl>
+<cl>BSIM3V3  param level   53 </cl>
+<cl>BSIM4    param level   60 </cl>
+<cl>PSP      param level 1020 </cl>
+<cl>PSPB     param level 1021 </cl>
+<cl> </cl>
+<cl>TOOL ngspice </cl>
+<cl>BSIM3V3  param level    8 </cl>
+<cl>BSIM4    param level   14 </cl>
+<cl> </cl>
+<cl> </cl>
+<cl>TOOL titan </cl>
+<cl>BSIM3V3  model BSM3 setdefault version 3.0 </cl>
+<cl>BSIM3V3  model BS32 setdefault version 3.24 </cl>
+<cl>BSIM4    model BS4  setdefault version 4.2 </cl>
+<cl>BSIM4    model BS41 setdefault version 4.1 </cl>
+<cl>BSIM4    model BS42 setdefault version 4.21 </cl>
+</code>
+
+
+<p>Different industry-standard electrical simulators have different interpretations of the parameters of .MODEL 
+statement, which also deviate from the Berkeley model (see Berkeley's BSIM3v3.2.4 or BSIM4.3.0 MOSFET Model User's Manual). 
+This can lead to significant differences in the results given by different simulators.</p>
+
+<p>With no <f>simToolModel</f> variable set, &tool; uses the HSPICE model. Otherwise, &tool; interprets the parameters in the .MODEL statement with regard to the value of the <f>simToolModel</f> variable, and uses the model of the corresponding simulator.</p>
+
+<p>The HSPICE BSIM3v3 model (<f>LEVEL=49</f>, <f>simToolModel = HSPICE</f>) used by &tool; deviates from the Berkeley BSIM3v3 model with regard to the following parameters (only if parameter <f>ACM=0-3</f>):</p>
+
+<glossary>
+<row><article><f>CJSWG</f></article><def>ignored, <f>CJGATE used instead</f></def></row>
+<row><article><f>MJSWG</f></article><def>ignored, <f>MJSW used instead</f></def></row>
+<row><article><f>PBSW </f></article><def>ignored, <f>PHP used instead</f></def></row>
+<row><article><f>PBSWG</f></article><def>ignored, <f>PHP used instead</f></def></row>
+<row><article><f>NF</f></article><def>the <f>W</f> of the is divided by <f>NF</f> to choose the appropriate model in the techno file</def></row>
+</glossary>
+
+<p>The ELDO BSIM4 (<f>LEVEL=60</f>, <f>simToolModel = ELDO</f>) model used by &tool; deviates from the Berkeley BSIM4 model
+with regard to the initialization of the binning parameters of LPEB (lateral non uniform doping on
+K1):</p>
+
+<glossary>
+<row><article><f>LLEPB=0</f></article><def>instead of <f>LLEPB=LLPE0</f></def></row>
+<row><article><f>WLEPB=0</f></article><def>instead of <f>WLEPB=WLPE0</f></def></row>
+<row><article><f>PLEPB=0</f></article><def>instead of <f>PLEPB=PLPE0</f></def></row>
+<row><article><f>NF</f></article><def>the <f>W</f> of the is not divided by <f>NF</f> to choose the appropriate model in the techno file</def></row>
+</glossary>
+
+<p>The TITAN BSIM models used by &tool; are fully compliant with Berkeley BSIM models. The only special behavior 
+relates to <f>NF</f></p>
+<glossary>
+<row><article><f>NF</f></article><def>the <f>W</f> of the is not divided by <f>NF</f> to choose the appropriate model in the techno file</def></row>
+</glossary>
+
+
+</section>
+<section niv='4'><title>JFET</title>
+<bnf>
+<cl>Jxx &lt;ND&gt; &lt;NG&gt; &lt;NS&gt; &lt;MNAME&gt; {[&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;]}</cl>
+<cl>+ [$X=&lt;val&gt;] [$Y=&lt;val&gt;]</cl>
+</bnf>
+<p>Parameters:</p>
+<glossary>
+<row><article><f>xx</f></article><def>JFET transistor name</def></row>
+<row><article><f>&lt;ND&gt;</f></article><def>Drain node</def></row>
+<row><article><f>&lt;NG&gt;</f></article><def>Gate node</def></row>
+<row><article><f>&lt;NS&gt;</f></article><def>Source node</def></row>
+<row><article><f>&lt;MNAME&gt;</f></article><def>Model name, described in a .MODEL card</def></row>
+</glossary>
+<p>Optional parameters:</p>
+<glossary>
+<row><article><f>$X=&lt;val&gt;</f></article><def>X coordinate</def></row>
+<row><article><f>$Y=&lt;val&gt;</f></article><def>Y coordinate</def></row>
+<row><article><f>&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;</f></article><def>Instantiation specific parameters</def></row>
+</glossary>
+</section>
+<p>Warning: JFETs are parsed but are not suuported as transistors. They can only be interpreted as resistances. 
+See <f>avtSpiJFETisResistance</f>.</p>
+
+<section niv='4'><title>Junction Diode</title>
+<bnf>
+<cl>Dxx NP NN MNAME [AREA=&lt;val&gt;] [PJ|PERI=&lt;val&gt;]</cl>
+<cl>+ {[&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;]} [$X=&lt;val&gt;] [$Y=&lt;val&gt;]</cl>
+</bnf>
+<p>Parameters:</p>
+<glossary>
+<row><article><f>xx</f></article><def>Diode name</def></row>
+<row><article><f>&lt;NP&gt;</f></article><def>Positive node</def></row>
+<row><article><f>&lt;NN&gt;</f></article><def>Negative node</def></row>
+<row><article><f>&lt;MNAME&gt;</f></article><def>Model name, described in a .MODEL card</def></row>
+</glossary>
+<p>Optional parameters:</p>
+<glossary>
+<row><article><f>$X=&lt;val&gt;</f></article><def>X coordinate</def></row>
+<row><article><f>$Y=&lt;val&gt;</f></article><def>Y coordinate</def></row>
+<row><article><f>&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;</f></article><def>Instantiation specific parameters</def></row>
+</glossary>
+</section>
+
+<section niv='4'><title>Resistance</title>
+<bnf>
+<cl>Rxx N1 N2 [R=]&lt;val&gt;|&lt;expr&gt; [TC1=&lt;val&gt;|&lt;expr&gt;]</cl>
+<cl>+ [TC2=&lt;val&gt;|&lt;expr&gt;] {[&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;]}</cl>
+</bnf>
+<p>Parameters:</p>
+<glossary>
+<row><article><f>xx</f></article><def>Resistance name</def></row>
+<row><article><f>&lt;N1&gt;, &lt;N2&gt;</f></article><def>Resistance nodes</def></row>
+<row><article><f>[R=]&lt;val&gt;|&lt;expr&gt;</f></article><def>Value of resistance in Ohm</def></row>
+</glossary>
+<p>Optional parameters:</p>
+<glossary>
+<row><article><f>TC1=&lt;val&gt;|&lt;expr&gt;</f></article><def>Parsed but not supported</def></row>
+<row><article><f>TC2=&lt;val&gt;|&lt;expr&gt;</f></article><def>Parsed but not supported</def></row>
+<row><article><f>&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;</f></article><def>Parsed but not supported</def></row>
+</glossary>
+</section>
+
+<section niv='4'><title>Capacitance</title>
+<bnf>
+<cl>Cxx &lt;N1&gt; &lt;N2&gt; [C|VALUE=]&lt;val&gt;|&lt;expr&gt; [POLY=&lt;val&gt;|&lt;expr&gt;]</cl>
+<cl>+ {[&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;]}</cl>
+</bnf>
+<p>Parameters:</p>
+<glossary>
+<row><article><f>xx</f></article><def>Capacitance name</def></row>
+<row><article><f>&lt;N1&gt;, &lt;N2&gt;</f></article><def>Capacitance nodes</def></row>
+<row><article><f>[C|VALUE=]&lt;val&gt;|&lt;expr&gt;</f></article><def>Value of capacitance in Farads</def></row>
+</glossary>
+<p>Optional parameters:</p>
+<glossary>
+<row><article><f>POLY=&lt;val&gt;|&lt;expr&gt;</f></article><def>Parsed but not supported</def></row>
+<row><article><f>&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;</f></article><def>Parsed but not supported</def></row>
+</glossary>
+</section>
+
+<section niv='4'><title>Subcircuit Instance</title>
+<bnf>
+<cl>Xxx {&lt;NN&gt;} &lt;MNAME&gt; {[&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;]}</cl>
+<cl>+ [$X=&lt;val&gt;] [$Y=&lt;val&gt;] [$T=&lt;Tx&gt; &lt;Ty&gt; &lt;R&gt; &lt;A&gt;]</cl>
+</bnf>
+<p>Parameters:</p>
+<glossary>
+<row><article><f>xx</f></article><def>Instance name</def></row>
+<row><article><f>{&lt;NN&gt;}</f></article><def>list of nodes. Number must be the same as the subcircuit being instantiated</def></row>
+<row><article><f>&lt;MNAME&gt;</f></article><def>Subcircuit being instantiated</def></row>
+</glossary>
+<p>Optional parameters:</p>
+<glossary>
+<row><article><f>$X=&lt;val&gt;</f></article><def>X coordinate</def></row>
+<row><article><f>$Y=&lt;val&gt;</f></article><def>Y coordinate</def></row>
+<row><article><f>$T=&lt;Tx&gt; &lt;Ty&gt; &lt;R&gt; &lt;A&gt;</f></article><def>Transform of the placement (X translation, Y translation, reflexion and rotation). Parsed but not supported</def></row>
+<row><article><f>&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;</f></article><def>Instantiation specific parameters, updating subcircuit parameters</def></row>
+</glossary>
+</section>
+
+<section niv='4'><title>Independant Voltage Source</title>
+<bnf>
+<cl>Vxx &lt;NP&gt; &lt;NN&gt; DC [=] </cl>
+<cl>+ &lt;expr&gt;|&lt;pwl_function&gt;|&lt;pulse_function&gt;  </cl>
+<cl> </cl>
+<cl>&lt;pwl_function&gt; ::= PWL (&lt;TN&gt; &lt;VN&gt; {&lt;TN&gt; &lt;VN&gt;} [TD] [SHIFT=&lt;val&gt;])</cl>
+<cl> </cl>
+<cl>&lt;pulse_function&gt; ::= PULSE (&lt;V0&gt; &lt;V1&gt; &lt;TD&gt; &lt;TR&gt; &lt;TF&gt; &lt;PW&gt; &lt;PER&gt;)</cl>
+</bnf>
+<p>Parameters:</p>
+<glossary>
+<row><article><f>xx</f></article><def>Voltage source name</def></row>
+<row><article><f>&lt;NP&gt;</f></article><def>Positive node. The node may be hierarchical, up to one level of hierarchy</def></row>
+<row><article><f>&lt;NN&gt;</f></article><def>Negative node. The node may be hierarchical, up to one level of hierarchy</def></row>
+</glossary>
+<p>Piece Wise Linear function parameters:</p>
+<glossary>
+<row><article><f>&lt;TN&gt;</f></article><def>Time Ti in seconds (unless specified unit)</def></row>
+<row><article><f>&lt;VN&gt;</f></article><def>Value Vi of the source in volts at time Ti</def></row>
+<row><article><f>&lt;TD&gt;</f></article><def>Negative node</def></row>
+<row><article><f>SHIFT=&lt;val&gt;</f></article><def>Value added to all time values specified in the PWL card</def></row>
+</glossary>
+<p>Pulse function parameters:</p>
+<glossary>
+<row><article><f>&lt;VO&gt;</f></article><def>Initial value in volts of DC voltage</def></row>
+<row><article><f>&lt;V1&gt;</f></article><def>Pulse magnitude in volts</def></row>
+<row><article><f>&lt;TD&gt;</f></article><def>Delay time in seconds (unless specified unit)</def></row>
+<row><article><f>&lt;TR&gt;</f></article><def>Rise time in seconds (unless specified unit)</def></row>
+<row><article><f>&lt;PW&gt;</f></article><def>Pulse width in seconds (unless specified unit)</def></row>
+<row><article><f>&lt;PER&gt;</f></article><def>Pulse period in seconds (unless specified unit)</def></row>
+</glossary>
+<p>The <f>PWL</f> and <f>PULSE</f> functions can be used to define clocks as an alternative to the INF or SDC constraint files. However, care should be taken to ensure that enough of the waveform is specified for the parser to be able to deduce the rise/fall clock instants and the period.</p>
+<p>The <f>DC</f> function can be used to specify power supply values. If the specified negative node is the node <f>0</f>, or a node for which a supply value has been associated, then the supply value given by the sum of the DC value and the negative node supply value is associated to the positive node. Fairly complex multi-voltage configurations are possible, since multiple Vcards are possible and they can be resolved in any order.</p>
+<p>The <f>DC</f> function, especially in combination with the <f>.GLOBAL</f> directive is a powerful mechanism for specifying which nodes are power supplies. Supplies can be completely determined using these cards without using any configuration variables. A node for which the supply value is superior to <f>avtVddVssThreshold</f> is considered to be a VDD node, else the node is considered to be a VSS node.
+</p>
+</section>
+
+<section niv='4'><title>Supported Voltage Sources: Scenario 1</title>
+<code>
+<cl>.GLOBAL inh_VDD inh_GND</cl>
+<cl> </cl>
+<cl>Vsup inh_VDD inh_GND 1.2V</cl>
+<cl>Vgnd inh_GND 0 0V </cl>
+<cl> </cl>
+<cl>.SUBCKT inv A B inh_VDD inh_GND</cl>
+<cl>MP0 B A inh_VDD inh_VDD PCH</cl>
+<cl>MN0 B A inh_GND inh_GND NCH</cl> 
+<cl>.ENDS</cl>
+</code>
+</section>
+
+<section niv='4'><title>Supported Voltage Sources: Scenario 2</title>
+<code>
+<cl>Vgnd GND 0 0V </cl>
+<cl>Vsup VDD GND 1.2V</cl>
+<cl> </cl>
+<cl>.SUBCKT INV A B inh_VDD inh_GND</cl>
+<cl>MP0 B A inh_VDD inh_VDD PCH</cl>
+<cl>MN0 B A inh_GND inh_GND NCH</cl> 
+<cl>.ENDS</cl>
+<cl> </cl>
+<cl>Xinv0 A B VDD GND INV</cl>
+</code>
+</section>
+
+<section niv='4'><title>Supported Voltage Sources: Scenario 3</title>
+<code>
+<cl>Vgnd GND 0 0V </cl>
+<cl> </cl>
+<cl>.SUBCKT INV A B inh_VDD inh_GND</cl>
+<cl>Vsup inh_VDD inh_GND 1.2V</cl>
+<cl>MP0 B A inh_VDD inh_VDD PCH</cl>
+<cl>MN0 B A inh_GND inh_GND NCH</cl> 
+<cl>.ENDS</cl>
+<cl> </cl>
+<cl>Xinv0 A B VDD GND INV</cl>
+</code>
+</section>
+
+<section niv='4'><title>Supported Voltage Sources: Scenario 4</title>
+<code>
+<cl>Vgnd GND 0 0V </cl>
+<cl>Vsup12 VDD GND 1.2V</cl>
+<cl> </cl>
+<cl>.SUBCKT INV A B inh_VDD inh_GND</cl>
+<cl>Vsup14 inh_VDD inh_GND 1.4V</cl>
+<cl>MP0 B A inh_VDD inh_VDD PCH</cl>
+<cl>MN0 B A inh_GND inh_GND NCH</cl> 
+<cl>.ENDS</cl>
+<cl> </cl>
+<cl>Xinv0 A B VDD GND INV</cl>
+</code>
+<p><f>Vsup14</f> is ignored</p>
+</section>
+
+<section niv='4'><title>Supported Voltage Sources: Scenario 5</title>
+<code>
+<cl>Vgnd GND 0 0V </cl>
+<cl>Vsup12 VDD GND 1.2V</cl>
+<cl>Vsup14 VDD GND 1.4V</cl>
+<cl> </cl>
+<cl>.SUBCKT INV A B inh_VDD inh_GND</cl>
+<cl>MP0 B A inh_VDD inh_VDD PCH</cl>
+<cl>MN0 B A inh_GND inh_GND NCH</cl> 
+<cl>.ENDS</cl>
+<cl> </cl>
+<cl>Xinv0 A B VDD GND INV</cl>
+</code>
+<p><f>Vsup12</f> is ignored</p>
+</section>
+
+<section niv='4'><title>Supported Voltage Sources: Scenario 6</title>
+<code>
+<cl>Vgnd Xinv0.inh_GND 0 0V </cl>
+<cl>Vsup12 Xinv0.inh_VDD 0 1.2V</cl>
+<cl> </cl>
+<cl>.SUBCKT INV A B</cl>
+<cl>MP0 B A inh_VDD inh_VDD PCH</cl>
+<cl>MN0 B A inh_GND inh_GND NCH</cl> 
+<cl>.ENDS</cl>
+<cl> </cl>
+<cl>Xinv0 A B INV</cl>
+</code>
+<p>The following syntax is not supported:</p>
+<cl>Vsup12 Xinv0.inh_VDD Xinv1.inh_GND 1.2V</cl>
+</section>
+
+<section niv='4'><title>File Inclusion</title>
+<bnf>
+<cl>.LIB|.LIBRARY LNAME [&lt;LIBTYPE&gt;]</cl>
+<cl>.INCLUDE &lt;FILENAME&gt;</cl>
+</bnf>
+<p>&tool; has a limited support of relative paths: when the path is not absolute, the path is assumed to be relative to the working directory of &tool; (the directory where it has been invoked from). Contrary to other simulators, it is not assumed to be relative to the directory of the file which makes the inclusion. This limitation can be overwhelmed by the variable <f>avtLibraryDirs</f></p>  
+</section>
+
+<section niv='4'><title>Subcircuit</title>
+<bnf>
+<cl>.SUBCKT &lt;NAME&gt; &lt;NN&gt; {&lt;NN&gt;} [PARAM:]{[&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;]}</cl>
+<cl> </cl>
+<cl>{&lt;component&gt;}</cl>
+<cl> </cl>
+<cl>.ENDS [&lt;NAME&gt;]</cl>
+<cl> </cl>
+<cl>&lt;component&gt; ::= M|J|D|R|C|X|V|.SUBCKT|.LIB|.INCLUDE|.MODEL|.PARAM</cl>
+</bnf>
+<p>Parameters:</p>
+<glossary>
+<row><article><f>&lt;NAME&gt;</f></article><def>Name of the subcircuit</def></row>
+<row><article><f>&lt;NN&gt;</f></article><def>Node name. Nodes with the same name followed by period and number are 
+considered to be on the same net, even if they are not connected in the subcircuit. For example, in
+<f>.SUBCKT nand2 in out out.1 out.2 vss vdd out.3</f> the nodes <f>out</f>, <f>out.1</f>, <f>out.2</f> 
+and <f>out.3</f> are considered to be the same signal. See also <f>avtSpiMergeConnector</f> and 
+<f>avtSpiConnectorSeparator</f>.</def></row>
+<row><article><f>&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;</f></article><def>Default parameters</def></row>
+</glossary>
+
+<p>&tool; supports the declaration of subcircuits within subcircuits. However, if subcircuit A is defined within a subcircuit,
+instantiations of subcircuit A must not occur before in the file. This is not true if subcircuit A is defined at top-level.</p>
+
+</section>
+
+
+<section niv='4'><title>Parameters</title>
+<bnf>
+<cl>.PARAM {&lt;param&gt;=&lt;val&gt;|&lt;expr&gt;}</cl>
+</bnf>
+</section>
+
+<section niv='4'><title>Temperature</title>
+<bnf>
+<cl>.TEMP &lt;val&gt;|&lt;expr&gt;</cl>
+<cl>.OPTION TEMP &lt;val&gt;|&lt;expr&gt;</cl>
+</bnf>
+</section>
+
+<section niv='4'><title>Scale Factor</title>
+<bnf>
+<cl>.SCALE &lt;val&gt;|&lt;expr&gt;</cl>
+</bnf>
+<p>Scales MOSFET parameters.</p>
+<glossary>
+<row><article><f>L=L*&lt;val&gt;</f></article><def></def></row>
+<row><article><f>W=W*&lt;val&gt;</f></article><def></def></row>
+<row><article><f>PD=PD*&lt;val&gt;</f></article><def></def></row>
+<row><article><f>PS=PS*&lt;val&gt;</f></article><def></def></row>
+<row><article><f>SA=SA*&lt;val&gt;</f></article><def></def></row>
+<row><article><f>SB=SB*&lt;val&gt;</f></article><def></def></row>
+<row><article><f>SD=SD*&lt;val&gt;</f></article><def></def></row>
+<row><article><f>AD=AD*&lt;val&gt;*&lt;val&gt;</f></article><def></def></row>
+<row><article><f>AS=AS*&lt;val&gt;*&lt;val&gt;</f></article><def></def></row>
+</glossary>
+</section>
+
+<section niv='4'><title>Global Nodes</title>
+<bnf>
+<cl>.GLOBAL {node}</cl>
+</bnf>
+<p>When using the TCL interface, one should take care that the validity of <f>.GLOBAL</f> statement is limited
+to the context of the <f>avt_LoadFile</f> function call. For example, let's suppose a <f>.GLOBAL</f> statement defined
+in <f>globals.spi</f>, and a netlist defined in <f>netlist.spi</f>:</p>
+<code>
+<cl>avt_LoadFile globals.spi spice</cl>
+<cl>avt_LoadFile netlist.spi spice</cl>
+</code>
+<p>With such a script, the <f>.GLOBAL</f> statement will not be available in <f>netlist.spi</f>. 
+If it is not the intended behavior, prefer <f>.INCLUDE globals.spi</f> in <f>netlist.spi</f>.</p>
+</section>
+
+</section>

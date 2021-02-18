@@ -1,0 +1,19 @@
+
+       TimingConstraintList *ttv_GetConstraints(TimingFigure *tf, char *input-
+       connector, char *towhat);
+
+DDEESSCCRRIIPPTTIIOONN
+       Computes the constraints at the interface of a timing figure.
+         Returns a list of TimingConstraint.
+
+AARRGGUUMMEENNTTSS
+       ttff            Timing figure
+
+       iinnppuuttccoonnnneeccttoorr
+                     Connector whose constraints must be computed
+
+       ttoowwhhaatt        Ending path node types, can be a mix of _l_a_t_c_h, _p_r_e_c_h_a_r_g_e,
+                     _c_l_o_c_k_g_a_t_i_n_g, _p_r_e_c_h_a_r_g_e or _a_l_l
+
+       EEXXAAMMPPLLEE       _s_e_t _c_l _[_t_t_v___G_e_t_C_o_n_s_t_r_a_i_n_t_s _$_f_i_g _* _a_l_l
+

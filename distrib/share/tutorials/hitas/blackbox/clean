@@ -1,0 +1,9 @@
+rm -f circuit.dtx
+rm -f circuit.cnv
+rm -f circuit.cns
+rm -f circuit.rcx
+rm -f circuit.stm
+rm -f circuit.sto
+rm -f circuit.str
+rm -f *.log
+rm -f *.rep

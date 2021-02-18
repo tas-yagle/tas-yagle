@@ -1,0 +1,64 @@
+*  
+*  Spice description of circuit
+*  
+.INCLUDE ../techno/bsim4_dummy.hsp
+
+.TEMP 125
+Vground vss 0 DC 0
+Vsupply vdd 0 DC 1.62
+
+.subckt invx1 a y vdd vss
+mM0 y a vss vss TN L=3e-07 W=12e-07
+mM1 y a vdd vdd TP L=3e-07 W=18e-07
+.ends
+
+.subckt msdp2_y di ck t vdd vss 
+M34 n11   dff_m vdd   vdd TP L=0.18U W=1.872U AS=0.67392P AD=0.67392P PS=1.607U PD=4.464U 
+M33 vdd   di    n12   vdd TP L=0.18U W=3.6684U AS=1.32062P AD=1.32062P PS=2.9017U PD=8.0604U 
+M32 n3    ckn   dff_m vdd TP L=0.18U W=1.512U AS=0.54432P AD=0.54432P PS=1.3478U PD=3.744U 
+M31 n12   vss   n3    vdd TP L=0.18U W=3.6684U AS=1.32062P AD=1.32062P PS=2.9017U PD=8.0604U 
+M30 n3    n2    n6    vdd TP L=0.18U W=3.6684U AS=1.32062P AD=1.32062P PS=2.9017U PD=8.0604U 
+M29 n6    vss   vdd   vdd TP L=0.18U W=3.6684U AS=1.32062P AD=1.32062P PS=2.9017U PD=8.0604U 
+M28 n2    vss   vdd   vdd TP L=0.18U W=1.512U AS=0.54432P AD=0.54432P PS=1.3478U PD=3.744U 
+M27 vdd   ck    ckn   vdd TP L=0.18U W=1.512U AS=0.54432P AD=0.54432P PS=1.3478U PD=3.744U 
+M26 vdd   n11   n21   vdd TP L=0.18U W=0.792U AS=0.28512P AD=0.28512P PS=0.8294U PD=2.304U 
+M25 dff_m ckp   n21   vdd TP L=0.18U W=0.792U AS=0.28512P AD=0.28512P PS=0.8294U PD=2.304U 
+M24 ckp   ckn   vdd   vdd TP L=0.18U W=1.872U AS=0.67392P AD=0.67392P PS=1.607U PD=4.464U 
+M23 t     dff_s vdd   vdd TP L=0.18U W=4.2084U AS=1.51502P AD=1.51502P PS=3.2905U PD=9.1404U 
+M22 dff_s ckp   n16   vdd TP L=0.18U W=2.9484U AS=1.06142P AD=1.06142P PS=2.3833U PD=6.6204U 
+M21 n16   n11   vdd   vdd TP L=0.18U W=2.9484U AS=1.06142P AD=1.06142P PS=2.3833U PD=6.6204U 
+M20 vdd   n20   n22   vdd TP L=0.18U W=0.6084U AS=0.219024P AD=0.219024P PS=0.6998U PD=1.944U 
+M19 dff_s ckn   n22   vdd TP L=0.18U W=0.6084U AS=0.219024P AD=0.219024P PS=0.6998U PD=1.944U 
+M18 n20   dff_s vdd   vdd TP L=0.18U W=0.792U AS=0.28512P AD=0.28512P PS=0.8294U PD=2.304U 
+M17 vss   dff_m n11   vss TN L=0.18U W=1.872U AS=0.67392P AD=0.67392P PS=1.607U PD=4.464U 
+M16 n3    ckp   dff_m vss TN L=0.18U W=0.792U AS=0.28512P AD=0.28512P PS=0.8294U PD=2.304U 
+M15 n2    vss   vss   vss TN L=0.18U W=0.792U AS=0.28512P AD=0.28512P PS=0.8294U PD=2.304U 
+M14 n5    vss   n3    vss TN L=0.18U W=1.872U AS=0.67392P AD=0.67392P PS=1.607U PD=4.464U 
+M13 vss   vss   n5    vss TN L=0.18U W=1.872U AS=0.67392P AD=0.67392P PS=1.607U PD=4.464U 
+M12 n10   di    vss   vss TN L=0.18U W=1.872U AS=0.67392P AD=0.67392P PS=1.607U PD=4.464U 
+M11 n3    n2    n10   vss TN L=0.18U W=1.872U AS=0.67392P AD=0.67392P PS=1.607U PD=4.464U 
+M10 ckn   ck    vss   vss TN L=0.18U W=1.152U AS=0.41472P AD=0.41472P PS=1.0886U PD=3.024U 
+M09 vss   n11   n15   vss TN L=0.18U W=0.4284U AS=0.154224P AD=0.154224P PS=0.5702U PD=1.584U 
+M08 n15   ckn   dff_m vss TN L=0.18U W=0.4284U AS=0.154224P AD=0.154224P PS=0.5702U PD=1.584U 
+M07 ckp   ckn   vss   vss TN L=0.18U W=0.972U AS=0.34992P AD=0.34992P PS=0.959U PD=2.664U 
+M06 n20   dff_s vss   vss TN L=0.18U W=0.4284U AS=0.154224P AD=0.154224P PS=0.5702U PD=1.584U 
+M05 vss   dff_s t     vss TN L=0.18U W=2.232U AS=0.80352P AD=0.80352P PS=1.8662U PD=5.184U 
+M04 n16   ckn   dff_s vss TN L=0.18U W=1.512U AS=0.54432P AD=0.54432P PS=1.3478U PD=3.744U 
+M03 dff_s ckp   n18   vss TN L=0.18U W=0.4284U AS=0.154224P AD=0.154224P PS=0.5702U PD=1.584U 
+M02 vss   n20   n18   vss TN L=0.18U W=0.4284U AS=0.154224P AD=0.154224P PS=0.5702U PD=1.584U 
+M01 vss   n11   n16   vss TN L=0.18U W=1.512U AS=0.54432P AD=0.54432P PS=1.3478U PD=3.744U 
+C3 dff_s vss 3.2904e-14
+.ends msdp2_y
+
+.subckt circuit data ck y vdd vss
+XINV0 data d1 vdd vss invx1
+XFF0 d1 ck d2 vdd vss msdp2_y
+XINV1 d2 s1 vdd vss invx1
+XINV2 s1 s2 vdd vss invx1
+XINV3 s2 d3 vdd vss invx1
+XFF1 d3 ck d4 vdd vss msdp2_y
+XINV4 d4 y vdd vss invx1
+RR1 vdd vss 100M
+.ends circuit
+
+Xcir data ck y vdd vss circuit

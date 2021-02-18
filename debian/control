@@ -1,0 +1,46 @@
+Source:        tasyag
+Section:       Science/Electronics
+Priority:      optional
+Maintainer:    Jean-Paul Chaput <Jean-Paul.Chaput@lip6.fr>
+Build-Depends: debhelper (>= 7),
+               quilt,
+               tcsh,
+               texlive-full,
+               swig,
+               libedit-dev,
+               tcl8.5-dev,
+	       libmotif-dev,
+	       libxp-dev,
+	       libxt-dev,
+	       libxpm-dev,
+               openjdk-6-jre,
+               libsaxon-java (>= 9),
+               libsaxonb-java,
+               libservlet2.4-java,
+               fop (>= 0.95)
+Homepage:      https://soc-extras.lip6.fr/en/tasyag-abstract-en/
+Standards-Version: 3.8.4
+
+Package:      tasyag
+Architecture: any
+Depends:      ${misc:Depends},
+              ${shlibs:Depends},
+              tcl8.5
+Description: Tas/Yagle - Static Timing Analyser
+ The  advent   of  semiconductor  fabrication technologies   now   allows   high
+ performance in complex integrated circuits.
+   With the increasing complexity of  these  circuits,  static  timing  analysis
+ (STA)  has  revealed  itself  as  the  only feasible   method   ensuring   that
+ expected performances are actually obtained.
+   In addition, signal integrity (SI) issues due to  crosstalk  play  a  crucial
+ role in performance and reliability of these systems, and must  be  taken  into
+ account during the timing analysis.
+   However, performance  achievement not  only lies in fabrication technologies,
+ but also  in the way circuits  are designed.  Very high performance designs are
+ obtained with semi or full-custom designs techniques.
+   The HITAS platform provides advanced  STA  and  SI  solutions  at  transistor
+ level. It has been  built-up in order to allow  engineers  to  ensure  complete
+ timing and SI coverage on their digital custom designs,  as  well  as  IP-reuse
+ through timing abstraction.
+   Furthermore,  hierarchy  handling  through  transparent  timing  views allows
+ full-chip verification, with virtually no limit of capacity in design size.

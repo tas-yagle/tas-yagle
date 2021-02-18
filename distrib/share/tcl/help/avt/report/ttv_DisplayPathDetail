@@ -1,0 +1,13 @@
+
+       void ttv_DisplayPathDetail(FILE *f, int num, TimingPath *tp);
+
+DDEESSCCRRIIPPTTIIOONN
+       Prints detailed information about a given path
+
+AARRGGUUMMEENNTTSS
+       ttpp            Pointer on a path
+
+       ff             File where to save the report, _s_t_d_o_u_t for standard output
+
+       nnuumm           Number to identify the path
+

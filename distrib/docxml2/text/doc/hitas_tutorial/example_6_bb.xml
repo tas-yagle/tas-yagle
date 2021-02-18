@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Analog Blocks Handling</title>
+
+<section niv='2'><title>Objective</title>
+<p>&tool; is designed to compute propagation delays in digital designs. The advantage of this
+restrictive target is to enable very fast computing times. The drawback is that non-digital
+block characterization is not directly handled by &tool; and should be supplied to 3rd-party analog 
+simulators. However, &tool; provides various ways to link with external characterizations.</p>
+<p>This example presents two of the simplest ways with which &tool; can deal with analog blocks. It takes place in the <f>blackbox/</f> directory.</p>
+</section>
+
+<section niv='2'><title>Database Generation</title>
+<p>The complete configuration required for the timing database generation takes place
+the <f>db.tcl</f> script. The temperature and power supplies are specified directly 
+in the <f>circuit.spi</f> file.</p>
+</section>
+
+<section niv='2'><title>Ignore Function</title>
+<p>The simplest and often sufficient technique for handling analog parts of a design
+is to tell &tool; to explicitly ignore them so that they will be included in the timing database.</p>
+<p>&tool; can ignore specified components with <f>inf_DefineIgnore </f>command. 
+This directive can be used to ignore transistors, instances, resistances, capacitances and diodes
+by specifying them by name</p>
+<p>It is equivalent to commenting out elements in the spice netlist</p>
+<p>See HiTas Reference Guide for further details.</p>
+<glossary>
+<row type='split'><article><f>inf_SetFigureName circuit</f></article>
+<def>tells the tool to apply the SDC constraints to the design.  </def></row>
+<row type='split'><article><f>inf_DefineIgnore resistances R1</f></article>
+<def>tells the tool to ignore the resistance named R1 in the design.  </def></row>
+<row type='split'><article><f>inf_DefineIgnore instances INV1</f></article>
+<def>tells the tool to ignore the instance inverter named INV1 in the design.  </def></row>
+</glossary>
+<p>The first ignore directive is to remove what &tool; considers to be a short circuit
+between the power supplies. A resistance such as this causes problems for the identification
+of power supply nets and so must be handled like this.</p>
+<p>The output logging function has been activated in the <f>db.tcl</f> script for file
+parsing statistics (see documentation of <f>avtLogFile</f> and <f>avtLogEnable</f> in
+the reference guide for more details). Look at the generated log file to see the effect
+of the directive.</p>
+<p>The second directive effectively leaves a hole in the netlist, however, this poses
+no problem for the timing database generation for the rest of the circuit. Try running the
+path report script (<f>report.tcl</f>) both with and without this directive to see the effect. 
+Leave this directive commented out for the next section.</p>
+</section>
+
+<section niv='2'><title>Integration in a Hierarchical Netlist</title>
+<p>The second way of handling analog parts is the incorporation of timings from a <f>.lib</f> 
+file to model the timing of a block (anolog or otherwise) instantiated within a hierarchical netlist.
+In order to use this method it is first of all necessary to create "analog holes" in the netlist
+where these blocks are instantiated. This is done with the <f>avt_SetBlackBoxes</f> function, taking as
+argument the list of the sub-circuits to blackbox.</p>
+<p>The default behavior of &tool; is not to try to fill the "holes". To tell the tool to fill the 
+holes with timing characterizations, the <f>tasBlackboxRequiresTimings</f> variable is set to <f>yes</f> in the 
+<f>db.tcl</f> script.</p>
+<p>The timing information for these "holes" must be provided from an external timing database,
+this is typically done by loading an appropriate <f>.lib</f> file.</p>
+<p>In this example, we will be using an external <f>.lib</f> to represent the timings for the flip-flop.
+Although this is not really an analog circuit, the procedure would be the same for an analog block
+and a flip-flop is a simple example containing setup, hold and access arcs.</p>
+<p>To try this, you should recreate the timing database with the following lines in the appropriate script:</p>
+<code>
+<cl>avt_SetBlackBoxes {msdp2_y}</cl>
+<cl>avt_config tasBlackboxRequiresTimings yes</cl>
+<cl>...</cl>
+<cl>avt_LoadFile ./msdp2_y.lib lib</cl>
+</code>
+<p>The timing arcs for the instances <f>msdp2_y</f> are directly integrated in the new database.
+The database for <f>circuit</f> is flat and does not contain instances of <f>msdp2_y</f>.</p>
+<p>Examine the timing database using the path report script and compare with the path reports
+obtained without "blackboxing" of the flip-flops.</p>
+</section>
+
+
+</section>
+</chapter>

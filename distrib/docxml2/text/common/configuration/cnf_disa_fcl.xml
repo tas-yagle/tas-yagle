@@ -1,0 +1,18 @@
+<glossary>
+
+<row type='split'><article><index>yagUseGenius</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Extends the simple pattern recognition of FCL to allow the recognition of 
+hierarchically defined structures of generic size.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagUseOnlyGenius</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Same as <f>yagUseGenius</f> but &tool; stops the execution after the 
+hierarchical pattern recognition phase.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+</glossary>

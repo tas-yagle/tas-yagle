@@ -1,0 +1,53 @@
+
+           ssta_ToolBox  [-parsedatafile] [-getfield <filednum>] [-getdistrib]
+       [options]
+           options:
+           [-values <valuelist>] [-filename <fname>]
+           [-parsefunction <funcname>] [-fixedrange  <time>]  [-nbrange  <num-
+       ber>] ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Handles  various  operations  related  to  statistical  timing analysis
+       results.
+
+AARRGGUUMMEENNTTSS
+       --ppaarrsseeddaattaaffiillee
+                     Reads a SSTA data file and returns its content as a  list
+                     (one entry per SSTA run) of 2 element lists with the SSTA
+                     run number and the line corresponding  to  the  SSTA  run
+                     from the file: <ssta run number> <file line> ... ....
+
+       --ggeettddiissttrriibb   Returns  a distribution from the list of values. The dis-
+                     tribution is a list of list with 5 elements:  <low  range
+                     value>  <high range value> <number of occurence> <cumula-
+                     tive number of occurence> <cumulative % of occurence> ...
+                     ....
+
+       --ggeettffiieelldd <<ffiilleeddnnuumm>>
+                     Reads and returns the _<_f_i_l_e_d_n_u_m_>'th field of each line of
+                     a file: <line1 field value> <line2 field value> ....
+
+       ooppttiioonnss::
+
+       --vvaalluueess <<vvaalluueelliisstt>>
+                     List of values to use.
+
+       --ffiilleennaammee <<ffnnaammee>>
+                     Filename of the file to read from or to drive to.
+
+       --ppaarrsseeffuunnccttiioonn <<ffuunnccnnaammee>>
+                     Function name to run while parsing result file. Each line
+                     parsed is feed to the function as one argument which is a
+                     list with 2 values: <ssta run number> <file  line>.  When
+                     _-_p_a_r_s_e_f_u_n_c_t_i_o_n is used, the API returns nothing.
+
+       --nnbbrraannggee <<nnuummbbeerr>>
+                     Specifies the number of range to use when building a dis-
+                     tribution. The default value is _2_0.
+
+       --ffiixxeeddrraannggee <<ttiimmee>>
+                     Specifies a range length rather than a  range  number  to
+                     build a distribution.
+
+       EEXXAAMMPPLLEE       ssta_ToolBox -getdistrib -values 1 3 5 1 8
+

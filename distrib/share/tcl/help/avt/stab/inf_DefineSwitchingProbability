@@ -1,0 +1,17 @@
+
+           inf_DefineSwitchingProbability {signal} {switching probability} ;
+
+DDEESSCCRRIIPPTTIIOONN
+       [IN ALPHA DEVELOPMENT STAGE] Associates a switching probability to _s_i_g_-
+       _n_a_l. This probability can be used by  CTK  to  remove  non  interesting
+       agressions (see also variable: stbCtkMinOccurenceProbability).
+
+AARRGGUUMMEENNTTSS
+       ssiiggnnaall        signal to associate the probability to.
+
+       sswwiittcchhiinngg pprroobbaabbiilliittyy
+                     probability value from 0 to 1.
+
+       EEXXAAMMPPLLEE       _i_n_f___D_e_f_i_n_e_S_w_i_t_c_h_i_n_g_P_r_o_b_a_b_i_l_i_t_y   _"_e_n_a_b_l_e_"   _0_._2_5.  Signal
+                     "enable" can switch 1 time each 4 clock cycles.
+

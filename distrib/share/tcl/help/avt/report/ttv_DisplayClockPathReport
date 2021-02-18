@@ -1,0 +1,18 @@
+
+       void ttv_DisplayClockPathReport(FILE *f, TimingFigure *tf, char *clock,
+       char *minmax, int number);
+
+DDEESSCCRRIIPPTTIIOONN
+       Prints a detailed report of timing paths originating from a clock.
+
+AARRGGUUMMEENNTTSS
+       ff             File where to save the report, _s_t_d_o_u_t for standard output
+
+       ttff            Pointer on the timing figure to consider
+
+       cclloocckk         Starting point name; can be a wildcard name
+
+       mmiinnmmaaxx        _m_i_n or _m_a_x; type of path to be searched
+
+       nnuummbbeerr        Maximum number of paths to report
+

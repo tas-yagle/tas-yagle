@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<pagebreak/>
+<section niv='2'><title>INF Configuration</title>
+<p>Signal naming: only disassembly directives accept all hierarchical names as inputs. Other directives take as input the hierarchical name of the highest level.</p> 
+<section niv='3'><title>General</title>
+&inf_API_general;
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Disassembly Directives</title>
+&inf_API_netlist;
+&inf_API_disa;
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Timing Directives</title>
+&inf_API_timing;
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Timing Abstraction Directives</title>
+&inf_API_abstraction;
+</section>
+
+<pagebreak/>
+<section niv='3'><title>STA Directives</title>
+&inf_API_stab;
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Crosstalk Directives</title>
+&inf_API_xtalk;
+</section>
+
+</section>

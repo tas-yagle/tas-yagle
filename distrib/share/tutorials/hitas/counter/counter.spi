@@ -1,0 +1,75 @@
+
+.subckt counter o1 o2 o3 o4 o5 o6 o7 ck reset vdd vss
+
+xreset reset nreset vdd vss inv
+
+xo1_fflop o1_ffi o1_ffo ck vdd vss fflop
+xo1_reset nreset o1_ffo o1_ffi vdd vss nand 
+xo1_0 o1_ffo bufo1_ffo vdd vss inv
+xo1_1 bufo1_ffo o1 vdd vss inv
+
+xo2_fflop o2_ffi o2_ffo o1_ffo vdd vss fflop
+xo2_reset nreset o2_ffo o2_ffi vdd vss nand 
+xo2_0 o2_ffo bufo2_ffo vdd vss inv
+xo2_1 bufo2_ffo o2 vdd vss inv
+
+xo3_fflop o3_ffi o3_ffo o2_ffo vdd vss fflop
+xo3_reset nreset o3_ffo o3_ffi vdd vss nand 
+xo3_0 o3_ffo bufo3_ffo vdd vss inv
+xo3_1 bufo3_ffo o3 vdd vss inv
+
+xo4_fflop o4_ffi o4_ffo o3_ffo vdd vss fflop
+xo4_reset nreset o4_ffo o4_ffi vdd vss nand 
+xo4_0 o4_ffo bufo4_ffo vdd vss inv
+xo4_1 bufo4_ffo o4 vdd vss inv
+
+xo5_fflop o5_ffi o5_ffo o4_ffo vdd vss fflop
+xo5_reset nreset o5_ffo o5_ffi vdd vss nand 
+xo5_0 o5_ffo bufo5_ffo vdd vss inv
+xo5_1 bufo5_ffo o5 vdd vss inv
+
+xo6_fflop o6_ffi o6_ffo o5_ffo vdd vss fflop
+xo6_reset nreset o6_ffo o6_ffi vdd vss nand 
+xo6_0 o6_ffo bufo6_ffo vdd vss inv
+xo6_1 bufo6_ffo o6 vdd vss inv
+
+xo7_fflop o7_ffi o7_ffo o6_ffo vdd vss fflop
+xo7_reset nreset o7_ffo o7_ffi vdd vss nand 
+xo7_0 o7_ffo bufo7_ffo vdd vss inv
+xo7_1 bufo7_ffo o7 vdd vss inv
+
+.ends
+
+.subckt inv a b vdd vss
++        w=1u l=0.08u 
+Mn1 b a vss vss TN w=w l=l 
+Mp1 b a vdd vdd TP w='w*2' l=l 
+.ends
+
+.subckt nand a b o vdd vss
++       w=1u l=0.08u
+Mn1 o a int vss TN w='w' l=l
+Mn2 int b vss vss TN w='w' l=l
+Mp1 o a vdd vdd TP w='w*2' l=l
+Mp2 o b vdd vdd TP w='w*2' l=l
+.ends
+
+.subckt latch i o ck vdd vss
++       w=0.6u l=0.08u
+Xinvck1 ck nck vdd vss inv
+Mn1 i ck li vss TN w=2u l=l 
+Mp1 i nck li vdd TP w=4u l=l
+XinvP li o vdd vss inv w='w*2'
+XinvL o liback vdd vss inv w=w
+Mn4 li nck liback vss TN w='w' l=l 
+Mp4 li ck liback vdd TP w='w*2' l=l
+.ends
+
+.subckt fflop i o ck vdd vss
+xm i mo ck vdd vss latch
+Xinvsck ck nck vdd vss inv
+xs mo o nck vdd vss latch
+.ends
+
+
+

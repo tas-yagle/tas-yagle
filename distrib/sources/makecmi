@@ -1,0 +1,7 @@
+all :
+	@make -C cmi
+	@make -C avtcmi
+
+clean :
+	@make -C cmi clean
+	@make -C avtcmi clean

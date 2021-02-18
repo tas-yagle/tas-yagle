@@ -1,0 +1,49 @@
+<!DOCTYPE notice SYSTEM "../../common/common_entity.xml" [
+<!ENTITY elp_tool "Genelp">
+<!ENTITY tool "HITAS">
+<!ENTITY xtas_tool "XTAS">
+<!ENTITY presentation SYSTEM "presentation.xml">
+<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY overview SYSTEM "overview.xml">
+<!ENTITY understanding SYSTEM "understanding.xml">
+<!ENTITY scope SYSTEM "scope.xml">
+<!ENTITY integration SYSTEM "integration.xml">
+<!ENTITY using_tcl SYSTEM "using_tcl.xml">
+<!ENTITY dtb_guidelines SYSTEM "dtb_guidelines.xml">
+<!ENTITY stability_guidelines SYSTEM "stability_guidelines.xml">
+<!ENTITY crosstalk_guidelines SYSTEM "crosstalk_guidelines.xml">
+<!ENTITY path_guidelines SYSTEM "path_guidelines.xml">
+<!ENTITY sim_guidelines SYSTEM "sim_guidelines.xml">
+<!ENTITY abstraction_guidelines SYSTEM "abstraction_guidelines.xml">
+<!ENTITY analog_guidelines SYSTEM "analog_guidelines.xml">
+<!ENTITY using_gui SYSTEM "using_gui.xml">
+<!ENTITY big_designs SYSTEM "big_designs.xml">
+<!ENTITY techno_files SYSTEM "techno_files.xml">
+<!ENTITY terminology SYSTEM "terminology.xml">
+]>
+<notice>
+    <presentation>
+       &presentation; 
+    </presentation>
+    <introduction>
+        &introduction;
+    </introduction>
+    <document>
+        &installation;
+        &overview;
+        &understanding;
+        &scope;
+        &integration;
+        &using_tcl;
+        &dtb_guidelines;
+        &path_guidelines;
+        &stability_guidelines;
+        &crosstalk_guidelines;
+        &sim_guidelines;
+        &analog_guidelines;
+        &abstraction_guidelines;
+        &using_gui;
+        &big_designs;
+        &terminology;
+    </document>
+</notice>

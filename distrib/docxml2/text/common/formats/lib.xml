@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>Liberty</title>
+<p>&tool; supports the Liberty version 2000.11 (.lib) Open Source standard for integrating external timing characterization.</p>
+<p>Supported statements are:</p>
+<list>
+<item><f>bus</f></item>
+<item><f>cell</f></item>
+<item><f>cell_fall</f></item>
+<item><f>cell_rise</f></item>
+<item><f>fall_constraint</f></item>
+<item><f>fall_propagation</f></item>
+<item><f>fall_transition</f></item>
+<item><f>ff </f></item>
+<item><f>ff_bank</f></item>
+<item><f>latch </f></item>
+<item><f>latch_bank</f></item>
+<item><f>library</f></item>
+<item><f>lu_table_template</f></item>
+<item><f>pin</f></item>
+<item><f>rise_constraint</f></item>
+<item><f>rise_transition</f></item>
+<item><f>rise_propagation</f></item>
+<item><f>statetable</f></item>
+<item><f>timing</f></item>
+<item><f>type</f></item>
+<item><f>wire_load</f></item>
+<item><f>wire_load_table</f></item>
+</list>
+<p>For more information see the Liberty User Guide.</p>
+
+</section>

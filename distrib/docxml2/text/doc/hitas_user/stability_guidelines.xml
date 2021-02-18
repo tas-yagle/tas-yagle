@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Static Timing Analysis</title>
+
+
+
+<section niv='2'><title>Performing the Analysis</title>
+<p>The Static Timing Analysis (sometimes also referred to as Stability Analysis) is performed upon the UTD 
+timing database. The user must provide a timing constraints file, typically an SDC (Synopsys Design Constraints) 
+file, or its INF equivalent, which should at least provide the two following sets of information:</p>
+<list>
+<item>The definitions of all the external clocks and the global clock period.</item>
+<item>Constraints specifications for the I/O connectors (corresponding to arrival and departures times).</item>
+</list>
+<p>For the first set of information, clock defintions can be specified with functions <f>create_clock</f>, 
+<f>create_generated_clock</f> and <f>set_clock_latency</f>.</p>
+<p>For the second set of information, switching windows for the input connectors must 
+be specified with function <f>set_input_delay</f>. Switching window definition for the inputs is mandatory 
+to allow their propagation throughout the design. In addition, constraints on the 
+output connectors can be specified with the <f>set_output_delay</f> function.</p>
+<p>The STA engine is invoked with the 
+function <f>stb</f>, taking as argument a pointer on the timing database (<f>TimingFigure</f> object). 
+A pointer on a <f>TimingFigure</f> object can be obtained as the 
+result of the <f>hitas</f> function. If the timing database has already been created and exists 
+on disk (DTX and STM files),
+then a pointer on the <f>TimingFigure</f> object can be obtained with the <f>ttv_LoadSpecifiedTimingFigure</f> function. Here is an
+example of the launch of the STA with a minimal set of constraints:</p> 
+<code>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure cpu]</cl>
+<cl>inf_SetFigureName cpu</cl>
+<cl>create_clock -period 900 -waveform {0 450} clk</cl>
+<cl>set_input_delay -rise 850 -clock clk *</cl>
+<cl>stb $fig</cl>
+</code>
+
+<p>The <f>stb</f> function first propagates the interface clocks onto the commands of the latches.
+Then it propagates the switching windows defined on input connectors through the elements of the
+database, either combinational or sequential, over one clock cycle.</p>
+<p>When propagating through combinational elements (gates),
+<f>stb</f> calculates the switching window on the gate's output by just summing up the gate's intrinsic 
+delays to the switching window on its inputs. Depending on the kind of analysis, detailed or not, 
+(<f>stbDetailedAnalysis</f>), the tool merges or not disjoint switching windows on the gate's output (see
+diagram below). Detailed analysis has no impact on setup/hold calculations but is mandatory in
+subsequent crosstalk analysis</p>
+<p>When propagating through sequential elements (latches or precharges), the tool calculates the 
+switching window on the latch's output by propagating the switching window on its input, with regard to 
+the arrival times of the clock on the latch.</p>
+
+<p>Once the <f>stb</f> function terminates, the timing database is annotated with stability information, i.e.
+each reference point of the database (I/O connectors, latches, commands, precharge) is annotated with its
+propagated switching window.</p>
+<p>The comparison of the switching windows on the latch nodes, to the arrival times of the clocks, 
+define the setup/hold slacks on the latches. The comparison of the switching windows on the output
+connectors, to the <f>set_output_delay</f> constraints, define the setup/hold slacks on the output 
+connectors.</p>
+</section>
+
+
+<section niv='2'><title>Output Files</title>
+<p>With default behavior, the STA engine generates two files:</p>
+<list>
+<item><f>.sto</f> file: switching windows for each signal of the design under analysis.</item>
+<item><f>.str</f> file: setup and hold slack report computed for all the reference points of the design under analysis.</item>
+</list>
+</section>
+
+<section niv='2'><title>Tcl Reports</title>
+<p>The slack report is also available through the Tcl function <f>stb_DisplaySlackReport</f>. This
+function generates the same kind of report as the <f>.str</f> file, but with more customizable and
+detailed information.</p>
+</section>
+
+&slack_reports;
+
+<section niv='2'><title>Skew Compensation</title>
+<p>When computing hold slack values between two latches, taking into account the clock skew on the full
+clock tree may lead to excessive pessimism.</p> 
+<p>The hold slack is the difference between the data 
+arrival time and the clock arrival time on a latch. The data is supposed to 
+remain stable until after the latch has closed, i.e. the data is supposed to arrive after the time the clock 
+arrives. In the case of a master to slave data path, we have:</p>
+<code>
+<cl>hold_slack = data_time - ck_to_slave</cl>
+</code>
+
+<p>The data comes from the opening of the master latch, so we can express the data arrival time as follow:</p>
+<code>
+<cl>data_time = ck_to_master + master_to_slave</cl>
+</code>
+<p>All in all, we have: (minimized)</p>
+<code>
+<cl>hold_slack = ck_to_master + master_to_slave - ck_to_slave</cl>
+<cl>hold_slack_min = ck_to_master_min + master_to_slave_min - ck_to_slave_max</cl>
+</code>
+<p>In this case, paths from clock to master and from clock to slave are almost identical, until
+the node where they diverge towards master and slave. However, 
+static timing analysis hypothesis may lead to significant differences between min and max propagation delays
+on a given path (especially when crosstalk effects are taken into account).</p>
+<p>In the case of a hold slack, we check a data coming out from a master 
+latch (opening), against the memorizing event of a slave latch (closing). What should be emphasized here is that 
+a single clock edge generates both the opening event of the master latch and the closing event of the slave
+latch. The signal is propagating through the common part of the clock-to-master and clock-to-slave paths, and 
+diverges to the master and the slave. Therefore, considering min and max propagation delays on the clock paths 
+only makes sense on the parts of the paths which are not common to the clock-to-master and clock-to-slave paths. 
+The following diagram illustrates this situation:</p> 
+<imgsize namehtml="skew_comp.gif" namepdf="skew_comp.gif" hpdf="200pt"/>
+<p>&tool; supports this situation by a skew compensation mechanism. The global difference between 
+clock-to-master (minimum) and clock-to-slave (maximum) is computed. The difference relative to the common part 
+is removed afterwards. It appears in the slack report tagged as <f>[SKEW COMPENSATION]</f>.</p> 
+
+
+
+</section>
+
+<section niv='2'><title>Multicycle Paths</title>
+
+<p>&tool; supports multicycle paths through the SDC commands <f>set_multicycle_path</f> as described in this section. Multicycle paths
+specifications typically allow the tool to perform timing checks for data which requires more than one clock cycle to reach its destination.
+Let's consider the diagram below, which summarizes what can be done with multicycle paths:</p>
+
+<code>
+<cl>              ____      ____      ____      ____     </cl>
+<cl>ORIGIN_CK ___|    |____|    |____|    |____|    |____|</cl>
+<cl>             0         1         2         3         4</cl>
+<cl>              ____      ____      ____      ____      ____</cl>
+<cl>DEST_CK   ___|    |____|    |____|    |____|    |____|    |____|</cl>
+<cl>             0         1         2         3         4         5</cl>
+</code>
+
+<p>In the 1-cycle default case, checks are done as follow:</p>
+<list>
+<item>Setup timing check: <f>ORIGIN(0)</f> vs. <f>DEST(1)</f></item>
+<item>Hold timing check: <f>ORIGIN(0)</f> vs. <f>DEST(0)</f></item>
+</list>
+
+<p>Let's consider a multicycle path of 5, if one just writes the command:</p>
+<code>set_multicycle_path 5 -end -to DEST_DATA</code>
+<p>or its equivalent:</p>
+<code>set_multicycle_path 5 -end -setup -to DEST_DATA</code>
+<p>This gives:</p>
+<list>
+<item>Setup timing check: <f>ORIGIN(0)</f> vs. <f>DEST(5)</f></item>
+<item>Hold timing check: <f>ORIGIN(0)</f> vs. <f>DEST(4)</f></item>
+</list>
+
+<p>As you can see, by default the path multiplier (5 here) is applied to the setup check, effectively saying that the
+data is allowed 5x more clock cycles than the default of 1 to arrive at the destination latch. Note that changing the
+path multiplier for setup also affects the hold check since, by default, the hold check is 1 cycle before the setup check.</p>
+<p>If you want to have the hold checks done as in the 1-cycle case, one must moves the hold check backwards by 4 cycles.
+This can be done by specifying a path multiplier of 4 for the hold chacks on the same paths as follows:</p>
+<code>set_multicycle_path 4 -end -hold -to DEST_DATA</code>
+<p>This gives:</p>
+<list>
+<item>Setup timing check: <f>ORIGIN(0)</f> vs. <f>DEST(5)</f></item>
+<item>Hold timing check: <f>ORIGIN(0)</f> vs. <f>DEST(0)</f></item>
+</list>
+
+</section>
+
+
+<section niv='2'><title>Tips</title>
+
+<section niv='3'><title>Disabling Master-to-Slave Timing Checks</title>
+<p>Since 2.7p6 release, there is a way to disable the setup/hold checks between master and slave latches,
+with a semi-manual method.</p>
+
+<p>The SDC command <f>set_false_path</f> accepts the <f>-hold</f> and <f>-setup</f> options, so 
+it is possible to disable 
+setup/hold checks on specific latches through this command, for example:</p>
+<code>
+<cl>set_false_path -setup -to "*.dff_s"</cl>
+<cl>set_false_path -hold -to "*.dff_s"</cl>
+</code>
+
+<p>This will disable setup/hold checks on all the latches matching the pattern <f>*.dff_s</f> 
+(assuming the latch node's name is <f>dff_s</f>). This method assumes that you know the name of the 
+latch node. Obviously it's not always the case, so &tool; also provides an automatic master/slave detection
+mechanism. This detection is done during the database construction (the <f>hitas</f> command), and is
+controlled by the following configuration:</p>
+
+<code>
+<cl>avt_config yagleAutomaticFlipFlopDetection mark</cl>
+</code>
+
+<p>The effect of this configuration is to report master/slave information about the latches in the 
+<f>.rep</f> file, as follow:</p>
+
+<code>
+<cl>[WRN 33] Loop between 2 gates at 409 'm1.dff_m' (master latch found)</cl>
+<cl>[WRN 34] Loop between 2 gates at 411 'm1.dff_s' (slave latch found)</cl>
+</code>
+
+<p>It is possible to extract the SDC commands from the <f>.rep</f> file with an AWK script looking like:</p>
+
+<code>
+<cl>#!/usr/local/bin/gawk -f</cl>
+<cl>{</cl>
+<cl>  if ($2=="34]") {</cl>
+<cl>    gsub ("'", "", $9);</cl>
+<cl>    printf "set_false_path -setup -to "$9"\n" >"ms_chk.sdc";</cl>
+<cl>    printf "set_false_path -hold -to "$9"\n" >"ms_chk.sdc";</cl>
+<cl>  } </cl>
+<cl>}</cl>
+</code>
+ 
+
+</section>
+
+</section>
+
+<section niv='2'><title>On-Chip Variation</title>
+<p>&tool; handles On-Chip Variation by considering additionnal margins on timing paths. An added margin is associated
+with a timing path and is defined by an absolute <f>delta</f> value and a relative <f>factor</f> value. The absolute value 
+is an added or substracted propagation delay. The relative value is a percentage of the propagation delay of the timing path itself.</p>
+<p>Both the absolute value and the relative value should
+be specified by the user, with the <f>inf_DefinePathDelayMargin</f> function:</p>
+<code>
+<cl>path_delay + margin = path_delay * factor + delta</cl>
+</code>
+<p>Those margins can be specified either path by path or by group of paths (data paths, clock paths, paths arriving on special
+nodes...).</p>
+<p>&tool; also considers positive and negative margins (if <f>factor &gt; 1</f>, the margin is positive, else it is negative).
+Positive margins are used when considering max paths, negative margins are used when considering min paths (for example
+STA computes setup slacks by considering max data path vs. min clock path, and the other way round for hold slacks).</p>
+</section>
+
+<section niv='2'><title>Clock Schemes Handling</title>
+
+<section niv='3'><title>Clock Dividers</title>
+<p>Under construction...</p>
+</section>
+
+<section niv='3'><title>Pulse Generators</title>
+<p>Under construction...</p>
+</section>
+
+<section niv='3'><title>RS-based Clock Generators</title>
+<p>Under construction...</p>
+</section>
+
+</section>
+
+</section></chapter>

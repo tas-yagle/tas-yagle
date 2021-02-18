@@ -1,0 +1,17 @@
+
+       TimingSignalList   *ttv_GetTimingSignalList(TimingFigure   *tvf,   char
+       *type, char *location);
+
+DDEESSCCRRIIPPTTIIOONN
+       Retreives a list of timing signals of a given type and location
+
+AARRGGUUMMEENNTTSS
+       ttvvff           Pointer on a timing figure
+
+       ttyyppee          _c_o_n_n_e_c_t_o_r, _p_r_e_c_h_a_r_g_e, _l_a_t_c_h, _c_o_m_m_a_n_d or _b_r_e_a_k_p_o_i_n_t
+
+       llooccaattiioonn      _i_n_t_e_r_f_a_c_e, _i_n_t_e_r_n_a_l or _a_l_l
+
+       EEXXAAMMPPLLEE       _s_e_t  _e_x_t___l_a_t_c_h_e_s  _[_t_t_v___G_e_t_T_i_m_i_n_g_S_i_g_n_a_l_L_i_s_t   _$_f_i_g   _l_a_t_c_h
+                     _i_n_t_e_r_f_a_c_e_]
+

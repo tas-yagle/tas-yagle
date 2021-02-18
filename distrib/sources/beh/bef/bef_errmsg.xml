@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="bef">
+
+<err>
+    <lib>BEF-</lib><num>000</num>
+    <msg>Behavior out format %s is not a legal format!\nA Verilog file will be dumped.\n</msg>
+    <doc>To describe the format for the generated behavior, you must set 'avtOutputBehaviorFormat' either to 'vhd' for VHDL or to 'vlg' for Verilog.\n</doc>
+</err>
+<err>
+    <lib>BEF-</lib><num>001</num>
+    <msg>Behavior in format %s is not a legal format!\n</msg>
+    <doc>To describe the format of input behavior, you must set 'avtInputBehaviorFormat' either to 'vhd' for VHDL or to 'vlg' for Verilog.\n</doc>
+</err>
+
+</messages>

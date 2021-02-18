@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>Utility</title>
+<p>
+The MBK API provides a set of utility functions to allow creation and manipulation of chain list and hash table objects.
+</p>
+&mbk_API;
+</section>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Lab7. Analog Blocks handling </title>
+
+<section niv='2'><title>Objective</title>
+<p>&tool; is designed to compute propagation delays in digital designs. The advantage of this
+restrictive target is to enable very fast computing times. The drawback is that non-digital
+block characterization is not directly handled by &tool; and should be supplied to 3rd-party analog 
+simulators. However, &tool; provides various ways to link with external characterizations.</p>
+<p>This lab presents an illustration of the pre-characterization strategy, i.e. the integration of
+a <f>.lib</f> file to replace a block (analog or not).</p>
+<p>This lab also explains how to ignore elements of the design to perform a right database generation.</p>
+<p>This is based upon inverter chain between 2 flip-flop studied in lab2_ms.</p>
+</section> <!-- Objective -->
+
+
+<section niv='2'><title>Ignore Function</title>
+<p>The &tool; can ignore specified components with <f>inf_DefineIgnore </f>command.</p>
+<p>It is equivalent to commenting out elements in spice netlist</p>
+<p>See HiTas Reference Guide for further details.</p>
+<glossary>
+<row type='split'><article><f>inf_SetFigureName circuit</f></article>
+<def>tells the tool to apply the SDC constraints to the design.  </def></row>
+<row type='split'><article><f>inf_DefineIgnore resistances R1</f></article>
+<def>tells the tool to ignore the resistance named R1 in the design.  </def></row>
+<row type='split'><article><f>inf_DefineIgnore instances INV1</f></article>
+<def>tells the tool to ignore the instance inverter named INV1 in the design.  </def></row>
+</glossary>
+</section>
+
+
+<section niv='2'><title>Database Generation</title>
+<p>The database generation is done in the same way as in the lab2_ms:</p>
+<code>
+<cl>avt_LoadFile ../techno/bsim4_dummy.hsp</cl>
+<cl>avt_LoadFile circuit.spi spice</cl>
+<cl> </cl>
+<cl>set fig [hitas circuit]</cl>
+</code>
+</section>
+
+
+<section niv='2'><title>Integration in a Hierarchical Netlist (Pre-Layout)</title>
+<glossary>
+<row><article><f>db.tcl</f></article><def>Timing database construction script, with integration of the pre-characterization.</def></row>
+</glossary>
+
+<p>The first step to perform when integrating the pre-characterized <f>.lib</f> file within a hierarchical 
+netlist is the blackboxing of the instances of the analog sub-circuits, in order to obtain 
+"analog holes" in the netlist. This is done with the <f>avt_SetBlackBoxes</f> function, taking as
+argument the list of the sub-circuits to blackbox.</p>
+
+<p>The default behavior of &tool; is not to try to fill the "holes". To tell the tool to fill the 
+holes with timing characterizations, the <f>tasIgnoreBlackbox</f> variable is set to <f>yes</f> in the 
+<f>db.tcl</f> script.</p>
+
+<p>The timing arcs for the instances <f>msdp2_y</f> are directly integrated in the new database.
+The database for <f>circuit</f> is flat and does not contain instances of <f>msdp2_y</f>.</p>
+</section>
+
+
+</section>
+</chapter>
+

@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Structural validation</title>
+<section niv='2'><title>Writing the &tool; recognition rules</title>
+
+<p>We describe here the set of rules which must be applied on the RAM to recognize the matrix, i.e. the block 
+constituted of two banks 
+together with the command buffers. Each bank is formed by a row of bit-lines.</p>
+
+<p>The hierarchical recognition starts from the lower levels, therefore the rules must be written 
+in the following order: firstly for a bit-line, then for a bank, and finally for the matrix.</p> 
+
+<p>All these rules are already written, and each rule is described in a separate file with a <f>.vhd</f> 
+extension. All the rule files are located in the <f>cells/</f> directory.
+The special file <f>cells/LIBRARY</f> 
+indicates to &tool; which of those rules are to be applied, and in which order.</p>
+
+<p>In the following sections, we will progressively integrate the rules in the <f>LIBRARY</f> file, 
+and apply them to the netlist <f>ram4x128.spi</f>, until the complete 
+recognition of the two-ram-cell block. The rules are made generic so they can as well be applied to the two other RAMs. 
+We will see how.</p> 
+</section>
+<last></last>
+<section niv='2'><title>Recognition rules for a bit-line</title>
+<section niv='3'><title>Transistor level leaves</title>
+<p>A bit-line has the following structure:</p>
+<imgsize namehtml="bitline_leaves.gif" namepdf="bitline_leaves.gif" hpdf="345pt" wpdf="368pt" />
+<p>The first step of recognition consists in describing the transistor-level leaves (grayscale parts of the figure). 
+The recognition rules for those leaves are described in the next sections, and refer to the files <f>mem_cell.vhd</f>,
+<f>sense_amp.vhd</f>, <f>precharge.vhd</f> and <f>write_enable.vhd</f>.</p>
+<pagebreak/>
+<section niv='4'><title>Memory cell</title>
+
+<code>
+<cl>ENTITY mem_cell IS </cl>
+<cl>  PORT (q, nq: INOUT BIT;</cl>
+<cl>        com: IN BIT;</cl>
+<cl>        vdd, vss: IN BIT</cl>
+<cl>  );</cl>
+<cl>  -- pragma symmetric q nq</cl>
+<cl>  -- pragma symmetric com</cl>
+<cl>END;</cl>
+<cl> </cl>
+<cl>ARCHITECTURE archi OF mem_cell IS
+</cl>
+<cl>  COMPONENT tn </cl>
+<cl>    PORT (grid: IN BIT; source, drain: INOUT BIT); </cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT tp </cl>
+<cl>    PORT (grid: IN BIT; source, drain: INOUT BIT); </cl>
+<cl>  END COMPONENT;</cl>
+<cl> </cl>
+<cl>  SIGNAL s_q, s_nq: BIT;
+</cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  t0: tn PORT MAP (com,  s_q,  q);</cl>
+<cl>  t1: tn PORT MAP (com,  s_nq, nq);</cl>
+<cl>  t2: tn PORT MAP (s_q,  vss,  s_nq);</cl>
+<cl>  t3: tp PORT MAP (s_q,  vdd,  s_nq);</cl>
+<cl>  t4: tn PORT MAP (s_nq, vss,  s_q);</cl>
+<cl>  t5: tp PORT MAP (s_nq, vdd,  s_q);</cl>
+<cl>END;</cl>
+</code>
+<p>The directive <f>-- pragma symmetric q nq</f> is essential for the further steps 
+of the recognition. As a memory cell is intrinsicly symmetric, 
+the <f>q</f> (<f>nq</f>) port of the rule may match either the <f>q</f> or <f>nq</f>
+signal in the transistor netlist. This directive allows the program to consider <f>q</f> 
+and <f>nq</f> as identical.</p>
+
+</section>
+<section niv='4'><title>Sense amplifier</title>
+
+
+<p>The generated RAMs use different architectures of sense amplifiers, depending
+on the size of the generated RAM. The 4 x 128 and 8 x 256 RAMs use the first architecture, as
+the 4 x 4096 RAM uses the second one.</p>
+<p>In order to use the same rule for the three different RAMs, we have introduced in the
+'sense_amp' rule those two possible architectures. In the recognition process, 
+&tool; will try to identify each one of the architectures.</p>
+<last> </last>
+<code>
+<cl>ENTITY sense_amp IS</cl>
+<cl>    PORT (</cl>
+<cl>        data, ndata : IN BIT;</cl>
+<cl>        cke, ckp : IN BIT;</cl>
+<cl>        x : OUT BIT;</cl>
+<cl>        vdd, vss : IN BIT</cl>
+<cl>    );</cl>
+<cl>    -- pragma symmetric data ndata</cl>
+<cl>END;</cl>
+<cl> </cl>
+<cl>ARCHITECTURE sa OF sense_amp is</cl>
+<cl> 	</cl>
+<cl>  COMPONENT tp </cl>
+<cl>    PORT (grid: IN BIT; </cl>
+<cl>          source, draIN: INOUT BIT); </cl>
+<cl>    END COMPONENT;</cl>
+<cl>  COMPONENT tn </cl>
+<cl>    PORT (grid: IN BIT; </cl>
+<cl>          source, draIN : INOUT BIT); </cl>
+<cl>  END COMPONENT;</cl>
+<cl> 	</cl>
+<cl>  SIGNAL sig, nsig, dout : BIT;</cl>
+<cl>  SIGNAL c1, c2, c3 : BIT;</cl>
+<cl>  SIGNAL s1, s2, s3 : BIT;</cl>
+<cl> 	</cl>
+<cl>BEGIN</cl>
+<cl>  sa0_0 : tp PORT MAP (c1,    c1,   vdd);</cl>
+<cl>  sa0_1 : tp PORT MAP (c1,    sig,  vdd);</cl>
+<cl>  sa0_2 : tn PORT MAP (data,  c1,   s1);</cl>
+<cl>  sa0_3 : tn PORT MAP (ndata, sig,  s1);</cl>
+<cl>  sa0_4 : tn PORT MAP (cke,   s1,   vss);</cl>
+<cl>  sa1_0 : tp PORT MAP (c2,    c2,   vdd);</cl>
+<cl>  sa1_1 : tp PORT MAP (c2,    nsig, vdd);</cl>
+<cl>  sa1_2 : tn PORT MAP (ndata, c2,   s2);</cl>
+<cl>  sa1_3 : tn PORT MAP (data,  nsig, s2);</cl>
+<cl>  sa1_4 : tn PORT MAP (cke,   s2,   vss);</cl>
+<cl>  sa2_0 : tp PORT MAP (c3,    c3,   vdd);</cl>
+<cl>  sa2_1 : tp PORT MAP (c3,    x,    vdd);</cl>
+<cl>  sa2_2 : tn PORT MAP (sig,   c3,   s3);</cl>
+<cl>  sa2_3 : tn PORT MAP (nsig,  x,    s3);</cl>
+<cl>  sa2_4 : tn PORT MAP (cke,   s3,   vss);</cl>
+<cl>  link  : tn PORT MAP (ckp,   sig,  nsig);</cl>
+<cl>END;     </cl>
+<cl> </cl>
+<cl>ARCHITECTURE sa2 OF sense_amp is</cl>
+<cl> </cl>
+<cl>  COMPONENT tp </cl>
+<cl>    PORT (grid: IN BIT; </cl>
+<cl>          source, draIN: INOUT BIT); </cl>
+<cl>    END COMPONENT;</cl>
+<cl>  COMPONENT tn </cl>
+<cl>    PORT (grid: IN BIT; </cl>
+<cl>          source, draIN: INOUT BIT); </cl>
+<cl>  END COMPONENT;</cl>
+<cl>	</cl>
+<cl>  SIGNAL sig, nsig: BIT;</cl>
+<cl>  SIGNAL s1, s2, s3: BIT;</cl>
+<cl>  SIGNAL c1, c2, c3: BIT;</cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  sa2_0  : tp PORT MAP (c1,    c1,   vdd);</cl>
+<cl>  sa2_1  : tn PORT MAP (ndata, s1,   c1);</cl>
+<cl>  sa2_2  : tp PORT MAP (c2,    c2,   vdd);</cl>
+<cl>  sa2_3  : tn PORT MAP (data,  c2,   s1);</cl>
+<cl>  sa2_4  : tn PORT MAP (cke,   s1,   vss);</cl>
+<cl>  sa2_5  : tp PORT MAP (c1,    nsig, vdd);</cl>
+<cl>  sa2_6  : tn PORT MAP (data,  nsig, s2);</cl>
+<cl>  sa2_7  : tn PORT MAP (cke,   s2,   vss);</cl>
+<cl>  sa2_8  : tp PORT MAP (c2,    sig,  vdd);</cl>
+<cl>  sa2_9  : tn PORT MAP (ndata, sig,  s2);</cl>
+<cl>  sa2_10 : tn PORT MAP (ckp,   sig,  nsig);</cl>
+<cl>  sa_0   : tp PORT MAP (c3,    c3,   vdd);</cl>
+<cl>  sa_1   : tp PORT MAP (c3,    x,    vdd);</cl>
+<cl>  sa_2   : tn PORT MAP (sig,   c3,   s3);</cl>
+<cl>  sa_3   : tn PORT MAP (nsig,  x,    s3);</cl>
+<cl>  sa_4   : tn PORT MAP (cke,   s3,   vss);</cl>
+<cl>END;</cl>
+</code>
+
+</section>
+<section niv='4'><title>Precharge</title>
+
+<code>
+<cl>ENTITY precharge IS</cl>
+<cl>  PORT (q, nq: INOUT BIT;</cl>
+<cl>        ck: IN BIT;</cl>
+<cl>        vdd: IN BIT);</cl>
+<cl>  -- pragma symmetric q nq</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE nq_q OF precharge IS </cl>
+<cl> </cl>
+<cl>  COMPONENT tn</cl>
+<cl>    PORT (grid: IN BIT; source, drain: INOUT BIT); </cl>
+<cl>  END COMPONENT; </cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  t0: tn PORT MAP (ck, q,  vdd);</cl>
+<cl>  t1: tn PORT MAP (ck, nq, vdd);</cl>
+<cl>  t2: tn PORT MAP (ck, q,  nq);</cl>
+<cl>END;</cl>
+</code>
+
+</section>
+
+
+<pagebreak/>
+<section niv='4'><title>Write enable</title>
+
+<code>
+<cl>ENTITY write_enable IS</cl>
+<cl>  PORT (din, wen: IN BIT;</cl>
+<cl>        q, nq: INOUT BIT;</cl>
+<cl>        vss, vdd: IN BIT);</cl>
+<cl>  -- pragma symmetric q nq</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE write_enable OF write_enable IS </cl>
+<cl> </cl>
+<cl>  COMPONENT tp </cl>
+<cl>    PORT (grid: IN BIT; source, drain: INOUT BIT); </cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT tn </cl>
+<cl>    PORT (grid: IN BIT; source, drain: INOUT BIT); </cl>
+<cl>  END COMPONENT; </cl>
+<cl> </cl>
+<cl>  SIGNAL s2_q, s_nq, s_q: BIT; </cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  t0: tn PORT MAP (wen,  q,   s_q);</cl>
+<cl>  t1: tn PORT MAP (wen,  nq,  s_nq);</cl>
+<cl>  t2: tn PORT MAP (din,  vss, s_nq);</cl>
+<cl>  t3: tp PORT MAP (din,  vdd, s_nq);</cl>
+<cl>  t4: tn PORT MAP (s2_q, vss, s_q);</cl>
+<cl>  t5: tp PORT MAP (s2_q, vdd, s_q);</cl>
+<cl>  t6: tn PORT MAP (din,  vss, s2_q);</cl>
+<cl>  t7: tp PORT MAP (din,  vdd, s2_q);</cl>
+<cl>END;</cl>
+</code>
+
+</section>
+
+<section niv='4'><title>Performing the recognition</title>
+
+<p>To perform the recognition of the transistor leaves described above, edit the <f>LIBRARY</f> file, and 
+uncomment the following lines:</p>
+<code>
+<cl>mem_cell.vhd;</cl>
+<cl>write_enable.vhd;</cl>
+<cl>precharge.vhd;</cl>
+<cl>sense_amp.vhd;</cl>
+</code>
+
+<p>Type the command line <f> yagle -xg -rp -v ram4x128</f></p>
+
+<p>The <f>-xg</f> option performs the &tool; hierarchical recognition, 
+and makes the program exit after the &tool; recognition, 
+the <f>-rp</f> option reduces transistors extracted in parallel.</p>
+
+<p>The execution lasts a few seconds. Execution trace is displayed on the standard output, 
+and should have this appearence:</p>
+<code>
+<cl>                                     @@@@            </cl>
+<cl>                                       @@            </cl>
+<cl>                                       @@            </cl>
+<cl>        @@@@@ @@@   @@@@      @@@@@@   @@     @@@@@  </cl>
+<cl>         @@    @   @@   @    @@  @@    @@    @     @ </cl>
+<cl>          @@   @   @@   @@   @   @@    @@   @@     @@</cl>
+<cl>          @@  @      @@@@@   @   @     @@   @@@@@@@@@</cl>
+<cl>           @@ @    @@   @@    @@@      @@   @@       </cl>
+<cl>           @@@    @@    @@   @@        @@   @@      @</cl>
+<cl>            @@    @@   @@@   @@@@@@    @@    @@    @@</cl>
+<cl>        @@  @      @@@@  @@ @@   @@@ @@@@@@    @@@@  </cl>
+<cl>        @@  @                @     @                 </cl>
+<cl>         @@@                  @@@@@                  </cl>
+<cl>      </cl>
+<cl>              Yet Another Gate Level Extractor</cl>
+<cl>      </cl>
+<cl>             AVERTEC CAD System 1.00, yagle 3.50</cl>
+<cl>             Copyright (c) 2000-2002,    AVERTEC</cl>
+<cl>             E-mail support: support@avertec.com</cl>
+<cl>      </cl>
+<cl>[YAG MES] Loading the figure ram4x128 </cl>
+<cl>[YAG MES] Transistor netlist checking </cl>
+<cl>[YAG MES] Hierarchical recognition    </cl>
+<cl>_________________________  FCL</cl>
+<cl>mem_cell:  512 found</cl>
+<cl>write_enable:  4 found</cl>
+<cl>precharge:  12 found</cl>
+<cl>sense_amp:  4 found</cl>
+<cl>sense_amp (sa2):  not found</cl>
+<cl> </cl>
+<cl>_________________________ GENIUS</cl> 
+<cl>Building final instance list and executing C actions...</cl>
+<cl> </cl>
+<cl>_________________________  END</cl>   
+<cl> 00m04s  u:00m03.4  M:9032Kb</cl>
+<cl> </cl>
+</code>
+
+<p>Additionnal information is available by setting the 
+<f> GnsTraceLevel</f> variable in the <f> avttools.conf</f>
+file to a higher level (up to level 6). Information can be redirected by setting the 
+<f> GnsTraceFile</f> variable to a file name.</p>
+
+<p>The execution generates four FCL report files: <f>mem_cell.fclins</f>, <f>write_enable.fclins</f>, 
+<f>precharge.fclins</f> and <f>sense_amp.fclins</f>. Each of those files details the 
+relationships between the recognized component and the netlist of ram4x128.</p>
+
+<p>The generation of the FCL report files can be disabled by setting the <f>FclWriteReport</f> variable
+in the <f>avttools.conf</f> file to <f>no</f>.</p>
+
+
+</section>
+
+</section>
+<last></last>
+<section niv='3'><title>Column of memory cells</title>
+
+<p>The first of the hierarchical rules groups an arbitrary number of 'mem_cell' components into a column.</p>
+<imgsize namehtml="bitline_column.gif" namepdf="bitline_column.gif" hpdf="345pt" wpdf="368pt" />
+<p>The memory cells are grouped together when their ports <f>q</f> and <f>nq</f>
+are connected on the same signals <f>q</f> and <f>nq</f>. 
+The directive <f>-- pragma symmetric q nq</f> 
+placed in the 'mem_cell' rule allows the program to group two memory cells if the 
+<f>q</f> port of the first one is connected on the same signal as the <f>nq</f>
+port of the second one, as illustrated in the figure above. The rule is described below, 
+and refers to the file <f>column.vhd</f>.</p>
+<last></last>
+<code>
+<cl>ENTITY column IS</cl>
+<cl>  GENERIC (capacity: INTEGER);</cl>
+<cl>  PORT (q, nq: INOUT BIT;</cl>
+<cl>        com: IN BIT_VECTOR (0 TO capacity - 1);</cl>
+<cl>        vdd, vss: IN BIT</cl>
+<cl>  );</cl>
+<cl>  -- pragma symmetric q nq</cl>
+<cl>  -- pragma symmetric com</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE column OF column IS
+</cl>
+<cl>  COMPONENT mem_cell </cl>
+<cl>    PORT (q, nq: INOUT BIT; com, vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT; </cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  loop: FOR i IN 0 TO capacity - 1 GENERATE</cl>
+<cl>    mem_i: mem_cell</cl>
+<cl>      PORT MAP (q, nq, com (i), vdd, vss);</cl>
+<cl>  END GENERATE;</cl>
+<cl>END;</cl>
+</code>
+<p>This rule is generic, so it can match columns made of any number of memory cells. When the 'column' rule 
+has been applied, the value of the generic 'capacity' is fixed by the number of occurencies of memory cells 
+found by the rule. This value is then available for rules of higher level of hierarchy, instantiating 
+the 'column' rule.</p>
+<p>The VHDL used to describe the structural rules in &tool; differs here slightly from IEEE-1067 VHDL. 
+Actually, in GNS-VHDL, the value of a generic is computed at the lower level it appears, by counting 
+the number of component occurencies in the <f>GENERATE</f> statement where the generic occurs. 
+This value is transmitted via the <f>GENERIC MAP</f> statements to higher levels of hierarchy.</p>
+<p>To perform the recognition of the rule described above, edit the <f>LIBRARY</f> file, 
+and uncomment the following line:</p>
+
+<p><f>column.vhd;</f></p>
+
+<p>Then type the command line <f> yagle -xg -rp ram4x128</f></p>
+
+</section>
+<last></last>
+<section niv='3'><title>Column of memory cells with precharge and selector</title>
+
+<p>The 'column_and_sel' rule groups a 'column' component, recognized by the preceding rule, together 
+with a 'prechage' component and two transistors.</p>
+<imgsize namehtml="bitline_clmn_sel.gif" namepdf="bitline_clmn_sel.gif" hpdf="345pt" wpdf="368pt" />
+<p>The rule is described below and refers to the file <f>column_and_sel.vhd</f>.</p>
+<last></last>
+<code>
+<cl>ENTITY column_and_sel IS</cl>
+<cl>  GENERIC (capacity: INTEGER);</cl>
+<cl>  PORT (q, nq: INOUT BIT;</cl>
+<cl>        com: IN BIT_vector (0 TO capacity - 1);</cl>
+<cl>        ck, sel_column, vdd, vss: in BIT</cl>
+<cl>  );</cl>
+<cl>  -- pragma symmetric q nq</cl>
+<cl>  -- pragma symmetric com</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE sel_precharge OF column_and_sel IS </cl>
+<cl> </cl>
+<cl>  COMPONENT column </cl>
+<cl>    GENERIC (capacity: INTEGER);</cl>
+<cl>    PORT (q, nq: INOUT BIT; </cl>
+<cl>          com: in BIT_VECTOR (0 TO capacity - 1); </cl>
+<cl>          vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT;      </cl>
+<cl>  COMPONENT precharge</cl>
+<cl>    PORT (q, nq: INOUT BIT; ck: IN BIT; vdd: IN BIT);</cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT tn </cl>
+<cl>    PORT (grid: IN BIT; source, drain: INOUT BIT); </cl>
+<cl>  END COMPONENT; </cl>
+<cl> </cl>
+<cl>  SIGNAL a, na: BIT; </cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  col: column </cl>
+<cl>    GENERIC MAP (capacity)</cl>
+<cl>    PORT MAP (a, na, com, vdd, vss);</cl>
+<cl>  prech: precharge PORT MAP (a, na, ck, vdd);</cl>
+<cl>  t1: tn PORT MAP (sel_column, a, q);</cl>
+<cl>  t2: tn PORT MAP (sel_column, na, nq);</cl>
+<cl>END;</cl>
+</code> 
+<p>The <f>GENERIC MAP (capacity)</f>
+statement allows the program to extract the value of the generic 'capacity' computed by the preceding rule.</p>
+<p>To perform the recognition of the rule described above, edit the <f>LIBRARY</f> file, and 
+uncomment the following line:</p>
+
+<p><f>column_and_sel.vhd;</f></p>
+
+<p>Then type the command line <f> yagle -xg -rp ram4x128</f></p>
+
+</section>
+<last></last>
+<section niv='3'><title>Bit line</title>
+
+<p>The 'bit_line' rule groups an undefined number of 'column_and_sel' components, recognized by 
+the preceding rule, together with a 'sense amplifier' component, a 'write enable' component and 
+a 'precharge' component.</p>
+<imgsize namehtml="bitline.gif" namepdf="bitline.gif" hpdf="345pt" wpdf="368pt" />
+<p>The 'bit_line' rule is described below and refers to the file <f>bit_line.vhd</f>.</p>
+<last></last>
+<code>
+<cl>ENTITY bit_line IS</cl>
+<cl>  GENERIC (capacity, nbcolumn: INTEGER);</cl>
+<cl>  PORT (din: IN BIT;</cl>
+<cl>        dout: OUT BIT;</cl>
+<cl>        com: in BIT_VECTOR (0 TO capacity - 1);</cl>
+<cl>        sel: in BIT_VECTOR (0 TO nbcolumn - 1);</cl>
+<cl>        wen, ck, cke, ckp, vdd, vss: IN BIT);</cl>
+<cl>  -- pragma symmetric com</cl>
+<cl>  -- pragma symmetric sel</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE bit_line OF bit_line IS </cl>
+<cl> </cl>
+<cl>  COMPONENT column_and_sel</cl>
+<cl>    GENERIC (capacity: INTEGER);</cl>
+<cl>    PORT (q, nq: INOUT BIT;</cl>
+<cl>          com: IN BIT_VECTOR (0 TO capacity - 1);</cl>
+<cl>          ck, sel_column, vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT;      </cl>
+<cl>  COMPONENT sense_amp </cl>
+<cl>    PORT (data, ndata: IN BIT;</cl>
+<cl>          cke, ckp: IN BIT;</cl>
+<cl>          dout: OUT BIT;</cl>
+<cl>          vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT write_enable</cl>
+<cl>    PORT (datain, wen: IN BIT;</cl>
+<cl>          q, nq: INOUT BIT;</cl>
+<cl>          vss, vdd: IN BIT);</cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT precharge</cl>
+<cl>    PORT (q, nq: INOUT BIT; ck, vdd: IN BIT);</cl>
+<cl>  END COMPONENT; </cl>
+<cl> </cl>
+<cl>  SIGNAL nq, q: BIT; </cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  loop: FOR i IN 0 TO nbcolumn - 1 GENERATE</cl>
+<cl>    column_sel_i: column_and_sel </cl>
+<cl>      GENERIC MAP (capacity)</cl>
+<cl>      PORT MAP (q, nq, com (0 TO capacity - 1), ck, sel (i),</cl>
+<cl>                vdd, vss);</cl>
+<cl>  END GENERATE;</cl>
+<cl>  sa: sense_amp PORT MAP (q, nq, cke, ckp, dout, vdd, vss);</cl>
+<cl>  wen: write_enable PORT MAP (din, wen, q, nq, vss, vdd);</cl>
+<cl>  prech: precharge PORT MAP (q, nq, ckp, vdd);</cl>
+<cl>END;</cl>
+</code>
+<p>The generic 'nbcolumn' is fixed by the number of occurencies of 'column_and_sel' components 
+found by the 'bit_line' rule. The generic 'capacity' is extracted from the preceding rule by the 
+<f> GENERIC MAP (capacity)</f> statement.
+To perform the recognition of the rule described above, edit the <f>LIBRARY</f> file, and 
+uncomment the following line:</p>
+
+<p><f>bit_line.vhd;</f></p>
+
+<p>Type the command line <f> yagle -xg -rp ram4x128</f></p>
+
+</section>
+</section>
+<pagebreak/>
+<section niv='2'><title>Recognition rules for a bank</title>
+
+<p>A bank is made of an arbitrary number of bit-lines, as illustrated in the 
+figure below.</p>
+<imgsize namehtml="half-ram.gif" namepdf="half-ram.gif" hpdf="237pt" wpdf="368pt" />
+<p>The rule 'bank', referring to the file <f>bank.vhd</f> introduces the 
+generic 'size'. The value of this generic is computed by counting the number 
+of occurencies of the component 'bit_line' matching the rule in the design. 
+For instance, the rule says that bit-lines are grouped together if and only if
+the ports <f>com</f>, <f>sel</f>, <f>write</f>, <f>ck</f>, <f>cke</f> and <f>ckp</f> of 
+each bit-line instance are respectively connected to the entity ports <f>com</f>, <f>sel</f>, 
+<f>write</f>, <f>ck</f>, <f>cke</f> and <f>ckp</f>.</p>
+<p>The values of the generics 'capacity' and
+'nbcolumn' are obtained through the <f>GENERIC MAP</f> statement.</p>
+<last> </last>
+<code>
+<cl>ENTITY bank IS</cl>
+<cl>  GENERIC (size, capacity, nbcolumn: INTEGER);</cl>
+<cl>  PORT (din: IN BIT_VECTOR (size - 1 DOWNTO 0);</cl>
+<cl>        dout: OUT BIT_VECTOR (size - 1 DOWNTO 0);</cl>
+<cl>        com: IN BIT_VECTOR (0 TO capacity - 1);</cl>
+<cl>        sel: IN BIT_VECTOR (0 TO nbcolumn - 1);</cl>
+<cl>        write, ck, cke, ckp, vdd, vss: IN bit);</cl>
+<cl>  -- pragma symmetric com</cl>
+<cl>  -- pragma symmetric sel</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE bank OF bank IS </cl>
+<cl> </cl>
+<cl>  COMPONENT bit_line </cl>
+<cl>    GENERIC (capacity, nbcolumn: INTEGER);</cl>
+<cl>    PORT (data_in: IN bit;</cl>
+<cl>          data_out: OUT bit;</cl>
+<cl>          com: IN BIT_VECTOR (0 TO capacity - 1);</cl>
+<cl>          sel: IN BIT_VECTOR (0 TO nbcolumn - 1);</cl>
+<cl>          write, ck, cke, ckp, vdd, vss: IN bit);</cl>
+<cl>  END COMPONENT; </cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  loop: FOR i IN 0 TO size - 1 GENERATE</cl>
+<cl>    bit_line_i: bit_line </cl>
+<cl>      GENERIC MAP (capacity, nbcolumn)</cl>
+<cl>      PORT MAP (din (i), dout (i),</cl>
+<cl>                com (0 to capacity - 1),</cl>
+<cl>                sel (0 to nbcolumn - 1),</cl>
+<cl>                write, ck, cke, ckp,</cl> 
+<cl>                vdd, vss);</cl>
+<cl>  END GENERATE;</cl>
+<cl>END;</cl>
+</code>
+<p>To perform the recognition of the rule described above, edit the <f>LIBRARY</f> file, and uncomment
+the following line:</p>
+
+<p><f>bank.vhd;</f></p>
+
+<p>Then type the command <f>yagle -xg -rp ram4x128</f>.</p>
+<p>As a RAM instantiates two banks, &tool; identifies two occurencies of of the rule 'bank', 
+and the following message should be displayed on the standard output:</p>
+<last> </last>
+<code>
+<cl>                                     @@@@            </cl>
+<cl>                                       @@            </cl>
+<cl>                                       @@            </cl>
+<cl>        @@@@@ @@@   @@@@      @@@@@@   @@     @@@@@  </cl>
+<cl>         @@    @   @@   @    @@  @@    @@    @     @ </cl>
+<cl>          @@   @   @@   @@   @   @@    @@   @@     @@</cl>
+<cl>          @@  @      @@@@@   @   @     @@   @@@@@@@@@</cl>
+<cl>           @@ @    @@   @@    @@@      @@   @@       </cl>
+<cl>           @@@    @@    @@   @@        @@   @@      @</cl>
+<cl>            @@    @@   @@@   @@@@@@    @@    @@    @@</cl>
+<cl>        @@  @      @@@@  @@ @@   @@@ @@@@@@    @@@@  </cl>
+<cl>        @@  @                @     @                 </cl>
+<cl>         @@@                  @@@@@                  </cl>
+<cl>      </cl>
+<cl>              Yet Another Gate Level Extractor</cl>
+<cl>      </cl>
+<cl>             AVERTEC CAD System 1.00, yagle 3.50</cl>
+<cl>             Copyright (c) 2000-2002,    AVERTEC</cl>
+<cl>             E-mail support: support@avertec.com</cl>
+<cl> </cl>
+<cl>[YAG MES] Loading the figure ram4x128  </cl>
+<cl>[YAG MES] Transistor netlist checking  </cl>
+<cl>[YAG MES] Hierarchical recognition                </cl>
+<cl>_________________________  FCL   </cl>
+<cl>mem_cell:  512 found</cl>
+<cl>write_enable:  4 found</cl>
+<cl>inv:  163 found</cl>
+<cl>nand2:  43 found</cl>
+<cl>precharge:  12 found</cl>
+<cl>sense_amp:  4 found</cl>
+<cl>sense_amp (sa2):  not found</cl>
+<cl> </cl>
+<cl>_________________________ GENIUS </cl>
+<cl>tree:  2 found</cl>
+<cl>tree2:  2 found</cl>
+<cl>tree_command:  1 found</cl>
+<cl>column:  8 found   (capacity = 64)</cl>
+<cl>column_and_sel:  8 found</cl>
+<cl>n_column:  4 found   (nbcolumn = 2)</cl>
+<cl>bank:  2 found   (size = 2)</cl>
+<cl>Building final instance list and executing C actions...</cl>
+<cl> </cl>
+<cl>_________________________  END   </cl>
+<cl> 00m03s  u:00m02.2  M:9464Kb</cl>
+</code>
+
+</section>
+<pagebreak/>
+<section niv='2'><title>Recognition rules for the matrix</title>
+<section niv='3'><title>Buffers</title>
+<p>The matrix has the following structure, where the two
+banks have already been recognized.</p>
+<imgsize namehtml="ram_buffers.gif" namepdf="ram_buffers.gif" hpdf="308pt" wpdf="368pt" />
+<p>The rule we must write to recognize the matrix may describe the interconnection
+of the two banks and of the components constituting the command buffers. As we can see 
+from the figure above, the description at the transistor level of all the command buffers 
+is a quite tedious task, and we feel more comfortable with describing intermediary levels 
+of hierarchy, such as nand and inverter cells. The rules identifying these cells are described in
+sections 4.4.1.a and 4.4.1.b., referring to the files <f>inv.vhd</f> and <f>nand2.vhd</f>.</p>
+
+<p>We will then be able to write much more easily the rules identifying the repetitive 
+structures shown in the transparent grayscale boxes. These rules are described in the 
+sections 4.4.1.c and 4.4.1.d, referring to the files <f>tree.vhd</f> and <f>tree2.vhd</f>.</p>
+
+<pagebreak/>
+<section niv='4'><title>Inverter cell</title>
+
+<code>
+<cl>ENTITY inv IS </cl>
+<cl>  PORT (i: IN BIT; o: OUT BIT; vdd, vss: IN BIT);</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE inverter OF inv IS </cl>
+<cl> </cl>
+<cl>  COMPONENT tp </cl>
+<cl>    PORT (grid: IN BIT; source, drain: INOUT BIT); </cl>
+<cl>  END COMPONENT; </cl>
+<cl>  COMPONENT tn </cl>
+<cl>    PORT (grid: IN BIT; source, drain: INOUT BIT); </cl>
+<cl>  END COMPONENT; </cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  n0: tn PORT MAP (i, vss, o);</cl>
+<cl>  p0: tp PORT MAP (i, vdd, o);</cl>
+<cl>END;</cl>
+</code>
+
+</section>
+<section niv='4'><title>Nand cell</title>
+
+<code>
+<cl>ENTITY nand2 IS</cl>
+<cl>  PORT (i1, i2: IN BIT;</cl>
+<cl>        o: OUT BIT;</cl>
+<cl>        vdd, vss: IN BIT);</cl>
+<cl>  -- pragma symmetric i1 i2</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE nand2 OF nand2 IS </cl>
+<cl> </cl>
+<cl>  COMPONENT tp </cl>
+<cl>    PORT (grid: IN BIT; source, drain: INOUT BIT); </cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT tn </cl>
+<cl>    PORT (grid: IN BIT; source, drain: INOUT BIT); </cl>
+<cl>  END COMPONENT;</cl>
+<cl> </cl>
+<cl>  SIGNAL s: BIT; </cl>
+<cl> </cl>
+<cl>begin</cl>
+<cl>  tp0: tp PORT MAP (i1, vdd, o);</cl>
+<cl>  tp1: tp PORT MAP (i2, vdd, o);</cl>
+<cl>  tn0: tn PORT MAP (i1, s, o);</cl>
+<cl>  tn1: tn PORT MAP (i2, vss, s);</cl>
+<cl>END;</cl>
+</code>
+
+</section>
+<last></last>
+<section niv='4'><title>Tree</title>
+
+<code>
+<cl>ENTITY tree IS</cl>
+<cl>  PORT (i1, i2: IN BIT;</cl>
+<cl>        o1, o2: OUT BIT; vdd, vss: IN BIT);</cl>
+<cl>  -- pragma symmetric i1 i2</cl>
+<cl>  -- pragma symmetric o1 o2</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE tree OF tree IS </cl>
+<cl> </cl>
+<cl>  COMPONENT nand2</cl>
+<cl>    PORT (i1, i2: IN BIT; o: OUT BIT; vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT inv</cl>
+<cl>    PORT (i: IN BIT; o: OUT BIT; vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT; </cl>
+<cl> </cl>
+<cl>  SIGNAL s1, s2: BIT; </cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  na2_1: nand2 PORT MAP (i1, i2, s1, vdd, vss);</cl>
+<cl>  na2_2: nand2 PORT MAP (i1, i2, s2, vdd, vss);</cl>
+<cl>  i2_i: inv PORT MAP (s1, o1, vdd, vss);</cl>
+<cl>  i3_i: inv PORT MAP (s2, o2, vdd, vss);</cl>
+<cl>END;</cl>
+</code>
+
+</section>
+
+<section niv='4'><title>Another tree</title>
+
+<code>
+<cl>ENTITY tree2 IS</cl>
+<cl>  PORT (i1, i2: IN BIT;</cl>
+<cl>        o1, o2: OUT BIT; vdd, vss: IN BIT);</cl>
+<cl>  -- pragma symmetric i1 i2</cl>
+<cl>  -- pragma symmetric o1 o2</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE tree2 OF tree2 IS </cl>
+<cl>  COMPONENT nand2</cl>
+<cl>    PORT (i1, i2: IN BIT; o: OUT BIT; vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT inv</cl>
+<cl>    PORT (i: IN BIT; o: OUT BIT; vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT; </cl>
+<cl> </cl>
+<cl>  SIGNAL nand_o: BIT; </cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  na2_1: nand2 PORT MAP (i1, i2, nand_o, vdd, vss);</cl>
+<cl>  i3_i: inv PORT MAP (nand_o, o2, vdd, vss);</cl>
+<cl>  i2_i_0: inv PORT MAP (nand_o, o1, vdd, vss);</cl>
+<cl>END;</cl>
+</code>
+
+</section>
+
+
+<p>To perform the recognition of the 'inv', 'nand2', 'tree' and 'tree2' rules, edit the <f>LIBRARY</f>
+file, and uncomment the following lines:</p>
+
+<code>
+<cl>inv.vhd;</cl>
+<cl>nand2.vhd;</cl>
+<cl>tree.vhd;</cl>
+<cl>tree2.vhd;</cl>
+</code>
+
+<p>Note the recognition priority of the inverter rule: it must be recognized after any other rule containing inverter
+structures (the 'mem_cell' rule or the 'write_enable' rule for example).
+Otherwise, as the transistors recognized by the 'inverter' rule cannot belong to any other rule, a rule containing 
+inverter structures cannot be matched.</p>
+
+<p>Here, the priority is set by the occurence order of the rules in the LIBRARY file.</p>
+
+<p>To perform the recognition, type the command line <f>yagle -xg -rp ram4x128</f></p>
+</section>
+
+<last></last>
+<section niv='3'><title>Commands bufferization</title>
+
+<p>The following figure illustrates the rule grouping the two
+'tree' components and the two 'tree2' components into a single
+commands bufferization component.</p>
+<imgsize namehtml="ram_commandbuf.gif" namepdf="ram_commandbuf.gif" hpdf="308pt" wpdf="368pt" />
+<p>This rule is described below, and refer to the file <f>tree_command.vhd</f>.</p>
+<last></last>
+<code>
+<cl>ENTITY tree_command IS</cl>
+<cl>  PORT (ck, write, en: IN BIT;</cl>
+<cl>        cken: INOUT BIT;</cl>
+<cl>        ck_0, ck_1,</cl>
+<cl>        cke_0, cke_1,</cl>
+<cl>        ckp_0, ckp_1,</cl>
+<cl>        wen_0, wen_1: OUT BIT;</cl>
+<cl>        vdd, vss: IN BIT);</cl>
+<cl>  -- pragma symmetric write_0 write_1</cl>
+<cl>  -- pragma symmetric ck_0 ck_1 ckp_0 ckp_1</cl>
+<cl>  -- pragma symmetric cke_0 cke_1</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE tc OF tree_command IS </cl>
+<cl> </cl>
+<cl>  COMPONENT tree</cl>
+<cl>    PORT (i1, i2: IN BIT;</cl>
+<cl>          o1, o2: OUT BIT;</cl>
+<cl>          vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT tree2</cl>
+<cl>    PORT (i1, i2: IN BIT;</cl>
+<cl>          o1, o2: OUT BIT;</cl>
+<cl>          vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT nand2</cl>
+<cl>    PORT (i1, i2: IN BIT; o: OUT BIT; vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT inv</cl>
+<cl>     PORT (i: IN BIT; o: OUT BIT; vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT; </cl>
+<cl> </cl>
+<cl>  SIGNAL n, n_0, n_1: BIT;</cl>
+<cl>  SIGNAL ncke_0, ncke_1: BIT; </cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  na2_0: nand2 PORT MAP (en, ck, n, vdd, vss);</cl>
+<cl>  inv_2: inv PORT MAP (n, cken, vdd, vss);</cl>
+<cl>  inv_3: inv PORT MAP (cken, n_0, vdd, vss);</cl>
+<cl>  inv_4: inv PORT MAP (cken, n_1, vdd, vss);</cl>
+<cl>  ckp: tree PORT MAP (n_0, n, ckp_0, ckp_1, vdd, vss);</cl>
+<cl>  ck: tree PORT MAP (n_1, n, ck_0, ck_1, vdd, vss);</cl>
+<cl>  ck_0: tree2 PORT MAP (write, cken, wen_0, ncke_0, vdd, vss);</cl>
+<cl>  ck_1: tree2 PORT MAP (write, cken, wen_1, ncke_1, vdd, vss);</cl>
+<cl>  inv_6: inv PORT MAP (ncke_0, cke_0, vdd, vss);</cl>
+<cl>  inv_7: inv PORT MAP (ncke_1, cke_1, vdd, vss);</cl>
+<cl>END;</cl>
+</code>
+<p>To perform the recognition of the rule 'tree_command', edit the <f>LIBRARY</f> file 
+and uncomment the following line:</p>
+
+<p><f>tree_command.vhd;</f></p>
+
+<p>Then type the command line <f>yagle -xg -rp ram4x128</f></p>
+
+</section>
+<section niv='3'><title>Matrix</title>
+
+
+<p>The highest-level hierarchical rule 'matrix' groups the two banks, the 
+commands bufferization component, together with inverters bufferizing the 
+signal <f>ncom</f>.</p>
+
+<p>As shown in the figure below, the number of inverters is equal to two times the
+size of the vector <f>ncom</f>, i.e. <f>2 * capacity</f>.</p>
+
+<imgsize namehtml="ram.gif" namepdf="ram.gif" hpdf="308pt" wpdf="369pt" />
+
+<p>The rule 'matrix' is described below, and refers to the file 'matrix.vhd'.</p>
+
+<last></last>
+
+<code>
+<cl>ENTITY matrix IS</cl>
+<cl>  GENERIC (size, capacity, nbcolumn: INTEGER);</cl>
+<cl>  PORT (din: IN BIT_VECTOR (2 * size - 1 DOWNTO 0);</cl>
+<cl>        dout: OUT BIT_VECTOR (2 * size - 1 DOWNTO 0);</cl>
+<cl>        ncom: IN BIT_VECTOR (0 TO capacity - 1);</cl>
+<cl>        sel: IN BIT_VECTOR (0 TO nbcolumn - 1);</cl>
+<cl>        write, ck, en: IN BIT; cken: INOUT BIT;</cl>
+<cl>        cke, wen: INOUT BIT_vector (0 to 1); </cl>
+<cl>        vdd, vss: IN BIT);</cl>
+<cl>END; </cl>
+<cl> </cl>
+<cl>ARCHITECTURE matrix OF matrix IS </cl>
+<cl>  COMPONENT bank </cl>
+<cl>    GENERIC (size, capacity, nbcolumn: INTEGER);</cl>
+<cl>    PORT (din: IN BIT_VECTOR (size - 1 DOWNTO 0);</cl>
+<cl>          dout: OUT BIT_VECTOR (size - 1 DOWNTO 0);</cl>
+<cl>          com: IN BIT_VECTOR (0 TO capacity - 1);</cl>
+<cl>          sel: IN BIT_VECTOR (0 TO nbcolumn - 1);</cl>
+<cl>          write, ck, cke, ckp, vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT tree_command</cl>
+<cl>    PORT (ck, write, en: IN BIT;</cl>
+<cl>          cken: INOUT BIT;</cl>
+<cl>          ck_0, ck_1, cke_0, cke_1, ckp_0, ckp_1,</cl>
+<cl>          write_0, write_1: OUT BIT; vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT;</cl>
+<cl>  COMPONENT inv</cl>
+<cl>    PORT (i: IN BIT; o: OUT BIT; vdd, vss: IN BIT);</cl>
+<cl>  END COMPONENT; </cl>
+<cl> </cl>
+<cl>  SIGNAL com0, com1: BIT_VECTOR (0 to capacity - 1);</cl>
+<cl>  SIGNAL ckb, ckp: BIT_VECTOR (0 to 1); </cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>  bank0: bank</cl>
+<cl>    GENERIC MAP (size, capacity, nbcolumn)</cl>
+<cl>    PORT MAP (din (2 * size - 1 downto size),</cl>
+<cl>              dout (2 * size - 1 downto size),</cl>
+<cl>              com0, sel, wen (0), ckb (0),</cl> 
+<cl>              cke (0), ckp (0), vdd, vss);</cl>
+<cl>  bank1: bank</cl>
+<cl>    GENERIC MAP (size, capacity, nbcolumn)</cl>
+<cl>    PORT MAP (din (size - 1 DOWNTO 0),</cl>
+<cl>              dout (size - 1 DOWNTO 0),</cl>
+<cl>              com1, sel, wen (1), ckb (1),</cl> 
+<cl>              cke (1), ckp (1), vdd, vss);</cl>
+<cl>  tree_com: tree_command</cl>
+<cl>    PORT MAP (ck, write, en, cken,</cl>
+<cl>              ckb (0), ckb (1), cke (0), cke (1),</cl>
+<cl>              ckp (0), ckp (1), wen (0), wen (1), vdd, vss);</cl>
+<cl>  loop_com: FOR i IN 0 TO capacity - 1 GENERATE</cl>
+<cl>    inv_0: inv PORT MAP (ncom (i), com0 (i), vdd, vss);</cl>
+<cl>    inv_1: inv PORT MAP (ncom (i), com1 (i), vdd, vss);</cl>
+<cl>  END GENERATE;</cl>
+<cl>END;</cl>
+</code>
+<p>To perform the recognition of the rule 'matrix', edit the <f>LIBRARY</f> file 
+and uncomment the following lines:</p>
+
+<p><f>matrix.vhd;</f></p>
+
+<p>Then type the command line <f>yagle -xg -rp ram4x128</f></p>
+<p>The trace displayed on the standard output tells you that the matrix has been recognized:</p>
+<code>
+<cl>                                      @@@@            </cl>
+<cl>                                        @@            </cl>
+<cl>                                        @@            </cl>
+<cl>         @@@@@ @@@   @@@@      @@@@@@   @@     @@@@@  </cl>
+<cl>          @@    @   @@   @    @@  @@    @@    @     @ </cl>
+<cl>           @@   @   @@   @@   @   @@    @@   @@     @@</cl>
+<cl>           @@  @      @@@@@   @   @     @@   @@@@@@@@@</cl>
+<cl>            @@ @    @@   @@    @@@      @@   @@       </cl>
+<cl>            @@@    @@    @@   @@        @@   @@      @</cl>
+<cl>             @@    @@   @@@   @@@@@@    @@    @@    @@</cl>
+<cl>         @@  @      @@@@  @@ @@   @@@ @@@@@@    @@@@  </cl>
+<cl>         @@  @                @     @                 </cl>
+<cl>          @@@                  @@@@@                  </cl>
+<cl>      </cl>
+<cl>               Yet Another Gate Level Extractor</cl>
+<cl>      </cl>
+<cl>              AVERTEC CAD System 1.00, yagle 3.50</cl>
+<cl>              Copyright (c) 2000-2002,    AVERTEC</cl>
+<cl>              E-mail support: support@avertec.com</cl>
+<cl>      </cl>
+<cl>[YAG MES] Loading the figure ram4x128  </cl>
+<cl>[YAG MES] Transistor netlist checking  </cl>
+<cl>[YAG MES] Hierarchical recognition                </cl>
+<cl>_________________________  FCL   </cl>
+<cl>mem_cell:  512 found</cl>
+<cl>write_enable:  4 found</cl>
+<cl>inv:  163 found</cl>
+<cl>nand2:  43 found</cl>
+<cl>precharge:  12 found</cl>
+<cl>sense_amp:  4 found</cl>
+<cl>sense_amp (sa2):  not found</cl>
+<cl> </cl>
+<cl>_________________________ GENIUS </cl>
+<cl>tree:  2 found</cl>
+<cl>tree2:  2 found</cl>
+<cl>tree_command:  1 found</cl>
+<cl>column:  8 found   (capacity = 64)</cl>
+<cl>column_and_sel:  8 found</cl>
+<cl>n_column:  4 found   (nbcolumn = 2)</cl>
+<cl>bank:  2 found   (size = 2)</cl>
+<cl>matrix:  1 found</cl>
+<cl>Building final instance list and executing C actions...</cl>
+<cl> </cl>
+<cl>_________________________  END   </cl>
+<cl> 00m02s  u:00m02.4  M:9520Kb</cl>
+<cl>------------------------------------------------------</cl>
+<cl>[YAG MES] Execution COMPLETED </cl>
+<cl>------------------------------------------------------</cl>
+<cl>[YAG WAR 06] 312 transistors connected as parallel pairs</cl>
+<cl>See file 'ram4x128.rep' for more information</cl>
+</code>
+
+<p>To generate a hierarchical netlist containing the matrix and the unmatched transistors, edit 
+the <f>LIBRARY</f> file, recomment the line:</p>
+
+<p><f>/* matrix.vhd; */</f></p>
+
+<p>and uncomment the line:</p>
+
+<p><f>matrix.vhd: keep = yes;</f></p>
+
+<p>The option <f>keep = yes</f> tells &tool; to cut the structure recognized by the 'matrix' rule
+in the 'ram4x128' netlist. Therefore &tool; will create a hierarchical structural
+entity, instantiating two components: the recognized structure (the matrix) and a component constituted of 
+the remaining transistors (the ones that haven't been matched by any rule).</p>
+
+<p>The name of the hierarchical structural entity is the name of the radix of the flat transistor 
+netlist (<f>ram4x128</f>), to which is appended the suffix <f>_yagroot</f>: <f>ram4x128_yagroot</f>. 
+The corresponding generated file, in VHDL format, is <f>ram4x128_yagroot.vhd</f>. 
+In SPICE format, it is <f>ram4x128_yagroot.spi</f></p>
+
+<p>The name of the recognized structure is the name of the highest-level recognition rule ('matrix'), 
+followed by the computed 
+values of the generics: <f>matrix_2_64_2</f>. The description of this component is not automatic, as it is 
+associated with a user-defined rule (the 'matrix' rule). Actually, the description of the component must be done 
+by the action associated with the 'matrix' rule. For we are, for the moment, only interested in structural recognition, 
+we will use the simple action described in the files <f>matrix_vhdl.c</f> or <f>matrix_spice.c</f>. 
+This actions generate but the interface of the component <f>matrix</f>, respectively in VHDL or SPICE format.
+Note that it is possible to generate almost everything with an action, for it is a C program executed
+by &tool;.</p>
+
+<p>The name of the component containing the unmatched transistor is the name of the radix of the flat 
+transistor netlist (<f>ram4x128</f>), to which is appended the suffix <f>_yagcore</f>: <f>ram4x128_yagcore</f>. 
+The corresponding generated file, in VHDL format, is <f>ram4x128_yagcore.vhd</f>.
+In SPICE format, it is <f>ram4x128_yagcore.spi</f></p>
+
+<p>Now let's generate the hierarchical netlist <f>ram4x128_yagroot</f>, the component <f>ram4x128_yagcore</f> 
+and the component <f>matrix_2_64_2</f>. If you want to have netlists in VHDL
+format, set <f>avtOutputNetlistFormat</f> to <f>vhd</f> in the <f>avttools.conf</f> file, 
+edit the <f>LIBRARY</f> file and uncomment the line:</p>
+
+<p><f>matrix_vhdl.c;</f></p>
+
+<p>If you want to have netlists in SPICE format, set <f>avtOutputNetlistFormat</f> to <f>vhd</f> in the 
+<f>avttools.conf</f> file, edit the <f>LIBRARY</f> file and uncomment the line:</p>
+
+<p><f>matrix_spice.c;</f></p>
+
+<p>Then type the command line <f>yagle -xg -rp ram4x128</f></p>
+
+<p>Note that, as VHDL can not describe transistor level netlists, it is preferable to generate the files in SPICE 
+format.</p>
+
+</section>
+</section>
+</section></chapter>

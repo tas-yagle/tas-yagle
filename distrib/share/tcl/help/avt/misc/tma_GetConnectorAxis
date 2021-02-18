@@ -1,0 +1,21 @@
+
+       DoubleList  *tma_GetConnectorAxis(TimingFigure  *tvf,  char *type, char
+       *name);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns the defined connector axis set for a connector/signal.
+           If no axis have been defined for the signal or the signal does  not
+       exist, the returned list contains only one element with value _-_1.
+           There is an exeption if the signal is an internal clock and no axis
+       is defined for it. In  this  case,  the  slope  max  of  the  clock  is
+       returned.
+
+AARRGGUUMMEENNTTSS
+       ffiigg           Pointer on the timing figure.
+
+       ttyyppee          Type of axis: _s_l_o_p_e or _c_a_p_a_c_i_t_a_n_c_e
+
+       nnaammee          Name of the signal.
+
+       EEXXAAMMPPLLEE       _s_e_t _s_l_o_p_e_a_x_i_s _[_t_m_a___G_e_t_C_o_n_n_e_c_t_o_r_A_x_i_s _$_f_i_g _s_l_o_p_e _c_k_]
+

@@ -1,0 +1,58 @@
+* m12 model 
+
+.include inv.spi 
+
+.include nand.spi 
+
+.include ff.spi 
+
+* rc model
+
+.subckt sigc c_1 c 
+r1 c_1 c 100
+c1 c_1 vss 3f
+c2 c vss 4f
+.ends sigc
+
+.subckt sigd d_1 d
+r1 d_1 d 300
+c1 d_1 vss 6f
+c2 d vss 8f
+.ends sigd
+
+.subckt sige e_1 e
+r1 e_1 e 300
+c1 e_1 vss 6f
+c2 e vss 8f
+.ends sige
+
+.subckt sigm12ck ck_1 ck
+r1 ck_1 ck 80
+c1 ck_1 vss 7f
+c2 ck vss 6f
+.ends sigm12ck
+
+.subckt sigsm12_1 s1_1 s1_2
+r1 s1_1 s1_2 200
+c1 s1_1 vss 6f
+c2 s1_2 vss 5f
+.ends sigsm12_1
+
+.subckt sigsm12_2 s2_1 s2_2
+r1 s2_1 s2_2 200
+c1 s2_1 vss 3f
+c2 s2_2 vss 4f
+.ends sigsm12_2
+
+.subckt m12 c d e ck vdd vss
+xnand1 c_1 d_1 s1_1 vdd vss nand
+xff1 s1_2 ck_1 s2_1 vdd vss ff
+xinv1 s2_2 e_1 vdd vss inv
+xsigc c_1 c sigc
+xsigd d_1 d sigd
+xsige e_1 e sige
+xsigck ck_1 ck sigm12ck
+xsigs1 s1_1 s1_2 sigsm12_1
+xsigs2 s2_1 s2_2 sigsm12_2
+.ends m12
+

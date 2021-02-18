@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>Description</title>
+<p>FCL is a built-in pattern recognition module which allows the transistor netlist disassembler to deal with unusual gate structures, for example complex latches or analog circuit blocks such as differential amplifiers. In order to accomplish this, the user must provide a set of transistor netlists, annotated with a number of predefined types, together with the optional corresponding behavioural descriptions (for functional abstraction).</p>
+</section>

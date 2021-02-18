@@ -1,0 +1,18 @@
+
+       TimingPathList      *ttv_GetGeneratedClockPaths(TimingFigure      *tvf,
+       TimingEvent *tve, char *minmax);
+
+DDEESSCCRRIIPPTTIIOONN
+       Gets the path list from a top level clock to  the  specified  generated
+       clock timing event.
+
+AARRGGUUMMEENNTTSS
+       ttvvff           Timing figure
+
+       ttvvee           Generated clock timing event
+
+       mmiinnmmaaxx        Maximum (_m_a_x) or minimum (_m_i_n) paths are returned
+
+       EEXXAAMMPPLLEE       _s_e_t  _p___l_i_s_t  _[_t_t_v___G_e_t_G_e_n_e_r_a_t_e_d_C_l_o_c_k_P_a_t_h_s _$_f_i_g _$_c_l_o_c_k_e_v_e_n_t
+                     _m_a_x_]
+

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<glossary>
+
+<row type="split"><article><index>avtSpiVector</index></article><def> 
+<glossary width='small'>
+<row><article><f>_</f></article><def>Default, vectors are of the shape <f>foo_1</f> in output spice files</def></row>
+<row><article><f>[]</f></article><def>Vectors are of the shape <f>foo[1]</f> in output spice files</def></row>
+<row><article><f>()</f></article><def>Vectors are of the shape <f>foo(1)</f> in output spice files</def></row>
+<row><article><f>&lt;&gt;</f></article><def>Vectors are of the shape <f>foo&lt;1&gt;</f> in output spice files</def></row>
+</glossary>
+</def></row>
+
+
+<row type="split"><article><index>avtSpiDriveDefaultUnits</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def> 
+Its behavior is to indicate the parameter units to be used when instantiating a transistor. 
+For instance, <f>avtSpiDriveDefaultUnits = W:1e-6;L:1</f> will set the spice driver to drive parameter W value 
+in micron and parameter L in meter.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiUseUnits</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def> 
+Allows the use of units in driven spice files. This is the default. 
+</def></row>
+<row><article><f>no</f></article><def> </def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiDriveParasitics</index></article><def>	
+<glossary width='small'>
+<row><article><f>yes</f></article><def>A SPEF file will be generated while parsing a SPICE file. 
+The loaded file will be stripped of all resistors and capacitors. The SPEF file can be used as a parasitic cache 
+file.</def></row>
+<row><article><f>no</f></article><def> </def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiDriveTrsInstanceParams</index></article><def>	
+<glossary width='small'>
+<row><article><f>no</f></article><def>Specifics instances parameters for the models of transistors 
+will not be driven.</def></row>
+<row><article><f>yes</f></article><def> </def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiDriveCapaMini</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>When driving a Spice netlist, doesn't drive capacitances 
+below <f>float</f> (in Pico-farads). Default is 10-6 pF.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiDriveResiMini</index></article><def>	
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>When driving a Spice netlist, fix minimum value 
+for resistances to <f>float</f> (in Ohms). Default is 10e-3 Ohms.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiRCMemoryLimit</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Amount of memory in MB allowed to creating a .SPEF 
+file from a spice file. This option influences <f>avtSpiDriveParasitics</f> speed. The default value is 100.</def></row>
+</glossary>
+</def></row>
+
+
+<row type="split"><article><index>avtSpiFlags</index></article><def>This configuration is used to control the behavior of the spice parser/driver. The values (flags) are added separated with commas. 
+<glossary width='small2'>
+<row><article><f>DriveInstanceParameters</f></article><def>Enables the drive of the instances with 
+all their parameters</def></row>
+<row><article><f>IgnoreGlobalParameters</f></article><def>Works with <f>DriveInstanceParameters</f> 
+and removes all the global parameters from the instance parameters to drive. Useful 
+when the netlist has been flattened and the parameters inherited by the leaf instances.</def></row>
+<row><article><f>KeepBBOXContent</f></article><def>Will keep the content of the figures set 
+as blackboxes whereas by default only the interfaces are kept.</def></row>
+<row><article><f>TransfertTopLevelVcards</f></article><def>Will transfert voltage sources connected to instances, who are defined
+out of a subckt in the spice file, in their corresponding circuit subckt so the Vcards can be taken into account when working on one
+of this instance circuit.
+This option is enabled by default. It can be unset by adding '!' in front of the option: '!TransfertTopLevelVcards'.
+</def></row>
+</glossary>
+</def></row>
+
+
+</glossary>
+

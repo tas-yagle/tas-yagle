@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="cns_api">
+
+<err>
+    <lib>CNSAPI-</lib><num>001</num>
+    <msg>cone figure %s already loaded\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CNSAPI-</lib><num>002</num>
+    <msg>transistor Netlist %s already loaded\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CNSAPI-</lib><num>003</num>
+    <msg>no Cone figure was loaded for '%s'\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

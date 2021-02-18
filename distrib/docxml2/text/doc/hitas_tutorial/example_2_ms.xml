@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Master-Slave Flip-Flop</title>
+<p>This example presents how &tool; performs timing checks upon a sequential design. The example given here
+is a simple master-slave flip-flop (<f>msdp2_y</f> diagram below). It takes place in the directory <f>ms/</f></p>
+<imgsize namehtml="ms_diagram.gif" namepdf="ms_diagram.svg"/>
+
+<section niv='2'><title>Timing Checks</title>
+<section niv='3'><title>Principles</title>
+<p>Static Timing Analysis is performed by propagating interface constraints towards latch's inputs and commands, and towards output connectors. Once interface constraints have been propagated, the tool computes the setup and hold slacks. </p>
+<p>The complete configuration required for database construction takes place in the <f>db.tcl</f>. It does not differ from previous examples</p>
+<p>The complete configuration required for STA takes place in the <f>sta.tcl</f>.</p>
+</section>
+
+<section niv='3'><title>STA with Tcl Interface</title>
+<section niv='4'><title>Timing Constraints</title>
+<p>Timing constraints are set in SDC format (Synopsys Design Constraints). Let's review the constraints commands applied to the 
+flip-flop:</p>
+
+<glossary>
+<row type='split'><article><f>inf_SetFigureName msdp2_y</f></article>
+<def>tells the tool to apply the SDC constraints to the design msdp2_y.</def></row>
+<row type='split'><article><f>create_clock -period 1000 -waveform {500 0} ck</f></article>
+<def>Defines the clock waveform.</def></row>
+<row type='split'><article><f>set_input_delay -clock -ck -clock_fall -min 200 di</f></article><def></def></row>
+<row type='split'><article><f>set_input_delay -clock -ck -clock_fall -max 300 di</f></article>
+<def>Tells the tool that inputs signals on <f>di</f> may switch between times 200 and 300.</def></row>
+<row type='split'><article><f>set_output_delay -clock ck -clock_fall -min 200 t</f></article><def></def></row>
+<row type='split'><article><f>set_output_delay -clock ck -clock_fall -max 400 t</f></article>
+<def>Tells the tool that the delay from output connector <f>t</f> to the next memory element (hypothetical).</def></row>
+</glossary>
+</section>
+
+<section niv='4'><title>Static Timing Analysis</title>
+<p>Launch of the STA is done by invoking the following commands (file <f>sta.tcl</f>):</p>
+<p> </p>
+<p>The command:</p>
+<code>set fig [ttv_LoadSpecifiedTimingFigure msdp2_y]</code>
+<p>reads the timing database from disk.</p>
+<p>The command:</p>
+<code>set stbfig [stb $fig]</code>
+<p>launches the static timing analysis. The <f>stb</f> function returns a pointer on the newly created figure, which back-annotates the timing database with timing propagation information.</p>
+<p>The function:</p>
+<code>
+<cl>stb_DisplaySlackReport [fopen slack.rep w] $fig * * ?? 10  all 10000</cl>
+</code>
+<p>displays a global slack report in the file <f>slack.rep</f>.</p>
+</section>
+
+</section>
+
+</section>
+&slack_reports;
+
+</section>
+
+</chapter>
+
+

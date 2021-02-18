@@ -1,0 +1,23 @@
+
+       void ttv_DisplayPathDetailShowColumn(char *conf);
+
+DDEESSCCRRIIPPTTIIOONN
+       Selects the columns to be displayed in the reports provided by _t_t_v___D_i_s_-
+       _p_l_a_y_P_a_t_h.
+           By default, all columns are displayed when  available  information.
+       Wild  cards  can  be  used,  eg.  _d_t_._*_s_l_o_p_e.  Prefix _p_l_. refers to path
+       reports, _._d_t to path detail reports, _c_2_l_. to  connector  to  latch  and
+       _s_t_a_b to stability reports.
+
+AARRGGUUMMEENNTTSS
+       ccoonnff          list  of  column  IDs separated by spaces. Valid IDs are:
+                     _p_l_._i_n_d_e_x,  _p_l_._s_t_a_r_t_t_i_m_e,   _p_l_._s_t_a_r_t_s_l_o_p_e,   _p_l_._p_a_t_h_d_e_l_a_y,
+                     _p_l_._t_o_t_a_l_d_e_l_a_y,   _p_l_._d_a_t_a_l_a_g,  _p_l_._e_n_d_s_l_o_p_e,  _p_l_._s_t_a_r_t_n_o_d_e,
+                     _p_l_._e_n_d_n_o_d_e,    _d_t_._s_i_m_a_c_c,    _d_t_._s_i_m_d_e_l_t_a,    _d_t_._s_i_m_s_l_o_p_e,
+                     _d_t_._s_i_m_e_r_r_o_r,    _d_t_._r_e_f_a_c_c,    _d_t_._r_e_f_d_e_l_t_a,   _d_t_._r_e_f_s_l_o_p_e,
+                     _d_t_._r_e_f_l_a_g_a_c_c,  _d_t_._r_e_f_l_a_g_d_e_l_t_a,  _d_t_._c_t_k_a_c_c,   _d_t_._c_t_k_d_e_l_t_a,
+                     _d_t_._c_t_k_s_l_o_p_e,   _d_t_._c_t_k_l_a_g_a_c_c,   _d_t_._c_t_k_l_a_g_d_e_l_t_a,   _d_t_._c_a_p_a,
+                     _d_t_._n_o_d_e_t_y_p_e,   _d_t_._n_o_d_e_n_a_m_e,   _d_t_._n_e_t_n_a_m_e,    _d_t_._l_i_n_e_t_y_p_e,
+                     _d_t_._t_r_a_n_s_i_s_t_o_r_s,   _d_t_._c_l_o_c_k_i_n_f_o,   _s_t_a_b_._f_r_o_m,   _s_t_a_b_._t_h_r_u,
+                     _c_2_l_._a_b_s_d_a_t_a or _a_l_l.
+

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>CTK - Crosstalk Report Information</title>
+
+<p>The <f>.ctk</f> file is an ASCII text file made up of three distinct sections. This file contains the following information:</p>
+<list>
+<item>Delay changes due to crosstalk</item>
+<item>Detailed aggression reports for all analyzed nets</item>
+<item>Peak noise voltage for all analyzed nets</item>
+</list>
+
+
+
+
+
+
+<section niv='3'><title>Delay Changes due to Crosstalk</title>
+
+<p>This section reports all delay and slopes which have changed due to crosstalk. Thresholds for slope and delay changes can be set to avoid excessive reporting information. These thresholds are set using the <f>ctkDeltaDelayMin</f> and <f>ctkDeltaSlopeMin</f> configuration variables.</p>
+<p>The syntax of this section is as follows:</p>
+<code>
+<cl>BeginDelay</cl>
+<cl>  UP|DW &lt;start&gt; UP|DW &lt;end&gt;</cl>
+<cl>     delay|slope min|max &lt;nominal&gt; -&gt; &lt;aggressed&gt;</cl>
+<cl>         |      |</cl>
+<cl>         |      |</cl>
+<cl>     delay|slope min|max &lt;nominal&gt; -&gt; &lt;aggressed&gt;</cl>
+<cl>   |</cl>
+<cl>   |</cl>
+<cl>  UP|DW &lt;start&gt; UP|DW &lt;end&gt;</cl>
+<cl>     delay|slope min|max &lt;nominal&gt; -&gt; &lt;aggressed&gt;</cl>
+<cl>         |      |</cl>
+<cl>         |      |</cl>
+<cl>     delay|slope min|max &lt;nominal&gt; -&gt; &lt;aggressed&gt;</cl>
+<cl>EndDelay</cl>
+</code>
+<p>Fields &lt;start&gt; and &lt;end&gt; represent timing signal names. If the timing signal name is different from the net name, then the net name is given in brackets. Fields &lt;nominal&gt; and &lt;aggressed&gt; represent delay values in picoseconds without and with crosstalk respectively.</p>
+
+</section>
+
+<section niv='3'><title>Detailed Aggression Report</title>
+
+<p>This section gives detailed aggressor information for nets whose total coupling capacitance exceeds a certain threshold. The coupling capacitance due to each aggressor is given, as well as information as to whether the aggressor can modify minimum or maximum delays. Only nets for which the relative coupling capacitance is greater than the <f>ctkrcapamin</f> configuration variable are reported.</p>
+<p>The syntax of this section is as follows:</p>
+<code>
+<cl>BeginCrosstalk</cl>
+<cl>  Node: DW|UP &lt;signal&gt; </cl>
+<cl>    Ground capacitance: &lt;value&gt;</cl>
+<cl>    Aggressor:</cl>
+<cl>      [*] &lt;signal&gt; [B] [W] [R] [F] cc=&lt;value&gt;</cl>
+<cl>             |         |</cl>
+<cl>             |         |</cl>
+<cl>      [*] &lt;signal&gt; [B] [W] [R] [F] cc=&lt;value&gt;</cl>
+<cl>                                     ---------</cl>
+<cl>                                     &lt;total&gt; (&lt;relative&gt;)</cl>
+<cl>  |</cl>
+<cl>  |</cl>
+<cl>  Node: DW|UP &lt;signal&gt; </cl>
+<cl>    Ground capacitance: &lt;value&gt;</cl>
+<cl>    Aggressor:</cl>
+<cl>      [*] &lt;signal&gt; [B] [W] [R] [F] cc=&lt;value&gt;</cl>
+<cl>             |         |</cl>
+<cl>             |         |</cl>
+<cl>      [*] &lt;signal&gt; [B] [W] [R] [F] cc=&lt;value&gt;</cl>
+<cl>                                     ---------</cl>
+<cl>                                     &lt;total&gt; (&lt;relative&gt;)</cl>
+<cl>   </cl><cl>EndCrosstalk</cl>
+</code>
+<p>If a star (*) is present before an aggressor name, it mean that there is no corresponding timing signal. As no switching information is provided for this aggressor, the crosstalk engine assumes that this aggressor is always an active aggressor.</p>
+<p>If the character 'B' or 'W' or both are present on a line, this means that the aggressor can modify minimum propagation delays (B = Best Case) or maximum propagation delays (W = Worst Case). If the character 'R' or 'F' or both are present on a line, this means that the aggressor has made a contribution to calculate the real rise (R) peak noise voltage value or the real fall (F) peak noise voltage value. These characters can appear in lower case ('b','w','r','f') when crosstalk mutex are used. This means the influence of the net is ignored because of the crosstalk mutex.
+The total value of the coupling capacitance and it relative contribution to the total net capacitance is also given.</p>
+
+</section>
+
+<section niv='3'><title>Peak Noise Report</title>
+
+<p>This section gives the results of a calculation of upper and lower peak voltages on a net as a result of its aggressors. This list is sorted according to the peak noise voltage value. Only nets for which the peak noise voltage is above the threshold given by the <f>ctknoisemin</f> configuration variable are reported.</p> 
+<p>The syntax of this section is as follows:</p>
+<code>
+<cl>BeginNoise</cl>
+<cl>  DW|UP &lt;signal&gt; &lt;mod ovr&gt; &lt;max ovr&gt; &lt;real ovr&gt; \\</cl>
+<cl>                 &lt;mod und&gt; &lt;max und&gt; &lt;real und&gt;</cl>
+<cl>  |</cl>
+<cl>  DW|UP &lt;signal&gt; &lt;mod ovr&gt; &lt;max ovr&gt; &lt;real ovr&gt; \\</cl>
+<cl>                 &lt;mod und&gt; &lt;max und&gt; &lt;real und&gt;</cl>
+<cl>EndNoise</cl>
+</code>
+<p>For each state (UP or DOWN) of a signal, the crosstalk engine gives the peak noise voltage (&lt;max ovr&gt; and &lt;max und&gt;) calculated with all aggressors considered active, and the "real" noise voltage (&lt;real ovr&gt; and &lt;real und&gt;) calculated considering possible switching configurations of aggressors. &lt;mod ovr&gt; and 
+&lt;mod und&gt; are the electrical model used to evaluate peak noise voltage.</p> 
+<p>Currently, the noise voltage on the net is evaluated by replacing the net driver by a single equivalent constant-valued resistor. This value is either determined from the transistor netlist (model SCR) or, if this is not possible, defined by the <f>ctknoisedefaultresi</f> configuration variable (model CC). Both overshoot and undershoot values are calculated for each signal state.</p>
+
+</section>
+</section>
+

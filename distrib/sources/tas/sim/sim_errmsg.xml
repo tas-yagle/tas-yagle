@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="sim">
+
+<err>
+    <lib>SIM-</lib><num>001</num>
+    <msg>can not open file %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIM-</lib><num>002</num>
+    <msg>can not close file %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIM-</lib><num>003</num>
+    <msg>can not execute %s or %s exit with non zero value %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIM-</lib><num>004</num>
+    <msg>read error for net '%s' in file %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIM-</lib><num>005</num>
+    <msg>previous read error\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIM-</lib><num>006</num>
+    <msg>simToolModel '%s' is unknown\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

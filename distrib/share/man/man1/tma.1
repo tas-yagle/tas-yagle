@@ -1,0 +1,204 @@
+.TH TAS 1 "30 March 2000" "AVERTEC" "AVERTEC CAD Tools"
+
+.SH NAME
+.PP
+\fBtma\fP \- A Timing Model Abstractor
+
+.so man1/avt_origin.1
+
+.SH SYNOPSIS
+.PP
+tma \fI[options] [tas options] file \fP
+
+.SH DESCRIPTION
+.PP
+\fBTMA\fP is a timing characterization tool for CMOS circuits and cell
+libraries. 
+TMA performs the calculation of timing constraints on CMOS circuits interface, 
+i.e. setup times, hold times, access times and insertion delays. TMA calculations
+are based on TAS delays, and therefore
+can be performed on a flat or hierarchical, cell based or transistor
+based netlist. 
+Timing constraints are computed either in the form of single delays, 
+or in the form of 1D or 2D
+lookup tables. When used for cell libraries, TMA performs the
+functional characterization of the cells.
+
+.PP
+
+.SH INPUT FILES
+.PP
+\fBTMA\fP includes the timing engine TAS and therefore accepts any format
+of netlist accepted by TAS (see \fBtas(1)\fP). TMA can also works on 
+previous results of stand alone TAS, by reading files in TTX, DTX and STM
+formats.
+
+.PP
+
+.SH OUTPUT FILES
+.PP
+\fBTMA\fP writes characterization's results in Timing Library Format (TLF),
+versions 3 and 4, Liberty format version 2.1 and TTX format.
+
+.PP
+
+.SH OPTIONS
+.PP
+
+\fBTMA\fP accepts any option accepted by TAS (see \fBtas(1)\fP).
+In addition to TMA's options, usefull TAS' options for characterization 
+are detailed below.
+
+Options may appear in  any  order before or after the optional
+input filename.
+
+.TP 10
+\fI-dtx\fP
+With this option, timing constraints computations are performed on
+a DTX (detailed perfmodule) file.
+When neither the \fB-ttx\fP option nor the \fB-dtx\fP option is set, TMA searches for
+a netlist on which the delay calculations will be performed. The netlist's
+format must be specified on the command line with the \fB-in=format\fP option.
+
+.TP 10
+\fI-fin=file\fP
+When more than one cell is to be given to TMA for constraints 
+computations, the list of cell files must be specified in an input file.
+For instance, the \fB-fin\fP allows the user to specify the list
+of cells to characterize in a library. The cell name must be followed by
+a behavioral directive :
+.br
+      - W : \fBTMA\fP automatically generates a behavioral description.
+.br
+      -  R  : \fBTMA\fP reads from the disk a behavioral description to include
+in the output file. The format of the behavioral description is set with the
+environment variable BEH_IN_FORMAT.
+.br
+      -  T  : \fBTMA\fP doesn't generate any behavioral description.
+.br
+If no output name is specified
+(using the \fB-lib\fP option), the name of the input list file is
+used as output name, suffixed with the output format.
+The \fB-fin\fP option is not compatible with the specification of
+a file on the command line.
+
+.TP 10
+\fI-i\fP
+This option makes \fBTMA\fP read the \fBinf\fP file. This
+file has the same name than the \fIroot_file\fP
+with the \fBinf\fP extension. It may contain characterization
+slopes and capacitances, clock and asynchron signals specifications,
+mutual
+exclusion conditions on ports of the circuit for
+the functional analysis process
+as well as information about signal renaming, path elimination, case analysis,
+precharged signals, intermediary points, path selection,
+factorizing points and interconnecting analysis (hierarchical mode)
+(see \fB-f\fP option, \fBinf(5)\fP and \fByagle(1)\fP).
+
+.TP 10
+\fI-lib=name\fP
+This option allows the naming of the output file or output library.
+This name is always suffixed with the output format.
+
+.TP 10
+\fI-lut[=n]\fP
+This option allows TAS to compute lookup tables instead
+of single delays. The sizes of the lookup tables are optional.
+If characterization slopes and capacitances are specified in
+the \fBinf\fP file, the lookup tables take the specified sizes,
+even if n is set on the command line.
+If no characterization slopes and capacitances are specified,
+and if n is set on the command line, the size is 2n+1. 
+If no characterization slopes and capacitances are specified,
+and if no n is set on the command line, the default size is 5.
+
+.TP 10
+\fI-mod=w\fP
+To be used only if a cell name is given on the command line. This option
+is equivalent to the W directive in the input file given with the \fB-fin\fP option.
+It allows \fBTMA\fP to automatically generate a behavioral description of the cell.
+
+.TP 10
+\fI-mod=r\fP
+To be used only if a cell name is given on the command line. This option
+is equivalent to the R directive in the input file given with the \fB-fin\fP option.
+It allows \fBTMA\fP to read a behavioral description of the cell, to include in the
+output file. The behavioral description file format is set with the environment variable
+BEH_IN_FORMAT.
+
+.TP 10
+\fI-mod=t\fP
+To be used only if a cell name is given on the command line. This option
+is equivalent to the T directive in the input file given with the \fB-fin\fP option.
+With this option \fBTMA\fP doesn't generate any behavioral description of the cell.
+
+.TP 10
+\fI-mrg=margin\fP
+This option allows the user to specify a margin in the timing
+constraints calculations. This margin is systematically added to
+setup times, access times and insertion delays, and systematically 
+substracted to hold times. The unity is the picosecond.
+
+.TP 10
+\fI-nac\fP
+With this option \fBTMA\fP does not perform the automatic detection
+of clocks (which is the default). The clocks must then be specified 
+in the  \fBinf\fP file, and the \fB-i\fP option must be set.
+
+.TP 10
+\fI-nbh\fP
+With this option, no behavioral description is read by nor computed by \fBTMA\fP, 
+therefore no behavioral description will be generated.
+
+.TP 10
+\fI-format=lib\fP
+The output file is written in the Liberty 2.1 format.
+When a list of cells is given as input, every characterized cells are
+written in the same file.
+
+.TP 10
+\fI-format=tlf3\fP
+The output file is written in the Timing Library Format (TLF) 3.0 format.
+When a list of cells is given as input, every characterized cells are
+written in the same file.
+
+.TP 10
+\fI-format=tlf4\fP
+The output file is written in the Timing Library Format (TLF) 4.1 format.
+When a list of cells is given as input, every characterized cells are
+written in the same file.
+
+.TP 10
+\fI-format=ttx\fP
+The output files are written in the TTX format.
+The TTX format is not a library format, and can only represent one
+cell by file, therefore, when a list of cells is given as input, each
+characterized cell is written in a separate file.
+
+.TP 10
+\fI-sfx=suffix\fP
+This option allows TMA to suffix the names of the output files, and
+the names of the characterized cells.
+
+.TP 10
+\fI-ttx\fP
+With this option, timing constraints computations are performed on
+a TTX (general perfmodule) file.
+When neither the \fB-ttx\fP or \fB-dtx\fP option is set, TMA seaches for
+a netlist on which perform the delay calculations. This netlist's
+format must be specified on the command line with the \fB-in=format\fP option.
+
+.TP 10
+\fI-v\fP
+TMA runs in verbose mode.
+
+.SH SEE ALSO
+.PP
+     hitas(1), xtas(1), etas(1), yagle(1), dtv(5), ttv(5), inf(5), fcl(5)
+
+.SH DIAGNOSTICS
+
+.so man1/avt_bug_report.1
+
+

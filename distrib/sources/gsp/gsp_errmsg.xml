@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="gsp">
+
+<err>
+    <lib>GSP-</lib><num>001</num>
+    <msg>can't get up expression for cone %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GSP-</lib><num>002</num>
+    <msg>can't get down expression for cone %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GSP-</lib><num>003</num>
+    <msg>Internal: unknown transition for out signal %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GSP-</lib><num>004</num>
+    <msg>can't propagate thru cone %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GSP-</lib><num>005</num>
+    <msg>can't find global path transfer\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GSP-</lib><num>006</num>
+    <msg>Internal: can't get sup expr, cone list is NULL\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GSP-</lib><num>007</num>
+    <msg>Internal: can't get sup expr, cone is NULL\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GSP-</lib><num>008</num>
+    <msg>Internal: can't get sup expr for cone %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GSP-</lib><num>009</num>
+    <msg>Internal: can't get input/ouput connector to analyse instance %s\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="avt_api">
+
+<err>
+    <lib>AVTAPI-</lib><num>001</num>
+    <msg>could not find netlist '%s' in memory\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVTAPI-</lib><num>002</num>
+    <msg>unknown file format '%s' for '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVTAPI-</lib><num>003</num>
+    <msg>could not create file '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVTAPI-</lib><num>004</num>
+    <msg>could not find connector '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVTAPI-</lib><num>005</num>
+    <msg>could not find node for connector '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVTAPI-</lib><num>006</num>
+    <msg>Unable to encrypt file '%s'\n</msg>
+    <doc></doc>
+</err>
+</messages>

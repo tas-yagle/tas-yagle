@@ -1,0 +1,15 @@
+
+       void inf_AddFile(char *filename, char *figname);
+
+DDEESSCCRRIIPPTTIIOONN
+       Loads  an  INF  file  and applies included statements on a figure (this
+       function does not invoke _i_n_f___S_e_t_F_i_g_u_r_e_N_a_m_e).
+
+AARRGGUUMMEENNTTSS
+       ffiilleennaammee      INF file to load
+
+       ffiiggnnaammee       Figure on which to apply INF statements. Those statements
+                     will be added to the ones that my be already present.
+
+       EEXXAAMMPPLLEE       _i_n_f___A_d_d_F_i_l_e _c_p_u_._i_n_f _c_p_u
+

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Lab7. Hierarchical Analysis</title>
+<section niv='2'><title>Design Description</title>
+<p>This lab intends to perform the complete STA and SI of the hierarchical macro described
+in the following diagram. the design presents two levels of hierarchy:</p>
+<imgsize namehtml="img1.gif" namepdf="img1.gif"/>
+<p>The two low-level blocks adder and cpu2901 are full-custom blocks, designed at transistor-level, and extracted as flat transistor net-lists with parasitics (including coupling capacitances).</p>
+<p>The ram4x128 is an abstracted model of a 128-4bit-word memory.</p>
+<p>The top-level instantiates these three blocks, and is back-annotated with parasitics (including coupling capacitances).</p>
+</section>
+<section niv='2'><title>Database Generation</title>
+<section niv='3'><title>Global Configuration</title>
+<p>The complete configuration required for the database generation takes place in the <f>db.tcl</f>. The script also launches the commands that effectively generate that database. </p>
+
+<glossary>
+  <row type='split'><article><f>avt_config avtLibraryDirs ".:../lab3_adder:../lab6_cpu"</f></article>
+       <def>tells the tool where to find timing databases for the lower levels of hierarchy.</def></row>
+  <row type='split'><article><f>avt_config avtVddName vdd</f></article>
+       <def>tells the tool which signal must be considered as a power supply.</def></row>
+  <row type='split'><article><f>avt_config avtVssName vss</f></article>
+       <def>idem for ground signal identification.</def></row>
+  <row type='split'><article><f>avt_config tasGenerateDetailTimingFile yes</f></article> 
+       <def>tells the tool to dump on disk the .dtx file.</def></row>
+  <row type='split'><article><f>avt_config tasExitAfterDetailTimingFile yes</f></article> 
+       <def>tells the tool to dump on disk the .dtx file only.</def></row>
+  <row type='split'><article><f>avt_config tasHierarchicalMode yes</f></article> 
+       <def>tells the tool to work hierarchically.</def></row>
+  <row type='split'><article><f>avt_LoadFile ./ram4x128.lib lib</f></article> 
+       <def>load the abstracted block ram4x128.lib</def></row>
+  <row type='split'><article><f>avt_LoadFile top.v verilog</f></article> 
+       <def>load the Verilog netlist of top</def></row>
+  <row type='split'><article><f>avt_LoadFile top.spef spef</f></article> 
+       <def>load the parasitics back-annotation in SPEF format</def></row>
+</glossary>
+
+</section>
+
+<section niv='3'><title>Database Generation</title>
+<p>The generation launch is done through the command tas:</p>
+<code>set fig [hitas top] </code>
+</section>
+
+</section>
+
+<section niv='2'><title>Database Analysis</title>
+<section niv='3'><title>Path Searching with the Tcl Interface</title>
+<p>The complete configuration required for the database browsing takes place in the <f>report.tcl</f>. </p>
+<p>The command:</p>
+<code>set fig [ttv_LoadSpecifiedTimingFigure top]</code>
+<p>reads the timing database from disk.</p>
+<p>The command:</p>
+<code>set clist [ttv_GetPaths $fig * * uu 5 critic path max]</code>
+<p>gives the 5 critical paths of the design.</p>
+<p>The command:</p>
+<code>ttv_DisplayPathListDetail stdout $clist</code>
+<p>displays on the standard output the detail of all the paths of the path list given by the <f>ttv_GetPaths</f> function.</p>
+</section>
+
+<section niv='3'><title>Path Searching with the GUI</title>
+<p>Database can also be accessed with the xtas GUI. To launch the GUI, type in command line:</p>
+<code># xtas</code>
+<p>Open the database <f>top.dtx</f>.</p>
+<p>Load the INF file <f>top.inf</f>.</p>
+</section>
+
+</section>
+
+</section>
+
+</chapter>
+
+

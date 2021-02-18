@@ -1,0 +1,1554 @@
+/* 
+ * This file is part of the Alliance CAD System
+ * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Universite Pierre et Marie Curie
+ * 
+ * Home page          : http://www-asim.lip6.fr/alliance/
+ * E-mail support     : mailto:alliance-support@asim.lip6.fr
+ * 
+ * This library is free software; you  can redistribute it and/or modify it
+ * under the terms  of the GNU Library General Public  License as published
+ * by the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ * 
+ * Alliance VLSI  CAD System  is distributed  in the hope  that it  will be
+ * useful, but WITHOUT  ANY WARRANTY; without even the  implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ * 
+ * You should have received a copy  of the GNU General Public License along
+ * with the GNU C Library; see the  file COPYING. If not, write to the Free
+ * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+ 
+/* 10/23/97 Cone Netlist Structure functions: cnsfig.yac                      */
+
+%{
+#include <stdlib.h>
+#include <limits.h>
+#include"prsall.h"
+
+extern int      cnsfiglineno;
+extern char    *yytext;
+
+lowire_list    *heaplowire();
+
+static locon_list     *ptlocon = NULL;
+static cnsfig_list    *ptcnsfig = NULL;
+static lofig_list     *ptlofig = NULL;
+static ptype_list     *ptptype = NULL;
+static lotrs_list     *ptlotrs = NULL;
+static loins_list     *ptloins = NULL;
+static losig_list     *ptlosig = NULL;
+static losig_list     *ptbulk = NULL;
+static lorcnet_list   *ptlorcnet = NULL;
+static lowire_list    *ptlowirelist = NULL;
+static lowire_list    *ptlowire = NULL;
+static lowire_list    *ptnextlowire = NULL;
+static chain_list     *ptsignamechain = NULL;
+static long            idxval;
+static cone_list      *ptcone = NULL;
+static ptype_list     *ptptype1 = NULL;
+static long            counter0;
+static long            counter1;
+static cell_list      *ptcell = NULL;
+static chain_list     *ptchain = NULL;
+static num_list       *ptnum = NULL;
+static long            cellconecount;
+static edge_list      *ptedge = NULL;
+static cone_list      *ptcone1 = NULL;
+static char           *ptstr = NULL;
+static locon_list     **lnarray = NULL;
+static lotrs_list     **lsarray = NULL;
+static cone_list      **cearray = NULL;
+static chain_list     *ptclcnchain = NULL;
+static edge_list      *ptedgein = NULL;
+static long            infoval;
+static edge_list      *ptedgeout = NULL;
+static sbrstruc       *ptbrstruc = NULL;
+static ptype_list     *ptuser = NULL;
+//static chain_list     *ptlotrschain = NULL;
+static chain_list     *ptloconchain = NULL;
+static locon_list     *ptextlocon = NULL;
+static chain_list     *ptextloconlist = NULL;
+static locon_list     *ptheadlocon = NULL;
+static long            linknum;
+static link_list      *ptlink = NULL;
+static chain_list     *ptparallelchain = NULL;
+static chain_list     *ptbleederchain = NULL;
+static chain_list     *ptswitchchain = NULL;
+static chain_list     *ptbrch = NULL;
+static int             locallnidx;
+static unsigned long   lnpagenum;
+static long            lnidx;
+static char            ptidx2str[255];
+static char            buffer[1024];
+static char            ptchar[2];
+static int             locallsidx;
+static unsigned long   lspagenum;
+static long            lsidx;
+static int             localceidx;
+static unsigned long   cepagenum;
+static long            ceidx;
+static long            counter2;
+static branch_list    *ptbranch = NULL;
+static branch_list    *ptidx2br = NULL;
+static chain_list     *ptswch = NULL;
+static chain_list     *pttranslist = NULL;
+static chain_list     *ptparatranschain = NULL;
+static optparam_list  *ptoptparam = NULL;
+static ptype_list     *contextparam =NULL;
+static char           *subcktname;
+static int             annotate;
+
+int yyerror ();
+int yylex ();
+static void cns_parserexit();
+%}
+
+%union {
+   char     cstr[1024];
+   char       *name;
+   long        lval;
+   float       fval;
+   num_list   *nodes;
+   struct {
+      long        index;
+      num_list   *nodes;
+   }           signode;
+}
+
+%token   <cstr> cnsSTRING cnsTIME cnsCNS cnsSCALE cnsCONNECTORS cnsINTERNAL
+%token   <cstr> cnsTRANSISTORS cnsINSTANCES cnsCELLS cnsCONES cnsINPUT cnsOUTPUT
+%token   <cstr> cnsSIGNALS cnsWIRES cnsCROSSTALKS cnsNODES cnsCTC
+%token   <cstr> cnsBRANCHES cnsUSER cnsPARALLEL cnsSWITCH cnsBLEEDER cnsPARATRANS cnsSIGNATURE cnsSIGIDX
+%type   <lval> option_stuck cnsLONG
+%type   <fval> cnsFLOAT
+
+%type    <cstr> cns version techno inlo figname author day month time
+%type    <cstr> symbol locondir locontype conename vecname lotrsname
+%type    <lval> losigalim losigtype layer
+%type    <lval> date year drvcnidx lotrstype celltype conetype conetectype
+%type    <lval> inconetype outconetype branchtype linktype
+%type    <fval> losigcapa wireresi wirecapa ctccapa
+%type    <signode> signalnode
+%type    <nodes> nodelist
+%type    <name> lotrsmodel
+
+%start header
+
+%%
+header   :  '(' cns version techno inlo figname author day month date time year content ')' {
+               if (annotate) {
+                  ptcnsfig->LOFIG = ptlofig;
+                  ptcnsfig->LOCON = ptlofig->LOCON;
+                  ptcnsfig->LOTRS = ptlofig->LOTRS;
+                  ptcnsfig->LOINS = ptlofig->LOINS;
+               }
+               else {
+                  ptcnsfig->LOCON = (locon_list *)reverse((chain_list *)ptcnsfig->LOCON);
+                  for (ptlocon = ptcnsfig->LOCON; ptlocon != NULL; ptlocon = ptlocon->NEXT) {
+                     if (ptlofig->LOSIG != NULL) {
+                        ptptype = getptype(ptlocon->USER, (long)CNS_SIGINDEX);
+                        if (ptptype != NULL) {
+                           ptlocon->SIG = getlosig(ptlofig, (long)ptptype->DATA);
+                           ptlocon->USER = delptype(ptlocon->USER, (long)CNS_SIGINDEX);
+                        }
+                        else {
+                           (void)fflush(stdout);
+                           (void)fprintf(stderr, "\n*** cns error ***");
+                           (void)fprintf(stderr, " inconsistency: external connector '%s' without signal index\n", ptlocon->NAME);
+                           cns_parserexit(-1);
+                        }
+                        ptptype = getptype(ptlocon->USER, (long)CNS_NODELIST);
+                        if (ptptype != NULL) {
+                           for (ptnum = (num_list *)ptptype->DATA; ptnum; ptnum = ptnum->NEXT) {
+                              setloconnode(ptlocon, ptnum->DATA);
+                           }
+                           freenum((num_list *)ptptype->DATA);
+                           ptlocon->USER = delptype(ptlocon->USER, (long)CNS_NODELIST);
+                        }
+                        else setloconnode(ptlocon, 1);
+                     }
+                     if ((ptlocon->DIRECTION != CNS_VDDC) && (ptlocon->DIRECTION != CNS_GNDC) && (ptlocon->DIRECTION != CNS_VSSC)) {
+                        if ((ptptype = getptype(ptlocon->USER, (long)CNS_SEEN)) != NULL) {
+                           ptlocon->USER = delptype(ptlocon->USER, (long)CNS_SEEN);
+                        }
+                     }
+                  }
+                  ptcnsfig->LOTRS = (lotrs_list *)reverse((chain_list *)ptcnsfig->LOTRS);
+               }
+               for (ptlotrs = ptcnsfig->LOTRS; ptlotrs != NULL; ptlotrs = ptlotrs->NEXT) {
+                  ptptype = getptype(ptlotrs->USER, (long)CNS_DRIVINGCONE);
+                  if ((ptptype != NULL) && ((idxval = (long)ptptype->DATA) != 0)) {
+                     if ((idxval > 0) && (idxval <= (ceidx+1)) && ((ptcone = cearray[idxval-1]) != NULL)) {
+                        ptptype->DATA = (void *)ptcone;
+                        if ((ptptype1 = getptype(ptcone->USER, (long)CNS_LOTRSGRID)) != NULL) {
+                           ptptype1->DATA = (void *)addchain((chain_list *)ptptype1->DATA, (void *)ptlotrs);
+                        }
+                        else {
+                           ptcone->USER = addptype(ptcone->USER, CNS_LOTRSGRID, (void *)addchain((chain_list *)NULL, (void *)ptlotrs));
+                        }
+                     }
+                     else {
+                        (void)fflush(stdout);
+                        (void)fprintf(stderr, "\n*** cns error ***");
+                        (void)fprintf(stderr, " inconsistency: driving cone index %ld not found\n", idxval);
+                        cns_parserexit(-1);
+                     }
+                  }
+                  else if (ptptype != NULL) {
+                     ptlotrs->USER = delptype(ptlotrs->USER, (long)CNS_DRIVINGCONE);
+                  }
+                  if ((CNS_DEBUG_LEVEL > 2) && ((ptptype = getptype(ptlotrs->USER, (long)CNS_SEEN)) == NULL)) {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns warning ***");
+                     (void)fprintf(stderr, " transistor index %ld does not belong to any cone\n", (long )getptype(ptlotrs->USER, (long)CNS_INDEX)->DATA);
+                  }
+                  else {
+                     ptlotrs->USER=testanddelptype(ptlotrs->USER, CNS_SEEN);
+                  }
+               }
+               for (ptlocon = ptcnsfig->INTCON; ptlocon != NULL; ptlocon = ptlocon->NEXT) {
+                  if (ptlofig->LOSIG != NULL) {
+                     ptptype = getptype(ptlocon->USER, (long)CNS_SIGINDEX);
+                     if (ptptype != NULL) {
+                        ptlocon->SIG = getlosig(ptlofig,  (long)ptptype->DATA);
+                        ptlocon->USER = delptype(ptlocon->USER, (long)CNS_SIGINDEX);
+                     }
+                     else {
+                        (void)fflush(stdout);
+                        (void)fprintf(stderr, "\n*** cns error ***");
+                        (void)fprintf(stderr, " inconsistency: instance connector '%s' without signal index\n", ptlocon->NAME);
+                        cns_parserexit(-1);
+                     }
+                     ptptype = getptype(ptlocon->USER, (long)CNS_NODELIST);
+                     if (ptptype != NULL) {
+                        for (ptnum = (num_list *)ptptype->DATA; ptnum; ptnum = ptnum->NEXT) {
+                           setloconnode(ptlocon, ptnum->DATA);
+                        }
+                        freenum((num_list *)ptptype->DATA);
+                        ptlocon->USER = delptype(ptlocon->USER, (long)CNS_NODELIST);
+                     }
+                     else setloconnode(ptlocon, 1);
+                  }
+               }
+               if (!annotate) {
+                  for (ptloins = ptcnsfig->LOINS; ptloins != NULL; ptloins = ptloins->NEXT) {
+                     /* update model list   */
+                     for (ptchain = ptlofig->MODELCHAIN; ptchain; ptchain = ptchain->NEXT) {
+                        if (ptchain->DATA == (void *)ptloins->FIGNAME) break;
+                     }
+                    if (!ptchain) ptlofig->MODELCHAIN = addchain(ptlofig->MODELCHAIN, (void *)ptloins->FIGNAME);
+                     for (ptlocon = ptloins->LOCON; ptlocon != NULL; ptlocon = ptlocon->NEXT) {
+                        ptlocon->ROOT = ptloins;
+                        if (ptlofig->LOSIG != NULL) {
+                           ptptype = getptype(ptlocon->USER, (long)CNS_SIGINDEX);
+                           if (ptptype != NULL) {
+                              ptlocon->SIG = getlosig(ptlofig,  (long)ptptype->DATA);
+                              ptlocon->USER = delptype(ptlocon->USER, (long)CNS_SIGINDEX);
+                           }
+                           else {
+                              (void)fflush(stdout);
+                              (void)fprintf(stderr, "\n*** cns error ***");
+                              (void)fprintf(stderr, " inconsistency: instance connector '%s' without signal index\n", ptlocon->NAME);
+                              cns_parserexit(-1);
+                           }
+                           ptptype = getptype(ptlocon->USER, (long)CNS_NODELIST);
+                           if (ptptype != NULL) {
+                              for (ptnum = (num_list *)ptptype->DATA; ptnum; ptnum = ptnum->NEXT) {
+                                 setloconnode(ptlocon, ptnum->DATA);
+                              }
+                              freenum((num_list *)ptptype->DATA);
+                              ptlocon->USER = delptype(ptlocon->USER, (long)CNS_NODELIST);
+                           }
+                           else setloconnode(ptlocon, 1);
+                        }
+                     }
+                  }
+               }
+               counter1 = 0;
+               ptcnsfig->CELL = (cell_list *)reverse((chain_list *)ptcnsfig->CELL);
+               for (ptcell = ptcnsfig->CELL; ptcell != NULL; ptcell = ptcell->NEXT) {
+                  for (ptchain = ptcell->CONES; ptchain != NULL; ptchain = ptchain->NEXT) {
+                     idxval = (long)ptchain->DATA;
+                     if ((idxval > 0) && (idxval <= (ceidx+1)) && ((ptcone = cearray[idxval-1]) != NULL)) {
+                        counter1++;
+                        ptchain->DATA = (void *)ptcone;
+                        ptcone->CELLS = addchain(ptcone->CELLS, (void *)ptcell);
+                     }
+                     else {
+                        (void)fflush(stdout);
+                        (void)fprintf(stderr, "\n*** cns error ***");
+                        (void)fprintf(stderr, " inconsistency: cell cone index %ld not found\n", idxval);
+                        cns_parserexit(-1);
+                     }
+                  }
+               }
+               if (counter1 != cellconecount) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " inconsistency: two different cell & cone counts\n");
+                  cns_parserexit(-1);
+               }
+               ptcnsfig->CONE = (cone_list *)reverse((chain_list *)ptcnsfig->CONE);
+               for (ptcone = ptcnsfig->CONE; ptcone != NULL; ptcone = ptcone->NEXT) {
+                  for (ptedge = ptcone->INCONE; ptedge != NULL; ptedge = ptedge->NEXT) {
+                     if ((ptedge->TYPE & (CNS_CONE | CNS_VDD | CNS_GND | CNS_VSS)) != 0) {
+                        idxval = (long)ptedge->UEDGE.CONE;
+                        if ((idxval > 0) && (idxval <= (ceidx+1)) && ((ptcone1 = cearray[idxval-1]) != NULL)) {
+                           ptedge->UEDGE.CONE = ptcone1;
+                        }
+                        else {
+                           (void)fflush(stdout);
+                           (void)fprintf(stderr, "\n*** cns error ***");
+                           (void)fprintf(stderr, " inconsistency: input cone index %ld not found\n", idxval);
+                           cns_parserexit(-1);
+                        }
+                     }
+                  }
+                  for (ptedge = ptcone->OUTCONE; ptedge != NULL; ptedge = ptedge->NEXT) {
+                     if ((ptedge->TYPE & (CNS_CONE | CNS_VDD | CNS_GND | CNS_VSS)) != 0) {
+                        idxval = (long)ptedge->UEDGE.CONE;
+                        if ((idxval > 0) && (idxval <= (ceidx+1)) && ((ptcone1 = cearray[idxval-1]) != NULL)) {
+                           ptedge->UEDGE.CONE = ptcone1;
+                        }
+                        else {
+                           (void)fflush(stdout);
+                           (void)fprintf(stderr, "\n*** cns error ***");
+                           (void)fprintf(stderr, " inconsistency: output cone index %ld not found\n", idxval);
+                           cns_parserexit(-1);
+                        }
+                     }
+                  }
+                  if ((ptptype = getptype(ptcone->USER, (long)CNS_LOCON)) != NULL) {
+                     for (ptchain = (chain_list *)ptptype->DATA; ptchain != NULL; ptchain = ptchain->NEXT) {
+                        ptlocon = (locon_list *)ptchain->DATA;
+                        if ((ptptype1 = getptype(ptlocon->USER, (long)CNS_CONE)) != NULL) {
+                           ptptype1->DATA = (void *)addchain((chain_list *)ptptype1->DATA, (void *)ptcone);
+                        }
+                        else {
+                           ptlocon->USER = addptype(ptlocon->USER, CNS_CONE, (void *)addchain((chain_list *)NULL, (void *)ptcone));
+                        }
+                     }
+                  }
+                  if ((ptptype = getptype(ptcone->USER, (long)CNS_SIGINDEX)) != NULL && ptlofig->LOSIG != NULL) {
+                     ptcone->USER = addptype(ptcone->USER, (long)CNS_SIGNAL, (void *)getlosig(ptlofig, (long)ptptype->DATA));
+                     ptcone->USER = delptype(ptcone->USER, (long)CNS_SIGINDEX);
+                  }
+               }
+               if (ptlofig->LOSIG != NULL && !annotate) {
+                  ptlofig->LOSIG = (losig_list *)reverse((chain_list *)ptlofig->LOSIG);
+                  ptlofig->LOCON = ptcnsfig->LOCON;
+                  ptlofig->LOTRS = ptcnsfig->LOTRS;
+                  ptlofig->LOINS = ptcnsfig->LOINS;
+               }
+               else if (!annotate) {
+                  ptlofig->LOCON = ptcnsfig->LOCON;
+                  ptlofig->MODE = 'P';
+               }
+               mbkfree(lnarray);
+               mbkfree(lsarray);
+               mbkfree(cearray);
+               mbkfree(ptbrstruc);
+               ptlofig = NULL;
+               ptcnsfig = NULL;
+            };
+
+cns   :  cnsCNS;
+
+version  :  cnsSTRING {
+               ptstr = (char *)mbkalloc(8);
+               strcpy(ptstr, "V");
+               if (strncmp($1, strcat(ptstr, CNS_VERSION), strlen(CNS_VERSION)+(int)1)) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns warning ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " file CNS version %s different from CNS version V%s\n", $1, CNS_VERSION);
+               }
+               mbkfree((void *)ptstr);
+            };
+
+techno   :  cnsSTRING {
+               if ((strcmp($1, "npmosfet") && strcmp($1, "edmesfet")) || strcmp($1, CNS_TECHNO)) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns warning ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " technology %s unknown or different from selected %s\n", $1, CNS_TECHNO);
+               }
+            };
+
+inlo     :  cnsSTRING {
+            };
+
+figname  :  cnsSTRING {
+               ptcnsfig = addcnsfig(CNS_HEADCNSFIG, $1, (locon_list *)NULL, (locon_list *)NULL, (lotrs_list *)NULL, (loins_list *)NULL, (cone_list *)NULL, (cell_list *)NULL, (lofig_list *)NULL, (befig_list *)NULL);
+               if (!annotate) {
+                  ptlofig = addlofig($1);
+                  ptcnsfig->LOFIG = ptlofig;
+               }
+               lnarray = (locon_list **)mbkalloc((unsigned)(32*sizeof(locon_list *)));
+               lsarray = (lotrs_list **)mbkalloc((unsigned)(2048*sizeof(lotrs_list *)));
+               cearray = (cone_list **)mbkalloc((unsigned)(1024*sizeof(cone_list *)));
+               locallnidx = -1;
+               lnpagenum = 1;
+               lnidx = -1;
+               locallsidx = -1;
+               lspagenum = 1;
+               lsidx = -1;
+               localceidx = -1;
+               cepagenum = 1;
+               ceidx = -1;
+               cellconecount = 0;
+               ptclcnchain = (chain_list *)NULL;
+               ptedgein = (edge_list *)NULL;
+               infoval = 0;
+               ptedgeout = (edge_list *)NULL;
+               ptbrstruc = (sbrstruc *)mbkalloc(sizeof(sbrstruc));
+               ptbrstruc->BREXT = (branch_list *)NULL;
+               ptbrstruc->BRVDD = (branch_list *)NULL;
+               ptbrstruc->BRGND = (branch_list *)NULL;
+               ptbrstruc->BRVSS = (branch_list *)NULL;
+               ptuser = (ptype_list *)NULL;
+//               ptlotrschain = (chain_list *)NULL;
+               ptloconchain = (chain_list *)NULL;
+               ptheadlocon = (locon_list *)NULL;
+               ptextlocon = (locon_list *)NULL;
+               linknum = 0;
+               ptlink = (link_list *)NULL;
+               ptparallelchain = (chain_list *)NULL;
+               ptbleederchain = (chain_list *)NULL;
+               ptswitchchain = (chain_list *)NULL;
+               ptbrch = (chain_list *)NULL;
+               ptlowirelist = (lowire_list *)NULL;
+               ptsignamechain = (chain_list *)NULL;
+               ptnum = (num_list *)NULL;
+               ptoptparam = NULL;
+            };
+
+author   :  cnsSTRING;
+day      :  cnsSTRING;
+month    :  cnsSTRING; 
+date     :  cnsLONG;
+time     :  cnsTIME;
+year     :  cnsLONG;
+
+content  :  /* empty */
+            |  content nextexp;
+
+nextexp  :  '(' cnsSCALE '(' symbol scale ')' ')'
+            |  '(' cnsSIGNALS losig ')'
+            |  '(' cnsCROSSTALKS  ctc ')'
+            |  '(' cnsCONNECTORS locon ')'
+            |  '(' cnsINTERNAL intlocon ')'
+            |  '(' cnsTRANSISTORS lotrs ')'
+            |  '(' cnsINSTANCES loins ')'
+            |  '(' cnsCELLS cell ')'
+            |  '(' cnsCONES cone ')';
+
+symbol   :  cnsSTRING {
+               if (strcmp($1, "X") != 0) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns warning ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " scale symbol %s unknown, X expected\n", $1);
+               }
+            };
+
+scale    :  cnsFLOAT {SCALE_X = (long)$1;};
+
+option_stuck : /* empty */ {
+                 $$ = -1;
+              }
+              | '-' cnsSTRING {
+                 $$ = atol($2);
+              }; 
+
+locon    :  /* empty */
+            |  /* (<locon index> <vecname> <direction> <type> <signal & node> <stuck>) */
+            locon '(' cnsLONG vecname locondir locontype signalnode option_stuck ')' {
+               if (!annotate) {
+                  addcnslocon(ptcnsfig, $3, buffer, ptchar[0]);
+                  ptlocon = ptcnsfig->LOCON;
+               }
+               else {
+                  ptlocon = getlocon(ptlofig, namealloc(buffer));
+                  ptlocon->DIRECTION = ptchar[0];
+                  ptlocon->TYPE = ptchar[1];
+               }
+               ptlocon->USER = addptype(ptlocon->USER, CNS_SIGINDEX, (void *)$7.index);
+               if ($8 == 1) ptlocon->USER = addptype(ptlocon->USER, CNS_TYPELOCON, (void *)CNS_ONE);
+               else if ($8 == 0) ptlocon->USER = addptype(ptlocon->USER, CNS_TYPELOCON, (void *)CNS_ZERO);
+               if ((void *)$7.nodes != NULL) {
+                  ptlocon->USER = addptype(ptlocon->USER, CNS_NODELIST, (void *)$7.nodes);
+               }
+               if (++locallnidx == 31) {
+                  lnarray = (locon_list **)mbkrealloc((char *)lnarray, (unsigned)(++lnpagenum*32*sizeof(locon_list *)));
+                  locallnidx = -1;
+               }
+               lnarray[++lnidx] = ptlocon;
+            }
+            |  /* (<locon index> <vecname> <direction> <type> <stuck>) */
+               locon '(' cnsLONG vecname locondir locontype option_stuck ')' {
+               if (!annotate) {
+                  addcnslocon(ptcnsfig, $3, buffer, ptchar[0]);
+                  ptlocon = ptcnsfig->LOCON;
+               }
+               else {
+                  ptlocon = getlocon(ptlofig, namealloc(buffer));
+                  ptlocon->DIRECTION = ptchar[0];
+                  ptlocon->TYPE = ptchar[1];
+               }
+               if ($7 == 1) ptlocon->USER = addptype(ptlocon->USER, CNS_TYPELOCON, (void *)CNS_ONE);
+               else if ($7 == 0) ptlocon->USER = addptype(ptlocon->USER, CNS_TYPELOCON, (void *)CNS_ZERO);
+               if (++locallnidx == 31) {
+                  lnarray = (locon_list **)mbkrealloc((char *)lnarray, (unsigned)(++lnpagenum*32*sizeof(locon_list *)));
+                  locallnidx = -1;
+               }
+               lnarray[++lnidx] = ptlocon;
+            };
+
+intlocon :  /* empty */
+            |  /* (<locon index> <vecname> <direction> <signal & node>) */
+            intlocon '(' cnsLONG vecname locondir signalnode ')' {
+               addcnsintlocon(ptcnsfig, $3, buffer, ptchar[0]);
+               ptlocon = ptcnsfig->INTCON;
+               ptlocon->USER = addptype(ptlocon->USER, CNS_SIGINDEX, (void *)$6.index);
+               if ((void *)$6.nodes != NULL) {
+                  ptlocon->USER = addptype(ptlocon->USER, CNS_NODELIST, (void *)$6.nodes);
+               }
+               if (++locallnidx == 31) {
+                  lnarray = (locon_list **)mbkrealloc((char *)lnarray, (unsigned)(++lnpagenum*32*sizeof(locon_list *)));
+                  locallnidx = -1;
+               }
+               lnarray[++lnidx] = ptlocon;
+            }
+            |  /* (<locon index> <vecname> <direction>) */
+               intlocon '(' cnsLONG vecname locondir ')' {
+               addcnsintlocon(ptcnsfig, $3, buffer, ptchar[0]);
+               ptlocon = ptcnsfig->INTCON;
+               if (++locallnidx == 31) {
+                  lnarray = (locon_list **)mbkrealloc((char *)lnarray, (unsigned)(++lnpagenum*32*sizeof(locon_list *)));
+                  locallnidx = -1;
+               }
+               lnarray[++lnidx] = ptlocon;
+            };
+
+loinslocon :/* empty */
+            |  /* (<locon index> <vecname> <direction> <signal & node>) */
+            loinslocon '(' cnsLONG vecname locondir signalnode ')' {
+               if (!annotate) {
+                  ptheadlocon = addcnslocontolist(ptheadlocon, $3, buffer, ptchar[0]);
+                  ptheadlocon->TYPE = 'I';
+                  ptlocon = ptheadlocon;
+                  ptlocon->USER = addptype(ptlocon->USER, CNS_SIGINDEX, (void *)$6.index);
+                  if ((void *)$6.nodes != NULL) {
+                     ptlocon->USER = addptype(ptlocon->USER, CNS_NODELIST, (void *)$6.nodes);
+                  }
+                  if (++locallnidx == 31) {
+                     lnarray = (locon_list **)mbkrealloc((char *)lnarray, (unsigned)(++lnpagenum*32*sizeof(locon_list *)));
+                     locallnidx = -1;
+                  }
+                  lnarray[++lnidx] = ptlocon;
+               }
+            }
+            |  /* (<locon index> <vecname> <direction>) */
+            loinslocon '(' cnsLONG vecname locondir ')' {
+               if (!annotate) {
+                  ptheadlocon = addcnslocontolist(ptheadlocon, $3, buffer, ptchar[0]);
+                  ptheadlocon->TYPE = 'I';
+                  ptlocon = ptheadlocon;
+                  if (++locallnidx == 31) {
+                     lnarray = (locon_list **)mbkrealloc((char *)lnarray, (unsigned)(++lnpagenum*32*sizeof(locon_list *)));
+                     locallnidx = -1;
+                  }
+                  lnarray[++lnidx] = ptlocon;
+               }
+            };
+
+locondir   :  cnsSTRING {
+                  ptchar[0] = ' ';
+                  if (strcmp($1, "I") == 0) {ptchar[0] = CNS_I;}
+                  if (strcmp($1, "O") == 0) {ptchar[0] = CNS_O;}
+                  if (strcmp($1, "B") == 0) {ptchar[0] = CNS_B;}
+                  if (strcmp($1, "Z") == 0) {ptchar[0] = CNS_Z;}
+                  if (strcmp($1, "T") == 0) {ptchar[0] = CNS_T;}
+                  if (strcmp($1, "X") == 0) {ptchar[0] = CNS_X;}
+                  if (strcmp($1, "Vdd") == 0) {ptchar[0] = CNS_VDDC;}
+                  if (strcmp($1, "Gnd") == 0) {ptchar[0] = CNS_GNDC;}
+                  if (strcmp($1, "Vss") == 0) {ptchar[0] = CNS_VSSC;}
+                  if (ptchar[0] == ' ') {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " connector type %s unknown\n", $1);
+                     cns_parserexit(-1);
+                  }
+               };
+
+locontype   :  cnsSTRING {
+                  ptchar[1] = ' ';
+                  if (strcmp($1, "I") == 0) {ptchar[1] = 'I';}
+                  if (strcmp($1, "E") == 0) {ptchar[1] = 'E';}
+                  if (strcmp($1, "X") == 0) {ptchar[1] = 'X';}
+                  if (ptchar[1] == ' ') {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " connector type %s unknown\n", $1);
+                     cns_parserexit(-1);
+                  }
+               };
+
+signalnode  :  /* <signal index> <nodelist> */
+               cnsLONG nodelist {
+                  $$.index = $1;
+                  $$.nodes = $2;
+               };
+                  
+nodelist    :  /* empty */ {$$ = NULL;}
+               |  '(' cnsNODES node ')' {
+                  $$ = ptnum;
+                  ptnum = NULL;
+               };
+
+node        :  /* empty */
+               |  node cnsLONG {ptnum = addnum(ptnum, $2);};
+
+losig    :  /* empty */
+            |  /* (<index> <name> <type> <capa> <wirelist>) */
+            losig '(' cnsLONG '(' losigname ')' losigtype losigalim losigcapa wirelist ')' {
+               if (!annotate) {
+                  ptsignamechain = reverse(ptsignamechain);
+                  ptlosig = addlosig(ptlofig, $3, ptsignamechain, $7);
+                  ptsignamechain = NULL;
+                  ptlorcnet = addlorcnet(ptlosig);
+                  if ($8 != LONG_MAX) {
+                      ptlosig->USER = addptype(ptlosig->USER, LOSIGALIM, (void *)$8);
+                  }
+                  if ($9 != 0 || ptlowirelist != NULL) {
+                     rcn_setcapa(ptlosig, $9);
+                     for (ptlowire = ptlowirelist; ptlowire; ptlowire = ptnextlowire) {
+                        ptnextlowire = ptlowire->NEXT;
+                        addlowire(ptlosig,0, ptlowire->RESI, ptlowire->CAPA, ptlowire->NODE1, ptlowire->NODE2);
+                        freelowire(ptlowire);
+                     }
+                     ptlowirelist = NULL;
+                  }
+               }
+            };
+
+losigalim   :  /* empty */ {
+                   $$ = LONG_MAX;
+               }
+               |  '(' cnsLONG ')' {
+                   $$ = $2;
+               };
+
+losigtype :  cnsSTRING {
+                $$ = 0;
+                if (strcmp($1, "D") == 0) $$ = CNS_SIGVDD;
+                else if (strcmp($1, "S") == 0) $$ = CNS_SIGVSS;
+                else if (strcmp($1, "T") == 0) $$ = CNS_SIGTRANSP;
+                else if (strcmp($1, "I") == 0) $$ = CNS_SIGINT;
+                else if (strcmp($1, "E") == 0) $$ = CNS_SIGEXT;
+                if ($$ == 0) {
+                   (void)fflush(stdout);
+                   (void)fprintf(stderr, "\n*** cns error ***");
+                   (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                   (void)fprintf(stderr, " signal type %s unknown\n", $1);
+                   cns_parserexit(-1);
+                }
+             };
+
+losigname :  vecname {
+                if (!annotate) ptsignamechain = addchain(ptsignamechain, namealloc(buffer));
+             }
+             |  losigname vecname {
+                if (!annotate) ptsignamechain = addchain(ptsignamechain, namealloc(buffer));
+             };
+
+vecname   :  cnsSTRING {
+                strcpy(buffer, $1);
+             };
+
+losigcapa :  cnsFLOAT {$$ = ((float)$1) / 1000;};
+
+wirelist  :  /* empty */
+             |  '(' cnsWIRES wire ')';
+
+wire      :  /* empty */
+             |  /* (<layer> <node1> <node2> <resi> <capa>) */
+             wire '(' layer cnsLONG cnsLONG wireresi wirecapa ')' {
+                if (!annotate) {
+                   ptlowire = heaplowire();
+                   ptlowire->NEXT = ptlowirelist;
+                   ptlowirelist = ptlowire;
+                   ptlowire->NODE1 = $4;
+                   ptlowire->NODE2 = $5;
+                   ptlowire->RESI = $6;
+                   ptlowire->CAPA = $7;
+                }
+             };
+
+layer :  cnsSTRING {
+                $$ = 0;
+             };
+            
+wireresi  :  cnsFLOAT {$$ = (float)$1;};
+
+wirecapa  :  cnsFLOAT {$$ = ((float)$1) / 1000;};
+
+ctc      :  /* empty */
+            |  /* (K <capa> <sig1> <node1> <sig2> <node2>) */
+            ctc '(' layer ctccapa cnsLONG cnsLONG cnsLONG cnsLONG ')' {
+               if (!annotate) {
+                  if (ptlofig->LOSIG == NULL) {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " incoherent view : crosstalk capacitances but no signals declared\n");
+                     cns_parserexit(-1);
+                  }
+                  addloctc(getlosig(ptlofig, $5), $6, getlosig(ptlofig, $7), $8, $4);
+               }
+            };
+
+ctccapa   :  cnsFLOAT {$$ = ((float)$1) / 1000;};
+
+lotrs    :  /* empty */
+            |  /* (<lotrs index> <lotrs name> <driving cone index> <x> <y> <w> <l> <ps> <pd> <xs> <xd>      */
+            /* <drain signal & nodes> <grid signal & nodes> <source signal & nodes> <type> <model>) */
+            lotrs '(' cnsLONG lotrsname drvcnidx cnsLONG cnsLONG cnsLONG cnsLONG cnsLONG cnsLONG cnsLONG cnsLONG signalnode signalnode signalnode signalnode lotrstype lotrsmodel optlotrsparams contextparams ')' {
+               if (ptlofig->LOSIG == NULL) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " incoherent view : transistor with signals but no signals declared\n");
+                  cns_parserexit(-1);
+               }
+               if ($17.index == 0) ptbulk = NULL;
+               else ptbulk = getlosig(ptlofig, $17.index);
+               if (!annotate) {
+                  addcnslotrs(ptcnsfig, $3, (cone_list *)NULL, $6, $7,
+                              (long)$8, (long)$9, (long)$10, (long)$11,
+                              (long)$12, (long)$13, $18,
+                              getlosig(ptlofig, $15.index), getlosig(ptlofig, $16.index),
+                              getlosig(ptlofig, $14.index), ptbulk, ptstr);
+                  ptlotrs = ptcnsfig->LOTRS;
+               }
+               else {
+                  ptlotrs = mbk_quickly_getlotrsbyname(ptlofig, ptstr);
+               }
+               if (++locallsidx == 2047) {
+                  lsarray = (lotrs_list **)mbkrealloc((char *)lsarray, (unsigned)(++lspagenum*2048*sizeof(lotrs_list *)));
+                  locallsidx = -1;
+               }
+               if (!annotate) {
+                  ptoptparam = (optparam_list *)reverse((chain_list *)ptoptparam);
+                  ptcnsfig->LOTRS->USER = addptype(ptcnsfig->LOTRS->USER, OPT_PARAMS, ptoptparam);
+                  ptoptparam = NULL;
+                  if (contextparam != NULL) {
+                     eqt_param *param;
+                     int nb = countchain((chain_list *)contextparam);
+                     ptype_list *pt;
+                     param = (eqt_param *)mbkalloc (sizeof (struct eqt_param));
+                     param->EBI = mbkalloc(nb * sizeof (eqt_biinfo));
+                     param->NUMBER = nb;
+                     for (pt = contextparam, nb=0; pt!=NULL; pt=pt->NEXT, nb++) {
+                        param->EBI[nb].VAL = *(float *)&pt->TYPE;
+                        param->EBI[nb].NAME = pt->DATA;
+                     }
+                     ptcnsfig->LOTRS->USER = addptype(ptcnsfig->LOTRS->USER, PARAM_CONTEXT, param);
+                     freeptype(contextparam);
+                  }
+                  contextparam = NULL;
+                  if (strcmp(subcktname, "" ) != 0) {
+                     ptcnsfig->LOTRS->USER = addptype(ptcnsfig->LOTRS->USER, TRANS_FIGURE, subcktname);
+                  }
+               }
+               subcktname = NULL;
+               lsarray[++lsidx] = ptlotrs;
+               ptlotrs->USER = testanddelptype(ptlotrs->USER, CNS_DRIVINGCONE);
+               ptlotrs->USER = addptype(ptlotrs->USER, CNS_DRIVINGCONE, (void *)$5);
+               if (!annotate) {
+                  if ($19 != NULL) addlotrsmodel(ptlotrs, $19);
+                  if ($14.nodes == NULL) {
+                     setloconnode(ptlotrs->DRAIN, 1);
+                  }
+                  else {
+                     for (ptnum = $14.nodes; ptnum; ptnum = ptnum->NEXT) {
+                        setloconnode(ptcnsfig->LOTRS->DRAIN, ptnum->DATA);
+                     }
+                  }
+                  freenum($14.nodes);
+                  if ($15.nodes == NULL) {
+                     setloconnode(ptcnsfig->LOTRS->GRID, 1);
+                  }
+                  else {
+                     for (ptnum = $15.nodes; ptnum; ptnum = ptnum->NEXT) {
+                        setloconnode(ptcnsfig->LOTRS->GRID, ptnum->DATA);
+                     }
+                  }
+                  freenum($15.nodes);
+                  if ($16.nodes == NULL) {
+                     setloconnode(ptcnsfig->LOTRS->SOURCE, 1);
+                  }
+                  else {
+                     for (ptnum = $16.nodes; ptnum; ptnum = ptnum->NEXT) {
+                        setloconnode(ptcnsfig->LOTRS->SOURCE, ptnum->DATA);
+                     }
+                  }
+                  freenum($16.nodes);
+                  if ($17.nodes == NULL && ptbulk) {
+                     setloconnode(ptcnsfig->LOTRS->BULK, 1);
+                  }
+                  else if (ptbulk) {
+                     for (ptnum = $17.nodes; ptnum; ptnum = ptnum->NEXT) {
+                        setloconnode(ptcnsfig->LOTRS->BULK, ptnum->DATA);
+                     }
+                  }
+                  freenum($17.nodes);
+               }
+            };
+optlotrsparams : '(' lotrsparamlist ')'
+            ;
+
+contextparams : '(' cnsSTRING contextparamlist ')'
+                {
+                  subcktname=namealloc($2);
+                }
+                |
+                '(' ')'
+                {
+                  subcktname="";
+                }
+            ;
+            
+contextparamlist : /*empty */
+            | contextparamlist contextparam
+            ;
+
+contextparam  : cnsSTRING '=' cnsFLOAT {
+                  if (!annotate) {
+                     contextparam = addptype(contextparam, 0, namealloc($1));
+                     *(float *)&contextparam->TYPE=$3;
+                  }
+               };
+
+lotrsparamlist : /*empty */
+            | lotrsparamlist lotrsparam
+            ;
+
+lotrsparam  : cnsSTRING '=' cnsFLOAT {
+                  if (!annotate) ptoptparam = makelotrsparam(ptoptparam, $1, $3, NULL);
+               };
+
+lotrsname   : cnsSTRING {
+                  if (strncmp($1, "cns_", 4) == 0 && strlen($1) > 4) ptstr = namealloc($1 + 4);
+                  else ptstr = namealloc($1);
+               };
+
+lotrsmodel :/* empty */ {$$ = NULL;}
+            |  cnsSTRING {
+                  $$ = namealloc($1);
+               };
+
+drvcnidx :  cnsLONG
+            |  '?' {$$ = 0;};
+
+lotrstype   :  cnsSTRING {
+                  if ((strcmp($1, "E") == 0) || (strcmp($1, "N") == 0)) {$$ = TRANSN;}
+                  else if ((strcmp($1, "D") == 0) || (strcmp($1, "P") == 0)) {$$ = TRANSP;}
+                  else {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " transistor type %s unknown\n", $1);
+                     cns_parserexit(-1);
+                  }
+               };
+
+loins    :  /* empty */
+            |  /* (<loins index> <loins name> <figure name> <connector list> */
+            loins '(' cnsLONG insname cnsSTRING '(' cnsCONNECTORS loinslocon ')' ')' {
+               if (!annotate) {
+                  ptloins = (loins_list *)mbkalloc(sizeof(loins_list));
+                  ptloins->INSNAME = namealloc(ptstr);
+                  ptloins->FIGNAME = namealloc($5);
+                  ptloins->LOCON = ptheadlocon;
+                  ptloins->USER = NULL;
+                  ptloins->NEXT = ptcnsfig->LOINS;
+                  ptcnsfig->LOINS = ptloins;
+                  ptheadlocon = NULL;
+                  mbkfree(ptstr);
+               }
+            };
+
+insname :   cnsSTRING {
+               if (!annotate) {
+                  ptstr = (char *)mbkalloc(sizeof($1));
+                  ptstr = strcpy(ptstr, $1);
+               }
+            }
+            |  cnsSTRING '[' cnsLONG ']' {
+               if (!annotate) {
+                  (void)sprintf(ptidx2str, " %ld", $3);
+                  ptstr = (char *)mbkalloc(sizeof($1)+sizeof(ptidx2str));
+                  ptstr = strcpy(ptstr, $1);
+                  ptstr = strcat(ptstr, ptidx2str);
+               }
+            };
+
+cell     :  /* empty */
+            |  /* (<index> <type> <cellcones>) */
+            cell '(' cnsLONG celltype '(' cellcones ')' ')' {
+               ptcell = ptcnsfig->CELL;
+               ptclcnchain = reverse(ptclcnchain);
+               ptcell = addcell(ptcell, $4, ptclcnchain, (befig_list *)NULL);
+               ptcnsfig->CELL = ptcell;
+               ptcell->USER = addptype(ptcell->USER, CNS_INDEX, (void *)$3);
+               ptclcnchain = (chain_list *)NULL;
+            };
+
+celltype :  cnsSTRING {
+               $$ = 0; counter1 = 0;
+               if (strstr($1, "Super_Buffer") != NULL) {$$ |= CNS_SUPER_BUFFER; counter1++;}
+               if (strstr($1, "Tristate") != NULL) {$$ |= CNS_TRISTATE_E; counter1++;}
+               if (strstr($1, "Squirt_Buffer") != NULL) {$$ |= CNS_SQUIRT_BUFFER; counter1++;}
+               if (strstr($1, "Latch") != NULL) {$$ |= CNS_LATCH_E; counter1++;}
+               if (strstr($1, "Read") != NULL) {$$ |= CNS_READ; counter1++;}
+               if (strstr($1, "Ms_Ff") != NULL) {$$ |= CNS_MS_FF; counter1++;}
+               if ($$ == 0) $$ = (CNS_UNKNOWN | atol($1));
+               if ($$ == CNS_UNKNOWN) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " cell type %s unknown\n", $1);
+                  cns_parserexit(-1);
+               }
+               if (counter1 > 1) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " cell type %s (%ld) conflicts\n", $1, $$);
+                  cns_parserexit(-1);
+               }
+            };
+
+cellcones   :  /* empty */
+               |  cellcones cnsLONG {
+                  ptclcnchain = addchain(ptclcnchain, (char *)$2);
+               };
+
+cone     :  /* empty */
+            |  /* (<index> <name> <type> <input> <output> <branches> <user>) */
+            cone '(' cnsLONG conename conetype '-' conetectype cnsLONG cnsLONG cnsLONG cnsLONG input output branches tail ')' {
+               ptcone = ptcnsfig->CONE;
+               ptedgein = (edge_list *)reverse((chain_list *)ptedgein);
+               ptedgeout = (edge_list *)reverse((chain_list *)ptedgeout);
+               ptcone = addcone(ptcone, $3, ptstr, $5, $7, $8, $9, $10, $11, ptedgein, ptedgeout, ptbrstruc->BREXT, ptbrstruc->BRVDD, ptbrstruc->BRGND, ptbrstruc->BRVSS, (chain_list *)NULL);
+               if ((unsigned long)$3 >= 1024*cepagenum) {
+                  cepagenum = (long)(($3/1024)+1);
+                  cearray = (cone_list **)mbkrealloc((char *)cearray, (unsigned)(cepagenum*1024*sizeof(cone_list *)));
+               }
+               if ((ceidx+1) < $3) ceidx = $3-1;
+               cearray[($3-1)] = ptcone;
+               ptcone->BREXT = (branch_list *)reverse((chain_list *)ptcone->BREXT);
+               ptcone->BRVDD = (branch_list *)reverse((chain_list *)ptcone->BRVDD);
+               ptcone->BRGND = (branch_list *)reverse((chain_list *)ptcone->BRGND);
+               ptcone->BRVSS = (branch_list *)reverse((chain_list *)ptcone->BRVSS);
+               ptcnsfig->CONE = ptcone;
+               ptcone->USER = (ptype_list *)reverse((chain_list *)ptuser);
+               for (ptchain = ptloconchain; ptchain != NULL; ptchain = ptchain->NEXT) {
+                  ptlocon = (locon_list *)ptchain->DATA;
+                  locon2cone(ptlocon, ptcone);
+               }
+               if ((ptextloconlist != NULL)) {
+                  for (ptchain = ptextloconlist; ptchain; ptchain = ptchain->NEXT) {
+                     ptextlocon = (locon_list *)ptchain->DATA;
+                     ptextlocon->USER = addptype(ptextlocon->USER, CNS_EXT, (void *)ptcone);
+                  }
+                  ptcone->USER = addptype(ptcone->USER, CNS_EXT, (void *)ptextloconlist);
+               }
+               ptedgein = (edge_list *)NULL;
+               ptedgeout = (edge_list *)NULL;
+               ptbrstruc->BREXT = (branch_list *)NULL;
+               ptbrstruc->BRVDD = (branch_list *)NULL;
+               ptbrstruc->BRGND = (branch_list *)NULL;
+               ptbrstruc->BRVSS = (branch_list *)NULL;
+               ptuser = (ptype_list *)NULL;
+//               ptlotrschain = (chain_list *)NULL;
+               freechain(ptloconchain);
+               ptloconchain = (chain_list *)NULL;
+               ptextlocon = (locon_list *)NULL;
+               ptextloconlist = (chain_list *)NULL;
+               linknum = 0;
+               ptlink = (link_list *)NULL;
+               ptparallelchain = (chain_list *)NULL;
+               ptbleederchain = (chain_list *)NULL;
+               ptswitchchain = (chain_list *)NULL;
+               ptbrch = (chain_list *)NULL;
+               mbkfree((void *)ptstr);
+            };
+
+conename   :  cnsSTRING {
+                ptstr = (char *)mbkalloc(strlen($1)+1);
+                strcpy(ptstr, $1);
+             };
+
+conetype :  /* empty */ {$$ = 0;}
+            |  cnsSTRING {
+               $$ = 0; counter1 = 0;  counter2 = 0;
+               if (strstr($1, "M") != NULL) {$$ |= CNS_MEMSYM; counter1++;}
+               if (strstr($1, "L") != NULL) {$$ |= CNS_LATCH; counter1++;}
+               if (strstr($1, "S") != NULL) {$$ |= CNS_RS; counter1++;}
+               if (strstr($1, "F") != NULL) {$$ |= CNS_FLIP_FLOP; counter1++;}
+               if (strstr($1, "m") != NULL) {$$ |= CNS_MASTER; counter1++;}
+               if (strstr($1, "e") != NULL) {$$ |= CNS_SLAVE; counter1++;}
+               if (strstr($1, "P") != NULL) {$$ |= CNS_PRECHARGE; counter1++;}
+               if (strstr($1, "T") != NULL) {$$ |= CNS_TRI; counter1++;}
+               if (strstr($1, "C") != NULL) {$$ |= CNS_CONFLICT; counter1++;}
+               if (strstr($1, "Ext") != NULL) {$$ |= CNS_EXT; counter1++;}
+               if (strstr($1, "Vdd") != NULL) {$$ |= CNS_VDD; counter2++;}
+               if (strstr($1, "Gnd") != NULL) {$$ |= CNS_GND; counter2++;}
+               if (strstr($1, "Vss") != NULL) {$$ |= CNS_VSS; counter2++;}
+               if ((counter1*counter2) != 0) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " cone type %s (%ld) conflicts\n", $1, $$);
+                  cns_parserexit(-1);
+               }
+               if ((counter1 == 0) && (counter2 >= 2)) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " cone type %s (%ld) conflicts\n", $1, $$);
+                  cns_parserexit(-1);
+               }
+            };
+
+conetectype :  cnsSTRING {
+                  $$ = 0; counter0 = 0; counter1 = 0;  counter2 = 0;
+                  if (strstr($1, "Cm") != NULL) {$$ |= CNS_CMOS; counter0++;}
+                  if (strstr($1, "dC") != NULL) {$$ |= CNS_DUAL_CMOS; counter0++;}
+                  if (strstr($1, "VddD") != NULL) {$$ |= CNS_VDD_DEGRADED; counter2++;}
+                  if (strstr($1, "GndD") != NULL) {$$ |= CNS_GND_DEGRADED; counter2++;}
+                  if (strstr($1, "VssD") != NULL) {$$ |= CNS_VSS_DEGRADED; counter2++;}
+                  if (strstr($1, "Nor") != NULL) {$$ |= CNS_NOR; counter1++;}
+                  if (strstr($1, "Or") != NULL) {$$ |= CNS_OR; counter1++;}
+                  if (strstr($1, "Pr_Nor") != NULL) {$$ |= CNS_PR_NOR; counter1++;}
+                  if (strstr($1, "Nand") != NULL) {$$ |= CNS_NAND; counter1++;}
+                  if (strstr($1, "Sbe") != NULL) {$$ |= CNS_SBE; counter1++;}
+                  if (strstr($1, "Sbd") != NULL) {$$ |= CNS_SBD; counter1++;}
+                  if (strstr($1, "Tristate_o") != NULL) {$$ |= CNS_TRISTATE_O; counter1++;}
+                  if (strstr($1, "Squirt_o") != NULL) {$$ |= CNS_SQUIRT_O; counter1++;}
+                  if (strstr($1, "Latch_o") != NULL) {$$ |= CNS_LATCH_O; counter1++;}
+                  if (strstr($1, "Pr_Bus") != NULL) {$$ |= CNS_PR_BUS; counter1++;}
+                  if (strstr($1, "Zero") != NULL) {$$ |= CNS_ZERO; counter1++;}
+                  if (strstr($1, "One") != NULL) {$$ |= CNS_ONE; counter1++;}
+                  if (counter1 > 1) {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " cone tectype %s (%ld) conflicts\n", $1, $$);
+                     cns_parserexit(-1);
+                  }
+               };
+
+input    :  '(' cnsINPUT incone ')';
+
+incone   :  /* empty */
+            |  /* (<type> <info> <index>) */
+            incone '(' inconetype inconeinfo cnsLONG ')' {
+               if (($3 & CNS_EXT) == CNS_EXT) {
+                  if (($5 < 1) || ($5 > (lnidx+1)) || ((ptlocon = lnarray[$5-1]) == NULL)) {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " connector index %ld not found\n", $5);
+                     cns_parserexit(-1);
+                  }
+                  else {
+                     ptedgein = addedge(ptedgein, $3, (void *)ptlocon);
+                     if (getptype(ptlocon->USER, (long)CNS_SEEN) == NULL) {
+                        ptlocon->USER = addptype(ptlocon->USER, CNS_SEEN, (void *)NULL);
+                     }
+                  }
+               }
+               else {
+                  ptedgein = addedge(ptedgein, ($3 | infoval), (void *)$5);
+               }
+               infoval = 0;
+            };
+
+inconetype  :  cnsSTRING {
+                  $$ = 0;
+                  if (strcmp($1, "Cone") == 0) {$$ = CNS_CONE;}
+                  else if (strcmp($1, "Ext") == 0) {$$ = CNS_EXT;}
+                  else if (strcmp($1, "Vdd") == 0) {$$ = CNS_VDD;}
+                  else if (strcmp($1, "Gnd") == 0) {$$ = CNS_GND;}
+                  else if (strcmp($1, "Vss") == 0) {$$ = CNS_VSS;}
+                  if ($$ == 0) {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " incone type %s unknown\n", $1);
+                     cns_parserexit(-1);
+                  }
+               };
+
+inconeinfo  :  /* empty */
+               |  inconeinfo cnsSTRING {
+                  if (strcmp($2, "bleeder") == 0) {infoval |= CNS_BLEEDER;}
+                  else if (strcmp($2, "command") == 0) {infoval |= CNS_COMMAND;}
+                  else if (strcmp($2, "async") == 0) {infoval |= CNS_ASYNC;}
+                  else if (strcmp($2, "loop") == 0) {infoval |= CNS_LOOP;}
+                  else if (strcmp($2, "feedback") == 0) {infoval |= CNS_FEEDBACK;}
+                  else if (strcmp($2, "memsym") == 0) {infoval |= CNS_MEMSYM;}
+                  else if (strcmp($2, "hz_command") == 0) {infoval |= CNS_HZCOM;}
+                  else {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " unexpected token %s\n", $2);
+                     cns_parserexit(-1);
+                  }
+               };
+
+output   :  '(' cnsOUTPUT outcone ')';
+
+outcone  :  /* empty */
+            |  /* (<type> <info> <index>) */
+            outcone '(' outconetype outconeinfo cnsLONG ')' {
+               if (($3 & CNS_EXT) == CNS_EXT) {
+                  if (($5 < 1) || ($5 > (lnidx+1)) || ((ptextlocon = lnarray[$5-1]) == NULL)) {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " connector index %ld not found\n", $5);
+                     cns_parserexit(-1);
+                  }
+                  else {
+                     ptextloconlist = addchain(ptextloconlist, ptextlocon);
+                     ptedgeout = addedge(ptedgeout, $3, (void *)ptextlocon);
+                     if (getptype(ptextlocon->USER, (long)CNS_SEEN) == NULL) {
+                        ptextlocon->USER = addptype(ptextlocon->USER, CNS_SEEN, (void *)NULL);
+                     }
+                  }
+               }
+               else {
+                  ptedgeout = addedge(ptedgeout, ($3 | infoval), (void *)$5);
+               }
+               infoval = 0;
+            };
+
+outconetype :  cnsSTRING {
+                  $$ = 0;
+                  if (strcmp($1, "Cone") == 0) {$$ = CNS_CONE;}
+                  else if (strcmp($1, "Ext") == 0) {$$ = CNS_EXT;}
+                  if ($$ == 0) {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " outcone type %s unknown\n", $1);
+                     cns_parserexit(-1);
+                  }
+               };
+
+outconeinfo :  /* empty */
+               |  outconeinfo cnsSTRING {
+                  if (strcmp($2, "bleeder") == 0) {infoval |= CNS_BLEEDER;}
+                  else if (strcmp($2, "command") == 0) {infoval |= CNS_COMMAND;}
+                  else if (strcmp($2, "async") == 0) {infoval |= CNS_ASYNC;}
+                  else if (strcmp($2, "loop") == 0) {infoval |= CNS_LOOP;}
+                  else if (strcmp($2, "feedback") == 0) {infoval |= CNS_FEEDBACK;}
+                  else if (strcmp($2, "memsym") == 0) {infoval |= CNS_MEMSYM;}
+                  else {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " unexpected token %s\n", $2);
+                     cns_parserexit(-1);
+                  }
+               };
+
+branches :  '(' cnsBRANCHES branch ')';
+
+branch   :  /* empty */
+            |  /* (<index> <branchtype> links) */
+            branch '(' cnsLONG branchtype links ')' {
+               ptlink = (link_list *)reverse((chain_list *)ptlink);
+               if (($4 & CNS_EXT) == CNS_EXT) {
+                  ptbranch = ptbrstruc->BREXT;
+                  ptbranch = addbranch(ptbranch, $4, ptlink);
+                  ptbranch->USER = addptype(ptbranch->USER, CNS_INDEX, (void *)$3);
+                  ptbrstruc->BREXT = ptbranch;
+                  if ((ptlink->NEXT == NULL) && (ptextlocon == NULL) && ((ptlink->TYPE & CNS_IN) == CNS_IN)) {
+                     ptextlocon = ptlink->ULINK.LOCON;
+                     ptextloconlist = addchain(ptextloconlist, ptextlocon);
+                  }
+               }
+               else if (($4 & CNS_VDD) == CNS_VDD) {
+                  ptbranch = ptbrstruc->BRVDD;
+                  ptbranch = addbranch(ptbranch, $4, ptlink);
+                  ptbranch->USER = addptype(ptbranch->USER, CNS_INDEX, (void *)$3);
+                  ptbrstruc->BRVDD = ptbranch;
+               }
+               else if (($4 & CNS_GND) == CNS_GND) {
+                  ptbranch = ptbrstruc->BRGND;
+                  ptbranch = addbranch(ptbranch, $4, ptlink);
+                  ptbranch->USER = addptype(ptbranch->USER, CNS_INDEX, (void *)$3);
+                  ptbrstruc->BRGND = ptbranch;
+               }
+               else if (($4 & CNS_VSS) == CNS_VSS) {
+                  ptbranch = ptbrstruc->BRVSS;
+                  ptbranch = addbranch(ptbranch, $4, ptlink);
+                  ptbranch->USER = addptype(ptbranch->USER, CNS_INDEX, (void *)$3);
+                  ptbrstruc->BRVSS = ptbranch;
+               }
+               linknum = 0;
+               ptlink = (link_list *)NULL;
+            };
+
+branchtype  :  cnsSTRING {
+                  $$ = 0; counter1 = 0; counter2 = 0;
+                  if (strstr($1, "Vdd") != NULL) {$$ |= CNS_VDD; counter1++;}
+                  if (strstr($1, "Gnd") != NULL) {$$ |= CNS_GND; counter1++;}
+                  if (strstr($1, "Vss") != NULL) {$$ |= CNS_VSS; counter1++;}
+                  if (strstr($1, "Ext") != NULL) {$$ |= CNS_EXT; counter1++;}
+                  if (strstr($1, "Nf") != NULL) {$$ |= CNS_NOT_FUNCTIONAL;}
+                  if (strstr($1, "Nu") != NULL) {$$ |= CNS_NOT_UP;}
+                  if (strstr($1, "Nd") != NULL) {$$ |= CNS_NOT_DOWN;}
+                  if (strstr($1, "B") != NULL) {$$ |= CNS_BLEEDER;}
+                  if (strstr($1, "Dd") != NULL) {$$ |= CNS_VDD_DEGRADED;}
+                  if (strstr($1, "Ds") != NULL) {$$ |= CNS_VSS_DEGRADED;}
+                  if (strstr($1, "F") != NULL) {$$ |= CNS_FEEDBACK;}
+                  if (strstr($1, "Nx") != NULL) {$$ |= CNS_NOTCONFLICTUAL;}
+                  if (strstr($1, "R") != NULL) {$$ |= CNS_RESBRANCH;}
+                  if (strstr($1, "I") != NULL) {$$ |= CNS_IGNORE;}
+                  if (strstr($1, "P") != NULL) {$$ |= CNS_PARALLEL; counter2++;}
+                  if (strstr($1, "p") != NULL) {$$ |= CNS_PARALLEL_INS; counter2++;}
+                  if ($$ == 0) {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " branch type %s unknown\n", $1);
+                     cns_parserexit(-1);
+                  }
+                  if (counter1 != 1) {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " branch type %s (%ld) conflicts\n", $1, $$);
+                     cns_parserexit(-1);
+                  }
+                  if (counter2 > 1) {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns warning ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " P and p branch type redundancy\n");
+                  }
+               };
+
+links    :  /* empty */
+            |  /* (<linktype> cnsSTRING cnsSTRING) */
+            links '(' linktype cnsSTRING cnsSTRING ')' {
+               long loconidx = atol($4);
+               long sigidx = atol($5);
+               if (linknum++ > CNS_MAXLINKNUM) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " number of branch links exceeds %ld\n", (long int)CNS_MAXLINKNUM);
+                  cns_parserexit(-1);
+               }
+               if (($3 & CNS_EXT) == CNS_EXT) {
+                  if ((loconidx > 0) && (loconidx <= (lnidx+1)) && ((ptlocon = lnarray[loconidx-1]) != NULL)) {
+                     ptloconchain = addchain(ptloconchain, (char *)ptlocon);
+                     ptlink = addlink(ptlink, $3, (void *)ptlocon, getlosig(ptlofig, sigidx));
+                  }
+                  else {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " connector index %ld not found\n", loconidx);
+                     cns_parserexit(-1);
+                  }
+               }
+               else {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " connector type link expected\n");
+                  cns_parserexit(-1);
+               }
+            }
+            |  /* (<linktype> cnsSTRING cnsSTRING cnsSTRING) */
+               links '(' linktype cnsSTRING cnsSTRING cnsSTRING ')' {
+               if (linknum++ > CNS_MAXLINKNUM) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " number of branch links exceeds %ld\n", (long)CNS_MAXLINKNUM);
+                  cns_parserexit(-1);
+               }
+               if (($3 & CNS_EXT) == CNS_EXT) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " transistor type link expected\n");
+                  cns_parserexit(-1);
+               }
+               else {
+                  long loconidx = atol($5);
+                  long sigidx = atol($6);
+                  if ((loconidx > 0) && (loconidx <= (lsidx+1)) && ((ptlotrs = lsarray[loconidx-1]) != NULL)) {
+                     if ((ptptype = getptype(ptlotrs->USER, (long)CNS_LINKTYPE)) != NULL) {
+                        ptptype->DATA = (void *)$3;
+                     }
+                     else {
+                        ptlotrs->USER = addptype(ptlotrs->USER, CNS_LINKTYPE, (void *)$3);
+                     }
+//                     ptlotrschain = addchain(ptlotrschain, (char *)ptlotrs);
+                     ptlink = addlink(ptlink, $3, (void *)ptlotrs, getlosig(ptlofig, sigidx));
+                     if (getptype(ptlotrs->USER, (long)CNS_SEEN) == NULL) {
+                        ptlotrs->USER = addptype(ptlotrs->USER, CNS_SEEN, (void *)NULL);
+                     }
+                     if (!strcmp(CNS_TECHNO, "npmosfet")) {
+                         if (MLO_IS_TRANSN(ptlotrs->TYPE)) ptlink->TYPE |= CNS_TNLINK;
+                         if (MLO_IS_TRANSP(ptlotrs->TYPE)) ptlink->TYPE |= CNS_TPLINK;
+                     }
+                  }
+                  else {
+                     (void)fflush(stdout);
+                     (void)fprintf(stderr, "\n*** cns error ***");
+                     (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                     (void)fprintf(stderr, " transistor index %ld not found\n", loconidx);
+                     cns_parserexit(-1);
+                  }
+               }
+            };
+
+linktype :  cnsSTRING {
+               $$ = 0; counter1 = 0; counter2 = 0;
+               if (strstr($1, "S") != NULL) {$$ |= CNS_SW; counter1++;}
+               if (strstr($1, "P") != NULL) {$$ |= CNS_PULL; counter1++;}
+               if (strstr($1, "p") != NULL) {$$ |= CNS_DRIV_PULL; counter1++;}
+               if (strstr($1, "DU") != NULL) {$$ |= CNS_DIODE_UP; counter1++;}
+               if (strstr($1, "DD") != NULL) {$$ |= CNS_DIODE_DOWN; counter1++;}
+               if (strstr($1, "R") != NULL) {$$ |= CNS_RESIST; counter1++;}
+               if (strstr($1, "X") != NULL) {$$ |= CNS_SHORT; counter1++;}
+               if (strstr($1, "C") != NULL) {$$ |= CNS_CAPA; counter1++;}
+               if (strstr($1, "d") != NULL) {$$ |= CNS_DIPOLE; counter1++;}
+               if (strstr($1, "_s") != NULL) {$$ |= CNS_SWITCH;}
+               if (strstr($1, "_c") != NULL) {$$ |= CNS_COMMAND;}
+               if (strstr($1, "_a") != NULL) {$$ |= CNS_ASYNCLINK;}
+               if (strstr($1, "InOut") != NULL) {$$ |= CNS_INOUT; counter2++;}
+               else if (strstr($1, "In") != NULL) {$$ |= CNS_IN; counter2++;}
+               if ($$ == 0) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " link type %s unknown\n", $1);
+                  cns_parserexit(-1);
+               }
+               if ((counter1*counter2) != 0) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " link type %s (%ld) conflicts\n", $1, $$);
+                  cns_parserexit(-1);
+               }
+               if ((counter1 == 0) && (counter2 != 1)) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " link type %s (%ld) conflicts\n", $1, $$);
+                  cns_parserexit(-1);
+               }
+            };
+
+tail     :  /* empty */
+            |  tail item;
+
+item     :  '(' cnsCELLS '(' cells ')' ')'
+            |  '(' cnsUSER userfields ')';
+
+cells    :  /* empty */
+            |  cells cnsLONG {cellconecount++;};
+
+userfields  :  /* empty */
+               |  userfields fields;
+
+fields   :  '(' cnsPARALLEL parallel ')' {
+               ptparallelchain = reverse(ptparallelchain);
+               ptuser = addptype(ptuser, CNS_PARALLEL, (void *)ptparallelchain);
+               ptparallelchain = (chain_list *)NULL;
+            }
+            |  '(' cnsBLEEDER bleeder ')' {
+               ptbleederchain = reverse(ptbleederchain);
+               ptuser = addptype(ptuser, CNS_BLEEDER, (void *)ptbleederchain);
+               ptbleederchain = (chain_list *)NULL;
+            }
+            |  '(' cnsSIGNATURE '(' cnsSTRING ')' ')' {
+               ptuser = addptype(ptuser, CNS_SIGNATURE, (void *)mbkstrdup($4));
+            }
+            |  '(' cnsSIGIDX '(' cnsLONG ')' ')' {
+               ptuser = addptype(ptuser, CNS_SIGINDEX, (void *)($4));
+            }
+            |  '(' cnsSWITCH switch ')' {
+               ptswitchchain = reverse(ptswitchchain);
+               ptuser = addptype(ptuser, CNS_SWITCH, (void *)ptswitchchain);
+               ptswitchchain = (chain_list *)NULL;
+            }
+            |  '(' cnsPARATRANS paratrans ')' {
+               ptparatranschain = reverse(ptparatranschain);
+               ptuser = addptype(ptuser, CNS_PARATRANS, (void *)ptparatranschain);
+               ptparatranschain = (chain_list *)NULL;
+            };
+
+paratrans :  /* empty */
+            |  paratrans '(' translist ')' {
+               chain_list *ptchain;
+               lotrs_list *ptlotrs;
+               pttranslist = reverse(pttranslist);
+               for (ptchain = pttranslist->NEXT; ptchain; ptchain = ptchain->NEXT) {
+                  ptlotrs = (lotrs_list *)ptchain->DATA;
+                  ptlotrs->USER = addptype(ptlotrs->USER, MBK_TRANS_MARK, NULL);
+               }
+               ptparatranschain = addchain(ptparatranschain, pttranslist->DATA);
+               ptlotrs = (lotrs_list *)pttranslist->DATA;
+               ptlotrs->USER = addptype(ptlotrs->USER, MBK_TRANS_PARALLEL, pttranslist);
+               pttranslist = (chain_list *)NULL;
+            };
+
+translist  : /* empty */
+            |  translist cnsLONG {
+               lotrs_list *ptlotrs;
+               if (($2 < 1) || ($2 > (lsidx+1)) || ((ptlotrs = lsarray[$2-1]) == NULL)) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " transistor index %ld not found\n", $2);
+                  cns_parserexit(-1);
+               }
+               pttranslist = addchain(pttranslist, (void *)ptlotrs);
+            };
+
+parallel :  /* empty */
+            |  parallel '(' parabrs ')' {
+               ptbrch = reverse(ptbrch);
+               ptparallelchain = addchain(ptparallelchain, (void *)ptbrch);
+               ptbrch = (chain_list *)NULL;
+            };
+
+parabrs  : /* empty */
+            |  parabrs cnsLONG {
+               if ((ptidx2br = idx2br(ptbrstruc, $2)) == NULL) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " branch index %ld not found\n", $2);
+                  cns_parserexit(-1);
+               }
+               ptbrch = addchain(ptbrch, (void *)ptidx2br);
+            };
+
+bleeder  :  /* empty */
+            |  '(' bleeders ')' ;
+
+bleeders : /* empty */
+            |  bleeders cnsLONG {
+               if ((ptidx2br = idx2br(ptbrstruc, $2)) == NULL) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " branch index %ld not found\n", $2);
+                  cns_parserexit(-1);
+               }
+               ptbleederchain = addchain(ptbleederchain, (void *)ptidx2br);
+            };
+
+switch   :  /* empty */
+            |  switch '(' cnsLONG cnsLONG ')' {
+               lotrs_list *ptlotrs1, *ptlotrs2;
+               if (($3 < 1) || ($3 > (lsidx+1)) || ((ptlotrs1 = lsarray[$3-1]) == NULL)) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " transistor index %ld not found\n", $3);
+                  cns_parserexit(-1);
+               }
+               ptswch = addchain((chain_list *)NULL, (void *)ptlotrs1);
+               if (($4 < 1) || ($4 > (lsidx+1)) || ((ptlotrs2 = lsarray[$4-1]) == NULL)) {
+                  (void)fflush(stdout);
+                  (void)fprintf(stderr, "\n*** cns error ***");
+                  (void)fprintf(stderr, " parser(): line %d, string %s\n", cnsfiglineno, yytext);
+                  (void)fprintf(stderr, " transistor index %ld not found\n", $4);
+                  cns_parserexit(-1);
+               }
+               ptswch = addchain(ptswch, (void *)ptlotrs2);
+               if (getptype(ptlotrs1->USER, CNS_SWITCH) == NULL) {
+                  ptlotrs1->USER = addptype(ptlotrs1->USER, CNS_SWITCH, ptlotrs2);
+               }
+               if (getptype(ptlotrs2->USER, CNS_SWITCH) == NULL) {
+                  ptlotrs2->USER = addptype(ptlotrs2->USER, CNS_SWITCH, ptlotrs1);
+               }
+               ptswch = reverse(ptswch);
+               ptswitchchain = addchain(ptswitchchain, (void *)ptswch);
+            };
+            
+cnsLONG : cnsSTRING {
+             $$ = atol($1);
+          };
+
+cnsFLOAT : cnsSTRING {
+             sscanf($1, "%f", &($$));
+          };
+
+%%
+
+/* print line number and string where an error has occured */
+
+extern int      cnsfiglineno;
+extern char    *yytext;
+
+void
+setcnslofig(lofig_list *existingfig)
+{
+    ptlofig = existingfig;
+    if (ptlofig) annotate = 1;
+    else annotate = 0;
+}
+
+static void
+cns_yyclean()
+{
+   if (ptcnsfig != NULL) {
+      CNS_HEADCNSFIG = delcnsfig(CNS_HEADCNSFIG, ptcnsfig);
+      ptcnsfig = NULL;
+   }
+   if (ptlofig != NULL) {
+      lofigchain(ptlofig);
+      dellofig(ptlofig->NAME);
+      ptlofig = NULL;
+   }
+}
+
+static void
+cns_parserexit(int code)
+{
+    cns_yyclean();
+    EXIT(code);
+}
+
+int yyerror(char *s)
+{
+   cns_yyclean();
+   fflush(stdout);
+   fprintf(stderr, "\n*** cns error *** parser(): %s", s);
+   fprintf(stderr, " line %d, string %s\n", cnsfiglineno, yytext);
+   return 0;
+}

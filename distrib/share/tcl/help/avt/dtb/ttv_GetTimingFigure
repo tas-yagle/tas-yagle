@@ -1,0 +1,16 @@
+
+           <TimingPathList *> ttv_GetTimingFigure <name>
+
+           Obsolete but still working:
+           <TimingPathList *> ttv_GetTimingFigure <name> <temperature> <supply
+       value> ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Gets a timing figure from memory, assuming it has already been  loaded.
+       Only usefull when a timing figure comes from a _._l_i_b of _._t_l_f file.
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Timing figure's name
+
+       EEXXAAMMPPLLEE       _s_e_t _f_i_g _[_t_t_v___G_e_t_T_i_m_i_n_g_F_i_g_u_r_e _m_y___d_e_s_i_g_n_]
+

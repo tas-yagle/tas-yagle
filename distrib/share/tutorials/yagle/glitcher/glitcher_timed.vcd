@@ -1,0 +1,194 @@
+$date
+   Oct 31, 2003  17:33:32
+$end
+$version
+   Synopsys 1076 VHDL Simulator Version 2000.12
+$end
+$timescale
+   1 ps
+$end
+
+$comment Csum: 1 6b8365d17ff5ff0e $end
+
+$scope module TB_GLITCHER $end
+$scope module INS_GLITCHER $end
+$scope task BUX1 $end
+$upscope $end
+$scope task BUX2 $end
+$upscope $end
+$scope task BUX3 $end
+$upscope $end
+$scope task BUX4 $end
+$upscope $end
+$scope task BUX5 $end
+$upscope $end
+$scope task BUX6 $end
+$upscope $end
+$scope task BUX7 $end
+$upscope $end
+$scope task BUX8 $end
+$upscope $end
+$scope task BUX9 $end
+$upscope $end
+$var wire 1 ! I $end
+$var wire 1 " S0 $end
+$var wire 1 # S1 $end
+$var wire 1 $ S2 $end
+$var wire 1 % S3 $end
+$var wire 1 & S4 $end
+$var wire 1 ' O $end
+$scope task BUX10 $end
+$upscope $end
+$scope task BUX11 $end
+$upscope $end
+$var wire 1 ( S5 $end
+$var wire 1 ) IDLY $end
+$var wire 1 * IDLYN $end
+$var wire 1 + S6 $end
+$var wire 1 , DLY0_N1 $end
+$var wire 1 - DLY0_N3 $end
+$scope task BUS0 $end
+$upscope $end
+$var wire 1 . DLY0_N4 $end
+$var wire 1 / VSS $end
+$var wire 1 0 VDD $end
+$scope task BUX0 $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions
+$end
+$dumpvars
+X!
+X'
+X0
+X/
+X.
+X-
+X,
+X"
+X#
+X$
+X%
+X&
+X(
+X)
+X*
+X+
+$end
+#0
+1!
+#242
+0"
+#279
+0,
+#546
+1#
+#752
+0$
+#1046
+1%
+#1132
+1-
+#1251
+0&
+#1455
+1(
+#1638
+0+
+#1783
+1'
+#1862
+0.
+#2486
+1)
+#2662
+0*
+#5000
+0!
+#5426
+1"
+#5567
+1,
+#5641
+0#
+#5937
+1$
+#5998
+0-
+#6142
+0%
+#6436
+1&
+#6597
+0(
+#6802
+1.
+#7245
+1+
+#7260
+0)
+#7459
+0'
+#7529
+1*
+#7712
+0+
+#7857
+1'
+#10000
+1!
+#10242
+0"
+#10279
+0,
+#10546
+1#
+#10752
+0$
+#11046
+1%
+#11132
+1-
+#11251
+0&
+#11455
+1(
+#11862
+0.
+#12486
+1)
+#12662
+0*
+#15000
+0!
+#15426
+1"
+#15567
+1,
+#15641
+0#
+#15937
+1$
+#15998
+0-
+#16142
+0%
+#16436
+1&
+#16597
+0(
+#16802
+1.
+#17245
+1+
+#17260
+0)
+#17459
+0'
+#17529
+1*
+#17712
+0+
+#17857
+1'

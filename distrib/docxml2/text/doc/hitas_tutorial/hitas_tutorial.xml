@@ -1,0 +1,47 @@
+<!DOCTYPE notice SYSTEM "../../common/common_entity.xml" [
+<!ENTITY tool "HITAS">
+<!ENTITY presentation         SYSTEM "presentation.xml">
+<!ENTITY introduction         SYSTEM "introduction.xml">
+<!ENTITY overview             SYSTEM "overview.xml">
+<!ENTITY sta                  SYSTEM "sta.xml">
+<!ENTITY tcl                  SYSTEM "tcl.xml">
+<!ENTITY examples             SYSTEM "examples.xml">
+<!ENTITY example_0_inv        SYSTEM "example_0_inv.xml">       
+<!ENTITY example_1_adder      SYSTEM "example_1_adder.xml">       
+<!ENTITY example_2_ms         SYSTEM "example_2_ms.xml">       
+<!ENTITY example_3_addaccu    SYSTEM "example_3_addaccu.xml">       
+<!ENTITY example_4_cpu        SYSTEM "example_4_cpu.xml">       
+<!ENTITY example_5_hierarchy  SYSTEM "example_5_hierarchy.xml">       
+<!ENTITY example_6_bb         SYSTEM "example_6_bb.xml">       
+<!ENTITY example_7_ck_gating  SYSTEM "example_7_ck_gating.xml">       
+<!ENTITY example_8_multicycle SYSTEM "example_8_multicycle.xml">       
+<!ENTITY example_9_lib        SYSTEM "example_9_lib.xml">       
+<!ENTITY ssta                 SYSTEM "ssta.xml">       
+]>
+
+<notice>
+<presentation>
+&presentation; 
+</presentation>
+<introduction>
+&introduction;
+</introduction>
+<document>
+&overview;
+&sta;
+&tcl;
+&examples;
+&example_0_inv;
+&example_1_adder;
+&example_2_ms;
+&example_3_addaccu;
+&example_4_cpu;
+&example_5_hierarchy;
+&example_6_bb;
+&ssta;
+<!--&example_7_ck_gating;
+&example_8_multicycle;
+&example_9_lib;-->
+</document>
+</notice>  
+

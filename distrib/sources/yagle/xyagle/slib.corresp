@@ -1,0 +1,71 @@
+i1x     2   a z
+        * inv_x1    i nq
+        * inv_x2    i nq
+        * inv_x4    i nq
+        * inv_x8    i nq
+        * n1_y      i f
+
+nd2     3   a b z
+        * na2_y     i0 i1 f
+        * na2_x1    i0 i1 nq
+        * na2_x4    i0 i1 nq
+
+nd3     4   a b c z
+        * na3_y     i0 i1 i2 f
+        * na3_x1    i0 i1 i2 q
+        * na3_x4    i0 i1 i2 q
+
+nd4     5   a b c d z
+        * na4_y     i0 i1 i2 i3 f
+        * na4_x1    i0 i1 i2 i3 q
+        * na4_x4    i0 i1 i2 i3 q
+
+nr2     3   a b z
+        * no2_y     i0 i1 f
+        * no2_x1    i0 i1 nq
+        * no2_x4    i0 i1 nq
+
+nr3     4   a b c z
+        * no3_y     i0 i1 i2 f
+        * no3_x1    i0 i1 i2 q
+        * no3_x4    i0 i1 i2 q
+
+nr4     5   a b c d z
+        * no4_x2    i0 i1 i2 i3 q
+        * no4_x4    i0 i1 i2 i3 q
+
+or2b    3   a b z
+        * o2_y      i0 i1 t
+        * o2_x2     i0 i1 q 
+        * o2_x4     i0 i1 q 
+
+or3     4   a b c z
+        * o3_y      i0 i1 i2 t
+        * o3_x2     i0 i1 i2 q 
+        * o3_x4     i0 i1 i2 q 
+
+or4     5   a b c d z
+        * o4_x2     i0 i1 i2 i3 q 
+        * o4_x4     i0 i1 i2 i3 q 
+
+and2    3   a b z
+        * a2_y     i0 i1 t
+        * a2_x2    i0 i1 q
+        * a2_x4    i0 i1 q
+
+and3    4   a b c z
+        * a3_y     i0 i1 i2 t
+        * a3_x2    i0 i1 i2 q
+        * a3_x4    i0 i1 i2 q
+
+and4    5   a b c d z
+        * a4_y     i0 i1 i2 i3 t
+        * a4_x2    i0 i1 i2 i3 q
+        * a4_x4    i0 i1 i2 i3 q
+
+xr      3   a b z
+        * xr2_y     i0 i1 t
+        * xr2_x1    i0 i1 q
+        * xr2_x4    i0 i1 q
+
+

@@ -1,0 +1,9 @@
+
+       void inf_DefineSuppress(char *name);
+
+DDEESSCCRRIIPPTTIIOONN
+       Sets an auxiliary signal to be suppressed.
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Signal's name
+

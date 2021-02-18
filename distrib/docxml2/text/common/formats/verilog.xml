@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>VERILOG</title>
+<p>&tool; supports the structural subset of the Verilog Hardware Description Language. For more information
+see the IEEE P1364 standard</p>
+</section>

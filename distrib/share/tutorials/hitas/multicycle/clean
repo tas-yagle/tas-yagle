@@ -1,0 +1,10 @@
+#!/bin/csh -f
+
+rm -f *.dtx *.stm *.rcx cmd_* *.rep 
+rm -f *.gns *.cnv *.cns *.loop *.ttx 
+rm -f *.chi *.out *.lib
+rm -f *.sto *.str *.ste
+rm -f *.ctk *.ctx
+rm -f *.ter *.tou *.log
+rm -f *.siginfo
+rm -f *.vhd *.v *.tas.inf *.spice.inf *.tas.trace core *~ *.PathMargins

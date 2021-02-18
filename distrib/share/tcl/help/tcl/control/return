@@ -1,0 +1,113 @@
+NAME
+       return - Return from a procedure
+
+SYNOPSIS
+       return ?-code code? ?-errorinfo info? ?-errorcode code? ?string?
+
+
+DESCRIPTION
+       Return  immediately from the current procedure (or top-level command or
+       source command), with string as the return value.   If  string  is  not
+       specified then an empty string will be returned as result.
+
+EXCEPTIONAL RETURN CODES
+       In  addition  to the result of a procedure, the return code of a proce-
+       dure may also be set by return through use of the -code option.  In the
+       usual  case  where  the -code option isn't specified the procedure will
+       return normally.  However, the -code option may be used to generate  an
+       exceptional  return  from the procedure.  Code may have any of the fol-
+       lowing values:
+
+       ok (or 0)    Normal return:  same as if the  option  is  omitted.   The
+                    return code of the procedure is 0 (TCL_OK).
+
+       error (1)    Error  return:  the  return  code  of  the  procedure is 1
+                    (TCL_ERROR).  The procedure command behaves in its calling
+                    context as if it were the command error result.  See below
+                    for additional options.
+
+       return (2)   The return code of the procedure is 2  (TCL_RETURN).   The
+                    procedure  command behaves in its calling context as if it
+                    were the command return (with no arguments).
+
+       break (3)    The return code of the procedure is  3  (TCL_BREAK).   The
+                    procedure  command behaves in its calling context as if it
+                    were the command break.
+
+       continue (4) The return code of the procedure is 4 (TCL_CONTINUE).  The
+                    procedure  command behaves in its calling context as if it
+                    were the command continue.
+
+       value        Value must be an integer;  it  will  be  returned  as  the
+                    return code for the current procedure.
+
+       The  -code  option  is  rarely used.  It is provided so that procedures
+       that implement new control structures can  reflect  exceptional  condi-
+       tions back to their callers.
+
+       Two  additional options, -errorinfo and -errorcode, may be used to pro-
+       vide additional information during error returns.   These  options  are
+       ignored unless code is error.
+
+       The  -errorinfo  option specifies an initial stack trace for the error-
+       Info variable;  if it is not specified then the  stack  trace  left  in
+       errorInfo  will  include the call to the procedure and higher levels on
+       the stack but it will not include any information about the context  of
+       the  error  within the procedure.  Typically the info value is supplied
+       from the value left in errorInfo after a catch command trapped an error
+       within the procedure.
+
+       If  the  -errorcode  option is specified then code provides a value for
+       the errorCode variable.  If the option is not specified then  errorCode
+       will default to NONE.
+
+EXAMPLES
+       First,  a  simple  example  of using return to return from a procedure,
+       interrupting the procedure body.
+              proc printOneLine {} {
+                 puts "line 1"    ;# This line will be printed.
+                 return
+                 puts "line 2"    ;# This line will not be printed.
+              }
+
+       Next, an example of using return to set the value returned by the  pro-
+       cedure.
+              proc returnX {} {return X}
+              puts [returnX]    ;# prints "X"
+
+       Next,  a  more  complete  example,  using  return -code error to report
+       invalid arguments.
+              proc factorial {n} {
+                 if {![string is integer $n] || ($n < 0)} {
+                    return -code error \
+                          "expected non-negative integer,\
+                           but got \"$n\""
+                 }
+                 if {$n < 2} {
+                    return 1
+                 }
+                 set m [expr {$n - 1}]
+                 set code [catch {factorial $m} factor]
+                 if {$code != 0} {
+                    return -code $code $factor
+                 }
+                 set product [expr {$n * $factor}]
+                 if {$product < 0} {
+                    return -code error \
+                          "overflow computing factorial of $n"
+                 }
+                 return $product
+              }
+
+       Next, a procedure replacement for break.
+              proc myBreak {} {
+                 return -code break
+              }
+
+
+SEE ALSO
+       break(n),  catch(n),   continue(n),   error(n),   proc(n),   source(n),
+       tclvars(n)
+
+
+KEYWORDS

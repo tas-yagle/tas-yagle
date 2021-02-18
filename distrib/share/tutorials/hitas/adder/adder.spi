@@ -1,0 +1,2040 @@
+* Spice description of adder
+* Date ( dd/mm/yyyy hh:mm:ss ): 26/02/2003 at  9:58:03
+
+.INCLUDE ../techno/bsim4_dummy.hsp
+
+.TEMP 125
+.GLOBAL vdd vss
+Vsupply vdd 0 DC 1.62
+Vground vss 0 DC 0
+
+.subckt adder vss vdd s_3 s_2 s_1 s_0 cout b_3 b_2 b_1 b_0 a_3 a_2 a_1 
++ a_0 
+Mtr_00001 vss mbk_sig6_6 cell0_0.g_8 vss tn L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00002 mbk_sig8_2 b_0_5 mbk_sig6_5 vss tn L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00003 vss a_0_5 mbk_sig8_1 vss tn L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00004 vss mbk_sig1_5 s_0_2 vss tn L=0.18U W=1.62U AS=0.5832P AD=0.5832P 
++ PS=3.96U PD=3.96U 
+Mtr_00005 mbk_sig1_4 b_0_4 a_0_4 vss tn L=0.18U W=0.9U AS=0.324P AD=0.324P 
++ PS=2.52U PD=2.52U 
+Mtr_00006 b_0_3 a_0_3 mbk_sig1_3 vss tn L=0.18U W=0.9U AS=0.324P AD=0.324P 
++ PS=2.52U PD=2.52U 
+Mtr_00007 vss mbk_sig16_6 cell0_1.g_5 vss tn L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00008 mbk_sig24_2 b_1_5 mbk_sig16_5 vss tn L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00009 vss a_1_5 mbk_sig24_1 vss tn L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00010 vss mbk_sig11_5 cell0_1.p_7 vss tn L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00011 mbk_sig11_4 b_1_4 a_1_4 vss tn L=0.18U W=0.9U AS=0.324P AD=0.324P 
++ PS=2.52U PD=2.52U 
+Mtr_00012 b_1_3 a_1_3 mbk_sig11_3 vss tn L=0.18U W=0.9U AS=0.324P AD=0.324P 
++ PS=2.52U PD=2.52U 
+Mtr_00013 vss cell0_2.p_8 cell3_2.p_5 vss tn L=0.18U W=1.08U AS=0.3888P 
++ AD=0.3888P PS=2.88U PD=2.88U 
+Mtr_00014 cell0_2.p_7 mbk_sig28_5 vss vss tn L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00015 mbk_sig28_4 b_2_5 a_2_5 vss tn L=0.18U W=0.9U AS=0.324P AD=0.324P 
++ PS=2.52U PD=2.52U 
+Mtr_00016 b_2_4 a_2_4 mbk_sig28_3 vss tn L=0.18U W=0.9U AS=0.324P AD=0.324P 
++ PS=2.52U PD=2.52U 
+Mtr_00017 vss a_2_3 mbk_sig33_2 vss tn L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00018 mbk_sig33_1 b_2_3 mbk_sig30_6 vss tn L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00019 vss mbk_sig30_5 cell0_2.g_8 vss tn L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00020 vss mbk_sig47_6 cell0_3.g_6 vss tn L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00021 mbk_sig59_2 b_3_5 mbk_sig47_5 vss tn L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00022 vss a_3_5 mbk_sig59_1 vss tn L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00023 vss mbk_sig43_5 cell0_3.p_9 vss tn L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00024 mbk_sig43_4 b_3_4 a_3_4 vss tn L=0.18U W=0.9U AS=0.324P AD=0.324P 
++ PS=2.52U PD=2.52U 
+Mtr_00025 b_3_3 a_3_3 mbk_sig43_3 vss tn L=0.18U W=0.9U AS=0.324P AD=0.324P 
++ PS=2.52U PD=2.52U 
+Mtr_00026 cell1_1.co_10 cell0_1.g_4 vss vss tn L=0.18U W=0.9U AS=0.324P 
++ AD=0.324P PS=2.52U PD=2.52U 
+Mtr_00027 mbk_sig23_2 cell0_1.p_6 cell1_1.co_9 vss tn L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00028 vss cell0_0.g_7 mbk_sig23_1 vss tn L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00029 vss cell0_2.p_6 cell1_2.np_4 vss tn L=0.18U W=0.72U AS=0.2592P 
++ AD=0.2592P PS=2.16U PD=2.16U 
+Mtr_00030 cell1_2.ng_4 cell0_2.g_7 vss vss tn L=0.18U W=0.72U AS=0.2592P 
++ AD=0.2592P PS=2.16U PD=2.16U 
+Mtr_00031 vss cell0_3.p_8 mbk_sig58_2 vss tn L=0.18U W=1.26U AS=0.4536P 
++ AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00032 mbk_sig58_1 cell0_2.p_5 mbk_sig52_5 vss tn L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00033 cell1_3.g_6 cell0_3.g_5 vss vss tn L=0.18U W=0.54U AS=0.1944P 
++ AD=0.1944P PS=1.8U PD=1.8U 
+Mtr_00034 mbk_sig57_2 cell0_3.p_7 cell1_3.g_5 vss tn L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00035 vss cell0_2.g_6 mbk_sig57_1 vss tn L=0.18U W=1.26U AS=0.4536P 
++ AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00036 vss cell1_1.co_8 mbk_sig35_3 vss tn L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00037 mbk_sig35_2 cell1_2.ng_3 cell3_2.g_6 vss tn L=0.18U W=1.44U 
++ AS=0.5184P AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00038 mbk_sig35_1 cell1_2.np_3 vss vss tn L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00039 vss cell1_1.co_7 mbk_sig60_3 vss tn L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00040 mbk_sig60_2 cell1_3.g_4 cout_3 vss tn L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00041 mbk_sig60_1 mbk_sig52_4 vss vss tn L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00042 s_1_2 mbk_sig21_5 vss vss tn L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00043 mbk_sig21_4 cell0_1.p_5 cell0_0.g_6 vss tn L=0.18U W=0.9U AS=0.324P 
++ AD=0.324P PS=2.52U PD=2.52U 
+Mtr_00044 mbk_sig21_3 cell0_0.g_5 cell0_1.p_4 vss tn L=0.18U W=0.9U AS=0.324P 
++ AD=0.324P PS=2.52U PD=2.52U 
+Mtr_00045 s_2_2 mbk_sig37_5 vss vss tn L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00046 mbk_sig37_4 cell1_1.co_6 cell3_2.p_4 vss tn L=0.18U W=0.9U AS=0.324P 
++ AD=0.324P PS=2.52U PD=2.52U 
+Mtr_00047 mbk_sig37_3 cell3_2.p_3 cell1_1.co_5 vss tn L=0.18U W=0.9U AS=0.324P 
++ AD=0.324P PS=2.52U PD=2.52U 
+Mtr_00048 s_3_2 mbk_sig56_5 vss vss tn L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00049 mbk_sig56_4 cell0_3.p_6 cell3_2.g_5 vss tn L=0.18U W=0.9U AS=0.324P 
++ AD=0.324P PS=2.52U PD=2.52U 
+Mtr_00050 mbk_sig56_3 cell3_2.g_4 cell0_3.p_5 vss tn L=0.18U W=0.9U AS=0.324P 
++ AD=0.324P PS=2.52U PD=2.52U 
+Mtr_00051 vdd mbk_sig1_2 s_0_1 vdd tp L=0.18U W=1.98U AS=0.7128P AD=0.7128P 
++ PS=4.68U PD=4.68U 
+Mtr_00052 vdd mbk_sig6_4 cell0_0.g_4 vdd tp L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00053 mbk_sig6_3 a_0_2 vdd vdd tp L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00054 vdd b_0_2 mbk_sig6_2 vdd tp L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00055 cell0_0.g_3 mbk_sig6_1 vdd vdd tp L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00056 mbk_sig10_2 a_0_1 vdd vdd tp L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00057 mbk_sig1_1 b_0_1 mbk_sig10_1 vdd tp L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00058 vdd mbk_sig11_2 cell0_1.p_3 vdd tp L=0.18U W=1.98U AS=0.7128P 
++ AD=0.7128P PS=4.68U PD=4.68U 
+Mtr_00059 vdd mbk_sig16_4 cell0_1.g_3 vdd tp L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00060 mbk_sig16_3 a_1_2 vdd vdd tp L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00061 vdd b_1_2 mbk_sig16_2 vdd tp L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00062 cell0_1.g_2 mbk_sig16_1 vdd vdd tp L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00063 mbk_sig13_2 a_1_1 vdd vdd tp L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00064 mbk_sig11_1 b_1_1 mbk_sig13_1 vdd tp L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00065 mbk_sig28_2 b_2_2 mbk_sig39_2 vdd tp L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00066 mbk_sig39_1 a_2_2 vdd vdd tp L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00067 cell3_2.p_2 cell0_2.p_4 vdd vdd tp L=0.18U W=2.16U AS=0.7776P 
++ AD=0.7776P PS=5.04U PD=5.04U 
+Mtr_00068 vdd mbk_sig28_1 cell0_2.p_3 vdd tp L=0.18U W=2.16U AS=0.7776P 
++ AD=0.7776P PS=5.04U PD=5.04U 
+Mtr_00069 cell0_2.g_5 mbk_sig30_4 vdd vdd tp L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00070 vdd b_2_1 mbk_sig30_3 vdd tp L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00071 mbk_sig30_2 a_2_1 vdd vdd tp L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00072 vdd mbk_sig30_1 cell0_2.g_4 vdd tp L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00073 vdd mbk_sig43_2 cell0_3.p_4 vdd tp L=0.18U W=1.98U AS=0.7128P 
++ AD=0.7128P PS=4.68U PD=4.68U 
+Mtr_00074 vdd mbk_sig47_4 cell0_3.g_4 vdd tp L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00075 mbk_sig47_3 a_3_2 vdd vdd tp L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00076 vdd b_3_2 mbk_sig47_2 vdd tp L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00077 cell0_3.g_3 mbk_sig47_1 vdd vdd tp L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00078 mbk_sig45_2 a_3_1 vdd vdd tp L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00079 mbk_sig43_1 b_3_1 mbk_sig45_1 vdd tp L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00080 cell1_1.co_4 cell0_1.g_1 mbk_sig18_3 vdd tp L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00081 mbk_sig18_2 cell0_1.p_2 vdd vdd tp L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00082 vdd cell0_0.g_2 mbk_sig18_1 vdd tp L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00083 cell1_2.np_2 cell0_2.p_2 vdd vdd tp L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00084 vdd cell0_2.g_3 cell1_2.ng_2 vdd tp L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00085 mbk_sig52_3 cell0_3.p_3 vdd vdd tp L=0.18U W=0.72U AS=0.2592P 
++ AD=0.2592P PS=2.16U PD=2.16U 
+Mtr_00086 vdd cell0_3.p_2 mbk_sig49_5 vdd tp L=0.18U W=1.26U AS=0.4536P 
++ AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00087 mbk_sig52_2 cell0_2.p_1 vdd vdd tp L=0.18U W=0.72U AS=0.2592P 
++ AD=0.2592P PS=2.16U PD=2.16U 
+Mtr_00088 mbk_sig49_4 cell0_2.g_2 vdd vdd tp L=0.18U W=0.36U AS=0.1296P 
++ AD=0.1296P PS=1.44U PD=1.44U 
+Mtr_00089 mbk_sig49_3 cell0_2.g_1 vdd vdd tp L=0.18U W=0.36U AS=0.1296P 
++ AD=0.1296P PS=1.44U PD=1.44U 
+Mtr_00090 mbk_sig49_2 cell0_3.g_2 cell1_3.g_3 vdd tp L=0.18U W=0.36U 
++ AS=0.1296P AD=0.1296P PS=1.44U PD=1.44U 
+Mtr_00091 cell1_3.g_2 cell0_3.g_1 mbk_sig49_1 vdd tp L=0.18U W=0.36U 
++ AS=0.1296P AD=0.1296P PS=1.44U PD=1.44U 
+Mtr_00092 mbk_sig41_2 cell1_1.co_3 vdd vdd tp L=0.18U W=2.88U AS=1.0368P 
++ AD=1.0368P PS=6.48U PD=6.48U 
+Mtr_00093 cell3_2.g_3 cell1_2.np_1 mbk_sig41_1 vdd tp L=0.18U W=2.88U 
++ AS=1.0368P AD=1.0368P PS=6.48U PD=6.48U 
+Mtr_00094 vdd cell1_2.ng_1 cell3_2.g_2 vdd tp L=0.18U W=1.44U AS=0.5184P 
++ AD=0.5184P PS=3.6U PD=3.6U 
+Mtr_00095 mbk_sig54_2 cell1_1.co_2 vdd vdd tp L=0.18U W=2.88U AS=1.0368P 
++ AD=1.0368P PS=6.48U PD=6.48U 
+Mtr_00096 cout_2 mbk_sig52_1 mbk_sig54_1 vdd tp L=0.18U W=2.88U AS=1.0368P 
++ AD=1.0368P PS=6.48U PD=6.48U 
+Mtr_00097 vdd cell1_3.g_1 cout_1 vdd tp L=0.18U W=1.44U AS=0.5184P AD=0.5184P 
++ PS=3.6U PD=3.6U 
+Mtr_00098 s_1_1 mbk_sig21_2 vdd vdd tp L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00099 mbk_sig22_2 cell0_0.g_1 vdd vdd tp L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00100 mbk_sig21_1 cell0_1.p_1 mbk_sig22_1 vdd tp L=0.18U W=1.62U 
++ AS=0.5832P AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00101 s_2_1 mbk_sig37_2 vdd vdd tp L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00102 mbk_sig37_1 cell3_2.p_1 mbk_sig42_2 vdd tp L=0.18U W=1.62U 
++ AS=0.5832P AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00103 mbk_sig42_1 cell1_1.co_1 vdd vdd tp L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00104 s_3_1 mbk_sig56_2 vdd vdd tp L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00105 mbk_sig55_2 cell3_2.g_1 vdd vdd tp L=0.18U W=1.62U AS=0.5832P 
++ AD=0.5832P PS=3.96U PD=3.96U 
+Mtr_00106 mbk_sig56_1 cell0_3.p_1 mbk_sig55_1 vdd tp L=0.18U W=1.62U 
++ AS=0.5832P AD=0.5832P PS=3.96U PD=3.96U 
+R3_1 s_3_5 s_3_1 2.36
+C3_11 s_3_5 vss 7.35e-16
+C3_12 s_3_1 vss 7.35e-16
+R3_2 s_3 s_3_5 2.91
+C3_21 s_3 vss 9.3e-16
+C3_22 s_3_5 vss 9.3e-16
+R3_3 s_3_4 s_3_2 1.01
+C3_31 s_3_4 vss 6.3e-16
+C3_32 s_3_2 vss 6.3e-16
+R3_4 s_3 s_3_4 1.01
+C3_41 s_3 vss 4.5e-17
+C3_42 s_3_4 vss 4.5e-17
+
+R4_1 s_2_5 s_2_1 1.34
+C4_11 s_2_5 vss 5.85e-16
+C4_12 s_2_1 vss 5.85e-16
+R4_2 s_2 s_2_5 1.82
+C4_21 s_2 vss 8.1e-16
+C4_22 s_2_5 vss 8.1e-16
+R4_3 s_2_4 s_2_2 1.45
+C4_31 s_2_4 vss 8.7e-16
+C4_32 s_2_2 vss 8.7e-16
+R4_4 s_2 s_2_4 1.31
+C4_41 s_2 vss 9.25e-16
+C4_42 s_2_4 vss 9.25e-16
+
+R5_1 s_1_5 s_1_1 0.3
+C5_11 s_1_5 vss 9.5e-16
+C5_12 s_1_1 vss 9.5e-16
+R5_2 s_1 s_1_5 0.78
+C5_21 s_1 vss 9.15e-16
+C5_22 s_1_5 vss 9.15e-16
+R5_3 s_1_4 s_1_2 1.6
+C5_31 s_1_4 vss 8.55e-16
+C5_32 s_1_2 vss 8.55e-16
+R5_4 s_1 s_1_4 1.83
+C5_41 s_1 vss 6.2e-16
+C5_42 s_1_4 vss 6.2e-16
+
+R6_1 s_0_5 s_0_1 2.47
+C6_11 s_0_5 vss 7.4e-16
+C6_12 s_0_1 vss 7.4e-16
+R6_2 s_0 s_0_5 1.33
+C6_21 s_0 vss 2.25e-16
+C6_22 s_0_5 vss 2.25e-16
+R6_3 s_0_4 s_0_2 2.21
+C6_31 s_0_4 vss 5.15e-16
+C6_32 s_0_2 vss 5.15e-16
+R6_4 s_0 s_0_4 2.74
+C6_41 s_0 vss 7.1e-16
+C6_42 s_0_4 vss 7.1e-16
+
+R7_1 cout_8 cout_1 2.29
+C7_11 cout_8 vss 7.35e-16
+C7_12 cout_1 vss 7.35e-16
+R7_2 cout cout_8 0.01
+C7_21 cout vss 4.8e-16
+C7_22 cout_8 vss 4.8e-16
+R7_3 cout_7 cout_2 0.67
+C7_31 cout_7 vss 3.65e-16
+C7_32 cout_2 vss 3.65e-16
+R7_4 cout_5 cout_7 0.53
+C7_41 cout_5 vss 8.75e-16
+C7_42 cout_7 vss 8.75e-16
+R7_5 cout_6 cout_3 2.49
+C7_51 cout_6 vss 1.55e-16
+C7_52 cout_3 vss 1.55e-16
+R7_6 cout_5 cout_6 0.65
+C7_61 cout_5 vss 6.2e-16
+C7_62 cout_6 vss 6.2e-16
+R7_7 cout cout_5 0.56
+C7_71 cout vss 5.65e-16
+C7_72 cout_5 vss 5.65e-16
+
+R8_1 b_3_14 b_3_1 2.32
+C8_11 b_3_14 vss 4.15e-16
+C8_12 b_3_1 vss 4.15e-16
+R8_2 b_3_12 b_3_14 0.65
+C8_21 b_3_12 vss 4.4e-16
+C8_22 b_3_14 vss 4.4e-16
+R8_3 b_3_13 b_3_2 2.57
+C8_31 b_3_13 vss 7.6e-16
+C8_32 b_3_2 vss 7.6e-16
+R8_4 b_3_12 b_3_13 0.4
+C8_41 b_3_12 vss 1.1e-16
+C8_42 b_3_13 vss 1.1e-16
+R8_5 b_3 b_3_12 1.81
+C8_51 b_3 vss 8.25e-16
+C8_52 b_3_12 vss 8.25e-16
+R8_6 b_3_11 b_3_3 0.71
+C8_61 b_3_11 vss 7.8e-16
+C8_62 b_3_3 vss 7.8e-16
+R8_7 b_3_7 b_3_11 2.76
+C8_71 b_3_7 vss 5.2e-16
+C8_72 b_3_11 vss 5.2e-16
+R8_8 b_3_10 b_3_4 0.02
+C8_81 b_3_10 vss 3.5e-16
+C8_82 b_3_4 vss 3.5e-16
+R8_9 b_3_8 b_3_10 2.23
+C8_91 b_3_8 vss 4.2e-16
+C8_92 b_3_10 vss 4.2e-16
+R8_10 b_3_9 b_3_5 0.32
+C8_101 b_3_9 vss 6.3e-16
+C8_102 b_3_5 vss 6.3e-16
+R8_11 b_3_8 b_3_9 0.76
+C8_111 b_3_8 vss 5.3e-16
+C8_112 b_3_9 vss 5.3e-16
+R8_12 b_3_7 b_3_8 2.53
+C8_121 b_3_7 vss 4e-16
+C8_122 b_3_8 vss 4e-16
+R8_13 b_3 b_3_7 2.59
+C8_131 b_3 vss 7.45e-16
+C8_132 b_3_7 vss 7.45e-16
+
+R9_1 b_2_14 b_2_1 2.13
+C9_11 b_2_14 vss 9e-16
+C9_12 b_2_1 vss 9e-16
+R9_2 b_2 b_2_14 1.9
+C9_21 b_2 vss 9.55e-16
+C9_22 b_2_14 vss 9.55e-16
+R9_3 b_2_13 b_2_2 1.28
+C9_31 b_2_13 vss 6.15e-16
+C9_32 b_2_2 vss 6.15e-16
+R9_4 b_2_11 b_2_13 2.92
+C9_41 b_2_11 vss 6.15e-16
+C9_42 b_2_13 vss 6.15e-16
+R9_5 b_2_12 b_2_3 1.06
+C9_51 b_2_12 vss 9e-17
+C9_52 b_2_3 vss 9e-17
+R9_6 b_2_11 b_2_12 1.31
+C9_61 b_2_11 vss 1.7e-16
+C9_62 b_2_12 vss 1.7e-16
+R9_7 b_2_9 b_2_11 1.3
+C9_71 b_2_9 vss 6.55e-16
+C9_72 b_2_11 vss 6.55e-16
+R9_8 b_2_10 b_2_4 1.94
+C9_81 b_2_10 vss 7e-16
+C9_82 b_2_4 vss 7e-16
+R9_9 b_2_9 b_2_10 0.19
+C9_91 b_2_9 vss 3.55e-16
+C9_92 b_2_10 vss 3.55e-16
+R9_10 b_2_7 b_2_9 0.33
+C9_101 b_2_7 vss 4e-16
+C9_102 b_2_9 vss 4e-16
+R9_11 b_2_8 b_2_5 1.92
+C9_111 b_2_8 vss 6.5e-16
+C9_112 b_2_5 vss 6.5e-16
+R9_12 b_2_7 b_2_8 2.26
+C9_121 b_2_7 vss 4.15e-16
+C9_122 b_2_8 vss 4.15e-16
+R9_13 b_2 b_2_7 1.2
+C9_131 b_2 vss 6.9e-16
+C9_132 b_2_7 vss 6.9e-16
+
+R10_1 b_1_14 b_1_1 1.55
+C10_11 b_1_14 vss 5.55e-16
+C10_12 b_1_1 vss 5.55e-16
+R10_2 b_1_10 b_1_14 0.99
+C10_21 b_1_10 vss 4.3e-16
+C10_22 b_1_14 vss 4.3e-16
+R10_3 b_1_13 b_1_2 1.03
+C10_31 b_1_13 vss 4.8e-16
+C10_32 b_1_2 vss 4.8e-16
+R10_4 b_1_11 b_1_13 1.53
+C10_41 b_1_11 vss 7.3e-16
+C10_42 b_1_13 vss 7.3e-16
+R10_5 b_1_12 b_1_3 0.08
+C10_51 b_1_12 vss 3.65e-16
+C10_52 b_1_3 vss 3.65e-16
+R10_6 b_1_11 b_1_12 0.6
+C10_61 b_1_11 vss 1.35e-16
+C10_62 b_1_12 vss 1.35e-16
+R10_7 b_1_10 b_1_11 1.29
+C10_71 b_1_10 vss 3.45e-16
+C10_72 b_1_11 vss 3.45e-16
+R10_8 b_1 b_1_10 1.66
+C10_81 b_1 vss 8.05e-16
+C10_82 b_1_10 vss 8.05e-16
+R10_9 b_1_9 b_1_4 1.25
+C10_91 b_1_9 vss 9.55e-16
+C10_92 b_1_4 vss 9.55e-16
+R10_10 b_1_7 b_1_9 2.31
+C10_101 b_1_7 vss 1.2e-16
+C10_102 b_1_9 vss 1.2e-16
+R10_11 b_1_8 b_1_5 1.45
+C10_111 b_1_8 vss 6.95e-16
+C10_112 b_1_5 vss 6.95e-16
+R10_12 b_1_7 b_1_8 0.75
+C10_121 b_1_7 vss 1.5e-16
+C10_122 b_1_8 vss 1.5e-16
+R10_13 b_1 b_1_7 0.15
+C10_131 b_1 vss 2.2e-16
+C10_132 b_1_7 vss 2.2e-16
+
+R11_1 b_0_14 b_0_1 1.94
+C11_11 b_0_14 vss 4e-17
+C11_12 b_0_1 vss 4e-17
+R11_2 b_0_12 b_0_14 2.08
+C11_21 b_0_12 vss 7.75e-16
+C11_22 b_0_14 vss 7.75e-16
+R11_3 b_0_13 b_0_2 1.94
+C11_31 b_0_13 vss 6.85e-16
+C11_32 b_0_2 vss 6.85e-16
+R11_4 b_0_12 b_0_13 1.92
+C11_41 b_0_12 vss 7.7e-16
+C11_42 b_0_13 vss 7.7e-16
+R11_5 b_0 b_0_12 2.9
+C11_51 b_0 vss 3.9e-16
+C11_52 b_0_12 vss 3.9e-16
+R11_6 b_0_11 b_0_3 1.28
+C11_61 b_0_11 vss 9.9e-16
+C11_62 b_0_3 vss 9.9e-16
+R11_7 b_0_7 b_0_11 1.8
+C11_71 b_0_7 vss 8.4e-16
+C11_72 b_0_11 vss 8.4e-16
+R11_8 b_0_10 b_0_4 2.7
+C11_81 b_0_10 vss 7.8e-16
+C11_82 b_0_4 vss 7.8e-16
+R11_9 b_0_8 b_0_10 2.58
+C11_91 b_0_8 vss 6.7e-16
+C11_92 b_0_10 vss 6.7e-16
+R11_10 b_0_9 b_0_5 2.52
+C11_101 b_0_9 vss 8.25e-16
+C11_102 b_0_5 vss 8.25e-16
+R11_11 b_0_8 b_0_9 2.8
+C11_111 b_0_8 vss 4.45e-16
+C11_112 b_0_9 vss 4.45e-16
+R11_12 b_0_7 b_0_8 2.07
+C11_121 b_0_7 vss 6.3e-16
+C11_122 b_0_8 vss 6.3e-16
+R11_13 b_0 b_0_7 0.11
+C11_131 b_0 vss 4e-16
+C11_132 b_0_7 vss 4e-16
+
+R12_1 a_3_14 a_3_1 0.34
+C12_11 a_3_14 vss 3.6e-16
+C12_12 a_3_1 vss 3.6e-16
+R12_2 a_3_10 a_3_14 1.26
+C12_21 a_3_10 vss 1.5e-17
+C12_22 a_3_14 vss 1.5e-17
+R12_3 a_3_13 a_3_2 1.27
+C12_31 a_3_13 vss 9.3e-16
+C12_32 a_3_2 vss 9.3e-16
+R12_4 a_3_11 a_3_13 0.94
+C12_41 a_3_11 vss 5e-16
+C12_42 a_3_13 vss 5e-16
+R12_5 a_3_12 a_3_3 0.1
+C12_51 a_3_12 vss 2.95e-16
+C12_52 a_3_3 vss 2.95e-16
+R12_6 a_3_11 a_3_12 1.87
+C12_61 a_3_11 vss 5e-18
+C12_62 a_3_12 vss 5e-18
+R12_7 a_3_10 a_3_11 2.92
+R12_8 a_3_8 a_3_10 0.55
+C12_81 a_3_8 vss 9.1e-16
+C12_82 a_3_10 vss 9.1e-16
+R12_9 a_3_9 a_3_4 2.92
+C12_91 a_3_9 vss 2.55e-16
+C12_92 a_3_4 vss 2.55e-16
+R12_10 a_3_8 a_3_9 2.82
+C12_101 a_3_8 vss 2.15e-16
+C12_102 a_3_9 vss 2.15e-16
+R12_11 a_3 a_3_8 0.82
+C12_111 a_3 vss 7.55e-16
+C12_112 a_3_8 vss 7.55e-16
+R12_12 a_3_7 a_3_5 1.77
+C12_121 a_3_7 vss 4.4e-16
+C12_122 a_3_5 vss 4.4e-16
+R12_13 a_3 a_3_7 1.99
+C12_131 a_3 vss 8.9e-16
+C12_132 a_3_7 vss 8.9e-16
+
+R13_1 a_2_14 a_2_1 0.48
+C13_11 a_2_14 vss 8.7e-16
+C13_12 a_2_1 vss 8.7e-16
+R13_2 a_2 a_2_14 1.64
+C13_21 a_2 vss 5.1e-16
+C13_22 a_2_14 vss 5.1e-16
+R13_3 a_2_13 a_2_2 1.15
+C13_31 a_2_13 vss 7.3e-16
+C13_32 a_2_2 vss 7.3e-16
+R13_4 a_2_7 a_2_13 2.93
+C13_41 a_2_7 vss 3.2e-16
+C13_42 a_2_13 vss 3.2e-16
+R13_5 a_2_12 a_2_3 2.31
+C13_51 a_2_12 vss 4.15e-16
+C13_52 a_2_3 vss 4.15e-16
+R13_6 a_2_8 a_2_12 2.24
+C13_61 a_2_8 vss 8e-16
+C13_62 a_2_12 vss 8e-16
+R13_7 a_2_11 a_2_4 2.36
+C13_71 a_2_11 vss 6.45e-16
+C13_72 a_2_4 vss 6.45e-16
+R13_8 a_2_9 a_2_11 2.72
+C13_81 a_2_9 vss 1.4e-16
+C13_82 a_2_11 vss 1.4e-16
+R13_9 a_2_10 a_2_5 2.11
+C13_91 a_2_10 vss 2e-16
+C13_92 a_2_5 vss 2e-16
+R13_10 a_2_9 a_2_10 0.84
+C13_101 a_2_9 vss 1.75e-16
+C13_102 a_2_10 vss 1.75e-16
+R13_11 a_2_8 a_2_9 1.63
+C13_111 a_2_8 vss 7.75e-16
+C13_112 a_2_9 vss 7.75e-16
+R13_12 a_2_7 a_2_8 1.4
+C13_121 a_2_7 vss 1.7e-16
+C13_122 a_2_8 vss 1.7e-16
+R13_13 a_2 a_2_7 1.53
+C13_131 a_2 vss 6.9e-16
+C13_132 a_2_7 vss 6.9e-16
+
+R14_1 a_1_14 a_1_1 0.02
+C14_11 a_1_14 vss 7.75e-16
+C14_12 a_1_1 vss 7.75e-16
+R14_2 a_1 a_1_14 0.08
+C14_21 a_1 vss 5.8e-16
+C14_22 a_1_14 vss 5.8e-16
+R14_3 a_1_13 a_1_2 1.07
+C14_31 a_1_13 vss 2.55e-16
+C14_32 a_1_2 vss 2.55e-16
+R14_4 a_1_7 a_1_13 0.78
+C14_41 a_1_7 vss 3.9e-16
+C14_42 a_1_13 vss 3.9e-16
+R14_5 a_1_12 a_1_3 0.92
+C14_51 a_1_12 vss 2.5e-16
+C14_52 a_1_3 vss 2.5e-16
+R14_6 a_1_8 a_1_12 0.87
+C14_61 a_1_8 vss 4.2e-16
+C14_62 a_1_12 vss 4.2e-16
+R14_7 a_1_11 a_1_4 0.63
+C14_71 a_1_11 vss 1e-16
+C14_72 a_1_4 vss 1e-16
+R14_8 a_1_9 a_1_11 2.47
+C14_81 a_1_9 vss 3e-17
+C14_82 a_1_11 vss 3e-17
+R14_9 a_1_10 a_1_5 1.24
+C14_91 a_1_10 vss 4.15e-16
+C14_92 a_1_5 vss 4.15e-16
+R14_10 a_1_9 a_1_10 0.42
+C14_101 a_1_9 vss 8.35e-16
+C14_102 a_1_10 vss 8.35e-16
+R14_11 a_1_8 a_1_9 0.16
+C14_111 a_1_8 vss 6.05e-16
+C14_112 a_1_9 vss 6.05e-16
+R14_12 a_1_7 a_1_8 1.49
+C14_121 a_1_7 vss 4.4e-16
+C14_122 a_1_8 vss 4.4e-16
+R14_13 a_1 a_1_7 0.99
+C14_131 a_1 vss 8.15e-16
+C14_132 a_1_7 vss 8.15e-16
+
+R15_1 a_0_14 a_0_1 2.05
+C15_11 a_0_14 vss 2.1e-16
+C15_12 a_0_1 vss 2.1e-16
+R15_2 a_0_8 a_0_14 2.23
+C15_21 a_0_8 vss 1.15e-16
+C15_22 a_0_14 vss 1.15e-16
+R15_3 a_0_13 a_0_2 0.04
+C15_31 a_0_13 vss 4.4e-16
+C15_32 a_0_2 vss 4.4e-16
+R15_4 a_0_11 a_0_13 2.81
+C15_41 a_0_11 vss 9.7e-16
+C15_42 a_0_13 vss 9.7e-16
+R15_5 a_0_12 a_0_3 2.08
+C15_51 a_0_12 vss 6.75e-16
+C15_52 a_0_3 vss 6.75e-16
+R15_6 a_0_11 a_0_12 1.8
+C15_61 a_0_11 vss 3.85e-16
+C15_62 a_0_12 vss 3.85e-16
+R15_7 a_0_9 a_0_11 0.44
+C15_71 a_0_9 vss 7.85e-16
+C15_72 a_0_11 vss 7.85e-16
+R15_8 a_0_10 a_0_4 1.15
+C15_81 a_0_10 vss 1.25e-16
+C15_82 a_0_4 vss 1.25e-16
+R15_9 a_0_9 a_0_10 0.99
+C15_91 a_0_9 vss 8.85e-16
+C15_92 a_0_10 vss 8.85e-16
+R15_10 a_0_8 a_0_9 2.45
+C15_101 a_0_8 vss 6.7e-16
+C15_102 a_0_9 vss 6.7e-16
+R15_11 a_0 a_0_8 0.8
+C15_111 a_0 vss 6.15e-16
+C15_112 a_0_8 vss 6.15e-16
+R15_12 a_0_7 a_0_5 0.81
+C15_121 a_0_7 vss 4.6e-16
+C15_122 a_0_5 vss 4.6e-16
+R15_13 a_0 a_0_7 0.43
+C15_131 a_0 vss 7.8e-16
+C15_132 a_0_7 vss 7.8e-16
+
+R16_1 mbk_sig6_14 mbk_sig6_1 2.96
+C16_11 mbk_sig6_14 vss 7.2e-16
+C16_12 mbk_sig6_1 vss 7.2e-16
+R16_2 mbk_sig6_6 mbk_sig6_14 0.71
+C16_21 mbk_sig6_6 vss 4e-17
+C16_22 mbk_sig6_14 vss 4e-17
+R16_3 mbk_sig6_13 mbk_sig6_2 0.99
+C16_31 mbk_sig6_13 vss 5.2e-16
+C16_32 mbk_sig6_2 vss 5.2e-16
+R16_4 mbk_sig6_7 mbk_sig6_13 1.74
+C16_41 mbk_sig6_7 vss 4.5e-16
+C16_42 mbk_sig6_13 vss 4.5e-16
+R16_5 mbk_sig6_12 mbk_sig6_3 0.74
+C16_51 mbk_sig6_12 vss 7.1e-16
+C16_52 mbk_sig6_3 vss 7.1e-16
+R16_6 mbk_sig6_10 mbk_sig6_12 1.11
+C16_61 mbk_sig6_10 vss 9.55e-16
+C16_62 mbk_sig6_12 vss 9.55e-16
+R16_7 mbk_sig6_11 mbk_sig6_4 1.11
+C16_71 mbk_sig6_11 vss 4.1e-16
+C16_72 mbk_sig6_4 vss 4.1e-16
+R16_8 mbk_sig6_10 mbk_sig6_11 0.91
+C16_81 mbk_sig6_10 vss 1.65e-16
+C16_82 mbk_sig6_11 vss 1.65e-16
+R16_9 mbk_sig6_8 mbk_sig6_10 3
+C16_91 mbk_sig6_8 vss 4.65e-16
+C16_92 mbk_sig6_10 vss 4.65e-16
+R16_10 mbk_sig6_9 mbk_sig6_5 2.12
+C16_101 mbk_sig6_9 vss 5e-17
+C16_102 mbk_sig6_5 vss 5e-17
+R16_11 mbk_sig6_8 mbk_sig6_9 2.29
+C16_111 mbk_sig6_8 vss 4.95e-16
+C16_112 mbk_sig6_9 vss 4.95e-16
+R16_12 mbk_sig6_7 mbk_sig6_8 2
+C16_121 mbk_sig6_7 vss 8.75e-16
+C16_122 mbk_sig6_8 vss 8.75e-16
+R16_13 mbk_sig6_6 mbk_sig6_7 0.17
+C16_131 mbk_sig6_6 vss 7.3e-16
+C16_132 mbk_sig6_7 vss 7.3e-16
+
+R17_1 cell0_0.g_20 cell0_0.g_1 0.24
+C17_11 cell0_0.g_20 vss 7.1e-16
+C17_12 cell0_0.g_1 vss 7.1e-16
+R17_2 cell0_0.g_18 cell0_0.g_20 2.05
+C17_21 cell0_0.g_18 vss 1.15e-16
+C17_22 cell0_0.g_20 vss 1.15e-16
+R17_3 cell0_0.g_19 cell0_0.g_2 0.86
+C17_31 cell0_0.g_19 vss 5.45e-16
+C17_32 cell0_0.g_2 vss 5.45e-16
+R17_4 cell0_0.g_18 cell0_0.g_19 2
+C17_41 cell0_0.g_18 vss 6.3e-16
+C17_42 cell0_0.g_19 vss 6.3e-16
+R17_5 cell0_0.g_14 cell0_0.g_18 1.98
+C17_51 cell0_0.g_14 vss 9.5e-17
+C17_52 cell0_0.g_18 vss 9.5e-17
+R17_6 cell0_0.g_17 cell0_0.g_3 1.51
+C17_61 cell0_0.g_17 vss 1.15e-16
+C17_62 cell0_0.g_3 vss 1.15e-16
+R17_7 cell0_0.g_15 cell0_0.g_17 1.22
+C17_71 cell0_0.g_15 vss 6.1e-16
+C17_72 cell0_0.g_17 vss 6.1e-16
+R17_8 cell0_0.g_16 cell0_0.g_4 2.89
+C17_81 cell0_0.g_16 vss 1.9e-16
+C17_82 cell0_0.g_4 vss 1.9e-16
+R17_9 cell0_0.g_15 cell0_0.g_16 0.06
+C17_91 cell0_0.g_15 vss 8.35e-16
+C17_92 cell0_0.g_16 vss 8.35e-16
+R17_10 cell0_0.g_14 cell0_0.g_15 0.02
+C17_101 cell0_0.g_14 vss 6.5e-16
+C17_102 cell0_0.g_15 vss 6.5e-16
+R17_11 cell0_0.g_10 cell0_0.g_14 0.39
+C17_111 cell0_0.g_10 vss 5.55e-16
+C17_112 cell0_0.g_14 vss 5.55e-16
+R17_12 cell0_0.g_13 cell0_0.g_5 2.8
+C17_121 cell0_0.g_13 vss 3.45e-16
+C17_122 cell0_0.g_5 vss 3.45e-16
+R17_13 cell0_0.g_11 cell0_0.g_13 1.72
+C17_131 cell0_0.g_11 vss 2.3e-16
+C17_132 cell0_0.g_13 vss 2.3e-16
+R17_14 cell0_0.g_12 cell0_0.g_6 1.64
+C17_141 cell0_0.g_12 vss 4.8e-16
+C17_142 cell0_0.g_6 vss 4.8e-16
+R17_15 cell0_0.g_11 cell0_0.g_12 2.15
+C17_151 cell0_0.g_11 vss 8.85e-16
+C17_152 cell0_0.g_12 vss 8.85e-16
+R17_16 cell0_0.g_10 cell0_0.g_11 2.71
+C17_161 cell0_0.g_10 vss 9.65e-16
+C17_162 cell0_0.g_11 vss 9.65e-16
+R17_17 cell0_0.g_8 cell0_0.g_10 1.06
+C17_171 cell0_0.g_8 vss 7.35e-16
+C17_172 cell0_0.g_10 vss 7.35e-16
+R17_18 cell0_0.g_9 cell0_0.g_7 1.27
+C17_181 cell0_0.g_9 vss 1.9e-16
+C17_182 cell0_0.g_7 vss 1.9e-16
+R17_19 cell0_0.g_8 cell0_0.g_9 2.8
+C17_191 cell0_0.g_8 vss 7.9e-16
+C17_192 cell0_0.g_9 vss 7.9e-16
+
+R18_1 mbk_sig8_2 mbk_sig8_1 1.87
+C18_11 mbk_sig8_2 vss 7.4e-16
+C18_12 mbk_sig8_1 vss 7.4e-16
+
+R19_1 mbk_sig1_11 mbk_sig1_1 0.88
+C19_11 mbk_sig1_11 vss 4.75e-16
+C19_12 mbk_sig1_1 vss 4.75e-16
+R19_2 mbk_sig1_9 mbk_sig1_11 1.63
+C19_21 mbk_sig1_9 vss 1.35e-16
+C19_22 mbk_sig1_11 vss 1.35e-16
+R19_3 mbk_sig1_10 mbk_sig1_2 0.63
+C19_31 mbk_sig1_10 vss 2.65e-16
+C19_32 mbk_sig1_2 vss 2.65e-16
+R19_4 mbk_sig1_9 mbk_sig1_10 1.05
+C19_41 mbk_sig1_9 vss 2.7e-16
+C19_42 mbk_sig1_10 vss 2.7e-16
+R19_5 mbk_sig1_5 mbk_sig1_9 1.31
+C19_51 mbk_sig1_5 vss 1.7e-16
+C19_52 mbk_sig1_9 vss 1.7e-16
+R19_6 mbk_sig1_8 mbk_sig1_3 1.1
+C19_61 mbk_sig1_8 vss 6.65e-16
+C19_62 mbk_sig1_3 vss 6.65e-16
+R19_7 mbk_sig1_6 mbk_sig1_8 0.35
+C19_71 mbk_sig1_6 vss 3.8e-16
+C19_72 mbk_sig1_8 vss 3.8e-16
+R19_8 mbk_sig1_7 mbk_sig1_4 2.52
+C19_81 mbk_sig1_7 vss 2.55e-16
+C19_82 mbk_sig1_4 vss 2.55e-16
+R19_9 mbk_sig1_6 mbk_sig1_7 1.94
+C19_91 mbk_sig1_6 vss 2.4e-16
+C19_92 mbk_sig1_7 vss 2.4e-16
+R19_10 mbk_sig1_5 mbk_sig1_6 2.88
+C19_101 mbk_sig1_5 vss 3.15e-16
+C19_102 mbk_sig1_6 vss 3.15e-16
+
+R20_1 mbk_sig16_14 mbk_sig16_1 2.14
+C20_11 mbk_sig16_14 vss 4.95e-16
+C20_12 mbk_sig16_1 vss 4.95e-16
+R20_2 mbk_sig16_12 mbk_sig16_14 0.35
+C20_21 mbk_sig16_12 vss 9.65e-16
+C20_22 mbk_sig16_14 vss 9.65e-16
+R20_3 mbk_sig16_13 mbk_sig16_2 0.35
+C20_31 mbk_sig16_13 vss 4e-17
+C20_32 mbk_sig16_2 vss 4e-17
+R20_4 mbk_sig16_12 mbk_sig16_13 0.61
+C20_41 mbk_sig16_12 vss 3.95e-16
+C20_42 mbk_sig16_13 vss 3.95e-16
+R20_5 mbk_sig16_6 mbk_sig16_12 1.83
+C20_51 mbk_sig16_6 vss 5.55e-16
+C20_52 mbk_sig16_12 vss 5.55e-16
+R20_6 mbk_sig16_11 mbk_sig16_3 1.02
+C20_61 mbk_sig16_11 vss 9.2e-16
+C20_62 mbk_sig16_3 vss 9.2e-16
+R20_7 mbk_sig16_7 mbk_sig16_11 0.43
+C20_71 mbk_sig16_7 vss 5.55e-16
+C20_72 mbk_sig16_11 vss 5.55e-16
+R20_8 mbk_sig16_10 mbk_sig16_4 2.68
+C20_81 mbk_sig16_10 vss 9.35e-16
+C20_82 mbk_sig16_4 vss 9.35e-16
+R20_9 mbk_sig16_8 mbk_sig16_10 1.42
+C20_91 mbk_sig16_8 vss 5.75e-16
+C20_92 mbk_sig16_10 vss 5.75e-16
+R20_10 mbk_sig16_9 mbk_sig16_5 1.78
+C20_101 mbk_sig16_9 vss 3.55e-16
+C20_102 mbk_sig16_5 vss 3.55e-16
+R20_11 mbk_sig16_8 mbk_sig16_9 1.87
+C20_111 mbk_sig16_8 vss 8.25e-16
+C20_112 mbk_sig16_9 vss 8.25e-16
+R20_12 mbk_sig16_7 mbk_sig16_8 1.93
+C20_121 mbk_sig16_7 vss 3.35e-16
+C20_122 mbk_sig16_8 vss 3.35e-16
+R20_13 mbk_sig16_6 mbk_sig16_7 0.56
+C20_131 mbk_sig16_6 vss 1.9e-16
+C20_132 mbk_sig16_7 vss 1.9e-16
+
+R21_1 cell0_1.g_11 cell0_1.g_1 1.24
+C21_11 cell0_1.g_11 vss 1.6e-16
+C21_12 cell0_1.g_1 vss 1.6e-16
+R21_2 cell0_1.g_9 cell0_1.g_11 0.6
+C21_21 cell0_1.g_9 vss 8.65e-16
+C21_22 cell0_1.g_11 vss 8.65e-16
+R21_3 cell0_1.g_10 cell0_1.g_2 2.49
+C21_31 cell0_1.g_10 vss 1.2e-16
+C21_32 cell0_1.g_2 vss 1.2e-16
+R21_4 cell0_1.g_9 cell0_1.g_10 1.1
+C21_41 cell0_1.g_9 vss 8.95e-16
+C21_42 cell0_1.g_10 vss 8.95e-16
+R21_5 cell0_1.g_7 cell0_1.g_9 1.57
+C21_51 cell0_1.g_7 vss 2.15e-16
+C21_52 cell0_1.g_9 vss 2.15e-16
+R21_6 cell0_1.g_8 cell0_1.g_3 0.45
+C21_61 cell0_1.g_8 vss 5.9e-16
+C21_62 cell0_1.g_3 vss 5.9e-16
+R21_7 cell0_1.g_7 cell0_1.g_8 2.67
+C21_71 cell0_1.g_7 vss 3.65e-16
+C21_72 cell0_1.g_8 vss 3.65e-16
+R21_8 cell0_1.g_5 cell0_1.g_7 2.06
+C21_81 cell0_1.g_5 vss 5.45e-16
+C21_82 cell0_1.g_7 vss 5.45e-16
+R21_9 cell0_1.g_6 cell0_1.g_4 2.33
+C21_91 cell0_1.g_6 vss 6.5e-16
+C21_92 cell0_1.g_4 vss 6.5e-16
+R21_10 cell0_1.g_5 cell0_1.g_6 2.72
+C21_101 cell0_1.g_5 vss 4.5e-16
+C21_102 cell0_1.g_6 vss 4.5e-16
+
+R22_1 mbk_sig24_2 mbk_sig24_1 1.8
+C22_11 mbk_sig24_2 vss 7.3e-16
+C22_12 mbk_sig24_1 vss 7.3e-16
+
+R23_1 mbk_sig11_11 mbk_sig11_1 1.22
+C23_11 mbk_sig11_11 vss 9.95e-16
+C23_12 mbk_sig11_1 vss 9.95e-16
+R23_2 mbk_sig11_9 mbk_sig11_11 2.12
+C23_21 mbk_sig11_9 vss 2.75e-16
+C23_22 mbk_sig11_11 vss 2.75e-16
+R23_3 mbk_sig11_10 mbk_sig11_2 2.18
+C23_31 mbk_sig11_10 vss 9.85e-16
+C23_32 mbk_sig11_2 vss 9.85e-16
+R23_4 mbk_sig11_9 mbk_sig11_10 0.93
+C23_41 mbk_sig11_9 vss 8.9e-16
+C23_42 mbk_sig11_10 vss 8.9e-16
+R23_5 mbk_sig11_5 mbk_sig11_9 1.68
+C23_51 mbk_sig11_5 vss 9.55e-16
+C23_52 mbk_sig11_9 vss 9.55e-16
+R23_6 mbk_sig11_8 mbk_sig11_3 0.09
+C23_61 mbk_sig11_8 vss 3.3e-16
+C23_62 mbk_sig11_3 vss 3.3e-16
+R23_7 mbk_sig11_6 mbk_sig11_8 2.1
+C23_71 mbk_sig11_6 vss 7.7e-16
+C23_72 mbk_sig11_8 vss 7.7e-16
+R23_8 mbk_sig11_7 mbk_sig11_4 1.63
+C23_81 mbk_sig11_7 vss 3.55e-16
+C23_82 mbk_sig11_4 vss 3.55e-16
+R23_9 mbk_sig11_6 mbk_sig11_7 1.92
+C23_91 mbk_sig11_6 vss 1.4e-16
+C23_92 mbk_sig11_7 vss 1.4e-16
+R23_10 mbk_sig11_5 mbk_sig11_6 1.44
+C23_101 mbk_sig11_5 vss 2.8e-16
+C23_102 mbk_sig11_6 vss 2.8e-16
+
+R24_1 cell0_1.p_17 cell0_1.p_1 0.91
+C24_11 cell0_1.p_17 vss 8.45e-16
+C24_12 cell0_1.p_1 vss 8.45e-16
+R24_2 cell0_1.p_13 cell0_1.p_17 2.93
+C24_21 cell0_1.p_13 vss 6.35e-16
+C24_22 cell0_1.p_17 vss 6.35e-16
+R24_3 cell0_1.p_16 cell0_1.p_2 0.25
+C24_31 cell0_1.p_16 vss 7.8e-16
+C24_32 cell0_1.p_2 vss 7.8e-16
+R24_4 cell0_1.p_14 cell0_1.p_16 0.91
+C24_41 cell0_1.p_14 vss 5e-18
+C24_42 cell0_1.p_16 vss 5e-18
+R24_5 cell0_1.p_15 cell0_1.p_3 2.29
+C24_51 cell0_1.p_15 vss 1.15e-16
+C24_52 cell0_1.p_3 vss 1.15e-16
+R24_6 cell0_1.p_14 cell0_1.p_15 2.24
+C24_61 cell0_1.p_14 vss 1.25e-16
+C24_62 cell0_1.p_15 vss 1.25e-16
+R24_7 cell0_1.p_13 cell0_1.p_14 2.09
+C24_71 cell0_1.p_13 vss 3.35e-16
+C24_72 cell0_1.p_14 vss 3.35e-16
+R24_8 cell0_1.p_11 cell0_1.p_13 1.74
+C24_81 cell0_1.p_11 vss 1.7e-16
+C24_82 cell0_1.p_13 vss 1.7e-16
+R24_9 cell0_1.p_12 cell0_1.p_4 0.19
+C24_91 cell0_1.p_12 vss 1.15e-16
+C24_92 cell0_1.p_4 vss 1.15e-16
+R24_10 cell0_1.p_11 cell0_1.p_12 0.97
+C24_101 cell0_1.p_11 vss 1.65e-16
+C24_102 cell0_1.p_12 vss 1.65e-16
+R24_11 cell0_1.p_7 cell0_1.p_11 2.52
+C24_111 cell0_1.p_7 vss 3.8e-16
+C24_112 cell0_1.p_11 vss 3.8e-16
+R24_12 cell0_1.p_10 cell0_1.p_5 0.31
+C24_121 cell0_1.p_10 vss 4.8e-16
+C24_122 cell0_1.p_5 vss 4.8e-16
+R24_13 cell0_1.p_8 cell0_1.p_10 1.47
+C24_131 cell0_1.p_8 vss 9.35e-16
+C24_132 cell0_1.p_10 vss 9.35e-16
+R24_14 cell0_1.p_9 cell0_1.p_6 1.86
+C24_141 cell0_1.p_9 vss 6.1e-16
+C24_142 cell0_1.p_6 vss 6.1e-16
+R24_15 cell0_1.p_8 cell0_1.p_9 1.47
+C24_151 cell0_1.p_8 vss 7e-17
+C24_152 cell0_1.p_9 vss 7e-17
+R24_16 cell0_1.p_7 cell0_1.p_8 2.46
+C24_161 cell0_1.p_7 vss 1.1e-16
+C24_162 cell0_1.p_8 vss 1.1e-16
+
+R25_1 cell0_2.p_20 cell0_2.p_1 2.11
+C25_11 cell0_2.p_20 vss 9.75e-16
+C25_12 cell0_2.p_1 vss 9.75e-16
+R25_2 cell0_2.p_16 cell0_2.p_20 1.62
+C25_21 cell0_2.p_16 vss 3.25e-16
+C25_22 cell0_2.p_20 vss 3.25e-16
+R25_3 cell0_2.p_19 cell0_2.p_2 0.59
+C25_31 cell0_2.p_19 vss 2.15e-16
+C25_32 cell0_2.p_2 vss 2.15e-16
+R25_4 cell0_2.p_17 cell0_2.p_19 0.71
+C25_41 cell0_2.p_17 vss 4.2e-16
+C25_42 cell0_2.p_19 vss 4.2e-16
+R25_5 cell0_2.p_18 cell0_2.p_3 1.89
+C25_51 cell0_2.p_18 vss 7.4e-16
+C25_52 cell0_2.p_3 vss 7.4e-16
+R25_6 cell0_2.p_17 cell0_2.p_18 0.12
+C25_61 cell0_2.p_17 vss 1.5e-16
+C25_62 cell0_2.p_18 vss 1.5e-16
+R25_7 cell0_2.p_16 cell0_2.p_17 1.34
+C25_71 cell0_2.p_16 vss 6.5e-17
+C25_72 cell0_2.p_17 vss 6.5e-17
+R25_8 cell0_2.p_8 cell0_2.p_16 0.87
+C25_81 cell0_2.p_8 vss 8.2e-16
+C25_82 cell0_2.p_16 vss 8.2e-16
+R25_9 cell0_2.p_15 cell0_2.p_4 0.41
+C25_91 cell0_2.p_15 vss 2.35e-16
+C25_92 cell0_2.p_4 vss 2.35e-16
+R25_10 cell0_2.p_13 cell0_2.p_15 0.2
+C25_101 cell0_2.p_13 vss 5.5e-17
+C25_102 cell0_2.p_15 vss 5.5e-17
+R25_11 cell0_2.p_14 cell0_2.p_5 0.03
+C25_111 cell0_2.p_14 vss 2e-16
+C25_112 cell0_2.p_5 vss 2e-16
+R25_12 cell0_2.p_13 cell0_2.p_14 1
+C25_121 cell0_2.p_13 vss 2.9e-16
+C25_122 cell0_2.p_14 vss 2.9e-16
+R25_13 cell0_2.p_9 cell0_2.p_13 0.24
+C25_131 cell0_2.p_9 vss 8.8e-16
+C25_132 cell0_2.p_13 vss 8.8e-16
+R25_14 cell0_2.p_12 cell0_2.p_6 2.17
+C25_141 cell0_2.p_12 vss 9.3e-16
+C25_142 cell0_2.p_6 vss 9.3e-16
+R25_15 cell0_2.p_10 cell0_2.p_12 0.88
+C25_151 cell0_2.p_10 vss 1.2e-16
+C25_152 cell0_2.p_12 vss 1.2e-16
+R25_16 cell0_2.p_11 cell0_2.p_7 2.44
+C25_161 cell0_2.p_11 vss 4e-16
+C25_162 cell0_2.p_7 vss 4e-16
+R25_17 cell0_2.p_10 cell0_2.p_11 2.57
+C25_171 cell0_2.p_10 vss 1.5e-16
+C25_172 cell0_2.p_11 vss 1.5e-16
+R25_18 cell0_2.p_9 cell0_2.p_10 2.27
+C25_181 cell0_2.p_9 vss 7.5e-16
+C25_182 cell0_2.p_10 vss 7.5e-16
+R25_19 cell0_2.p_8 cell0_2.p_9 0.43
+C25_191 cell0_2.p_8 vss 4.9e-16
+C25_192 cell0_2.p_9 vss 4.9e-16
+
+R26_1 cell3_2.p_11 cell3_2.p_1 0.91
+C26_11 cell3_2.p_11 vss 6.85e-16
+C26_12 cell3_2.p_1 vss 6.85e-16
+R26_2 cell3_2.p_9 cell3_2.p_11 1.46
+C26_21 cell3_2.p_9 vss 7.95e-16
+C26_22 cell3_2.p_11 vss 7.95e-16
+R26_3 cell3_2.p_10 cell3_2.p_2 0.34
+C26_31 cell3_2.p_10 vss 4.05e-16
+C26_32 cell3_2.p_2 vss 4.05e-16
+R26_4 cell3_2.p_9 cell3_2.p_10 0.93
+C26_41 cell3_2.p_9 vss 2.9e-16
+C26_42 cell3_2.p_10 vss 2.9e-16
+R26_5 cell3_2.p_7 cell3_2.p_9 2.42
+C26_51 cell3_2.p_7 vss 6.5e-16
+C26_52 cell3_2.p_9 vss 6.5e-16
+R26_6 cell3_2.p_8 cell3_2.p_3 0.34
+C26_61 cell3_2.p_8 vss 9.6e-16
+C26_62 cell3_2.p_3 vss 9.6e-16
+R26_7 cell3_2.p_7 cell3_2.p_8 1.38
+C26_71 cell3_2.p_7 vss 1.5e-16
+C26_72 cell3_2.p_8 vss 1.5e-16
+R26_8 cell3_2.p_5 cell3_2.p_7 0.87
+C26_81 cell3_2.p_5 vss 2.35e-16
+C26_82 cell3_2.p_7 vss 2.35e-16
+R26_9 cell3_2.p_6 cell3_2.p_4 2.74
+C26_91 cell3_2.p_6 vss 4.5e-17
+C26_92 cell3_2.p_4 vss 4.5e-17
+R26_10 cell3_2.p_5 cell3_2.p_6 1.55
+C26_101 cell3_2.p_5 vss 3.75e-16
+C26_102 cell3_2.p_6 vss 3.75e-16
+
+R27_1 mbk_sig28_11 mbk_sig28_1 1.14
+C27_11 mbk_sig28_11 vss 8.35e-16
+C27_12 mbk_sig28_1 vss 8.35e-16
+R27_2 mbk_sig28_9 mbk_sig28_11 2.41
+C27_21 mbk_sig28_9 vss 5.5e-17
+C27_22 mbk_sig28_11 vss 5.5e-17
+R27_3 mbk_sig28_10 mbk_sig28_2 1.4
+C27_31 mbk_sig28_10 vss 3.35e-16
+C27_32 mbk_sig28_2 vss 3.35e-16
+R27_4 mbk_sig28_9 mbk_sig28_10 0.13
+C27_41 mbk_sig28_9 vss 7.5e-16
+C27_42 mbk_sig28_10 vss 7.5e-16
+R27_5 mbk_sig28_5 mbk_sig28_9 0.27
+C27_51 mbk_sig28_5 vss 3e-17
+C27_52 mbk_sig28_9 vss 3e-17
+R27_6 mbk_sig28_8 mbk_sig28_3 1.06
+C27_61 mbk_sig28_8 vss 8.05e-16
+C27_62 mbk_sig28_3 vss 8.05e-16
+R27_7 mbk_sig28_6 mbk_sig28_8 0.43
+C27_71 mbk_sig28_6 vss 6.05e-16
+C27_72 mbk_sig28_8 vss 6.05e-16
+R27_8 mbk_sig28_7 mbk_sig28_4 0.09
+C27_81 mbk_sig28_7 vss 6.05e-16
+C27_82 mbk_sig28_4 vss 6.05e-16
+R27_9 mbk_sig28_6 mbk_sig28_7 2.09
+C27_91 mbk_sig28_6 vss 6e-16
+C27_92 mbk_sig28_7 vss 6e-16
+R27_10 mbk_sig28_5 mbk_sig28_6 2.87
+C27_101 mbk_sig28_5 vss 5.9e-16
+C27_102 mbk_sig28_6 vss 5.9e-16
+
+R28_1 mbk_sig33_2 mbk_sig33_1 0.87
+C28_11 mbk_sig33_2 vss 3.9e-16
+C28_12 mbk_sig33_1 vss 3.9e-16
+
+R29_1 mbk_sig30_14 mbk_sig30_1 2.84
+C29_11 mbk_sig30_14 vss 4.1e-16
+C29_12 mbk_sig30_1 vss 4.1e-16
+R29_2 mbk_sig30_6 mbk_sig30_14 1.77
+C29_21 mbk_sig30_6 vss 8.5e-17
+C29_22 mbk_sig30_14 vss 8.5e-17
+R29_3 mbk_sig30_13 mbk_sig30_2 3
+C29_31 mbk_sig30_13 vss 2.15e-16
+C29_32 mbk_sig30_2 vss 2.15e-16
+R29_4 mbk_sig30_11 mbk_sig30_13 0.39
+C29_41 mbk_sig30_11 vss 9.45e-16
+C29_42 mbk_sig30_13 vss 9.45e-16
+R29_5 mbk_sig30_12 mbk_sig30_3 0.46
+C29_51 mbk_sig30_12 vss 9.95e-16
+C29_52 mbk_sig30_3 vss 9.95e-16
+R29_6 mbk_sig30_11 mbk_sig30_12 1.44
+C29_61 mbk_sig30_11 vss 7.6e-16
+C29_62 mbk_sig30_12 vss 7.6e-16
+R29_7 mbk_sig30_7 mbk_sig30_11 2.27
+C29_71 mbk_sig30_7 vss 1.05e-16
+C29_72 mbk_sig30_11 vss 1.05e-16
+R29_8 mbk_sig30_10 mbk_sig30_4 0.98
+C29_81 mbk_sig30_10 vss 8e-17
+C29_82 mbk_sig30_4 vss 8e-17
+R29_9 mbk_sig30_8 mbk_sig30_10 1.67
+C29_91 mbk_sig30_8 vss 6.5e-17
+C29_92 mbk_sig30_10 vss 6.5e-17
+R29_10 mbk_sig30_9 mbk_sig30_5 1.78
+C29_101 mbk_sig30_9 vss 6e-16
+C29_102 mbk_sig30_5 vss 6e-16
+R29_11 mbk_sig30_8 mbk_sig30_9 0.2
+C29_111 mbk_sig30_8 vss 4.2e-16
+C29_112 mbk_sig30_9 vss 4.2e-16
+R29_12 mbk_sig30_7 mbk_sig30_8 1.07
+C29_121 mbk_sig30_7 vss 2.3e-16
+C29_122 mbk_sig30_8 vss 2.3e-16
+R29_13 mbk_sig30_6 mbk_sig30_7 0.67
+C29_131 mbk_sig30_6 vss 4.4e-16
+C29_132 mbk_sig30_7 vss 4.4e-16
+
+R30_1 cell0_2.g_20 cell0_2.g_1 2.79
+C30_11 cell0_2.g_20 vss 3.55e-16
+C30_12 cell0_2.g_1 vss 3.55e-16
+R30_2 cell0_2.g_16 cell0_2.g_20 1.33
+C30_21 cell0_2.g_16 vss 9.95e-16
+C30_22 cell0_2.g_20 vss 9.95e-16
+R30_3 cell0_2.g_19 cell0_2.g_2 0.04
+C30_31 cell0_2.g_19 vss 8.85e-16
+C30_32 cell0_2.g_2 vss 8.85e-16
+R30_4 cell0_2.g_17 cell0_2.g_19 2.31
+C30_41 cell0_2.g_17 vss 5.25e-16
+C30_42 cell0_2.g_19 vss 5.25e-16
+R30_5 cell0_2.g_18 cell0_2.g_3 2.55
+C30_51 cell0_2.g_18 vss 3.1e-16
+C30_52 cell0_2.g_3 vss 3.1e-16
+R30_6 cell0_2.g_17 cell0_2.g_18 1.12
+C30_61 cell0_2.g_17 vss 5.9e-16
+C30_62 cell0_2.g_18 vss 5.9e-16
+R30_7 cell0_2.g_16 cell0_2.g_17 0.33
+C30_71 cell0_2.g_16 vss 7.15e-16
+C30_72 cell0_2.g_17 vss 7.15e-16
+R30_8 cell0_2.g_8 cell0_2.g_16 1.94
+C30_81 cell0_2.g_8 vss 1.35e-16
+C30_82 cell0_2.g_16 vss 1.35e-16
+R30_9 cell0_2.g_15 cell0_2.g_4 2.92
+C30_91 cell0_2.g_15 vss 2.5e-17
+C30_92 cell0_2.g_4 vss 2.5e-17
+R30_10 cell0_2.g_11 cell0_2.g_15 2.57
+C30_101 cell0_2.g_11 vss 3.55e-16
+C30_102 cell0_2.g_15 vss 3.55e-16
+R30_11 cell0_2.g_14 cell0_2.g_5 2.62
+C30_111 cell0_2.g_14 vss 2.2e-16
+C30_112 cell0_2.g_5 vss 2.2e-16
+R30_12 cell0_2.g_12 cell0_2.g_14 1.23
+C30_121 cell0_2.g_12 vss 4.25e-16
+C30_122 cell0_2.g_14 vss 4.25e-16
+R30_13 cell0_2.g_13 cell0_2.g_6 1.54
+C30_131 cell0_2.g_13 vss 8.45e-16
+C30_132 cell0_2.g_6 vss 8.45e-16
+R30_14 cell0_2.g_12 cell0_2.g_13 2.8
+C30_141 cell0_2.g_12 vss 9.25e-16
+C30_142 cell0_2.g_13 vss 9.25e-16
+R30_15 cell0_2.g_11 cell0_2.g_12 0.06
+C30_151 cell0_2.g_11 vss 4e-16
+C30_152 cell0_2.g_12 vss 4e-16
+R30_16 cell0_2.g_9 cell0_2.g_11 1.87
+C30_161 cell0_2.g_9 vss 7.75e-16
+C30_162 cell0_2.g_11 vss 7.75e-16
+R30_17 cell0_2.g_10 cell0_2.g_7 2.63
+C30_171 cell0_2.g_10 vss 3.4e-16
+C30_172 cell0_2.g_7 vss 3.4e-16
+R30_18 cell0_2.g_9 cell0_2.g_10 2.89
+C30_181 cell0_2.g_9 vss 6.25e-16
+C30_182 cell0_2.g_10 vss 6.25e-16
+R30_19 cell0_2.g_8 cell0_2.g_9 1.45
+C30_191 cell0_2.g_8 vss 5e-18
+C30_192 cell0_2.g_9 vss 5e-18
+
+R31_1 mbk_sig47_14 mbk_sig47_1 2.71
+C31_11 mbk_sig47_14 vss 1.1e-16
+C31_12 mbk_sig47_1 vss 1.1e-16
+R31_2 mbk_sig47_6 mbk_sig47_14 1.28
+C31_21 mbk_sig47_6 vss 5.95e-16
+C31_22 mbk_sig47_14 vss 5.95e-16
+R31_3 mbk_sig47_13 mbk_sig47_2 0.93
+C31_31 mbk_sig47_13 vss 5e-16
+C31_32 mbk_sig47_2 vss 5e-16
+R31_4 mbk_sig47_7 mbk_sig47_13 0.56
+C31_41 mbk_sig47_7 vss 5.65e-16
+C31_42 mbk_sig47_13 vss 5.65e-16
+R31_5 mbk_sig47_12 mbk_sig47_3 0.47
+C31_51 mbk_sig47_12 vss 9.9e-16
+C31_52 mbk_sig47_3 vss 9.9e-16
+R31_6 mbk_sig47_10 mbk_sig47_12 2.34
+C31_61 mbk_sig47_10 vss 8.65e-16
+C31_62 mbk_sig47_12 vss 8.65e-16
+R31_7 mbk_sig47_11 mbk_sig47_4 1.34
+C31_71 mbk_sig47_11 vss 4.35e-16
+C31_72 mbk_sig47_4 vss 4.35e-16
+R31_8 mbk_sig47_10 mbk_sig47_11 2.48
+C31_81 mbk_sig47_10 vss 9.1e-16
+C31_82 mbk_sig47_11 vss 9.1e-16
+R31_9 mbk_sig47_8 mbk_sig47_10 0.5
+C31_91 mbk_sig47_8 vss 6.9e-16
+C31_92 mbk_sig47_10 vss 6.9e-16
+R31_10 mbk_sig47_9 mbk_sig47_5 0.89
+C31_101 mbk_sig47_9 vss 9.65e-16
+C31_102 mbk_sig47_5 vss 9.65e-16
+R31_11 mbk_sig47_8 mbk_sig47_9 0.61
+C31_111 mbk_sig47_8 vss 2.45e-16
+C31_112 mbk_sig47_9 vss 2.45e-16
+R31_12 mbk_sig47_7 mbk_sig47_8 1.38
+C31_121 mbk_sig47_7 vss 2.5e-17
+C31_122 mbk_sig47_8 vss 2.5e-17
+R31_13 mbk_sig47_6 mbk_sig47_7 1.91
+C31_131 mbk_sig47_6 vss 8.45e-16
+C31_132 mbk_sig47_7 vss 8.45e-16
+
+R32_1 cell0_3.g_14 cell0_3.g_1 0.18
+C32_11 cell0_3.g_14 vss 7e-17
+C32_12 cell0_3.g_1 vss 7e-17
+R32_2 cell0_3.g_6 cell0_3.g_14 0.54
+C32_21 cell0_3.g_6 vss 8.3e-16
+C32_22 cell0_3.g_14 vss 8.3e-16
+R32_3 cell0_3.g_13 cell0_3.g_2 1.98
+C32_31 cell0_3.g_13 vss 5.15e-16
+C32_32 cell0_3.g_2 vss 5.15e-16
+R32_4 cell0_3.g_11 cell0_3.g_13 1.32
+C32_41 cell0_3.g_11 vss 4.75e-16
+C32_42 cell0_3.g_13 vss 4.75e-16
+R32_5 cell0_3.g_12 cell0_3.g_3 1.08
+C32_51 cell0_3.g_12 vss 5.45e-16
+C32_52 cell0_3.g_3 vss 5.45e-16
+R32_6 cell0_3.g_11 cell0_3.g_12 2.47
+C32_61 cell0_3.g_11 vss 2.7e-16
+C32_62 cell0_3.g_12 vss 2.7e-16
+R32_7 cell0_3.g_7 cell0_3.g_11 2.18
+C32_71 cell0_3.g_7 vss 9e-16
+C32_72 cell0_3.g_11 vss 9e-16
+R32_8 cell0_3.g_10 cell0_3.g_4 2.57
+C32_81 cell0_3.g_10 vss 2.5e-17
+C32_82 cell0_3.g_4 vss 2.5e-17
+R32_9 cell0_3.g_8 cell0_3.g_10 1.83
+C32_91 cell0_3.g_8 vss 9.4e-16
+C32_92 cell0_3.g_10 vss 9.4e-16
+R32_10 cell0_3.g_9 cell0_3.g_5 2.63
+C32_101 cell0_3.g_9 vss 2.05e-16
+C32_102 cell0_3.g_5 vss 2.05e-16
+R32_11 cell0_3.g_8 cell0_3.g_9 1.01
+C32_111 cell0_3.g_8 vss 2.05e-16
+C32_112 cell0_3.g_9 vss 2.05e-16
+R32_12 cell0_3.g_7 cell0_3.g_8 1.25
+C32_121 cell0_3.g_7 vss 5.15e-16
+C32_122 cell0_3.g_8 vss 5.15e-16
+R32_13 cell0_3.g_6 cell0_3.g_7 0.25
+C32_131 cell0_3.g_6 vss 6e-16
+C32_132 cell0_3.g_7 vss 6e-16
+
+R33_1 mbk_sig59_2 mbk_sig59_1 2.39
+C33_11 mbk_sig59_2 vss 6.9e-16
+C33_12 mbk_sig59_1 vss 6.9e-16
+
+R34_1 mbk_sig43_11 mbk_sig43_1 0.62
+C34_11 mbk_sig43_11 vss 2.65e-16
+C34_12 mbk_sig43_1 vss 2.65e-16
+R34_2 mbk_sig43_9 mbk_sig43_11 2.96
+C34_21 mbk_sig43_9 vss 8.4e-16
+C34_22 mbk_sig43_11 vss 8.4e-16
+R34_3 mbk_sig43_10 mbk_sig43_2 2.68
+C34_31 mbk_sig43_10 vss 3.85e-16
+C34_32 mbk_sig43_2 vss 3.85e-16
+R34_4 mbk_sig43_9 mbk_sig43_10 1.23
+C34_41 mbk_sig43_9 vss 4.3e-16
+C34_42 mbk_sig43_10 vss 4.3e-16
+R34_5 mbk_sig43_7 mbk_sig43_9 2.29
+C34_51 mbk_sig43_7 vss 7.4e-16
+C34_52 mbk_sig43_9 vss 7.4e-16
+R34_6 mbk_sig43_8 mbk_sig43_3 0.27
+C34_61 mbk_sig43_8 vss 1e-16
+C34_62 mbk_sig43_3 vss 1e-16
+R34_7 mbk_sig43_7 mbk_sig43_8 1.19
+C34_71 mbk_sig43_7 vss 2.5e-16
+C34_72 mbk_sig43_8 vss 2.5e-16
+R34_8 mbk_sig43_5 mbk_sig43_7 3
+C34_81 mbk_sig43_5 vss 4.4e-16
+C34_82 mbk_sig43_7 vss 4.4e-16
+R34_9 mbk_sig43_6 mbk_sig43_4 0.31
+C34_91 mbk_sig43_6 vss 9.2e-16
+C34_92 mbk_sig43_4 vss 9.2e-16
+R34_10 mbk_sig43_5 mbk_sig43_6 0.72
+C34_101 mbk_sig43_5 vss 4.05e-16
+C34_102 mbk_sig43_6 vss 4.05e-16
+
+R35_1 cell0_3.p_23 cell0_3.p_1 2.77
+C35_11 cell0_3.p_23 vss 8.05e-16
+C35_12 cell0_3.p_1 vss 8.05e-16
+R35_2 cell0_3.p_21 cell0_3.p_23 2.19
+C35_21 cell0_3.p_21 vss 6.2e-16
+C35_22 cell0_3.p_23 vss 6.2e-16
+R35_3 cell0_3.p_22 cell0_3.p_2 2.82
+C35_31 cell0_3.p_22 vss 3.4e-16
+C35_32 cell0_3.p_2 vss 3.4e-16
+R35_4 cell0_3.p_21 cell0_3.p_22 2.44
+C35_41 cell0_3.p_21 vss 5.45e-16
+C35_42 cell0_3.p_22 vss 5.45e-16
+R35_5 cell0_3.p_9 cell0_3.p_21 0.91
+C35_51 cell0_3.p_9 vss 5.8e-16
+C35_52 cell0_3.p_21 vss 5.8e-16
+R35_6 cell0_3.p_20 cell0_3.p_3 1.02
+C35_61 cell0_3.p_20 vss 6.15e-16
+C35_62 cell0_3.p_3 vss 6.15e-16
+R35_7 cell0_3.p_18 cell0_3.p_20 1.49
+C35_71 cell0_3.p_18 vss 3.75e-16
+C35_72 cell0_3.p_20 vss 3.75e-16
+R35_8 cell0_3.p_19 cell0_3.p_4 0.51
+C35_81 cell0_3.p_19 vss 4.3e-16
+C35_82 cell0_3.p_4 vss 4.3e-16
+R35_9 cell0_3.p_18 cell0_3.p_19 0.93
+C35_91 cell0_3.p_18 vss 7.15e-16
+C35_92 cell0_3.p_19 vss 7.15e-16
+R35_10 cell0_3.p_16 cell0_3.p_18 0.29
+C35_101 cell0_3.p_16 vss 3.5e-16
+C35_102 cell0_3.p_18 vss 3.5e-16
+R35_11 cell0_3.p_17 cell0_3.p_5 2.34
+C35_111 cell0_3.p_17 vss 4.5e-17
+C35_112 cell0_3.p_5 vss 4.5e-17
+R35_12 cell0_3.p_16 cell0_3.p_17 0.89
+C35_121 cell0_3.p_16 vss 3.05e-16
+C35_122 cell0_3.p_17 vss 3.05e-16
+R35_13 cell0_3.p_14 cell0_3.p_16 2.53
+C35_131 cell0_3.p_14 vss 2e-17
+C35_132 cell0_3.p_16 vss 2e-17
+R35_14 cell0_3.p_15 cell0_3.p_6 2.54
+C35_141 cell0_3.p_15 vss 8.05e-16
+C35_142 cell0_3.p_6 vss 8.05e-16
+R35_15 cell0_3.p_14 cell0_3.p_15 0.92
+C35_151 cell0_3.p_14 vss 8.3e-16
+C35_152 cell0_3.p_15 vss 8.3e-16
+R35_16 cell0_3.p_10 cell0_3.p_14 0.36
+C35_161 cell0_3.p_10 vss 1e-16
+C35_162 cell0_3.p_14 vss 1e-16
+R35_17 cell0_3.p_13 cell0_3.p_7 2.56
+C35_171 cell0_3.p_13 vss 7.1e-16
+C35_172 cell0_3.p_7 vss 7.1e-16
+R35_18 cell0_3.p_11 cell0_3.p_13 2.75
+C35_181 cell0_3.p_11 vss 2.4e-16
+C35_182 cell0_3.p_13 vss 2.4e-16
+R35_19 cell0_3.p_12 cell0_3.p_8 0.15
+C35_191 cell0_3.p_12 vss 5e-16
+C35_192 cell0_3.p_8 vss 5e-16
+R35_20 cell0_3.p_11 cell0_3.p_12 1.6
+C35_201 cell0_3.p_11 vss 3.55e-16
+C35_202 cell0_3.p_12 vss 3.55e-16
+R35_21 cell0_3.p_10 cell0_3.p_11 0.02
+C35_211 cell0_3.p_10 vss 3.2e-16
+C35_212 cell0_3.p_11 vss 3.2e-16
+R35_22 cell0_3.p_9 cell0_3.p_10 1.1
+C35_221 cell0_3.p_9 vss 9.8e-16
+C35_222 cell0_3.p_10 vss 9.8e-16
+
+R36_1 cell1_1.co_26 cell1_1.co_1 0.88
+C36_11 cell1_1.co_26 vss 2e-16
+C36_12 cell1_1.co_1 vss 2e-16
+R36_2 cell1_1.co_24 cell1_1.co_26 1.04
+C36_21 cell1_1.co_24 vss 3.9e-16
+C36_22 cell1_1.co_26 vss 3.9e-16
+R36_3 cell1_1.co_25 cell1_1.co_2 0.89
+C36_31 cell1_1.co_25 vss 8.1e-16
+C36_32 cell1_1.co_2 vss 8.1e-16
+R36_4 cell1_1.co_24 cell1_1.co_25 0.25
+C36_41 cell1_1.co_24 vss 7.4e-16
+C36_42 cell1_1.co_25 vss 7.4e-16
+R36_5 cell1_1.co_22 cell1_1.co_24 2.65
+C36_51 cell1_1.co_22 vss 7.65e-16
+C36_52 cell1_1.co_24 vss 7.65e-16
+R36_6 cell1_1.co_23 cell1_1.co_3 2.11
+C36_61 cell1_1.co_23 vss 4.2e-16
+C36_62 cell1_1.co_3 vss 4.2e-16
+R36_7 cell1_1.co_22 cell1_1.co_23 2.88
+C36_71 cell1_1.co_22 vss 3.15e-16
+C36_72 cell1_1.co_23 vss 3.15e-16
+R36_8 cell1_1.co_14 cell1_1.co_22 2.86
+C36_81 cell1_1.co_14 vss 9.45e-16
+C36_82 cell1_1.co_22 vss 9.45e-16
+R36_9 cell1_1.co_21 cell1_1.co_4 0.93
+C36_91 cell1_1.co_21 vss 1.8e-16
+C36_92 cell1_1.co_4 vss 1.8e-16
+R36_10 cell1_1.co_19 cell1_1.co_21 2.94
+C36_101 cell1_1.co_19 vss 2.9e-16
+C36_102 cell1_1.co_21 vss 2.9e-16
+R36_11 cell1_1.co_20 cell1_1.co_5 0.08
+C36_111 cell1_1.co_20 vss 4e-17
+C36_112 cell1_1.co_5 vss 4e-17
+R36_12 cell1_1.co_19 cell1_1.co_20 2.35
+C36_121 cell1_1.co_19 vss 1.65e-16
+C36_122 cell1_1.co_20 vss 1.65e-16
+R36_13 cell1_1.co_15 cell1_1.co_19 2.07
+C36_131 cell1_1.co_15 vss 7.2e-16
+C36_132 cell1_1.co_19 vss 7.2e-16
+R36_14 cell1_1.co_18 cell1_1.co_6 1.75
+C36_141 cell1_1.co_18 vss 3.6e-16
+C36_142 cell1_1.co_6 vss 3.6e-16
+R36_15 cell1_1.co_16 cell1_1.co_18 0.29
+C36_151 cell1_1.co_16 vss 5.95e-16
+C36_152 cell1_1.co_18 vss 5.95e-16
+R36_16 cell1_1.co_17 cell1_1.co_7 0.32
+C36_161 cell1_1.co_17 vss 8.3e-16
+C36_162 cell1_1.co_7 vss 8.3e-16
+R36_17 cell1_1.co_16 cell1_1.co_17 1.04
+C36_171 cell1_1.co_16 vss 4.35e-16
+C36_172 cell1_1.co_17 vss 4.35e-16
+R36_18 cell1_1.co_15 cell1_1.co_16 1.01
+C36_181 cell1_1.co_15 vss 4.95e-16
+C36_182 cell1_1.co_16 vss 4.95e-16
+R36_19 cell1_1.co_14 cell1_1.co_15 2.72
+C36_191 cell1_1.co_14 vss 2.6e-16
+C36_192 cell1_1.co_15 vss 2.6e-16
+R36_20 cell1_1.co_12 cell1_1.co_14 0.35
+C36_201 cell1_1.co_12 vss 5.95e-16
+C36_202 cell1_1.co_14 vss 5.95e-16
+R36_21 cell1_1.co_13 cell1_1.co_8 2.51
+C36_211 cell1_1.co_13 vss 8.05e-16
+C36_212 cell1_1.co_8 vss 8.05e-16
+R36_22 cell1_1.co_12 cell1_1.co_13 2.37
+C36_221 cell1_1.co_12 vss 9.35e-16
+C36_222 cell1_1.co_13 vss 9.35e-16
+R36_23 cell1_1.co_10 cell1_1.co_12 0.92
+C36_231 cell1_1.co_10 vss 9e-17
+C36_232 cell1_1.co_12 vss 9e-17
+R36_24 cell1_1.co_11 cell1_1.co_9 2.22
+C36_241 cell1_1.co_11 vss 4e-16
+C36_242 cell1_1.co_9 vss 4e-16
+R36_25 cell1_1.co_10 cell1_1.co_11 1.62
+C36_251 cell1_1.co_10 vss 4e-16
+C36_252 cell1_1.co_11 vss 4e-16
+
+R37_1 mbk_sig23_2 mbk_sig23_1 2.9
+C37_11 mbk_sig23_2 vss 8.15e-16
+C37_12 mbk_sig23_1 vss 8.15e-16
+
+R38_1 cell1_2.np_8 cell1_2.np_1 1.12
+C38_11 cell1_2.np_8 vss 8.8e-16
+C38_12 cell1_2.np_1 vss 8.8e-16
+R38_2 cell1_2.np_6 cell1_2.np_8 2.16
+C38_21 cell1_2.np_6 vss 5.2e-16
+C38_22 cell1_2.np_8 vss 5.2e-16
+R38_3 cell1_2.np_7 cell1_2.np_2 0.39
+C38_31 cell1_2.np_7 vss 7.4e-16
+C38_32 cell1_2.np_2 vss 7.4e-16
+R38_4 cell1_2.np_6 cell1_2.np_7 0.18
+C38_41 cell1_2.np_6 vss 8.35e-16
+C38_42 cell1_2.np_7 vss 8.35e-16
+R38_5 cell1_2.np_4 cell1_2.np_6 2.64
+C38_51 cell1_2.np_4 vss 7.8e-16
+C38_52 cell1_2.np_6 vss 7.8e-16
+R38_6 cell1_2.np_5 cell1_2.np_3 1.76
+C38_61 cell1_2.np_5 vss 6.1e-16
+C38_62 cell1_2.np_3 vss 6.1e-16
+R38_7 cell1_2.np_4 cell1_2.np_5 2.19
+C38_71 cell1_2.np_4 vss 2.1e-16
+C38_72 cell1_2.np_5 vss 2.1e-16
+
+R39_1 cell1_2.ng_8 cell1_2.ng_1 2.66
+C39_11 cell1_2.ng_8 vss 4.75e-16
+C39_12 cell1_2.ng_1 vss 4.75e-16
+R39_2 cell1_2.ng_6 cell1_2.ng_8 1.12
+C39_21 cell1_2.ng_6 vss 1.8e-16
+C39_22 cell1_2.ng_8 vss 1.8e-16
+R39_3 cell1_2.ng_7 cell1_2.ng_2 2.35
+C39_31 cell1_2.ng_7 vss 4.5e-17
+C39_32 cell1_2.ng_2 vss 4.5e-17
+R39_4 cell1_2.ng_6 cell1_2.ng_7 0.21
+C39_41 cell1_2.ng_6 vss 8e-16
+C39_42 cell1_2.ng_7 vss 8e-16
+R39_5 cell1_2.ng_4 cell1_2.ng_6 0.86
+C39_51 cell1_2.ng_4 vss 3.15e-16
+C39_52 cell1_2.ng_6 vss 3.15e-16
+R39_6 cell1_2.ng_5 cell1_2.ng_3 2.12
+C39_61 cell1_2.ng_5 vss 4.05e-16
+C39_62 cell1_2.ng_3 vss 4.05e-16
+R39_7 cell1_2.ng_4 cell1_2.ng_5 1.54
+C39_71 cell1_2.ng_4 vss 5.3e-16
+C39_72 cell1_2.ng_5 vss 5.3e-16
+
+R40_1 mbk_sig58_2 mbk_sig58_1 0.95
+C40_11 mbk_sig58_2 vss 6.35e-16
+C40_12 mbk_sig58_1 vss 6.35e-16
+
+R41_1 mbk_sig52_11 mbk_sig52_1 2.96
+C41_11 mbk_sig52_11 vss 5.3e-16
+C41_12 mbk_sig52_1 vss 5.3e-16
+R41_2 mbk_sig52_9 mbk_sig52_11 2.77
+C41_21 mbk_sig52_9 vss 6.45e-16
+C41_22 mbk_sig52_11 vss 6.45e-16
+R41_3 mbk_sig52_10 mbk_sig52_2 2.3
+C41_31 mbk_sig52_10 vss 2.55e-16
+C41_32 mbk_sig52_2 vss 2.55e-16
+R41_4 mbk_sig52_9 mbk_sig52_10 2.43
+C41_41 mbk_sig52_9 vss 2e-16
+C41_42 mbk_sig52_10 vss 2e-16
+R41_5 mbk_sig52_5 mbk_sig52_9 1.67
+C41_51 mbk_sig52_5 vss 9.7e-16
+C41_52 mbk_sig52_9 vss 9.7e-16
+R41_6 mbk_sig52_8 mbk_sig52_3 0.69
+C41_61 mbk_sig52_8 vss 7.5e-17
+C41_62 mbk_sig52_3 vss 7.5e-17
+R41_7 mbk_sig52_6 mbk_sig52_8 1.35
+C41_71 mbk_sig52_6 vss 7e-16
+C41_72 mbk_sig52_8 vss 7e-16
+R41_8 mbk_sig52_7 mbk_sig52_4 2.59
+C41_81 mbk_sig52_7 vss 2.95e-16
+C41_82 mbk_sig52_4 vss 2.95e-16
+R41_9 mbk_sig52_6 mbk_sig52_7 2.79
+C41_91 mbk_sig52_6 vss 1.15e-16
+C41_92 mbk_sig52_7 vss 1.15e-16
+R41_10 mbk_sig52_5 mbk_sig52_6 0.36
+C41_101 mbk_sig52_5 vss 8.05e-16
+C41_102 mbk_sig52_6 vss 8.05e-16
+
+R42_1 cell1_3.g_14 cell1_3.g_1 1.2
+C42_11 cell1_3.g_14 vss 7.75e-16
+C42_12 cell1_3.g_1 vss 7.75e-16
+R42_2 cell1_3.g_6 cell1_3.g_14 0.79
+C42_21 cell1_3.g_6 vss 8.4e-16
+C42_22 cell1_3.g_14 vss 8.4e-16
+R42_3 cell1_3.g_13 cell1_3.g_2 0.79
+C42_31 cell1_3.g_13 vss 5.55e-16
+C42_32 cell1_3.g_2 vss 5.55e-16
+R42_4 cell1_3.g_11 cell1_3.g_13 0.56
+C42_41 cell1_3.g_11 vss 7e-16
+C42_42 cell1_3.g_13 vss 7e-16
+R42_5 cell1_3.g_12 cell1_3.g_3 1.59
+C42_51 cell1_3.g_12 vss 7.4e-16
+C42_52 cell1_3.g_3 vss 7.4e-16
+R42_6 cell1_3.g_11 cell1_3.g_12 2.73
+C42_61 cell1_3.g_11 vss 9.9e-16
+C42_62 cell1_3.g_12 vss 9.9e-16
+R42_7 cell1_3.g_9 cell1_3.g_11 2.33
+C42_71 cell1_3.g_9 vss 9e-17
+C42_72 cell1_3.g_11 vss 9e-17
+R42_8 cell1_3.g_10 cell1_3.g_4 0.32
+C42_81 cell1_3.g_10 vss 1.1e-16
+C42_82 cell1_3.g_4 vss 1.1e-16
+R42_9 cell1_3.g_9 cell1_3.g_10 0.07
+C42_91 cell1_3.g_9 vss 2.5e-17
+C42_92 cell1_3.g_10 vss 2.5e-17
+R42_10 cell1_3.g_7 cell1_3.g_9 1.44
+C42_101 cell1_3.g_7 vss 7.25e-16
+C42_102 cell1_3.g_9 vss 7.25e-16
+R42_11 cell1_3.g_8 cell1_3.g_5 0.14
+C42_111 cell1_3.g_8 vss 8.6e-16
+C42_112 cell1_3.g_5 vss 8.6e-16
+R42_12 cell1_3.g_7 cell1_3.g_8 0.06
+C42_121 cell1_3.g_7 vss 5.85e-16
+C42_122 cell1_3.g_8 vss 5.85e-16
+R42_13 cell1_3.g_6 cell1_3.g_7 1.91
+C42_131 cell1_3.g_6 vss 4.85e-16
+C42_132 cell1_3.g_7 vss 4.85e-16
+
+R43_1 mbk_sig57_2 mbk_sig57_1 2.3
+C43_11 mbk_sig57_2 vss 9.75e-16
+C43_12 mbk_sig57_1 vss 9.75e-16
+
+R44_1 mbk_sig35_5 mbk_sig35_1 2.21
+C44_11 mbk_sig35_5 vss 9.35e-16
+C44_12 mbk_sig35_1 vss 9.35e-16
+R44_2 mbk_sig35_3 mbk_sig35_5 2.73
+C44_21 mbk_sig35_3 vss 5.5e-17
+C44_22 mbk_sig35_5 vss 5.5e-17
+R44_3 mbk_sig35_4 mbk_sig35_2 1.44
+C44_31 mbk_sig35_4 vss 6.1e-16
+C44_32 mbk_sig35_2 vss 6.1e-16
+R44_4 mbk_sig35_3 mbk_sig35_4 2.12
+C44_41 mbk_sig35_3 vss 2.55e-16
+C44_42 mbk_sig35_4 vss 2.55e-16
+
+R45_1 cell3_2.g_14 cell3_2.g_1 2.07
+C45_11 cell3_2.g_14 vss 9.75e-16
+C45_12 cell3_2.g_1 vss 9.75e-16
+R45_2 cell3_2.g_8 cell3_2.g_14 2.73
+C45_21 cell3_2.g_8 vss 6.3e-16
+C45_22 cell3_2.g_14 vss 6.3e-16
+R45_3 cell3_2.g_13 cell3_2.g_2 0.42
+C45_31 cell3_2.g_13 vss 4.1e-16
+C45_32 cell3_2.g_2 vss 4.1e-16
+R45_4 cell3_2.g_11 cell3_2.g_13 2.46
+C45_41 cell3_2.g_11 vss 3.6e-16
+C45_42 cell3_2.g_13 vss 3.6e-16
+R45_5 cell3_2.g_12 cell3_2.g_3 1.96
+C45_51 cell3_2.g_12 vss 1.45e-16
+C45_52 cell3_2.g_3 vss 1.45e-16
+R45_6 cell3_2.g_11 cell3_2.g_12 1.26
+C45_61 cell3_2.g_11 vss 1.9e-16
+C45_62 cell3_2.g_12 vss 1.9e-16
+R45_7 cell3_2.g_9 cell3_2.g_11 1.72
+C45_71 cell3_2.g_9 vss 2.65e-16
+C45_72 cell3_2.g_11 vss 2.65e-16
+R45_8 cell3_2.g_10 cell3_2.g_4 0.35
+C45_81 cell3_2.g_10 vss 4.3e-16
+C45_82 cell3_2.g_4 vss 4.3e-16
+R45_9 cell3_2.g_9 cell3_2.g_10 0.15
+C45_91 cell3_2.g_9 vss 8.5e-16
+C45_92 cell3_2.g_10 vss 8.5e-16
+R45_10 cell3_2.g_8 cell3_2.g_9 1.58
+C45_101 cell3_2.g_8 vss 1.5e-16
+C45_102 cell3_2.g_9 vss 1.5e-16
+R45_11 cell3_2.g_6 cell3_2.g_8 0.91
+C45_111 cell3_2.g_6 vss 2e-17
+C45_112 cell3_2.g_8 vss 2e-17
+R45_12 cell3_2.g_7 cell3_2.g_5 1.6
+C45_121 cell3_2.g_7 vss 2.85e-16
+C45_122 cell3_2.g_5 vss 2.85e-16
+R45_13 cell3_2.g_6 cell3_2.g_7 1.79
+C45_131 cell3_2.g_6 vss 5e-17
+C45_132 cell3_2.g_7 vss 5e-17
+
+R46_1 mbk_sig60_5 mbk_sig60_1 2.75
+C46_11 mbk_sig60_5 vss 7.1e-16
+C46_12 mbk_sig60_1 vss 7.1e-16
+R46_2 mbk_sig60_3 mbk_sig60_5 1.05
+C46_21 mbk_sig60_3 vss 5.5e-16
+C46_22 mbk_sig60_5 vss 5.5e-16
+R46_3 mbk_sig60_4 mbk_sig60_2 1.82
+C46_31 mbk_sig60_4 vss 2.65e-16
+C46_32 mbk_sig60_2 vss 2.65e-16
+R46_4 mbk_sig60_3 mbk_sig60_4 0.74
+C46_41 mbk_sig60_3 vss 2.8e-16
+C46_42 mbk_sig60_4 vss 2.8e-16
+
+R47_1 mbk_sig21_11 mbk_sig21_1 1.29
+C47_11 mbk_sig21_11 vss 4.2e-16
+C47_12 mbk_sig21_1 vss 4.2e-16
+R47_2 mbk_sig21_5 mbk_sig21_11 1.71
+C47_21 mbk_sig21_5 vss 6.25e-16
+C47_22 mbk_sig21_11 vss 6.25e-16
+R47_3 mbk_sig21_10 mbk_sig21_2 1.24
+C47_31 mbk_sig21_10 vss 8.3e-16
+C47_32 mbk_sig21_2 vss 8.3e-16
+R47_4 mbk_sig21_6 mbk_sig21_10 2.43
+C47_41 mbk_sig21_6 vss 9.1e-16
+C47_42 mbk_sig21_10 vss 9.1e-16
+R47_5 mbk_sig21_9 mbk_sig21_3 2.52
+C47_51 mbk_sig21_9 vss 6.25e-16
+C47_52 mbk_sig21_3 vss 6.25e-16
+R47_6 mbk_sig21_7 mbk_sig21_9 0.98
+C47_61 mbk_sig21_7 vss 1.85e-16
+C47_62 mbk_sig21_9 vss 1.85e-16
+R47_7 mbk_sig21_8 mbk_sig21_4 1
+C47_71 mbk_sig21_8 vss 9.95e-16
+C47_72 mbk_sig21_4 vss 9.95e-16
+R47_8 mbk_sig21_7 mbk_sig21_8 1.12
+C47_81 mbk_sig21_7 vss 2.8e-16
+C47_82 mbk_sig21_8 vss 2.8e-16
+R47_9 mbk_sig21_6 mbk_sig21_7 2.22
+C47_91 mbk_sig21_6 vss 9.4e-16
+C47_92 mbk_sig21_7 vss 9.4e-16
+R47_10 mbk_sig21_5 mbk_sig21_6 2.31
+C47_101 mbk_sig21_5 vss 5.3e-16
+C47_102 mbk_sig21_6 vss 5.3e-16
+
+R48_1 mbk_sig37_11 mbk_sig37_1 1.34
+C48_11 mbk_sig37_11 vss 9.7e-16
+C48_12 mbk_sig37_1 vss 9.7e-16
+R48_2 mbk_sig37_9 mbk_sig37_11 1.35
+C48_21 mbk_sig37_9 vss 6.65e-16
+C48_22 mbk_sig37_11 vss 6.65e-16
+R48_3 mbk_sig37_10 mbk_sig37_2 2.7
+C48_31 mbk_sig37_10 vss 6.4e-16
+C48_32 mbk_sig37_2 vss 6.4e-16
+R48_4 mbk_sig37_9 mbk_sig37_10 1.36
+C48_41 mbk_sig37_9 vss 1.95e-16
+C48_42 mbk_sig37_10 vss 1.95e-16
+R48_5 mbk_sig37_5 mbk_sig37_9 2.93
+C48_51 mbk_sig37_5 vss 4.5e-17
+C48_52 mbk_sig37_9 vss 4.5e-17
+R48_6 mbk_sig37_8 mbk_sig37_3 1.87
+C48_61 mbk_sig37_8 vss 3.25e-16
+C48_62 mbk_sig37_3 vss 3.25e-16
+R48_7 mbk_sig37_6 mbk_sig37_8 0.53
+C48_71 mbk_sig37_6 vss 8.15e-16
+C48_72 mbk_sig37_8 vss 8.15e-16
+R48_8 mbk_sig37_7 mbk_sig37_4 1.51
+C48_81 mbk_sig37_7 vss 5.55e-16
+C48_82 mbk_sig37_4 vss 5.55e-16
+R48_9 mbk_sig37_6 mbk_sig37_7 1.96
+C48_91 mbk_sig37_6 vss 9.75e-16
+C48_92 mbk_sig37_7 vss 9.75e-16
+R48_10 mbk_sig37_5 mbk_sig37_6 1.16
+C48_101 mbk_sig37_5 vss 6.2e-16
+C48_102 mbk_sig37_6 vss 6.2e-16
+
+R49_1 mbk_sig56_11 mbk_sig56_1 1.57
+C49_11 mbk_sig56_11 vss 7.15e-16
+C49_12 mbk_sig56_1 vss 7.15e-16
+R49_2 mbk_sig56_5 mbk_sig56_11 2.24
+C49_21 mbk_sig56_5 vss 5.65e-16
+C49_22 mbk_sig56_11 vss 5.65e-16
+R49_3 mbk_sig56_10 mbk_sig56_2 1.47
+C49_31 mbk_sig56_10 vss 8.2e-16
+C49_32 mbk_sig56_2 vss 8.2e-16
+R49_4 mbk_sig56_6 mbk_sig56_10 0.81
+C49_41 mbk_sig56_6 vss 6.1e-16
+C49_42 mbk_sig56_10 vss 6.1e-16
+R49_5 mbk_sig56_9 mbk_sig56_3 2.46
+C49_51 mbk_sig56_9 vss 2.05e-16
+C49_52 mbk_sig56_3 vss 2.05e-16
+R49_6 mbk_sig56_7 mbk_sig56_9 2.79
+C49_61 mbk_sig56_7 vss 5.2e-16
+C49_62 mbk_sig56_9 vss 5.2e-16
+R49_7 mbk_sig56_8 mbk_sig56_4 2.52
+C49_71 mbk_sig56_8 vss 1.7e-16
+C49_72 mbk_sig56_4 vss 1.7e-16
+R49_8 mbk_sig56_7 mbk_sig56_8 2.05
+C49_81 mbk_sig56_7 vss 7.6e-16
+C49_82 mbk_sig56_8 vss 7.6e-16
+R49_9 mbk_sig56_6 mbk_sig56_7 2.79
+C49_91 mbk_sig56_6 vss 9.15e-16
+C49_92 mbk_sig56_7 vss 9.15e-16
+R49_10 mbk_sig56_5 mbk_sig56_6 1.84
+C49_101 mbk_sig56_5 vss 9.85e-16
+C49_102 mbk_sig56_6 vss 9.85e-16
+
+R50_1 mbk_sig10_2 mbk_sig10_1 1.6
+C50_11 mbk_sig10_2 vss 7.55e-16
+C50_12 mbk_sig10_1 vss 7.55e-16
+
+R51_1 mbk_sig13_2 mbk_sig13_1 1.32
+C51_11 mbk_sig13_2 vss 3.8e-16
+C51_12 mbk_sig13_1 vss 3.8e-16
+
+R52_1 mbk_sig39_2 mbk_sig39_1 0.72
+C52_11 mbk_sig39_2 vss 2.45e-16
+C52_12 mbk_sig39_1 vss 2.45e-16
+
+R53_1 mbk_sig45_2 mbk_sig45_1 2.02
+C53_11 mbk_sig45_2 vss 1.95e-16
+C53_12 mbk_sig45_1 vss 1.95e-16
+
+R54_1 mbk_sig18_5 mbk_sig18_1 2.8
+C54_11 mbk_sig18_5 vss 1.4e-16
+C54_12 mbk_sig18_1 vss 1.4e-16
+R54_2 mbk_sig18_3 mbk_sig18_5 1.33
+C54_21 mbk_sig18_3 vss 7.9e-16
+C54_22 mbk_sig18_5 vss 7.9e-16
+R54_3 mbk_sig18_4 mbk_sig18_2 2.81
+C54_31 mbk_sig18_4 vss 8.35e-16
+C54_32 mbk_sig18_2 vss 8.35e-16
+R54_4 mbk_sig18_3 mbk_sig18_4 0.04
+C54_41 mbk_sig18_3 vss 5.2e-16
+C54_42 mbk_sig18_4 vss 5.2e-16
+
+R55_1 mbk_sig49_11 mbk_sig49_1 0.13
+C55_11 mbk_sig49_11 vss 1.85e-16
+C55_12 mbk_sig49_1 vss 1.85e-16
+R55_2 mbk_sig49_7 mbk_sig49_11 0.12
+C55_21 mbk_sig49_7 vss 7.65e-16
+C55_22 mbk_sig49_11 vss 7.65e-16
+R55_3 mbk_sig49_10 mbk_sig49_2 1.16
+C55_31 mbk_sig49_10 vss 1.2e-16
+C55_32 mbk_sig49_2 vss 1.2e-16
+R55_4 mbk_sig49_8 mbk_sig49_10 2.88
+C55_41 mbk_sig49_8 vss 5.4e-16
+C55_42 mbk_sig49_10 vss 5.4e-16
+R55_5 mbk_sig49_9 mbk_sig49_3 2.6
+C55_51 mbk_sig49_9 vss 5.3e-16
+C55_52 mbk_sig49_3 vss 5.3e-16
+R55_6 mbk_sig49_8 mbk_sig49_9 0.3
+C55_61 mbk_sig49_8 vss 6e-16
+C55_62 mbk_sig49_9 vss 6e-16
+R55_7 mbk_sig49_7 mbk_sig49_8 2.09
+C55_71 mbk_sig49_7 vss 8.2e-16
+C55_72 mbk_sig49_8 vss 8.2e-16
+R55_8 mbk_sig49_5 mbk_sig49_7 1.77
+C55_81 mbk_sig49_5 vss 3.15e-16
+C55_82 mbk_sig49_7 vss 3.15e-16
+R55_9 mbk_sig49_6 mbk_sig49_4 1.99
+C55_91 mbk_sig49_6 vss 5e-18
+C55_92 mbk_sig49_4 vss 5e-18
+R55_10 mbk_sig49_5 mbk_sig49_6 2.09
+C55_101 mbk_sig49_5 vss 7.45e-16
+C55_102 mbk_sig49_6 vss 7.45e-16
+
+R56_1 mbk_sig41_2 mbk_sig41_1 2.67
+C56_11 mbk_sig41_2 vss 5.1e-16
+C56_12 mbk_sig41_1 vss 5.1e-16
+
+R57_1 mbk_sig54_2 mbk_sig54_1 1.46
+C57_11 mbk_sig54_2 vss 7e-17
+C57_12 mbk_sig54_1 vss 7e-17
+
+R58_1 mbk_sig22_2 mbk_sig22_1 1.62
+C58_11 mbk_sig22_2 vss 2.2e-16
+C58_12 mbk_sig22_1 vss 2.2e-16
+
+R59_1 mbk_sig42_2 mbk_sig42_1 1.63
+C59_11 mbk_sig42_2 vss 7.15e-16
+C59_12 mbk_sig42_1 vss 7.15e-16
+
+R60_1 mbk_sig55_2 mbk_sig55_1 0.93
+C60_11 mbk_sig55_2 vss 7.3e-16
+C60_12 mbk_sig55_1 vss 7.3e-16
+
+C_ctc_0 mbk_sig41_1 mbk_sig42_1 3.2e-16
+C_ctc_1 mbk_sig49_9 mbk_sig22_1 1.98e-15
+C_ctc_2 mbk_sig49_10 mbk_sig22_1 1.11e-15
+C_ctc_3 mbk_sig54_2 mbk_sig10_1 1.79e-15
+C_ctc_4 mbk_sig37_8 mbk_sig45_1 7e-16
+C_ctc_5 mbk_sig49_6 mbk_sig37_4 1.41e-15
+C_ctc_6 mbk_sig21_5 mbk_sig56_11 3.5e-16
+C_ctc_7 mbk_sig21_10 mbk_sig55_2 1.8e-15
+C_ctc_8 mbk_sig18_2 mbk_sig21_10 7.2e-16
+C_ctc_9 cell3_2.g_11 mbk_sig41_1 1.7e-15
+C_ctc_10 mbk_sig57_1 mbk_sig45_1 1.1e-16
+C_ctc_11 mbk_sig49_11 mbk_sig57_2 3.9e-16
+C_ctc_12 cell1_3.g_1 mbk_sig13_2 2e-16
+C_ctc_13 cell1_3.g_13 mbk_sig41_1 1.73e-15
+C_ctc_14 mbk_sig39_1 cell1_3.g_11 1.5e-16
+C_ctc_15 mbk_sig52_3 mbk_sig21_7 1.16e-15
+C_ctc_16 mbk_sig52_8 mbk_sig10_1 8e-16
+C_ctc_17 mbk_sig52_10 mbk_sig35_1 9.7e-16
+C_ctc_18 mbk_sig60_1 mbk_sig52_2 1.58e-15
+C_ctc_19 cell1_2.ng_8 mbk_sig45_2 8.2e-16
+C_ctc_20 cell1_2.np_4 mbk_sig37_9 1.01e-15
+C_ctc_21 cell1_2.np_6 mbk_sig37_1 6.3e-16
+C_ctc_22 cell1_2.np_7 mbk_sig55_2 5.3e-16
+C_ctc_23 cell1_2.np_8 mbk_sig10_1 3.8e-16
+C_ctc_24 cell1_1.co_1 mbk_sig41_2 1.05e-15
+C_ctc_25 cell1_1.co_2 mbk_sig18_5 7e-17
+C_ctc_26 cell1_1.co_4 cell1_3.g_6 6.4e-16
+C_ctc_27 cell1_1.co_6 cell3_2.g_14 1.63e-15
+C_ctc_28 cell1_1.co_7 mbk_sig22_2 6.6e-16
+C_ctc_29 cell1_1.co_13 mbk_sig41_1 4.3e-16
+C_ctc_30 cell1_1.co_15 mbk_sig35_1 5e-17
+C_ctc_31 cell1_1.co_22 mbk_sig23_1 1.83e-15
+C_ctc_32 cell1_1.co_23 mbk_sig22_2 1.47e-15
+C_ctc_33 cell1_1.co_25 mbk_sig13_2 2.9e-16
+C_ctc_34 mbk_sig37_11 cell1_1.co_16 7.8e-16
+C_ctc_35 mbk_sig56_3 cell1_1.co_4 3.7e-16
+C_ctc_36 cell0_3.p_8 mbk_sig49_3 1.02e-15
+C_ctc_37 cell0_3.p_13 mbk_sig54_2 2.5e-16
+C_ctc_38 cell0_3.p_17 mbk_sig22_1 1.74e-15
+C_ctc_39 cell1_2.np_5 cell0_3.p_1 1.79e-15
+C_ctc_40 mbk_sig21_3 cell0_3.p_10 1.29e-15
+C_ctc_41 mbk_sig49_1 cell0_3.p_1 5e-17
+C_ctc_42 mbk_sig43_4 mbk_sig56_1 2.5e-16
+C_ctc_43 mbk_sig43_6 mbk_sig21_6 8.4e-16
+C_ctc_44 cell1_1.co_3 mbk_sig43_10 7e-16
+C_ctc_45 mbk_sig21_7 mbk_sig43_11 1.16e-15
+C_ctc_46 mbk_sig59_2 mbk_sig41_2 1.12e-15
+C_ctc_47 mbk_sig35_3 mbk_sig59_1 5.5e-16
+C_ctc_48 cell0_3.g_1 mbk_sig57_2 5.4e-16
+C_ctc_49 cell0_3.g_3 mbk_sig39_1 1.11e-15
+C_ctc_50 cell0_3.g_5 mbk_sig35_5 1e-15
+C_ctc_51 cell0_3.g_7 mbk_sig42_2 1.14e-15
+C_ctc_52 cell0_3.g_10 mbk_sig39_2 1.91e-15
+C_ctc_53 mbk_sig10_1 cell0_3.g_9 1.73e-15
+C_ctc_54 mbk_sig47_2 mbk_sig55_1 1.29e-15
+C_ctc_55 mbk_sig47_6 cell0_3.g_5 1.48e-15
+C_ctc_56 mbk_sig47_7 mbk_sig35_5 4e-17
+C_ctc_57 mbk_sig47_10 mbk_sig55_1 3.4e-16
+C_ctc_58 cell0_3.g_2 mbk_sig47_1 1.55e-15
+C_ctc_59 mbk_sig43_5 mbk_sig47_5 1.41e-15
+C_ctc_60 mbk_sig52_6 mbk_sig47_5 1.11e-15
+C_ctc_61 cell1_3.g_9 mbk_sig47_8 1.19e-15
+C_ctc_62 mbk_sig22_2 mbk_sig47_8 8.2e-16
+C_ctc_63 cell0_2.g_5 mbk_sig56_3 1.85e-15
+C_ctc_64 cell0_2.g_6 mbk_sig10_1 1.41e-15
+C_ctc_65 cell0_2.g_7 cell0_3.p_2 9.8e-16
+C_ctc_66 cell0_2.g_16 mbk_sig35_4 1.68e-15
+C_ctc_67 cell0_2.g_18 mbk_sig13_1 9.8e-16
+C_ctc_68 mbk_sig47_1 cell0_2.g_6 9.8e-16
+C_ctc_69 mbk_sig30_4 cell3_2.g_9 1.44e-15
+C_ctc_70 mbk_sig30_7 mbk_sig22_2 5.4e-16
+C_ctc_71 mbk_sig30_9 mbk_sig57_1 6.9e-16
+C_ctc_72 mbk_sig30_11 mbk_sig23_2 3.7e-16
+C_ctc_73 mbk_sig30_12 cell1_1.co_22 1.19e-15
+C_ctc_74 cell0_3.p_12 mbk_sig30_13 1.15e-15
+C_ctc_75 mbk_sig52_9 mbk_sig30_4 1.17e-15
+C_ctc_76 mbk_sig35_2 mbk_sig30_13 1.88e-15
+C_ctc_77 cell3_2.g_5 mbk_sig30_2 1.66e-15
+C_ctc_78 mbk_sig54_1 mbk_sig30_1 1.93e-15
+C_ctc_79 mbk_sig33_1 mbk_sig30_7 1.39e-15
+C_ctc_80 mbk_sig28_1 mbk_sig22_1 1.1e-15
+C_ctc_81 mbk_sig28_2 mbk_sig21_6 2.4e-16
+C_ctc_82 mbk_sig28_3 mbk_sig21_2 3.2e-16
+C_ctc_83 mbk_sig28_7 mbk_sig47_3 3.8e-16
+C_ctc_84 mbk_sig28_11 cell3_2.g_6 4.1e-16
+C_ctc_85 cell0_3.g_4 mbk_sig28_8 1.39e-15
+C_ctc_86 cell3_2.p_6 cell0_2.g_12 1.72e-15
+C_ctc_87 cell3_2.p_11 mbk_sig57_1 1.25e-15
+C_ctc_88 mbk_sig47_14 cell3_2.p_11 1.76e-15
+C_ctc_89 mbk_sig45_1 cell3_2.p_7 1.4e-15
+C_ctc_90 cell0_2.p_2 mbk_sig22_2 2.6e-16
+C_ctc_91 cell0_2.p_3 cell1_2.np_4 1.27e-15
+C_ctc_92 cell0_2.p_4 mbk_sig37_3 3e-17
+C_ctc_93 cell0_2.p_6 mbk_sig22_2 1.84e-15
+C_ctc_94 cell0_2.p_7 cell0_3.p_21 1.53e-15
+C_ctc_95 cell0_2.p_13 mbk_sig23_1 9.2e-16
+C_ctc_96 cell0_2.p_18 mbk_sig21_3 1.55e-15
+C_ctc_97 mbk_sig30_1 cell0_2.p_4 1.79e-15
+C_ctc_98 mbk_sig60_3 cell0_2.p_16 1.33e-15
+C_ctc_99 cell0_1.p_5 mbk_sig42_2 6e-17
+C_ctc_100 cell0_1.p_6 mbk_sig43_3 3e-16
+C_ctc_101 cell0_1.p_14 mbk_sig22_2 7.1e-16
+C_ctc_102 cell0_1.p_16 cell3_2.g_14 2.5e-16
+C_ctc_103 mbk_sig56_9 cell0_1.p_13 6.6e-16
+C_ctc_104 mbk_sig11_2 mbk_sig60_3 5e-17
+C_ctc_105 mbk_sig11_8 cell0_3.p_15 5.1e-16
+C_ctc_106 mbk_sig11_10 cell0_1.p_9 3.9e-16
+C_ctc_107 mbk_sig11_11 mbk_sig37_10 4.1e-16
+C_ctc_108 cell0_2.p_1 mbk_sig11_10 1.38e-15
+C_ctc_109 mbk_sig28_6 mbk_sig11_2 2e-17
+C_ctc_110 mbk_sig24_1 cell1_1.co_15 1.76e-15
+C_ctc_111 mbk_sig43_9 mbk_sig24_2 3.9e-16
+C_ctc_112 cell3_2.g_6 mbk_sig24_2 2e-16
+C_ctc_114 cell0_1.g_5 mbk_sig13_1 1.34e-15
+C_ctc_115 cell0_1.g_8 mbk_sig49_1 1.23e-15
+C_ctc_116 cell0_1.g_9 mbk_sig43_4 1.16e-15
+C_ctc_117 cell0_1.g_10 mbk_sig37_10 1.27e-15
+C_ctc_118 mbk_sig11_9 cell0_1.g_11 3.5e-16
+C_ctc_119 mbk_sig47_11 cell0_1.g_10 7e-17
+C_ctc_120 mbk_sig49_7 cell0_1.g_3 1.04e-15
+C_ctc_121 mbk_sig16_10 cell1_2.ng_8 1.29e-15
+C_ctc_122 mbk_sig16_11 mbk_sig10_1 1.08e-15
+C_ctc_123 cell0_1.p_3 mbk_sig16_10 6e-17
+C_ctc_124 cell0_2.g_4 mbk_sig16_11 3.6e-16
+C_ctc_125 mbk_sig47_3 mbk_sig16_8 8.5e-16
+C_ctc_126 cell1_1.co_21 mbk_sig16_3 3.3e-16
+C_ctc_127 mbk_sig1_3 cell3_2.p_8 1.65e-15
+C_ctc_128 mbk_sig1_8 mbk_sig35_2 8.6e-16
+C_ctc_129 mbk_sig1_10 cell1_1.co_16 4.6e-16
+C_ctc_130 mbk_sig1_11 mbk_sig11_10 1.24e-15
+C_ctc_131 cell1_1.co_9 mbk_sig1_3 2.5e-16
+C_ctc_132 mbk_sig37_2 mbk_sig1_3 8.6e-16
+C_ctc_133 mbk_sig8_2 mbk_sig33_1 5.3e-16
+C_ctc_134 cell3_2.p_5 mbk_sig8_2 1.63e-15
+C_ctc_135 mbk_sig28_4 mbk_sig8_1 1.71e-15
+C_ctc_136 mbk_sig28_5 mbk_sig8_1 3.5e-16
+C_ctc_137 cell0_3.g_9 mbk_sig8_2 1.6e-16
+C_ctc_138 cell0_3.p_10 mbk_sig8_1 1.34e-15
+C_ctc_139 mbk_sig52_5 mbk_sig8_2 1.03e-15
+C_ctc_140 mbk_sig60_5 mbk_sig8_2 1.09e-15
+C_ctc_141 cell0_0.g_10 mbk_sig8_2 1.3e-16
+C_ctc_142 cell0_0.g_14 cell0_3.p_19 1.55e-15
+C_ctc_143 cell0_0.g_17 mbk_sig43_8 1.49e-15
+C_ctc_144 cell0_0.g_18 mbk_sig16_6 1.7e-15
+C_ctc_145 cell0_2.p_14 cell0_0.g_14 1.56e-15
+C_ctc_146 cell0_2.g_15 cell0_0.g_9 1.64e-15
+C_ctc_147 mbk_sig56_7 cell0_0.g_17 5.9e-16
+C_ctc_148 mbk_sig49_2 cell0_0.g_14 1.6e-15
+C_ctc_149 mbk_sig6_1 cell3_2.g_8 1.88e-15
+C_ctc_150 mbk_sig6_3 mbk_sig18_4 2.6e-16
+C_ctc_151 mbk_sig6_4 cell0_0.g_18 1.47e-15
+C_ctc_152 mbk_sig6_7 mbk_sig23_1 2.3e-16
+C_ctc_153 mbk_sig6_9 cell0_0.g_5 6.4e-16
+C_ctc_154 mbk_sig6_11 cell1_3.g_1 4.4e-16
+C_ctc_155 mbk_sig6_13 cell0_2.p_6 1.92e-15
+C_ctc_156 mbk_sig6_14 cell0_3.p_14 1.71e-15
+C_ctc_157 mbk_sig37_1 mbk_sig6_7 9e-16
+C_ctc_158 a_0_1 cell0_3.p_18 1.3e-15
+C_ctc_159 a_0_3 cell1_1.co_23 9.2e-16
+C_ctc_160 a_0_5 mbk_sig35_1 5.2e-16
+C_ctc_161 a_0_9 mbk_sig30_13 1.07e-15
+C_ctc_162 a_0_11 mbk_sig21_4 1.59e-15
+C_ctc_163 a_0_12 mbk_sig21_3 5.5e-16
+C_ctc_164 a_0_14 mbk_sig10_1 1.77e-15
+C_ctc_165 mbk_sig6_8 a_0_4 1.16e-15
+C_ctc_166 mbk_sig11_7 a_0_2 1.2e-15
+C_ctc_167 cell0_3.p_19 a_0_11 8.2e-16
+C_ctc_168 mbk_sig42_2 a_0_2 1.2e-16
+C_ctc_169 a_1_2 mbk_sig52_7 1e-15
+C_ctc_170 a_1_4 mbk_sig58_2 6.3e-16
+C_ctc_171 a_1 mbk_sig37_11 1.62e-15
+C_ctc_172 a_1_7 mbk_sig1_7 1.8e-15
+C_ctc_173 a_1_8 mbk_sig18_3 2.2e-16
+C_ctc_174 a_1_9 mbk_sig1_10 1.18e-15
+C_ctc_175 a_1_10 mbk_sig10_1 1.89e-15
+C_ctc_176 a_1_12 mbk_sig22_1 3.9e-16
+C_ctc_177 mbk_sig37_6 a_1_2 1.88e-15
+C_ctc_178 mbk_sig56_2 a_1_10 6.1e-16
+C_ctc_179 a_2_2 cell0_2.p_6 1.81e-15
+C_ctc_180 a_2_3 mbk_sig35_1 9.9e-16
+C_ctc_181 a_2_8 a_0_12 7e-17
+C_ctc_182 a_2_9 mbk_sig41_1 1.26e-15
+C_ctc_183 mbk_sig30_2 a_2_11 6.8e-16
+C_ctc_184 mbk_sig59_1 a_2 4e-16
+C_ctc_185 cell0_3.p_14 a_2_14 3.8e-16
+C_ctc_186 cell1_2.ng_6 a_2_3 1.45e-15
+C_ctc_187 mbk_sig58_2 a_2_3 1.03e-15
+C_ctc_188 mbk_sig56_4 a_2_12 4.1e-16
+C_ctc_189 a_3_2 mbk_sig59_1 1.54e-15
+C_ctc_190 a_3_4 mbk_sig6_13 1.11e-15
+C_ctc_191 a_3_5 mbk_sig56_11 6.9e-16
+C_ctc_192 a_3_9 a_0_2 1.4e-16
+C_ctc_193 a_3_14 mbk_sig10_2 2.5e-16
+C_ctc_194 cell0_3.p_11 a_3_8 1.31e-15
+C_ctc_195 mbk_sig57_2 a_3_10 6.1e-16
+C_ctc_196 b_0_1 mbk_sig35_5 2.7e-16
+C_ctc_197 b_0_3 cell0_3.p_14 5.6e-16
+C_ctc_198 b_0_4 mbk_sig41_1 1.95e-15
+C_ctc_199 b_0 mbk_sig13_1 9.8e-16
+C_ctc_200 b_0_9 mbk_sig41_1 4.9e-16
+C_ctc_201 b_0_11 a_2_10 4.1e-16
+C_ctc_202 b_0_13 cell1_2.np_6 1.34e-15
+C_ctc_203 a_3_8 b_0_12 1.02e-15
+C_ctc_204 cell0_0.g_8 b_0_8 6.5e-16
+C_ctc_205 cell0_0.g_19 b_0_11 3.2e-16
+C_ctc_206 cell0_1.p_13 b_0_8 1.05e-15
+C_ctc_207 cell0_3.g_6 b_0_14 2.7e-16
+C_ctc_208 cell0_3.g_12 b_0_2 4.7e-16
+C_ctc_209 cell0_3.g_13 b_0_4 5.9e-16
+C_ctc_210 mbk_sig43_10 b_0_4 1.35e-15
+C_ctc_211 cell1_1.co_16 b_0_10 5.1e-16
+C_ctc_212 cell1_2.ng_1 b_0_10 3.8e-16
+C_ctc_213 cell3_2.g_14 b_0_9 1.85e-15
+C_ctc_214 b_1_4 mbk_sig13_1 8e-17
+C_ctc_215 b_1_5 mbk_sig37_1 6.5e-16
+C_ctc_216 b_1_7 mbk_sig10_2 1.62e-15
+C_ctc_217 b_1_8 mbk_sig52_9 1.33e-15
+C_ctc_218 b_1_10 a_1_13 5e-17
+C_ctc_219 b_1_14 mbk_sig57_2 1.99e-15
+C_ctc_220 a_0_7 b_1_4 5.8e-16
+C_ctc_221 cell0_2.p_8 b_1 7.3e-16
+C_ctc_222 cell0_2.g_2 b_1_12 8.9e-16
+C_ctc_223 mbk_sig43_11 b_1_14 3.4e-16
+C_ctc_224 mbk_sig55_1 b_1 1.82e-15
+C_ctc_225 b_2_1 mbk_sig42_2 1.69e-15
+C_ctc_226 b_2_3 a_1 1.72e-15
+C_ctc_227 b_2 a_1_1 2.7e-16
+C_ctc_228 b_2_10 cell0_1.g_9 1.2e-16
+C_ctc_229 b_2_13 mbk_sig23_2 1.17e-15
+C_ctc_230 b_2_14 mbk_sig35_1 7e-17
+C_ctc_231 a_2_13 b_2_1 1.39e-15
+C_ctc_232 a_0_13 b_2_7 9.3e-16
+C_ctc_233 cell3_2.p_2 b_2_14 1.76e-15
+C_ctc_234 cell0_2.g_14 b_2_4 1.43e-15
+C_ctc_235 mbk_sig43_8 b_2_4 1.25e-15
+C_ctc_236 cell0_3.p_6 b_2_13 1.86e-15
+C_ctc_237 cell1_3.g_8 b_2_3 8e-16
+C_ctc_238 b_3_1 b_1_8 1.09e-15
+C_ctc_239 b_3_3 mbk_sig43_3 3.2e-16
+C_ctc_240 b_3_4 mbk_sig60_4 1.85e-15
+C_ctc_241 b_3_5 mbk_sig23_1 5.3e-16
+C_ctc_242 b_3 a_2 4.8e-16
+C_ctc_243 b_3_11 mbk_sig58_2 5.8e-16
+C_ctc_244 b_3_12 b_0_3 1.11e-15
+C_ctc_245 mbk_sig16_6 b_3_9 6.7e-16
+C_ctc_246 cell0_1.p_12 b_3_4 1.09e-15
+C_ctc_247 cell3_2.p_3 b_3_11 8.3e-16
+C_ctc_248 cell3_2.g_3 b_3_3 5e-17
+C_ctc_249 cout_1 a_1_10 2.8e-16
+C_ctc_250 cout_3 mbk_sig24_1 1.02e-15
+C_ctc_251 cout mbk_sig60_3 6e-16
+C_ctc_252 cout_8 cell0_1.g_9 5.6e-16
+C_ctc_253 b_3_10 cout_6 1.8e-15
+C_ctc_254 b_2_11 cout_7 2.5e-16
+C_ctc_255 b_0_7 cout_7 1.1e-16
+C_ctc_256 cell0_2.p_19 cout_8 1.11e-15
+C_ctc_257 cell0_2.g_9 cout_6 1.19e-15
+C_ctc_258 cell1_1.co_14 cout_8 3.2e-16
+C_ctc_259 mbk_sig49_8 cout_2 1.49e-15
+C_ctc_260 s_0_1 mbk_sig60_1 1.17e-15
+C_ctc_261 s_0_2 mbk_sig41_2 1.38e-15
+C_ctc_262 s_0_5 a_3_2 4.5e-16
+C_ctc_263 b_0_5 s_0_5 1.28e-15
+C_ctc_264 cell0_1.p_10 s_0_1 7e-16
+C_ctc_265 cell0_2.p_9 s_0_5 1.01e-15
+C_ctc_266 cell1_2.np_2 s_0_2 1.36e-15
+C_ctc_267 cell1_3.g_14 s_0_4 1.49e-15
+C_ctc_268 s_1_4 mbk_sig59_2 1.61e-15
+C_ctc_269 b_3_8 s_1_1 3.9e-16
+C_ctc_270 cell0_2.p_5 s_1_4 1.81e-15
+C_ctc_271 cell1_1.co_20 s_1_1 4.7e-16
+C_ctc_272 s_2_5 s_1_2 1.16e-15
+C_ctc_273 b_2_12 s_2_2 1.13e-15
+C_ctc_274 a_1_5 s_2 9.1e-16
+C_ctc_275 cell0_0.g_4 s_2_2 1.04e-15
+C_ctc_276 cell3_2.p_4 s_2 2e-15
+C_ctc_277 cell0_3.p_9 s_2 2.1e-16
+C_ctc_278 cell1_2.ng_4 s_2_4 7.4e-16
+C_ctc_279 cell1_3.g_10 s_2_5 1.83e-15
+C_ctc_280 s_3 cell0_0.g_14 7.9e-16
+C_ctc_281 s_3_5 mbk_sig42_1 9.9e-16
+C_ctc_282 mbk_sig11_4 s_3 1.95e-15
+C_ctc_283 mbk_sig30_5 s_3_1 1.05e-15
+C_ctc_284 mbk_sig30_8 s_3_5 1.44e-15
+C_ctc_285 cell1_1.co_17 s_3_5 8.8e-16
+C_ctc_286 cell1_3.g_6 s_3_4 1.32e-15
+C_ctc_287 mbk_sig18_3 s_3_1 6.6e-16
+C_ctc_288 mbk_sig49_4 s_3_4 1e-15
+.ends adder
+

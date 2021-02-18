@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>Timing Abstraction Directives</title>
+
+<section niv='4'><title>Parameterization of Lookup Tables</title>
+
+<p>Lookup tables defined for timing paths depend
+on input slopes and output capacitances. The SLOPEIN and CAPAOUT sections provide various means
+for specifying the ranges of slopes and capacitances applied on external connectors.
+Ranges can be set for selected connectors, but a default range can also be given, using the
+keyword 'default'.
+Ranges can be set by enumeration, using the syntax:</p>
+<code>signal: (slope_0, slope_1, ... , slope_n);</code>
+<p>Ranges can also be set by specifying a lower bound,  an upper bound, and a step, using the syntax:</p>
+<code>signal: (lower_bound: upper_bound: step);</code> 
+</section>
+
+<section niv='4'><title>SLOPEIN</title>
+
+<p>The SLOPEIN section describes the slopes to be applied on input connectors. 
+Slopes are given in pico-seconds.</p>
+<code>
+<cl>SLOPEIN</cl>
+<cl>BEGIN</cl>
+<cl>    sig1: (100, 400, 900, 1500, 2200, 3000);</cl>
+<cl>    sig2: (100: 1000: 100);</cl>
+<cl>    default: (100, 400, 900, 1500, 2200, 3000);</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</section>
+
+<section niv='4'><title>CAPAOUT</title>
+
+<p>The CAPAOUT section describes the capacitances to be applied on output connectors.
+To specify capacitances, a scaling factor is available. The range of capacitance
+can be given for specific length and width of transistors. The capacitances really applied
+on the connector are then scaled by the ratio between the given length and width, and the characteristic
+length and width of the transistors of the cell driving the pin.
+Capacitances are given in Femto-farads, lengths are given microns.
+</p>
+
+<code>
+<cl>CAPAOUT</cl>
+<cl>BEGIN</cl>
+<cl>    sig1: (0.7, 80.5, 190.0, 300.5); </cl>
+<cl>    sig2: (0: 250: 25);</cl>
+<cl>    default: (0.3, 38.5, 147.0, 311.5) L=0.18 W=0.6;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</section>
+
+
+<section niv='4'><title>CLOCK CONNECTORS</title>
+
+<p>Clocks must be declared in the information file in order to compute setup and hold constraints. These clocks are specified in the CLOCK CONNECTORS section.</p>
+<code>
+<cl>CLOCK CONNECTORS</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</section>
+</section>

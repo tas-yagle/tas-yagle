@@ -1,0 +1,708 @@
+#!/bin/sh
+#
+# Install Script for HiTas and Yagle tools distribution     
+#
+# Copyright (c)1999-2005, Avertec                   
+# All Rights Reserved
+#
+##########################################################################
+
+##########################################################################
+echonl()
+{
+    if [ `echo "x\c"` = "x" ] ; then
+        echo "$1\c"
+    else
+        echo -n "$1"
+    fi
+}
+
+##########################################################################
+exit_install()
+{
+    echo "Exit installation..."
+    echo " "
+    exit 1
+}
+
+##########################################################################
+abort_install()
+{
+    if readinlist "Abort installation y/n? [n]:" "$YESNOLIST" n ; then
+        if readinlist "Are you sure? y/n [n]:" "$YESNOLIST" n ; then
+            exit_install
+        fi
+    fi
+}
+
+##########################################################################
+is_yes_no()
+{
+    anstotest="$1"
+    case "$anstotest" in
+        y|Y|yes|YES|accept)
+            return 0
+            ;;
+        n|N|no|NO|decline)
+            return 1
+            ;;
+        *)
+            return 2
+            ;;
+    esac
+}
+
+##########################################################################
+is_in_list()
+{
+    arginlist="$1"
+    listofarg="$2"
+
+    for arg in $arginlist ; do
+        ok=0
+        for available in $listofarg ; do
+            if [ "$arg" = "$available" ] ; then
+                ok=1
+            fi
+        done
+        if [ $ok = 0 ] ; then
+            return 1
+        fi
+    done
+
+    return 0
+}
+
+##########################################################################
+not_in_os()
+{
+    file="$1"
+    in_os=0
+    is_os=0
+
+    osinfile=`echo "$file" | grep Solaris_2.8 | grep -v Solaris_2.8_64`
+    if [ "$osinfile" ] ; then
+        is_os=1
+        for os in $OSTOINSTALL ; do
+            if [ "$os" = "S2.8" ] ; then 
+                in_os=1
+            fi
+        done
+    fi
+    
+    osinfile=`echo "$file" | grep Solaris_2.8_64`
+    if [ "$osinfile" ] ; then
+        is_os=1
+        for os in $OSTOINSTALL ; do
+            if [ "$os" = "S2.8_64" ] ; then 
+                in_os=1
+            fi
+        done
+    fi
+    
+    osinfile=`echo "$file" | grep Solaris_10 | grep -v Solaris_10_64`
+    if [ "$osinfile" ] ; then
+        is_os=1
+        for os in $OSTOINSTALL ; do
+            if [ "$os" = "S10" ] ; then 
+                in_os=1
+            fi
+        done
+    fi
+    
+    osinfile=`echo "$file" | grep Solaris_10_64`
+    if [ "$osinfile" ] ; then
+        is_os=1
+        for os in $OSTOINSTALL ; do
+            if [ "$os" = "S10_64" ] ; then 
+                in_os=1
+            fi
+        done
+    fi
+    
+    osinfile=`echo "$file" | grep RHEL_3.0` 
+    if [ "$osinfile" ] ; then
+        is_os=1
+        for os in $OSTOINSTALL ; do
+            if [ "$os" = "RHEL3.0" ] ; then 
+                in_os=1
+            fi
+        done 
+    fi
+    
+    osinfile=`echo "$file" | grep RHEL_3.0_64` 
+    if [ "$osinfile" ] ; then
+        is_os=1
+        for os in $OSTOINSTALL ; do
+            if [ "$os" = "RHEL3.0_64" ] ; then 
+                in_os=1
+            fi
+        done 
+    fi
+    
+    if [ $in_os -eq 1 -o $is_os -eq 0 ] ; then
+        return 1;
+    else
+        return 0;
+    fi
+}
+##########################################################################
+read_answer()
+{
+    message="$1"
+    defaultvalue="$2"
+    while true ; do
+        echonl "$message"
+        echonl " "
+        read answer
+        echo " "
+        if [ ! "$answer" ] ; then
+            answer="$defaultvalue"
+        fi
+        if is_yes_no "$answer" ; then
+            return 0
+        else
+            return 1
+        fi
+    done
+}
+
+##########################################################################
+readinlist()
+{
+    question="$1"
+    listofarg="$2"
+    defaultvalue="$3"
+    returnvalue=true 
+
+    while true ; do
+        if read_answer "$question"  "$defaultvalue" ; then
+            returnvalue=true
+        else
+            returnvalue=false
+        fi
+        if is_in_list "$answer" "$listofarg" ; then
+            break ;
+        else
+            echo "ERROR: Invalid response... try again"
+            echo " "
+        fi
+    done
+
+    if [ "$returnvalue" = "true" ] ; then
+        return 0 
+    else
+        return 1 
+    fi
+}
+
+##########################################################################
+printlicense()
+{
+    licensefile="$1"
+
+    if [ -f "/bin/more" ] ; then
+        cattool="/bin/more"
+    elif [ -f "/usr/bin/more" ] ; then
+        cattool="/usr/bin/more"
+    elif [ -f "/usr/ucb/more" ] ; then
+        cattool="/usr/ucb/more"
+    else
+        cattool=cat
+    fi
+
+    echo "You must accept the following license agreement before installation"
+    echo " "
+    echo "Press return to continue"
+    echo " "
+    read dummy
+    $cattool "$licensefile"
+    echo " "
+}
+##########################################################################
+
+##########################################################################
+create_dir()
+{
+    dir="$1"
+    if [ ! -d "$dir" ] ; then
+        echo "Directory $INSTALLDIR does not exist..."
+        echo " "
+        if readinlist "Do you want to create it now y/n? [y]:" "$YESNOLIST" y ; then
+            if mkdir -p "$INSTALLDIR" > /dev/null 2>&1 ; then
+                echo "Creating installation directory..."
+                echo " "
+                return 0
+            else
+                echo "Can not create directory $INSTALLDIR..."
+                echo " "
+                abort_install
+                return 1
+            fi
+        else
+            abort_install
+            return 1
+        fi
+    else
+        echo "Directory $INSTALLDIR already exists..."
+        echo " "
+        if readinlist "Do you want to overwrite it now y/n? [n]:" "$YESNOLIST" n ; then
+            echo "All data will be destroyed..."
+            echo " "
+            if readinlist "Are you sure y/n? [n]:" "$YESNOLIST" n ; then
+                if rm -rf $INSTALLDIR/* > /dev/null 2>&1 ; then
+                    echo "Creating installation directory..."
+                    echo " "
+                    return 0
+                else
+                    echo "Can not overwrite directory $INSTALLDIR..."
+                    echo " "
+                    abort_install
+                    return 1
+                fi
+            else
+                abort_install
+                return 1
+            fi
+        else
+            abort_install
+            return 1
+        fi
+    fi
+}
+##########################################################################
+
+##########################################################################
+setinstallinfo()
+{
+    echo " "
+
+    while true ; do
+        read_answer "Enter the source directory [${INSTALLTOOLSDIR}]: " "$INSTALLTOOLSDIR"
+        INSTALLTOOLSDIR="$answer"
+        if [ -f "$INSTALLTOOLSDIR/license_terms/license.txt" ] ; then
+            printlicense "$INSTALLTOOLSDIR/license_terms/license.txt"
+            while true ; do
+                echo "To accept the terms and conditions of this agreement enter accept"
+                echo " "
+                echo "To decline the terms and conditions of this agreement enter decline"
+                echo " "
+                if readinlist "Do you accept the terms and conditions? [accept]:" "accept decline" accept ; then
+                    break ;
+                else
+                    abort_install
+                    echo "You must accept the terms and conditions license agreement to continue..."
+                    echo " "
+                fi
+            done
+            break ;
+        else
+            echo "Bad source directory..."
+            echo " "
+            abort_install
+        fi
+    done 
+
+    while true ; do
+        read_answer "Enter the destination directory [${INSTALLDIR}]: " "$INSTALLDIR"
+        INSTALLDIR="$answer"
+        if create_dir "$INSTALLDIR" ; then
+            break ;
+        fi
+    done
+ 
+    echo "Enter the OS to install"
+    echo "   S2.8       : Solaris 2.8"
+    echo "   S2.8_64    : Solaris 2.8 64bits"
+    echo "   S10        : Solaris 10"
+    echo "   S10_64     : Solaris 10 64bits"
+    echo "   RHEL3.0    : Red Hat Enterprise Linux 3.0"
+    echo "   RHEL3.0_64 : Red Hat Enterprise Linux 3.0 64bits"
+    readinlist "OS [${OSTOINSTALL}]: " "$OSTOINSTALL all" "all"
+    OSTOINSTALL=$answer
+    if [ "$OSTOINSTALL" = "all" ] ; then 
+        OSTOINSTALL="S2.8 S2.8_64 S10 S10_64 RHEL3.0 RHEL3.0_64"
+    fi
+}
+##########################################################################
+copy_file()
+{
+    sourcedirfile="$1"
+
+    echo "Copying common distribution files..."
+    echo " "
+    for line in `awk '/^common/ {printf "%s ",$0}' $sourcedirfile/etc/avttools.dtb`; do
+        file=`echo "$line"|sed 's/.*://g'`
+        if not_in_os "$file" ; then 
+            continue
+        fi
+        scefullname="$sourcedirfile/$file"
+        dstfullname="$INSTALLDIR/$file"
+        if [ -d "$scefullname" ] ; then
+            if [ ! -d "$dstfullname" ] ; then
+                if mkdir -p "$dstfullname" > /dev/null 2>&1 ; then
+                    echonl "*"
+                else
+                    echo "Can not write in the destination directory..."
+                    echo " "
+                    exit_install
+                fi
+            fi
+        elif [ -f "$scefullname" ] ; then
+            if cp -f "$scefullname" "$dstfullname" > /dev/null 2>&1 ; then
+                echonl "*"
+            else
+                echo "Can not write in the destination directory..."
+                echo " "
+                exit_install
+            fi
+        else
+            basename=`basename "$file"`
+            if [ "$basename" = "*r" ] ; then
+                dirname=`dirname "$file"`
+                if cp -rf $sourcedirfile/$dirname/* $INSTALLDIR/$dirname/. > /dev/null 2>&1 ; then
+                    echonl "*"
+                fi
+            elif [ "$basename" = "*" ] ; then
+                dirname=`dirname "$file"`
+                if cp -f $sourcedirfile/$dirname/* $INSTALLDIR/$dirname/. > /dev/null 2>&1 ; then
+                    echonl "*"
+                fi
+            fi
+        fi
+    done
+    echo " "
+    echo " "
+
+    echo "Copying HITAS distribution files..."
+    echo " "
+    for line in `awk '/^hitas/ {printf "%s ",$0}' $sourcedirfile/etc/avttools.dtb`; do
+        file=`echo "$line"|sed 's/.*://g'`
+        if not_in_os "$file" ; then 
+            continue
+        fi
+        scefullname="$sourcedirfile/$file"
+        dstfullname="$INSTALLDIR/$file"
+        if [ -d "$scefullname" ] ; then
+            if [ ! -d "$dstfullname" ] ; then
+                if mkdir -p "$dstfullname" > /dev/null 2>&1 ; then
+                    echonl "*"
+                else
+                    echo "Can not write in the destination directory..."
+                    echo " "
+                    exit_install
+                fi
+            fi
+        elif [ -f "$scefullname" ] ; then
+            if cp -f "$scefullname" "$dstfullname" > /dev/null 2>&1 ; then
+                echonl "*"
+            else
+                echo "Can not write in the destination directory..."
+                echo " "
+                exit_install
+            fi
+        else
+            basename=`basename "$file"`
+            if [ "$basename" = "*r" ] ; then
+                dirname=`dirname "$file"`
+                if cp -rf $sourcedirfile/$dirname/* $INSTALLDIR/$dirname/. > /dev/null 2>&1 ; then
+                    echonl "*"
+                fi
+            elif [ "$basename" = "*" ] ; then
+                dirname=`dirname "$file"`
+                if cp -f $sourcedirfile/$dirname/* $INSTALLDIR/$dirname/. > /dev/null 2>&1 ; then
+                    echonl "*"
+                fi
+            fi
+        fi
+    done
+    echo " "
+    echo " "
+
+    echo "Copying YAGLE distribution files..."
+    echo " "
+    for line in `awk '/^yagle/ {printf "%s ",$0}' $sourcedirfile/etc/avttools.dtb`; do
+        file=`echo "$line"|sed 's/.*://g'`
+        if not_in_os "$file" ; then 
+            continue
+        fi
+        scefullname="$sourcedirfile/$file"
+        dstfullname="$INSTALLDIR/$file"
+        if [ -d "$scefullname" ] ; then
+            if [ ! -d "$dstfullname" ] ; then
+                if mkdir -p "$dstfullname" > /dev/null 2>&1 ; then
+                    echonl "*"
+                else
+                    echo "Can not write in the destination directory..."
+                    echo " "
+                    exit_install
+                fi
+            fi
+        elif [ -f "$scefullname" ] ; then
+            if cp -f "$scefullname" "$dstfullname" > /dev/null 2>&1 ; then
+                echonl "*"
+            else
+                echo "Can not write in the destination directory..."
+                echo " "
+                exit_install
+            fi
+        else
+            basename=`basename "$file"`
+            if [ "$basename" = "*r" ] ; then
+                dirname=`dirname "$file"`
+                if cp -rf $sourcedirfile/$dirname/* $INSTALLDIR/$dirname/. > /dev/null 2>&1 ; then
+                    echonl "*"
+                fi
+            elif [ "$basename" = "*" ] ; then
+                dirname=`dirname "$file"`
+                if cp -f $sourcedirfile/$dirname/* $INSTALLDIR/$dirname/. > /dev/null 2>&1 ; then
+                    echonl "*"
+                fi
+            fi
+        fi
+    done
+    echo " "
+    echo " "
+
+}
+##########################################################################
+
+##########################################################################
+installdistrib()
+{
+    if [ -f "$INSTALLDIR/etc/avttools.dtb" ] ; then
+        if rm -f $INSTALLDIR/etc/avttools.dtb > /dev/null 2>&1 ; then
+            echo "Remove the old distribution database..."
+            echo " "
+        else
+            echo "Can not remove the old database..."
+            echo " "
+            exit_install
+        fi
+    else
+        if [ ! -d "$INSTALLDIR/etc" ] ; then
+            if mkdir -p "$INSTALLDIR/etc" > /dev/null 2>&1 ; then
+                echo "Creating the new distribution database..."
+                echo " "
+            else
+                echo "Can not write in the destination directory..."
+                echo " "
+                exit_install
+            fi
+        fi
+    fi
+
+    copy_file $INSTALLTOOLSDIR
+}
+##########################################################################
+##########################################################################
+create_env()
+{
+    destfile="$INSTALLDIR/etc/avt_env.csh"
+    server=`hostname`
+    read_answer "Enter the license server name [${server}]: " "$server"
+    server="$answer"
+    SERVER="$server"
+
+    if [ -d "$INSTALLTOOLSDIR/tools/Linux_demo" ] ; then
+        echo "setenv AVTOS Linux_demo" >> "$destfile"
+    else 
+        echo "switch (\`uname\`)" >> "$destfile"
+        echo "    case Linux*:" >> "$destfile"
+        echo "        switch (\$1)" >> "$destfile"
+        echo "            case 64:" >> "$destfile"
+        echo "                setenv AVTOS RHEL_3.0_64" >> "$destfile"
+        echo "                breaksw" >> "$destfile"
+        echo "            default" >> "$destfile"
+        echo "                setenv AVTOS RHEL_3.0" >> "$destfile"
+        echo "                breaksw" >> "$destfile"
+        echo "        endsw" >> "$destfile"
+        echo "        breaksw" >> "$destfile"
+        echo "    case SunOS*:" >> "$destfile"
+        echo "        switch (\`uname -r\`)" >> "$destfile"
+        echo "            case 5.8*:" >> "$destfile"
+        echo "            case 5.9*:" >> "$destfile"
+        echo "                switch (\$1)" >> "$destfile"
+        echo "                    case 64:" >> "$destfile"
+        echo "                        setenv AVTOS Solaris_2.8_64" >> "$destfile"
+        echo "                        breaksw" >> "$destfile"
+        echo "                    default" >> "$destfile"
+        echo "                        setenv AVTOS Solaris_2.8" >> "$destfile"
+        echo "                        breaksw" >> "$destfile"
+        echo "                endsw" >> "$destfile"
+        echo "                breaksw" >> "$destfile"
+        echo "            case 5.10*:" >> "$destfile"
+        echo "                switch (\$1)" >> "$destfile"
+        echo "                    case 64:" >> "$destfile"
+        echo "                        setenv AVTOS Solaris_10_64" >> "$destfile"
+        echo "                        breaksw" >> "$destfile"
+        echo "                    default" >> "$destfile"
+        echo "                        setenv AVTOS Solaris_10" >> "$destfile"
+        echo "                        breaksw" >> "$destfile"
+        echo "                endsw" >> "$destfile"
+        echo "                breaksw" >> "$destfile"
+        echo "            default :" >> "$destfile"
+        echo "                setenv AVTOS Solaris_2.8" >> "$destfile"
+        echo "                breaksw" >> "$destfile"
+        echo "        endsw" >> "$destfile"
+        echo "        breaksw" >> "$destfile"
+        echo "    default :" >> "$destfile"
+        echo "        setenv AVTOS Solaris_2.8" >> "$destfile"
+        echo "        breaksw" >> "$destfile"
+        echo "endsw" >> "$destfile"
+    fi
+
+    echo "setenv AVT_FLEX_LICENSE yes" >> "$destfile"
+    echo "setenv AVT_LICENSE_FILE $INSTALLDIR/etc/avtlicense.lic" >> "$destfile"
+
+    echo "setenv AVT_TOOLS_DIR $AVT_TOOLS_DIR" >> "$destfile"
+    echo "if \$?PATH then" >> "$destfile"
+    echo "    setenv PATH \$AVT_TOOLS_DIR/tools/\$AVTOS/bin:\$AVT_TOOLS_DIR/tcl:\${PATH}" >> "$destfile"
+    echo "else" >> "$destfile"
+    echo "    setenv PATH \$AVT_TOOLS_DIR/tools/\$AVTOS/bin:\$AVT_TOOLS_DIR/tcl" >> "$destfile"
+    echo "endif" >> "$destfile"
+    echo "if \$?LD_LIBRARY_PATH then" >> "$destfile"
+    echo "    setenv LD_LIBRARY_PATH \$AVT_TOOLS_DIR/tools/\$AVTOS/api_lib:\${LD_LIBRARY_PATH}" >> "$destfile"
+    echo "else" >> "$destfile"
+    echo "    setenv LD_LIBRARY_PATH \$AVT_TOOLS_DIR/tools/\$AVTOS/api_lib" >> "$destfile"
+    echo "endif" >> "$destfile"
+    echo "if \$?MANPATH then" >> "$destfile"
+    echo "    setenv MANPATH \$AVT_TOOLS_DIR/man:\${MANPATH}" >> "$destfile"
+    echo "else" >> "$destfile"
+    echo "    setenv MANPATH \$AVT_TOOLS_DIR/man" >> "$destfile"
+    echo "endif" >> "$destfile"
+    echo "setenv AVT_LICENSE_SERVER $server" >> "$destfile"
+
+
+    destfilesh="$INSTALLDIR/etc/avt_env.sh"
+    
+    if [ -d "$INSTALLTOOLSDIR/tools/Linux_demo" ] ; then
+        echo "AVTOS=Linux_demo" >> "$destfilesh"
+        echo "export $AVTOS" >> "$destfilesh"
+    else 
+        echo "case \`uname\` in" >> "$destfilesh"
+        echo "    Linux*)" >> "$destfilesh"
+        echo "        case \${1:-32} in" >> "$destfilesh"
+        echo "            64)" >> "$destfilesh"
+        echo "                AVTOS=RHEL_3.0_64" >> "$destfilesh"
+        echo "                export AVTOS;;" >> "$destfilesh"
+        echo "            *)" >> "$destfilesh"
+        echo "                AVTOS=RHEL_3.0" >> "$destfilesh"
+        echo "                export AVTOS;;" >> "$destfilesh"
+        echo "        esac;;" >> "$destfilesh"
+        echo "    SunOS*)" >> "$destfilesh"
+        echo "        case \`uname -r\` in" >> "$destfilesh"
+        echo "            5.8*)" >> "$destfilesh"
+        echo "                case \${1:-32} in" >> "$destfilesh"
+        echo "                    64)" >> "$destfilesh"
+        echo "                        AVTOS=Solaris_2.8_64" >> "$destfilesh"
+        echo "                        export AVTOS;;" >> "$destfilesh"
+        echo "                    *)" >> "$destfilesh"
+        echo "                        AVTOS=Solaris_2.8" >> "$destfilesh"
+        echo "                        export AVTOS;;" >> "$destfilesh"
+        echo "                esac;;" >> "$destfilesh"
+        echo "            5.9*)" >> "$destfilesh"
+        echo "                case \${1:-32} in" >> "$destfilesh"
+        echo "                    64)" >> "$destfilesh"
+        echo "                        AVTOS=Solaris_2.8_64" >> "$destfilesh"
+        echo "                        export AVTOS;;" >> "$destfilesh"
+        echo "                    *)" >> "$destfilesh"
+        echo "                        AVTOS=Solaris_2.8" >> "$destfilesh"
+        echo "                        export AVTOS;;" >> "$destfilesh"
+        echo "                esac;;" >> "$destfilesh"
+        echo "            5.10*)" >> "$destfilesh"
+        echo "                case \${1:-32} in" >> "$destfilesh"
+        echo "                    64)" >> "$destfilesh"
+        echo "                        AVTOS=Solaris_10_64" >> "$destfilesh"
+        echo "                        export AVTOS;;" >> "$destfilesh"
+        echo "                    *)" >> "$destfilesh"
+        echo "                        AVTOS=Solaris_10" >> "$destfilesh"
+        echo "                        export AVTOS;;" >> "$destfilesh"
+        echo "                esac;;" >> "$destfilesh"
+        echo "            *)" >> "$destfilesh"
+        echo "                AVTOS=Solaris_2.8" >> "$destfilesh"
+        echo "                export AVTOS;;" >> "$destfilesh"
+        echo "        esac;;" >> "$destfilesh"
+        echo "    *)" >> "$destfilesh"
+        echo "        AVTOS=Solaris_2.8" >> "$destfilesh"
+        echo "        export AVTOS;;" >> "$destfilesh"
+        echo "esac" >> "$destfilesh"
+    fi
+
+    echo "AVT_FLEX_LICENSE=yes" >> "$destfilesh"
+    echo "export AVT_FLEX_LICENSE" >> "$destfilesh"
+    echo "AVT_LICENSE_FILE=$INSTALLDIR/etc/avtlicense.lic" >> "$destfilesh"
+    echo "export AVT_LICENSE_FILE" >> "$destfilesh"
+    echo "AVT_TOOLS_DIR=$AVT_TOOLS_DIR" >> "$destfilesh"
+    echo "export AVT_TOOLS_DIR" >> "$destfilesh"
+    echo "if [ \${PATH:-notset} = notset ]" >> "$destfilesh"
+    echo "then" >> "$destfilesh"
+    echo "    PATH=\$AVT_TOOLS_DIR/tools/\$AVTOS/bin:\$AVT_TOOLS_DIR/tcl" >> "$destfilesh"
+    echo "    export PATH" >> "$destfilesh"
+    echo "else" >> "$destfilesh"
+    echo "    PATH=\$AVT_TOOLS_DIR/tools/\$AVTOS/bin:\$AVT_TOOLS_DIR/tcl:\${PATH}" >> "$destfilesh"
+    echo "    export PATH" >> "$destfilesh"
+    echo "fi" >> "$destfilesh"
+    echo "if [ \${LD_LIBRARY_PATH:-notset} = notset ]" >> "$destfilesh"
+    echo "then" >> "$destfilesh"
+    echo "    LD_LIBRARY_PATH=\$AVT_TOOLS_DIR/tools/\$AVTOS/api_lib" >> "$destfilesh"
+    echo "    export LD_LIBRARY_PATH" >> "$destfilesh"
+    echo "else" >> "$destfilesh"
+    echo "    LD_LIBRARY_PATH=\$AVT_TOOLS_DIR/tools/\$AVTOS/api_lib:\${LD_LIBRARY_PATH}" >> "$destfilesh"
+    echo "    export LD_LIBRARY_PATH" >> "$destfilesh"
+    echo "fi" >> "$destfilesh"
+    echo "if [ \${MANPATH:-notset} = notset ]" >> "$destfilesh"
+    echo "then" >> "$destfilesh"
+    echo "    MANPATH=\$AVT_TOOLS_DIR/man" >> "$destfilesh"
+    echo "    export MANPATH" >> "$destfilesh"
+    echo "else" >> "$destfilesh"
+    echo "    MANPATH=\$AVT_TOOLS_DIR/man:\${MANPATH}" >> "$destfilesh"
+    echo "    export MANPATH" >> "$destfilesh"
+    echo "fi" >> "$destfilesh"
+    echo "AVT_LICENSE_SERVER=$server" >> "$destfilesh"
+    echo "export AVT_LICENSE_SERVER" >> "$destfilesh"
+
+
+}
+
+##########################################################################
+
+INSTALLTOOLS=`basename $0`
+INSTALLTOOLSDIR=`dirname $0`
+CURRENTDIR=`pwd`
+if [ "$AVT_TOOLS_DIR" ] ; then
+    INSTALLDIR="$AVT_TOOLS_DIR"
+else
+    INSTALLDIR="$CURRENTDIR/AvtTools"
+fi
+
+OSTOINSTALL="S2.8 S2.8_64 S10 S10_64 RHEL3.0 RHEL3.0_64"
+
+YESNOLIST="y Y yes YES n N no NO"
+
+umask 022
+if  [ "$1" = "-help" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+echo "usage:  Install [source directory] [destination directory]"
+echo " "
+exit 1
+fi
+
+if [ "$1" ] ; then 
+    INSTALLTOOLSDIR="$1"
+fi
+
+if [ "$2" ] ; then 
+    INSTALLDIR="$2"
+fi
+setinstallinfo
+
+cd "$INSTALLDIR"
+AVT_TOOLS_DIR=`pwd`
+
+cd "$CURRENTDIR"
+installdistrib
+create_env
+
+echo "Installation successful"
+echo " "
+exit 0

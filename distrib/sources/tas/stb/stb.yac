@@ -1,0 +1,1478 @@
+/****************************************************************************/
+/*                                                                          */
+/*                      Chaine de CAO & VLSI   AVERTEC                      */
+/*                                                                          */
+/*    Produit : STB Version 1.00                                            */
+/*    Fichier : stb.yac                                                     */
+/*                                                                          */
+/*    (c) copyright 2000 AVERTEC                                            */
+/*    Tous droits reserves                                                  */
+/*                                                                          */
+/*    Auteur(s) : Karim DIOURY                                              */
+/*                Anthony LESTER                                            */
+/*   11 Aug 2004: Antony PINTO                                              */
+/*                Parse functions extracted to abstract origin of data      */
+/*                                                                          */
+/****************************************************************************/
+
+%{
+
+#include STB_H
+#include TTV_H
+
+#include "stb_init.h"
+#include "stb_util.h"
+#include "stb_error.h"
+#include "stb_parse.h"
+
+/*****************************************************************************
+* global variables                                                           *
+*****************************************************************************/
+
+// useful when we are not confident with my modification
+//
+// ...anto...
+//
+//#define STBPARSE_OLDFASHION 1
+
+static stb_parse    *STAB;
+
+extern int yylineno;
+extern void stb_parse_init_stab(stb_parse *stab);
+
+/*****************************************************************************
+* function declarations                                                      *
+*****************************************************************************/
+
+int yyerror();
+int yylex();
+int stbclosefile() ;
+
+static void stb_yyclean(void);
+
+%}
+
+%union
+  {
+  double             decimal;
+  char              *text;
+  long               valu;
+  stb_parse_doublet  doublet;
+  stb_parse_pulse    pulse;
+  char               flag;
+  int                phase;
+  chain_list        *list;
+  stbpriority       *prio;
+  };
+
+%token        LeftParen
+%token        RightParen
+%token        Colon
+%token        Semicolon
+%token        Comma
+%token        Not
+%token        _BEGIN
+%token        _END
+%token        _DEFAULT
+%token        _PERIOD
+%token        _VERSION
+%token        _STABILITY
+%token        _NAME
+%token        _SETUPTIME
+%token        _HOLDTIME
+%token        _CONNECTORS
+%token        _CLOCK
+%token        _GROUPS
+%token        _ASYNCHRONOUS
+%token        _EQUIVALENT
+%token        _DISABLE
+%token        _UP
+%token        _DOWN
+%token        _RISING
+%token        _FALLING
+%token        _FROM
+%token        _FOR
+%token        _TO
+%token        _STABLE
+%token        _UNSTABLE
+%token        _INPUT
+%token        _STABILITY
+%token        _OUTPUT
+%token        _VERIFY
+%token        _SPECIFY
+%token        _INTERNAL
+%token        _NODES
+%token        _AFTER
+%token        _BEFORE
+%token        _CONDITIONED
+%token        _COMMAND
+%token        _STATES
+%token        _NOVERIF
+%token        _WITHOUT
+%token        _PRECHARGE
+%token        _EVALUATE
+%token        _MULTIPLE
+%token        _PRIORITY
+%token        _MEMORY
+
+%token <text>    Identifier
+%token <valu>    Binary
+%token <valu>    Integer
+%token <decimal> decimal_literal
+
+%type  <doublet> rdouble range edge_up edge_dn relative_phase
+%type  <flag>    stability_type edge_option relative_type state hz_option
+%type  <phase>   source_phase dest_phase
+%type  <pulse>   clock_spec
+%type  <list>    ckname_list group ckprio_list integer_list
+%type  <valu>    period
+%type  <text>    disable_from disable_to
+%type  <text>    clock_ident
+%type  <prio>    ckprio_pair
+
+%start stb_file
+
+%%
+
+stb_file        : general ck_declar disable wenable specin specout inputs outputs memories internals
+                { /* set the default SPECIN */
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list    *ptttvsig;
+                    stbnode        *ptstbnode;
+                    stbck          *ptstbck;
+                    chain_list     *ptchain;
+                    char            edge;
+                    long            d = 0, u = 0;
+                    int             i;
+
+                    if ((ptstbck = stb_getclock(STAB->PARSEDFIG, STAB->PARSEDFIG->PHASENUMBER - 1, NULL, &edge, NULL)) != NULL) {
+                        if (edge == STB_SLOPE_DN) {
+                            d = ptstbck->SDNMIN;
+                            u = ptstbck->SDNMAX;
+                        }
+                        else {
+                            d = ptstbck->SUPMIN;
+                            u = ptstbck->SUPMAX;
+                        }
+                    }
+
+                    for (ptchain = STAB->PARSEDFIG->CONNECTOR; ptchain; ptchain = ptchain->NEXT) {
+                        ptttvsig = (ttvsig_list *)ptchain->DATA;
+                        if ((ptttvsig->TYPE & TTV_SIG_CI) != TTV_SIG_CI || (ptttvsig->TYPE & TTV_SIG_CB) == TTV_SIG_CB) continue;
+                        for (i = 0; i < 2; i++) {
+                            ptstbnode = stb_getstbnode(ptttvsig->NODE+i);
+                            if (ptstbnode->CK != NULL) {
+                              if (ptstbnode->CK->TYPE == STB_TYPE_CLOCK)
+                                continue;
+                            }
+
+                            if (ptstbnode->SPECIN == NULL) {
+                                ptstbnode->SPECIN = stb_alloctab(STAB->PARSEDFIG->PHASENUMBER);
+                                ptstbnode->SPECIN[STAB->PARSEDFIG->PHASENUMBER - 1] = stb_addstbpair(NULL, d, u);
+                            }
+                        }
+                    }
+                    STAB->PARSEDFIG = NULL; /* finished with it */
+#else
+                    stb_parse_stb_file(STAB);
+#endif
+                }
+                ;
+
+general         : name version period setup hold
+                {
+#ifdef STBPARSE_OLDFASHION
+                    STAB->PTINSCHAIN = NULL;
+                    STAB->PTSTABLELIST = NULL;
+                    STAB->PTUNSTABLELIST = NULL;
+                    STAB->DEFAULTPHASE = STB_NO_INDEX;
+                    STAB->CKDOMAINS = NULL;
+                    STAB->CKEQVT = NULL;
+                    STAB->DOMAININDEX = 0;
+                    STAB->EQVTINDEX = 0;
+#endif
+                    STAB->PARSEDFIG->CLOCKPERIOD = $3 * TTV_UNIT;
+                }
+                ;
+
+name            : _NAME Identifier Semicolon
+                {
+#ifdef STBPARSE_OLDFASHION
+                    char        *name = namealloc($2);
+                    int          found = FALSE;
+                    stbfig_list *ptfig;
+
+                    /* check that the STB figure exists */
+                    for (ptfig = HEAD_STBFIG; ptfig; ptfig = ptfig->NEXT)
+                    {
+                        if (ptfig->FIG->INFO->FIGNAME == name)
+                        {
+                            found = TRUE;
+                            STAB->PARSEDFIG = ptfig;
+                            break;
+                        }
+                        if (!found) stb_error(ERR_NO_FIGURE, NULL, 0, STB_FATAL);
+                    }
+#else
+                    stb_parse_name(STAB,$2,0);
+#endif
+                }
+                ;
+
+version         : _VERSION decimal_literal Semicolon
+                ;
+
+period          : /* empty */
+                {
+                    $$ = STB_NO_TIME;
+                }
+                | _PERIOD Integer Semicolon
+                {
+                    $$ = $2;
+                }
+                ;
+
+setup           : _SETUPTIME Integer Semicolon
+                {
+                    STAB->PARSEDFIG->SETUP = $2 * TTV_UNIT;
+                }
+                ;
+
+hold            : _HOLDTIME Integer Semicolon
+                {
+                    STAB->PARSEDFIG->HOLD = $2 * TTV_UNIT;
+                }
+                ;
+
+rdouble         : LeftParen Integer Colon Integer RightParen
+                {
+                    $$.start = $2;
+                    $$.end = $4;
+                }
+                ;
+
+range           : rdouble
+                {
+                    $$ = $1;
+                }
+                | Integer
+                {
+                    $$.start = $1;
+                    $$.end = $1;
+                }
+                ;
+
+clock_spec      : edge_up edge_dn period
+                {
+                    $$.supmin = $1.start * TTV_UNIT ;
+                    $$.supmax = $1.end * TTV_UNIT ;
+                    $$.sdnmin = $2.start * TTV_UNIT ;
+                    $$.sdnmax = $2.end * TTV_UNIT ;
+                    $$.period = $3 * TTV_UNIT ;
+                }
+                | edge_dn edge_up period
+                {
+                    $$.supmin = $2.start * TTV_UNIT ;
+                    $$.supmax = $2.end * TTV_UNIT ;
+                    $$.sdnmin = $1.start * TTV_UNIT ;
+                    $$.sdnmax = $1.end * TTV_UNIT ;
+                    $$.period = $3 * TTV_UNIT ;
+                }
+
+edge_up         : _UP range Semicolon
+                {
+                    $$ = $2;
+                }
+                ;
+
+edge_dn         : _DOWN range Semicolon
+                {
+                    $$ = $2;
+                }
+                ;
+
+ck_declar       : clock clock_groups eqvt_clocks ckprio
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list    *ptttvsig;
+                    stbck          *ptstbck;
+                    chain_list     *ptchain, *ptchain1;
+                    chain_list     *foundchain = NULL;
+                    long            period;
+                    char            namebuf[1024];
+
+                    STAB->DOMAININDEX++;
+                    for (ptchain = STAB->PARSEDFIG->CLOCK; ptchain; ptchain = ptchain->NEXT) {
+                        ptttvsig = (ttvsig_list *)ptchain->DATA;
+                        if (getptype(ptttvsig->USER, STB_DOMAIN) == NULL) {
+                            foundchain = addchain(foundchain, ptttvsig);
+                            ptttvsig->USER = addptype(ptttvsig->USER, STB_DOMAIN, (void *)((long)STAB->DOMAININDEX));
+                        }
+                        ptstbck = stb_getstbnode(ptttvsig->NODE)->CK;
+                        if (ptstbck->PERIOD == STB_NO_TIME) {
+                            if (STAB->PARSEDFIG->CLOCKPERIOD == STB_NO_TIME) {
+                                stb_error(ERR_UNDEFINED_PERIOD, ttv_getsigname(STAB->PARSEDFIG->FIG, namebuf, ptttvsig), 0, STB_FATAL);
+                            }
+                            ptstbck->PERIOD = STAB->PARSEDFIG->CLOCKPERIOD;
+                            ptstbck = stb_getstbnode(ptttvsig->NODE+1)->CK;
+                            ptstbck->PERIOD = STAB->PARSEDFIG->CLOCKPERIOD;
+                        }
+                    }
+                    if (foundchain != NULL) {
+                        STAB->CKDOMAINS = addchain(STAB->CKDOMAINS, foundchain);
+                        STAB->PARSEDFIG->CKDOMAIN = stb_addstbdomain(STAB->PARSEDFIG->CKDOMAIN, STB_NO_INDEX, STB_NO_INDEX);
+                    }
+                    STAB->PARSEDFIG->USER = addptype(STAB->PARSEDFIG->USER, STB_DOMAIN, STAB->CKDOMAINS);
+
+                    /* verify that domains have equivalent periods */
+                    for (ptchain = STAB->CKDOMAINS; ptchain; ptchain = ptchain->NEXT) {
+                        period = STB_NO_TIME;
+                        for (ptchain1 = (chain_list *)ptchain->DATA; ptchain1; ptchain1 = ptchain1->NEXT) {
+                            ptttvsig = (ttvsig_list *)ptchain1->DATA;
+                            ptstbck = stb_getstbnode(ptttvsig->NODE)->CK;
+                            if (period == STB_NO_TIME) period = ptstbck->PERIOD;
+                            else if (ptstbck->PERIOD != period) {
+                                stb_error(ERR_INCOHERENT_PERIOD, ttv_getsigname(STAB->PARSEDFIG->FIG, namebuf, ptttvsig), 0, STB_FATAL);
+                            }
+                        }
+                    }
+
+                    /* initialise the clocks */
+                    stb_initclock(STAB->PARSEDFIG,0);
+                    stb_checkclock(STAB->PARSEDFIG);
+#else
+                    stb_parse_ckdeclar(STAB);
+#endif
+                }
+                ;
+
+clock           : /* empty */
+                | _CLOCK _CONNECTORS _BEGIN cklocon_list _END Semicolon
+                ;
+
+cklocon_list    : /* empty */
+                | cklocon cklocon_list
+                ;
+
+cklocon         : clock_ident Colon clock_spec
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list    *ptttvsig;
+                    chain_list     *ptchain;
+                    char           *name = namealloc($1);
+                    char            namebuf[1024];
+                    chain_list     *headlist;
+                    long            period;
+                    int             found = FALSE;
+
+                    headlist = ttv_getsigbytype(STAB->PARSEDFIG->FIG, NULL, TTV_SIG_C|TTV_SIG_B|TTV_SIG_L, NULL);
+
+                        for(ptchain = headlist; ptchain; ptchain = ptchain->NEXT)
+                        {
+                            ptttvsig = (ttvsig_list *)ptchain->DATA;
+                            ttv_getsigname(STAB->PARSEDFIG->FIG, namebuf, ptttvsig);
+                            if (ttv_jokersubst(namebuf, name, '*') == 1) {
+                                ttvevent_list *ptevent;
+                                stbnode       *ptstbnode;
+
+                                if (STAB->INVERTED)
+                                    ptttvsig->USER = addptype (ptttvsig->USER, STB_INVERTED_CLOCK, 0);
+
+                                period = $3.period;
+
+                                STAB->PARSEDFIG->CLOCK = addchain(STAB->PARSEDFIG->CLOCK, ptttvsig);
+                                ptevent = ptttvsig->NODE;
+                                ptstbnode = stb_getstbnode(ptevent);
+                                stb_addstbck(ptstbnode, $3.supmin, $3.supmax, $3.sdnmin, $3.sdnmax,
+                                             period, STAB->PARSEDFIG->SETUP, STAB->PARSEDFIG->HOLD, STB_NO_INDEX, 0, STB_NO_VERIF, STB_TYPE_CLOCK);
+                                ptevent = ptttvsig->NODE+1;
+                                ptstbnode = stb_getstbnode(ptevent);
+                                stb_addstbck(ptstbnode, $3.supmin, $3.supmax, $3.sdnmin, $3.sdnmax,
+                                             period, STAB->PARSEDFIG->SETUP, STAB->PARSEDFIG->HOLD, STB_NO_INDEX, 0, STB_NO_VERIF, STB_TYPE_CLOCK);
+                                found = TRUE;
+                                if (strchr(name, '*') == NULL) break;
+                            }
+                        }
+                    freechain(headlist) ;
+                    if (found == FALSE) {
+                        stb_yyclean();
+                        stb_error(ERR_NO_CLOCK_CONNECTOR, name, yylineno, STB_FATAL);
+                    }
+                    STAB->INVERTED = 0;
+#else
+                    stb_parse_cklocon(STAB,$1,&$3);
+#endif
+                }
+                ;
+
+clock_ident     : Identifier
+                {
+                    $$ = $1;
+                }
+                | Not Identifier
+                {
+                    $$ = $2;
+                    STAB->INVERTED = 1;
+                }
+                ;
+
+ckname_list     : /* empty */
+                {
+                    $$ = NULL;
+                }
+                | Identifier
+                {
+#ifdef STBPARSE_OLDFASHION
+                    $$ = addchain(NULL, stb_getsigfromlist(STAB->PARSEDFIG->FIG, STAB->PARSEDFIG->CLOCK, namealloc($1)));
+                    if ($$->DATA == NULL) {
+                        stb_yyclean();
+                        stb_error(ERR_NO_CLOCK_CONNECTOR, $1, yylineno, STB_FATAL);
+                    }
+#else
+                    $$ = stb_parse_ckname_list(STAB,NULL,$1);
+#endif
+                }
+                | ckname_list Comma Identifier
+                {
+#ifdef STBPARSE_OLDFASHION
+                    $$ = addchain($1, stb_getsigfromlist(STAB->PARSEDFIG->FIG, STAB->PARSEDFIG->CLOCK, namealloc($3)));
+                    if ($$->DATA == NULL) {
+                        stb_yyclean();
+                        stb_error(ERR_NO_CLOCK_CONNECTOR, $3, yylineno, STB_FATAL);
+                    }
+#else
+                    $$ = stb_parse_ckname_list(STAB,$1,$3);
+#endif
+                }
+                ;
+
+domain_groups   : /* empty */
+                | group domain_groups
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list    *ptttvsig;
+                    chain_list     *ptchain;
+                    char            name[1024];
+
+                    if ($1 != NULL) {
+                        STAB->CKDOMAINS = addchain(STAB->CKDOMAINS, $1);
+                        STAB->DOMAININDEX++;
+                        for (ptchain = $1; ptchain; ptchain = ptchain->NEXT) {
+                            ptttvsig = (ttvsig_list *)ptchain->DATA;
+                            if (getptype(ptttvsig->USER, STB_DOMAIN) != NULL) {
+                                ttv_getsigname(STAB->PARSEDFIG->FIG, name, ptttvsig);
+                                stb_yyclean();
+                                stb_error(ERR_MULTIPLE_DOMAIN, name, yylineno, STB_FATAL);
+                            }
+                            ptttvsig->USER = addptype(ptttvsig->USER, STB_DOMAIN, (void *)((long)STAB->DOMAININDEX));
+                        }
+                        STAB->PARSEDFIG->CKDOMAIN = stb_addstbdomain(STAB->PARSEDFIG->CKDOMAIN, STB_NO_INDEX, STB_NO_INDEX);
+                    }
+#else
+                    if ($1 != NULL)
+                      stb_parse_domain_groups(STAB,$1);
+#endif
+                }
+                ;
+
+eqvt_groups     : /* empty */
+                | group eqvt_groups
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list    *ptttvsig;
+                    chain_list     *ptchain;
+                    ptype_list     *ptuser;
+                    char            curdomain = STB_NO_INDEX;
+                    char            sigdomain;
+                    char            name[1024];
+
+                    if ($1 != NULL) {
+                        STAB->CKEQVT = addchain(STAB->CKEQVT, $1);
+                        STAB->EQVTINDEX++;
+                        for (ptchain = $1; ptchain; ptchain = ptchain->NEXT) {
+                            ptttvsig = (ttvsig_list *)ptchain->DATA;
+                            if (getptype(ptttvsig->USER, STB_EQUIVALENT) != NULL) {
+                                ttv_getsigname(STAB->PARSEDFIG->FIG, name, ptttvsig);
+                                stb_yyclean();
+                                stb_error(ERR_MULTIPLE_EQUIVALENCE, name, yylineno, STB_FATAL);
+                            }
+                            if ((ptuser = getptype(ptttvsig->USER, STB_DOMAIN)) == NULL) {
+                                sigdomain = 0;
+                            }
+                            else sigdomain = (char)((long)ptuser->DATA);
+                            if (curdomain == STB_NO_INDEX) curdomain = sigdomain;
+                            else if (sigdomain != curdomain) {
+                                ttv_getsigname(STAB->PARSEDFIG->FIG, name, ptttvsig);
+                                stb_yyclean();
+                                stb_error(ERR_DOMAIN_NOT_EQUIVALENT, name, yylineno, STB_FATAL);
+                            }
+                            ptttvsig->USER = addptype(ptttvsig->USER, STB_EQUIVALENT, (void *)((long)STAB->EQVTINDEX));
+                        }
+                    }
+#else
+                    if ($1 != NULL)
+                      stb_parse_eqvt_groups(STAB,$1);
+#endif
+                }
+                ;
+
+group           : Identifier Colon ckname_list Semicolon period
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list    *ptttvsig;
+                    stbck          *ptstbck;
+                    chain_list     *ptchain;
+
+                    $$ = $3;
+                    if ($5 != STB_NO_TIME) {
+                        for (ptchain = $3; ptchain; ptchain = ptchain->NEXT) {
+                            ptttvsig = (ttvsig_list *)ptchain->DATA;
+                            ptstbck = stb_getstbnode(ptttvsig->NODE)->CK;
+                            if (ptstbck->PERIOD == STB_NO_TIME) ptstbck->PERIOD = $5;
+                            ptstbck = stb_getstbnode(ptttvsig->NODE+1)->CK;
+                            if (ptstbck->PERIOD == STB_NO_TIME) ptstbck->PERIOD = $5;
+                        }
+                    }
+#else
+                    $$ = stb_parse_group($3,$5);
+#endif
+                }
+                ;
+
+clock_groups    : /* empty */
+                | _ASYNCHRONOUS _CLOCK _GROUPS _BEGIN domain_groups _END Semicolon
+                ;
+
+eqvt_clocks     : /* empty */
+                | _EQUIVALENT _CLOCK _GROUPS _BEGIN eqvt_groups _END Semicolon
+                {
+#ifdef STBPARSE_OLDFASHION
+                    STAB->PARSEDFIG->USER = addptype(STAB->PARSEDFIG->USER, STB_EQUIVALENT, STAB->CKEQVT);
+#else
+                    stb_parse_eqvt_clocks(STAB);
+#endif
+                }
+                ;
+
+disable_from    : /*empty */
+                {
+                    $$ = NULL;
+                }
+                | _FROM Identifier
+                {
+                    $$ = namealloc($2);
+                }
+
+disable_to      : /*empty */
+                {
+                    $$ = NULL;
+                }
+                | _TO Identifier
+                {
+                    $$ = namealloc($2);
+                }
+
+disable_pair    : disable_from disable_to Semicolon
+                {
+                    stb_ckdisable(STAB->PARSEDFIG, $1, $2);
+                }
+                ;
+
+disable_list    : /* empty */
+                | disable_pair disable_list
+                ;
+
+ckprio          : /* empty */
+                | _MULTIPLE _CLOCK _PRIORITY _BEGIN ckprio_list _END Semicolon
+                {
+                    STAB->PARSEDFIG->PRIOCLOCK = $5 ;
+                }
+                ;
+
+ckprio_list     : /* empty */
+                {
+                    $$ = NULL ;
+                }
+                | ckprio_pair ckprio_list
+                {
+                    $$ = addchain ($2, $1) ;
+                }
+                ;
+
+ckprio_pair     : Identifier Colon Identifier Semicolon
+                {
+#ifdef STBPARSE_OLDFASHION
+                  char cknamebuf[1024] ;
+                  chain_list *ptchain ;
+                  ttvsig_list *ptttvsig ;
+
+                  for (ptchain = STAB->PARSEDFIG->CLOCK ; ptchain ; ptchain = ptchain->NEXT) {
+                    ptttvsig = (ttvsig_list*)ptchain->DATA ;
+                    ttv_getsigname (STAB->PARSEDFIG->FIG, cknamebuf, ptttvsig);
+                    if (!strcmp (cknamebuf, $3)) {
+                      $$ = (stbpriority*)mbkalloc (sizeof (struct stbpriority)) ;
+                      $$->CLOCK = ptttvsig ;
+                      $$->MASK = strdup ($1) ;
+                      break ;
+                    }
+                  }
+                  if (!ptchain)
+                    stb_error (ERR_NO_CLOCK_CONNECTOR, $3, yylineno, STB_FATAL);
+
+#else
+                    $$ = stb_parse_ckprio_pair(STAB,$1,$3);
+#endif
+                }
+                ;
+
+disable         : /* empty */
+                | _DISABLE _BEGIN disable_list _END Semicolon
+                ;
+
+wenable         : /* empty */
+                | _CONDITIONED _COMMAND _STATES _BEGIN command_list comdefault _END Semicolon
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list   *ptttvsig;
+                    chain_list    *ptchain;
+
+                    for (ptchain = STAB->PARSEDFIG->COMMAND; ptchain; ptchain = ptchain->NEXT)
+                    {
+                        ptttvsig = (ttvsig_list *)ptchain->DATA;
+                        if (getptype(ptttvsig->USER, STB_WENABLE) != NULL) {
+                            ptttvsig->USER = delptype(ptttvsig->USER, STB_WENABLE);
+                        }
+                     }
+#else
+                    stb_parse_wenable(STAB);
+#endif
+                }
+                ;
+
+state           : _UP
+                {
+                    $$ = STB_UP|STB_VERIF_STATE;
+                }
+                | _DOWN
+                {
+                    $$ = STB_DN|STB_VERIF_STATE;
+                }
+                | _RISING
+                {
+                    $$ = STB_UP|STB_VERIF_EDGE;
+                }
+                | _FALLING
+                {
+                    $$ = STB_DN|STB_VERIF_EDGE;
+                }
+                | _NOVERIF
+                {
+                    $$ = STB_NO_VERIF;
+                }
+                ;
+
+command_list    : /* empty */
+                | command command_list
+                ;
+
+command         : Identifier Colon state Semicolon
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list   *ptttvsig;
+                    stbnode       *ptstbnode_up;
+                    stbnode       *ptstbnode_dn;
+                    chain_list    *ptchain;
+                    char          *name = namealloc($1);
+                    char           namebuf[1024];
+
+                    for (ptchain = STAB->PARSEDFIG->COMMAND; ptchain; ptchain = ptchain->NEXT)
+                    {
+                        ptttvsig = (ttvsig_list *)ptchain->DATA;
+                        if (getptype(ptttvsig->USER, STB_WENABLE) != NULL)
+                          continue ;
+                        ttv_getsigname(STAB->PARSEDFIG->FIG, namebuf, ptttvsig);
+                        if (ttv_jokersubst(namebuf, name, '*') == 1) {
+                            ptttvsig->USER = addptype(ptttvsig->USER, STB_WENABLE, (void *)NULL);
+                            ptstbnode_dn = stb_getstbnode(ptttvsig->NODE);
+                            ptstbnode_up = stb_getstbnode(ptttvsig->NODE+1);
+                            if($3 == STB_NO_VERIF) {
+                               ptstbnode_dn->CK->VERIF = $3;
+                               ptstbnode_up->CK->VERIF = $3;
+                            }
+                            else {
+                               ptstbnode_dn->CK->VERIF &= ~(STB_UP|STB_DN);
+                               ptstbnode_dn->CK->VERIF = $3;
+                               ptstbnode_up->CK->VERIF &= ~(STB_UP|STB_DN);
+                               ptstbnode_up->CK->VERIF = $3;
+                            }
+                            if (strchr(name, '*') == NULL) break;
+                        }
+                    }
+                    if (ptchain == NULL && strchr(name, '*') == NULL) {
+                        stb_yyclean();
+                        stb_error(ERR_NO_COMMAND, name, yylineno, STB_FATAL);
+                    }
+#else
+                    stb_parse_command(STAB,$1,$3);
+#endif
+                }
+                ;
+
+comdefault      : /* empty */
+                | _DEFAULT Colon state Semicolon
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list   *ptttvsig;
+                    stbnode       *ptstbnode_up;
+                    stbnode       *ptstbnode_dn;
+                    chain_list    *ptchain;
+
+                    for (ptchain = STAB->PARSEDFIG->COMMAND; ptchain; ptchain = ptchain->NEXT)
+                    {
+                        ptttvsig = (ttvsig_list *)ptchain->DATA;
+                        if (getptype(ptttvsig->USER, STB_WENABLE) != NULL)
+                          continue ;
+                        ptstbnode_dn = stb_getstbnode(ptttvsig->NODE);
+                        ptstbnode_up = stb_getstbnode(ptttvsig->NODE+1);
+                        if($3 == STB_NO_VERIF) {
+                           ptstbnode_dn->CK->VERIF = $3;
+                           ptstbnode_up->CK->VERIF = $3;
+                        }
+                        else {
+                           ptstbnode_dn->CK->VERIF = $3;
+                           ptstbnode_up->CK->VERIF = $3;
+                        }
+                    }
+#else
+                    stb_parse_comdefault(STAB,$3);
+#endif
+                }
+                ;
+
+specin          : /* empty */
+                | _SPECIFY _INPUT _CONNECTORS _BEGIN inlocon_list indefault_list _END Semicolon
+                ;
+
+stability_list  : /* empty */
+                | stability stability_list
+                ;
+
+stability       : stability_type integer_list Semicolon
+                {
+#ifdef STBPARSE_OLDFASHION
+                    if ($1 == STB_STABLE) {
+                        STAB->PTSTABLELIST = append(STAB->PTSTABLELIST, STAB->PTINSCHAIN);
+                    }
+                    else {
+                        STAB->PTUNSTABLELIST = append(STAB->PTUNSTABLELIST, STAB->PTINSCHAIN);
+                    }
+                    STAB->PTINSCHAIN = NULL;
+#else
+                    stb_parse_stability(STAB,$1,0,NULL,$2);
+#endif
+                }
+                | stability_type Integer relative_phase Semicolon
+                {
+#ifdef STBPARSE_OLDFASHION
+                    if ($1 == STB_STABLE) {
+                        STAB->PTSTABLELIST = append(STAB->PTSTABLELIST, addchain(NULL, (void *)((long)TTV_UNIT*(($2 * $3.signe) + $3.end))));
+                    }
+                    else {
+                        STAB->PTUNSTABLELIST = append(STAB->PTUNSTABLELIST, addchain(NULL, (void *)((long)TTV_UNIT*(($2 * $3.signe) + $3.start))));
+                    }
+                    STAB->PTINSCHAIN = NULL;
+#else
+                    stb_parse_stability(STAB,$1,$2,&$3,NULL);
+#endif
+                }
+                ;
+
+stability_type  : _UNSTABLE
+                {
+                    $$ = STB_UNSTABLE;
+                }
+                | _STABLE
+                {
+                    $$ = STB_STABLE;
+                }
+                ;
+
+relative_phase  : relative_type Identifier edge_option
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvevent_list  *ptttvevent;
+                    ttvevent_list  *ptttvck;
+                    stbck          *ptstbck;
+
+                    ptttvevent = stb_getphase(STAB->PARSEDFIG, namealloc($2), $3);
+                    if (ptttvevent == NULL) {
+                        ptttvevent = stb_getphase(STAB->PARSEDFIG, namealloc($2), STB_SLOPE_ALL);
+                        if (ptttvevent != NULL) {
+                          if ((ptttvevent->TYPE & TTV_NODE_UP) == TTV_NODE_UP) {
+                              ptttvck = ptttvevent->ROOT->NODE ;
+                          }
+                          else {
+                              ptttvck = ptttvevent->ROOT->NODE + 1 ;
+                          }
+                        }
+                    }
+                    else {
+                        ptttvck = ptttvevent ;
+                    }
+                    if (ptttvevent == NULL) {
+                        stb_yyclean();
+                        stb_error(ERR_UNKNOWN_PHASE, $2, yylineno, STB_FATAL);
+                    }
+                    ptstbck = stb_getstbnode(ptttvck)->CK;
+                    if ((ptttvck->TYPE & TTV_NODE_UP) == TTV_NODE_UP) {
+                        $$.start = ptstbck->SUPMIN;
+                        $$.end = ptstbck->SUPMAX;
+                    }
+                    else {
+                        $$.start = ptstbck->SDNMIN;
+                        $$.end = ptstbck->SDNMAX;
+                    }
+                    if ($1 == STBYY_BEFORE) {
+                        $$.start += ptstbck->PERIOD;
+                        $$.end += ptstbck->PERIOD;
+                        $$.signe = (long)-1;
+                    }
+                    else
+                        $$.signe = (long)1;
+                    ptstbck = stb_getstbnode(ptttvevent)->CK;
+                    STAB->DEFAULTPHASE = ptstbck->CKINDEX;
+#else
+                    stb_parse_relative_phase(STAB,&$$,$1,$2,$3);
+#endif
+                }
+                ;
+
+relative_type   : _AFTER
+                {
+                    $$ = STBYY_AFTER;
+                }
+                | _BEFORE
+                {
+                    $$ = STBYY_BEFORE;
+                }
+                ;
+
+edge_option     : /* empty */
+                {
+                    $$ = STB_SLOPE_ALL;
+                }
+                | _RISING
+                {
+                    $$ = STB_SLOPE_UP;
+                }
+                | _FALLING
+                {
+                    $$ = STB_SLOPE_DN;
+                }
+                ;
+
+source_phase    : /* empty */
+                {
+#ifdef STBPARSE_OLDFASHION
+                    $$ = STB_NO_INDEX;
+#else
+                    $$ = stb_parse_phase(STAB,NULL,0);
+#endif
+                }
+                | _FROM Identifier edge_option
+                {
+#ifdef STBPARSE_OLDFASHION
+                    $$ = (int)stb_getphaseindex(STAB->PARSEDFIG, namealloc($2), $3);
+                    if ($$ == STB_NO_INDEX) {
+                        stb_yyclean();
+                        stb_error(ERR_UNKNOWN_PHASE, $2, yylineno, STB_FATAL);
+                    }
+#else
+                    $$ = stb_parse_phase(STAB,$2,$3);
+#endif
+                }
+                ;
+
+dest_phase      : /* empty */
+                {
+#ifdef STBPARSE_OLDFASHION
+                    $$ = STB_NO_INDEX;
+#else
+                    $$ = stb_parse_phase(STAB,NULL,0);
+#endif
+                }
+                | _FOR Identifier edge_option
+                {
+#ifdef STBPARSE_OLDFASHION
+                    $$ = (int)stb_getphaseindex(STAB->PARSEDFIG, namealloc($2), $3);
+                    if ($$ == STB_NO_INDEX) {
+                        stb_yyclean();
+                        stb_error(ERR_UNKNOWN_PHASE, $2, yylineno, STB_FATAL);
+                    }
+#else
+                    $$ = stb_parse_phase(STAB,$2,$3);
+#endif
+                }
+                ;
+
+integer_list    : /* empty */
+                {
+                    $$ = NULL;
+                }
+                | Integer integer_list
+                {
+                    STAB->PTINSCHAIN = addchain(STAB->PTINSCHAIN, (void *)$1);
+                    $$ = STAB->PTINSCHAIN;
+                }
+
+inlocon_list    : /* empty */
+                | inlocon inlocon_list
+                ;
+
+inlocon         : Identifier edge_option source_phase Colon stability_list
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list   *ptttvsig;
+                    chain_list    *ptchain;
+                    char          *name = namealloc($1);
+                    char           namebuf[1024];
+                    int            errcode = 0;
+                    char           phase;
+
+                    for (ptchain = STAB->PARSEDFIG->CONNECTOR; ptchain; ptchain = ptchain->NEXT)
+                    {
+                        ptttvsig = (ttvsig_list *)ptchain->DATA;
+                        ttv_getsigname(STAB->PARSEDFIG->FIG, namebuf, ptttvsig);
+                        if (ttv_jokersubst(namebuf, name, '*') == 1) {
+                            if ($3 == STB_NO_INDEX) {
+                                if (STAB->DEFAULTPHASE != STB_NO_INDEX) {
+                                    phase = STAB->DEFAULTPHASE;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN->NEXT == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else stb_error(ERR_UNKNOWN_PHASE, $1, yylineno, STB_FATAL);
+                            }
+                            else phase = $3;
+                            if ((errcode = stb_addintervals(STAB->PARSEDFIG, ptttvsig, STAB->PTSTABLELIST, STAB->PTUNSTABLELIST, STB_SPECIN, $2, phase, 0)) != 0) {
+                                stb_yyclean();
+                                stb_error(errcode, name, yylineno, STB_FATAL);
+                            }
+                            if (strchr(name, '*') == NULL) break;
+                        }
+                    }
+                    freechain(STAB->PTSTABLELIST);
+                    STAB->PTSTABLELIST = NULL;
+                    freechain(STAB->PTUNSTABLELIST);
+                    STAB->PTUNSTABLELIST = NULL;
+                    STAB->DEFAULTPHASE = STB_NO_INDEX;
+                    if (ptchain == NULL && strchr(name, '*') == NULL) {
+                        stb_yyclean();
+                        stb_error(ERR_NO_CONNECTOR, name, yylineno, STB_FATAL);
+                    }
+#else
+                    stb_parse_inlocon(STAB,$1,$2,$3);
+#endif
+                }
+                ;
+
+indefault_list  : /* empty */
+                | indefault indefault_list
+                ;
+
+indefault       : _DEFAULT edge_option source_phase Colon stability_list
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list   *pttarget;
+                    stbnode       *ptstbnode_up;
+                    stbnode       *ptstbnode_dn;
+                    stbpair_list  *ptstbpair;
+                    chain_list    *ptchain;
+                    long           period;
+                    int            errcode = 0;
+                    char           phase;
+
+                    if ($3 == STB_NO_INDEX) {
+                        if (STAB->DEFAULTPHASE != STB_NO_INDEX) {
+                            phase = STAB->DEFAULTPHASE;
+                        }
+                        else if (STAB->PARSEDFIG->CKDOMAIN == NULL) {
+                            phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                        }
+                        else if (STAB->PARSEDFIG->CKDOMAIN->NEXT == NULL) {
+                            phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                        }
+                        else stb_error(ERR_UNKNOWN_PHASE, "default", yylineno, STB_FATAL);
+                    }
+                    else phase = $3;
+                    period = stb_getperiod(STAB->PARSEDFIG, phase);
+                    ptstbpair = stb_buildintervals(STAB->PTSTABLELIST, STAB->PTUNSTABLELIST, period, &errcode);
+                    if (errcode != 0) {
+                        stb_yyclean();
+                        stb_error(errcode, "default", yylineno, STB_FATAL);
+                    }
+                    freechain(STAB->PTSTABLELIST);
+                    STAB->PTSTABLELIST = NULL;
+                    freechain(STAB->PTUNSTABLELIST);
+                    STAB->PTUNSTABLELIST = NULL;
+                    STAB->DEFAULTPHASE = STB_NO_INDEX;
+
+                    for (ptchain = STAB->PARSEDFIG->CONNECTOR; ptchain; ptchain = ptchain->NEXT)
+                    {
+                        pttarget = (ttvsig_list *)ptchain->DATA;
+                        if ((pttarget->TYPE & TTV_SIG_CI) != TTV_SIG_CI || (pttarget->TYPE & TTV_SIG_CB) == TTV_SIG_CB) continue;
+                        ptstbnode_dn = stb_getstbnode(pttarget->NODE);
+                        ptstbnode_up = stb_getstbnode(pttarget->NODE+1);
+                        if (ptstbnode_dn->CK != NULL){
+                           if (ptstbnode_dn->CK->TYPE == STB_TYPE_CLOCK)
+                              continue;
+                        }
+                        if (ptstbnode_up->CK != NULL){
+                           if (ptstbnode_up->CK->TYPE == STB_TYPE_CLOCK)
+                              continue;
+                        }
+
+                        if (ptstbnode_dn != NULL) {
+                            if (ptstbnode_dn->SPECIN == NULL && ($2 == STB_SLOPE_DN || $2 == STB_SLOPE_ALL)) {
+                                ptstbnode_dn->SPECIN = stb_alloctab(STAB->PARSEDFIG->PHASENUMBER);
+                                ptstbnode_dn->SPECIN[(int)phase] = stb_dupstbpairlist(ptstbpair);
+                            }
+                        }
+
+                        if (ptstbnode_up != NULL) {
+                            if (ptstbnode_up->SPECIN == NULL && ($2 == STB_SLOPE_UP || $2 == STB_SLOPE_ALL)) {
+                                ptstbnode_up->SPECIN = stb_alloctab(STAB->PARSEDFIG->PHASENUMBER);
+                                ptstbnode_up->SPECIN[(int)phase] = stb_dupstbpairlist(ptstbpair);
+                            }
+                        }
+                    }
+                    stb_freestbpair(ptstbpair);
+#else
+                    stb_parse_indefault(STAB,$2,$3);
+#endif
+                }
+                ;
+
+specout         : /* empty */
+                | _VERIFY _OUTPUT _CONNECTORS _BEGIN outlocon_list outdefault_list _END Semicolon
+                ;
+
+outlocon_list   : /* empty */
+                | outlocon outlocon_list
+                ;
+
+outlocon        : Identifier edge_option dest_phase Colon stability_list
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list   *ptttvsig;
+                    chain_list    *ptchain;
+                    char          *name = namealloc($1);
+                    char           namebuf[1024];
+                    int            errcode = 0;
+                    char           phase;
+
+                    for (ptchain = STAB->PARSEDFIG->CONNECTOR; ptchain; ptchain = ptchain->NEXT)
+                    {
+                        ptttvsig = (ttvsig_list *)ptchain->DATA;
+                        ttv_getsigname(STAB->PARSEDFIG->FIG, namebuf, ptttvsig);
+                        if (ttv_jokersubst(namebuf, name, '*') == 1) {
+                            if ($3 == STB_NO_INDEX) {
+                                if (STAB->DEFAULTPHASE != STB_NO_INDEX) {
+                                    phase = STAB->DEFAULTPHASE;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN->NEXT == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else stb_error(ERR_UNKNOWN_PHASE, $1, yylineno, STB_FATAL);
+                            }
+                            else phase = $3;
+                            if ((errcode = stb_addintervals(STAB->PARSEDFIG, ptttvsig, STAB->PTSTABLELIST, STAB->PTUNSTABLELIST, STB_SPECOUT, $2, phase, 0)) != 0) {
+                                stb_yyclean();
+                                stb_error(errcode, name, yylineno, STB_FATAL);
+                            }
+                            if (strchr(name, '*') == NULL) break;
+                        }
+                    }
+                    freechain(STAB->PTSTABLELIST);
+                    STAB->PTSTABLELIST = NULL;
+                    freechain(STAB->PTUNSTABLELIST);
+                    STAB->PTUNSTABLELIST = NULL;
+                    STAB->DEFAULTPHASE = STB_NO_INDEX;
+                    if (ptchain == NULL && strchr(name, '*') == NULL) {
+                        stb_yyclean();
+                        stb_error(ERR_NO_CONNECTOR, name, yylineno, STB_FATAL);
+                    }
+#else
+                    stb_parse_outlocon(STAB,$1,$2,$3);
+#endif
+                }
+                ;
+
+outdefault_list : /* empty */
+                | outdefault outdefault_list
+                ;
+
+outdefault      : _DEFAULT edge_option dest_phase Colon stability_list
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list   *pttarget;
+                    stbnode       *ptstbnode_up;
+                    stbnode       *ptstbnode_dn;
+                    stbpair_list  *ptstbpair;
+                    chain_list    *ptchain;
+                    long           period;
+                    int            errcode = 0;
+                    char           phase;
+
+                    if ($3 == STB_NO_INDEX) {
+                        if (STAB->DEFAULTPHASE != STB_NO_INDEX) {
+                            phase = STAB->DEFAULTPHASE;
+                        }
+                        else if (STAB->PARSEDFIG->CKDOMAIN == NULL) {
+                            phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                        }
+                        else if (STAB->PARSEDFIG->CKDOMAIN->NEXT == NULL) {
+                            phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                        }
+                        else stb_error(ERR_UNKNOWN_PHASE, "default", yylineno, STB_FATAL);
+                    }
+                    else phase = $3;
+                    period = stb_getperiod(STAB->PARSEDFIG, phase);
+                    ptstbpair = stb_buildintervals(STAB->PTSTABLELIST, STAB->PTUNSTABLELIST, period, &errcode);
+                    if (errcode != 0) {
+                        stb_yyclean();
+                        stb_error(errcode, "default", yylineno, STB_FATAL);
+                    }
+                    freechain(STAB->PTSTABLELIST);
+                    STAB->PTSTABLELIST = NULL;
+                    freechain(STAB->PTUNSTABLELIST);
+                    STAB->PTUNSTABLELIST = NULL;
+                    STAB->DEFAULTPHASE = STB_NO_INDEX;
+
+                    for (ptchain = STAB->PARSEDFIG->CONNECTOR; ptchain; ptchain = ptchain->NEXT)
+                    {
+                        pttarget = (ttvsig_list *)ptchain->DATA;
+                        if ((pttarget->TYPE & TTV_SIG_CO) != TTV_SIG_CO)
+                          continue;
+
+                        ptstbnode_dn = stb_getstbnode(pttarget->NODE);
+                        if (ptstbnode_dn != NULL) {
+                            if (ptstbnode_dn->SPECOUT == NULL && ($2 == STB_SLOPE_DN || $2 == STB_SLOPE_ALL)) {
+                                ptstbnode_dn->SPECOUT = stb_alloctab(STAB->PARSEDFIG->PHASENUMBER);
+                                ptstbnode_dn->SPECOUT[(int)phase] = stb_dupstbpairlist(ptstbpair);
+                            }
+                        }
+
+                        ptstbnode_up = stb_getstbnode(pttarget->NODE+1);
+                        if (ptstbnode_up != NULL) {
+                            if (ptstbnode_up->SPECOUT == NULL && ($2 == STB_SLOPE_UP || $2 == STB_SLOPE_ALL)) {
+                                ptstbnode_up->SPECOUT = stb_alloctab(STAB->PARSEDFIG->PHASENUMBER);
+                                ptstbnode_up->SPECOUT[(int)phase] = stb_dupstbpairlist(ptstbpair);
+                            }
+                        }
+                    }
+                    stb_freestbpair(ptstbpair);
+#else
+                    stb_parse_outdefault(STAB,$2,$3);
+#endif
+                }
+                ;
+
+hz_option       : /* empty */
+                {
+                    $$ = 0;
+                }
+                | _WITHOUT _PRECHARGE
+                {
+                    $$ = STB_TYPE_PRECHARGE;
+                }
+                | _WITHOUT _EVALUATE
+                {
+                    $$ = STB_TYPE_EVAL;
+                }
+                ;
+
+inputs          : /* empty */
+                | _INPUT _CONNECTORS _STABILITY _BEGIN innode_list _END Semicolon
+                ;
+
+innode_list     : /* empty */
+                | innode innode_list
+                ;
+
+innode          : Identifier edge_option source_phase hz_option Colon stability_list
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list   *ptttvsig;
+                    chain_list    *ptchain;
+                    char          *name = namealloc($1);
+                    char           namebuf[1024];
+                    int            errcode = 0;
+                    int            table;
+                    char           phase;
+
+                    for (ptchain = STAB->PARSEDFIG->CONNECTOR; ptchain; ptchain = ptchain->NEXT)
+                    {
+                        ptttvsig = (ttvsig_list *)ptchain->DATA;
+                        if ((ptttvsig->TYPE & TTV_SIG_CI) != TTV_SIG_CI || (ptttvsig->TYPE & TTV_SIG_CB) == TTV_SIG_CB) continue;
+                        ttv_getsigname(STAB->PARSEDFIG->FIG, namebuf, ptttvsig);
+                        if (namealloc(namebuf) == name)
+                        {
+                            if ($3 == STB_NO_INDEX) {
+                                if (STAB->DEFAULTPHASE != STB_NO_INDEX) {
+                                    phase = STAB->DEFAULTPHASE;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN->NEXT == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else stb_error(ERR_UNKNOWN_PHASE, $1, yylineno, STB_FATAL);
+                            }
+                            else phase = $3;
+                            if ($4 == 0) table = STB_TABLE;
+                            else table = STB_THZ;
+                            if ((errcode = stb_addintervals(STAB->PARSEDFIG, ptttvsig, STAB->PTSTABLELIST, STAB->PTUNSTABLELIST, table, $2, phase, $4)) != 0) {
+                                stb_yyclean();
+                                stb_error(errcode, name, yylineno, STB_FATAL);
+                            }
+                        }
+                    }
+                    freechain(STAB->PTSTABLELIST);
+                    STAB->PTSTABLELIST = NULL;
+                    freechain(STAB->PTUNSTABLELIST);
+                    STAB->PTUNSTABLELIST = NULL;
+                    STAB->DEFAULTPHASE = STB_NO_INDEX;
+#else
+                    stb_parse_innode(STAB,$1,$2,$3,$4);
+#endif
+                }
+                ;
+
+outputs         : /* empty */
+                | _OUTPUT _CONNECTORS _STABILITY _BEGIN outnode_list _END Semicolon
+                ;
+
+outnode_list    : /* empty */
+                | outnode outnode_list
+                ;
+
+outnode         : Identifier edge_option source_phase hz_option Colon stability_list
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list   *ptttvsig;
+                    chain_list    *ptchain;
+                    char          *name = namealloc($1);
+                    char           namebuf[1024];
+                    int            errcode = 0;
+                    int            table;
+                    char           phase;
+
+                    for (ptchain = STAB->PARSEDFIG->CONNECTOR; ptchain; ptchain = ptchain->NEXT)
+                    {
+                        ptttvsig = (ttvsig_list *)ptchain->DATA;
+                        if ((ptttvsig->TYPE & TTV_SIG_CO) != TTV_SIG_CO) continue;
+                        ttv_getsigname(STAB->PARSEDFIG->FIG, namebuf, ptttvsig);
+                        if (namealloc(namebuf) == name)
+                        {
+                            if ($3 == STB_NO_INDEX) {
+                                if (STAB->DEFAULTPHASE != STB_NO_INDEX) {
+                                    phase = STAB->DEFAULTPHASE;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN->NEXT == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else stb_error(ERR_UNKNOWN_PHASE, $1, yylineno, STB_FATAL);
+                            }
+                            else phase = $3;
+                            if ($4 == 0) table = STB_TABLE;
+                            else table = STB_THZ;
+                            if ((errcode = stb_addintervals(STAB->PARSEDFIG, ptttvsig, STAB->PTSTABLELIST, STAB->PTUNSTABLELIST, table, $2, phase, $4)) != 0) {
+                                stb_yyclean();
+                                stb_error(errcode, name, yylineno, STB_FATAL);
+                            }
+                        }
+                    }
+                    freechain(STAB->PTSTABLELIST);
+                    STAB->PTSTABLELIST = NULL;
+                    freechain(STAB->PTUNSTABLELIST);
+                    STAB->PTUNSTABLELIST = NULL;
+                    STAB->DEFAULTPHASE = STB_NO_INDEX;
+#else
+                    stb_parse_outnode(STAB,$1,$2,$3,$4);
+#endif
+                }
+                ;
+
+memories        : /* empty */
+                | _MEMORY _NODES _STABILITY _BEGIN mem_list _END Semicolon
+                ;
+
+mem_list        : /* empty */
+                | mem mem_list
+                ;
+
+mem             : Identifier edge_option source_phase hz_option Colon stability_list
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list   *ptttvsig;
+                    chain_list    *ptchain;
+                    char          *name = namealloc($1);
+                    char           namebuf[1024];
+                    int            errcode = 0;
+                    int            table;
+                    char           phase;
+
+                    for (ptchain = STAB->PARSEDFIG->MEMORY; ptchain; ptchain = ptchain->NEXT)
+                    {
+                        ptttvsig = (ttvsig_list *)ptchain->DATA;
+                        if ((ptttvsig->TYPE & TTV_SIG_C) == TTV_SIG_C) continue;
+                        if ((ptttvsig->TYPE & TTV_SIG_L) != TTV_SIG_L) continue;
+                        ttv_getsigname(STAB->PARSEDFIG->FIG, namebuf, ptttvsig);
+                        if (namealloc(namebuf) == name)
+                        {
+                            if ($3 == STB_NO_INDEX) {
+                                if (STAB->DEFAULTPHASE != STB_NO_INDEX) {
+                                    phase = STAB->DEFAULTPHASE;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN->NEXT == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else stb_error(ERR_UNKNOWN_PHASE, $1, yylineno, STB_FATAL);
+                            }
+                            else phase = $3;
+                            if ($4 == 0) table = STB_TABLE;
+                            else table = STB_THZ;
+
+                            if ((errcode = stb_addintervals(STAB->PARSEDFIG, ptttvsig, STAB->PTSTABLELIST, STAB->PTUNSTABLELIST, table, $2, phase, $4)) != 0) {
+                                stb_yyclean();
+                                stb_error(errcode, name, yylineno, STB_FATAL);
+                            }
+                        }
+                    }
+                    freechain(STAB->PTSTABLELIST);
+                    STAB->PTSTABLELIST = NULL;
+                    freechain(STAB->PTUNSTABLELIST);
+                    STAB->PTUNSTABLELIST = NULL;
+                    STAB->DEFAULTPHASE = STB_NO_INDEX;
+#else
+                    stb_parse_mem(STAB,$1,$2,$3,$4);
+#endif
+                }
+                ;
+
+internals       : /* empty */
+                | _INTERNAL _NODES _STABILITY _BEGIN node_list _END Semicolon
+                ;
+
+node_list       : /* empty */
+                | node node_list
+                ;
+
+node            : Identifier edge_option source_phase hz_option Colon stability_list
+                {
+#ifdef STBPARSE_OLDFASHION
+                    ttvsig_list   *ptttvsig;
+                    chain_list    *ptchain;
+                    char          *name = namealloc($1);
+                    char           namebuf[1024];
+                    int            errcode = 0;
+                    int            table;
+                    char           phase;
+
+                    for (ptchain = STAB->PARSEDFIG->NODE; ptchain; ptchain = ptchain->NEXT)
+                    {
+                        ptttvsig = ((ttvevent_list *)ptchain->DATA)->ROOT;
+                        if ((ptttvsig->TYPE & TTV_SIG_C) == TTV_SIG_C) continue;
+                        if ((ptttvsig->TYPE & TTV_SIG_L) == TTV_SIG_L) continue;
+                        ttv_getsigname(STAB->PARSEDFIG->FIG, namebuf, ptttvsig);
+                        if (namealloc(namebuf) == name)
+                        {
+                            if ($3 == STB_NO_INDEX) {
+                                if (STAB->DEFAULTPHASE != STB_NO_INDEX) {
+                                    phase = STAB->DEFAULTPHASE;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else if (STAB->PARSEDFIG->CKDOMAIN->NEXT == NULL) {
+                                    phase = (int)STAB->PARSEDFIG->PHASENUMBER - 1;
+                                }
+                                else stb_error(ERR_UNKNOWN_PHASE, $1, yylineno, STB_FATAL);
+                            }
+                            else phase = $3;
+                            if ($4 == 0) table = STB_TABLE;
+                            else table = STB_THZ;
+
+                            if ((errcode = stb_addintervals(STAB->PARSEDFIG, ptttvsig, STAB->PTSTABLELIST, STAB->PTUNSTABLELIST, table, $2, phase, $4)) != 0) {
+                                stb_yyclean();
+                                stb_error(errcode, name, yylineno, STB_FATAL);
+                            }
+                        }
+                    }
+                    freechain(STAB->PTSTABLELIST);
+                    STAB->PTSTABLELIST = NULL;
+                    freechain(STAB->PTUNSTABLELIST);
+                    STAB->PTUNSTABLELIST = NULL;
+                    STAB->DEFAULTPHASE = STB_NO_INDEX;
+#else
+                    stb_parse_node(STAB,$1,$2,$3,$4);
+#endif
+                }
+                ;
+
+%%
+
+extern int  yylineno ;
+extern char stbtext[] ;
+
+static void
+stb_yyclean()
+{
+    if (STAB->PTINSCHAIN != NULL) {
+        freechain(STAB->PTINSCHAIN);
+        STAB->PTINSCHAIN = NULL;
+    }
+    if (STAB->PTSTABLELIST != NULL) {
+        freechain(STAB->PTSTABLELIST);
+        STAB->PTSTABLELIST = NULL;
+    }
+    if (STAB->PTUNSTABLELIST != NULL) {
+        freechain(STAB->PTUNSTABLELIST);
+        STAB->PTUNSTABLELIST = NULL;
+    }
+    if (STAB->PARSEDFIG != NULL) {
+        stb_delstbfig(STAB->PARSEDFIG);
+        STAB->PARSEDFIG = NULL;
+    }
+}
+
+void
+stb_parse_init_stab(stb_parse *stab)
+{
+    STAB    = stab;
+    stb_parse_init(STAB,stb_yyclean);
+}
+
+int yyerror()
+{
+   stb_yyclean();
+   if (stbclosefile()) {
+           stb_error(ERR_CANNOT_CLOSE, NULL, 0, STB_FATAL);
+   }
+   stb_error(ERR_SYNTAX, strdup(stbtext), yylineno, STB_FATAL); /* parse error */
+   return 0;
+}

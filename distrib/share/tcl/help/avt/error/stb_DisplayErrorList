@@ -1,0 +1,20 @@
+
+       void stb_DisplayErrorList(FILE *f, StabilityFigure *stbfig, double mar-
+       gin, int nberror);
+
+DDEESSCCRRIIPPTTIIOONN
+       Prints a report of signals  presenting  timing  violations  (setup  and
+       hold)
+
+AARRGGUUMMEENNTTSS
+       ff             File where to save the report, _s_t_d_o_u_t for standard output
+
+       ssttbbffiigg        Pointer on a stability figure
+
+       mmaarrggiinn        Value below which a setup/hold slack  is  reported  as  a
+                     violation.  For  example, if the margin is 100ps (100e-12
+                     second), a signal with a setup  or  a  hold  slack  below
+                     100ps will be reported as a violation.
+
+       nnbbeerrrroorr       Maximum number of reported violations
+

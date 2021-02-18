@@ -1,0 +1,11 @@
+Document: tasyag
+Title:    Tas/Yagle Documentation
+Abstract: Tas/Yagle Tools Documentation
+Section:  Science/Electronics
+
+Format: HTML
+Index: /usr/share/doc/tasyag/docavertec.html
+Files: /usr/share/doc/tasyag/dochtml/*.html /usr/share/doc/tasyag/dochtml/imgs/*
+
+Format: PDF
+Files: /usr/share/doc/tasyag/docpdf/*.pdf.gz

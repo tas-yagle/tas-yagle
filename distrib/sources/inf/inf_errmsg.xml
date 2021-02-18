@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="inf">
+
+<err>
+    <lib>INF-</lib><num>001</num>
+    <msg>%sL and W not required\n</msg>
+    <doc>The parameters L and W won't be use because they have no meaning in this declaration.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>002</num>
+    <msg>%sunrecognized token '%s', should be %s\n</msg>
+    <doc>The expected token was not found.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>003</num>
+    <msg>%sunrecognized token '%s'\n</msg>
+    <doc>The token is unknown and can't be handled.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>004</num>
+    <msg>%sinvalid value '%s', should be %s\n</msg>
+    <doc>An invalid value has been encountred.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>005</num>
+    <msg>%sunknown section '%s', ignoring section\n</msg>
+    <doc>The section is unknown and can't be handled.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>006</num>
+    <msg>%sunknown direction '%s', ignoring section\n</msg>
+    <doc>The connector direction is unknown and can't be handled.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>007</num>
+    <msg>%sclock '%s' is not delared yet\n</msg>
+    <doc>A clock signal is referenced but has not been declared yet.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>008</num>
+    <msg>%sno period specified for clock '%s' or no default period\n</msg>
+    <doc>It's impossible to find a period to associate with the clock. Either the default period or the clock period should be defined.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>009</num>
+    <msg>%s:%d: syntax error near '%s'\n</msg>
+    <doc>A syntax error occured when parsing file. Either a signal name matchs a syntax token or the token is unknown. In the first case, consider enclosing the signal name with quote.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>010</num>
+    <msg>%s:%d: syntax error in regular expression\n</msg>
+    <doc>An invalid regular expression have been detected.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>011</num>
+    <msg>no figure name given, guessing it is '%s'\n</msg>
+    <doc>The information file should begin with the figure name associated with the informations. If the name is not specified, a figure name will be guessed from the file name. This could lead to errors if the guessed name is wrong.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>012</num>
+    <msg>can not open '%s' information file\n</msg>
+    <doc>An error occured when trying to read the information file.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>013</num>
+    <msg>%sinformation on signal %s already read -- ignored\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INF-</lib><num>014</num>
+    <msg>%sinformation on signal '%s' has already been set elsewhere -- overriding with inf values\n</msg>
+    <doc>A default value has been set by the netlist spice deck and will be shadowed by a new value who has more priority.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>015</num>
+    <msg>%sinformation '%s' for '%s' has already been set to '%s' elsewhere -- overriding with inf value '%s'\n</msg>
+    <doc>A default value has been set by the netlist spice deck and will be shadowed by a new value who has more priority.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>016</num>
+    <msg>%sinformation '%s' for '%s' has already been set elsewhere -- overriding with inf values\n</msg>
+    <doc>A default value has been set by the netlist spice deck and will be shadowed by a new value who has more priority.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>017</num>
+    <msg>%sinformation '%s' for '%s' has already been set to %d elsewhere -- overriding with inf value %d\n</msg>
+    <doc>A default value has been set by the netlist spice deck and will be shadowed by a new value who has more priority.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>018</num>
+    <msg>could not create file '%s'\n</msg>
+    <doc>An error occured when trying the open the information file in write mode.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>019</num>
+    <msg>%sslope defined for pin '%s' %s is too low, set to %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INF-</lib><num>020</num>
+    <msg>%sinvalid check type ('%s') for 'NoCheck' section\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INF-</lib><num>021</num>
+    <msg>unknown inf section '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INF-</lib><num>022</num>
+    <msg>%sunknown characteristic '%s', ignoring this entry\n</msg>
+    <doc>The signal characteristic is unknown and can't be handled.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>023</num>
+    <msg>name '%s' doesn't match any %s in circuit\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>INF-</lib><num>024</num>
+    <msg>%sincompatible tokens given for 'directives' section\n</msg>
+    <doc>Using "... with sig rising|falling" or "... before|after sig up|down" is forbidden.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>025</num>
+    <msg>%sinvalid type '%s', ignoring this entry\n</msg>
+    <doc>The given type does not apply to this section and can't be handled.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>026</num>
+    <msg>%sout of range probability value: %g\n</msg>
+    <doc>The probability value must be a value ranging from 0 to 1.</doc>
+</err>
+<err>
+    <lib>INF-</lib><num>027</num>
+    <msg>invalid marking %s\n</msg>
+    <doc></doc>
+</err>
+
+
+
+</messages>

@@ -1,0 +1,11 @@
+
+       void avt_StopWatch(char *name);
+
+DDEESSCCRRIIPPTTIIOONN
+       Stops a timer; the timer must be started for the function to work
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Name of the timer to stop
+
+       EEXXAAMMPPLLEE       _a_v_t___S_t_o_p_W_a_t_c_h _"_C_P_U___T_I_M_E_"
+

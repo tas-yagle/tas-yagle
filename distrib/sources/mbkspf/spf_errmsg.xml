@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="spf">
+
+<err>
+    <lib>SPF-</lib><num>001</num>
+    <msg>Invalid pin type '%s' at line %d\n</msg>
+    <doc>The pintype field does not contain a valid [IiOoSsBbJjXx] character.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>002</num>
+    <msg>Syntax error at line %d, token '%s'\n</msg>
+    <doc>The given line does not conform to legal SPF syntax. If token is 'CR', there are probably missing elements on the line.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>003</num>
+    <msg>Undeclared node '%s' (line %d)\n</msg>
+    <doc>The given node is not declared in the current net.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>004</num>
+    <msg>Net '%s' with mismatching total capacitance (total=%gpf, sum=%gpf)\n</msg>
+    <doc>The total capacitance already associated with a net in a design does not match the value given for the total capacitance for the net in the SPF file.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>005</num>
+    <msg>Unsupported divider, using '/' (line %d)\n</msg>
+    <doc>A missing or invalid character used to specify the hierarchy divider.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>006</num>
+    <msg>Unsupported delimiter, using ':' (line %d)\n</msg>
+    <doc>A missing or invalid character used to specify the name delimiter.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>007</num>
+    <msg>Unknown syntax for BUSBIT section (line %d)\n</msg>
+    <doc>Illegal syntax used to specify bus delimiters in the BUSBIT section.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>008</num>
+    <msg>Undefined design entity name\n</msg>
+    <doc>The name of the design to be annotated is not specified in the SPF file.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>009</num>
+    <msg>Entity '%s' does not exist\n</msg>
+    <doc>The design entity specified for annotation does not exist. Either the netlist has not been loaded yet or the names do not match.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>010</num>
+    <msg>Unknown capacitance unit '%s', assuming 'pf' (line %d)\n</msg>
+    <doc>Illegal specification of capacitance unit. Legal values are ff, pf, nf, uf, mf, kf. The final 'f' is optional and case is irrelevant.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>011</num>
+    <msg>Unknown resistance unit '%s', assuming none (line %d)\n</msg>
+    <doc>Illegal specification of resistance unit. Legal values are f, p, n, u, m, k. The case is irrelevant.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>012</num>
+    <msg>Device or instance '%s' cannot be found (line %d)\n</msg>
+    <doc>The object specified for connection to the parasitic network does not exist.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>013</num>
+    <msg>Connector of transistor '%s' named '%s' cannot be found (line %d)\n</msg>
+    <doc>The name used to specify the transistor connector is invalid. Legal names are g, d, s, b.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>014</num>
+    <msg>Connector of transistor '%s' named '%s' might be connected to the wrong signal (line %d)\n</msg>
+    <doc>There may be an incoherance in the parasitic file.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>015</num>
+    <msg>Instance '%s' cannot be found (line %d)\n</msg>
+    <doc>The instance specified for connection to the parasitic network does not exist.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>016</num>
+    <msg>Connector of instance '%s' named '%s' cannot be found (line %d)\n</msg>
+    <doc>The name used to specify the instance connector is invalid.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>017</num>
+    <msg>Connector '%s' cannot be found (line %d)\n</msg>
+    <doc>The external pin specified for connection to the parasitic network does not exist.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>018</num>
+    <msg>Connector named '%s' is on the wrong equipotential (line %d)\n</msg>
+    <doc>There may be an incoherance in the parasitic file.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>019</num>
+    <msg>Negative capacitance found (line %d)\n</msg>
+    <doc>A negative value was used to specify a capacitance, this is ignored.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>020</num>
+    <msg>Negative resistance found (line %d)\n</msg>
+    <doc>A negative value was used to specify a resistance, this is ignored.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>021</num>
+    <msg>%d signal(s) missing in the netlist\n</msg>
+    <doc>Signals specified in the parasitic file do not exist in the netlist.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>022</num>
+    <msg>Don't know how to handle connector '%s' for resistor annotation (line %d)\n</msg>
+    <doc>The handled names for resistor connectors are 'pos', 'neg' , '1' and '2'.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>023</num>
+    <msg>Signal '%s' missing in the netlist (line %d)\n</msg>
+    <doc>Signal can not be found in netlist to annotate.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>024</num>
+    <msg>Failed to open file '%s'\n</msg>
+    <doc>The dspf file was not found.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>025</num>
+    <msg>RC Network declaration for signal '%s' continued at line %d\n</msg>
+    <doc>Multiple consecutive declarations for the signal have been detected. They will be merged.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>026</num>
+    <msg>Don't know how to handle capacitance/diode connector '%s' for capacitance/diode annotation (line %d)\n</msg>
+    <doc>The handled names for capacitance and diode connectors are '1' and '2'.</doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>027</num>
+    <msg>No declaration of crosstalk capacitance node '%s' (line %d), associated with net '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPF-</lib><num>028</num>
+    <msg>Node '%s' (line %d) could not be created, coupling capacitance to this node will be ignored\n</msg>
+    <doc>A coupling capacitance to a non existant signal in the netlist will be ignored.</doc>
+</err>
+
+</messages>

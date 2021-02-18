@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="spe">
+
+<err>
+    <lib>SPEF-</lib><num>001</num>
+    <msg>can't use RC cache with compressed file.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>002</num>
+    <msg>could not find figure '%s' specified into spef file '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>003</num>
+    <msg>%s:%d: %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>004</num>
+    <msg>%s:%d: Syntax Error near '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>005</num>
+    <msg>can't get current file position.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>006</num>
+    <msg>can't set current file position.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>007</num>
+    <msg>only one spef cache can be used\nfigure '%s' won't be cached\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>008</num>
+    <msg>can't open file '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>009</num>
+    <msg>%s:%d: signal '%s' does not exist in netlist\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>010</num>
+    <msg>%s:%d: transistor connector '%s' of '%s' can not be found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>011</num>
+    <msg>%s:%d: object named '%s' can not be found in transistors, connectors or instances\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>012</num>
+    <msg>%s:%d: resistor connector '%s' of '%s' can not be found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>013</num>
+    <msg>%s:%d: capacitance connector '%s' of '%s' can not be found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>014</num>
+    <msg>%s:%d: diode connector '%s' of '%s' can not be found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>015</num>
+    <msg>%s:%d: delimiter '%c' not found in name '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>016</num>
+    <msg>%s:%d: Signal '%s' not found in the netlist\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>017</num>
+    <msg>%s:%d: Connector of instance '%s' named '%s' can not be found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>018</num>
+    <msg>%s:%d: Transistor, instance, resistor, capacitance or diode '%s' can not be found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>019</num>
+    <msg>%s:%d: Connector of transistor '%s' named '%s' can not be found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>020</num>
+    <msg>%s:%d: Connector of resistor '%s' named '%s' can not be found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>021</num>
+    <msg>%s:%d: Connector of %s '%s' named '%s' can not be found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>022</num>
+    <msg>%s:%d: Resistor found between two different nets '%s' and '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>023</num>
+    <msg>%s:%d: Capacitance node '%s' not found in the netlist\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SPEF-</lib><num>024</num>
+    <msg>%s:%d: Could not find circuit connector '%s'\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

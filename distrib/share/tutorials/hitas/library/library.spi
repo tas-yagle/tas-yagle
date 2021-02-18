@@ -1,0 +1,222 @@
+* Spice description of ao2o22
+
+.subckt ao2o22 vss vdd q i3 9 i1 i0 
+M01 vss 2 q vss tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M02 2 i1 1 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M03 1 i0 2 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M04 vss i3 1 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M05 1 9 vss 5 tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M06 q 2 vdd 6 tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M07 2 i1 4 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M08 vdd i3 3 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M09 3 9 2 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M10 4 i0 vdd 6 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+C2 1 vss 1.99441e-15
+C3 2 vss 6.40584e-15
+C1 vss 5 5.64418e-15
+C9 vdd vss 5.05663e-15
+C8 q vss 2.58522e-15
+C7 i3 vss 2.95462e-15
+C5 9 vss 3.23197e-15
+C4 i1 vss 3.23197e-15
+C6 i0 vss 2.95462e-15
+.ends ao2o22
+
+* Spice description of ff2
+
+.subckt ff2 vss vdd q i1 i0 cmd ck 
+M01 vss q 1 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M02 1 nckr sff_s vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M03 sff_s ckr y vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M04 vss y 2 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M05 2 ckr sff_m vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M06 sff_m nckr 5 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M07 vss cmd 10 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M08 3 i0 vss 18 tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M09 4 cmd u vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M10 u 10 3 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M11 vss i1 4 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M12 ckr nckr vss 18 tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M13 vss ck nckr vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M14 y sff_m vss 18 tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M15 vss sff_s q vss tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M16 q sff_s vss 18 tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M17 5 u vss 18 tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M18 6 q vdd 19 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M19 sff_s ckr 6 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M20 y nckr sff_s vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M21 7 y vdd 19 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M22 sff_m nckr 7 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M23 15 ckr sff_m vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M24 vdd i0 8 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M25 10 cmd vdd 19 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M26 9 i1 vdd 19 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M27 8 cmd u vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M28 u 10 9 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M29 vdd nckr ckr vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M30 nckr ck vdd 19 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M31 q sff_s vdd 19 tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M32 y sff_m vdd 19 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M33 vdd u 15 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M34 vdd sff_s q vdd tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+C5 10 vss 6.54862e-15
+C9 ckr vss 1.10493e-14
+C10 nckr vss 1.1396e-14
+C14 sff_m vss 6.42301e-15
+C15 y vss 4.80814e-15
+C3 u vss 6.67128e-15
+C16 sff_s vss 6.7122e-15
+C1 vss 18 1.31165e-14
+C19 vdd vss 1.44679e-14
+C17 q vss 6.15082e-15
+C8 i1 vss 2.42923e-15
+C7 i0 vss 3.1591e-15
+C6 cmd vss 5.41426e-15
+C11 ck vss 3.1591e-15
+.ends ff2
+
+* Spice description of inv
+
+.subckt inv vss vdd nq i 
+M01 vss i nq vss tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M02 nq i vdd 2 tp L=0.35U W=4.4U AS=3.3P AD=3.3P PS=10.3U PD=10.3U 
+C2 vss 1 2.23443e-15
+C3 vdd vss 2.30273e-15
+C1 nq vss 2.76148e-15
+C4 i vss 3.1892e-15
+.ends inv
+
+* Spice description of mux2
+
+.subckt mux2 vss vdd q i1 i0 cmd 
+M01 vss i1 1 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M02 1 cmd 5 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M03 vss cmd 4 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M04 5 4 2 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M05 2 i0 vss 7 tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M06 q 5 vss 7 tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M07 vdd 5 q vdd tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M08 3 i1 vdd 8 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M09 4 cmd vdd 8 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M10 6 cmd 5 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M11 5 4 3 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M12 vdd i0 6 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+C3 4 vss 5.95297e-15
+C2 5 vss 4.7485e-15
+C1 vss 7 5.52667e-15
+C10 vdd vss 6.58426e-15
+C9 q vss 2.64397e-15
+C8 i1 vss 3.71745e-15
+C7 i0 vss 3.36619e-15
+C6 cmd vss 6.60261e-15
+.ends mux2
+
+* Spice description of na2
+
+.subckt na2 vss vdd nq i1 i0 
+M01 1 i1 nq vss tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M02 vss i0 1 vss tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M03 vdd i1 nq vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M04 nq i0 vdd 3 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+C2 vss 2 2.6442e-15
+C6 vdd vss 2.82047e-15
+C1 nq vss 2.79086e-15
+C4 i1 vss 3.68237e-15
+C5 i0 vss 3.53623e-15
+.ends na2
+
+* spi file for NAND2X1 cell
+
+
+.subckt nand2x1  VDD VSS A B Y
+mM0 6 B VSS VSS TN L=1.8e-07 W=7.8e-07
+mM1 Y A 6 VSS TN L=1.8e-07 W=7.8e-07
+mM2 Y B VDD VDD TP L=1.8e-07 W=9e-07
+mM3 VDD A Y VDD TP L=1.8e-07 W=9e-07
+c_5110 A VSS 0.36891f
+c_5113 VDD VSS 0.283315f
+c_5115 Y VSS 0.240941f
+c_5116 B VSS 0.453382f
+c_5107 B A 0.130949f
+c_5111 B VDD 0.00692105f
+c_5114 B Y 0.0161483f
+c_5108 A VDD 3.9836e-19
+c_5109 A Y 0.151611f
+c_5112 VDD Y 0.0259377f
+*
+*
+.ends
+
+
+* Spice description of no3
+
+.subckt no3 vss vdd nq i2 i1 i0 
+M01 vss i0 nq vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M02 nq i2 vss 3 tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M03 nq i1 vss 3 tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M04 vdd i2 2 vdd tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M05 1 i1 nq vdd tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M06 2 i0 1 vdd tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+C2 vss 3 3.3382e-15
+C4 vdd vss 2.98567e-15
+C1 nq vss 3.81907e-15
+C8 i2 vss 3.61086e-15
+C7 i1 vss 3.17863e-15
+C6 i0 vss 3.2596e-15
+.ends no3
+
+* Spice description of ts
+
+.subckt ts vss vdd q i cmd 
+M01 1 i vss 4 tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M02 vss 3 1 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M03 2 cmd 1 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M04 3 cmd vss 4 tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M05 vss 1 q vss tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M06 q 1 vss 4 tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M07 vdd 2 q vdd tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M08 vdd cmd 2 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M09 2 3 1 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M10 2 i vdd 5 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M11 q 2 vdd 5 tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M12 3 cmd vdd 5 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+C4 1 vss 6.28498e-15
+C6 2 vss 7.68869e-15
+C2 3 vss 5.06239e-15
+C3 vss 4 6.16192e-15
+C5 vdd vss 6.92574e-15
+C1 q vss 2.64397e-15
+C8 i vss 2.9371e-15
+C7 cmd vss 8.91222e-15
+.ends ts
+
+* Spice description of xor2
+
+.subckt xor2 vss vdd q i1 i0 
+M01 vss i0 1 vss tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M02 1 6 4 vss tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M03 4 5 2 vss tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M04 2 i1 vss 7 tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M05 vss i1 6 vss tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M06 5 i0 vss 7 tn L=0.35U W=1.4U AS=1.05P AD=1.05P PS=4.3U PD=4.3U 
+M07 vss 4 q vss tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M08 q 4 vss 7 tn L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M09 vdd 6 3 vdd tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M10 3 5 4 vdd tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M11 3 i0 vdd 8 tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M12 4 i1 3 vdd tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M13 vdd 4 q vdd tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M14 q 4 vdd 8 tp L=0.35U W=5.9U AS=4.425P AD=4.425P PS=13.3U PD=13.3U 
+M15 vdd i0 5 vdd tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+M16 6 i1 vdd 8 tp L=0.35U W=2.9U AS=2.175P AD=2.175P PS=7.3U PD=7.3U 
+C6 3 vss 2.74153e-15
+C2 4 vss 7.91506e-15
+C4 5 vss 5.06945e-15
+C10 6 vss 5.36068e-15
+C1 vss 7 7.37367e-15
+C7 vdd vss 8.66628e-15
+C11 q vss 2.58522e-15
+C9 i1 vss 4.62772e-15
+C8 i0 vss 3.70588e-15
+.ends xor2
+

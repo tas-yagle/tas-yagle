@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>The Interconnect Timing API Functions</title>
+<p>
+The TRC API provides a set of functions to calculate delays from RC interconnection networks using precise AWE delay calculations.
+</p>
+&trc_API;
+</section>

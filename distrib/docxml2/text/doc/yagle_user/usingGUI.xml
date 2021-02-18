@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Using The XYagle GUI</title>
+
+
+<section niv='2'><title>Presentation of the XYagle Interface</title>
+
+<p>XYagle contains five pull down menus:</p>
+<list>
+<item>File</item>
+<item>Edit</item>
+<item>View</item>
+<item>Windows</item>
+<item>Options</item>
+</list>
+<p>These menus grant accesss to the XYagle functionality.</p>
+<p>Each menu can be tear of from the main XYagle window in order
+to allow the user to accesss it directly.</p>
+
+
+
+<section niv='3'><title>The File Menu</title>
+
+
+<p>The <f>File</f> menu provides accesss to the "Open" and "Quit"
+functionalities of the XYagle interface. The functionalities of the <f>File</f> menu are detailed 
+in the following sections.</p>
+
+<section niv='4'><title>Open...</title>
+
+<p>By selecting the <f>Open...</f> item of the <f>File</f> menu 
+you will be presented with the <f>XYagle File Select</f> dialog.
+Choose which schematic to load by selecting it in this dialog.</p>
+<imgsize namehtml="xyagle_fileselect.gif" namepdf="xyagle_fileselect_dpi.gif" hpdf="254pt" wpdf="171pt"  />
+
+</section>
+
+<section niv='4'><title>Disassemble...</title>
+
+<p>The circuit disassembling can be launched from within XYagle.
+You will need to read the Yagle User Guide before using this option.</p>
+<p>More information about performing the disassembling can be found in the 
+<f>Disassembling with XYagle</f> Chapter of the current documentation. </p>
+
+</section>
+
+<section niv='4'><title>Quit</title>
+
+<p>Selecting this item in the <f>File</f> menu will exit XYagle.</p>
+
+</section>
+
+
+</section>
+
+<section niv='3'><title>The Edit Menu</title>
+
+<p>The <f>Edit</f> menu provides accesss to the most current functionnalities
+of XYagle.</p>
+<imgsize namehtml="xyagle_editmenu.gif" namepdf="xyagle_editmenu_dpi.gif" hpdf="142pt" wpdf="142pt"  />
+<p>Most of these options will be detailled in following chapters.
+A quick presentation are given in the following sections:</p>
+
+<section niv='4'><title>Extract</title>
+
+<p>Select the <f>Extract</f> option in order to switch the
+extract sub-netlist mode on.
+More information on modes can be found in the 
+<f>Schematic Browsing with XYagle</f> chapter</p>
+
+
+</section>
+<section niv='4'><title>Highlight</title>
+
+<p>Select the <f>Highlight</f> option in order to switch the
+hiliting gate dependences mode on.
+More information on modes can be found in the 
+<f>Schematic Browsing with XYagle</f> chapter</p>
+
+</section>
+
+<section niv='4'><title>Go thru hierarchy</title>
+
+<p>Select the <f>Go thru hierarchy</f> option in order 
+to switch the traversing hierarchy mode on.
+More information on modes can be found in the 
+<f>Schematic Browsing with XYagle</f> chapter</p>
+
+</section>
+
+<section niv='4'><title>Set Depth...</title>
+
+<p>By selecting the <f>Set Depth...</f> item of the <f>Edit</f> menu
+you will be presented with the <f>XYagle: Prompt</f> dialog.</p>
+<imgsize namehtml="xyagle_editdepth.gif" namepdf="xyagle_editdepth_dpi.gif" hpdf="175pt" wpdf="160pt"  />
+<p>Set the depth value before using the Extract or Highlight modes.</p>
+
+</section>
+
+<section niv='4'><title>Back</title>
+
+<p>By selecting the <f>Back</f> item of the <f>Edit</f> menu,
+you will return to the previous display configuration.</p>
+
+</section>
+
+<section niv='4'><title>Full Figure</title>
+
+<p>By selecting the <f>Full Figure</f> item of the <f>Edit</f> menu,
+you will return to the main figure. This option is used to 
+return to the figure after using options that display sub-netlist
+of the full figure.</p>
+
+</section>
+
+<section niv='4'><title>Find...</title>
+
+<p>By selecting the <f>Find...</f> item of the <f>Edit</f> menu
+you will be presented with the <f>XYagle: Prompt</f> dialog.</p>
+<imgsize namehtml="xyagle_editfind.gif" namepdf="xyagle_editfind_dpi.gif" hpdf="113pt" wpdf="160pt"  />
+<p>This option allows you to search object by name in the current schematic.</p>
+
+</section>
+
+
+
+</section>
+
+
+<section niv='3'><title>The View Menu</title>
+
+<p>The <f>View</f> menu provides accesss to a number of options
+affecting the display of the selected schematic.</p>
+<imgsize namehtml="xyagle_viewmenu.gif" namepdf="xyagle_viewmenu_dpi.gif" hpdf="127pt" wpdf="104pt"  />
+<p>The items of this menu have explicit names:</p>
+<glossary>
+<row><article>Refresh</article><def>Allows the user to refresh the display.</def></row>
+<row><article>Fit window</article><def>Allows the user to display all the schematic in the XYagle main window at the more effective scale.</def></row>
+<row><article>Zoom In</article><def>Allows the user to zoom in and to take a closer look to the schematic elements.</def></row>
+<row><article>Zoom Out</article><def>Allows the user to zoom out and to see the surrounding elements of the schematics.</def></row>
+<row><article>Zoom Select</article><def>Allows the user to</def></row>
+<row><article>Zoom Set</article><def>Allows the user to set the zoom factor. the value is a percentage between 5 and 95%.</def></row>
+<row><article>Previous</article><def>Allows the user to </def></row>
+</glossary>
+<p>Applications of these options will be used in the following chapters.</p>
+
+</section>
+
+
+<section niv='3'><title>The Windows Menu</title>
+
+<p>The <f>Windows</f> menu provides access to more specific XYagle 
+functionalities.</p>
+<imgsize namehtml="xyagle_windowsmenu.gif" namepdf="xyagle_windowsmenu_dpi.gif" hpdf="81pt" wpdf="130pt"  />
+<p>These options grant access to information about the schematic and the
+elements of a disassembled netlist.
+This section provide an overview of these options. complete
+information can be found in the <f>XYagle Basics</f> and <f>Disassembled Netlist Information</f> chapters.</p>
+<glossary>
+<row><article>Show Structure</article><def>Allows the user to see the structure of the next selected gate.</def></row>
+<row><article>Show Behavior</article><def>Allows the user to see the behavior of the next selected gate.</def></row>
+<row><article>Show Message</article><def>Allows the user to view XYagle messages.</def></row>
+<row><article>Show Info</article><def>Allows the user to display general information about the schematic such as the figure name.</def></row>
+</glossary>
+
+</section>
+
+
+<section niv='3'><title>the Options Menu</title>
+
+<p>The <f>Options</f> menu provides accesss to some basic 
+configuration of the visibility of elements
+displayed in the XYagle interface.</p>
+<imgsize namehtml="xyagle_optionsmenu.gif" namepdf="xyagle_optionsmenu_dpi.gif" hpdf="39pt" wpdf="123pt"  />
+<p>By selecting the <f>Layer</f> item of the <f>Options</f> menu, 
+you will then be presented with the <f>Layer</f> dialog:</p>
+<imgsize namehtml="xyagle_optionslayers.gif" namepdf="xyagle_optionslayers_dpi.gif" hpdf="200pt" wpdf="148pt"  />
+<p>The <f>Layer</f> dialog allows the user to configure 
+the visibility of the schematic.</p>
+
+</section>
+
+</section>
+
+
+<section niv='2'><title>Loading the Schematic</title>
+
+<p>The XYagle graphical interface allows the user to displays 
+different type of circuit,
+from transistor level schematic to hierarchical gate netlist.</p>
+<p>To load a schematic use the <f>Open</f> item in the <f>File</f> menu.</p>
+
+
+
+<section niv='3'><title>transistor Level Schematic</title>
+
+<p>XYagle displays transistor Level Schematic as 
+a network of symbols representing transistors.</p>
+<p></p>
+<imgsize namehtml="xyagle_loadmux.gif" namepdf="xyagle_loadmux_dpi.gif" hpdf="360pt" wpdf="336pt"  />
+
+</section>
+
+
+<section niv='3'><title>Gate Netlist</title>
+
+<p>XYagle displays gate netlist as network of logical gates.</p>
+<imgsize namehtml="xyagle_loadaddaccu.gif" namepdf="xyagle_loadaddaccu.gif" hpdf="282pt" wpdf="351pt"  />
+<p></p>
+
+</section>
+
+
+<section niv='3'><title>Disassembled Gate Netlist</title>
+
+<p>XYagle display disassembled gate netlist as </p>
+<imgsize namehtml="xyagle_loadchip.gif" namepdf="xyagle_loadchip_dpi.gif" hpdf="422pt" wpdf="340pt"  />
+
+</section>
+
+
+<section niv='3'><title>Hierarchical Gate Netlist</title>
+
+<p>XYagle displays hierarchical gate netlist as a network of gates and blocs.</p>
+<imgsize namehtml="xyagle_loadheart.gif" namepdf="xyagle_loadheart.gif" hpdf="330pt" wpdf="351pt"  />
+
+</section>
+
+</section>
+
+
+<section niv='2'><title>XYagle Basics</title>
+
+<p>This section explains how to obtain information about the 
+figure loaded in XYagle and how to use the schematic in 
+good conditions of visibility.</p>
+
+
+<section niv='3'><title>Viewing General Information</title>
+
+<p>To view the general information use the <f>Show Info</f> item 
+in the <f>Windows</f> menu.</p>
+<p>This opens a window that display the name of the loaded figure
+and the dimensions of the schematic.</p>
+<imgsize namehtml="xyagle_basicinfo.gif" namepdf="xyagle_basicinfo_dpi.gif" wpdf="306pt" hpdf="334pt" />
+
+</section>
+
+
+<section niv='3'><title>Configuring Visibility</title>
+
+<p>To configure the visibility use the <f>Layer</f> item 
+in the <f>Options</f> menu.</p>
+<imgsize namehtml="xyagle_optionslayers.gif" namepdf="xyagle_optionslayers_dpi.gif" hpdf="200pt" wpdf="148pt"  />
+<p>XYagle display objects on layers, select on the left column
+the layers you want to be visible, and select on the right column
+the layers you want to be invisible. Then valid your
+choice with <f>Apply</f>.</p>
+
+</section>
+
+
+<section niv='3'><title>Navigation in XYagle</title>
+
+<p>To navigate in XYagle, use the <f>View</f> menu.</p>
+<p>Use he <f>Zoom In</f> item of this menu to have a 
+good visibility of the schematic.</p>
+<imgsize namehtml="xyagle_basicvisibility.gif" namepdf="xyagle_basicvisibility_dpi.gif" hpdf="277pt" wpdf="330pt"  />
+<p>Use he <f>Zoom Out</f> item of this menu to have a 
+larger visibility of the schematic or to <f>Fit Window</f> 
+display the full schematic on the display.</p>
+
+
+</section>
+
+</section>
+
+
+<section niv='2'><title>Schematic Browsing with XYagle</title>
+
+<p></p>
+
+
+<section niv='3'><title>XYagle Browsing Modes</title>
+
+<p>To unselect a XYagle browsing mode use the <f>Select</f> item in the
+<f>Edit</f> menu.</p>
+
+</section>
+
+
+<section niv='3'><title>Extracting Sub-Netlists</title>
+
+<p>To extract sub-netlists use the <f>Extract</f> item in
+the <f>Edit</f> menu.</p>
+<imgsize namehtml="xyagle_browsingextract.gif" namepdf="xyagle_browsingextract_dpi.gif" hpdf="307pt" wpdf="383pt" />
+
+</section>
+
+
+<section niv='3'><title>Highlighting Gate Dependences</title>
+
+<p>To highlight gate dependences use the <f>Highlight</f> item
+in the <f>Edit</f> menu.</p>
+
+
+<imgsize namehtml="xyagle_browsinghilite.gif" namepdf="xyagle_browsinghilite_dpi.gif" hpdf="265pt" wpdf="390pt"  />
+
+
+</section>
+
+
+<section niv='3'><title>Traversing Hierarchy</title>
+
+<p>To traverse hierarchy use the <f>Go thru hierarchy</f> item
+in the <f>Edit</f> menu</p>.
+<p>traversing hierarchy allows the user to display the bloc sub-netlist.
+for example going thru the hierarchy of the muxout bloc from the previously loaded hierarchical gate netlist
+display the gates of the bloc.</p>
+<imgsize namehtml="xyagle_loadmuxout.gif" namepdf="xyagle_loadmuxout.gif" hpdf="330pt" wpdf="351pt"  />
+<p>It is possible to go thru the hierarchy of a gate to display the transistor level of the gate.
+For exemple, going thru the hierarchy of a OR gate from the previous muxout display the 
+following network of transistor:</p>
+<imgsize namehtml="xyagle_loador2.gif" namepdf="xyagle_loador2.gif" hpdf="313pt" wpdf="261pt"  />
+
+</section>
+
+
+<section niv='3'><title>Searching Object by Name</title>
+
+<p>To search object by name use the <f>Find...</f> item in
+the <f>Edit</f> menu.</p>
+
+</section>
+
+
+</section>
+
+
+<section niv='2'><title>Disassembled Netlist Information</title>
+
+
+
+<section niv='3'><title>Viewing the Gate Structure</title>
+
+<p>To view the gate structure use the <f>Show Structure</f> in
+the <f>Windows</f> menu</p>
+
+<imgsize namehtml="xyagle_infostructure.gif" namepdf="xyagle_infostructure_dpi.gif" hpdf="307pt" wpdf="383pt" />
+<p>The information provided by <f>Show Structure</f> 
+on a selected gate structure contains the name of the gate,
+ the inputs and
+output signals.</p>
+
+</section>
+
+
+<section niv='3'><title>Viewing the Gate Behavior</title>
+
+<p>To view the gate behavior use the <f>Show Behavior</f> in
+the <f>Windows</f> menu</p>
+
+<imgsize namehtml="xyagle_infobehaviour.gif" namepdf="xyagle_infobehaviour_dpi.gif" hpdf="307pt" wpdf="383pt" />
+<p><f>Show Behavior</f> provides the logical dependence between 
+input and output signals of the selected gate.</p>
+
+</section>
+
+</section>
+
+
+</section>      
+</chapter>      
+     

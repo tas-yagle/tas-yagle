@@ -1,0 +1,10 @@
+rm *.cns
+rm *.dtx
+rm *.inf
+rm *.lib
+rm *.rcx
+rm *.rep
+rm *.stm
+rm *_ext.spi
+rm cmd_*
+

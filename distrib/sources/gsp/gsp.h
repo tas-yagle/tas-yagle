@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#include MUT_H
+#include MLO_H
+#include MLU_H
+#include MSL_H
+#include RCN_H
+#include INF_H
+#include BEH_H
+#include CNS_H
+#include LOG_H
+#include CBH_H
+#include EFG_H
+#include EQT_H
+#include GSP_H
+
+#include "gsp_util.h"
+#include "gsp_get_patterns.h"

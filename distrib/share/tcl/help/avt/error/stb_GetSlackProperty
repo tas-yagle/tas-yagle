@@ -1,0 +1,13 @@
+
+       Property *stb_GetSlackProperty(StabilitySlack *so, char *property);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns a property of a slack object. A Property is a polymorphic type,
+       the returned type depends on the property code.
+
+AARRGGUUMMEENNTTSS
+       ssoo            Pointer on the slack object
+
+       ccooddee          Property code; for available property codes, see the _S_t_a_-
+                     _b_i_l_i_t_y_S_l_a_c_k object section
+

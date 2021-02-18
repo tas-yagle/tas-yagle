@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="ttv_api">
+
+<err>
+    <lib>TTVAPI-</lib><num>001</num>
+    <msg>invalid direction for input signal '%c'\n</msg>
+    <doc>a direction should be 'u' or 'd'.</doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>002</num>
+    <msg>no clock signal defined, no false %s paths check done\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>003</num>
+    <msg>conflicting node type old:'%c' new:'%c'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>004</num>
+    <msg>type '%c' is unknown\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>005</num>
+    <msg>overriding type '%c' with '%c'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>006</num>
+    <msg>subtype '%c' is unknown\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>007</num>
+    <msg>%s: invalid node type '%c', ttv_AddCustomSignal ignored\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>008</num>
+    <msg>nul or negative %sslope set to %gps for line %s->%s %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>009</num>
+    <msg>%s: invalid direction '%s', timing line creation ignored\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>010</num>
+    <msg>unknown file format '%s' for timing file '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>011</num>
+    <msg>bad value '%s' in 'ttv_ExcludeNodeType'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>012</num>
+    <msg>bad value '%s' in 'ttv_GetMatchingSignal'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>013</num>
+    <msg>could not open current directory\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>014</num>
+    <msg>could not load timing figure '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>015</num>
+    <msg>could not load crosstalk figure\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>016</num>
+    <msg>timing figure '%s' already loaded\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>017</num>
+    <msg>could not find timing figure '%s' with temperature=%g° and voltage=%gV\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>018</num>
+    <msg>invalid direction '%s'\n</msg>
+    <doc>a direction should look like \"uu\" (start signal rising, end signal rising) or \"ud\" (start signal rising, end signal falling) for instance.</doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>019</num>
+    <msg>could not find signal '%s' in figure\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>020</num>
+    <msg>no %s path was found for path %s -> %s %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>021</num>
+    <msg>.dtx file for '%s' is needed to run 'all path' search\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>022</num>
+    <msg>available values for parameter 'minmax' are 'min' or 'max'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>023</num>
+    <msg>available values for parameter 'all' are 'critic' or 'all'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>024</num>
+    <msg>available values for parameter 'path' are 'path' or 'access'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>025</num>
+    <msg>function '%s' is obsolete, use ttv_GetPaths\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>026</num>
+    <msg>bad value for parameter 'order'.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>027</num>
+    <msg>bad value for function 'ttv_AutomaticDetailBuild'. Valid values are 'on' and 'off'.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>028</num>
+    <msg>bad value '%s' in 'ttv_GetLines'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>029</num>
+    <msg>unrecognized property '%s':'%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>030</num>
+    <msg>unrecognized property '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>031</num>
+    <msg>unknown parameter value '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>032</num>
+    <msg>ttv_SetTimingLineDelay: negative slope given (%g), set to 0.1e-12\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>033</num>
+    <msg>stability error found at node %s: data too late by %.1fps\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>034</num>
+    <msg>ttv_ProbeDelay: could not find node '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>035</num>
+    <msg>at least %d node names are required for the function to run\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>036</num>
+    <msg>could not open file '%s' for writing\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>037</num>
+    <msg>ttv_SetReportUnit: error, setting digits to %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>038</num>
+    <msg>ttv_SetReportUnit: unknown unit/setup '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>039</num>
+    <msg>ttv_SetReportUnit is obsolete, use ttv_SetupReport\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>040</num>
+    <msg>ttv_DisplaySimulation: valid values for mode are 'y' or 'n'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>041</num>
+    <msg>ttv_DisplayConnectorToLatchMargin: unknown mode '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>042</num>
+    <msg>no defined clocks\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>043</num>
+    <msg>unknown property %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>044</num>
+    <msg>could not load cone file '%s.cns'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>045</num>
+    <msg>Changing %s to %g according to UTD\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>046</num>
+    <msg>Changing thresholds according to UTD\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>047</num>
+    <msg>ttv_ProbeDelay: '%s' matched %d node names, function run can be very long\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>048</num>
+    <msg>unknown node type '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>049</num>
+    <msg>inconsistancies in given array and axis: %d elements in array vs %d in axis\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>050</num>
+    <msg>invalid axis type '%s'. Only slope-slope, slope-ckslope and slope-capa are available\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>051</num>
+    <msg>unknown timing figure flag '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>052</num>
+    <msg>could not find loaded timing figure '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>053</num>
+    <msg>Wrong order list format. Should be a list of globalseed-localseed pair values.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTVAPI-</lib><num>054</num>
+    <msg>unknown connector direction '%c'\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

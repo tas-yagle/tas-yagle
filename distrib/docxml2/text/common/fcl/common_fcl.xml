@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>FCL - Transistor Netlist Pattern-Matching</title>
+&fcl_description;
+&fcl_usage;
+&fcl_netlist;
+&fcl_behaviour;
+&fcl_library;
+</section></chapter>

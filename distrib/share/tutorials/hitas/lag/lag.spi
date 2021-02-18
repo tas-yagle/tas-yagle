@@ -1,0 +1,41 @@
+* lag example
+
+.temp 60
+
+.include bsim4_dummy.hsp
+
+.subckt inv a b vdd vss
++        w=0.72u l=0.18u 
+Mn1 b a vss vss TN w=w l=l 
+Mp1 b a vdd vdd TP w='w*2' l=l 
+.ends
+
+.subckt lagpath i o vdd vss
+x1 i n1 vdd vss inv
+x2 n1 n2 vdd vss inv
+x3 n2 n3 vdd vss inv
+x4 n3 n4 vdd vss inv
+x5 n4 o vdd vss inv
+.ends lagpath
+
+.subckt latch i o ck nck vdd vss 
++        w=0.72u l=0.18u
+Mn1 i ck li vss TN w=w l=l 
+Mp1 i nck li vdd TP w='w*2' l=l 
+XinvP li o  vdd vss inv 
+XinvL o li vdd vss inv w='w/4' l=l
+.ends
+
+.subckt lag i o ck
+xc1 ck nck vdd vss inv
+xc2 nck ck1 vdd vss inv
+xc3 ck1 nck1 vdd vss inv
+xd0 i n1 vdd vss inv
+xl0 n1 n2 ck1 nck1 vdd vss latch
+xd1 n2 n3 vdd vss lagpath
+xl1 n3 n4 nck1 ck1 vdd vss latch
+xd2 n4 n5 vdd vss inv
+xl2 n5 n6 ck1 nck1 vdd vss latch
+xd4 n6 o vdd vss inv
+
+.ends

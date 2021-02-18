@@ -1,0 +1,25 @@
+
+           <TimingFigure *> hitas <figname> [-annotatefromcns] [-startfromcns]
+
+       ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Generates a  timing  figure  from  a  pre-  or  post-layout  transistor
+       netlist.  It  is assumed that an internal representation of the netlist
+       exists in the program's memory, i.e., that the related files (including
+       MOS models) have already been loaded. See _a_v_t___L_o_a_d_F_i_l_e function.
+
+AARRGGUUMMEENNTTSS
+       ffiiggnnaammee       Name of the subcircuit the timing figure is to be derived
+
+       --aannnnoottaatteeffrroommccnnss
+                     [experimental] If a _$_f_i_l_e_n_a_m_e.cns file  exist,  disassem-
+                     bling  circuit  stage is replaced by annotate the circuit
+                     from cns file information.
+
+       --ssttaarrttffrroommccnnss [experimental] Same as _-_a_n_n_o_t_a_t_e_f_r_o_m_c_n_s expect  that  the
+                     netlist  saved  in  the  cns  file  is used, not the user
+                     loaded one.
+
+       EEXXAAMMPPLLEE       _s_e_t _f_i_g _[_h_i_t_a_s _m_y___d_e_s_i_g_n_]
+

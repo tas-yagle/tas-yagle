@@ -1,0 +1,34 @@
+NAME
+       concat - Join lists together
+
+SYNOPSIS
+       concat ?arg arg ...?
+
+
+DESCRIPTION
+       This  command  joins  each  of its arguments together with spaces after
+       trimming leading and trailing white-space from each of  them.   If  all
+       the arguments are lists, this has the same effect as concatenating them
+       into a single list.  It permits any number of arguments; if no args are
+       supplied, the result is an empty string.
+
+EXAMPLES
+       Although concat will concatenate lists (so the command:
+              concat a b {c d e} {f {g h}}
+       will  return  "a b c d e f {g h}" as its result), it will also concate-
+       nate things that are not lists, and hence the command:
+              concat " a b {c   " d "  e} f"
+       will return "a b {c d e} f" as its result.
+
+       Note that the concatenation does not remove spaces from the  middle  of
+       its arguments, so the command:
+              concat "a   b   c" { d e f }
+       will  return  "a    b   c d e f" (i.e. with three spaces between the a,
+       the b and the c).
+
+
+SEE ALSO
+       append(n), eval(n)
+
+
+KEYWORDS

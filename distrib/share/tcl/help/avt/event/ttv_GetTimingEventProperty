@@ -1,0 +1,13 @@
+
+       Property *ttv_GetTimingEventProperty(TimingEvent *ev, char *code);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns a property of a timing event. A Property is a polymorphic type,
+       the returned type depends on the property code.
+
+AARRGGUUMMEENNTTSS
+       eevv            Pointer on the timing event
+
+       ccooddee          Property code; for  available  property  codes,  see  the
+                     _T_i_m_i_n_g_E_v_e_n_t object section
+

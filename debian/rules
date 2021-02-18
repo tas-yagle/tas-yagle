@@ -1,0 +1,87 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
+%:
+	dh  $@
+
+
+override_dh_auto_configure:
+	echo "dh_auto_configure disabled."
+
+
+override_dh_auto_build:
+	tar zxf distrib_extras/flex-2.5.4_patch.tar.gz; \
+	localinstall=`pwd`; \
+	cd flex-2.5.4; \
+	./configure --prefix=$${localinstall}; \
+	make install; \
+	cd ..; \
+	PATH=$${localinstall}/bin:$$PATH; \
+	export PATH; \
+	cd distrib; \
+	builddir=`pwd`; \
+	AVERTEC_OS="Linux"; \
+	for dir in api_include api_lib bin lib include man/man3 share/doc; do \
+	  mkdir -p $${dir}; \
+	done; \
+	ln -s sources obj; \
+	ln -s share/etc etc; \
+	cd obj; \
+	make WITH_FLEXLM=NOFLEX               \
+	     ALLIANCE_TOP=$${builddir}        \
+	     AVERTEC_TOP=$${builddir}         \
+	     AVERTEC_OS=$$AVERTEC_OS          \
+	     AVERTEC_LICENSE=AVERTEC_DUMMY    \
+	     AVT_LICENSE_SERVER=house         \
+	     AVT_LICENSE_FILE=27009@house     \
+	     AVT_COMPILATION_TYPE=distrib     \
+	     AVT_DISTRIB_DIR=$${builddir}     \
+         PACKAGING_TOP=$${localinstall};  \
+	cd ..; \
+	PATH=`pwd`/bin:$$PATH; \
+	cd docxml2; \
+	if [ "`uname -m`" != "x86_64" ]; then \
+	  make AVERTEC_TOP=$${builddir}/share; \
+	else \
+	  tar jxf docxml2-compiled.tar.bz2; \
+	fi; \
+	cd ..;
+
+
+override_dh_auto_install:
+	destdir="`pwd`/debian/tasyag"; \
+	prefix="/usr/lib/tasyag"; \
+	sharedir="/usr/share"; \
+	tasyagsharedir="$${sharedir}/tasyag"; \
+	docdir="$${sharedir}/doc/tasyag"; \
+	mandir="$${sharedir}/man"; \
+	man3dir="$${mandir}/man3"; \
+	bindir="/usr/bin"; \
+	etcdir="$${tasyagsharedir}/etc"; \
+	tcldir="$${tasyagsharedir}/tcl"; \
+	echo "destdir=$${destdir}"; \
+	if [ ! -d "$${destdir}$${etcdir}"  ]; then mkdir -p "$${destdir}$${etcdir}" ; fi; \
+	if [ ! -d "$${destdir}$${bindir}"  ]; then mkdir -p "$${destdir}$${bindir}" ; fi; \
+	if [ ! -d "$${destdir}$${tcldir}"  ]; then mkdir -p "$${destdir}$${tcldir}" ; fi; \
+	if [ ! -d "$${destdir}$${man3dir}" ]; then mkdir -p "$${destdir}$${man3dir}"; fi; \
+	if [ ! -d "$${destdir}$${docdir}"  ]; then mkdir -p "$${destdir}$${docdir}" ; fi; \
+	for conf in avt.slib avttools.dtb Xtas Xyagle trmodel.cfg avt_env.sh; do \
+	  cp distrib/share/etc/$${conf} $${destdir}$${etcdir}; \
+	done; \
+	for tool in avt_shell avtman xtas xyagle ttvdiff ttvren; do \
+	  cp distrib/bin/$${tool} $${destdir}$${bindir}; \
+	done; \
+	cp -r distrib/share/tcl/*                   $${destdir}$${tcldir};  \
+	cp distrib/man/man3/*                       $${destdir}$${man3dir}; \
+	mv distrib/docxml2/compiled/docavertec.html $${destdir}$${docdir};  \
+	mv distrib/docxml2/compiled/docpdf          $${destdir}$${docdir};  \
+	mv distrib/docxml2/compiled/dochtml         $${destdir}$${docdir};  \
+	mv distrib/share/tutorials                  $${destdir}$${docdir}

@@ -1,0 +1,53 @@
+<!DOCTYPE notice SYSTEM "../../common/common_entity.xml" [
+<!ENTITY tool "GNS">
+<!ENTITY MAJ "GNS">
+<!ENTITY MIN "gns">
+<!ENTITY presentation          SYSTEM "presentation.xml">
+<!ENTITY introduction          SYSTEM "introduction.xml">
+<!ENTITY configuration         SYSTEM "configuration.xml">
+<!ENTITY recognition           SYSTEM "recognition.xml">
+<!ENTITY performing            SYSTEM "performing.xml">
+<!ENTITY rules                 SYSTEM "rules.xml">
+<!ENTITY extensions            SYSTEM "extensions.xml">
+<!ENTITY creation              SYSTEM "creation.xml">
+<!ENTITY APIfunc               SYSTEM "APIfunc.xml">
+<!ENTITY gen_builtins          SYSTEM "gen_builtins.xml">
+<!ENTITY gen_builtin_functions SYSTEM "gen_builtin_functions.xml">
+<!ENTITY gen                   SYSTEM "gen.xml">
+<!ENTITY gen_API               SYSTEM "gen_API.xml">
+<!ENTITY mbk                   SYSTEM "mbk.xml">
+<!ENTITY mbk_API               SYSTEM "mbk_API.xml">
+<!ENTITY beg                   SYSTEM "beg.xml">
+<!ENTITY beg_API               SYSTEM "beg_API.xml">
+<!ENTITY database              SYSTEM "database.xml">
+<!ENTITY database_API          SYSTEM "database_API.xml">
+<!ENTITY fcl                   SYSTEM "fcl.xml">
+<!ENTITY fcl_API               SYSTEM "fcl_API.xml">
+<!ENTITY spi_API               SYSTEM "spi_API.xml">
+<!ENTITY sim                   SYSTEM "sim.xml">
+<!ENTITY sim_API               SYSTEM "sim_API.xml">
+<!ENTITY stm                   SYSTEM "stm.xml">
+<!ENTITY stm_API               SYSTEM "stm_API.xml">
+<!ENTITY tracing               SYSTEM "tracing.xml">
+<!ENTITY error                 SYSTEM "error.xml">
+]>
+
+<notice>
+    <presentation>
+       &presentation; 
+    </presentation>
+    <introduction>
+        &introduction;
+    </introduction>
+    <document>
+        &recognition;
+        &configuration;
+        &performing;
+        &rules;
+        &extensions;
+        &creation;
+        &APIfunc;
+        &creation;
+        &error;
+   </document>
+</notice>    

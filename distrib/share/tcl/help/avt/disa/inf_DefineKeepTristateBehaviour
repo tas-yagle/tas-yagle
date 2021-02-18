@@ -1,0 +1,11 @@
+
+       void inf_DefineKeepTristateBehaviour(char *name);
+
+DDEESSCCRRIIPPTTIIOONN
+       Disables  the  transformation  of bus into register when configurations
+       'avtVerilogTristateIsMemory'  or  'yagleTristateIsMemory'  is  used  to
+       drive a behavioural model.
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Signal's name
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<pagebreak/>
+<section niv='2'><title>General</title>
+<section niv='3'><title>Configuration</title>
+&avt_API_config;
+</section>
+
+<pagebreak/>
+<section niv='3'><title>File Loading</title>
+&avt_API_files;
+&mbk_API_files;
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Netlist Modification</title>
+&avt_API_lofig;
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Statistics</title>
+&avt_API_system;
+</section>
+
+</section>

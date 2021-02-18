@@ -1,0 +1,109 @@
+#!/bin/sh -f
+
+hostlog_os_spec()
+{
+    if [ "$1" = "Solaris_2.8" ] ; then
+        HOSTLOG="paris"
+    elif [ "$1" = "Solaris_2.8_64" ] ; then
+        HOSTLOG="paris"
+    elif [ "$1" = "Solaris_2.9" ] ; then
+        HOSTLOG="denver"
+    elif [ "$1" = "Solaris_2.9_64" ] ; then
+        HOSTLOG="denver"
+    elif [ "$1" = "RHEL_3.0" ] ; then
+        HOSTLOG="rio"
+    elif [ "$1" = "RHEL_3.0_64" ] ; then
+        HOSTLOG="bangalore"
+    fi
+    HOSTLOG_DOC="denver"
+}
+
+##########################################################################
+ping_machine()
+{
+    PINGMACHINE=`ping $1`
+    echo -n "pinging $1... "
+    if [ "$PINGMACHINE" != "$1 is alive" ] ; then
+        echo "failed: $PINGMACHINE"
+        exit
+    fi
+    echo "ok"
+}
+
+##########################################################################
+read_entry()
+{
+    SYSTEMOS=" "
+  
+    if [ "$*" = "-h" ] || [ "$*" = "-help" ] ; then
+        print_help
+        exit
+    elif [ "$*" != "" ] ; then
+        for option in $* ; do
+            # OS selection
+            if [ "$option" = "-all" ] ; then
+                SYSTEMOS="Solaris_2.8 Solaris_2.8_64 Solaris_2.9 Solaris_2.9_64 RHEL_3.0 RHEL_3.0_64"
+            elif [ "$option" = "-s28" ] ; then
+                SYSTEMOS="$SYSTEMOS Solaris_2.8"
+            elif [ "$option" = "-s28_64b" ]  ; then
+                SYSTEMOS="$SYSTEMOS Solaris_2.8_64"
+            elif [ "$option" = "-s29" ] ; then
+                SYSTEMOS="$SYSTEMOS Solaris_2.9"
+            elif [ "$option" = "-s29_64b" ]  ; then
+                SYSTEMOS="$SYSTEMOS Solaris_2.9_64"
+            elif [ "$option" = "-rhel" ]   ; then
+                SYSTEMOS="$SYSTEMOS RHEL_3.0"
+            elif [ "$option" = "-rhel_64b" ]   ; then
+                SYSTEMOS="$SYSTEMOS RHEL_3.0_64"
+            fi
+        done
+    fi
+
+    if [ "$SYSTEMOS" = " " ] ; then
+        SYSTEMOS="Solaris_2.8 Solaris_2.8_64 Solaris_2.9 Solaris_2.9_64 RHEL_3.0 RHEL_3.0_64"
+    fi
+}
+
+
+##########################################################################
+compilation()
+{
+    TOOLS_DIR = "/users/disk02/avertec/distrib_ref/tools/$OS"
+    MAKEFILEVAR=""
+    if [ "$OS" = "Solaris_2.8_64" ] || [ "$OS" = "Solaris_2.9_64" ]|| [ "$OS" = "RHEL_3.0_64" ] ; then
+        MAKEFILEVAR="$MAKEFILEVAR AVT_COMPILATION_64BIT=yes"
+    fi
+    MAKEFILEVAR="$MAKEFILEVAR AVT_OS=$OS AVT_DISTRIB_DIR=/users/disk01/anthony/dev/$OS AVT_COMPILATION_TYPE=$AVT_COMPILATION_TYPE AVERTEC_TOP=$TOOLS_DIR"
+
+    echo -n "avtcmi $OS compilation on $HOSTLOG... "  
+  
+    rsh $HOSTLOG "cd $TOOLS_DIR/obj; make -f makecmi clean $MAKEFILEVAR; make -f makecmi $MAKEFILEVAR"
+    echo ok
+}
+
+##########################################################################
+doavtcmi()
+{
+    # ---------------------------------------------------------
+    # Variables
+    # ---------------------------------------------------------
+
+    AVT_COMPILATION_TYPE="distrib"
+
+    read_entry $*
+
+    # ---------------------------------------------------------
+    # Compilation
+    # ---------------------------------------------------------
+
+    for OS in $SYSTEMOS ; do
+        hostlog_os_spec $OS
+        ping_machine $HOSTLOG
+        compilation
+    done
+
+    exit
+}
+
+doavtcmi $*
+

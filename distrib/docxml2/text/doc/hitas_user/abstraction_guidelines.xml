@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Timing Characterization (.lib)</title>
+
+<section niv='2'><title>Setup and Hold Constraints Formulas</title>
+<p>Interface Setup and hold constraints are computed for each latch and register. They are computed with respect to
+the following formulas:</p>
+<code>
+<cl>setup = data_path_max - clock_path_min</cl>
+<cl>hold = clock_path_max - data_path_min</cl>
+</code>
+<p>The following diagram gives an example of clock path and data path.</p>
+<imgsize namehtml="Intrinsic.gif" namepdf="Intrinsic.svg"/>
+<list>
+<item>Clock path: from <f>ck</f> to <f>com</f> (the command of the latch)</item> 
+<item>Data path: from <f>data</f> to <f>mem</f> (the memory point itself).</item>
+</list>
+<p>With such definitions
+of data and clock paths, the above formulas give optimistic values for setup and hold times. Therefore, a corrective factor
+is added to those values. The corrective factor for setup is called the "intrinsic setup of the latch"; the corrective factor
+for hold is called "intrinsic hold of the latch". The formulas now become:</p>
+<code>
+<cl>setup = data_path_max - clock_path_min + intrinsic_setup</cl>
+<cl>hold = clock_path_max - data_path_min + intrinsic_hold</cl>
+</code>
+
+<section niv='3'><title>Setup Correction</title>
+<p>For setup time, the calculus is as follow:</p>
+<list>
+<item><f>clock_path_min</f> delay is computed at <f>com</f> crossing Vdd/2 (time <f>t1</f>), as the transitor <f>M</f> 
+closes at time <f>t2</f>: <f>t2 - t1</f> must be added to <f>clock_path_min</f></item>
+<item>Setup time must ensure that data is correctly written into the latch, i.e. that data crosses the feedback loop. This is modeled by
+adding <f>t_loop</f> to <f>data_path_max</f>.</item>
+</list>
+<p>The formula for setup becomes:</p> 
+<code>setup = data_path_max + t_loop - (clock_path_min + t2 - t1)</code>
+<p>The corrective factor for setup is:</p>
+<code>intrinsic_setup = t_loop - (t2 - t1)</code>
+</section>
+
+
+<section niv='3'><title>Hold Correction</title>
+<p>For hold time, the calculus is as follow:</p>
+<list>
+<item><f>clock_path_max</f> delay is computed at <f>com</f> crossing Vdd/2 (time <f>t1</f>), as the transitor <f>M</f> 
+closes at time <f>t2</f>: <f>t2 - t1</f> must be added to <f>clock_path_max</f></item>
+</list>
+<p>The formula for hold becomes:</p> 
+<code>hold = clock_path_max + (t2 - t1) - data_path_min</code>
+<p>The corrective factor for hold is:</p>
+<code>intrinsic_hold = t2 - t1</code>
+</section>
+</section>
+
+<section niv='2'><title>Performing the Characterization</title>
+<p>The purpose of timing abstraction is to create a <f>.lib</f> file - containing setup, hold and access information
+of the design - from an already existing timing figure. Within the <f>avt_shell</f> Tcl interface, timing abstraction 
+is performed with the function <f>tmabs</f></p>
+<p><f>BehFigure</f> is a description of the functionality that can be associated with the design in the <f>.lib</f> file.
+For the moment it takes the <f>NULL</f> value.</p>
+<p><f>TimingFigure</f> is the database itself, the one the <f>.lib</f> file will be created from. Timing abstraction
+only uses the <f>.dtx</f> file. The database can be obtained by two ways. Through
+the <f>hitas</f> function, with the appropriate configuration allowing correct database construction:</p>
+<code>
+<cl>avt_config ...</cl>
+<cl>avt_config ...</cl>
+<cl> </cl>
+<cl>set fig [hitas my_design]</cl>
+</code>
+<p>If the timing database has already been constructed, the path view can be obtained from the <f>.dtx</f> file with the
+following command:</p>
+<code>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure my_design]</cl>
+</code>
+<p>Timing abstraction requires additionnal information concerning clock definition (in order to construct correct
+setup/hold/access relationships). Clock definition and timing abstraction are then done as follow:</p>
+<code>
+<cl>inf_SetFigureName my_design</cl>
+<cl>create_clock -period 3000 ck</cl>
+<cl>set abs_fig [tmabs $fig NULL * * *]</cl>
+</code>
+<p>The <f>-period</f> value is irrelevant but is needed to respect SDC syntax. The <f>.lib</f> file is 
+generated from the abstracted timing figure <f>abs_fig</f> as follow:</p>
+<code>
+<cl>lib_DriveFile [list $abs_fig] NULL my_design.lib max</cl>
+</code>
+
+</section>
+
+<section niv='2'><title>Advanced Configuration</title>
+<section niv='3'><title>Input Slope and Output Load Axis</title>
+<p>User-defined input slopes can be defined with the function <f>inf_DefineSlopeRange</f>. This function affects
+the way lookup-table axis are constructed. Be aware that <f>inf_DefineSlopeRange</f> should be applied before calling the <f>hitas</f> 
+function:</p>
+<code>
+<cl>inf_SetFigureName my_design</cl>
+<cl>inf_DefineSlopeRange default {100e-12 150e-12 350e-12} custom</cl>
+<cl>set fig [hitas my_design]</cl>
+</code>
+
+<p>The same remarks apply to <f>inf_DefineCapacitanceRange</f>.</p>
+
+</section>
+<section niv='3'><title>Capacitances in the .lib file</title>
+<p>By default, capacitance values are given for input connectors only, as an average value. The given value is
+the equivalent capacitance allowing to compute the driving gate's delay at vdd/2. Capacitance ranges as well as different 
+rise/fall capacitances can be obtained by tuning the <f>elpCapaLevel</f> variable (values <f>1</f> or <f>2</f>).</p>
+<p>Capacitances can also be given for output connectors (set <f>tmaDriveCapaOut</f> variable to <f>yes</f>). 
+In such a case, the output delay is given WITHOUT taking into account the output connector's capacitance.</p>
+</section>
+
+
+
+</section>
+
+<section niv='2'><title>Cell Library</title>
+
+<p>Here is given an example Tcl script performing the timing abstraction of a list of 
+standard cells, into a single <f>.lib</f> file:</p>
+
+<code>
+<cl>avt_config tasBefig yes</cl>
+<cl>avt_config tmaFunctionalityMode w</cl>
+<cl> </cl>
+<cl>avt_LoadFile ./bsim3_018.tech spice</cl>
+<cl> </cl>
+<cl>foreach cell { ao2o22 ff2 inv mux2 na2 } {</cl>
+<cl>    avt_LoadFile $cell.spi spice</cl>
+<cl> </cl>
+<cl>    set fig [hitas $cell]</cl>
+<cl>    set beh_fig NULL</cl>
+<cl>    set abs_fig [tma_abstract $fig $beh_fig]</cl>
+<cl> </cl>
+<cl>    lappend fig_list $abs_fig</cl>
+<cl>    lappend beh_list $beh_fig</cl>
+<cl>}</cl>
+<cl> </cl>
+<cl>lib_drivefile $fig_list $beh_list "stdcells.lib" max</cl>
+</code>
+</section>
+
+
+</section></chapter>

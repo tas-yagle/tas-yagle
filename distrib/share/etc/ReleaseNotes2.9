@@ -1,0 +1,438 @@
+###############################################################################
+# AvtTools version 2.9p5 Release Notes
+# Copyright (c) 1998-2006, AVERTEC All Rights Reserved
+# October 2nd, 2006
+#
+###############################################################################
+
+# 2 - Bug fixes
+  - Bug fix in computation of active and effective dimensions of transistors
+  - Bug fix with low VT: transistors's current not properly computed
+  - Tuning of convergence conditions for very low currents
+
+###############################################################################
+# AvtTools version 2.9p4 Release Notes
+# Copyright (c) 1998-2006, AVERTEC All Rights Reserved
+# September 18th, 2006
+#
+###############################################################################
+
+# 1 - New functionalities
+  - path margin addition (inf_DefinePathDelayMargin) now calculates the margin
+    individually for each path instead of just using the critical path for
+    each latch
+  - line editing, history and command completion in avt_shell
+  - clock path details are now given in the connector to latch report as in
+    the slack report
+  - specification of HZ false paths (used in automatic false path detection)
+  - new setting "avtErrorPolicy", default is "lenient" but if set to "strict"
+    then any error will cause abort
+  - possibility to use full regular expressions as wildcards in INF/SDC
+    settings by preceding the expression with '%'
+  - new API function "ttv_SetTimingLineDelay" to force the delay value of a
+    timing arc
+  
+
+# 2 - Bug fixes
+  - clock path details given in slack report when clock is a connector
+  - separation of switching windows on the output of latches with
+    multiple clocks (removes false pessimism in this case)
+  - automatic search of real critic path if real critic path is marked as
+    a false path
+  - correlated clock skew compensation is now only applied on hold checks
+  - corrected a spice parser issue whereby recursive subcircuit definition
+    caused a fatal error
+  - suppression of unwanted constraint arcs in .LIB in pre-layout case 
+
+# 3 - Configuration changes
+  - the setting "tasMemoryCharacterisation = no" now no longer disables the
+    intrinsic latch access timing arc
+  
+
+
+###############################################################################
+# AvtTools version 2.9p3 Release Notes
+# Copyright (c) 1998-2006, AVERTEC All Rights Reserved
+# August 21st, 2006
+#
+###############################################################################
+
+# 2 - Bug fixes
+  - clock skew correlation not computed
+  - fixed XTAS possible crash during STA detail result display
+
+###############################################################################
+# AvtTools version 2.9p2 Release Notes
+# Copyright (c) 1998-2006, AVERTEC All Rights Reserved
+# August 8th, 2006
+#
+###############################################################################
+
+# 1 - New functionalities
+  - optional display of internal margins in slack and connector_to_latch report
+
+# 2 - Bug fixes
+  - incorrect rounding in path margin calculation
+  - STA propagated delays incorrectly displayed as crosstalk modifed
+  - difference between slack report summary and detail due to speed optimisation
+    in release 2.9
+  - Intrinsic access value modified by STA so causing summary/detail
+    differences in slack report
+  - inversion of RC and GATE line types when tasMemoryCharacterization off
+  - incomplete driving of parallel transistors in CNS/CNV files
+  - non-optimal speed for large spicedeck generation
+  - incorrectly very long names for internal nodes
+  - warnings due to incoherent RC networks in a generated SPEF file
+  - Node 0 not connected to Vss when used in instantiation
+  - excessive pessimism in hold margin calculation for precharge nodes
+  - stbEnableCommandCheck did not affect precharge verification
+  - corrected fatal error when doing STA on precharge circuits without clock
+  - false path specification now works with both node and net names
+  - phase inversion of command waveforms in graphical display
+  - corrected fatal error in partitioning after dynamic depth modfication
+  - nodes stuck at One or Zero can no longer be reported as loops
+
+###############################################################################
+# AvtTools version 2.9p1 Release Notes
+# Copyright (c) 1998-2006, AVERTEC All Rights Reserved
+# July 31st, 2006
+#
+###############################################################################
+
+# 2 - Bug fixes
+  - fixed bug in ttv_GetTimingSignalProperty
+  - fixed bug in spicedeck when netlist contains parallel transistors
+
+###############################################################################
+# AvtTools version 2.9 Release Notes
+# Copyright (c) 1998-2006, AVERTEC All Rights Reserved
+# June 27th, 2006
+#
+###############################################################################
+
+
+# 1 - New functionalities
+  - Slack report detail modified for easier slack computation understanding
+  - new variable stbEnableCommandCheck added
+  - new variable stbHelpForSetup added
+  - Tcl Function ttv_RecomputeDelays
+  - variable stbCtkReportFile is now set to no by default
+  - INF and avttools.conf real logging (memory status and not dump of input files 
+    as previously done)
+  - When driving INF file, extension '.inf' will no more be automatically added to filename 
+  - STB now uses the message log mechanism
+  - Manual recognition of latches. Done by INF markings inf_MarkSignal and inf_MarkTransistor.  	
+  - Syntax for Spice Diodes no longer requires AREA and PJ keywords	
+  - Error log mechanism is used for SPEF error messages	
+  - Correlated skew analysis	
+  - STB can now report the good reference clock	
+  - Tcl Function ttv_CharacPaths (requires TMA token)
+  - Tcl Function ttv_DetectFalsePath
+  - variable tasOutputCharge no longer supported. Replaced by SDC set_load command 
+  - variable simOutCapaValue no longer supported. Replaced by SDC set_load command 
+  
+# 2 - Bug fixes
+  - inf_Drive crashed when driving MUTEX constraints
+  - HiTas crashed in particular case during 'extracting CMOS dual' step
+  - STB corrected for muticycle path
+  - STB corrected for data propagation when a command signal was also a latch data
+  - fixed bug in path margin report file 
+  - fixed bug in ttv_GetTimingDetailProperty
+  - fixed a minor bug when rcxAweMatrix=always
+  - fixed bug in particular case of multivoltage context
+  - Xtas failed to report parallel paths for all the paths with '*' as start 
+    node with 'sig by sig'	
+  - No 'ERROR FROM' with setup errors: multicyclepath directive was removing 
+    'ERROR FROM' but not setup error itself 	
+  - Xtas crashed when displaying precharge stability	
+  - [rcn warning 000] internal error 7 spice deck extraction
+  - DTX crash when inf_DefineDLatch on outputs together with yagleMarkTristateMemory	
+  - Flat analysis of blocks with instances and transistors crashed when using 
+    black boxes for the instances
+  - Axis values appear twice in .lib file if there inf_DefineSlopeRange was followed 
+    by inf_Drive and 'avtReadInformationFile = $.inf'
+  - Correction of optimism in computation of intrinsic setup and hold values
+  - File bigger than 2Go could not be opened	
+  - SPEF parser did not support numbers as identifier in the namemap section	
+  - SPEF parser showed errors when reading a file generated with spice2spef converter	
+  - Xtas did not display negative hold/setup margin	
+  - Variables tasDelaySwitch, tasTreatDifferentialLatches and tasSpiceSimulation 
+    no longer supported
+  - LIB parser crashed when missing slew thresholds
+  - LIB: better handling of rise and fall capacitance range 
+  
+AvtTools version 2.9 integrates all bug fixes and new functionalities introduced 
+in releases 2.8p1 to 2.8p4.
+
+###############################################################################
+# AvtTools version 2.8p4 Release Notes
+# Copyright (c) 1998-2006, AVERTEC All Rights Reserved
+# April 26th, 2006
+#
+###############################################################################
+
+# 1 - New functionalities
+  - Enhanced transfer gate model using NMOS and PMOS contributions taking into
+    account the relative opening time difference due to inverter.
+    (activated by setting avtNewSwitchModel to yes and tasDelaySwitch to no)
+  - Full handling of M parameter for transistors by duplication
+  - New API inf_ExportSections for selective driving of INF sections
+  - New STB APIs for better handling of stability analysis results
+  - Setup/Hold driven in STO file to accelerate loading of switching windows
+  - New logging config to activate and deactivate logging of INF and avttools
+    configuration files
+  - Possibility to create internal clocks on latch commands
+
+# 2 - Bug fixes
+  - NF parameter interpreted correctly for hspice in transistor model size
+    selection 
+  - Setting input transition with wildcards now works correctly
+  - Setting output load on pins with RC parasitics now works correctly
+  - Correction for handling of resistance names for DSPF matching
+  - separate groups of equivalent clocks were all considered equivalent
+
+###############################################################################
+# AvtTools version 2.8p3 Release Notes
+# Copyright (c) 1998-2006, AVERTEC All Rights Reserved
+# April 10th, 2006
+#
+###############################################################################
+
+# 1 - New functionalities
+  - Tcl function avt_DriveSignalInfo for RC supply network dumping
+  - Detection of Level-Hold structures - controlled by yagDetectLevelHold
+  - Ignored device names now reported in log file ("stat:3" in avtLogEnable)
+  - INF directive 'Connector Directions' section affects spice netlist and 
+    disassembly (yagUseConnectorDirection = yes)
+  - avtSpiDriveDefaultUnits now also controls transistor parameters for 
+    printing out
+  - No automatic clock detection in TMA default mode
+  - simTechnologyName can now be set with multiple file names separated with 
+    commas.
+  - ttv_DisplayConnectorToLatchMargin has been optimized to handle large UTD
+  - Mode 'split' has been added to ttv_DisplayConnectorToLatchMargin: displays 
+    the latch margin connector per connector.
+
+# 2 - Bug fixes
+  - Optimization of crosstalk score analysis and reporting
+  - Correction of set_false_path 
+  - Correction of INF_DLATCH (no effect of mix with INF_PRECHARGE)	
+  - Improvement of latch automatic detection (some commands not marked)
+  - No more degraded levels for latches and bleeders
+  - Diodes are now reported in stat file
+  - Possible crash in path detail search when using set_load	
+  - Better handling of memsym latches (path through feedback loop)
+  - Crash after parsing .sto file in Xtas
+  - Correction of brutal exit when driving input connector info in .sto file 
+  - Command waveforms were inverted in Xtas
+  - ttv_ProbeDelay did not handle RC nodes and did not work with some wildcards	
+  - Could not drive ttx figure into a file with different filename
+  - 'Equivalent clock groups' not printed in .sto file	
+  - Corrections in 'equivalent clock groups' behavior
+  - Incorrect RC network after dspf/spice annotation		
+
+###############################################################################
+# AvtTools version 2.8p2 Release Notes
+# Copyright (c) 1998-2006, AVERTEC All Rights Reserved
+# February 24th, 2006
+#
+###############################################################################
+
+# 1 - New functionalities
+  - Spice parser now supports function pPar
+  - New Tcl API 'avt_DisplayNetlistHierarchy'
+  - Verilog + SDF loading in Tcl script	
+  - support of SDC command set_load	
+  - Mechanism to deactivate the reporting and logging of specific warning 
+    messages.
+
+# 2 - Major functionality Changes
+  - binaries ttvdiff, ttvren, genapi, wrap, cnsdiff, genelp, gnstest, x2v
+    are no longer distributed
+  - genelp is no longer distributed nor documentated	
+  - distribution is now statically linked
+
+# 3 - Enhancements
+  - Accuracy improvement for transmission gates 
+    (beta version: setenv SWITCHMODEL beta)
+  - Wild cards support for blackbox names
+    (BLACKBOX file and Tcl API avt_SetBlackboxes).
+  - tasIgnoreBlackbox (still supported) can be replaced by 
+    tasBlackboxRequiresTimings	
+  - configuration variable sdcUnits has been introduced instead of 
+    stbForeignTimeUnit to handle time and capacitance values passed to SDC 
+    functions.
+
+# 4 - Bug fixes
+  - segmentation fault when using inf_DefineNotLatch
+  - False warning "TAS-001 slope computing error" suppresed
+  - False warning "[Error #1][mbk_matrix] singular matrix given" suppressed
+  - For RC lines terminated by bleeders, RC delay was underestimated since 
+    bleeder incorrecctly considered as a line driver. 
+  - dspf parser handles signal names containing non alphanum characters 
+  - segmentation fault in stb_DisplaySlackReport if NULL stbfig
+  - Mismatching stability results when using avtPrecisionLevel=1 with loaded 
+    or generated UTD
+  - Path margins were not taken into account within slack report
+  - ttv_ProbeDelay supports wildcards correctly
+  - In Crosstalk "Observable Aggression" mode, slopes where not taken into 
+    account when computing switching windows for gates not followed by an 
+    RC network.
+  - Crosstalk Over-detection of aggressors leading to false errors	
+  - Brutal exit on startup of Xyagle. The version section in the ".xyagle.cfg"
+    file in the user home directory is the source of the bug.
+    Workaroud for previous releases: remove the file.
+
+###############################################################################
+# AvtTools version 2.8p1 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# January 13th, 2006
+#
+###############################################################################
+
+# 1 - New functionalities
+
+# 2 - Major functionality Changes
+  - The interface of the following Tcl functions is changed (now takes a 
+    stability figure as argument):
+    * stb_DisplaySlackReport
+    * stb_DisplaySignalStabilityReport
+    * stb_GetSignalStabilityPaths
+  - stb_DisplayErroneousSignals is no longer supported, please use
+    stb_DisplayErrorList
+  - The property TH_DELAY of object TimingFigure is no longer supported
+  - stb_GetSignalSetup is obsolete, please use stb_GetSetupSlack
+  - stb_GetSignalHold is obsolete, please use stb_GetHoldSlack
+  - No more automatic rescale if weird values for transistor parameters 
+    w, l, pd, ps, ad, as
+  - Delay deviations are now given relatively to path delay. To get local 
+    delay deviations use ttv_SetupReport
+
+# 3 - Enhancemen
+  - Better NRS/NRD parameters handling
+  - Better handling of inverters' parallel branches in post-layout.
+  - Better handling of conflictual capacitances (accuracy improvement)
+  - DSPF now supported with arbitrary ordering of *|I *|S *|P 
+
+# 4 - Bug fix
+  - .scale is taken into account even if occurring after netlist inclusion
+  - redundant access arcs in complex latches
+  - crosstalk accuracy options handled in TCL
+  - better orientation of transfer gates driving outputs
+
+###############################################################################
+# AvtTools version 2.8 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# December 5th, 2005
+#
+###############################################################################
+# Overview:
+This document outlines the changes made since the previous versions. 
+For detailed information about using a particular product, please refer
+to the online Help (http://www.avertec.com or e-mail:support@avertec.com)
+and the documentation.
+
+AvtTools is available for the following OS: 
+  - Solaris : 2.6, 2.8, 2.8 64bit, 2.9, and 2.9 64bit
+  - Linux   : RedHat 8.0, RedHat Enterprise Linux 3.0 
+              RedHat Enterprise Linux 3.0 64bit
+  
+This document describes (1) New functionalities and enhancements, 
+(2) Major functionality Changes, (3) Bug fixes, (4) Linux configuration.
+
+# 1 - New functionalities and enhancements
+
+  - Linux 64bit support 
+  - Support of NF and GEOMOD parameters
+  - .SCALE support for STI stress parameters
+  - Setup/Hold spice deck generation
+  - RISING_SLOPE and FALLING_SLOPE properties added to TimingSignal object.
+  - Improved Vcard handling
+  - New STA documentation
+  - Crosstalk models for long RC networks
+  - Improved error message display and documentation
+  - Better memory efficiency in SpiceDeck generation
+  - Better handling of latch command in feedback loop 
+  - Displaying of data and clock details in slack report
+  - Spice parser optimized to treat subcircuits with thousands of connectors
+  - Better consideration of latches intrinsic setup/hold for slack calculation 
+  - INF file is now checked during the execution.
+  - Improved constraint propagation and reporting
+  - Variables
+    * All configuration variables beginning with 'yagle' now begin with 'yag'
+    * 'avtPrecisionLevel' allows a more accurate slope propagation 
+    * 'yagAutomaticFlipFlopDetection' detects master and slave latches
+    * 'avtLogFile' 
+    * 'avtLogEnable' controls a re-built and unified log file mechanism
+    * 'avtVectorize' now controls vectors originating from all formats
+    * 'tasSilentMode' now available in Tcl
+  - Tcl commands
+    * Commands for crosstalk information browsing
+    * 'ttv_DetectFalseClockPath'
+    * 'ttv_DisplayClockPathReport' 
+    * SDC command 'set_input_transition' replaces 'inf_DefineSlope'
+    * 'tlf_DriveFile'
+    * 'stb_GetSignalHold'
+    * 'stb_GetSignalSetup'
+    * 'stb_DisplayConnectorToLatchError'
+    * 'stb_DisplaySlackReport'
+    * 'ttv_SetupReport'
+    * 'ttv_RemoveDuplicatedPath'
+    * 'inf_DefineSlopeRange'
+    * 'inf_DefineCapacitanceRange'
+    * 'inf_DefineNotLatch'
+    * 'inf_DefineConnectorSwing'
+    * 'ttv_DisplayConnectorToLatchMargin'
+    * 'avt_SetBlackBoxes'
+  
+# 2 - Major functionality Changes
+
+  - Files  
+    * New .agr file for crosstalk aggressions report
+    * .ctk is not generated in default mode
+    * .str now shows the transparency time of latches.
+    * Reading of .sto (stability output) files in Xtas GUI
+  - Variables
+    * 'tasModelsForDelay' is now defaulted to 'scm_cpl'
+    * 'xtasTextualDisplay' now defaulted to yes.
+    * 'avtStructuralVerilogVectors' controls escaped vectors in Verilog
+    * 'avtDoNotDevectNames' becomes 'avtVectorize'
+    * 'avtSpiNotMergeConnector' becomes 'avtSpiMergeConnector'
+    * avtSpiParseFirstLine now controls included files
+    * Obsolete 'avtReadInformationFile' (use avt_LoadFile)
+    * Obsolete 'avtSpiNoRCCapaToGnd' 
+    * Obsolete 'avtCharacTraceLevel'
+    * Obsolete 'yagleTraceLevel'
+    * Obsolete 'MBK_TRACE_FILE'
+    * Obsolete 'MBKLOGFILE'
+    * Obsolete 'MBK_SPI_DISPLAY_IGNORED'
+    * Obsolete 'avtCharacAllowRangeMargin'
+    * Obsolete 'avtCharacRangeMargin'
+    * Obsolete 'avtCharacForEachSize'
+    * Obsolete 'avtElpDelVtMargin'
+    * Obsolete 'avtElpMuluMargin' 
+    * Obsolete 'avtElpSaMargin'
+    * Obsolete 'avtElpSbMargin'
+    * Obsolete 'avtElpSdMargin'
+  - Tcl commands
+    * 'set_false_path' now includes -hold and -setup options
+    * 'ttv_DisplayPathDetailHideColumn': hiding the dt.linetype column
+     activates the merge of RC and gate delays in reports
+    * Obsolete 'stb_DisplayConnectorToLatchError' 
+    * Obsolete 'ttv_SimulatePathDetail'
+    * Obsolete 'inf_DefineNotDirout'
+    * Obsolete 'sdc2stb' 
+  
+# 3 - Bug fixes
+  - avtSpiKeepNames=all now works with shorted resistances
+  - INF file can now exceed 32kb when logging it 
+
+# 4 - Linux configuration
+AvtTools is compliant with the following RedHat Linux distributions:
+  - RedHat Linux 8.0 with kernel 2.4.18-14 or above (RedHat 8.0-8)
+  - RedHat Enterprise Linux 3.0 with kernel 2.4.21-4 or above (RedHat EL 3WS-1)
+  - RedHat Enterprise Linux 3.0 64bit with kernel 2.4.21-32 or above (RedHat EL 3WS-13.5.1)
+  
+Get your kernel version (uname -r) and your RedHat release number
+(rpm -qa | grep release) in order to check the compatibility of your
+system with AVERTEC's Linux distributions.

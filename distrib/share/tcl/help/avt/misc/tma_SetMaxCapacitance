@@ -1,0 +1,16 @@
+
+       void  tma_SetMaxCapacitance(TimingFigure  *bbox,  char *name, CapaValue
+       value);
+
+DDEESSCCRRIIPPTTIIOONN
+       Sets the max capacitance to report in .lib file.
+
+AARRGGUUMMEENNTTSS
+       bbbbooxx          Blackbox timing figure.
+
+       nnaammee          Name of the connector (can be a regular expression).
+
+       vvaalluuee         Capacitance value
+
+       EEXXAAMMPPLLEE       _s_e_t _s_l_o_p_e_a_x_i_s _[_t_m_a___G_e_t_C_o_n_n_e_c_t_o_r_A_x_i_s _$_f_i_g _s_l_o_p_e _c_k_]
+

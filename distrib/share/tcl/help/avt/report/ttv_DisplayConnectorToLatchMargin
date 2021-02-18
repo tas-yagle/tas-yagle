@@ -1,0 +1,30 @@
+
+       void  ttv_DisplayConnectorToLatchMargin(FILE *f, TimingFigure *tf, char
+       *inputconnector, char *mode);
+
+DDEESSCCRRIIPPTTIIOONN
+       Prints a report displaying setup and hold constraints on latch  points,
+       originating from input connectors (both from rising and falling transi-
+       tions).
+
+AARRGGUUMMEENNTTSS
+       ff             File where to save the report, _s_t_d_o_u_t for standard output
+
+       ttff            Pointer on the timing figure to consider
+
+       iinnppuuttccoonnnneeccttoorr
+                     Names of the connectors to consider, can be wildcards.
+
+       mmooddee          Controls  the amount of information displayed. Valid val-
+                     ues are _s_u_m_m_a_r_y or _a_l_l (display path  detail)  associated
+                     with _s_p_l_i_t. Using _s_p_l_i_t displays the report connector one
+                     connector at a time. This option  can  also  be  used  to
+                     reduce  memory  usage on huge UTDs. _m_a_r_g_i_n_s will show the
+                     computed contsraints for each path in the summary.  _p_a_t_h_-
+                     _c_o_m_p  permits will display the spice total error as total
+                     spice delay versus total tas  delay  +  path  margin.  By
+                     default, the path margin is not included.
+
+       EEXXAAMMPPLLEE       _t_t_v___D_i_s_p_l_a_y_C_o_n_n_e_c_t_o_r_T_o_L_a_t_c_h_M_a_r_g_i_n  _$_o_f_i_l_e  _$_f_i_g _"_*_" _"_s_u_m_-
+                     _m_a_r_y _s_p_l_i_t_"
+

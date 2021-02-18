@@ -1,0 +1,19 @@
+
+       void ttv_SetupReport(char *conf);
+
+DDEESSCCRRIIPPTTIIOONN
+       Changes units and format used in path reports. Default units are _n_s and
+       _p_f. Formats affect the way most of the  values  are  displayed  in  the
+       report  columns.  By  default, values are justified right, node and net
+       names are displayed together, and delay deviations are given relatively
+       to the path delay.
+
+AARRGGUUMMEENNTTSS
+       ccoonnff          List  of  names separated by spaces. Valid units are: _n_s,
+                     _p_s, _p_f, _f_f and _#digits (which defines the  precision  for
+                     delay  values, _# ranging from 1 to 9). Valid formats are:
+                     _J_u_s_t_i_f_y_R_i_g_h_t, _J_u_s_t_i_f_y_L_e_f_t, _O_n_l_y_N_e_t_N_a_m_e, _N_o_d_e_N_a_m_e, _H_i_d_e_R_C,
+                     _S_h_o_w_R_C,  _L_o_c_a_l_E_r_r_o_r (which gives local delay deviations),
+                     _P_a_t_h_C_o_m_p   (compares   simulated   delay   versus   hitas
+                     delay+path margin).
+

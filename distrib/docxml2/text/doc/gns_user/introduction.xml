@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<intro_title>About this Document</intro_title>
+<intro>This document explains:<list>
+<item>The input formats supported</item>
+<item>How to perform the hierarchical recognition</item>
+<item>User constraints</item>
+<item>How to use &tool; </item>
+</list></intro>
+

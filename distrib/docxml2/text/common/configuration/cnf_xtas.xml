@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+<row type='split'><article><index>xtasTextualDisplay</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, XTas display mode is textual (easier to read)</def></row>
+<row><article><f>no</f></article><def>XTas display mode is graphical</def></row>
+</glossary>
+</def></row>
+
+
+</glossary>
+

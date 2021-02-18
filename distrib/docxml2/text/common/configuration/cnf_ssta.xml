@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<glossary>
+<row type='split'><article><index>avtSSTACacheSize</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;[unit]</f></article><def>Size of the memory allowed to read a set of
+SSTA stored files. The default value is 500Mb.</def></row>
+</glossary>
+</def></row>
+</glossary>

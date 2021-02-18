@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Addaccu</title>
+<p>This example describes a global timing characterization methodology. It is based upon a simple 4-bit adder-accumulator.</p>
+<p>This example takes place in the directory <f>addaccu/</f>.</p>
+<p>Timing characterization provides the timing properties (or constraints) of a macroblock, generally in the Liberty format. The purpose of the timing characterization is to provide other tools in the design flow - physical design, chip-level STA - with sufficient timing information about the macroblock, 
+so that those tools can perform their task correcly. Typically, the information given in the Liberty file are:</p>
+<list>
+<item>Setup and Hold Constraints (Sequential): the maximum and minimum arrival times of data signals on input pins relative to clock signals (on clock pins)</item>   
+<item>Access Times (Sequential): the maximum and minimum departure times of data signals on output pins relative to clock signals (on clock pins)</item>   
+<item>Propagation Times (Combinational): the maximum and minimum path delays between inout and output pins</item>   
+</list>
+
+<p>We describe here a methodology for secure timing characterization of macroblocks and cells. The following steps are involved:</p>   
+<list>
+<item>Construction of the macroblock timing database</item>
+<item>Identification of the paths involved in the timing constraints</item>
+<item>Validation of the paths and accuracy check by SPICE simulation</item>
+<item>Timing characterization for different slopes and loads</item>
+<item>Timing characterization by SPICE simulation for different slopes and loads</item>
+</list>
+
+<section niv='2'><title>Design Description</title>
+<p>The addaccu chip consists of a four-bit adder, a four-bit register, and a 2 to 1 four-bit multiplexer. </p>
+<imgsize namehtml="yagtraining_addaccudesign.gif" namepdf="yagtraining_addaccudesign.gif" wpdf="273pt"/>
+<p>The circuit performs an addition between either the <f>b[3:0]</f> and <f>a[3:0]</f> inputs when sel is set to 0, or between <f>b[3:0]</f> and the content of the four-bit register when sel is set to 1. The content of the register is overwritten by the values of the outputs <f>s[3:0]</f> on each falling edge of the clock, ck..</p>
+</section>
+<section niv='2'><title>Construction of the Timing Database</title>
+<p>The temperature and supplies specifications take place in the <f>addaccu_schem.spi</f> file:</p>
+<code>
+<cl>.TEMP 125</cl>
+<cl>.GLOBAL vdd vss</cl>
+<cl>Vsupply vdd vss DC 2.0</cl>
+<cl>Vground vss 0 DC 0</cl>
+</code>
+<p>As the <f>addaccu_schem.spi</f> subcircuit is not instantiated, the <f>vdd</f> and <f>vss</f> signals 
+appear in the <f>.GLOBAL</f> statement.</p>
+
+<p>In the present example, the <f>.INCLUDE</f> statement is used for technology file integration:</p>
+<code>.INCLUDE ../techno/bsim4_dummy.ng</code>
+<p>The additional configuration required for the database construction takes place in the 
+<f>db.tcl</f> script. The script also launches the commands that effectively generate that database. </p>
+<p>Configuration variables are set in the Tcl script by the mean of the <f>avt_config</f> function.</p>
+<glossary>
+<row type='split'><article><f>avt_config tasGenerateConeFile yes</f></article>
+<def>tells the tool to dump on disk the .cns file, which contains the partitions (the cones) created by the partitioning algorithm.</def></row>
+<row type='split'><article><f>avt_config avtVerboseConeFile yes</f></article>
+<def>tells the tool to dump on disk the .cnv file, which is a more readable version.</def></row>
+<row type='split'><article><f>avt_config simVthLow 0.2</f></article>
+<def>Low threshold of slope definition</def></row>
+<row type='split'><article><f>avt_config simVthHigh 0.8</f></article>
+<def>High threshold of slope definition</def></row>
+<row type='split'><article><f>avt_config simToolModel ngspice</f></article>
+<def>tells the tool the technology file type (which simulator it is designed for)</def></row>
+</glossary>
+
+<p>The construction itself is done through the command <f>hitas</f>:</p>
+<code>
+<cl>avt_LoadFile addaccu_schem.spi</cl>
+<cl>set fig [hitas addaccu] </cl>
+</code>
+</section>
+
+<section niv='2'><title>Timing Paths Identification</title>
+<p>The <f>paths.tcl</f> script reports the timing paths involved in the constraints described above (setup, hold, access and combinational paths).</p>
+
+<p>Let's have a look at the following code sequence in the script:</p>
+<code>
+<cl># Setup / Hold paths</cl>
+<cl>set file [fopen $figname.setuphold w]</cl>
+<cl>ttv_DisplayConnectorToLatchMargin $file $fig * "split all"</cl>
+<cl>fclose $file</cl>
+</code>
+<p>The function <f>ttv_DisplayConnectorToLatchMargin</f> displays the setup and hold constraints associated with the input pins, related to the clock signal
+created with the <f>create_clock</f> statement (note that the frequency information is irrelevant here, as setup and hold constraints do not depend
+upon frequency - the syntax just requires it). Precisely, for each input pin, the <f>ttv_DisplayConnectorToLatchMargin</f> function displays all possible 
+setup and hold values, depending on the latch involved. All information about the data paths, clock paths and latch involved is reported in the <f>addaccu.setuphold</f> file.</p>
+<p>Now let's look at the maximum access paths detection. The related code sequence is:</p>
+<code>
+<cl># Max access paths</cl>
+<cl>set file [fopen $figname.accessmax w]</cl>
+<cl>set pathlist [ttv_GetPaths $fig * s\[*\] ?? 0 critic access max]</cl>
+<cl>ttv_DisplayPathListDetail $file $pathlist</cl>
+<cl>fclose $file</cl>
+</code>
+<p>The <f>ttv_GetPaths</f> function looks for all (argument <f>0</f>) the access paths ending on signals s[0:3], using maximum path values for data and clock. The whole detail 
+of those paths is reported in the <f>addaccu.accessmax</f>. </p>
+
+<p>The next code sequence deals with minimum access paths, and is very similar to the one described above. The <f>ttv_GetPaths</f> function 
+looks here for all the access paths ending on signals s[0:3], using minimum path values for data and clock. The whole detail of those paths is reported in the <f>addaccu.accessmin</f> file.</p>
+
+<p>The final code sequence deals with combinational paths between input and output pins:</p>
+<code>
+<cl># Combinatorial paths</cl>
+<cl>set file [fopen $figname.comb w]</cl>
+<cl>set pathlist [ttv_GetPaths $fig a\[*\] s\[*\] ?? 0 critic path max]</cl>
+<cl>ttv_DisplayPathListDetail $file $pathlist</cl>
+<cl>set pathlist [ttv_GetPaths $fig b\[*\] s\[*\] ?? 0 critic path max]</cl>
+<cl>ttv_DisplayPathListDetail $file $pathlist</cl>
+<cl>set pathlist [ttv_GetPaths $fig sel s\[*\] ?? 0 critic path max]</cl>
+<cl>ttv_DisplayPathListDetail $file $pathlist</cl>
+<cl>set pathlist [ttv_GetPaths $fig ck s\[*\] ?? 0 critic path max]</cl>
+<cl>ttv_DisplayPathListDetail $file $pathlist</cl>
+<cl>fclose $file</cl>
+</code>
+
+<p>The whole detail of those paths is reported in the <f>addaccu.comb</f> file.</p>
+<p>All these paths will be the ones which will be used to characterize the design, it is therefore necessary to carefully check that there are relevant.</p>
+
+</section>
+
+<section niv='2'><title>Timing Paths Validation by SPICE simulation</title>
+<p>The <f>paths_simu.tcl</f> script performs the same task as the <f>paths.tcl</f> script, and re-simulates the paths with NG-SPICE. 
+NG-SPICE is a freeware SPICE simulator (Berkeley license). It is provided with this tutorial. Binaries are in <f>../bin/Linux/</f> and <f>../bin/Solaris/</f>.
+For the sake of understanding, the set of paths - reported and simulated - has been reduced to the ones originating from some inputs only. 
+&tool; actually generates a SPICE deck with all the stimuli allowing for signal propagation. It automatically invokes the simulator and retrieve the results, which are integrated in the reports. It just needs the following configuration:</p>
+<glossary>
+<row type='split'><article><f>avt_config avtSpiceString "./bin/Solaris/ngspice -b $"</f></article>
+<def>The command line which will be invoked by &tool;</def></row>
+<row type='split'><article><f>avt_config SimToolModel ngspice</f></article>
+<def>Tells &tool; the SPICE format to use for the SPICE deck</def></row>
+<row type='split'><article><f>avt_config simTechnologyName ../techno/bsim4_dummy.ng</f></article>
+<def>The technology file to include in the SPICE deck (<f>.INCLUDE</f>)</def></row>
+<row type='split'><article><f>avt_config avtSpiceOutFile $.log</f></article>
+<def>Tells &tool; the suffix of the file containing the simulation results, required unless the simulator fixes this.</def></row>
+<row type='split'><article><f>ttv_DisplayActivateSimulation yes</f></article>
+<def>The flag for activating the re-simulation of reported paths</def></row>
+</glossary>
+
+<p>Just invoke <f>paths_simu.tcl</f> to run the simulations. As before, the results are displayed in the files <f>addaccu.comb</f>, <f>addaccu.setuphold</f>, <f>addaccu.accessmin</f> and <f>addaccu.accessmax</f>. An additionnal column gives the NG-SPICE values.</p>
+<p>The configuration is given for ngspice since the simulator is provided however another simulator can be used, for example the configuration for hspice would be something like:</p>
+<glossary>
+<row type='split'><article><f>avt_config avtSpiceString "hspice  $"</f></article>
+<def>The command line which will be invoked by &tool;</def></row>
+<row type='split'><article><f>avt_config SimToolModel hspice</f></article>
+<def>Tells &tool; the SPICE format to use for the SPICE deck</def></row>
+<row type='split'><article><f>avt_config simTechnologyName ../techno/bsim4_dummy.hsp</f></article>
+<def>The technology file to include in the SPICE deck (<f>.INCLUDE</f>)</def></row>
+<row type='split'><article><f>ttv_DisplayActivateSimulation yes</f></article>
+<def>The flag for activating the re-simulation of reported paths</def></row>
+</glossary>
+</section>
+
+<section niv='2'><title>Timing Characterization (.lib)</title>
+<p>The timing abstraction configuration takes place in the <f>charac.tcl</f> script. Let's review the configuration needed:</p>
+<glossary>
+<row type='split'><article><f>inf_SetFigureName addaccu</f></article>
+<def>tells the tool to apply the SDC constraints to the design addaccu.  </def></row>
+<row type='split'><article><f>create_clock -period 3000 -waveform {0 1500} ck</f></article>
+<def>Creates a clock on signal <f>ck</f>. Period is not relevant, but required by the SDC syntax</def></row>
+<row type='split'><article><f>inf_DefineSlopeRange default {25ps 50ps 100ps 200ps 400ps} custom</f></article>
+<def>The set of slopes to be applied on input pins</def></row>
+<row type='split'><article><f>inf_DefineCapacitanceRange default {8fF 16fF 32fF 64fF} custom</f></article>
+<def>The set of loads to be applied on output pins</def></row>
+</glossary>
+<p>The timing abstraction is done through the command <f>tmabs</f>:</p>
+<code>
+<cl>set abs [tmabs $fig NULL * * * -verbose -detailfile $figname.clog]</cl>
+<cl>lib_drivefile [list $abs] NULL addaccu.lib max</cl>
+</code>
+<p>A file <f>addaccu.clog</f> is issued, which contains all the paths used for characterization.</p>
+
+</section>
+
+<section niv='2'><title>Timing Characterization (.lib) by SPICE simulation</title>
+<p>The referent script is <f>charac_simu.tcl</f>. The simulation configuration is the same as in the <f>paths_simu.tcl</f> script, except for the two following lines:</p>
+<code>
+<cl># Simulation speed-up</cl>
+<cl>avt_config simOutLoad dynamic</cl>
+<cl>avt_config avtTechnologyName ../techno/bsim4_dummy.ng</cl>
+</code>
+<p>It just tells &tool; to transform out-of-path transistors into equivalent capacitances. </p>
+<p>The <f>charac_simu.tcl</f> script simulates all the paths used for characterization and issues the <f>addaccu_golden.lib</f> file. It uses a cache 
+mechanism in order to avoid resimulating several times the same path (clock paths for instance).</p>
+
+</section>
+</section>
+
+</chapter>
+

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Lab8. Sub-Circuit Blackboxing</title>
+
+<section niv='2'><title>Objective</title>
+<p>&tool; is designed to compute propagation delays in digital designs. The advantage of this
+restrictive target is to enable very fast computing times. The drawback is that non-digital
+block characterization is not directly handled by &tool; and should be supplied to 3rd-party analog 
+simulators. However, &tool; provides various ways to link with external characterizations.</p>
+<p>First, the tool provides the means to choose between integrating a pre-characterization (such as 
+a .lib or .dtx file) and integrating an on-the-fly characterization (by piloting an analog
+simulator).</p>
+<p>The pre-characterization strategy is easier to set-up, but has the drawback to provide 
+only one characterization for (potentially) several instances of an analog sub-circuit.
+The on-the-fly characterization is a little more difficult to set-up, but provides 
+environment-dependant (PVT, input slopes, output loads) characterizations, and therefore greater 
+accuracy.</p>
+<p>This lab presents an illustration of the pre-characterization strategy, i.e. the integration of
+a <f>.lib</f> file to replace an analog block.</p>
+</section> <!-- Objective -->
+
+<section niv='2'><title>Pre-Characterization</title>
+<p>In this section, we present how to create a DTX file within a Tcl script, and how to get timing values 
+from analog simulation results. We then present how to make a <f>.lib</f> file out of it, and how to integrate 
+this pre-characterization in the top-level timing database construction.</p> 
+
+<p>Associated files:</p>
+<glossary>
+<row><article><f>rs_clock_gen.tcl</f></article><def>Timing database construction script</def></row>
+<row><article><f>rs_clock_gen_sim.tcl</f></article><def>Timing database construction and simulator linking script</def></row>
+<row><article><f>cmd_rs_clock_gen.chi</f></article><def>Simulator output file</def></row>
+</glossary>
+
+<section niv='3'><title>Database Construction</title>
+<p>The API functions provided with the <f>avt_shell</f> Tcl interface enable the creation of custom timing 
+databases (DTX files). Using of those functions is illustrated in the <f>rs_clock_gen.tcl</f> script.
+The script generates a timing database for a NAND-RS-based non-overlapping clocks generator 
+(<f>rs_clock_gen</f> sub-circuit).</p>
+
+<p>The <f>avt_GetNetlist</f> function is used in order to retrieve the netlist the timing figure
+will be based on.</p>
+<p>The <f>avt_FlattenNetlist</f> function flattens the netlist to the transistor level. The purpose
+of the flattening is to enable the database creation function (<f>ttv_CreateTimingFigure</f>) to computing
+capacitances for input and output connectors: the function has an easier access to the transistors
+participating to the global connector capacitance. Note that the transistors models are necessary
+for computing gate and source/drain capacitances.</p>
+<p>The <f>ttv_CreateTimingFigure</f> function creates the timing database itself. The function takes
+as argument the netlist of the <f>rs_clock_gen</f> sub-circuit, and builds the interface of the new timing 
+database upon the interface of the 
+netlist. If the new timing database is intended to replace an analog sub-circuit, it 
+ensures interface consistency between the "hole" in the top-level netlist 
+and the newly created timing database. Note that the Vdd and Vss names must be specified if they appear on the
+interface.</p>
+
+<p>The <f>ttv_AddTiming</f> functions add timing arcs in the database.</p>
+<p>The <f>ttv_FinishTimingFigure</f> function updates the database.</p>
+<p>The <f>ttv_DriveTimingFigure</f> function prints the database on disk (DTX file).</p>
+
+<p>Launching the <f>rs_clock_gen.tcl</f> script will result in the creation of the <f>rs_clock_gen.dtx</f> 
+timing database.</p>
+
+</section> <!-- Database Construction -->
+
+<section niv='3'><title>Simulator Linking</title>
+<p>The <f>rs_clock_gen.tcl</f> script associates "hard" values to the delays and slopes given as 
+parameters of the <f>ttv_AddTiming</f> function (timing arc creation). It 
+is the responsibility of the user to associate pertinent values to the parameters of the 
+<f>ttv_AddTiming</f> function, by all the ways Tcl scripting provides.</p>
+<p>However, the <f>avt_shell</f> Tcl interface also provides means to retrieve the values from 
+analog simulations results. Provided functions cover:</p>
+<list>
+<item><p>Stimuli description and formatting:</p>
+<p><f>sim_AddInitLevel</f></p>
+<p><f>sim_AddInitLevel</f></p>
+<p><f>sim_AddWaveForm</f></p>
+</item>
+<item><p>Measure setting</p>
+<p><f>sim_AddSpiceMeasureDelay</f></p>
+<p><f>sim_AddSpiceMeasureSlope</f></p>
+</item>
+<item><p>Simulator call</p>
+<p><f>sim_RunSimulation</f></p>
+</item>
+<item><p>Result retrieving</p>
+<p><f>sim_GetSpiceMeasureDelay</f></p>
+<p><f>sim_GetSpiceMeasureSlope</f></p>
+</item>
+</list>
+
+<p>Configuring and using the simulator linking features is illustrated in the <f>rs_clock_gen_sim.tcl</f>
+script.</p>
+
+<p>Launching the <f>rs_clock_gen_sim.tcl</f> script will produce the following actions:</p>
+<list>
+<item>Creation of the set of sub-circuits to be simulated (<f>rs_clock_gen.spi</f>)</item> 
+<item>Creation of <f>cmd_rs_clock_gen.spi</f>, file to be provided as input to the simulator.
+This file contains the formatted stimuli and measure 
+directives, as well as an inclusion of <f>rs_clock_gen.spi</f>. The formatting of the measure directives
+is done through the <f>simToolModel</f> variable. This variable formats the SPICE deck accordingly to
+the simulator under usage.</item>
+<item>Launching of the simulator in a separate process according to the <f>$spice_string</f> variable.</item>
+<item>Waiting for the normal termination of the process (exit 1)</item>
+<item>Reading the results in the <f>cmd_rs_clock_gen.chi</f> simulator output file. 
+The output file suffix is specified by the <f>simToolModel</f> variable</item>
+<item>Creation of the timing database, and printing on disk of the <f>rs_clock_gen.dtx</f> file.</item>
+<item>Creation of the <f>rs_clock_gen.lib</f> file.</item>
+</list>
+
+</section> <!-- Simulator Linking -->
+
+<section niv='3'><title>Integration in a Hierarchical Netlist (Pre-Layout)</title>
+
+<glossary>
+<row><article><f>db.tcl</f></article><def>Timing database construction script, with integration of the pre-characterization.</def></row>
+</glossary>
+
+<p>The first step to perform when integrating the pre-characterized <f>.lib</f> file within a hierarchical 
+netlist is the blackboxing of the instances of the analog sub-circuits, in order to obtain 
+"analog holes" in the netlist. This is done with the <f>avt_SetBlackBoxes</f> function, taking as
+argument the list of the sub-circuits to blackbox.</p>
+
+<p>The default behavior of &tool; is not to try to fill the "holes". To tell the tool to fill the 
+holes with timing characterizations, the <f>tasIgnoreBlackbox</f> variable is set to <f>yes</f> in the 
+<f>db.tcl</f> script.</p>
+
+<p>The timing arcs for the instances <f>rs_clock_gen</f> are directly integrated in the new database.
+The database for <f>sample</f> is flat and does not contain instances of <f>rs_clock_gen</f>.</p>
+</section> <!-- Hierarchical Netlist Integration (Pre-Layout) -->
+
+</section> <!-- Analog Sub-circuit Characterization -->
+</section> <!-- Analog Sub-circuit Characterization -->
+
+
+</chapter>

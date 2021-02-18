@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>Design Specific Configuration</title>
+
+<section niv='3'><title>General</title>
+&inf_API_general;
+</section>
+
+<section niv='3'><title>Netlist</title>
+&inf_API_netlist;
+</section>
+
+<section niv='3'><title>Disassembly</title>
+&inf_API_disa;
+&inf_API_yag;
+</section>
+
+</section>

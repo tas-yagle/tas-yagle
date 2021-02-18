@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="beh">
+
+
+<err>
+	<lib>BEH-</lib><num>000</num>
+	<msg>syntax error\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>001</num>
+	<msg>combinatory loop: `%s`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>002</num>
+	<msg>cannot make bdd of empty expression\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>003</num>
+	<msg>cannot find terminal `%s`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>004</num>
+	<msg>illegal use of STABLE attribute\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>005</num>
+	<msg>cannot simplify internal signals\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>006</num>
+	<msg>cannot make derivatives of expressions\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>040</num>
+	<msg>signal `%s` never assigned\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>041</num>
+	<msg>`%s` has not an empty architecture\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>068</num>
+	<msg>port `%s` has unknwon type\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>069</num>
+	<msg>port `%s` has unknwon mode\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>070</num>
+	<msg>unknown time unit\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>100</num>
+	<msg>cannot find `%s`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>107</num>
+	<msg>cannot open result file\n</msg>
+	<doc></doc>
+</err>
+<!-- FATAL -->
+<err>
+	<lib>BEH-</lib><num>101</num>
+	<msg>%s: unknown operator\n</msg>
+	<doc></doc>
+</err>
+
+<err>
+	<lib>BEH-</lib><num>102</num>
+	<msg>%s: cannot create empty atom\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>103</num>
+	<msg>%s: cannot build NOT of empty expression\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>104</num>
+	<msg>%s: cannot combine empty expressions\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>105</num>
+	<msg>%s: cannot find terminal\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>110</num>
+	<msg>%s: decompiler called on empty figure\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>115</num>
+	<msg>%s: illegal bit string value : `%c`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>116</num>
+	<msg>%s: the same expression cannot be used twice\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>119</num>
+	<msg>%s: empty guard expression: `%s`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>120</num>
+	<msg>%s: empty waveform expression: `%s`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>200</num>
+	<msg>%s: illegal use of attribute STABLE\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>201</num>
+	<msg>%s: unknown terminal operand `%s`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>202</num>
+	<msg>%s: unknown operator `%d`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>203</num>
+	<msg>%s: empty expression\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>199</num>
+	<msg>%s: Please contact Avertec support\n</msg>
+	<doc></doc>
+</err>
+<!-- WARNING -->
+<err>
+	<lib>BEH-</lib><num>300</num>
+	<msg>beaux `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>301</num>
+	<msg>bebus `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>302</num>
+	<msg>bebux `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>303</num>
+	<msg>beder not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>304</num>
+	<msg>befig `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>305</num>
+	<msg>begen `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>306</num>
+	<msg>bemsg `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>307</num>
+	<msg>beout `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>308</num>
+	<msg>bequad not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>309</num>
+	<msg>bereg `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>310</num>
+	<msg>biabl not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>311</num>
+	<msg>binode not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>312</num>
+	<msg>%20s -> %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>313</num>
+	<msg>%23s %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>315</num>
+	<msg>bevectaux `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>316</num>
+	<msg>bevectout `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>317</num>
+	<msg>bevectbux `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>318</num>
+	<msg>bevectbus `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>319</num>
+	<msg>bevectreg `%s` not empty\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEH-</lib><num>320</num>
+	<msg>vectbiabl not empty\n</msg>
+	<doc></doc>
+</err>
+
+
+</messages>

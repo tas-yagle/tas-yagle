@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>DSPF Used for Connectivity</title>
+<p>If the DSPF is used for connectivity purpose (the SPICE netlist is not connected without the DSPF,
+connectivity is ensured by the R elements), use .INCLUDE parasitics.dspf inside .SUBCKT </p>
+</section>
+<section niv='3'><title>DSPF Used for Back-Annotation</title>
+<p>If there is no BUSBIT construct, only identifiers containing [] or &lt; &gt; are considered as vectors.</p>
+</section>

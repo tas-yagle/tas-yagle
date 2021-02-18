@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<intro_title>About this document</intro_title>
+        <intro>This document explains:<list>
+        <item>The tool capabilities and typical applications</item>
+        <item>The internal structure of the tool</item>
+        <item>How the tool integrates in custom design flows</item>
+        <item>How to perform static timing analysis at transistor-level</item>
+        <item>How to perform crosstalk analysis at transistor-level</item>
+        <item>How to perform timing abstraction at transistor-level</item>
+        <item>How to deal with big designs</item>
+        </list></intro>

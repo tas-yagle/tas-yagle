@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="cgv">
+
+<err>
+    <lib>CGV-</lib><num>001</num>
+    <msg>Internal error #%d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CGV-</lib><num>002</num>
+    <msg>Internal warning #%d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CGV-</lib><num>003</num>
+    <msg>%s:%ld: unknown internal error %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CGV-</lib><num>004</num>
+    <msg>could not open file '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CGV-</lib><num>005</num>
+    <msg>could not parse file '%s'\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

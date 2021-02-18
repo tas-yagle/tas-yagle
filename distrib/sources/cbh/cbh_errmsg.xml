@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="cbh">
+
+<err>
+    <lib>CBH-</lib><num>000</num>
+    <msg>Internal Error %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CBH-</lib><num>001</num>
+    <msg>%s: Possible cause library not charged\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CBH-</lib><num>002</num>
+    <msg>%s needs a file as argument\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CBH-</lib><num>003</num>
+    <msg>%s\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

@@ -1,0 +1,85 @@
+
+           stb_DisplaySlackReport   <FILE   *file>  <StabilityFigure  *stbfig>
+       [-from  <nodename>]  [-to  <nodename>]  [-thru_node  <nodename>]  [-dir
+       <dir>]  [-nbslacks  <nb>]  [-margin <marginval>] [-noprechlag] [common-
+       options]
+           or
+           stb_DisplaySlackReport <FILE *file>  -slacks  <stabilityslackslist>
+       [-nbslacks <nb>] [common-options]
+
+           common-options:
+           [-setuponly] [-holdonly] [-simple] [-summary] [-displaythru] [-dis-
+       playmargins]
+
+           Obsolete but still working:
+           stb_DisplaySlackReport(FILE  *f,  StabilityFigure   *stbfig,   char
+       *start, char *end, char *dir, int number, char *mode, TimeValue margin)
+       ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Retreives and prints or only prints a slack report.
+
+AARRGGUUMMEENNTTSS
+       ffiillee          File where to save the report, _s_t_d_o_u_t for  standard  out-
+                     put.
+
+       ssttbbffiigg        Stability figure.
+
+       --ffrroomm {{<<nnooddeennaammee>>}}
+                     DATA VALID start point (clock or input pin).
+
+       --ttoo {{<<nnooddeennaammee>>}}
+                     DATA  VALID end point (latch, precharge, output or direc-
+                     tive node).
+
+       --tthhrruu__nnooddee {{nnooddeennaammee}}
+                     DATA VALID access node when the DATA VALID  is  an  acces
+                     path.
+
+       --ddiirr {{<<ddiirr>>}}  Start  and end points transitions, _u, _d, _?. _z or _/ can be
+                     added to the usual direction to respectively display only
+                     HZ slacks or only non-HZ slacks. Default is _?_?.
+
+       --nnbbssllaacckkss {{<<nnbb>>}}
+                     Maximum number of reported setup and hold slacks. Default
+                     is unlimited (_<_n_b_><=0).
+
+       --mmaarrggiinn {{<<mmaarrggiinnvvaall>>}}
+                     Value below which a setup/hold slack  is  reported  as  a
+                     violation.  For  example, if the margin is 100ps (100e-12
+                     second), a signal with a setup  or  a  hold  slack  below
+                     100ps will be reported as a violation. Default is _0.
+
+       --nnoopprreecchhllaagg   Removes  slacks  whose DATA VALID passes thru transparent
+                     precharges when DATA VALID is an access.
+
+       ccoommmmoonn--ooppttiioonnss::
+
+       --sseettuuppoonnllyy    Displays only setup slacks.
+
+       --hhoollddoonnllyy     Displays only hold slacks.
+
+       --ssuummmmaarryy      Displays only the summary of the slacks.
+
+       --ddiissppllaayytthhrruu  Displays access node in the summary  if  the  DATA  VALID
+                     path is an access.
+
+       --ddiissppllaayymmaarrggiinnss
+                     Displays the path margins and the intrinsic margin in the
+                     summary.
+
+       --ssiimmppllee       Displays less detailed slack  details  by  hiding  period
+                     change operations.
+
+       EEXXAAMMPPLLEE       To display an already obtained StabilitySlack list:
+
+       oobbssoolleettee ooppttiioonnss::
+
+       mmooddee          Selects the displayed slack types: _s_e_t_u_p, _h_o_l_d, _a_l_l, _m_a_r_-
+                     _g_i_n_s, _s_u_m_m_a_r_y _s_e_t_u_p, _s_u_m_m_a_r_y _h_o_l_d  or  _s_u_m_m_a_r_y  _a_l_l.  _a_l_l
+                     means  _s_e_t_u_p  and  _h_o_l_d. _m_a_r_g_i_n_s will show in the summary
+                     the internal margins used for the slack computation. _t_h_r_u
+                     shows  in  the  summary  the latch through which the data
+                     arrives as well as the latch command which  enables  this
+                     data.
+

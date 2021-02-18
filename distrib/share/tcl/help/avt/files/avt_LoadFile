@@ -1,0 +1,15 @@
+
+       void avt_LoadFile(char *filename, char *format);
+
+DDEESSCCRRIIPPTTIIOONN
+       Loads files and construct internal representation according to the file
+       format
+
+AARRGGUUMMEENNTTSS
+       ffiilleennaammee      File to be loaded
+
+       ffoorrmmaatt        Available formats are _s_p_i_c_e, _t_l_f_4,  _t_l_f_3,  _l_i_b,  _v_e_r_i_l_o_g,
+                     _v_h_d_l, _s_p_f, _d_s_p_f, _i_n_f, _s_p_e_f and _t_t_v
+
+       EEXXAAMMPPLLEE       _a_v_t___L_o_a_d_F_i_l_e _d_e_s_i_g_n_._h_s_p _s_p_i_c_e
+

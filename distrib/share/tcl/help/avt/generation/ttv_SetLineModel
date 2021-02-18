@@ -1,0 +1,14 @@
+
+       void ttv_SetLineModel(TimingLine *tl, char *modelname, char *where);
+
+DDEESSCCRRIIPPTTIIOONN
+       Associates a model name to a line.
+
+AARRGGUUMMEENNTTSS
+       ttll            Timing Line to set the model name
+
+       mmooddeellnnaammee     name of the model to associate.
+
+       wwhheerree         value  to  associate  model to: "delay max", "delay min",
+                     "slope max" or "slope min".
+

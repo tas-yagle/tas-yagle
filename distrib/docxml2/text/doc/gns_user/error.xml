@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Error Messages</title>
+
+<p></p>
+
+
+
+<section niv='2'><title>Warning Messages</title>
+
+
+<glossary>
+<row type="split">
+<article>Warning: Spice file &lt;name&gt; already loaded</article>
+<def>This means that the corresponding transistor-level model has already been loaded, the model retained for recognition is the original model.</def>
+</row>
+<row type="split">
+<article>Warning: circuit signal &lt;name&gt; matched but at least one external connector in the model is missing in the circuit</article>
+<def>This means that the signal matching the connector is connected to no other connector in the circuit. In certain cases, this may be perfectly normal, however, it can mean that something is disconnected in the circuit.</def>
+</row>
+</glossary>
+</section>
+
+
+<section niv='2'><title>Fatal Errors</title>
+
+<glossary>
+
+<row type="split">
+<article>Fatal error while executing program</article>
+<def>While excuting the actions, the interpreter can be given instructions causing general protection faults either by manipulating pointers or calling functions. When this happens, this message appears.</def>
+</row>
+
+<row type="split">
+<article>variable &lt;name&gt; is not defined in the model</article>
+<def>A variable &lt;name&gt; declared in the action function header does not correspond to any generic variable in the model.</def>
+</row>
+
+<row type="split">
+<article>forbidden operators 'mod', 'rem', '**'</article>
+<def>This means there's a loop statement to compute a generic variable but one of the bounds of the loop contains operator that are not handled by Genius in this case.
+</def>
+</row>
+
+<row type="split">
+<article>put this FOR in another model</article>
+<def>This means there is more than one loop in the model that contains a generic variable of unknown value. This is forbidden. The user must use a separate hierarchical level for each loop.
+</def>
+</row>
+
+<row type="split">
+<article>transistor in center of loop forbidden </article>
+<def>Transistors can not be handled in a loop. This message is given if a rule flouts this restriction.</def>
+</row>
+
+<row type="split">
+<article>instance &lt;insname&gt; already exist in figure &lt;model&gt;</article>
+<def>This means that an instance of the model &lt;model&gt; with the name &lt;insname&gt; has already been instantiated. Instance names must be unique within a given model.
+</def>
+</row>
+
+<row type="split">
+<article>discrepancy between figure %s and instance %s in figure %s</article>
+<def>This means that a model is instantiated with a number of connectors different from the definition of the model.</def>
+</row>
+
+<row type="split">
+<article>no model &lt;name&gt; found</article>
+<def>The model &lt;name&gt; is used by a rule but its description cannot be found.</def>
+</row>
+
+<row type="split">
+<article>unknown connector (&lt;name&gt;) declared in symmetric connector list</article>
+<def>The connector &lt;name&gt; is used in a symmetric connector list but is not defined in the entity of the model.</def>
+</row>
+
+<row type="split">
+<article>unknown connector (&lt;name&gt;) declared in coupled connector list</article>
+<def>The connector &lt;name&gt; is used in a coupled connector list but is not defined in the entity of the model.</def>
+</row>
+
+<row type="split">
+<article>Spice file &lt;name&gt; contain more than one description</article>
+<def>A SPICE format transistor-level model file can only contain one SUBCKT corresponding to the model to identify.</def>
+</row>
+
+<row type="split">
+<article>Spice file &lt;name&gt; should be a flat transistor netlist</article>
+<def>The SPICE format model file &lt;name&gt; must be a flat transistor netlist, this error means that the netlist contains instances.</def>
+</row>
+
+<row type="split">
+<article>&lt;num&gt; Out of bounds for signal &lt;signame&gt;</article>
+<def>The signal &lt;signame&gt; is declared as a vector but during the recognition, genius tried to access &lt;signal&gt;(&lt;num&gt;) where &lt;num&gt; is not within the signal vector range. Check the model declaration.</def>
+</row>
+
+<row type="split">
+<article>connectors &lt;conname1&gt; and &lt;conname2&gt; mismatch in loins &lt;insname1&gt; and &lt;insname2&gt;</article>
+<def>When using the instance &lt;insname1&gt; previously recognized, there is a discrepancy between the connector &lt;conname1&gt; and the connector &lt;conname2&gt; of the instance &lt;insname2&gt; instantiated in the model.</def>
+</row>
+
+<row type="split">
+<article>No search done on connector '&lt;name1&gt;' signal '&lt;name1&gt;', model '&lt;name1&gt;' must be a connexe graph</article>
+<def>This message means that not all of the connectors in the model have been traversed. All the instances must be connected together so that the recognition algorithm can traverse all the instances in the model by jumping between connectors.</def>
+</row>
+
+<row type="split">
+<article>connector &lt;model&gt;.&lt;name&gt; is in coupled list but has no symmetry</article>
+<def>The connector &lt;name&gt; of the model &lt;model&gt; is used in a coupled connector list but is not a symmetric connector.</def>
+</row>
+
+<row type="split">
+<article>no symmetry found for connector &lt;name&gt; in coupled list</article>
+<def>The connector &lt;name&gt; of the model &lt;model&gt; is used in a coupled connector list but has no corresponding symmetric connector. A coupled pragma is missing or does not have all the coupled connectors declared.</def>
+</row>
+
+<row type="split">
+<article>while swapping &lt;conname1&gt; and &lt;conname2&gt;, one of the connector did not have coupled connector list while the other has</article>
+<def>In the model, a coupled pragma is missing for either connector &lt;conname1&gt; or connector &lt;conname2&gt;.</def>
+</row>
+
+<row type="split">
+<article>same signal in different symmetry list</article>
+<def>The same connector was encountered in two different symmetric connector lists. All the symmetric connectors must be put in the same symmetric connector list.</def>
+</row>
+
+<row type="split">
+<article>same signal in different coupled list</article>
+<def>The same connector was encountered in two different coupled connector list. All the coupled connectors must be put in the same coupled connector list.</def>
+</row>
+
+<row type="split">
+<article>Only one variable authorized in a 'for' expression. Use Hierarchy!</article>
+<def>This means there is a loop in the model that contains more than one generic variable of unknown value. This is forbidden. The user must use a separate hierarchical level for each of the variables.</def>
+</row>
+
+</glossary>
+
+</section>
+</section>
+</chapter>

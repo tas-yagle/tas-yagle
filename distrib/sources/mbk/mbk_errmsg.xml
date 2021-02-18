@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="mbk">
+
+
+<err>
+   <lib>MBK-</lib><num>000</num>
+   <msg>connector %s not found in instance %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>001</num>
+   <msg>connector number mismatch beetwen instance %s and figure %s\n</msg>
+   <doc></doc>
+</err>
+     
+<err>
+   <lib>MBK-</lib><num>002</num>
+   <msg>can't evaluate '%s', assuming 0\n</msg>
+   <doc></doc>
+</err>
+         
+<err>
+   <lib>MBK-</lib><num>003</num>
+   <msg>transistor length is null\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>004</num>
+   <msg>transistor width is null\n</msg>
+   <doc></doc>
+</err>
+        
+<err>
+   <lib>MBK-</lib><num>005</num>
+   <msg>conflicting power supply on node '%s' keeping %gv (other is %gv)\n</msg>
+   <doc></doc>
+</err>
+      
+<err>
+   <lib>MBK-</lib><num>006</num>
+   <msg>Can't flatten figure %s because RC cache is active\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>007</num>
+   <msg>lofigchain is missing on lofig %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>008</num>
+   <msg>Null CTC on signal %ld (1) in instance %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>009</num>
+   <msg>flattenlofig: connector %s exists only in instance %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>010</num>
+   <msg>flattenlofig: connector %s in instance %s: number of physical nodes differ\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>011</num>
+   <msg>Null CTC on signal %ld (2) in instance %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>012</num>
+   <msg>figure %s not empty (type=%ld)\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>013</num>
+   <msg>unflat error: no supply ground\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>014</num>
+   <msg>unflattenlofig: connector number inconsistency between model '%s' and instance '%s'\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>015</num>
+   <msg>duplosig impossible: signal %ld already exist\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>016</num>
+   <msg>the radical %s is already used in a vector\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>017</num>
+   <msg>the radical %s has a spurious vectorized value %s (%s)\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>018</num>
+   <msg>figure '%s': transistor '%s' appears several times\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>019</num>
+   <msg>can't open file %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>020</num>
+   <msg>addlofig impossible: figure %s already exists\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>021</num>
+   <msg>addlomodel impossible: model %s already exists\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>022</num>
+   <msg>illegal transistor type: %ld\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>023</num>
+   <msg>addloins impossible: instance %s already exist in figure %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>024</num>
+   <msg>addloins impossible: instance model is the figure %s itself\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>025</num>
+   <msg>addloins impossible: connector number discrepancy between figure %s and instance %s in figure %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>026</num>
+   <msg>addlocon impossible: connector %s already exists in figure %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>027</num>
+   <msg>addlocon impossible: bad direction %c in figure %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>028</num>
+   <msg>addlosig impossible: signal %ld already exist in figure %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>029</num>
+   <msg>getloins impossible: instance %s doesn't exist in figure %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>030</num>
+   <msg>getlotrs impossible: transistor %s doesn't exist in figure %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>031</num>
+   <msg>getlocon impossible: connector %s doesn't exist in figure %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>032</num>
+   <msg>getlosig impossible: signal %ld doesn't exist in figure %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>033</num>
+   <msg>viewlo: empty list of figure\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>034</num>
+   <msg>setsigsize() impossible: BKSIG not NULL\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>035</num>
+   <msg>Conflict power supply on signal: %s\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>036</num>
+   <msg>u is not a square matrix\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>037</num>
+   <msg>u and l matrix size mismatch\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>038</num>
+   <msg>could not find a pivot\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>039</num>
+   <msg>singular matrix given\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>040</num>
+   <msg>matrix a and b size can not allow '*' operation\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>041</num>
+   <msg>matrix a and b size can not allow '-' operation\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>042</num>
+   <msg>matrix solve order has not been computed yet\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>043</num>
+   <msg>matrix a and sol size can not allow solve operation\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>044</num>
+   <msg>unreducable matrix given\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>045</num>
+   <msg>fatal mbkalloc error: not enough memory when trying to allocate %lu bytes, top= %luKb\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>046</num>
+   <msg>fatal mbkrealloc error: not enough memory\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>047</num>
+   <msg>Can't open file %s because too big\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>048</num>
+   <msg>mbksysfopen: bad value for access\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>049</num>
+   <msg>file %s opened, file %s ignored\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MBK-</lib><num>050</num>
+   <msg>file %s opened for writting, file %s is deleted\n</msg>
+   <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>051</num>
+  <msg>Cannot evaluate parameter %s='%s'%s\n</msg>
+  <doc></doc>
+</err>
+
+<err>
+  <lib>MBK-</lib><num>052</num>
+  <msg>Cannot evaluate expression '%s=%s' in figure '%s': variable%s %s %s unknown, assuming 0\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>053</num>
+  <msg>Undefined %s parameter '%s' in subcircuit '%s'\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>054</num>
+  <msg>Error #%d in avt communication protocol (%s)\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>055</num>
+  <msg>IP port %d already in use. Waiting...\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>056</num>
+  <msg>Can't activate master process in a slave process\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>057</num>
+  <msg>not enought communication slot to handle new input connection !\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>058</num>
+  <msg>Non slot to handle new input connection !\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>060</num>
+  <msg>some communication slot are still active, but all process are finished !\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>061</num>
+  <msg>a lofig is not allowed in the slave process !\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>062</num>
+  <msg>a cnsfig is not allowed in the slave process !\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>063</num>
+  <msg>a ttvfig is not allowed in the slave process !\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>064</num>
+  <msg>a abnormal end-of-file was encountered !\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>065</num>
+  <msg>error '%s' while reading file '%s'\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>066</num>
+  <msg>error '%s' while writing to file '%s'\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>067</num>
+  <msg>missing end of encryption marker in file '%s'\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>068</num>
+  <msg>Failed to transfer file '%s'\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>069</num>
+  <msg>Environment variable '%s' is not set\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>070</num>
+  <msg>Expression '%s' returned negative value for %s\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>071</num>
+  <msg>Diode model evaluation returned %s capacitance value\n</msg>
+  <doc></doc>
+</err>
+<err>
+  <lib>MBK-</lib><num>072</num>
+  <msg>Resistive paths found between power supplies. If resistor names do not appear, consider using 'avt_config avtSpiKeepNames resistance'.\n</msg>
+  <doc></doc>
+</err>
+
+</messages>

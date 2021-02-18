@@ -1,0 +1,11 @@
+
+       char *avt_GetConfig(char *var);
+
+DDEESSCCRRIIPPTTIIOONN
+       returns the configurated value for configuration variable _v_a_r
+
+AARRGGUUMMEENNTTSS
+       vvaarr           Configuration variable to be set
+
+       EEXXAAMMPPLLEE       _s_e_t _c_o_n_e___c_f_g _[_a_v_t___G_e_t_C_o_n_f_i_g _t_a_s_G_e_n_e_r_a_t_e_C_o_n_e_F_i_l_e_]
+

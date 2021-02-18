@@ -1,0 +1,12 @@
+
+       TimingFigure *ttv_LoadSDF(Netlist *fig, char *sdf_file);
+
+DDEESSCCRRIIPPTTIIOONN
+       Constructs  a timing figure from a netlist and an SDF file. The netlist
+       must have been constructed before (related files loaded)
+
+AARRGGUUMMEENNTTSS
+       ffiigg           Pointer on a netlist
+
+       ssddff__ffiillee      Name of the corresponding SDF file
+

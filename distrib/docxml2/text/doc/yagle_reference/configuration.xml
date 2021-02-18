@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Configuration Variables</title>
+
+<section niv='2'><title>License Server</title>
+&cnf_license;
+</section>
+
+<section niv='2'><title>Environment</title>
+&cnf_env;
+</section>
+
+<section niv='2'><title>Names</title>
+&cnf_names;
+</section>
+
+<section niv='2'><title>Technology</title>
+&cnf_elp;
+</section>
+
+<section niv='2'><title>Input Netlist and Parasitics</title>
+&cnf_input_netlist;
+</section>
+
+<section niv='2'><title>SPICE Parser</title>
+&cnf_spice;
+</section>
+
+<section niv='2'><title>SPICE Driver</title>
+&cnf_spice_drive;
+</section>
+
+<section niv='2'><title>VHDL Parser/Driver</title>
+&cnf_vhdl;
+</section>
+
+<section niv='2'><title>VERILOG Parser/Driver</title>
+&cnf_verilog;
+</section>
+
+<section niv='2'><title>DSPF/SPEF Parser</title>
+&cnf_input_dspf;
+</section>
+
+<section niv='2'><title>General Configuration</title>
+&cnf_disa_general;
+</section>
+
+<section niv='2'><title>Disassembly</title>
+<section niv='3'><title>Functional Analysis</title>
+&cnf_disa_functional;
+</section>
+
+<section niv='3'><title>Transistor Orientation</title>
+&cnf_disa_xtor;
+</section>
+
+<section niv='3'><title>Latch Recognition</title>
+&cnf_disa_latch;
+</section>
+
+<section niv='3'><title>Pattern Matching</title>
+&cnf_disa_fcl;
+</section>
+
+<section niv='3'><title>Behavioral Model Generation</title>
+&cnf_disa_beh;
+</section>
+
+<section niv='3'><title>Cone Output Files</title>
+&cnf_output_cns;
+</section>
+</section>
+
+<section niv='2'><title>Output Configuration</title>
+&cnf_disa_output;
+&cnf_behformat;
+</section>
+
+<section niv='2'><title>Pattern Matching</title>
+&cnf_fcl;
+</section>
+
+<section niv='2'><title>Hierarchical Pattern Matching</title>
+&cnf_gns;
+</section>
+
+<section niv='2'><title>API Specific</title>
+&cnf_api;
+&cnf_api_beh;
+</section>
+
+<section niv='2'><title>GUI</title>
+&cnf_xyagle;
+</section>
+
+
+
+</section></chapter>

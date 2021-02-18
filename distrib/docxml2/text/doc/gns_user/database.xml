@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>Database</title>
+<p>
+The database API provides a set of functions to create and manage internal databases. This can be useful as a means of manipulating complex data structures within GNS actions. 
+</p>
+&database_API;
+</section>

@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>Running</title>
+
+
+<glossary>
+<row type='split'><article><index>stbCtkWorstBeginCondition</index></article><def>
+  <glossary width='small'>
+  <row><article><f>yes</f></article><def>The SI engine performs a worst case static timing 
+  analysis with crosstalk. All aggression is assumed initially. Any false aggression is detected and removed.</def></row>
+  <row><article><f>no</f></article><def>Default</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCrosstalkMode</index></article><def>
+  <glossary width='small'>
+  <row><article><f>yes</f></article><def>Enables crosstalk analysis.</def></row>
+  <row><article><f>no</f></article><def>Default</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkObservableMode</index></article><def>
+  <glossary width='small'>
+  <row><article><f>yes</f></article><def>Default. The SI engine performs a best case static timing analysis with 
+  crosstalk. No aggression is assumed initially. Any aggression is detected and added. Uses a less pessimistic algorithm 
+  to detect observable aggression.</def></row>
+  <row><article><f>no</f></article><def></def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkNoInfoActif</index></article><def>
+  <glossary width='small'>
+  <row><article><f>yes</f></article><def>The SI engine considers aggressors not defined 
+  in the timing view as active aggressors. No information on an aggressor are usually due to a coupling capacitance between 
+  usual net and an internal gate net.</def></row>
+  <row><article><f>no</f></article><def>Default.</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkMinOccurenceProbability</index></article><def>
+  <glossary width='small'>
+  <row><article><f>value</f></article><def>[IN ALPHA DEVELOPMENT STAGE] Defines the probability value (from 0 to 1) under which a agression occurence probability is considered as not interesting during a crosstalk analysis. Default value is 1. </def></row>
+  <row><article><f>no</f></article><def>Default.</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkReportFile</index></article><def>
+  <glossary width='small'>
+  <row><article><f>yes</f></article><def>The SI engine generates a <f>.ctk</f> crosstalk report 
+  file.</def></row>
+  <row><article><f>no</f></article><def>Default.</def></row>
+  </glossary>
+</def></row>
+
+
+</glossary>
+
+</section>
+<section niv='3'><title>Models</title>
+
+
+
+<glossary>
+<row type='split'><article><index>stbCtkMargin</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;float&gt;</f></article><def>Minimum delay between two switching windows implying 
+  that there is no possibility of aggression. Default value is 0 picoseconds.</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>ctkNoiseDefaultResi</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;float&gt;</f></article><def>Resistance in Ohms representing the driving strengh of input pins, 
+  in order to obtain pertinent peak noise values.</def></row>
+  <row><article><f>10000</f></article><def>Default value</def></row>
+  </glossary>
+</def></row>
+
+
+<row type='split'><article><index>rcxCtkModel</index></article><def>
+Model used to compute elementary delay when taking into account crosstalk effect if an aggression is detected.
+  <glossary width='small'>
+  <row><article><f>MILLER_0C2C</f></article><def>Coupling capacitance is removed or replaced to 
+  a ground capacitance with a doubled value. </def></row>
+  <row><article><f>MILLER_NOMINAL</f></article><def>Default, coupling capacitance is replaced to a ground capacitance 
+  with a value multiplied by 0.0 to 2.0 according to relative slope computed without coupling effect between 
+  victim and its aggressor. </def></row>
+  <!--<row><article><f>MILLER_NC3C</f></article><def>Same as <f>MILLER_NOMINAL</f>, except capacitance 
+  is multiplied by a value between -1.0 and 3.0. Set <f>rcxCtkNoise</f> to <f>NOISE_NEVER</f> with this configuration.</def></row>-->
+  </glossary>
+</def></row>
+
+<!--<row type='split'><article><index>rcxCtkNoise</index></article><def>
+  <glossary width='small'>
+  <row><article><f>NOISE_FINE</f></article><def>Default, allows modeling to take into account the 
+  changing in amplitude (noise effect) on a net due to coupling effect.</def></row>
+  <row><article><f>NOISE_NEVER</f></article><def>Changing in amplitude is not taken into account</def></row>
+  </glossary>
+</def></row>-->
+
+<row type='split'><article><index>rcxMinRelCtkFilter</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;float&gt;</f></article><def>Number between 0 and 1. If the ratio between one coupling 
+  capacitance and the total capacitance is less than <f>float</f>,  then the filtering of this coupling capacitance
+  is controlled by <f>stbCtkNoInfoActif</f>. Default is 0.05</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>rcxMinRelCtkSignal</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;float&gt;</f></article><def>Number between 0 and 1. If the ratio between the sum of coupling 
+  capacitance and the total capacitance is less than <f>float</f> then all the coupling capacitances are filtered. 
+  Default is 0.05</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>rcxCtkSlopeDelay</index></article><def>
+  <glossary width='small2'>
+  <row><article><f>SLOPE_DELAY_CTK</f></article><def>Default, basic slope is used during delay calculation. Gives 
+  pessimistic results, but is faster</def></row>
+  <row><article><f>SLOPE_DELAY_ENHANCED</f></article><def>Removes the contribution of the victim on the slopes of its aggressors. More precise but requires more computation 
+  time</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>rcxCtkSlopeNoise</index></article><def>
+  <glossary width='small'>
+  <row><article><f>SLOPE_CTK</f></article><def>Default, uses worst slopes with crosstalk to compute voltage 
+  noise</def></row>
+  <row><article><f>SLOPE_NOMINAL</f></article><def>Uses slopes computed without aggression to compute voltage 
+  noise </def></row>
+  <row><article><f>SLOPE_REAL</f></article><def>Removes the contribution of the victim on the slopes of its aggressors. Requires more computation 
+  time but gives better results</def></row>
+  </glossary>
+</def></row>
+
+</glossary>
+
+
+</section>
+<section niv='3'><title>Convergence</title>
+
+<glossary>
+<row type='split'><article><index>stbCtkMaxIteration</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Defines the maximum number of iteration the SI can perform. Default value: 999</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkminSlopeChange</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>When no further aggression is detected or removed, 
+  this variable represents the minimum slope variation, in ps, that induces slope re-calculation. Default is 2</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkMaxLastIter</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>When no further aggression is detected or removed, 
+  this variable represents the maximum number of iterations of slope re-calculation. Default is 3</def></row>
+  </glossary>
+</def></row>
+
+</glossary>
+
+
+</section>
+<section niv='3'><title>Reports</title>
+
+
+
+<glossary>
+<row type='split'><article><index>ctkDeltaDelayMin</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Minimum amount, in ps, of the propagation delay variation,
+  versus crosstalk-free propagation delay. If the variation is greater than <f>int</f>, then it is reported in the <f>.ctk</f> 
+  file. Default is 0 ps.</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>ctkDeltaSlopeMin</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Minimum amount, in ps, of the slope variation,
+  versus crosstalk-free slope. If the variation is greater than <f>int</f>, then it is reported in the <f>.ctk</f> 
+  file. Default is 0 ps.</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>ctkNoiseMin</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Minimum value, in mV, of the voltage noise to 
+  be reported in the <f>.ctk</f> file.</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>ctkCapaMin</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Number between 0 and 100. Minimum percentage of 
+  coupling capacitance. If the ratio of the coupling capacitance on a net is greater than <f>int</f> 
+  then it is reported in the <f>.ctk</f> file. </def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkMaxReportedSignals</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;number&gt;</f></article><def>Number of signals to report at each crosstalk iteration. Setting the number to 0 disables the report generated at each iteration.
+  Default is 0.
+  </def></row>
+  </glossary>
+</def></row>
+
+</glossary>
+
+
+</section>
+<section niv='3'><title>Scores</title>
+
+
+
+<glossary>
+<row type='split'><article><index>stbCtkCoefNoise</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Between 0 and 10. Specifies the noise voltage score part of 
+  the total score. Default is 4.</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkMinNoise</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Minimum noise voltage score under which no 
+  report for this net is provided. </def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkCoefInterval</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Between 0 and 10. Specifies the interval score part of 
+  the total score. Default is 3.</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkMinInterval</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Minimum interval score under which no 
+  report for this net is provided. </def></row>
+  </glossary>
+</def></row>
+
+
+<row type='split'><article><index>stbCtkCoefCtk</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Between 0 and 10. Specifies the crosstalk
+  score part of the total score. Default is 2.</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkMinCtk</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Minimum crosstalk score under which no 
+  report for this net is provided. </def></row>
+  </glossary>
+</def></row>
+
+
+<row type='split'><article><index>stbCtkCoefActivity</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Between 0 and 10. Specifies the activity score part of 
+  the total score. Default is 1.</def></row>
+  </glossary>
+</def></row>
+
+<row type='split'><article><index>stbCtkMinActivity</index></article><def>
+  <glossary width='small'>
+  <row><article><f>&lt;int&gt;</f></article><def>Minimum activity score under which no 
+  report for this net is provided. </def></row>
+  </glossary>
+</def></row>
+
+</glossary>
+
+
+</section>

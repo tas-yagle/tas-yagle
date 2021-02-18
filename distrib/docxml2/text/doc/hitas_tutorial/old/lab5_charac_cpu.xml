@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Lab5. AMD2901 Characterization </title>
+<p>This lab presents how &tool; performs characterization in LIB format upon a cpu design.
+Introduction to slope and capacitance ranges.
+This lab takes place in the directory <f>lab5_charac_cpu/</f></p>
+
+
+<section niv='2'><title>Timing Abstraction upon cpu design</title>
+<p>The timing abstraction configuration takes place in the 
+<f>charac.tcl</f> script as follow:</p>
+<glossary>
+<row type='split'><article><f>inf_DefineSlopeRange</f></article>
+<def>set a range for input slopes in lookup tables construction.</def></row>
+<row type='split'><article><f>inf_DefineCapacitanceRange</f></article>
+<def>set a range for output capacitances in lookup tables construction.</def></row>
+<row type='split'><article><f>set_false_path -from a\[1]</f></article>
+<def>specifies a falsepath from starting point a[1].</def></row>
+<row type='split'><article><f>set_false_path -to y\[1]</f></article>
+<def>specifies a falsepath to ending point y[1].</def></row>
+<row type='split'><article><f>avt_config tmaDtxInput yes</f></article>
+<def>tells the tool to take input file in DTX format.</def></row>
+</glossary>
+<p>The timing abstraction is done through the command <f>tma_abstract</f>.</p>
+<code>
+<cl>set abs [tma_abstract $fig NULL]</cl>
+<cl>lib_drivefile [list $abs] {} cpu2901.lib both</cl>
+</code>
+</section>
+
+</section>
+
+</chapter>
+
+

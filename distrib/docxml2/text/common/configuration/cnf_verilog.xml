@@ -1,0 +1,48 @@
+<glossary>
+
+<row type="split"><article><index>avtVerilogKeepNames</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>When generating Verilog output, any internal names
+which are not legal verilog names are preceded by a double backslash.</def></row>
+<row><article><f>no</f></article><def>Default. Illegal names are modified to create a legal name.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtStructuralVerilogVectors</index></article><def>
+Affects the parsing of illegal Verilog vector-signals in a netlist, i.e. vector-signals that are not indexed
+using the <f>[]</f> characters. Illegal Verilog vector-signals are supported as long as they are 
+preceded by <f>\</f>, otherwise the Verilog parser issues a syntax error. 
+Legal Verilog vector-signals are controlled by <f>avtVectorize</f>.
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Force illegal Verilog vector-signals to be represented 
+as vectors in the internal database, with regard to the value of <f>avtVectorize</f>. 
+For example, <f>\foo&lt;1&gt;</f> is represented internally as <f>foo 1</f> if <f>avtVectorize</f>
+is set to <f>&lt;1&gt;</f></def></row>
+<row><article><f>no</f></article><def>Default, illegal Verilog vector-signals are represented 
+in the internal database as they appear in the file. For exemple, <f>\foo&lt;1&gt;</f> is represented 
+internally as <f>foo&lt;1&gt;</f> </def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtStructuralVerilogSuffix</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Suffix of Verilog structural (netlist) file. 
+The default is <f>v</f></def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtBehavioralVerilogSuffix</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Suffix of Verilog behavioral file. 
+The default is <f>v</f></def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtVerilogMaxError</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Maximum number of errors before the Verilog parser 
+abandons.</def></row>
+</glossary>
+</def></row>
+
+</glossary>

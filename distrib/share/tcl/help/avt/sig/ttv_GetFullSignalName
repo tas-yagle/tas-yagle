@@ -1,0 +1,15 @@
+
+       char *ttv_GetFullSignalName(TimingFigure *tvf, TimingSignal *tvs);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns  the  full hierarchical name of a given timing signal. Returned
+       name is to be pasted for further use. Up to 16 full names are  kept  in
+       order to reduce memory consumption.
+
+AARRGGUUMMEENNTTSS
+       ttvvff           Pointer on a timing figure
+
+       ttvvss           Pointer on the timing signal to consider
+
+       EEXXAAMMPPLLEE       _s_e_t _n_a_m_e _[_t_t_v___G_e_t_F_u_l_l_S_i_g_n_a_l_N_a_m_e _$_f_i_g _$_s_i_g_]
+

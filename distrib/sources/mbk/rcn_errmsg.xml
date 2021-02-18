@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="rcn">
+
+<err>
+    <lib>RCN-</lib><num>000</num>
+    <msg>Internal error #%d. Please contact Avertec Support.\n</msg>
+    <doc>The internal data representation for parasitic element is unconsistent. Please contact Avertec Support.</doc>
+</err>
+
+<err>
+    <lib>RCN-</lib><num>001</num>
+    <msg>There is too many different format of file opened.\n</msg>
+    <doc>This is a very particular case where there is more than 16 differents format for input files. Please use less differents file format.</doc>
+</err>
+
+<err>
+    <lib>RCN-</lib><num>002</num>
+    <msg>Bad unit for RCN_CACHESIZE.\n</msg>
+    <doc>Allowed units for RCN_CACHESIZE are "kb", "mb" or "gb". See related documentation for more information.</doc>
+</err>
+
+</messages>

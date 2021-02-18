@@ -1,0 +1,13 @@
+
+       void avt_McInfo(char *msg);
+
+DDEESSCCRRIIPPTTIIOONN
+       Used  by  a  slave monte-carlo run, tells the master to display/log the
+       given message.
+           The message does not go to the result file.
+
+AARRGGUUMMEENNTTSS
+       mmssgg           Message to send.
+
+       EEXXAAMMPPLLEE       _a_v_t___M_c_I_n_f_o _"_R_u_n_n_i_n_g _i_n_t_o _S_T_A _s_t_a_g_e_"
+

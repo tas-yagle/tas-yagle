@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 9.0, SVG Export Plug-In  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20000303 Stylable//EN"   "http://www.w3.org/TR/2000/03/WD-SVG-20000303/DTD/svg-20000303-stylable.dtd" [
+	<!ENTITY st0 "font-size:10.8727;">
+	<!ENTITY st1 "fill:#169133;">
+	<!ENTITY st2 "fill:#199698;">
+	<!ENTITY st3 "fill-rule:evenodd;clip-rule:evenodd;fill:#F96611;stroke:#FFFFFF;stroke-width:1.44;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;">
+	<!ENTITY st4 "font-family:'Helvetica';font-weight:bold;">
+	<!ENTITY st5 "fill:none;stroke:#000000;stroke-width:4.08;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:16.32 12.24;">
+	<!ENTITY st6 "fill:none;stroke:#000000;stroke-width:4.08;stroke-miterlimit:10;">
+	<!ENTITY st7 "fill:#FB0F0C;">
+	<!ENTITY st8 "fill-rule:evenodd;clip-rule:evenodd;">
+	<!ENTITY st9 "fill:#FFFFFF;">
+	<!ENTITY st10 "font-size:12.1699;">
+	<!ENTITY st11 "fill-rule:evenodd;clip-rule:evenodd;fill:#F96611;">
+	<!ENTITY st12 "fill:none;stroke:#000000;stroke-width:4.08;stroke-linejoin:round;stroke-miterlimit:10;">
+	<!ENTITY st13 "font-family:'Helvetica';">
+	<!ENTITY st14 "fill-rule:nonzero;clip-rule:nonzero;stroke:#000000;stroke-miterlimit:4;">
+	<!ENTITY st15 "fill:none;stroke:#000000;stroke-width:4.08;stroke-linecap:round;stroke-miterlimit:10;">
+	<!ENTITY st16 "stroke:none;">
+]>
+<svg  width="131.66pt" height="289.87pt" viewBox="0 0 131.66 289.87" xml:space="preserve">
+	<g id="Calque_x0020_1" style="&st14; &st4; &st0;">
+		<g style="&st16;">
+			<path style="&st11;" d="M54.031,253.363c-10.06,0-18.334,8.112-18.334,18.173c0,10.222,8.275,18.334,18.334,18.334h59.061c10.062,0,18.174-8.112,18.174-18.334c0-10.061-8.112-18.173-18.174-18.173H54.031z"/>
+			<text transform="matrix(1 0 0 1 61.981 268.4521)"><tspan x="0" y="0" style="&st10;">T</tspan></text>
+			<text transform="matrix(1 0 0 1 69.2017 268.4521)"><tspan x="0" y="0" style="&st10;">iming </tspan></text>
+			<text transform="matrix(1 0 0 1 49.8125 283.0557)"><tspan x="0" y="0" style="&st10;">Abstraction</tspan></text>
+			<path style="&st3;" d="M53.869,103.438c-10.222,0-18.335,8.113-18.335,18.173c0,10.221,8.113,18.334,18.335,18.334h58.899c10.059,0,18.172-8.113,18.172-18.334c0-10.061-8.113-18.173-18.172-18.173H53.869z"/>
+			<text transform="matrix(1 0 0 1 46.0801 118.5278)"><tspan x="0" y="0" style="&st10;">Stability &amp; SI</tspan></text>
+			<text transform="matrix(1 0 0 1 58.2485 133.1304)"><tspan x="0" y="0" style="&st10;">Analysis</tspan></text>
+			<path style="&st11;" d="M54.031,152.602c-10.06,0-18.172,8.113-18.172,18.334c0,10.061,8.113,18.173,18.172,18.173h58.899c10.061,0,18.335-8.112,18.335-18.173c0-10.221-8.274-18.334-18.335-18.334H54.031z"/>
+			<text transform="matrix(1 0 0 1 70.4194 167.6904)"><tspan x="0" y="0" style="&st10;">Path</tspan></text>
+			<text transform="matrix(1 0 0 1 58.5737 182.2949)"><tspan x="0" y="0" style="&st10;">Analysis</tspan></text>
+			<path style="&st15;" d="M83.643,204.93l-30.829,6.977l30.829,6.978l30.829-6.978l-30.829-6.977z"/>
+			<path style="&st6;" d="M51.516,211.906h-28.07V72.529h1.46"/>
+			<path style="&st8;" d="M24.906,78.045l10.872-5.354l-10.872-5.517v10.871z"/>
+			<path style="&st12;" d="M83.319,35.209v8.438"/>
+			<path style="&st8;" d="M77.964,43.646l5.517,10.872l5.354-10.872H77.964z"/>
+			<path style="&st12;" d="M83.319,90.863v1.461"/>
+			<path style="&st8;" d="M77.964,92.324l5.517,10.871l5.354-10.871H77.964z"/>
+			<path style="&st6;" d="M83.319,140.514v1.298"/>
+			<path style="&st8;" d="M77.964,142.136l5.841,10.709l5.03-11.033l-10.871,0.324z"/>
+			<path style="&st12;" d="M83.643,189.19v3.732"/>
+			<path style="&st8;" d="M78.288,192.922l5.518,10.871l5.354-10.871H78.288z"/>
+			<path style="&st12;" d="M83.643,220.181v22.554"/>
+			<path style="&st8;" d="M78.288,242.734l5.518,10.708l5.354-10.708H78.288z"/>
+			<path style="&st5;" d="M23.446,83.724V10.546"/>
+			<path style="&st8;" d="M28.963,10.709L23.446,0l-5.354,10.709h10.872z"/>
+			<text transform="matrix(0 -1 1 0 17.0366 68.8774)"><tspan x="0" y="0" style="&st13; &st10;">Re-design</tspan></text>
+			<path style="&st6;" d="M83.643,220.181v14.603H57.034"/>
+			<path style="&st8;" d="M57.195,229.429l-10.708,5.519l10.708,5.354v-10.872z"/>
+			<path style="&st11;" d="M41.537,0.406c-3.245,0-5.841,2.596-5.841,5.841v23.04c0,3.245,2.596,5.841,5.841,5.841h83.4c3.245,0,5.842-2.596,5.842-5.841V6.247c0-3.245-2.597-5.841-5.842-5.841h-83.4z"/>
+			<text transform="matrix(1 0 0 1 70.7437 21.8232)"><tspan x="0" y="0" style="&st10;">UTD</tspan></text>
+			<text transform="matrix(1 0 0 1 93.2974 230.4844)"><tspan x="0" y="0" style="&st1;">O</tspan></text>
+			<text transform="matrix(1 0 0 1 101.7114 230.4844)"><tspan x="0" y="0" style="&st1;">K</tspan></text>
+			<text transform="matrix(1 0 0 1 46.8916 205.6582)"><tspan x="0" y="0" style="&st7;">K</tspan></text>
+			<text transform="matrix(1 0 0 1 54.7036 205.6582)"><tspan x="0" y="0" style="&st7;">O</tspan></text>
+			<text transform="matrix(1 0 0 1 0 237.7871)"><tspan x="0" y="0" style="&st2;">S</tspan></text>
+			<text transform="matrix(1 0 0 1 7.2144 237.7871)"><tspan x="0" y="0" style="&st2;">i</tspan></text>
+			<text transform="matrix(1 0 0 1 10.2563 237.7871)"><tspan x="0" y="0" style="&st2;">g</tspan></text>
+			<text transform="matrix(1 0 0 1 16.8433 237.7871)"><tspan x="0" y="0" style="&st2;">n</tspan></text>
+			<text transform="matrix(1 0 0 1 23.5044 237.7871)"><tspan x="0" y="0" style="&st2;">-</tspan></text>
+			<text transform="matrix(1 0 0 1 27.0854 237.7871)"><tspan x="0" y="0" style="&st2;">o</tspan></text>
+			<text transform="matrix(1 0 0 1 33.7324 237.7871)"><tspan x="0" y="0" style="&st2;">f</tspan></text>
+			<text transform="matrix(1 0 0 1 37.3291 237.7871)"><tspan x="0" y="0" style="&st2;">f</tspan></text>
+			<path style="&st8;" d="M53.869,54.274c-10.222,0-18.335,8.113-18.335,18.173s8.113,18.335,18.335,18.335h58.899c10.059,0,18.172-8.275,18.172-18.335s-8.113-18.173-18.172-18.173H53.869z"/>
+			<text transform="matrix(1 0 0 1 47.8652 69.3647)"><tspan x="0" y="0" style="&st9; &st10;"> Constraints</tspan></text>
+			<text transform="matrix(1 0 0 1 46.0801 83.9673)"><tspan x="0" y="0" style="&st9; &st10;">(re)definition</tspan></text>
+		</g>
+	</g>
+</svg>

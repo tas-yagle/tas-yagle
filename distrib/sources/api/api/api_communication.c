@@ -1,0 +1,6 @@
+#include <stdio.h>
+#include "api_communication.h"
+
+API_COMMINUCATION TTV_COM=NULL;
+API_COMMINUCATION STB_COM=NULL;
+API_COMMINUCATION CTK_API_COM=NULL;

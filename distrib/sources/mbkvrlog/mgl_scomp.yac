@@ -1,0 +1,1872 @@
+/****************************************************************************/
+/*                                                                          */
+/*                      Chaine de CAO & VLSI   AVERTEC                      */
+/*                                                                          */
+/*    Produit : Structural Verilog Compiler                                 */
+/*    Fichier : mgl_scomp.yac                                               */
+/*                                                                          */
+/*    (c) copyright 2000 AVERTEC                                            */
+/*    Tous droits reserves                                                  */
+/*                                                                          */
+/*    Auteur(s) : Anthony LESTER                                            */
+/*                                                                          */
+/*                                                                          */
+/****************************************************************************/
+
+%{
+
+#define YYDEBUG 1
+#define YYPARSE_PARAM parm
+#define YYLEX_PARAM parm
+
+#define MGL_CONTEXT(x) ((mgl_getcontext(parm))->x)
+
+#undef yyerror
+#define yyerror(x) mgl_scomperror(x, (mgl_getcontext(parm)))
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include AVT_H
+#include MUT_H
+#include MLO_H
+#include MLU_H
+#include MGL_H
+
+#include "mgl_type.h"
+#include "mgl_parse.h"
+#include "mgl_util.h"
+#include "mgl_error.h"
+
+#undef __GNUC__ /* to get round a bug in bison.simple */
+
+/*****************************************************************************
+* function declarations                                                      *
+*****************************************************************************/
+
+void mgl_scompclean();
+int mgl_scomperror();
+int mgl_scomplex();
+
+%}
+
+%pure_parser
+
+%union {
+    double      decimal;
+    int         integer;
+    int         base;
+    char       *text;
+    mgl_name    name;
+    mgl_expr    expr;
+};
+
+%expect 1
+
+%token T_ALWAYS
+%token T_AND
+%token T_ASSIGN
+%token T_ATTRIBUTE
+
+%token T_BEGIN
+%token T_BUF
+%token T_BUFIF0
+%token T_BUFIF1
+
+%token T_CASE
+%token T_CASEX
+%token T_CASEZ
+%token T_CMOS
+
+%token T_DEASSIGN
+%token T_DEFAULT
+%token T_DEFPARAM
+%token T_DISABLE
+
+%token T_EDGE
+%token T_ELSE
+%token T_END
+%token T_ENDATTRIBUTE
+%token T_ENDCASE
+%token T_ENDFUNCTION
+%token T_ENDMODULE
+%token T_ENDPRIMITIVE
+%token T_ENDSPECIFY
+%token T_ENDTABLE
+%token T_ENDTASK
+%token T_EVENT
+
+%token T_FOR
+%token T_FORCE
+%token T_FOREVER
+%token T_FORK
+%token T_FUNCTION
+
+%token T_HIGHZ0
+%token T_HIGHZ1
+
+%token T_IF
+%token T_IFNONE
+%token T_INITIAL
+%token T_INOUT
+%token T_INPUT
+%token T_INTEGER
+
+%token T_JOIN
+
+%token T_LARGE
+
+%token T_MEDIUM
+%token T_MODULE
+%token T_MACROMODULE
+
+%token T_NAND
+%token T_NEGEDGE
+%token T_NMOS
+%token T_NOR
+%token T_NOT
+%token T_NOTIF0
+%token T_NOTIF1
+
+%token T_OR
+%token T_OUTPUT
+
+%token T_PARAMETER
+%token T_PMOS
+%token T_POSEDGE
+%token T_PRIMITIVE
+%token T_PULL0
+%token T_PULL1
+%token T_PULLDOWN
+%token T_PULLUP
+
+%token T_RCMOS
+%token T_REAL
+%token T_REALTIME
+%token T_REG
+%token T_RELEASE
+%token T_REPEAT
+%token T_RNMOS
+%token T_RPMOS
+%token T_RTRAN
+%token T_RTRANIF0
+%token T_RTRANIF1
+
+%token T_SCALARED
+%token T_SIGNED
+%token T_SMALL
+%token T_SPECIFY
+%token T_SPECPARAM
+%token T_STRENGTH
+%token T_STRONG0
+%token T_STRONG1
+%token T_SUPPLY0
+%token T_SUPPLY1
+
+%token T_TABLE
+%token T_TASK
+%token T_TIME
+%token T_TRAN
+%token T_TRANIF0
+%token T_TRANIF1
+%token T_TRI
+%token T_TRI0
+%token T_TRI1
+%token T_TRIAND
+%token T_TRIOR
+%token T_TRIREG
+
+%token T_UNSIGNED
+
+%token T_VECTORED
+
+%token T_WAIT
+%token T_WAND
+%token T_WEAK0
+%token T_WEAK1
+%token T_WHILE
+%token T_WIRE
+%token T_WOR
+
+%token T_XNOR
+%token T_XOR
+
+%token T_LOGICAL_NOT
+%token T_LOGICAL_AND
+%token T_LOGICAL_OR
+%token T_BITWISE_NOT
+%token T_BITWISE_AND
+%token T_BITWISE_NAND
+%token T_BITWISE_OR
+%token T_BITWISE_NOR
+%token T_BITWISE_EXOR
+%token T_BITWISE_EXNOR
+%token T_MINUS
+%token T_PLUS
+%token T_MULTIPLY
+%token T_DIVIDE
+%token T_MODULO
+%token T_EQUALS
+%token T_DOES_NOT_EQUAL
+%token T_LESS_THAN
+%token T_LESS_THAN_OR_EQUAL_TO
+%token T_GREATER_THAN
+%token T_GREATER_THAN_OR_EQUAL_TO
+%token T_IDENTICAL
+%token T_NOT_IDENTICAL
+%token T_SHIFT_LEFT
+%token T_SHIFT_RIGHT
+
+%token T_LEADTO
+%token T_ALLPATH
+%token T_CONDITIONAL
+
+%token SYS_SETUP
+%token SYS_HOLD
+%token SYS_SETUPHOLD
+%token SYS_SKEW
+%token SYS_RECOVERY
+%token SYS_PERIOD
+%token SYS_WIDTH
+
+%token <text>    Identifier SystemIdentifier
+%token <decimal> RealLit
+%token <integer> IntegerLit
+%token <text>    StringLit
+%token <text>    MinTypMaxLit
+
+%right '?' ':'
+%left T_LOGICAL_OR
+%left T_LOGICAL_AND
+%left T_BITWISE_OR
+%left T_BITWISE_AND T_BITWISE_EXOR T_BITWISE_EXNOR
+%left T_EQUALS T_DOES_NOT_EQUAL T_IDENTICAL T_NOT_IDENTICAL
+%left T_LESS_THAN T_LESS_THAN_OR_EQUAL_TO T_GREATER_THAN T_GREATER_THAN_OR_EQUAL_TO 
+%left T_SHIFT_LEFT T_SHIFT_RIGHT
+%left T_PLUS T_MINUS
+%left T_MULTIPLY T_DIVIDE T_MODULO
+%right T_BITWISE_NOT T_LOGICAL_NOT T_UNARY_OPERATOR
+
+%type <text>     name_of_module name_of_module_instance lvalue identifier_hopt
+%type <name>     range range_option expandrange expandrange_option
+%type <expr>     primary expression concatenation
+
+%start verilog_file
+
+%%
+
+verilog_file        : description_list
+                    ;
+
+description_list    : /* empty */
+                    | description_list description
+                    ;
+
+description         : module
+                    {
+                        chain_list *ptchain;
+                        chain_list *ptassign;
+                        losig_list *ptnextsig, *ptsig, *ptprevsig;
+
+                        lofigchain(MGL_CONTEXT(LOFIG));
+                        if (MGL_CONTEXT(ASSIGN_LIST) != NULL) {
+                            if (MGL_CONTEXT(LOFIG)->MODE != 'P') {
+                                for (ptchain = MGL_CONTEXT(ASSIGN_LIST); ptchain; ptchain = ptchain->NEXT) {
+                                    ptassign = (chain_list *)ptchain->DATA;
+                                    mgl_assign(MGL_CONTEXT(LOFIG), (char *)ptassign->DATA, (char *)ptassign->NEXT->DATA, MGL_CONTEXT(HSHTAB), mgl_getcontext(parm));
+                                    freechain(ptassign);
+                                }
+                                /* delete marked signals */
+                                ptprevsig = NULL;
+                                for (ptsig = MGL_CONTEXT(LOFIG)->LOSIG; ptsig; ptsig = ptnextsig) {
+                                    ptnextsig = ptsig->NEXT;
+                                    if (ptsig->INDEX == 0) {
+                                        if (ptprevsig == NULL) MGL_CONTEXT(LOFIG)->LOSIG = ptnextsig;
+                                        else ptprevsig->NEXT = ptnextsig;
+                                    }
+                                    else ptprevsig = ptsig;
+                                }
+                            }
+                            freechain(MGL_CONTEXT(ASSIGN_LIST));
+                            MGL_CONTEXT(ASSIGN_LIST) = NULL;
+                        }
+                        mgl_fretab(MGL_CONTEXT(HSHTAB));
+                        MGL_CONTEXT(HSHTAB) = NULL;
+                    }
+                    | primitive
+                    {
+                        mgl_fretab(MGL_CONTEXT(HSHTAB));
+                        MGL_CONTEXT(HSHTAB) = NULL;
+                    }
+                    ;
+
+module              : T_MODULE Identifier
+                    {
+                        MGL_CONTEXT(HSHTAB) = mgl_initab();
+                        MGL_CONTEXT(SIGIDX) = 1;
+                        MGL_CONTEXT(FIGNAME) = $2;
+                        MGL_CONTEXT(NM1LST) = NULL;
+                        MGL_CONTEXT(NM2LST) = NULL;
+                        MGL_CONTEXT(NM3LST) = NULL;
+                        MGL_CONTEXT(MODEL) = NULL;
+                        MGL_CONTEXT(ASSIGN_LIST) = NULL;
+                        MGL_CONTEXT(ONLY_ORIENT) = 0;
+                        MGL_CONTEXT(BLDFLG) = 1;
+                        
+                        if (MGL_CONTEXT(TOPFIG) != NULL && MGL_CONTEXT(FIGNAME) == MGL_CONTEXT(TOPFIG)->NAME) {
+                            MGL_CONTEXT(LOFIG) = MGL_CONTEXT(TOPFIG);
+                        }
+                        else {
+                            if ((MGL_CONTEXT(LOFIG) = getloadedlofig(MGL_CONTEXT(FIGNAME))) != NULL) {
+                                if (!MGL_CONTEXT(LOFIG)->LOINS && !MGL_CONTEXT(LOFIG)->LOTRS) {
+                                    MGL_CONTEXT(SIGIDX) = getnumberoflosig(MGL_CONTEXT(LOFIG)) + 1;
+                                    MGL_CONTEXT(BLDFLG) = 1;
+                                    mgl_clean_lorcnet(MGL_CONTEXT(LOFIG));
+                                }
+                                else MGL_CONTEXT(BLDFLG) = 0;
+                                MGL_CONTEXT(ONLY_ORIENT) = 1;
+                            }
+                            else {
+                                MGL_CONTEXT(LOFIG) = addlofig(MGL_CONTEXT(FIGNAME));
+                                MGL_CONTEXT(BLDFLG) = 1;
+                                MGL_CONTEXT(ONLY_ORIENT) = 0;
+                            }
+                        }
+                        mgl_addtab(MGL_CONTEXT(HSHTAB), MGL_CONTEXT(FIGNAME), MGL_CONTEXT(FIGNAME), MGL_MODDFN, MGL_FIGDFN);
+                    }
+                    list_of_ports ';' module_item_list T_ENDMODULE
+                    ;
+
+list_of_ports       : /* empty */
+                    | '(' port_list ')'
+                    {
+                    }
+                    ;
+
+port_list           : port
+                    | port_list ',' port
+                    ;
+
+port                : port_expression_option
+                    {
+                    }
+                    | '.' Identifier '(' port_expression_option ')'
+                    {
+                    }
+                    ;
+
+port_expression_option : /*empty */
+                    | port_expression
+                    {
+                    }
+                    ;
+
+port_expression     : port_reference
+                    {
+                    }
+                    | '{' port_reference_list '}'
+                    {
+                    }
+                    ;
+
+port_reference_list : port_reference
+                    {
+                    }
+                    | port_reference_list ',' port_reference
+                    {
+                    }
+                    ;
+
+port_reference      : Identifier
+                    {
+                    }
+                    | Identifier '[' expression ']'
+                    {
+                    }
+                    | Identifier range
+                    {
+                    }
+                    ;
+
+module_item_list    : /* empty */
+                    | module_item_list module_item
+                    ;
+
+module_item         : parameter_decl
+                    | input_decl
+                    | output_decl
+                    | inout_decl
+                    | net_decl
+                    | reg_decl
+                    | integer_decl
+                    | real_decl
+                    | gate_instantiation
+                    | module_instantiation
+                    | parameter_override
+                    | continuous_assign
+                    | specify_block
+                    | always_statement
+                    | initial_statement
+                    | task
+                    | function
+                    ;
+
+primitive           : T_PRIMITIVE Identifier
+                    {
+                        MGL_CONTEXT(HSHTAB) = mgl_initab();
+                        MGL_CONTEXT(SIGIDX) = 1;
+                        MGL_CONTEXT(FIGNAME) = $2;
+                        MGL_CONTEXT(NM1LST) = NULL;
+                        MGL_CONTEXT(NM2LST) = NULL;
+                        MGL_CONTEXT(NM3LST) = NULL;
+                        MGL_CONTEXT(MODEL) = NULL;
+                        MGL_CONTEXT(ASSIGN_LIST) = NULL;
+                        MGL_CONTEXT(ONLY_ORIENT) = 0;
+                        MGL_CONTEXT(BLDFLG) = 1;
+                        
+                        if (MGL_CONTEXT(TOPFIG) != NULL && MGL_CONTEXT(FIGNAME) == MGL_CONTEXT(TOPFIG)->NAME) {
+                            MGL_CONTEXT(LOFIG) = MGL_CONTEXT(TOPFIG);
+                        }
+                        else {
+                            if ((MGL_CONTEXT(LOFIG) = getloadedlofig(MGL_CONTEXT(FIGNAME))) != NULL) {
+                                if (!MGL_CONTEXT(LOFIG)->LOINS && !MGL_CONTEXT(LOFIG)->LOTRS) {
+                                    MGL_CONTEXT(SIGIDX) = getnumberoflosig(MGL_CONTEXT(LOFIG)) + 1;
+                                    MGL_CONTEXT(BLDFLG) = 1;
+                                    mgl_clean_lorcnet(MGL_CONTEXT(LOFIG));
+                                }
+                                else MGL_CONTEXT(BLDFLG) = 0;
+                                MGL_CONTEXT(ONLY_ORIENT) = 1;
+                            }
+                            else {
+                                MGL_CONTEXT(LOFIG) = addlofig(MGL_CONTEXT(FIGNAME));
+                                MGL_CONTEXT(BLDFLG) = 1;
+                                MGL_CONTEXT(ONLY_ORIENT) = 0;
+                            }
+                        }
+                        mgl_addtab(MGL_CONTEXT(HSHTAB), MGL_CONTEXT(FIGNAME), MGL_CONTEXT(FIGNAME), MGL_MODDFN, MGL_FIGDFN);
+                    }
+                      list_of_ports ';' primitive_decl_list table_definition T_ENDPRIMITIVE
+                    ;
+
+primitive_decl_list : /* empty */
+                    | primitive_decl_list primitive_decl
+                    ;
+
+primitive_decl      : input_decl
+                    | output_decl
+                    | reg_decl
+                    ;
+
+table_definition    : T_TABLE table_entries T_ENDTABLE
+                    ;
+
+table_entries       : combinational_entry_eclr
+                    | sequential_entry_eclr
+                    ;
+
+combinational_entry_eclr : combinational_entry
+                    | combinational_entry_eclr combinational_entry
+                    ;
+
+combinational_entry : input_list ':' output_symbol ';'
+                    ;
+
+sequential_entry_eclr : sequential_entry
+                    | sequential_entry_eclr sequential_entry
+                    ;
+
+sequential_entry    : input_list ':' state ':' next_state ';'
+                    ;
+
+input_list          : level_symbol_or_edge_eclr
+                    ;
+
+level_symbol_or_edge_eclr : level_symbol_or_edge
+                    | level_symbol_or_edge_eclr level_symbol_or_edge
+                    ;
+
+level_symbol_or_edge : level_symbol
+                    | edge
+                    ;
+
+edge                : '(' level_symbol level_symbol ')'
+                    | edge_symbol
+                    ;
+
+state               : level_symbol
+                    ;
+
+next_state          : output_symbol
+                    | '-'
+                    ;
+
+output_symbol       : '0'
+                    | '1'
+                    | 'x'
+                    | 'X'
+                    ;
+
+level_symbol        : '0'
+                    | '1'
+                    | 'x'
+                    | 'X'
+                    | '?'
+                    | 'b'
+                    | 'B'
+                    ;
+
+edge_symbol         : 'r'
+                    | 'R'
+                    | 'f'
+                    | 'F'
+                    | 'p'
+                    | 'P'
+                    | 'n'
+                    | 'N'
+                    | '*'
+                    ;
+
+task                : T_TASK Identifier ';' 
+                    {
+                        MGL_CONTEXT(BLDFLG) = 0;
+                    }
+                    tf_declaration_list statement_or_null T_ENDTASK
+                    {
+                        MGL_CONTEXT(BLDFLG) = 1;
+                    }
+                    ;
+
+tf_declaration_list : /* empty */
+                    | tf_declaration_list tf_declaration
+                    ;
+
+tf_declaration      : parameter_decl
+                    | input_decl
+                    | output_decl
+                    | inout_decl
+                    | reg_decl
+                    | integer_decl
+                    | real_decl
+                    ;
+
+function            : T_FUNCTION range_option Identifier ';'
+                    {
+                        MGL_CONTEXT(BLDFLG) = 0;
+                    }
+                    function_decl_list statement_or_null T_ENDFUNCTION
+                    {
+                        MGL_CONTEXT(BLDFLG) = 1;
+                    }
+                    ;
+
+function_decl_list  : /* empty */
+                    | function_decl_list function_decl
+                    ;
+
+function_decl       : parameter_decl
+                    | input_decl
+                    | reg_decl
+                    | integer_decl
+                    | real_decl
+                    ;
+
+initial_statement   : T_INITIAL statement
+                    {
+                    }
+                    ;
+
+always_statement    : T_ALWAYS statement
+                    {
+                    }
+                    ;
+
+delay_or_event_control : 
+                      delay_control
+                    | event_control
+                    ;
+
+delay_control       : '#' IntegerLit
+                    | '#' RealLit
+                    | '#' Identifier
+                    | '#' '(' expression ')'
+                    ;
+
+event_control       : '@' Identifier
+                    | '@' '(' event_expression ')'
+                    | '@' '(' or_event_expression ')'
+                    ;
+
+or_event_expression : event_expression T_OR event_expression
+                    | or_event_expression T_OR event_expression
+                    ;
+
+event_expression    : expression
+                    {
+                    }
+                    | T_POSEDGE expression
+                    {
+                    }
+                    | T_NEGEDGE expression
+                    {
+                    }
+                    | T_EDGE expression
+                    {
+                    }
+                    ;
+
+parameter_override  : T_DEFPARAM assignment_list ';'
+                    ;
+
+parameter_decl      : T_PARAMETER range_option assignment_list ';'
+                    ;
+
+input_decl          : T_INPUT range_option variable_list ';'
+                    {
+                        if (MGL_CONTEXT(BLDFLG) || MGL_CONTEXT(ONLY_ORIENT)) {
+                            losig_list *ptlosig;
+                            locon_list *ptlocon;
+                            chain_list *ptchain;
+                            losig_list *ptprevsig;
+                            long        prevleft, prevright;
+                            char       *radical;
+                            int         index;
+    
+                            if ($2.ERR_FLAG) avt_errmsg(MGL_ERRMSG, "002", AVT_WARNING, MGL_CONTEXT(LINENUM));
+                            MGL_CONTEXT(NM1LST) = reverse(MGL_CONTEXT(NM1LST));
+                            for (ptchain = MGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) {
+                                if (strchr((char *)ptchain->DATA, ' ')) {
+                                    radical = vectorradical((char *)ptchain->DATA);
+                                    index = vectorindex((char *)ptchain->DATA);
+                                    if (MGL_CONTEXT(ONLY_ORIENT)) {
+                                        ptlocon = mgl_orientlocon(MGL_CONTEXT(LOFIG), IN, (char *)ptchain->DATA, -1, -1);
+                                        ptlosig = ptlocon->SIG;
+                                    }
+                                    else {
+                                        ptlosig = mgl_addlosig(MGL_CONTEXT(LOFIG), MGL_CONTEXT(SIGIDX), EXTERNAL, '0', (char *)ptchain->DATA, -1, -1);
+                                        ptlocon = mgl_addlocon(MGL_CONTEXT(LOFIG), ptlosig, IN, (char *)ptchain->DATA, -1, -1);
+                                        MGL_CONTEXT(SIGIDX) = ptlosig->INDEX + 1;
+                                    }
+                                    if ((ptprevsig = (losig_list *)mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN)) != NULL) {
+                                        prevleft = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN);
+                                        prevright = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN);
+                                        if ((prevleft == prevright && abs(index-prevright) != 1)
+                                        || (prevleft < prevright && index != prevright+1)
+                                        || (prevleft > prevright && index != prevright-1)) {
+                                            avt_errmsg(MGL_ERRMSG, "007", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
+                                        }
+                                        if (!MGL_CONTEXT(ONLY_ORIENT) && !ptlosig->NEXT && radical != vectorradical(ptlosig->NEXT->NAMECHAIN->DATA)) {
+                                            avt_errmsg(MGL_ERRMSG, "008", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
+                                        }
+                                    }
+                                    else {
+                                        mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN, index);
+                                    }
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN, (long)ptlosig);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN, index);
+                                }
+                                else {
+                                    if (mgl_chktab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_PNTDFN) != 0) {
+                                        avt_errmsg(MGL_ERRMSG, "003", AVT_ERROR, (char *)ptchain->DATA, MGL_CONTEXT(LINENUM));
+                                    }
+                                    if (MGL_CONTEXT(ONLY_ORIENT)) {
+                                        ptlocon = mgl_orientlocon(MGL_CONTEXT(LOFIG), IN, (char *)ptchain->DATA, $2.LEFT, $2.RIGHT);
+                                        ptlosig = ptlocon->SIG;
+                                    }
+                                    else {
+                                        ptlosig = mgl_addlosig(MGL_CONTEXT(LOFIG), MGL_CONTEXT(SIGIDX), EXTERNAL, '0', (char *)ptchain->DATA, $2.LEFT, $2.RIGHT);
+                                        ptlocon = mgl_addlocon(MGL_CONTEXT(LOFIG), ptlosig, IN, (char *)ptchain->DATA, $2.LEFT, $2.RIGHT);
+                                        MGL_CONTEXT(SIGIDX) = ptlosig->INDEX + 1;
+                                    }
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_PNTDFN, (long)ptlosig);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_LFTDFN, $2.LEFT);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_RGTDFN, $2.RIGHT);
+                                }
+                            }
+                            freechain(MGL_CONTEXT(NM1LST));
+                            MGL_CONTEXT(NM1LST) = NULL;
+                        }
+                    }
+                    ;
+
+output_decl         : T_OUTPUT range_option variable_list ';'
+                    {
+                        if (MGL_CONTEXT(BLDFLG) || MGL_CONTEXT(ONLY_ORIENT)) {
+                            losig_list *ptlosig;
+                            locon_list *ptlocon;
+                            chain_list *ptchain;
+                            losig_list *ptprevsig;
+                            long        prevleft, prevright;
+                            char       *radical;
+                            int         index;
+    
+                            if ($2.ERR_FLAG) avt_errmsg(MGL_ERRMSG, "002", AVT_WARNING, MGL_CONTEXT(LINENUM));
+                            MGL_CONTEXT(NM1LST) = reverse(MGL_CONTEXT(NM1LST));
+                            for (ptchain = MGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) {
+                                if (strchr((char *)ptchain->DATA, ' ')) {
+                                    radical = vectorradical((char *)ptchain->DATA);
+                                    index = vectorindex((char *)ptchain->DATA);
+                                    if (MGL_CONTEXT(ONLY_ORIENT)) {
+                                        ptlocon = mgl_orientlocon(MGL_CONTEXT(LOFIG), OUT, (char *)ptchain->DATA, -1, -1);
+                                        ptlosig = ptlocon->SIG;
+                                    }
+                                    else {
+                                        ptlosig = mgl_addlosig(MGL_CONTEXT(LOFIG), MGL_CONTEXT(SIGIDX), EXTERNAL, '0', (char *)ptchain->DATA, -1, -1);
+                                        ptlocon = mgl_addlocon(MGL_CONTEXT(LOFIG), ptlosig, OUT, (char *)ptchain->DATA, -1, -1);
+                                        MGL_CONTEXT(SIGIDX) = ptlosig->INDEX + 1;
+                                    }
+                                    if ((ptprevsig = (losig_list *)mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN)) != NULL) {
+                                        prevleft = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN);
+                                        prevright = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN);
+                                        if ((prevleft == prevright && abs(index-prevright) != 1)
+                                        || (prevleft < prevright && index != prevright+1)
+                                        || (prevleft > prevright && index != prevright-1)) {
+                                            avt_errmsg(MGL_ERRMSG, "007", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
+                                        }
+                                        if (!MGL_CONTEXT(ONLY_ORIENT) && !ptlosig->NEXT && radical != vectorradical(ptlosig->NEXT->NAMECHAIN->DATA)) {
+                                            avt_errmsg(MGL_ERRMSG, "008", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
+                                        }
+                                    }
+                                    else {
+                                        mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN, index);
+                                    }
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN, (long)ptlosig);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN, index);
+                                }
+                                else {
+                                    if (mgl_chktab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_PNTDFN) != 0) {
+                                        avt_errmsg(MGL_ERRMSG, "003", AVT_ERROR, (char *)ptchain->DATA, MGL_CONTEXT(LINENUM));
+                                    }
+                                    if (MGL_CONTEXT(ONLY_ORIENT)) {
+                                        ptlocon = mgl_orientlocon(MGL_CONTEXT(LOFIG), OUT, (char *)ptchain->DATA, $2.LEFT, $2.RIGHT);
+                                        ptlosig = ptlocon->SIG;
+                                    }
+                                    else {
+                                        ptlosig = mgl_addlosig(MGL_CONTEXT(LOFIG), MGL_CONTEXT(SIGIDX), EXTERNAL, '0', (char *)ptchain->DATA, $2.LEFT, $2.RIGHT);
+                                        ptlocon = mgl_addlocon(MGL_CONTEXT(LOFIG), ptlosig, OUT, (char *)ptchain->DATA, $2.LEFT, $2.RIGHT);
+                                        MGL_CONTEXT(SIGIDX) = ptlosig->INDEX + 1;
+                                    }
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_PNTDFN, (long)ptlosig);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_LFTDFN, $2.LEFT);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_RGTDFN, $2.RIGHT);
+                                }
+                            }
+                            freechain(MGL_CONTEXT(NM1LST));
+                            MGL_CONTEXT(NM1LST) = NULL;
+                        }
+                    }
+                    ;
+
+inout_decl          : T_INOUT range_option variable_list ';'
+                    {
+                        if (MGL_CONTEXT(BLDFLG) || MGL_CONTEXT(ONLY_ORIENT)) {
+                            losig_list *ptlosig;
+                            locon_list *ptlocon;
+                            chain_list *ptchain;
+                            losig_list *ptprevsig;
+                            long        prevleft, prevright;
+                            char       *radical;
+                            int         index;
+    
+                            if ($2.ERR_FLAG) avt_errmsg(MGL_ERRMSG, "002", AVT_WARNING, MGL_CONTEXT(LINENUM));
+                            MGL_CONTEXT(NM1LST) = reverse(MGL_CONTEXT(NM1LST));
+                            for (ptchain = MGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) {
+                                if (strchr((char *)ptchain->DATA, ' ')) {
+                                    radical = vectorradical((char *)ptchain->DATA);
+                                    index = vectorindex((char *)ptchain->DATA);
+                                    if (MGL_CONTEXT(ONLY_ORIENT)) {
+                                        ptlocon = mgl_orientlocon(MGL_CONTEXT(LOFIG), INOUT, (char *)ptchain->DATA, -1, -1);
+                                        ptlosig = ptlocon->SIG;
+                                    }
+                                    else {
+                                        ptlosig = mgl_addlosig(MGL_CONTEXT(LOFIG), MGL_CONTEXT(SIGIDX), EXTERNAL, '0', (char *)ptchain->DATA, -1, -1);
+                                        ptlocon = mgl_addlocon(MGL_CONTEXT(LOFIG), ptlosig, INOUT, (char *)ptchain->DATA, -1, -1);
+                                        MGL_CONTEXT(SIGIDX) = ptlosig->INDEX + 1;
+                                    }
+                                    if ((ptprevsig = (losig_list *)mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN)) != NULL) {
+                                        prevleft = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN);
+                                        prevright = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN);
+                                        if ((prevleft == prevright && abs(index-prevright) != 1)
+                                        || (prevleft < prevright && index != prevright+1)
+                                        || (prevleft > prevright && index != prevright-1)) {
+                                            avt_errmsg(MGL_ERRMSG, "007", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
+                                        }
+                                        if (!MGL_CONTEXT(ONLY_ORIENT) && !ptlosig->NEXT && radical != vectorradical(ptlosig->NEXT->NAMECHAIN->DATA)) {
+                                            avt_errmsg(MGL_ERRMSG, "008", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
+                                        }
+                                    }
+                                    else {
+                                        mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN, index);
+                                    }
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN, (long)ptlosig);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN, index);
+                                }
+                                else {
+                                    if (mgl_chktab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_PNTDFN) != 0) {
+                                        avt_errmsg(MGL_ERRMSG, "003", AVT_ERROR, (char *)ptchain->DATA, MGL_CONTEXT(LINENUM));
+                                    }
+                                    if (MGL_CONTEXT(ONLY_ORIENT)) {
+                                        ptlocon = mgl_orientlocon(MGL_CONTEXT(LOFIG), INOUT, (char *)ptchain->DATA, $2.LEFT, $2.RIGHT);
+                                        ptlosig = ptlocon->SIG;
+                                    }
+                                    else {
+                                        ptlosig = mgl_addlosig(MGL_CONTEXT(LOFIG), MGL_CONTEXT(SIGIDX), EXTERNAL, '0', (char *)ptchain->DATA, $2.LEFT, $2.RIGHT);
+                                        ptlocon = mgl_addlocon(MGL_CONTEXT(LOFIG), ptlosig, INOUT, (char *)ptchain->DATA, $2.LEFT, $2.RIGHT);
+                                        MGL_CONTEXT(SIGIDX) = ptlosig->INDEX + 1;
+                                    }
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_PNTDFN, (long)ptlosig);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_LFTDFN, $2.LEFT);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_RGTDFN, $2.RIGHT);
+                                }
+                            }
+                            freechain(MGL_CONTEXT(NM1LST));
+                            MGL_CONTEXT(NM1LST) = NULL;
+                        }
+                    }
+                    ;
+
+net_decl            : nettype charge_strength expandrange_option delay_option variable_list ';'
+                    {
+                        if (MGL_CONTEXT(BLDFLG) && MGL_CONTEXT(LOFIG)->MODE != 'P') {
+                            losig_list *ptlosig;
+                            chain_list *ptchain;
+                            losig_list *ptprevsig;
+                            long        prevleft, prevright;
+                            char       *radical;
+                            int         index;
+
+                            if ($3.ERR_FLAG) avt_errmsg(MGL_ERRMSG, "002", AVT_WARNING, MGL_CONTEXT(LINENUM));
+                            for (ptchain = MGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) {
+                                if (strchr((char *)ptchain->DATA, ' ')) {
+                                    radical = vectorradical((char *)ptchain->DATA);
+                                    index = vectorindex((char *)ptchain->DATA);
+                                    ptlosig = mgl_addlosig(MGL_CONTEXT(LOFIG), MGL_CONTEXT(SIGIDX), INTERNAL, '0', (char *)ptchain->DATA, -1, -1);
+                                    MGL_CONTEXT(SIGIDX) = ptlosig->INDEX + 1;
+                                    if ((ptprevsig = (losig_list *)mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN)) != NULL) {
+                                        prevleft = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN);
+                                        prevright = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN);
+                                        if ((prevleft == prevright && abs(index-prevright) != 1)
+                                        || (prevleft < prevright && index != prevright+1)
+                                        || (prevleft > prevright && index != prevright-1)) {
+                                            avt_errmsg(MGL_ERRMSG, "007", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
+                                        }
+                                        if (!ptlosig->NEXT || radical != vectorradical(ptlosig->NEXT->NAMECHAIN->DATA)) {
+                                            avt_errmsg(MGL_ERRMSG, "008", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
+                                        }
+                                    }
+                                    else {
+                                        mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN, index);
+                                    }
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN, (long)ptlosig);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN, index);
+                                }
+                                else {
+                                    if (mgl_chktab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_PNTDFN) != 0) {
+                                        avt_errmsg(MGL_ERRMSG, "004", AVT_WARNING, (char *)ptchain->DATA, MGL_CONTEXT(LINENUM));
+                                    }
+                                    else {
+                                        ptlosig = mgl_addlosig(MGL_CONTEXT(LOFIG), MGL_CONTEXT(SIGIDX), INTERNAL, '0', (char *)ptchain->DATA, $3.LEFT, $3.RIGHT);
+                                        MGL_CONTEXT(SIGIDX) = ptlosig->INDEX + 1;
+                                        mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_PNTDFN, (long)ptlosig);
+                                        mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_LFTDFN, $3.LEFT);
+                                        mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_RGTDFN, $3.RIGHT);
+                                    }
+                                }
+                            }
+                        }
+                        freechain(MGL_CONTEXT(NM1LST));
+                        MGL_CONTEXT(NM1LST) = NULL;
+                    }
+                    | nettype expandrange_option delay_option variable_list ';'
+                    {
+                        if (MGL_CONTEXT(BLDFLG) && MGL_CONTEXT(LOFIG)->MODE != 'P') {
+                            losig_list *ptlosig;
+                            chain_list *ptchain;
+                            losig_list *ptprevsig;
+                            long        prevleft, prevright;
+                            char       *radical;
+                            int         index;
+
+                            for (ptchain = MGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) {
+                                if (strchr((char *)ptchain->DATA, ' ')) {
+                                    radical = vectorradical((char *)ptchain->DATA);
+                                    index = vectorindex((char *)ptchain->DATA);
+                                    ptlosig = mgl_addlosig(MGL_CONTEXT(LOFIG), MGL_CONTEXT(SIGIDX), INTERNAL, '0', (char *)ptchain->DATA, -1, -1);
+                                    MGL_CONTEXT(SIGIDX) = ptlosig->INDEX + 1;
+                                    if ((ptprevsig = (losig_list *)mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN)) != NULL) {
+                                        prevleft = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN);
+                                        prevright = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN);
+                                        if ((prevleft == prevright && abs(index-prevright) != 1)
+                                        || (prevleft < prevright && index != prevright+1)
+                                        || (prevleft > prevright && index != prevright-1)) {
+                                            avt_errmsg(MGL_ERRMSG, "007", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
+                                        }
+                                        if (!ptlosig->NEXT || radical != vectorradical(ptlosig->NEXT->NAMECHAIN->DATA)) {
+                                            avt_errmsg(MGL_ERRMSG, "008", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
+                                        }
+                                    }
+                                    else {
+                                        mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN, index);
+                                    }
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN, (long)ptlosig);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN, index);
+                                }
+                                else {
+                                    if (mgl_chktab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_PNTDFN) != 0) {
+                                        avt_errmsg(MGL_ERRMSG, "004", AVT_WARNING, (char *)ptchain->DATA, MGL_CONTEXT(LINENUM));
+                                    }
+                                    else {
+                                        ptlosig = mgl_addlosig(MGL_CONTEXT(LOFIG), MGL_CONTEXT(SIGIDX), INTERNAL, '0', (char *)ptchain->DATA, $2.LEFT, $2.RIGHT);
+                                        MGL_CONTEXT(SIGIDX) = ptlosig->INDEX + 1;
+                                        mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_PNTDFN, (long)ptlosig);
+                                        mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_LFTDFN, $2.LEFT);
+                                        mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_RGTDFN, $2.RIGHT);
+                                    }
+                                }
+                            }
+                        }
+                        freechain(MGL_CONTEXT(NM1LST));
+                        MGL_CONTEXT(NM1LST) = NULL;
+                    }
+                    | nettype drive_strength expandrange_option delay_option assignment_list ';'
+                    | nettype expandrange_option delay_option assignment_list ';'
+                    ;
+
+nettype             : T_WIRE
+                    | T_WOR
+                    | T_WAND
+                    | T_TRI
+                    | T_TRIOR
+                    | T_TRIAND
+                    | T_TRI0
+                    | T_TRI1
+                    | T_SUPPLY0
+                    | T_SUPPLY1
+                    | T_TRIREG
+                    ;
+
+expandrange_option  : /* empty */
+                    {
+                        $$.NAME = NULL;
+                        $$.LEFT = -1;
+                        $$.RIGHT = -1;
+                        $$.ERR_FLAG = 0;
+                    }
+                    | expandrange
+                    {
+                        $$ = $1;
+                    }
+                    ;
+
+expandrange         : range
+                    {
+                        $$ = $1;
+                    }
+                    | T_SCALARED range
+                    {
+                        $$ = $2;
+                    }
+                    | T_VECTORED range
+                    {
+                        $$ = $2;
+                    }
+                    ;
+
+reg_decl            : T_REG range_option register_list ';'
+                    | T_TIME range_option register_list ';'
+                    ;
+
+register_list       : register_variable
+                    | register_list ',' register_variable
+                    ;
+
+register_variable   : Identifier range_option
+                    {
+                    }
+                    ;
+
+integer_decl        : T_INTEGER variable_list ';'
+                    ;
+
+real_decl           : T_REAL variable_list ';'
+                    ;
+
+continuous_assign   : T_ASSIGN drive_strength_option delay_option assignment_list ';'
+                    ;
+
+variable_list       : Identifier
+                    {
+                        MGL_CONTEXT(NM1LST) = addchain(NULL, $1);
+                    }
+                    | variable_list ',' Identifier
+                    {
+                        MGL_CONTEXT(NM1LST) = addchain(MGL_CONTEXT(NM1LST), $3);
+                    }
+                    ;
+
+charge_strength     : '(' T_SMALL ')'
+                    | '(' T_MEDIUM ')'
+                    | '(' T_LARGE ')'
+                    ;
+
+drive_strength_option : /* empty */
+                    | drive_strength
+                    ;
+
+drive_strength      : '(' strength0 ',' strength1 ')'
+                    | '(' strength1 ',' strength0 ')'
+                    | '(' strength0 ')'
+                    | '(' strength1 ')'
+                    ;
+
+strength0           : T_SUPPLY0
+                    | T_STRONG0
+                    | T_PULL0
+                    | T_WEAK0
+                    | T_HIGHZ0
+                    ;
+
+strength1           : T_SUPPLY1
+                    | T_STRONG1
+                    | T_PULL1
+                    | T_WEAK1
+                    | T_HIGHZ1
+                    ;
+
+range_option        : /* empty */
+                    {
+                        $$.LEFT = -1;
+                        $$.RIGHT = -1;
+                        $$.ERR_FLAG = 0;
+                    }
+                    | range
+                    {
+                        $$ = $1;
+                    }
+                    ;
+
+range               : '[' expression ':' expression ']'
+                    {
+                        if ($2.TYPE == MGL_RESULT && $4.TYPE == MGL_RESULT) {
+                            $$.LEFT = $2.RESULT;
+                            $$.RIGHT = $4.RESULT;
+                            $$.ERR_FLAG = 0;
+                        }
+                        else {
+                            $$.LEFT = -1;
+                            $$.RIGHT = -1;
+                            $$.ERR_FLAG = 1;
+                        }
+                    }
+                    ;
+
+assignment_list     : assignment
+                    | assignment_list ',' assignment
+                    ;
+
+gate_instantiation  : gatetype drive_delay_clr gate_instance_list ';'
+                    ;
+
+drive_delay_clr     : /* empty */
+                    | drive_delay_clr drive_delay
+                    ;
+
+drive_delay         : drive_strength
+                    | delay
+                    ;
+
+gatetype            : T_AND
+                    | T_NAND
+                    | T_OR
+                    | T_NOR
+                    | T_XOR
+                    | T_XNOR
+                    | T_BUF
+                    | T_NOT
+                    | T_BUFIF0
+                    | T_BUFIF1
+                    | T_NOTIF0
+                    | T_NOTIF1
+                    | T_PULLUP
+                    | T_PULLDOWN
+                    {
+                    }
+                    ;
+
+gate_instance_list  : gate_instance
+                    | gate_instance_list ',' gate_instance
+                    ;
+
+gate_instance       : name_of_gate_instance range_option '(' terminal_list ')'
+                    {
+                        freechain(MGL_CONTEXT(NM1LST));
+                        MGL_CONTEXT(NM1LST) = NULL;
+                    }
+                    | '(' terminal_list ')'
+                    {
+                        freechain(MGL_CONTEXT(NM1LST));
+                        MGL_CONTEXT(NM1LST) = NULL;
+                    }
+                    ;
+
+name_of_gate_instance : Identifier
+                    {
+                    }
+                    ;
+
+terminal_list       : terminal
+                    | terminal_list ',' terminal
+                    ;
+
+terminal            : expression
+                    {
+                        if ($1.TYPE == MGL_IDENT) {
+                            MGL_CONTEXT(NM1LST) = addchain(MGL_CONTEXT(NM1LST), $1.IDENT);
+                        }
+                        else if ($1.TYPE == MGL_CONCAT) {
+                            MGL_CONTEXT(NM1LST) = append($1.CONCAT, MGL_CONTEXT(NM1LST));
+                        }
+                        else if ($1.TYPE == MGL_RESULT) {
+                            if ($1.RESULT == 0) {
+                                MGL_CONTEXT(NM1LST) = addchain(MGL_CONTEXT(NM1LST), MGL_VSS);
+                            }
+                            else if ($1.RESULT == 1) {
+                                MGL_CONTEXT(NM1LST) = addchain(MGL_CONTEXT(NM1LST), MGL_VDD);
+                            }
+                        }
+                    }
+                    ;
+
+module_instantiation : name_of_module
+                    {
+                        if (MGL_CONTEXT(BLDFLG) && MGL_CONTEXT(LOFIG)->MODE != 'P') {
+                            MGL_CONTEXT(MODELNAME) = $1;
+                            MGL_CONTEXT(MODEL) = getloadedlofig(MGL_CONTEXT(MODELNAME));
+                            if (MGL_CONTEXT(MODEL) == NULL && MGL_USE_LIBRARY) {
+                                MGL_CONTEXT(MODEL) = getlofig(MGL_CONTEXT(MODELNAME), 'P');
+                            }
+                        }
+                    }
+                    parameter_assign_option module_instance_list ';'
+                    {
+                    }
+                    ;
+
+name_of_module      : Identifier
+                    {
+                        $$ = $1;
+                    }
+                    ;
+
+parameter_assign_option : /* empty */
+                    | parameter_assign
+                    ;
+
+parameter_assign    : '#' '(' expression_list ')'
+                    ;
+
+expression_list     : expression
+                    {
+                        if ($1.TYPE == MGL_IDENT) {
+                            MGL_CONTEXT(NM3LST) = addchain(MGL_CONTEXT(NM3LST), $1.IDENT);
+                        }
+                        else if ($1.TYPE == MGL_CONCAT) {
+                            MGL_CONTEXT(NM3LST) = append($1.CONCAT, MGL_CONTEXT(NM3LST));
+                        }
+                        else if ($1.TYPE == MGL_RESULT) {
+                            if ($1.RESULT == 0) {
+                                MGL_CONTEXT(NM3LST) = addchain(MGL_CONTEXT(NM3LST), MGL_VSS);
+                            }
+                            else if ($1.RESULT == 1) {
+                                MGL_CONTEXT(NM3LST) = addchain(MGL_CONTEXT(NM3LST), MGL_VDD);
+                            }
+                        }
+                    }
+                    | expression_list ',' expression
+                    {
+                        if ($3.TYPE == MGL_IDENT) {
+                            MGL_CONTEXT(NM3LST) = addchain(MGL_CONTEXT(NM3LST), $3.IDENT);
+                        }
+                        else if ($3.TYPE == MGL_CONCAT) {
+                            MGL_CONTEXT(NM3LST) = append($3.CONCAT, MGL_CONTEXT(NM3LST));
+                        }
+                        else if ($3.TYPE == MGL_RESULT) {
+                            if ($3.RESULT == 0) {
+                                MGL_CONTEXT(NM3LST) = addchain(MGL_CONTEXT(NM3LST), MGL_VSS);
+                            }
+                            else if ($3.RESULT == 1) {
+                                MGL_CONTEXT(NM3LST) = addchain(MGL_CONTEXT(NM3LST), MGL_VDD);
+                            }
+                        }
+                    }
+                    ;
+
+module_instance_list : module_instance
+                    | module_instance_list ',' module_instance
+                    ;
+
+module_instance     : name_of_module_instance range_option '(' list_of_module_terminals ')'
+                    {
+                        if (MGL_CONTEXT(BLDFLG) && MGL_CONTEXT(LOFIG)->MODE != 'P') {
+                            losig_list *ptlosig;
+                            losig_list *ptvddsig = NULL;
+                            losig_list *ptvsssig = NULL;
+                            chain_list *sigchain = NULL;
+                            chain_list *ptchain;
+                            int         index;
+
+                            for (ptchain = MGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) {
+                                if (ptchain->DATA == MGL_VDD) {
+                                    if (ptvddsig != NULL) ptlosig = ptvddsig;
+                                    else {
+                                        index = MGL_CONTEXT(SIGIDX);
+                                        ptlosig = mgl_givevdd(MGL_CONTEXT(LOFIG), $1, &index);
+                                        ptvddsig = ptlosig;
+                                        MGL_CONTEXT(SIGIDX) = index;
+                                    }
+                                }
+                                else if (ptchain->DATA == MGL_VSS) {
+                                    if (ptvsssig != NULL) ptlosig = ptvsssig;
+                                    else {
+                                        index = MGL_CONTEXT(SIGIDX);
+                                        ptlosig = mgl_givevss(MGL_CONTEXT(LOFIG), $1, &index);
+                                        ptvsssig = ptlosig;
+                                        MGL_CONTEXT(SIGIDX) = index;
+                                    }
+                                }
+                                else if ((ptlosig = mgl_getlosig(MGL_CONTEXT(LOFIG), (char *)ptchain->DATA, MGL_CONTEXT(HSHTAB), mgl_getcontext(parm))) == NULL) {
+                                    ptlosig = mgl_addlosig(MGL_CONTEXT(LOFIG), MGL_CONTEXT(SIGIDX), INTERNAL, '0', (char *)ptchain->DATA, -1, -1);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_PNTDFN, (long)ptlosig);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_LFTDFN, -1);
+                                    mgl_addtab(MGL_CONTEXT(HSHTAB), (char *)ptchain->DATA, MGL_CONTEXT(FIGNAME), MGL_RGTDFN, -1);
+                                    MGL_CONTEXT(SIGIDX)++;
+                                }
+                                sigchain = addchain(sigchain, ptlosig);
+                            }
+                            sigchain = reverse(sigchain);
+                            if ($2.LEFT == -1 || $2.RIGHT == -1) {
+                                if (MGL_CONTEXT(MODEL) == NULL && MGL_CONTEXT(NM2LST) != NULL) {
+                                    mgl_addloins(MGL_CONTEXT(LOFIG), MGL_CONTEXT(MODELNAME), $1, MGL_CONTEXT(NM2LST), sigchain);
+                                }
+                                else {
+                                    index = MGL_CONTEXT(SIGIDX);
+                                    if (MGL_CONTEXT(NM2LST) != NULL || MGL_CONTEXT(NM1LST) == NULL) sigchain = mgl_sortsig(MGL_CONTEXT(MODEL), $1, MGL_CONTEXT(NM2LST), sigchain, MGL_CONTEXT(LOFIG), &index);
+                                    MGL_CONTEXT(SIGIDX) = index;
+                                    addloins(MGL_CONTEXT(LOFIG), $1, MGL_CONTEXT(MODEL), sigchain);
+                                }
+                            }
+                            else {
+                            }
+                            freechain(sigchain);
+                        }
+                        freechain(MGL_CONTEXT(NM1LST));
+                        MGL_CONTEXT(NM1LST) = NULL;
+                        freechain(MGL_CONTEXT(NM2LST));
+                        MGL_CONTEXT(NM2LST) = NULL;
+                    }
+                    | '(' list_of_module_terminals ')'
+                    {
+                        freechain(MGL_CONTEXT(NM1LST));
+                        MGL_CONTEXT(NM1LST) = NULL;
+                        freechain(MGL_CONTEXT(NM2LST));
+                        MGL_CONTEXT(NM2LST) = NULL;
+                    }
+                    ;
+
+name_of_module_instance : Identifier
+                    {
+                        $$ = $1;
+                    }
+                    ;
+
+list_of_module_terminals : /* empty */
+                    | terminal_list
+                    | named_port_connection_list
+                    ;
+
+named_port_connection_list : named_port_connection
+                    | named_port_connection_list ',' named_port_connection
+                    ;
+
+named_port_connection : '.' Identifier '(' expression ')'
+                    {
+                        if ($4.TYPE == MGL_IDENT) {
+                            MGL_CONTEXT(NM1LST) = addchain(MGL_CONTEXT(NM1LST), $4.IDENT);
+                            MGL_CONTEXT(NM2LST) = addchain(MGL_CONTEXT(NM2LST), $2);
+                        }
+                        else if ($4.TYPE == MGL_CONCAT) {
+                            lofig_list *ptfig;
+                            chain_list *ptchain;
+                            int         i = 0;
+                            int         left, right, increment;
+
+                            if (MGL_CONTEXT(BLDFLG) && MGL_CONTEXT(LOFIG)->MODE != 'P'
+                             && (ptfig = getloadedlofig(MGL_CONTEXT(MODELNAME))) != NULL) {
+                                mgl_getloconrange(ptfig->LOCON, $2, &left, &right);
+                                for (ptchain = $4.CONCAT; ptchain; ptchain = ptchain->NEXT) i++;
+                                if (left == -1 || right == -1 || abs(right-left)+1 != i) {
+                                    avt_errmsg(MGL_ERRMSG, "006", AVT_ERROR, MGL_CONTEXT(LINENUM));
+                                    EXIT(1);
+                                }
+                                MGL_CONTEXT(NM1LST) = append($4.CONCAT, MGL_CONTEXT(NM1LST));
+                                i = left;
+                                if (right > left) increment = 1;
+                                else increment = -1;
+                                for (i = left; i != right+increment; i += increment) {
+                                    MGL_CONTEXT(NM2LST) = addchain(MGL_CONTEXT(NM2LST), vectorize($2, i));
+                                }
+                            }
+                            else {
+                                i=0;
+                                for (ptchain = $4.CONCAT; ptchain; ptchain = ptchain->NEXT) i++;
+                                MGL_CONTEXT(NM1LST) = append($4.CONCAT, MGL_CONTEXT(NM1LST));
+                                for (i = i-1; i >= 0; i--) {
+                                    MGL_CONTEXT(NM2LST) = addchain(MGL_CONTEXT(NM2LST), vectorize($2, i));
+                                }
+                            }
+                        }
+                        else if ($4.TYPE == MGL_RESULT) {
+                            if ($4.RESULT == 0) {
+                                MGL_CONTEXT(NM1LST) = addchain(MGL_CONTEXT(NM1LST), MGL_VSS);
+                                MGL_CONTEXT(NM2LST) = addchain(MGL_CONTEXT(NM2LST), $2);
+                            }
+                            else if ($4.RESULT == 1) {
+                                MGL_CONTEXT(NM1LST) = addchain(MGL_CONTEXT(NM1LST), MGL_VDD);
+                                MGL_CONTEXT(NM2LST) = addchain(MGL_CONTEXT(NM2LST), $2);
+                            }
+                        }
+                    }
+                    ;
+
+statement           : assignment ';'
+                    | T_WAIT '(' expression ')' statement_or_null
+                    | T_IF '(' expression ')' statement_or_null
+                    | T_IF '(' expression ')' statement_or_null T_ELSE statement_or_null
+                    | T_CASE '(' expression ')' case_item_list T_ENDCASE
+                    | T_CASEZ '(' expression ')' case_item_list T_ENDCASE
+                    | T_FOR '(' assignment ';' expression ';' assignment ')' statement
+                    | T_DISABLE Identifier ';'
+                    | T_FOREVER statement
+                    | T_REPEAT '(' expression ')' statement
+                    | T_WHILE '(' expression ')' statement
+                    | delay_or_event_control statement_or_null
+                    | statement_group
+                    | task_enable ';'
+                    | system_task_enable ';'
+                    | T_ASSIGN assignment ';'
+                    | T_DEASSIGN lvalue ';'
+                    ;
+
+statement_or_null   : statement
+                    | ';'
+                    ;
+
+assignment          : lvalue '=' expression
+                    {
+                        chain_list *ptchain;
+                    
+                        if ($1 != NULL && $3.TYPE == MGL_IDENT) {
+                            ptchain = addchain(NULL, $3.IDENT);
+                            ptchain = addchain(ptchain, $1);
+                            MGL_CONTEXT(ASSIGN_LIST) = addchain(MGL_CONTEXT(ASSIGN_LIST), ptchain);
+                        }
+                    }
+                    | lvalue '=' delay_or_event_control expression
+                    {
+                    }
+                    | lvalue T_LESS_THAN_OR_EQUAL_TO expression
+                    {
+                        chain_list *ptchain;
+                    
+                        if ($1 != NULL && $3.TYPE == MGL_IDENT) {
+                            ptchain = addchain(NULL, $3.IDENT);
+                            ptchain = addchain(ptchain, $1);
+                            MGL_CONTEXT(ASSIGN_LIST) = addchain(MGL_CONTEXT(ASSIGN_LIST), ptchain);
+                        }
+                    }
+                    | lvalue T_LESS_THAN_OR_EQUAL_TO delay_or_event_control expression
+                    {
+                    }
+                    ;
+
+case_item_list      : case_item
+                    | case_item_list case_item
+                    ;
+
+case_item           : expression_list ':' statement_or_null
+                    | T_DEFAULT ':' statement_or_null
+                    | T_DEFAULT statement_or_null
+                    ;
+                    
+statement_group     : T_BEGIN statement_list T_END
+                    | T_BEGIN ':' Identifier block_decl_list statement_list T_END
+                    ;
+
+statement_list      : /* empty */
+                    | statement_list statement
+                    ;
+
+block_decl_list     : /* empty */
+                    | block_decl_list block_decl
+                    ;
+
+block_decl          : parameter_decl
+                    | reg_decl
+                    | integer_decl
+                    | real_decl
+                    ;
+
+lvalue              : identifier_hopt
+                    {
+                        $$ = $1;
+                    }
+                    | identifier_hopt '[' expression ']'
+                    {
+                        if ($3.TYPE == MGL_RESULT && $1 != NULL) {
+                            $$ = vectorize($1, $3.RESULT);
+                        }
+                        else $$ = NULL;
+                    }
+                    | concatenation
+                    {
+                        $$ = NULL;
+                    }
+                    ;
+
+expression          : primary
+                    {
+                        $$ = $1;
+                    }
+                    | T_MINUS primary %prec T_UNARY_OPERATOR
+                    {
+                        $$ = $2;
+                        if ($$.TYPE == MGL_RESULT) {
+                            $$.RESULT = -$$.RESULT;
+                        }
+                    }
+                    | T_LOGICAL_NOT primary %prec T_UNARY_OPERATOR
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | T_BITWISE_NOT primary %prec T_UNARY_OPERATOR
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | T_BITWISE_AND primary %prec T_UNARY_OPERATOR
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | T_BITWISE_OR primary %prec T_UNARY_OPERATOR
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | T_BITWISE_NAND primary %prec T_UNARY_OPERATOR
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | T_BITWISE_NOR primary %prec T_UNARY_OPERATOR
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | T_BITWISE_EXOR primary %prec T_UNARY_OPERATOR
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | T_BITWISE_EXNOR primary %prec T_UNARY_OPERATOR
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_PLUS expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_MINUS expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_MULTIPLY expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_DIVIDE expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_MODULO expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_EQUALS expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_DOES_NOT_EQUAL expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_IDENTICAL expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_NOT_IDENTICAL expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_LOGICAL_AND expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_LOGICAL_OR expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_LESS_THAN expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_LESS_THAN_OR_EQUAL_TO expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_GREATER_THAN expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_GREATER_THAN_OR_EQUAL_TO expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_BITWISE_AND expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_BITWISE_OR expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_BITWISE_EXOR expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_BITWISE_EXNOR expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_SHIFT_LEFT expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression T_SHIFT_RIGHT expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | expression '?' expression ':' expression
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | StringLit
+                    {
+                        $$.TYPE = 0;
+                        mbkfree($1);
+                    }
+                    ;
+
+primary             : IntegerLit
+                    {
+                        $$.TYPE = MGL_RESULT;
+                        $$.RESULT = $1;
+                    }
+                    | identifier_hopt
+                    {
+                        int left, right, exist, increment, i;
+
+                        if ($1!=NULL) {
+                            exist = mgl_chktab(MGL_CONTEXT(HSHTAB), $1, MGL_CONTEXT(FIGNAME), MGL_PNTDFN);
+                            left = mgl_chktab(MGL_CONTEXT(HSHTAB), $1, MGL_CONTEXT(FIGNAME), MGL_LFTDFN);
+                            right = mgl_chktab(MGL_CONTEXT(HSHTAB), $1, MGL_CONTEXT(FIGNAME), MGL_RGTDFN);
+                            if (!exist || left == -1 || right == -1) {
+                                $$.IDENT = $1;
+                                if ($1 != NULL) {
+                                    $$.TYPE = MGL_IDENT;
+                                }
+                                else {
+                                    $$.TYPE = 0;
+                                }
+                            }
+                            else {
+                                $$.TYPE = MGL_CONCAT;
+                                $$.CONCAT = NULL;
+                                if (left < right) increment = 1;
+                                else increment = -1;
+                                for (i = left; i != right+increment; i += increment) {
+                                    $$.CONCAT = addchain($$.CONCAT, (char *)vectorize($1, i));
+                                }
+                            }
+                        }
+                        else $$.TYPE = 0;
+                        
+                    }
+                    | identifier_hopt '[' expression ']'
+                    {
+                        if ($3.TYPE == MGL_RESULT && $1 != NULL) {
+                            $$.TYPE = MGL_IDENT;
+                            $$.IDENT = vectorize($1, $3.RESULT);
+                        }
+                        else {
+                            $$.TYPE = 0;
+                        }
+                    }
+                    | identifier_hopt '[' expression ':' expression ']'
+                    {
+                        int left, right, increment, i;
+
+                        if ($3.TYPE == MGL_RESULT && $5.TYPE == MGL_RESULT) {
+                            left = $3.RESULT;
+                            right = $5.RESULT;
+                            $$.TYPE = MGL_CONCAT;
+                            $$.CONCAT = NULL;
+                            if (left < right) increment = 1;
+                            else increment = -1;
+                            for (i = left; i != right+increment; i += increment) {
+                                $$.CONCAT = addchain($$.CONCAT, (char *)vectorize($1, i));
+                            }
+                        }
+                        else $$.TYPE = 0;
+                    }
+                    | concatenation
+                    {
+                        $$ = $1;
+                    }
+                    | multiple_concatenation
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | function_call
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | '(' expression ')'
+                    {
+                        $$ = $2;
+                    }
+                    | MinTypMaxLit
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | system_call
+                    {
+                        $$.TYPE = 0;
+                    }
+                    | RealLit
+                    {
+                        $$.TYPE = 0;
+                    }
+                    ;
+
+identifier_hopt     : Identifier
+                    {
+                        $$ = $1;
+                    }
+                    | identifier_hopt '.' Identifier
+                    {
+                        $$ = NULL;
+                    }
+                    ;
+
+concatenation       : '{' expression_list '}'
+                    {
+                        if (MGL_CONTEXT(NM3LST) != NULL) {
+                            $$.TYPE = MGL_CONCAT;
+                            $$.CONCAT = MGL_CONTEXT(NM3LST);
+                            MGL_CONTEXT(NM3LST) = NULL;
+                        }
+                    }
+                    ;
+
+multiple_concatenation : '{' expression '{' expression_list '}' '}'
+                    ;
+
+function_call       : Identifier '(' expression_list ')'
+                    {
+                    }
+                    ;
+
+system_call         : SystemIdentifier '(' expression_list ')'
+                    {
+                    }
+                    | SystemIdentifier
+                    {
+                    }
+                    ;
+
+task_enable         : Identifier '(' expression_list ')'
+                    {
+                    }
+                    | Identifier
+                    {
+                    }
+                    ;
+
+system_task_enable  : SystemIdentifier '(' expression_list ')'
+                    {
+                    }
+                    | SystemIdentifier
+                    {
+                    }
+                    ;
+
+delay_option        : /* empty */
+                    | delay
+                    ;
+
+delay               : '#' IntegerLit
+                    | '#' RealLit
+                    | '#' Identifier
+                    | '#' '(' expression_list ')'
+                    ;
+
+specify_block       : T_SPECIFY specify_item_list T_ENDSPECIFY
+                    ;
+
+specify_item_list   : /* empty */
+                    | specify_item_list specify_item
+                    ;
+
+specify_item        : specparam_declaration
+                    | path_declaration
+                    | system_timing_check
+                    ;
+
+specparam_declaration : T_SPECPARAM assignment_list ';'
+                    ;
+
+path_declaration    : simple_path_declaration ';'
+                    | edge_sensitive_path_declaration ';'
+                    | state_dependent_path_declaration ';'
+                    ;
+
+list_of_path_inputs : specify_input_terminal_descriptor
+                    | list_of_path_inputs ',' specify_input_terminal_descriptor
+                    ;
+
+specify_input_terminal_descriptor : Identifier
+                    {
+                    }
+                    | Identifier '[' expression ']'
+                    {
+                    }
+                    | Identifier '[' expression ':' expression ']'
+                    {
+                    }
+                    ;
+
+list_of_path_outputs : specify_output_terminal_descriptor
+                    | list_of_path_outputs ',' specify_output_terminal_descriptor
+                    ;
+
+specify_output_terminal_descriptor : Identifier
+                    {
+                    }
+                    | Identifier '[' expression ']'
+                    {
+                    }
+                    | Identifier '[' expression ':' expression ']'
+                    {
+                    }
+                    ;
+
+path_delay_value    : path_delay_expression
+                    | '(' path_delay_expression ',' path_delay_expression ')'
+                    | '(' path_delay_expression ',' path_delay_expression ',' path_delay_expression ')'
+                    | '(' path_delay_expression ',' path_delay_expression ',' path_delay_expression ',' path_delay_expression ',' path_delay_expression ',' path_delay_expression ')'
+                    ;
+
+path_delay_expression : expression
+                    {
+                    }
+                    ;
+
+polarity_operator   : /* empty */
+                    | T_PLUS
+                    | T_MINUS
+                    ;
+
+simple_path_declaration :
+                      parallel_path_description '=' path_delay_value
+                    | full_path_description '=' path_delay_value
+                    ;
+
+parallel_path_description :
+                      '(' path_start T_LEADTO list_of_path_outputs ')'
+                    ;
+
+full_path_description :
+                      '(' path_start T_ALLPATH list_of_path_outputs ')'
+                    ;
+
+path_start          : edge_identifier list_of_path_inputs polarity_operator
+                    ;
+
+edge_sensitive_path_declaration :
+                      parallel_edge_sensitive_path_description '=' path_delay_value
+                    | full_edge_sensitive_path_description '=' path_delay_value
+                    ;
+
+parallel_edge_sensitive_path_description :
+                      '(' path_start T_LEADTO '(' list_of_path_outputs polarity_operator ':' expression ')' ')'
+                    ;
+
+full_edge_sensitive_path_description :
+                      '(' path_start T_ALLPATH '(' list_of_path_outputs polarity_operator ':' expression ')' ')'
+                    ;
+
+edge_identifier     : /* empty */
+                    | T_POSEDGE
+                    | T_NEGEDGE
+                    ;
+
+state_dependent_path_declaration :
+                      T_IF '(' expression ')' simple_path_declaration
+                    | T_IF '(' expression ')' edge_sensitive_path_declaration
+                    | T_IFNONE simple_path_declaration
+                    ;
+
+system_timing_check : SYS_SETUP
+                    | SYS_HOLD
+                    | SYS_SETUPHOLD
+                    | SYS_SKEW
+                    | SYS_RECOVERY
+                    | SYS_PERIOD
+                    | SYS_WIDTH
+                    ;
+%%
+
+/* ###--------------------------------------------------------------### */
+/*  function : yyerror                                                  */
+/* ###--------------------------------------------------------------### */
+
+int
+mgl_scomperror(char *str, mgl_scompcontext *context)
+{
+    context->ERRFLG++;
+    
+    avt_errmsg(MGL_ERRMSG, "001", AVT_ERROR, context->LINENUM);
+
+    return 1;
+}
+
+/* ###--------------------------------------------------------------### */
+/*  function : yyclean                                                  */
+/* ###--------------------------------------------------------------### */
+
+void
+mgl_scompclean(mgl_scompcontext *context)
+{
+    if (context->ASSIGN_LIST != NULL) {
+        freechain(context->ASSIGN_LIST);
+        context->ASSIGN_LIST = NULL;
+    }
+    if (context->HSHTAB != NULL) {
+        mgl_fretab(context->HSHTAB);
+        context->HSHTAB = NULL;
+    }
+}

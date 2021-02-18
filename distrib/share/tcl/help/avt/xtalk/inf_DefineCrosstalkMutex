@@ -1,0 +1,12 @@
+
+       void inf_DefineCrosstalkMutex(char *type, List *list);
+
+DDEESSCCRRIIPPTTIIOONN
+       Sets mutually exclusive signals with regard to crosstalk analysis.
+
+AARRGGUUMMEENNTTSS
+       ttyyppee          Legal values are _m_u_x_u_p and _m_u_x_d_n.
+
+       lliisstt          List  of  signals on which to apply mutual exclusion con-
+                     straints
+

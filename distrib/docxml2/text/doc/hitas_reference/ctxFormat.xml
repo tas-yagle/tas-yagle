@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<section niv='2'><title>CTX - Annotated Perfmodule Format</title>
+
+<p>The CTX file (suffix <f>.ctx</f>) is an ASCII text file containing all the delays calculated with crosstalk effects of a complete design hierarchy. This file is associated with all of the original detailed perfmodule files describing the hierarchy. It is intended to be viewed using the timing browser Xtas. This file contains four parts:</p>
+<list>
+<item>General header</item>
+<item>Top level delays</item>
+<item>Instance delays</item>
+<item>End of file</item>
+</list>
+
+
+
+
+
+
+<section niv='3'><title>General Header</title>
+
+<p>The CTX file header is the same as the corresponding perfmodule 
+file of the top level of the design:</p>
+<code>
+<cl>H &lt;tool&gt; &lt;vers&gt; &lt;name&gt; &lt;techno&gt; 
+&lt;techno_vers&gt; &lt;inslope&gt; &lt;outcapa&gt; &lt;hierarchy_level&gt; 
+(&lt;day&gt; &lt;month&gt; &lt;year&gt; &lt;hour&gt; &lt;minute&gt; 
+&lt;second&gt;);</cl>
+</code>
+
+</section>
+
+<section niv='3'><title>Top Level Delays</title>
+
+<p>Part of this file contains all the delays of the top level.</p>
+<code>
+<cl>M &lt;subcircuit name&gt; (</cl>
+<cl>  D &lt;line index&gt; ( </cl>
+<cl>     ((MAX &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>     ((MIN &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>    )</cl>
+<cl>  |</cl>
+<cl>  |</cl>
+<cl>  D &lt;line index&gt; ( </cl>
+<cl>     ((MAX &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>     ((MIN &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>    )</cl>
+<cl>)</cl></code>
+<p>The &lt;line index&gt; value is the index of the corresponding line in 
+the detailed timing perfmodule.</p>
+
+</section>
+
+
+<section niv='3'><title>Instance delays</title>
+
+<p>This section gives all delays for all instances.</p>
+<code>
+<cl>I &lt;instance name&gt; (</cl>
+<cl>  D &lt;line index&gt; ( </cl>
+<cl>     ((MAX &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>     ((MIN &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>    )</cl>
+<cl>  |      |</cl>
+<cl>  |      |</cl>
+<cl>  D &lt;line index&gt; ( </cl>
+<cl>     ((MAX &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>     ((MIN &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>    )</cl>
+<cl>)</cl>
+<cl>|</cl>
+<cl>|</cl>
+<cl>I &lt;instance name&gt; (</cl>
+<cl>  D &lt;line index&gt; ( </cl>
+<cl>     ((MAX &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>     ((MIN &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>    )</cl>
+<cl>  |      |</cl>
+<cl>  |      |</cl>
+<cl>  D &lt;line index&gt; ( </cl>
+<cl>     ((MAX &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>     ((MIN &lt;delay&gt; &lt;slope&gt;))</cl>
+<cl>    )</cl>
+<cl>)</cl></code>
+<p>For each instance, the &lt;line index&gt; value is the index of the corresponding line in the detailed timing perfmodule.</p>
+
+</section>
+
+
+
+
+
+<section niv='3'><title>The End of File</title>
+
+<p>The end of the CTK file is given by the <f>G;</f> article.</p>
+
+</section>
+
+
+</section>
+

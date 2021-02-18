@@ -1,0 +1,14 @@
+
+           ctk_LoadCrosstalkResults <{timingfigure}> ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Puts  the  UTD  in  the  same state as after the crosstalk analysis was
+       done. The corresponding StabilityFigure is returned.
+           Functions 'ttv_LoadCrosstalkFile', 'stb_LoadSwitchingWindows'  then
+       'ctk_LoadAggressionFile' are called to do this action.
+
+AARRGGUUMMEENNTTSS
+       ttiimmiinnggffiigguurree  TimingFigure to put into post-crosstalk analysis state
+
+       EEXXAAMMPPLLEE       _s_e_t _s_t_a_b_f_i_g _[_c_t_k___L_o_a_d_C_r_o_s_s_t_a_l_k_R_e_s_u_l_t_s _$_m_y_U_T_D_].
+

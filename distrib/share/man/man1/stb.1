@@ -1,0 +1,474 @@
+.TH STB 1 "06 November 2001" "AVERTEC" "AVERTEC CAD Tools"
+
+.SH NAME
+.PP
+\fBstb\fP \-  A stability analyzer that verify that setup and hold constraints are met.
+
+.so man1/avt_origin.1
+
+.SH SYNOPSIS
+.PP
+stb \fI[options] root_file \fP
+
+.SH DESCRIPTION
+.PP
+\fBstb\fP is a stability analyzer, which performs calculation of setup times and
+hold times in CMOS circuits, handling clock skew and enabling cycle sharing exploitation.
+Constraints are calculated for flip-flops and latches, precharged points, commands, output
+connectors and user-defined points.
+\fBstb\fP enables multiple clock domains analysis, and handles flip-flop based designs as well 
+as latch-based multiphases designs.  
+\fBstb\fP generates comprehensive stability reports, enabling the visualization of all the stability
+states for constrained points.
+
+.SH OPTIONS
+.PP
+Options may appear in  any  order before or after the input filename.
+
+.TP 10
+\fI-dg\fP
+To be used generally with the -da option for crosstalk analysis.
+With this option, STB uses the timing database in DTX format (gate graph). In this case, stability intervals for auxiliary nodes are also calculated. 
+
+.TP 10
+\fI-da\fP
+Essential for crosstalk analysis.
+With this option, all stability intervals are maintained, instead of merging them into a single interval for setup/hold verification. 
+
+.TP 10
+\fI-w\fP
+With this option, STB performs a worst case analysis. Any latches are initialized assuming zero exploitation of the transparency, and the system is relaxed to identify stable operation with minimum transparency. 
+The default is to initialize the latches assuming maximum transparency. 
+
+.TP 10
+\fI-ff\fP
+With this option, latches clocked on the same phase as the origin of their data input are assumed to be flip-flops.
+
+.TP 10
+\fI-lt\fP
+With this option, latches clocked on the same phase as the origin of their data input are assumed to be transparent.
+
+.TP 10
+\fI-er\fP
+With this option, latches clocked on the same phase as the origin of their data input are assumed to be errors.
+
+.TP 10
+\fI-setup\fP
+With this option, only setup times are calculated.
+
+.TP 10
+\fI-hold\fP
+With this option, only hold times are calculated.
+
+.TP 10
+\fI-tl\fP
+With this option, only top level paths are taked into account for stability analysis.
+
+.TP 10
+\fI-fe\fP
+With this option, all errors saved are redirected to a separate error file (suffix .ste).
+
+.TP 10
+\fI-s\fP
+With this option, the execution is in silent mode. No errors or warnings are reported unless they are fatal.
+
+.SH INPUT SPECIFICATION FORMAT
+.PP
+The input format is generate by \fBhitas(1)\fP. It contains the information on the shortest and longest path delays, this is the timing database of a particular circuit or block.
+
+.TP 10
+\fIinput_file.stb\fP
+The ".stb" file is an ascii text file made up of five sections. Any blank lines are ignored and lines starting with the "#" character are considered to be comment.
+
+.br
+The five sections are:
+.br
+        - General header
+.br
+        - Clock Specifications
+.br
+        - Clock domains
+.br
+        - Equivalent clocks
+.br
+        - Clock priorities
+.br
+        - Conditioned clock states
+.br
+        - Input connector stability specifications
+.br
+        - Output connector constraints to verify
+.br
+
+
+As part of the general header any or all of the sections can be omitted. This sections must appear in the specified order.
+The character '*' canbe used for any of the specified node names, matching any legal character string.
+.br
+For example:
+.br
+        com* matches com1, com2, command, etc...
+
+.TP 10
+\fIThe general header\fP
+The format of the header is as follows : 
+
+.br
+        name:    <name>;
+.br
+        version: 1.00;
+.br
+        period:  <integer>;
+.br
+        setup:   <integer>;
+.br
+        hold:    <integer>;
+.br
+
+
+The name is the name of the block to analyse, and is the the as the basename of the file.
+The version "1.00" corresponds to the current file format version.The last three values are integers representing times in picoseconds. 
+The period is the default clock period for clocks whose period is not specified. The setup and hold are global margins of safety for the setup and hold verifications. 
+It is possible to omit the default period specification so long as each clock has a period associated with its definition or via the domain definition. 
+
+.TP 10
+\fIClock specifications\fP
+This section is used to define all the external clock signals.
+.br
+The syntax is as follows:
+
+.br
+        clock connectors 
+.br
+        begin
+.br
+         <ck1>:
+.br
+           down (<min>:<max>);
+.br
+           up   (<min>:<max>);
+.br
+           [period <integer>]
+.br
+               |    |
+.br
+               |    |
+.br
+         <ckn>:
+.br
+           down (<min>:<max>);
+.br
+           up   (<min>:<max>);
+.br
+           [period <integer>]
+.br
+        end;
+.br
+
+
+For each of the external clock connectors, four parameters must be given: 
+the earliest and latest instant of the falling edge, and the earliest and latest instant of the rising edge. 
+The order is irrelevant, the actual values themselves are used to order the clock phases within the period. 
+
+.TP 10
+\fIClock domains specifications\fP
+This section allows the user to assign clock connectors to clock domains. Timing checks are only performed on paths which do not cross domain boundaries. Each domain must be given a name, however the name itself is purely facultatif.
+.br
+The syntax is as follows : 
+
+.br
+        asynchronous clock groups 
+.br
+        begin
+.br
+         <domain1>: <list_of_clocks>
+.br
+           [period <integer>]
+.br
+               |    |
+.br
+               |    |
+.br
+         <domainn>: <list_of_clocks>
+.br
+           [period <integer>]
+.br
+        end;
+.br
+
+
+Each domain contains the list of clock connectors which make up the domain. The period of the clocks can be specified here, since clocks in the same domain must have identical periods. 
+
+.TP 10
+\fIEquivalent clocks\fP
+This section allows the user to indicate that separate clock connectors should be treated as having identical phases. 
+.br
+The syntax is as follows : 
+
+.br
+        equivalent clock groups 
+.br
+        begin
+.br
+         <group1>: <list_of_clocks>
+.br
+               |    |
+.br
+               |    |
+.br
+         <groupn>: <list_of_clocks>
+.br
+        end;
+.br
+
+
+Each group contains the list of clock connectors which make up the equivalent group. 
+
+.TP 10
+\fIMultiple clock priority\fP
+This section allows the user to specify which clock should be considered as having the priority in the case of clocked signals (latches, flip-flops or precharges) which depend on multiple clocks. 
+Defining priority clocks is useful in the case4 of multiple clocks due to multiple operating modes (e.g. test mode or functional mode). 
+.br
+The syntax is as follows : 
+
+.br
+         multiple clock priority 
+.br
+         begin
+.br
+         <clocked_signal>: <clock_connector>
+.br
+               |    |
+.br
+               |    |
+.br
+         <clocked_signal>: <clock_connector>
+.br
+        end;
+.br
+
+Each line associates a clocked signal with its highest priority clock connector. 
+
+.SH THE OUTPUT STABILITY FILE FORMAT
+.PP
+\fBstb\fP generates the extension ".sto", and an extension ".str" for the timing report.
+
+.TP 10
+\fIoutput_file.sto\fP
+The '.sto' file is an ascii text file made up of six distinct sections. 
+.br
+The six sections are : 
+        - General header
+.br
+        - Clock Specifications
+.br
+        - Conditioned clock states
+.br
+        - Input connector stabilityintervals 
+.br
+        - Output connector stability intervals
+.br
+        - Internal node stability intervals
+.br
+
+Apart from the general header, some of the sections may be omitted. 
+
+.TP 10
+\fIInput connector stability intervals\fP
+This section gives the stability intervals at the input terminals. 
+.br
+The syntax is as follows : 
+
+.br
+        input connectors stability
+.br
+        begin
+.br
+          <input1> [from <phase>]:
+.br
+            unstable: <value>
+.br
+            stable:   <value>
+.br
+                |    |
+.br
+                |    |
+.br
+          <inputn> [from <phase>]:
+.br
+            unstable: <value>
+.br
+            stable:   <value>
+.br
+        end;
+.br
+
+That will be equivalent to the input connectors stability specification given in the '.stb' file except that every input connector is specified explicitly. 
+INOUT connectors are grouped with the output connectos in the subsequent section. 
+
+
+.TP 10
+\fIOutput connector stability intervals\fP
+This section specifies the stability intervals at the output terminals. 
+.br
+The syntax is as follows:
+
+.br
+output connectors stability
+       begin
+.br
+        <output1> [from <phase>]:
+.br
+           unstable: <value>
+.br
+           stable:   <value>
+.br
+               |    |
+.br
+               |    |
+.br
+         <outputn> [from <phase>]:
+.br
+           unstable: <value>
+.br
+           stable:   <value>
+.br
+       end;
+.br
+
+This section gives the stability intervals calculated for all internal nodes.
+If the analysis is performed on the critical path graph (the default), then the set of internal nodes consists solely of latch data and command input and precharges. If the analysis is performed on the causality (gate) graph, then the set includes all auxiliary nodes. 
+
+.TP 10
+\fIThe timing report\fP
+Generated by \fBstb\fP, it has the suffix '.str' and a basename identical to that of the original circuit. It lists the setup and hold margins calculated for all critical circuit nodes.
+.br
+This includes : 
+.br
+        - Output connectors
+.br
+        - Memory nodes
+.br
+        - Conditioned memory commands
+.br
+        - Precharged nodes
+.br
+
+All memory and conditioned command nodes are specified with the details of their local clock, since this is the reference for the setup and hold calculations. 
+A negative value for a setup or hold margin indicates a violation. In the event of a violation on a particular node, all data sources resulting in a violation are listed for that node, together with their individual setup and hold margins.
+
+.SH ENVIRONMENT VARIABLES
+
+.TP 10
+\fISTB_TRACE_MODE\fP
+If this variable is "yes" then STB displays all intermediary values of the stability intervals calculations on stdout. 
+Useful to see how the relaxation progresse
+
+.TP 10
+\fITAS_LANGUAGE\fP
+Indicates the language used by TAS and STB, "english" by default or "french".
+
+.TP 10
+\fIMBK_WORK_LIB\fP
+Indicates where STB has to read the input file and write the resulting files.
+The default is the current directory.
+
+.SH EXECUTION MODES
+
+.PP
+The STB command is used as follows : 
+stb \fI[options] root_file\fP
+
+.PP
+\fBstb\fP requires a complete timing database for the circuit to be analyzed (in DTX or TTX format, corresponding to the gate graph and the critical path graph respectively). 
+The default mode generates a timing report STR file containing the calculated setup and hold margins and an STO file containing the stability intervals calculated at the interface of the circuit analyzed. 
+
+.SH EXAMPLE STABILITY SPECIFICATION FILE
+.PP
+Since this file must be provided by the user, an example is shown here for clarification. 
+
+.br
+        name = mycircuit;
+.br
+        version = 1.00;
+.br
+        period = 180000;
+.br
+        setuptime = 100;
+.br
+        holdtime = 200;
+.br
+        
+.br
+        clock connectors 
+.br
+        begin  
+.br
+          ck:
+.br
+            up   (90000:90100);
+.br
+            down (10000:10100);
+.br
+        end;
+.br
+        
+.br
+        conditioned command states 
+.br
+        begin
+.br
+          com1: up
+.br
+        end;
+.br
+
+.br
+        
+.br
+        specify input connectors
+.br
+        begin
+.br
+          out1:
+.br
+            unstable 1000 after ck rising;
+.br
+            stable   3000 after ck rising;
+.br
+          default:
+.br
+            unstable 500 after ck rising;
+.br
+            stable   4000 after ck rising;
+.br
+        end;
+.br
+         
+.br
+        verify output connectors 
+.br
+        begin
+.br
+          out1:
+.br
+            unstable 1000 after ck rising;
+.br
+            stable   3000 after ck rising;
+.br
+          default:
+.br
+            unstable 500 after ck rising;
+.br
+            stable   4000 after ck rising;
+.br
+        end;
+.br
+
+.SH SEE ALSO
+.PP
+     hitas(1), inf(5), dtx(5), ttx(5)
+
+.SH DIAGNOSTICS
+.PP
+
+.so man1/avt_bug_report.1

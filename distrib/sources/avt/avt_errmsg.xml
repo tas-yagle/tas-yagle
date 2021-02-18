@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="avt">
+
+<err>
+    <lib>AVT-</lib><num>000</num>
+    <msg>Usage: avtdeltoken toolname servername hostname hostid hosttoken pid\n</msg>
+    <doc>When using the AVT license server (avtld), avtdeltoken allows to delete a token. Be careful, deleting a token under use will crash the corresponding process.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>001</num>
+    <msg>Character out of [0-9A-Za-z] range in avertecbanner\n</msg>
+    <doc>An illegal value has been used within an internal function. Please, report internal errors to Avertec Support.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>002</num>
+    <msg>Resulting size bigger than %d columns not allowed in avertecbanner\n</msg>
+    <doc>The formatting size of an object or a text does not fit the avertec banner dimensions. Please, report internal errors to Avertec Support.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>003</num>
+    <msg>'%s' is not a valid variable\n</msg>
+    <doc>Invalid variable in avttools.conf file. Check variable name or suppress wrong variable definition.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>004</num>
+    <msg>File avttools.conf, syntax error line %d\n</msg>
+    <doc>File avttools.conf cannot be printed. Correct synthax error (see documentation)</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>005</num>
+    <msg>'%s = %s' with no effect. Value '%s' already set with '%s'\n</msg>
+    <doc>A variable has been set twice within avttools.conf, suppress one if possible.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>006</num>
+    <msg>File avttools.conf, multiple declaration of '%s'\n</msg>
+    <doc>A variable has been set several times. Conflicts may occur. Check the declarations of the variable within avttools.conf file and keep only one.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>007</num>
+    <msg>Word %s too long\n</msg>
+    <doc>The string provided to the license server is too long. Use avtinfo to ensure valid value or license file are provided.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>008</num>
+    <msg>String too long\n</msg>
+    <doc>The line or message provided to the license server is too long.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>009</num>
+    <msg>Impossible to delete this token\n</msg>
+    <doc>The token cannot be deleted. Check token name and user rights.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>010</num>
+    <msg>Usage: avtgenkey toolname vendor server hostid date license type\n</msg>
+    <doc>The license server avt (avtld) failed to handle the license key of avtlicense file.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>011</num>
+    <msg>Usage: avtinfo tool_name\n</msg>
+    <doc>avtinfo displays information for the avt license server (avt). Ensure a valid tool_name is used.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>012</num>
+    <msg>Bad Format For Date\n</msg>
+    <doc>The date in the license file is not valid. The license file may be invalid. Check the license file in use.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>013</num>
+    <msg>Bad Token: %s\n</msg>
+    <doc>An invalid token has been requested by the license server. Check license file is valid and up to date.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>014</num>
+    <msg>Option -%c requires an operand\n</msg>
+    <doc>The specified option is not properly used. Check tool's usage.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>015</num>
+    <msg>Unrecognised option: -%c\n</msg>
+    <doc>The specified option is unknown. Check tool's usage.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>016</num>
+    <msg>Unrecognized Command line\n</msg>
+    <doc>Command line synthax invalid. Check tool's usage.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>017</num>
+    <msg>Error in opening file %s\n</msg>
+    <doc>The specified file cannot be open. Check user's rights, and file path.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>018</num>
+    <msg>Usage: avtreserve tool_name minutes [nb_token]\n</msg>
+    <doc>Display the usage of binary avtreserve. avtreserve is used by the avt license server (avtld).</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>019</num>
+    <msg>Unable to reserve token\n</msg>
+    <doc>Token reservation failed.  Check token name and reservation command synthax.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>020</num>
+    <msg>Usage: avttool tools_name_list\n</msg>
+    <doc>Display usage for monitoring tokens information.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>021</num>
+    <msg>Run failed\n</msg>
+    <doc>The binary ends with an error. Other messages should bring more information.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>022</num>
+    <msg>Impossible to give token\n</msg>
+    <doc>The license server was unable to get a pid for the token process.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>023</num>
+    <msg>License server %s not responding\n</msg>
+    <doc>The license server is unreachable. Check a valid license server is running.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>024</num>
+    <msg>Environment variable %s is not defined\n</msg>
+    <doc>A variable needs to be set in the environment. Avertec documentation supplies the user with the variables legal values.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>025</num>
+    <msg>...try with server %s\n</msg>
+    <doc>Another license server has been found and will be tryed. This can occur if the original license server specified by the user was not found or returned an error.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>026</num>
+    <msg>Bad license server %s\n</msg>
+    <doc>The license server is not valid or was not responding. Check a valid license server is running.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>027</num>
+    <msg>%s\n</msg>
+    <doc>The running tool encountered an error. Specific information supplied by the tool is displayed.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>028</num>
+    <msg>Token never taken\n</msg>
+    <doc>No token information available for the license server. If a binary (avtinfo, avtdeltoken, or other avt license server utility) has been used, please check the relevant usage.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>029</num>
+    <msg>Bad token description\n</msg>
+    <doc>The command line synthax used is not valid. Check for relevant avt license server utility usage.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>030</num>
+    <msg>Bad file name, check autorisation for %s</msg>
+    <doc>The utility failed to open the specified license key or log file.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>031</num>
+    <msg>Missing part of log file\n</msg>
+    <doc>The avt license server returns an error with the license log file. Usually not a critical error for the running process if avtld is used rather than flexnet.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>033</num>
+    <msg>AVT-_LICENSE_FILE not set and $AVT_TOOLS_DIR/etc/avtlicense.lic missing.\nIf errors occur, please check your Flexlm license paths.</msg>
+    <doc>The flex license file was not found. Use the flexnet license utilities to get information about flexnet license status.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>034</num>
+    <msg>Flexlm returned error '%d' when %s.\n</msg>
+    <doc>A generic message displaying error numbers returned by flexnet. Flexnet (or FlexLM) documentation provide some clue to handle surch error number.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>035</num>
+    <msg>Unable to find Flexlm job corresponding to feature %s\n</msg>
+    <doc>The specified feature is not valid or no job use it. Flexnet license utilities can provide information about the feature, and the jobs running.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>036</num>
+    <msg>Please, resolve Flexlm errors before running Avertec programs.\n</msg>
+    <doc>Flexnet encounters an error. As long as Flexnet license will not runs properly no licensed Avertec tool can be run. Dealling with license errors is a priority. Check if license file path and license daemon are valid and reachable.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>037</num>
+    <msg>Log level of variable '%s' is not a number. It is '%s'.\n</msg>
+    <doc>Please refer to the configuration of log report.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>038</num>
+    <msg>Log level of variable '%s' must be a positive number less or equal to 9. It is '%s'.\n</msg>
+    <doc>Please refer to the configuration of log report.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>039</num>
+    <msg>Log variable '%s' is unknown.\n</msg>
+    <doc>Please refer to the configuration of log report.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>040</num>
+    <msg>Invalid value '%s' for configuration variable '%s', should be 'yes' or 'no'\n</msg>
+    <doc>Please refer to the HiTas Reference Guide.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>041</num>
+    <msg>Invalid value '%s' for configuration variable '%s', please refer to the Reference Guide for correct values\n</msg>
+    <doc>Please refer to the HiTas Reference Guide.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>042</num>
+    <msg>Invalid file format '%s' for '%s', please refer to the Reference Guide for valid formats\n</msg>
+    <doc>Valid formats are 'spice', 'lib', 'tlf3', 'tlf4', 'ttv', 'vhdl', 'verilog', 'dspf', 'spef' and 'inf'.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>043</num>
+    <msg>Could not find a file matching '%s'\n</msg>
+    <doc>The specified filename filter does not match any files in accessible directories.</doc>
+</err>
+
+<err>
+    <lib>AVT-</lib><num>044</num>
+    <msg>Multiple settings for configuration variable '%s': '%s' is overwritten by '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>045</num>
+    <msg>could not open file '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>046</num>
+    <msg>could not create file '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>047</num>
+    <msg>'avtWarningFilter' has been set to '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>048</num>
+    <msg>Subsequent call to 'avt_LoadFile' will not retain previous definitions of global parameters\n</msg>
+    <doc>The scope of .SCALE, .GLOBAL or other global parameters is limited to the files loaded by a single call of 'avt_LoadFile'. The values of those global parameters are not retained for subsequent calls of 'avt_LoadFile'.</doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>049</num>
+    <msg>Incorrect unit specified in '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>050</num>
+    <msg>Incorrect number of jobs %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>051</num>
+    <msg>received answer from job %d, but is not running !\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>052</num>
+    <msg>job %d is not in state STAT_EXEC_WAIT when received begin packet\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>053</num>
+    <msg>job %d is not in state STAT_EXEC_RUN when received data\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>054</num>
+    <msg>job %d is not in state STAT_EXEC_RUN when received end\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>055</num>
+    <msg>Job %d aborted [%s]\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>056</num>
+    <msg>A system error occured when runing a new job\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>057</num>
+    <msg>Statistical result file '%s' already exist. Using '%s'.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>058</num>
+    <msg>Error in %s table. Entry %d correspond to index %d.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>059</num>
+    <msg>Received unhandled command '%s' from job %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>061</num>
+    <msg>Invalid binary transfer\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>062</num>
+    <msg>Failed to create directory '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>AVT-</lib><num>063</num>
+    <msg>Invalid value '%s' for configuration variable '%s'\n</msg>
+    <doc>Valid value are '1mW', '100uW', '10uW', '1uW', '100nW', '10nW', '1nW', '100pW', '10pW' and '1pW'.</doc>
+</err>
+
+</messages>

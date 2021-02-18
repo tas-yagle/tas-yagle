@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<intro_title>About this Document</intro_title>
+<intro>This document explains:<list>
+<item>Software installation</item>
+<item>The input formats supported</item>
+<item>How to perform the functional abstraction</item>
+<item>The VHDL/Verilog generated</item>
+<item>User constraints</item>
+<item>The Graphical User Interface</item>
+</list>
+</intro>

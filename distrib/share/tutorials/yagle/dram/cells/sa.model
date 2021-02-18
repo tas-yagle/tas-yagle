@@ -1,0 +1,31 @@
+
+.subckt gns_sensamp bl0 blb0 bl1 blb1 wlen0 wlen1 prech bl blb tozero toone eq0 eq1 blen
+* |condir bl inout, blb inout, toone in, tozero in, eq0 in, eq1 in, wlen0 in
+* |condir wlen1 in, prech in, bl0 inout, blb0 inout, bl1 inout, blb1 inout, blen in
+
+
+* pragma symmetric bl0 blb0
+* pragma symmetric bl1 blb1
+* pragma symmetric bl blb
+* pragma coupled bl0 bl1 bl 
+* pragma coupled blb0 blb1 blb 
+Mprechsa_p1 bl_in prech blb_in vddprch TP L=0.08U W=2U 
+Mprechsa_p2 vddprch prech blb_in vddprch TP L=0.08U W=2U 
+Mprechsa_p3 vddprch prech bl_in vddprch TP L=0.08U W=2U 
+Mn1 bl0 wlen0 bl_in vss TN L=0.1 W=0.6 
+Mn2 blb0 wlen0 blb_in vss TN L=0.1 W=0.6 
+Mn3 bl1 wlen1 bl_in vss TN L=0.1 W=0.6 
+Mn4 blb1 wlen1 blb_in vss TN L=0.1 W=0.6 
+Mn5 bl_in blb_in tozero vss TN L=0.1 W=0.6 
+Mn6 blb_in bl_in tozero vss TN L=0.1 W=0.6 
+Mp8 bl_in blb_in toone vdd TP L=0.1 W=1.2 
+Mp9 blb_in bl_in toone vdd TP L=0.1 W=1.2 
+Mneqx1 bl0 eq0 blb0 vss TN L=0.1 W=0.6 
+Mneqx2 bl1 eq1 blb1 vss TN L=0.1 W=0.6 
+
+Mn11 bl blen bl_in vss TN L=0.1 W=0.6
+Mn12 blb blen blb_in vss TN L=0.1 W=0.6
+
+.ends gns_sensamp
+
+

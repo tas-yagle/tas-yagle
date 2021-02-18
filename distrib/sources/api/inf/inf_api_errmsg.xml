@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="inf_api">
+
+<err>
+    <lib>INFAPI-</lib><num>001</num>
+    <msg>you must first use 'inf_SetFigureName' prior to use other functions\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>002</num>
+    <msg>figure '%s' could not be found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>003</num>
+    <msg>invalid  command state given: '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>004</num>
+    <msg>missing clock parameter\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>005</num>
+    <msg>clock '%s' not defined yet\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>006</num>
+    <msg>no period specified for clock '%s' or no default period\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>007</num>
+    <msg>missing clock parameter\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>008</num>
+    <msg>too many parameters starting at '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>009</num>
+    <msg>invalid bypass location given: '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>010</num>
+    <msg>unknown mutex type given: '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>011</num>
+    <msg>unknown crosstalk mutex type given: '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>012</num>
+    <msg>no signal elements in falsepath\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>013</num>
+    <msg>invalid signal type '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>014</num>
+    <msg>unrecognized token '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>015</num>
+    <msg>unknown section '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>016</num>
+    <msg>'%s' is not a number\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>017</num>
+    <msg>too much values for slope or capa generation\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>018</num>
+    <msg>unknown type given: '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>019</num>
+    <msg>inf_DisableTimingArc: invalid direction '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>020</num>
+    <msg>unknown characteristic '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>021</num>
+    <msg>bad value '%s' for 'stbUnits'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>022</num>
+    <msg>Clock '%s' is already defined.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>023</num>
+    <msg>inf_DefineStability command ignored\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>024</num>
+    <msg>missing parameter\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>025</num>
+    <msg>invalid parameter '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>026</num>
+    <msg>unsupported operation requested\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>027</num>
+    <msg>incompatible tokens given for directive\n</msg>
+    <doc>Using "... with sig rising|falling" or "... before|after sig up|down" is forbidden.</doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>028</num>
+    <msg>invalid type '%s', ignoring this entry\n</msg>
+    <doc>The given type does not apply to this section and can't be handled.</doc>
+</err>
+<err>
+    <lib>INFAPI-</lib><num>029</num>
+    <msg>out of range probability value: %g\n</msg>
+    <doc>The probability value must be a value ranging from 0 to 1.</doc>
+</err>
+
+</messages>

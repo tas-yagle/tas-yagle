@@ -1,0 +1,15 @@
+
+       void avt_SetMainSeed(int value);
+
+DDEESSCCRRIIPPTTIIOONN
+       Sets  the main seed to use when evaluating random mathematical function
+       with monte-carlo runs enabled. The main seed is used for  anything  but
+       model  parameters  in  a ".mcparam" spice section concerning transistor
+       model alterations. This function goal is to enable the  reproducibility
+       of past results.
+
+AARRGGUUMMEENNTTSS
+       vvaalluuee         seed value.
+
+       EEXXAAMMPPLLEE       _a_v_t___S_e_t_M_a_i_n_S_e_e_d _1_2_3_4_5_6
+

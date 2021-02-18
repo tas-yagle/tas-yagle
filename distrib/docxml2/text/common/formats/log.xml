@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>User-defined Log File</title>
+<p>A global log file can be generated, logging the proccessing of all the components of the
+software. This file is customizable, and user can choose which component to log, and the level of
+log to apply.</p>
+<p>Each line in the log file is beginning with the code related to the logged software component:</p>
+<glossary>
+<row><article><f>FAC</f></article><def>file access tracing</def></row>
+<row><article><f>MCH</f></article><def>disk cache tracing (used for <f>.stm</f>, <f>.rcx</f> and <f>.spef</f> files) </def></row>
+<row><article><f>MCC</f></article><def>MOSFET characterization</def></row>
+<row><article><f>RCN</f></article><def>RC networks construction</def></row>
+<row><article><f>TRC</f></article><def>RC networks characterization</def></row>
+<row><article><f>YAG</f></article><def>transistor netlist disassembly</def></row>
+<row><article><f>TAS</f></article><def>information related to delay calculation</def></row>
+<row><article><f>STM</f></article><def>information related to delay models</def></row>
+<row><article><f>EFG</f></article><def>spice deck generation</def></row>
+<row><article><f>GSP</f></article><def>automatic stimuli generation</def></row>
+<row><article><f>TLF</f></article><def><f>.tlf</f> file generation</def></row>
+<row><article><f>LIB</f></article><def><f>.lib</f> file generation</def></row>
+<row><article><f>ERR</f></article><def>error redirection in log file</def></row>
+<row><article><f>PRS</f></article><def>statistics related to netlist parsing</def></row>
+<row><article><f>SPI</f></article><def>detailed logging of the spice netlist and technology file parser</def></row>
+</glossary>
+
+<p>The <f>avtLogFile</f> variable activates the creation of the log file. The <f>avtLogEnable</f>
+variable selects the software components to log and the level of log. Please refer to the 'Configuration
+Variables' chapter for more details.</p>
+
+</section>
+

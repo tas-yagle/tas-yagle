@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+<row type="split"><article><index>avtAnnotationPreserveExistingParasitics</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Existing parasitics on nets annotated in a DSPF/SPEF file won't 
+be overridden by the parasitics in the DSPF/SPEF file. The DSPF/SPEF information will rather be added to the existing ones.  </def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtAnnotationDeviceConnectorSetting</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Overrides the internal tool known device connector names used in DSPF/SPEF annotation.
+The string must contain 10 items in the following order: transistor source name, transistor gate name, transistor drain name, transistor bulk name,
+resistor positive connector, resistor negative connector, capacitor positive connector, capacitor negative connector,
+diode positive connector, diode negative connector. By default, the tool knows of "s g d b 1 2 1 2 1 2" and "s g d b pos neg 1 2 1 2".
+<p>Example:</p>
+<p><f>avt_config avtAnnotationDeviceConnectorSetting "src gate drn blk 1 2 1 2 1 2"</f></p>
+</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtSpiDspfBuildPower</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Only used for DSPF annotation. When creating a figure from 
+DSPF information, use the avtGlobalVddName, avtGlobalVssName, avtVddName and avtVssName to detect power 
+connections on the instance, so they are created on the boundary of it instead of 
+being merged with all unknown connectors.</def></row>
+<row><article><f>no</f></article><def></def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtSpiDspfLinkExternal</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Only used for DSPF annotation. When an external connector is not 
+connected to anything, and if there is an internal signal with the same name, then the connector is assumed to be on 
+this signal.</def></row>
+<row><article><f>no</f></article><def></def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtSpiPinDspfOrder</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Only used for DSPF annotation. Order of connector of an instance is 
+the one described in the DSPF instead of the one described for the instance interface.</def></row>
+<row><article><f>no</f></article><def></def></row>
+</glossary>
+</def></row>
+</glossary>

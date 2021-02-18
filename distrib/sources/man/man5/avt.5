@@ -1,0 +1,710 @@
+.TH AVT 5 "28 May 2002" "AVERTEC" "Tools Configuration"
+
+.SH NAME
+.TP 10
+AVT
+\- Tools Configuration and License Server
+
+.so man1/avt_origin.1
+
+.SH TOOLS CONFIGURATION FILE avttools.conf
+The configuration file avttools.conf is common to all tools provided by AVERTEC. This file 
+should be used to modify the default: value of a set of variables used in the AVERTEC tools.
+The file contains a list of variables with their associated value:
+.br
+
+avtVar = value
+.br
+# sets the variable AvtVar to value
+
+.br
+If no value is specified, then the default: value is assumed.
+Lines beginning with '#' are comments and the file is case insensitive.
+.br
+This file may appear in the following directories, listed in order pf priority:
+.br
+.TP 2
+- Current directory '.'
+.br
+.TP 2
+- $AVTTOOLS_DIR/etc
+.br
+.TP 2
+- ~/etc
+
+.br
+Each variable corresponds to an environment variable in the shell. If the environment
+variable is set, then the corresponding variable in avttools.conf is ignored.
+
+
+.SH avtLicenseServer 
+- AVT_LICENSE_SERVER
+.br
+- default: machine hostname
+.br
+- values: every valid hostname
+
+.SH avtInputNetlistFormat 
+- MBK_IN_LO
+.br
+- default: al
+.br
+- values: hns, fne, hdn, fdn, al, alx, spi, cir, sp, edi, vst, vhd, v, vlg 
+
+.SH avtOutputNetlistFormat
+- MBK_OUT_LO
+.br
+- default: al
+.br
+- values: hns, fne, hdn, fdn, al, alx, spi, cir, sp, edi, vst, vhd, cct, v, vlg 
+
+.SH avtLoadParasitics
+- MBK_LOAD_PARASITICS
+.br
+- default: no
+.br
+- values: yes, no
+
+.SH avtInputParasiticNetlistFormat
+- MBK_IN_PARASITICS
+.br
+- default: dspf
+.br
+- values: dspf, spf
+
+.SH avtDoNotDevectNames
+- MBK_NO_DEVECT
+.br
+- default: no 
+.br
+- values: yes, no
+
+.SH avtCaseSensitive
+- MBK_CASE_SENSITIVE
+.br
+- default: no
+.br
+- values: yes, no
+
+.SH avtStructuralVhdlSuffix
+- MVL_FILE_SUFFIX
+.br
+- default: avtOutputNetlistFormat or MBK_OUT_LO
+.br
+- values: every valid string
+
+.SH avtStructuralVhdlMaxError
+- MVL_MAXERR
+.br
+- default: 30
+.br
+- values: 0 - INT_MAX
+
+.SH avtStructuralVhdlConfigure
+- MVL_CONFIGURE
+.br
+- default: no
+.br
+- values: yes, no
+
+.SH avtStructuralVerilogSuffix
+- MGL_FILE_SUFFIX
+.br
+- default: v
+.br
+- values: every valid suffix
+
+.SH avtUseVerilogLibrary
+- MGL_USE_LIBRARY
+.br
+- default: no 
+.br
+- values: yes or every string beginning with 'y' or 'Y', no
+
+.SH avtStructuralVerilogMaxError
+- MGL_MAXERR
+.br
+- default: 30
+.br
+- values: 0 - INT_MAX
+
+.SH avtInputBehaviorFormat
+- BEH_IN_FORMAT
+.br
+- default: vhd
+.br
+- values: vhd, vlg, vbe
+
+.SH avtOutputBehaviorFormat
+- BEH_OUT_FORMAT
+.br
+- default: vhd
+.br
+- values: vhd, vlg, vbe
+
+.SH avtBehavioralVerilogSuffix
+- BGL_FILE_SUFFIX
+.br
+- default: v 
+.br
+- values: every valid suffix
+
+.SH avtBehavioralVerilogMaxError
+- BGL_MAXERR
+.br
+- default: 30
+.br
+- values: 0 - INT_MAX
+
+.SH avtBehavioralVhdlSuffix
+- BVL_FILE_SUFFIX
+.br
+- default: vhd if avtinputbehaviorformat = vhd, vbe if avtinputbehaviorformat = vbe
+.br
+- values: every valid suffix
+
+.SH avtBehavioralVhdlMaxError
+- BVL_MAXERR
+.br
+- default: 30 
+.br
+- values: 0 - INT_MAX
+
+.SH avtVerboseConeFile
+- CNS_DRIVE_VERBOSE
+.br
+- default: no
+.br
+- values: yes/no
+
+.SH avtNormalConefile
+- CNS_DRIVE_NORMAL
+.br
+- default: yes
+.br
+- values: yes/no
+
+.SH avtInstanceSeparator
+- MBK_SEPAR
+.br
+- default: '.'
+.br
+- values: every single character
+
+.SH avtVddName
+- MBK_VDD
+.br
+- default: vdd
+.br
+- values: every valid string, including joker '*', multiple strings may be specified using the separator ':'
+
+.SH avtVssName
+- MBK_VSS
+.br
+- default: vss 
+.br
+- values: every valid string, including joker '*', multiple strings may be specified using the separator ':'
+
+.SH avtInputFilter
+- MBK_IN_FILTER
+.br
+- default: NULL 
+.br 
+- values: every valid string
+
+.SH avtOutputFilter
+- MBK_OUT_FILTER
+.br
+- default: NULL
+.br 
+- values: every valid string
+
+.SH avtFilterSuffix
+- MBK_FILTER_SFX
+.br
+- default: NULL
+.br 
+- values: every valid string
+
+.SH avtLibraryDirs
+- MBK_CATA_LIB
+.br
+- default: '.'
+.br
+- values: every valid path, multiple pathes may be specified using the separator ':'
+
+.SH avtLibraryFile
+- MBK_LIB_FILE
+.br
+- default: NULL 
+.br
+- values: every valid file (with absolute path)
+ 
+.SH avtWorkDir
+- MBK_WORK_LIB
+.br
+- default: '.' 
+.br
+- values: every valid path
+
+.SH avtSpiSuffix
+- MBK_SPI_SUFFIX
+.br
+- default: avtinputnetlistformat
+.br
+- values: every valid suffix
+
+.SH avtSpiTnModelName
+- MBK_SPI_TN
+.br
+- default: tn
+.br
+- values: every valid identifier, multiple identifiers may be specified using the separator ':'
+
+.SH avtSpiTpModelName
+- MBK_SPI_TP
+.br
+- default: tp
+.br
+- values: every valid identifier, multiple identifiers may be specified using the separator ':'
+
+.SH avtSpiDnModelName
+- MBK_SPI_DN
+.br
+- default: dn
+.br
+- values: every valid identifier, multiple identifiers may be specified using the separator ':'
+
+.SH avtSpiDpModelName
+- MBK_SPI_DP
+.br
+- default: dp
+.br
+- values: every valid identifier, multiple identifiers may be specified using the separator ':'
+
+.SH avtSpiNetName
+- MBK_SPI_NETNAME
+.br
+- default: net
+.br
+- values: every valid spice identifier
+
+.SH avtSpiNotMergeConnector
+- MBK_SPI_MERGE
+.br
+- default: no 
+.br
+- values: yes, no
+
+.SH avtSpiConnectorSeparator
+- MBK_SPI_SEPAR
+.br
+- default: '.'
+.br
+- values: every single character
+
+.SH avtSpiLoadCellsFromLib
+- MBK_SPI_AUTO_LOAD
+.br
+- default: no
+.br
+- values: yes, no
+
+.SH avtElpTechnoName
+- ELP_TECHNO_NAME
+.br
+- default: 
+.br
+- values:
+
+.SH avtLoadSpecifiedElpFile
+- ELP_LOAD_FILE
+.br
+- default: 
+.br
+- values:
+
+.SH avtUseOnlySpecifiedElpFile
+- ELP_GEN_PARAM
+.br
+- default: 
+.br
+- values:
+
+.SH avtFastMode
+- MBK_FAST_MODE
+.br
+- default: no
+.br
+- values: yes, no
+
+.SH avtNoTransistorName
+- MBK_NO_TRNAME
+.br
+- default: no 
+.br
+- values: yes, no
+
+.SH avtBlackboxFile
+- MBK_BLACKBOX_NAME
+.br
+- default: BLACKBOX
+.br
+- values: every valid filename
+
+.SH avtGlobalVddName
+- MBK_GLOBAL_VDD
+.br
+- default: vdd
+.br
+- values: every valid string, including joker '*', multiple strings may be specified using the separator ':'
+
+.SH avtGlobalVssName
+- MBK_GLOBAL_VSS
+.br
+- default: vss
+.br
+- values: every valid string, including joker '*', multiple strings may be specified using the separator ':'
+
+.SH avtSpiParseAllName
+- MBK_SPI_PARSE_ALLNAME
+.br
+- default: no
+.br
+- values: yes, no
+
+.SH avtSpiIgnoreDiode
+- MBK_SPI_IGNORE_DIODES
+.br
+- default: no 
+.br
+- values: yes, no
+
+.SH avtSpiIgnoreCapa
+- MBK_SPI_IGNORE_CAPA
+.br
+- default: no
+.br
+- values: yes, no
+
+.SH avtSpiIgnoreResistance
+- MBK_SPI_IGNORE_RESI
+.br
+- default: no
+.br
+- values: yes, no
+
+.SH avtSpiNoRCCapaToGnd
+- MBK_SPI_NORCCAPA_TOGND
+.br
+- default: no
+.br
+- values: yes, no
+
+.SH avtSpiScaleCapaFactor
+- MBK_SPI_SCALE_CAPAFACTOR
+.br
+- default: 1.0
+.br
+- values: 0 - FLT_MAX
+
+.SH avtSpiScaleResiFactor
+- MBK_SPI_SCALE_RESIFACTOR
+.br
+- default: 1.0
+.br
+- values: 0 - FLT_MAX
+
+.SH avtMaxScaleCapaFactor
+- TAS_MAXSCALE_CAPAFACTOR
+.br
+- default: 1.0
+.br
+- values: 0 - FLT_MAX
+
+.SH avtMinScaleCapaFactor
+- TAS_MINSCALE_CAPAFACTOR
+.br
+- default: 1.0
+.br
+- values: 0 - FLT_MAX
+
+.SH avtMaxScaleResiFactor
+- TAS_MAXSCALE_RESIFACTOR
+.br
+- default: 1.0
+.br
+- values: 0 - FLT_MAX
+
+.SH avtMinScaleResiFactor
+- TAS_MINSCALE_RESIFACTOR
+.br
+- default: 1.0
+.br
+- values: 0 - FLT_MAX
+
+.SH avtTechnologyName
+- MCC_SIM_FILE
+.br
+- default: 
+.br
+- values:
+
+.SH avtTechnologySize
+- MCC_TECHNO_SIZE
+.br
+- default: 
+.br
+- values:
+
+.SH avtSimPowerSupply
+- MCC_POWER_SUPPLY
+.br
+- default: 
+.br
+- values:
+
+.SH avtSimTemperature
+- MCC_SIM_TEMP
+.br
+- default: 
+.br
+- values:
+
+.SH avtCalcDerating
+- TUT_CALC_DERATE
+.br
+- default: 
+.br
+- values:
+
+.SH avtDeratingMinVoltage
+- TUT_MIN_VOLT
+.br
+- default: 
+.br
+- values:
+
+.SH avtDeratingMaxVoltage
+- TUT_MAX_VOLT
+.br
+- default: 
+.br
+- values:
+
+.SH avtDeratingMinTemperature
+- TUT_MIN_TEMP
+.br
+- default: 
+.br
+- values:
+
+.SH avtDeratingMaxTemperature
+- TUT_MAX_TEMP
+.br
+- default: 
+.br
+- values:
+
+.SH yagleWriteStatistics
+- YAGLE_STAT_MODE
+.br
+- default: 
+.br
+- values:
+
+.SH yagleSearchLoops
+- YAGLE_LOOP_MODE
+.br
+- default: 
+.br
+- values:
+
+.SH yagleDebugMode
+- YAGLE_DEBUG_MODE
+.br
+- default: 
+.br
+- values:
+
+.SH yagleDebugCone
+- YAGLE_DEBUG_CONE
+.br
+- default: 
+.br
+- values:
+
+.SH yagleLanguage
+- YAGLE_LANGUAGE
+.br
+- default: 
+.br
+- values:
+
+.SH yagleMaxBranchLinks
+- YAGLE_MAX_LINKS
+.br
+- default: 
+.br
+- values:
+
+.SH yagleRelaxationMaxBranchLinks
+- YAGLE_RELAX_LINKS
+.br
+- default: 
+.br
+- values:
+
+.SH yagleBddCeiling
+- YAGLE_BDDCEILING
+.br
+- default: 
+.br
+- values:
+
+.SH yagleElectricalThreshold
+- YAGLE_THRESHOLD
+.br
+- default: 
+.br
+- values:
+
+.SH yagleRelaxationAnalysis
+- YAGLE_RELAX_ALGO
+.br
+- default: 
+.br
+- values:
+
+.SH yagleMinimizeCones
+- YAGLE_MINIMISE_CONES
+.br
+- default: 
+.br
+- values:
+
+.SH yagleAssumeExpressionPrecedence
+- YAGLE_BEH_ASSUME_PRECEDE
+.br
+- default: 
+.br
+- values:
+
+.SH yagleBleederIsPrecharge
+- YAGLE_BLEEDER_PRECHARGE
+.br
+- default: 
+.br
+- values:
+
+.SH yagleTristateIsMemory
+- YAGLE_TRISTATE_MEMORY
+.br
+- default: 
+.br
+- values:
+
+.SH yagleVectorizeInterface
+- YAGLE_INTERFACE_VECTORS
+.br
+- default: 
+.br
+- values:
+
+.SH yagleSimplifyExpressions
+- YAGLE_SIMPLIFY_EXPRESSIONS
+.br
+- default: 
+.br
+- values:
+
+.SH yagleMinimizeInvertors
+- YAGLE_MINIMISE_INVERTORS
+.br
+- default: 
+.br
+- values:
+
+.SH avtGenSignature
+- YAGLE_GEN_SIGNATURE
+.br
+- default: 
+.br
+- values:
+
+.SH xyagIconLibrary
+- SLIB_LIBRARY_NAME
+.br
+- default: 
+.br
+- values:
+
+.SH xyagMakeCells
+- CGV_MAKE_CELLS
+.br
+- default: 
+.br
+- values:
+
+.SH fclLibraryName
+- FCL_LIB_NAME
+.br
+- default: 
+.br
+- values:
+
+.SH fclLibraryDir
+- FCL_LIB_PATH
+.br
+- default: 
+.br
+- values:
+
+.SH fclWriteReport
+- FCL_FILE
+.br
+- default: 
+.br
+- values:
+
+.SH fclAllowSharing
+- FCL_SHARE
+.br
+- default: 
+.br
+- values:
+
+.SH fclCutMatchedTransistors
+- FCL_USECUT
+.br
+- default: 
+.br
+- values:
+
+.SH fclMatchSizeTolerance
+- FCL_SIZE_TOLERANCE
+.br
+- default: 
+.br
+- values:
+
+.SH fclTraceLevel
+- FCL_TRACE_LEVEL
+.br
+- default: 
+.br
+- values:
+
+.SH fclDebugMode
+- FCL_DEBUG_MODE
+.br
+- default: 
+.br
+- values:
+
+.SH SEE ALSO
+.br
+genelp(1) tma(1) xyagle(1) hitas(1) x2v(1) yagle(1) stb(1) xcones(1) etas(1) tas(1) xtas(1)
+
+.so man1/avt_bug_report.1
+

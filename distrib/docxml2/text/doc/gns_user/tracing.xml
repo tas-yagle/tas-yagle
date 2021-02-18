@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Tracing the &tool; Execution</title>
+
+<p>
+As specified in the &tool; specific configuration, it is possible to to specify an output file or stdout for &tool; to send tracing information during the hierarchical recognition. This can be particularly useful when debugging recognition rules. It is also possible to specify a trace level up to level 6. The higher the level, the more information is provided. For the end user, only levels up to and including 4 provide useful information. The information provided at each level is documented below.
+</p>
+
+
+
+<section niv='2'><title>Trace Level 0</title>
+
+<p>
+In trace level 0, a recognition report for each of the transistor-level models will be produced. This will be followed by a report for each of the hierarchical rules in order of their application.
+</p>
+<p>
+For each of the transistor level models, &tool; displays the model name followed by the number of instances recognized for this model:
+</p>
+<code>&lt;model&gt;: &lt;number&gt; found</code>
+<p>
+The same information is also provided for the hierarchical model. In addition, if the model calculates a value for a generic variable, the the list of all the identified values is given in brackets. If all the instance models are identical, there should be only one value displayed:
+</p>
+<code>&lt;model&gt;: &lt;number&gt; found [(&lt;variable&gt;=&lt;values&gt;)]</code>
+<p>
+If none of the instances of the model are recognized, either for transistor-level or hierarchical models, then "not found" will be displayed:
+</p>
+<code>&lt;model&gt;: not found</code>
+
+</section>
+
+
+<section niv='2'><title>Trace Level 1</title>
+
+<p>
+In trace level 1, Only hierarchical recognition information will be provided with more precision. First of all the list of files specified in the opened LIBRARY file are displayed. This is done before the transistor-level information is displayed.
+</p>
+<p>
+For each model to recognize, &tool; displays the number of possible occurences of the model to recognize followed by the selected instance model from which the recognition will start from:
+</p>
+<code>
+<cl>--- &lt;model to recognize&gt; ---</cl>
+<cl>&lt;number&gt; possible occurences</cl>
+<cl>select model: &lt;modelname&gt;</cl>
+</code>
+<p>
+The recognition is made up of two phases. The first phase is applied if there is a generic variable whose value must be determined through the use of a GENERATE loop. The second phase is for instances which are not instantiated inside a loop. In phase 1, &tool; will choose a recognized instance of the &lt;modelname&gt; and try to match as much instances as possible of the same model respecting the connectivity described in the loop statement in the current model to recognize. Once this is done, the first instance name is displayed followed by the number of other instances that match the loop rule. If only one instance is found, "HEAD" is displayed else "CYCLE" is displayed. &tool; will continue with the remaining recognized instance of &lt;modelname&gt;.
+</p>
+<code>
+<cl>Phase 1</cl>
+<cl>[CYCLE|HEAD] &lt;instancename&gt; = &lt;number&gt; units</cl>
+<cl>...</cl>
+</code>
+<p>
+In phase 2, there are 2 cases:
+</p>
+<list>
+<item>There has not been a Phase 1</item>
+<item>There has been a Phase 1</item>
+</list>
+<p>
+If there has not been a Phase 1, &tool; displays the instance of &lt;modelname&gt; used to start the recognition followed by the word "match" if the model have been matched or by "not match" in the other case.
+</p>
+<code>
+<cl>Phase 2</cl>
+<cl>Starting '&lt;instancename&gt;'   [not match|match]</cl>
+<cl>...</cl>
+</code>
+<p>
+If there has been a Phase 1, &tool; will try to match the instances declared outside the loop respecting their connectivity with the instances identified in Phase 1. The units not matching the rules will be removed from the set of instances identified as being connected together in Phase 1.
+</p>
+<code>
+<cl>Phase 2</cl>
+<cl>&lt;number&gt; units really match from &lt;instancename&gt;</cl>
+<cl>...</cl>
+</code>
+
+</section>
+
+
+<section niv='2'><title>Trace Level 2</title>
+
+<p>
+In trace level 2, after the recognition of each architecture &tool; will display the list of instances recognized at that moment by the whole hierarchical recognition process. For each model, the model name and number of instances is displayed. Subsequently, the list of instances of the model are displayed. However, only the 20 first instances will be displayed.
+</p>
+<code>
+<cl>-*--------------------------------</cl>
+<cl>        &lt;model1&gt; [&lt;number&gt;]</cl>
+<cl>                &lt;model1instance1&gt;</cl>
+<cl>                &lt;model1instance2&gt;</cl>
+<cl>		...</cl>
+<cl>        &lt;model2&gt; [&lt;number&gt;]</cl>
+<cl>                &lt;model2instance1&gt;</cl>
+<cl>		...</cl>
+<cl>...</cl>
+<cl>-*--------------------------------</cl>
+</code>
+
+</section>
+
+
+<section niv='2'><title>Trace Level 3</title>
+
+<p>
+Trace level 3 is the level that should be enabled to check for unrecognized model which you believe should have been matched by the given rules. This level describes each of the steps whilst matching each instance of a model. To understand the messages generated by &tool;, we will first start by an example showing each of these steps and the correponding messages.
+</p>
+<p>
+Let's consider the following model M4 to recognize. This model has 3 instances of 3 differents models.
+</p>
+<imgHsize namehtml="tracelevel.gif"  namepdf="tracelevel.gif"  hpdf="329pt" wpdf="398pt"/>
+<p>
+Let's says the start model for the recognition using M4 is the model M1. &tool; will therefore start the recognition with the instance A.
+</p>
+<p>
+As Genius start the recognition of a rule or jumps to another instance of the rule, it displays the line:
+</p>
+<code>
+<cl>Starting '&lt;instance&gt;'</cl>
+<cl>  Trying to match instance '&lt;instance&gt;' ('&lt;model&gt;') with '&lt;model_instance_name&gt;' in model</cl>
+</code>
+<p>
+For our example:
+</p>
+<code>
+<cl>Starting 'A'</cl>
+<cl> Trying to match instance 'instance_M1' ('M1') with 'A' in model</cl>
+</code>
+<p>
+where instance_M1 is an instance recognized before by FCL or Genius, M1 is the instance model and A the instance in the model Genius tries to match.
+</p>
+<p>
+Now genius will check the connections of all the connectors of instance_M1. For each connector, there are 3 cases:
+</p>
+<list>
+<item>The connector is connected to the interface of the model corresponding to the rule.</item>
+<item>The connector is connected to an instance required by the rule which has already been visited.</item>
+<item>The connector is connected to an instance required by the rule which has not yet been visited.</item>
+</list>
+<p>
+In the first two cases, &tool; will just display a message telling whether or not the connectors match:
+</p>
+<code>  [MATCHED] '&lt;signal&gt;' - '&lt;model_signal&gt;' in model - connected to '&lt;model&gt;.&lt;model_connector&gt;'</code>
+<p>
+or
+</p>
+<code>  [FAILED] '&lt;signal&gt;' - '&lt;model_signal&gt;' in model - connected to '&lt;model&gt;.&lt;model_connector&gt;'
+</code>
+<p>
+&lt;signal&gt; is the name of the real signal in the input netlist which matches the model signal &lt;model_signal&gt; in the model to recognize.
+</p>
+<p>For our example, if we consider the connector a0:</p>
+<code>
+<cl>  [MATCHED] 'circuit_signal_a0' - 'model_signal_a0' in model - connected to 'M1.a0'</cl>
+<cl>  [MATCHED] 'circuit_signal_a0' - 'model_signal_a0' in model - connected to 'M4.d4'</cl>
+</code>
+<p>
+In the third case, &tool; will leave the current instance and check the new one. Once done, if the new instance matches, &tool; will continue checking the current instance. The message displayed for this will be:
+</p>
+<code>  Going through signal '&lt;signal&gt;' in model - connector '&lt;connector&gt;'</code>
+<p>
+The &lt;connector&gt; is the name of the connector on the new instance but the signal is obviously the same as that for the connector from which the recognition jumps. In our example, if B is the instance which has not yet been visited, the message will be:
+</p>
+<code>  Going through signal 'circuit_signal_a1' in model - connector 'b0'</code>
+<p>
+The cycle will then repeat by trying to recognize instances B and C:
+</p>
+<code>    Trying to match instance 'instance_M2' ('M2') with 'B' in model</code>
+<p>
+Once done, &tool; completes recognition of A by verifying the last connection:
+</p>
+<code>  [MATCHED] 'circuit_signal_a1' - 'model_signal_a1' in model - connected to 'M4.d0'</code>
+
+</section>
+
+
+<section niv='2'><title>Trace Level 4</title>
+
+<p>
+During the matching of an instance, the trace level 4 will show additional information concerning the links between the instance to match in the model and the instance choosen as a candidate for this instance. Basically, &tool; displays, for each model instance connector, the signal to which it will be linked in the circuit. We will call this step the model connector marking.
+</p>
+<p>
+Three message can appear when marking a signal:
+</p>
+<p>
+- if the connector is linked to an unmarked signal:
+</p>
+<code>		'&lt;circuit_signal&gt;' is associated to '&lt;connector&gt;'</code>
+<p>
+- if the connector is linked to an already marked signal and the signal is the good one:
+</p>
+<code>		'&lt;circuit_signal&gt;' is already correctly associated to &lt;connector&gt;</code>
+<p>
+- if the connector is linked to an already marked signal and the signal is another one:
+</p>
+<code>		'&lt;marked_circuit_signal&gt;' != '&lt;circuit_signal&gt;'</code>
+<code>                '&lt;connector&gt;' could not be associated</code>
+<p>
+In the last case, the signal in the model has already been given a correspondance in the circuit &lt;marked_circuit_signal&gt;. But the instance &lt;connector&gt; is linked to signal &lt;circuit_signal&gt; that is not the same as &lt;marked_circuit_signal&gt;. The match fails. &tool; will try another candidate for the model instance.
+</p>
+
+</section>
+</section>
+</chapter>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>Input Files</title>
+
+
+<glossary>
+
+<row type='split'><article><index>tmaLibraryFile</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Allows the user to specify an input library 
+file containing the areas of the cells</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tmaLibraryName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Allows the user to specify the name which will appear in the <f>library()</f> staement</def></row>
+</glossary>
+</def></row>
+</glossary>
+
+</section>
+<section niv='3'><title>Output Files</title>
+<glossary>
+
+<row type='split'><article><index>tmaFunctionalityMode</index></article><def>
+<glossary width='small'>
+<row><article><f>w</f></article><def>The timing abstraction engine generates a behavioral description</def></row>
+<row><article><f>r</f></article><def>The timing abstraction engine reads a behavioral description</def></row>
+<row><article><f>t</f></article><def>Default, the timing abstraction engine generates timing information 
+only</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tmaLibBusDelimiter</index></article><def>
+<glossary width='small'>
+<row><article><f>[]</f></article><def>Default, vectors in the lib file are of the kind <f>foo[1]</f></def></row>
+<row><article><f>_</f></article><def>Vectors in the lib file are of the kind <f>foo_1</f></def></row>
+<row><article><f>-</f></article><def>Vectors in the lib file are of the kind <f>foo-1</f></def></row>
+<row><article><f>{}</f></article><def>Vectors in the lib file are of the kind <f>foo{1}</f></def></row>
+<row><article><f>()</f></article><def>Vectors in the lib file are of the kind <f>foo(1)</f></def></row>
+<row><article><f>&lt;&gt;</f></article><def>Vectors are in the lib file are of the kind <f>foo&lt;1&gt;</f></def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tmaDriveCapaout</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Timing abstraction engine prints the output connectors 
+capacitance in the <f>.lib</f> file</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tmaLibSlewDerate</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Affects the <f>slew_derate_from_library</f> attribute of the Liberty file. Value should be comprised between 0 and 1.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tmaLibDriveTableIndex</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Enables indexes in LIB timing groups.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtPowerCalculation</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Enables leakage and switching power calculation.</def></row>
+<row><article><f>leakage</f></article><def>Enables leakage power calculation.</def></row>
+<row><article><f>switching</f></article><def>Enables switching power calculation.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+</glossary>
+</section>
+<section niv='3'><title>Units</title>
+
+
+
+<glossary>
+<row type='split'><article><index>tmaCapacitanceUnit</index></article><def>
+<glossary width='small'>
+<row><article><f>pf</f></article><def>Capacitance unit in pico-Farads</def></row>
+<row><article><f>ff</f></article><def>Default, capacitance unit in femto-Farads</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tmaTimeUnit</index></article><def>
+<glossary width='small'>
+<row><article><f>ns</f></article><def>Time unit in nanoseconds</def></row>
+<row><article><f>ps</f></article><def>Default, time unit in picoseconds</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tmaLeakagePowerUnit</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Leakage power unit in LIB file. Valid values are 1mW, 100uW, 10uW, 1uW, 100nW, 10nW, 1nW, 100pW, 10pW and 1pW.</def></row>
+<row><article><f>1uW</f></article><def>Default, leakage power unit.</def></row>
+</glossary>
+</def></row>
+</glossary>
+
+
+
+</section>

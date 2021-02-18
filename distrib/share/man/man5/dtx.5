@@ -1,0 +1,497 @@
+.TH DTX 5 "30 March 2000" "AVERTEC" "File Formats"
+
+.SH NAME
+.PP
+\fBdtx\fP \- The timing analyzer \fBtas\fP report : 'detailed perfmodule' format.
+
+.so man1/avt_origin.1
+.SH DESCRIPTION
+.PP
+
+The DTX format is used by the timing analyser TAS to
+report gate or interconnection delay details. The file has the
+extension .dtx. This format is also known as the 'detailed
+perfmodule'. This is a highly compact text format suitable
+for flat and hierarchical analysis. 
+The 'general perfmodule' has the .ttx extension.
+The content is best
+visualized by ETAS or XTAS.
+
+.SH ARTICLES
+.PP
+
+The 'detailled perfmodule' contains several articles and is terminated by the
+\fBG\fP article.
+
+.TP 10
+\fBInformation Header\fP
+.PP
+
+General information is given in a single \fBH\fP article
+at the beginning of the file.
+
+.RS 5
+.PP
+H \fItool vers name techno techno_vers inslope outcapa hierarchy_level ( day month year hour minute second );\fP 
+.RE
+
+.TP 10
+\fBInstances\fP
+.PP
+
+Instances in a hierarchical figure are given in \fBX\fP articles :
+
+.RS 5
+.PP
+X \fIfigure_name instance_name;\fP
+.RE
+
+.TP 10
+\fBExternal Conectors\fP
+.PP
+
+External connectors are given in \fBC\fP articles : 
+
+.RS 5
+.PP
+C \fItype index name (capa rupmax rdownmax fupmax fdownmax rupmin rdownmin fupmin fdownmin); \fP
+.RE
+
+.PP
+The \fBtype\fP defines the connector direction and whether it is the command
+of a register or a precharge. It can be one of : 
+
+.RS 5
+.TP 5 
+\fII\fP
+for an input connector
+
+.TP 5
+\fIO\fP
+for an output connector
+
+.TP 5
+\fIB\fP
+for a bidirectionnal connector
+
+.TP 5
+\fIT\fP
+for a transceiver connector
+
+.TP 5
+\fIZ\fP
+for a high-impedance connector
+
+.TP 5
+\fIX\fP
+for an unconnected connector
+
+.TP 5
+\fIIQ\fP
+input connector used as command for register or precharge
+
+.TP 5
+\fIBQ\fP
+output connector reused as input to command register or precharge.
+.RE
+
+.PP
+The electrical parameters given for each connector are :
+
+.RS 5
+.TP 5
+\fIcapa\fP
+capacitance attached to connector
+
+.TP 5
+\fIrupmax\fP
+maximum resistance to Vdd
+
+.TP 5
+\fIrdownmax\fP
+maximum resistance to Vss
+
+.TP 5
+\fIfupmax\fP
+maximum rising-edge slope
+
+.TP 5
+\fIfdownmax\fP
+maximum falling-edge slope
+
+.TP 5
+\fIrupmin\fP
+minimum resistance to Vdd
+
+.TP 5
+\fIrdownmin\fP
+minimum resistance to Vss
+
+.TP 5
+\fIfupmin\fP
+minimum rising-edge slope
+
+.TP 5
+\fIfdownmin\fP
+minimum falling-edge slope
+.RE
+
+.TP 10
+\fBInternal Connectors\fP
+.PP
+
+Internal connectors are given in \fBN\fP articles:
+
+.RS 5
+.PP
+C \fItype index name (index_extcon capa rupmax rdownmax fupmax fdownmax rupmin rdownmin fupmin fdownmin);\fP
+.RE
+
+.PP
+The \fItype\fP defines wether it is the command of a register or a precharge.
+.br
+It can be one of:
+
+.RS 5
+.TP 5
+\fII\fP
+not used as command for register or precharge
+
+.TP 5
+\fIQ\fP
+used as command for register or precharge
+.RE
+
+.PP
+The electrical parameters are the same as those for external connectors.
+The \fIindex_extcon\fP field specifies the
+index of the associated external connector. 
+
+.TP 10
+\fBRegister or Precharge Commands\fP
+.PP
+
+Commands of registers and precharges are given in \fIQ\fP articles : 
+
+.RS 5
+.PP
+Q \fItype index name (cmd1 cmd2 ... );\fP
+.RE
+
+.PP
+The \fBtype\fP can be one of the following : 
+
+.RS 5
+.TP 5
+\fIC\fP
+for an external connector command (also an external connector)
+
+.TP 5
+\fIN\fP
+For an internal connector command (also an internal connector)
+
+.TP 5
+\fIE\fP
+For an external command (extremity of an extenral path)
+
+.TP 5
+\fII\fP
+For an internal command (not the extremity of an external path)
+.RE
+
+.PP
+The list of command names in brackets is the list of
+commands lower down in the hierarchy which are internal
+or external commands and which have been replaced by
+this command at the current hierarchical level. Thus the
+command attribute of an arc can be defined at each level in
+the hierarchy.
+
+.TP 10
+\fBRegisters\fP
+.PP
+
+Registers are given in \fBL\fP articles : 
+
+.RS 5
+.PP
+L \fItype index name (cmd_index1 cmd_type1 cmd_index2 cmd_type2 ... ); \fP
+.RE
+
+.PP
+The \fBtype\fP can be one of :
+
+.RS 5
+.TP 5
+\fILE\fP
+external level-triggered register
+
+.TP 5
+\fILI\fP
+internal level-triggered register
+
+.TP 5
+\fIFE\fP
+external edge-triggered register
+
+
+.TP 5
+\fIFI\fP
+internal edge-triggered register
+
+.TP 5
+\fIFS\fP
+nor set reset latch
+
+.TP 5
+\fIFR\fP
+nand set reset latch
+
+.TP 5
+\fIC\fP
+for an external connector register (also an external connector)
+
+.TP 5
+\fIN\fP
+For an internal connector register (also an internal connector)
+
+.TP 5
+\fIE\fP
+For an external register (extremity of an extenral path)
+
+.TP 5
+\fII\fP
+For an internal register (not the extremity of an external path)
+.RE
+
+.PP
+The list in brackets is the list of command events which
+allow the opening of a level-triggered register or the
+writing into an edge-triggered register. The \fBindex\fP
+represents the index of the command signal.
+.br
+The type can be one of :
+
+.RS 5
+.TP 5
+\fIU\fP
+for a rising-edge event
+
+
+.TP 5
+\fID\fP
+for a falling-edge event
+
+.TP 10
+\fBPrecharged Signals\fP
+.PP
+
+Precharged signals are given in \fBR\fP articles : 
+
+.RS 5
+.PP
+R \fItype index name (cmd_index1 cmd_type1 cmd_index2 cmd_type2 ... );\fP
+.RE
+
+.PP
+the \fBtype\fP can be one of:
+
+.RS 5
+.TP 5
+\fIC\fP
+for an external connector precharge (also an external connector)
+
+.TP 5
+\fIN\fP
+For an internal connector precharge (also an internal connector)
+
+.TP 5
+\fIE\fP
+for an external precharge
+
+.TP 5
+\fII\fP
+for an internal precharge
+.RE
+
+.TP 10
+\fBBreak\fP
+.PP
+
+Breacks are given in \fBB\fP articles :
+
+.RS 5
+.PP
+B \fPtype index name\fP
+
+The \fBtype\fP can be one of:
+
+.RS 5
+.TP 5
+\fIC\fP
+for an external connector break (also an external connector)
+
+.TP 5
+\fIN\fP
+For an internal connector break (also an internal connector)
+
+.TP 5
+\fIE\fP
+For an external break (extremity of an extenral path)
+
+.TP 5
+\fII\fP
+For an internal break (not the extremity of an external path)
+.RE
+
+
+
+.TP 10
+\fBFactorization Points\fP
+.PP
+
+Factorization points are given in \fBI\fP articles :
+
+.RS 5
+.PP
+I \fItype index name;\fP
+.RE
+
+.PP
+The \fBtype\fP can be one of:
+
+.RS 5
+.TP 5
+\fIE
+for an external factorization signal
+
+.TP 5
+\fII\fP
+for an internal factorization signal
+.RE
+
+.TP 10
+\fBOther Signals\fP
+.PP
+
+Any other signals are given in \fIS\fP articles : 
+
+.RS 5
+.PP
+S \fItype index name;\fP
+.RE
+
+.PP
+The \fItype\fP can be one of : 
+
+.RS 5
+.TP 5
+\fIE\fP
+for an external signal
+
+.TP 5
+\fII\fP
+for an internal signal
+.RE
+
+.TP 10
+\fBElementary Delays\fP
+.PP
+
+Delays represented by one of three \fBdelay_type\fP articles.
+.br
+These are : 
+
+.RS 5
+.TP 5
+\fIF\fP
+for an elementary delay which is only
+part of paths internal to the figure.
+
+.TP 5
+\fIE
+for an elementary delay which is part
+of at least one path external to the
+figure.
+
+.TP 5
+\fIB\fP
+for an elementary delay which has a
+connector as an extremity.
+.RE
+
+.PP
+The general syntax of these articles is :
+
+.RS 5
+.PP
+delay_type starttype start endtype end (
+(cmd cmdtype (trs type delay slope elec))
+( . . (. . . . .))
+);
+.RE
+
+.PP
+where the parameters represent :
+
+.RS 5
+.TP 5
+\fIstarttype\fP
+type of the signal at the start of
+the path (C, N, Q, L, R, I, S).
+
+.TP 5
+\fIstart\fP
+index of the start signal.
+
+.TP 5
+\fIendtype\fP
+type of the signal at the end of the
+path (C, N, Q, L, R, I, S).
+
+.TP 5
+\fIend\fP
+index of the end signal.
+
+.TP 5
+\fIcmd\fP
+index of command if end is
+register or precharge
+
+.TP 5
+\fIcmdtype\fP
+type of event which activates
+command (U or D).
+
+.TP 5
+\fItrs\fP
+transition type (UU, DD, UD, DU).
+
+.TP 5
+\fItype\fP
+delay type (MAX or MIN).
+
+.TP 5
+\fIdelay\fP
+propagation delay.
+
+.TP 5
+\fIslope\fP
+slope at end.
+
+.TP 5
+\fIelec\fP
+one or two delay correction
+parameters (T or D) with respect
+to input slope if start is a
+connector, or the output
+capacitance if end is a connector.
+.RE
+
+.SH SEE ALSO
+.PP
+     tas(1),ttx(5)
+
+
+.so man1/avt_bug_report.1
+

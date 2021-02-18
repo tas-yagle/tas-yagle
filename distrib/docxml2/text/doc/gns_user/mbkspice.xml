@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>The Spice Netlist API Functions</title>
+<p>
+The mbkspice API provides a set of functions to drive SPICE netlist files from internal netlist structures.
+</p>
+&spi_API;
+</section>
+</chapter>

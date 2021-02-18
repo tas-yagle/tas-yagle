@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Examples</title>
+<p>This document contains a collection of examples, each one illustrating a feature or set of features. Those examples 
+appear in the following directories:</p>
+<list>
+<item><f>inv/</f>: guidelines for database construction and analysis, 
+based upon a single inverter and a chain of inverters. Introduction to the Tcl interface.</item>
+
+<item><f>adder/</f>: guidelines for database construction and analysis,
+based upon a full-adder design. Path reporting and simulation</item>
+
+<item><f>ms/</f>: guidelines for database construction and analysis of
+ a master-slave flip-flop. Introduction to timing checks and slack reports.
+</item>
+
+<item><f>addaccu/</f>: guidelines for .lib characterization of a simple adder-accumulator design. Link with 3rd-party simulator</item>
+
+<item><f>cpu2901/</f>: guidelines for database construction of a small microprocessor. Introduction to advanced configuration. Path reporting, timing checks and slack reports.</item>
+
+<item><f>h_macro/</f>: guidelines for hierarchical database construction and timing analysis of a hierachical design made up of custom macros and pre-characterized blocks.</item>
+
+<item><f>blackbox/</f>: guidelines for handling of analog blocks. Introduction to the two most simple techniques.</item>
+
+</list>
+</section>
+</chapter>
+    

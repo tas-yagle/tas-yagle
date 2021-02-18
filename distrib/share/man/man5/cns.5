@@ -1,0 +1,370 @@
+.TH CNS 5 "06 November 2002" "AVERTEC" "File Formats"
+
+.SH Name
+.TP 20
+CNS \- 
+YAGLE and TAS data structure to represent extracted gate net-lists.
+
+.so man1/avt_origin.1
+
+.SH DESCRIPTION
+.PP
+The CNS data structure is designed to represent extracted gate net-lists.
+It has evolved out of the need for a common data structure for CAD-CLSI
+verification tools such as: formal verification, timing and power
+analysis, and logico-temporal simulation.
+.br
+The CNS data structure combines the precision advantage of a transistor
+net-list with the speed advantage of a logical gate net-list.
+This is achieved by representing the circuit as a directed acyclic graph 
+representing signal-flow within the circuit.
+Each node of this graph is a type of pseudo logical gate known as a cone.
+A graph representation of the circuit allows the direct implementation
+of rapid transversal algorithms useful in simulation and timing analysis.
+
+.SH THE CONES
+.PP
+A Cone is the disassembled equivalent of a logical gate. It is made up of branches,
+a branch corresponding to a path from the node on which the cone is built to an external
+port across transistor source-drain junctions.
+.br
+
+Each cone contains up to four sets of branches but at least one. These set correspond
+to the type of external port on which the branch ends.
+.br
+The four types are: VDD, VSS, EXT and GND, corresponding to branches terminating on Vdd
+or Vss power supplies, external connectors, or ground (inclued for GaAs compatibility)
+respectively.
+.br
+For external connector branches the final link of the branch points to the corresponding 
+connector.
+.br
+
+The connectivity between cones is represented by edges. Each cone contains two list of
+edges: one for the inputs, and one for the outputs.
+An edge contains a pointer to an object to which the cone is connected (cone or external
+connector) and a type indicating the type of object and certains characteristics of the
+connection.
+
+.SH ENVIRONMENT VARIABLES
+.PP
+The environment variables allow selection of the ouput format and icontrol the display of trace and debug information.
+
+.TP 20
+\fICNS_DRIVE_VERBOSE\fP
+If the value of this variable is set to "yes", then
+a CNV format file is driven.
+
+.TP 20
+\fICNS_DRIVE_NORMAL\fP
+If the value of this variable is set to "yes", then 
+a CNS format file is driven.
+
+.TP 20
+\fICNS_TRACE_MODE\fP
+An integer which, if greater than or egal to 1, indicates that
+an execution trace of all
+CNS functions is displayed. the default value is 0.
+
+.TP 20
+\fICNS_DEBUG_MODE\fP
+An integer which, if greater than or egal to 2, indicates that additionnal
+figure coherency checks should be performed, this can significantly increase
+execution time. The default value is 0.
+
+.SH FILE FORMAT
+.PP
+The file format is "file_name.cns" or "filename.cnv", where 
+"file_name" is the name of the figure.
+If neither \fICNS_DRIVE_VERBOSE\fP nor \fICNS_DRIVE_NORMAL\fP is set to "yes" then
+the CNS format is driven.
+If both are specify, CNS and CNVformats are driven.
+
+.SH THE CNV FILE
+.PP
+The CNV file is a more readable version of the CNS file. 
+Both files contains the same information and are equivalent. 
+The CNS file is a less readeable format more suited for parsing.
+
+.SH CNS AND CNV SECTIONS
+.PP
+The CNS and CNV files have the same structure. These files are made 
+up of distinct sections.
+.br
+The five sections are:
+.br
+        - Header
+.br
+        - External Connectors
+.br
+        - Transistors
+.br
+        - Cells
+.br
+        - Cones
+.br
+
+.SH THE CNS and CNV SECTIONS
+.PP
+The following descriptions of the sections match with the CNV file.
+Even is the CNS file contains the same informations than the CNV file,
+the redaction of the two file is quite different.
+In order to have a better understanding what follows, make sure you have
+generated the CNV file by setting the proper Environment Variable.
+
+.TP 10
+.B HEADER
+The Header in CNV looks like:
+.br
+
+CNS V<number> <techno> Created by <name> on <date>
+.br
+Figure: <figure name>
+.br
+Netlist format: <format name>
+.br
+Capacitance Scale: <number>
+.br
+
+.TP 20
+\fIVersion\fB
+The first information in the HEADER is the CNS version number.
+
+.TP 20
+\fITechnology\fB
+Following the CNS version is the technology of the figure.
+Usually set to 'npmosfet' to indicate MOS technology.
+
+.TP 20
+\fIInformation\fB
+The informations given in the HEADER contains the user name and
+the date of creation of the file.
+
+.TP 20
+\fIFigure\fB
+This is the figure name.
+
+.TP 20
+\fINetlist format\fB
+This is the input netlist format.
+
+.TP 20
+\fICapacitance Scale\fB
+The capacitance scale factor.
+
+.TP 10
+.B EXTERNAL CONNECTORS
+There is an example on EXTERNAL CONNECTOR description in CNV:
+.br
+
+<index number>) <name> (<type>)
+.br
+
+.TP 20
+\fIIndex\fB
+An index associated to the connector, counting the number of connector to this point.
+References can be made to this number in order to identify the connector in the list.
+
+.TP 20
+\fIConnector Name\fB
+This is the connector name.
+
+.TP 20
+\fIConnector Type\fB
+The connector type can be INPUT, OUTPUT, TRISTATE or a POWER SUPPLY.
+The connector type is indicated in brackets following the connector name.
+
+.TP 10
+.B TRANSISTORS
+In CNV a transistor is described as follows:
+.br
+   
+<index>) <name>, Type <type> driven by '<name>',
+    Position = (<number>,<number>), 
+    Width=<number>, Length=<number>, 
+    PS=<number>, PD=<number>,
+    XS=<number>, XD=<number>
+.br
+
+.TP 20
+\fIIndex\fB
+An index associated with the transistor.
+References can be made to this number in order to identify the transistor in the list.
+
+.TP 20
+\fIName\fB
+The name of the transistor is composed of two letters: "tr", followed by a number.
+
+.TP 20
+\fIType\fB
+Indicate the transistor type.
+.br
+Can be TN or TP, respectively for N and P transistor.
+
+.TP 20
+\fIDriven\fB
+The name of the cone connected to the transistor gate.
+
+.TP 20
+\fITransistor Position\fB
+If the information has been extracted, it gives the localistation of the transistor in the layout.
+.br
+By default set to (0,0).
+
+.TP 20
+\fIDimensions\fB
+Width, Length, PS, PD, XS, XD define the pysical dimensions of the transistor.
+
+.TP 10
+.B CELLS
+In CNV, a cell is described as follows:
+.br
+
+<index>) Model <number>
+.br
+    <cone name>
+.br
+    <cone name>
+.br
+
+.TP 20
+\fIIndex\fB
+An index associated to the cell, counting the number of cell to this point.
+References can be made to this number in order to identify the cell in the list.
+
+.TP 20
+\fIModel\fB
+Regroupes under the same model an ensemble of cone which structure has been defined
+by the user in order to perform pattern matching.
+.br
+See man \fBfcl\fP.
+
+.TP 10
+.B CONES
+In CNV a cone is described as follows:
+.br
+<index>) <cone name>
+.br
+    Type: <type>
+.br
+    TecTytpe: <technology>
+.br
+  INPUTS
+.br
+    <edge type> '<name of the edge>'
+.br
+  OUTPUTS
+.br
+    <edge type> '<name of the edge>'
+.br
+  BRANCHES
+.br
+    <index>) <type of the branche>
+.br
+      <link type> <name> (Index=<number>) 
+        Driven by '<cone name>', Capa = <number>
+.br
+
+.TP 20
+\fIIndex\fB
+An index associated to the cones, counting the number of cones to this point.
+References can be made to this number in order to identify the cones in the list.
+
+.TP 20
+\fIName\fB
+Following the index is the cone name.
+
+.TP 20
+\fIType\fB
+Specifiy certains of the cone particularity if needed.
+
+.TP 20
+\fITecType\fB
+The technologic characteristics of the cone.
+
+.TP 20
+\fIINPUTS\fB
+Indicates the type and name of the input edges.
+.br
+Type can be either a cone or an external connector.
+
+.TP 20
+\fIOUTPUTS\fB
+Indicates the type and name of the output edges.
+.br
+Type can be either a cone or an external connector.
+
+.TP 20
+\fIBRANCHES\fB
+For each branche there is an index followed by the
+branch which can be Vdd, Vss, Ext or Gnd (See \fITHE CONES\fP).
+The branch type can be followed by a list in brackets.
+Each terms of this list indicating characteristics of the branch.
+.br
+Each branch contains a list of links, each one beginning by the link
+type, TN or TP, followed by the number appearing in the name of the 
+transistor.
+.br
+For convenience, the index of the link is indicated in brackets just after 
+this number, refering to the list of transistor.
+.br
+Follows the name of the cone driving the transistor gate, and the capacitance
+of the link.
+
+.SH EXAMPLE
+.PP
+A more complete exemple of Cone is given for comprehension:
+.br
+
+.br
+39) accu_2.dff_m
+.br
+    Type: Flip-Flop,Master
+.br
+    TecTytpe: Degraded Vdd
+.br
+  INPUTS
+.br
+    Cone 'auxsc33'
+.br
+    Cone command 'ck'
+.br
+    Cone loop feedback 'spi_81'
+.br
+  OUTPUTS
+.br
+    Cone loop 'spi_81'
+.br
+  BRANCHES
+.br
+    1) Vdd (Degraded)
+.br
+      TN 47 (Index=190) (Command) Driven by 'ck', Capa = 16.40
+.br
+      TP 169 (Index=68) Driven by 'auxsc33', Capa = 7.00
+.br
+    2) Vdd (Non-Functional,Feedback)
+.br
+      TP 168 (Index=69) Driven by 'spi_81', Capa = 16.40
+.br
+    3) Vss
+.br
+      TN 47 (Index=190) (Command) Driven by 'ck', Capa = 16.40
+.br
+      TN 51 (Index=186) Driven by 'auxsc33', Capa = 7.00
+.br
+    4) Vss (Non-Functional,Feedback)
+.br
+      TN 42 (Index=195) Driven by 'spi_81', Capa = 16.40
+.br
+  CELLS
+.br
+    (3)
+.br
+
+.SH SEE ALSO
+.PP
+yagle(1), tas(1), hitas(1)
+
+.so man1/avt_bug_report.1
+

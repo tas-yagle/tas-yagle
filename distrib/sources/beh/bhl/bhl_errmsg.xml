@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="bhl">
+
+<err>
+        <lib>BHL-</lib><num>000</num>
+        <msg>Internal error %s\n</msg>
+        <doc></doc>
+</err>
+
+</messages>

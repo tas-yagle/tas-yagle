@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Extending GNS with Dynamic Libraries</title>
+
+
+
+
+<section niv='2'><title>Overview</title>
+
+
+<p>The Avertec set of verification tools provide a complete platform for the verification of electrical and functional aspects at the back-end of a design flow. The standard tools in themselves provide a means of performing most of the standard verification requirements.</p>
+<p>However, users with particular verification flow requirements may require a higher degree of customizability of the various technology modules. For example, the GNS hierarchical recognition module allows for the execution of operations upon recognized objects, the user way require that certain complex verification operations be performed on these objects involving other Avertec modules, or even external tool.</p>
+<p>The &tool; provides a high-level programmatical interface to a growing number of the Avertec technology modules providing, in combination with GNS, a powerful mechanism for generating turnkey verification flows for custom components. In addition, a mechanism is provided for the user to dynamically link his own verification code directly into the Avertec platform.</p>
+
+
+</section>
+
+
+
+<section niv='2'><title>Description</title>
+
+
+<p>The &tool; is a set of dynamic libraries which act as high-level APIs to the complete Avertec verification platform. A growing number of the components which make up the Avertec tools have a corresponding dynamic library API. These dynamic libraries contain functions designed to be called from within GNS recognition actions (see GNS User Guide) or for the <f>avt_shell</f> Tcl script interface to the technology modules.</p>
+<p>In addition, it is also possible for the user to create his own APIs. The &tool; provides a simple method for user code to be transformed into a shared library for direct use from within GNS.</p>
+
+</section>
+
+
+<section niv='2'><title>Integrating the APIs in an Avertec Tool Flow</title>
+
+
+<p>The APIs are available whenever the GNS recognition module is activated. Currently, this is possible in the Yagle, &tool; and TMA tools. The activation of the GNS module by the appropriate options results in the loading of all the dynamic libraries specified in the configuration file. The functions defined in these libraries are then available for use in user-defined GNS actions.</p>
+<p>The set of APIs provided as standard with the Avertec tools are documented in subsequent chapters of this guide. The include, amongst others, functions to interrogate the recognition database, perform 'in situ' SPICE simulations to calculate delays and timing constraints, build behavioral models and build timing models.</p>
+
+</section>
+
+</section>
+</chapter>

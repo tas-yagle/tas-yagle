@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 9.0, SVG Export Plug-In  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20000303 Stylable//EN"   "http://www.w3.org/TR/2000/03/WD-SVG-20000303/DTD/svg-20000303-stylable.dtd" [
+	<!ENTITY st0 "fill:#000000;stroke:none;">
+	<!ENTITY st1 "stroke-linejoin:miter;">
+	<!ENTITY st2 "fill:#FFFFFF;stroke-linecap:round;">
+	<!ENTITY st3 "stroke-miterlimit:10;">
+	<!ENTITY st4 "fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;stroke-linecap:round;stroke-linejoin:miter;">
+	<!ENTITY st5 "font-size:15.319;">
+	<!ENTITY st6 "fill-rule:nonzero;clip-rule:nonzero;fill:none;stroke:#000000;stroke-width:1.44;stroke-linejoin:round;stroke-miterlimit:4;">
+	<!ENTITY st7 "fill:#FFFFFF;stroke-linejoin:miter;">
+	<!ENTITY st8 "font-family:'Helvetica';">
+]>
+<svg  width="204.281pt" height="229.809pt" viewBox="0 0 204.281 229.809" xml:space="preserve">
+	<g id="Calque_x0020_1" style="&st6; &st8; &st5;">
+		<g style="&st3;">
+			<path d="M174.626,72.65v20.424h-10.213v15.317h10.213v20.426"/>
+			<path d="M159.309,93.074v15.317"/>
+			<path style="&st1;" d="M57.188,16.483h117.438V72.65H57.188V16.483z"/>
+			<path style="&st4;" d="M123.566,16.483L92.93,1.165v30.636l30.636-15.318z"/>
+			<path style="&st7;" d="M133.778,16.483c0,2.821-2.286,5.106-5.106,5.106c-2.819,0-5.105-2.286-5.105-5.106c0-2.82,2.286-5.105,5.105-5.105c2.82,0,5.106,2.286,5.106,5.105z"/>
+			<path style="&st4;" d="M103.142,72.65l30.637-15.319v30.636L103.142,72.65z"/>
+			<path style="&st7;" d="M103.142,72.65c0,2.82-2.286,5.105-5.105,5.105c-2.82,0-5.106-2.286-5.106-5.105c0-2.82,2.286-5.106,5.106-5.106c2.819,0,5.105,2.286,5.105,5.106z"/>
+			<path d="M57.188,72.65v20.424H46.976v15.317h10.211v20.426"/>
+			<path d="M41.87,93.074v15.317"/>
+			<path d="M174.626,144.134v20.425h-10.213v15.317h10.213v20.425"/>
+			<path d="M159.309,164.559v15.317"/>
+			<path d="M159.309,100.632H21.446"/>
+			<path d="M164.413,200.301h20.425"/>
+			<path d="M159.309,172.117H57.188v30.635"/>
+			<path d="M57.188,141.48v40.848"/>
+			<path d="M174.626,126.163v20.423"/>
+			<path style="&st4;" d="M123.566,172.117L92.93,156.798v30.636l30.636-15.317z"/>
+			<path style="&st7;" d="M133.778,172.117c0,2.819-2.286,5.104-5.106,5.104c-2.819,0-5.105-2.285-5.105-5.104c0-2.822,2.286-5.106,5.105-5.106c2.82,0,5.106,2.284,5.106,5.106z"/>
+			<path style="&st4;" d="M56.983,131.269l-15.317,30.637h30.636l-15.318-30.637z"/>
+			<path style="&st2;" d="M62.089,126.163c0,2.818-2.286,5.106-5.106,5.106c-2.819,0-5.105-2.288-5.105-5.106c0-2.821,2.286-5.107,5.105-5.107c2.82,0,5.106,2.286,5.106,5.107z"/>
+			<text transform="matrix(1 0 0 1 37.7847 75.7134)"><tspan x="0" y="0" style="&st0;">m</tspan></text>
+			<text transform="matrix(1 0 0 1 183.001 75.7134)"><tspan x="0" y="0" style="&st0;">mb</tspan></text>
+			<text transform="matrix(1 0 0 1 0 105.5327)"><tspan x="0" y="0" style="&st0;">ck</tspan></text>
+			<text transform="matrix(1 0 0 1 52.6943 222.9722)"><tspan x="0" y="0" style="&st0;">d</tspan></text>
+		</g>
+	</g>
+</svg>

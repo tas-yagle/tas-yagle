@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<section niv='3'><title>Crosstalk Directives</title>
+
+<section niv='4'><title>CROSSTALK MUTEX</title>
+<p>During the aggression detection stage, it is possible to specify that only one signal can switch at the same time among a set of signals. Theses sets are specified in CROSSTALK MUTEX section :</p>
+<code>
+<cl>CROSSTALK MUTEX</cl>
+<cl>BEGIN</cl>
+<cl>    MUXUP {sig1, sig2};</cl>
+<cl>    MUXDN {sig3, sig4, sig5};</cl>
+<cl>    MUXUP {sig7, sig8, ..., sig12};</cl>
+<cl>    ...;</cl>
+<cl>END;</cl>
+</code>
+<p>
+In each MUXUP (MUXDN) section, only one signal in the list can rise (fall) at the same time. 
+A signal can be listed at most in one MUXUP and in one MUXDN section. If two or more signals of a same mutex 
+appear in the aggressor list of a signal, the one with the bigger coupling capacitance between 
+the victim and this aggressor is considered to be switching at the same time.</p>
+</section>
+</section>

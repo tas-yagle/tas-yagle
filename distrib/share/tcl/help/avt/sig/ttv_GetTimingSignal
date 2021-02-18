@@ -1,0 +1,16 @@
+
+       TimingSignal *ttv_GetTimingSignal(TimingFigure *tvf, char *name);
+
+DDEESSCCRRIIPPTTIIOONN
+       Retreives a timing signal from the timing figure; returns NULL on fail-
+       ure.
+
+AARRGGUUMMEENNTTSS
+       ttvvff           Pointer on a timing figure
+
+       nnaammee          Name of the timing signal to retrieve. Should repect  the
+                     naming  conventions  defined  with  _a_v_t_C_a_s_e_S_e_n_s_i_t_i_v_e  and
+                     _a_v_t_V_e_c_t_o_r_i_z_e configuration variables.
+
+       EEXXAAMMPPLLEE       _s_e_t _s_i_g _[_t_t_v___G_e_t_T_i_m_i_n_g_S_i_g_n_a_l _$_f_i_g _n_e_t_0_4_5_]
+

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="mcc">
+
+
+<err>
+   <lib>MCC-</lib><num>000</num>
+   <msg>Unknown transition in mcc_generatesimgate\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>001</num>
+   <msg>Default values assumed for vbs\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>002</num>
+   <msg>Can't generate params for %s ( L = %ldn, W = %ldn )\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>003</num>
+   <msg>Can't find vds for a degraded transistor\n</msg>
+   <doc></doc>
+</err>
+
+
+<err>
+   <lib>MCC-</lib><num>004</num>
+   <msg>Hspice bsim3v3 model used with invalid ACM value (%d)\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>005</num>
+   <msg>Level = 53, default ACM=10 used!!!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>006</num>
+   <msg>Level = 49, default ACM=0 used!!!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>007</num>
+   <msg>Invalid value of parameter MOBMOD, default value used!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>008</num>
+   <msg>Computation of Vdsat failed! Default computation of Vdsat used!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>009</num>
+   <msg>Negative Leff for %s  (L = %ldn, W = %ldn)! default value assumed: Leff = %ldn\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>010</num>
+   <msg>Negative Weff for %s  (L = %ldn, W = %ldn)! default value assumed : Weff = %ldn\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>011</num>
+   <msg>Computation of Vdsat failed! Bad value for RDSMOD = 0 assumed\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>012</num>
+   <msg>Technofile %s to get doesn't exist!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>013</num>
+   <msg>Technofile %s to delete doesn't exist\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>014</num>
+   <msg>No model %s in technofile %s, can't get index!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>015</num>
+   <msg>No model %s in technofile %s, can't get model name!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>016</num>
+   <msg>No model %s in technofile %s, can't get XL!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>017</num>
+   <msg>No model %s in technofile %s, can't get XW!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>018</num>
+   <msg>Can't initialise diode model '%s' parameters, unknown diode's level: %d\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>019</num>
+   <msg>Computation of VDDdeg for model %s which is a PMOS transistor!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>020</num>
+   <msg>Issue occured while computing VDDdeg for model %s (L=%g,W=%g), default value 'VDD (%g) - VTH (%g)' assumed (%g)\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>021</num>
+   <msg>Computation of VSSdeg for model %s which is a PMOS transistor!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>022</num>
+   <msg>Issue occured while computing VSSdeg for model %s (L=%g,W=%g), default value 'VTH' assumed (%g)\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>023</num>
+   <msg>mcc_dio_calcCDEP invalid value for TLEV! TLEV = 0 assumed\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>024</num>
+   <msg>Issue occured while computing VTI_nmos\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>025</num>
+   <msg>Issue occured while computing VTi_pmos\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>026</num>
+   <msg>Technofile %s doesn't exist, can't addmodel!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>027</num>
+   <msg>Model %s doesn't exist!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>028</num>
+   <msg>No model %s (%s case L = %ldn, W = %ldn) for %s\n</msg>
+   <doc>The technology file does not contain the model or the device size is out of the model ranges. It may also be necessary to load the techonology file before using CPE.</doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>029</num>
+   <msg>No model for diode model %s!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>030</num>
+   <msg>Closest model assumed %s (lmin = %ldn, lmax = %ldn, wmin = %ldn, wmax = %ldn)\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>031</num>
+   <msg>Positive vbs (%g) for transistor %s (model %s L=%gu W=%gu)\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>032</num>
+   <msg>Negative vbs (%g) for transistor %s (model %s L=%gu W=%gu)\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>033</num>
+   <msg>%s is used for best corner!\n</msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>034</num>
+   <msg>%s is used for worst corner!\n </msg>
+   <doc></doc>
+</err>
+
+<err>
+   <lib>MCC-</lib><num>035</num>
+   <msg>Could not characterize transistor model '%s' with given PVT: vdd=%gv temp=%g\n</msg>
+   <doc>Check if the PVT suits your transistor model</doc>
+</err>
+<err>
+   <lib>MCC-</lib><num>036</num>
+   <msg>Unknown transistor instance specific parameter '%s'\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>MCC-</lib><num>037</num>
+   <msg>Failed to evaluate %s=%s\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>MCC-</lib><num>038</num>
+   <msg>Cannot evaluate model parameter %s='%s'%s\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>MCC-</lib><num>039</num>
+   <msg>Extra transistor instance specific parameter %s=%g found in subckt '%s', found value used\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>MCC-</lib><num>040</num>
+   <msg>Extra transistor instance specific parameter M=%d : technology check won't work properly\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>MCC-</lib><num>041</num>
+   <msg>%s found on transistor %s in technology file subckt '%s'\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>MCC-</lib><num>042</num>
+   <msg>Can't determine transistor model type for '%s' using simToolModel setting '%s'. Guessing '%s'. Please set correct simToolModel ('%s'?).\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>MCC-</lib><num>043</num>
+   <msg>Can't open transistor model definition file %s.\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>MCC-</lib><num>044</num>
+   <msg>Parse error line %d file %s.\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>MCC-</lib><num>045</num>
+   <msg>Can't parse transistor definition file. Search in %s : %s\n</msg>
+   <doc></doc>
+</err>
+
+</messages>

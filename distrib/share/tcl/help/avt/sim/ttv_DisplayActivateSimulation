@@ -1,0 +1,13 @@
+
+       void ttv_DisplayActivateSimulation(char mode);
+
+DDEESSCCRRIIPPTTIIOONN
+       Enables  the  construction  and simulation of the spice deck of a given
+       path, when a reporting request occurs for  this  path.  The  simulation
+       columns  in  the report appear automatically except explicitly disabled
+       with _t_t_v___D_i_s_p_l_a_y_P_a_t_h_D_e_t_a_i_l_H_i_d_e_C_o_l_u_m_n.
+
+AARRGGUUMMEENNTTSS
+       mmooddee          _y_e_s or _n_o to activate or deactivate spice deck  construc-
+                     tion and simulation
+

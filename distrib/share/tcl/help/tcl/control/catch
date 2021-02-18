@@ -1,0 +1,64 @@
+NAME
+       catch - Evaluate script and trap exceptional returns
+
+SYNOPSIS
+       catch script ?varName?
+
+
+DESCRIPTION
+       The  catch  command may be used to prevent errors from aborting command
+       interpretation.  The catch command calls  the  Tcl  interpreter  recur-
+       sively  to execute script, and always returns without raising an error,
+       regardless of any errors that might occur while executing script.
+
+       If script raises an error, catch will return a non-zero  integer  value
+       corresponding  to the exceptional return code returned by evaluation of
+       script.  Tcl defines the normal return code from script  evaluation  to
+       be  zero  (0),  or  TCL_OK.   Tcl  also defines four exceptional return
+       codes: 1 (TCL_ERROR), 2 (TCL_RETURN), 3 (TCL_BREAK),  and  4  (TCL_CON-
+       TINUE).  Errors during evaluation of a script are indicated by a return
+       code of TCL_ERROR.  The other exceptional return codes are returned  by
+       the  return,  break,  and continue commands and in other special situa-
+       tions as documented.  Tcl packages can define new commands that  return
+       other integer values as return codes as well, and scripts that make use
+       of the return -code command can also have return codes other  than  the
+       five defined by Tcl.
+
+       If  the varName argument is given, then the variable it names is set to
+       the result of the script evaluation.  When the  return  code  from  the
+       script  is  1 (TCL_ERROR), the value stored in varName is an error mes-
+       sage.  When the return code from the script is 0  (TCL_OK),  the  value
+       stored in resultVarName is the value returned from script.
+
+       If script does not raise an error, catch will return 0 (TCL_OK) and set
+       the variable to the value returned from script.
+
+       Note that catch catches all exceptions, including  those  generated  by
+       break  and  continue  as  well as errors.  The only errors that are not
+       caught are syntax errors found when the script is  compiled.   This  is
+       because the catch command only catches errors during runtime.  When the
+       catch statement is compiled, the script is compiled  as  well  and  any
+       syntax errors will generate a Tcl error.
+
+
+EXAMPLES
+       The  catch  command may be used in an if to branch based on the success
+       of a script.
+              if { [catch {open $someFile w} fid] } {
+                  puts stderr "Could not open $someFile for writing\n$fid"
+                  exit 1
+              }
+
+       The catch command will not catch compiled  syntax  errors.   The  first
+       time proc foo is called, the body will be compiled and a Tcl error will
+       be generated.
+              proc foo {} {
+                  catch {expr {1 +- }}
+              }
+
+
+SEE ALSO
+       break(n), continue(n), error(n), return(n), tclvars(n)
+
+
+KEYWORDS

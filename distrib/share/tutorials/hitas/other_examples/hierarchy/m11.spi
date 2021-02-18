@@ -1,0 +1,89 @@
+* m11 model 
+
+.include inv.spi
+
+.include nand.spi
+
+.include ff.spi
+
+* rc model
+
+.subckt siga a_1 a 
+r1 a_1 a 100
+c1 a_1 vss 3f
+c2 a vss 4f
+.ends siga
+
+.subckt sigb b_1 b
+r1 b_1 b 300
+c1 b_1 vss 6f
+c2 b vss 8f
+.ends sigb
+
+.subckt sigm11ck ck_1 ck_2 ck_3 ck
+r1 ck_1 ck_4 80
+r2 ck_2 ck_4 100
+r3 ck_3 ck_4 200
+r4 ck ck_4 120
+c1 ck_1 vss 7f
+c2 ck_2 vss 3f
+c3 ck_3 vss 9f
+c4 ck_4 vss 2f
+c5 ck vss 6f
+.ends sigm11ck
+
+.subckt sigsm11_1 s1_1 s1_2
+r1 s1_1 s1_2 200
+c1 s1_1 vss 6f
+c2 s1_2 vss 5f
+.ends sigsm11_1
+
+.subckt sigsm11_2 s2_1 s2_2
+r1 s2_1 s2_2 200
+c1 s2_1 vss 3f
+c2 s2_2 vss 4f
+.ends sigsm11_2
+
+.subckt sigsm11_3 s3_1 s3_2
+r1 s3_1 s3_2 250
+c1 s3_1 vss 4f
+c2 s3_2 vss 7f
+.ends sigsm11_3
+
+.subckt sigsm11_4 s4_1 s4_2
+r1 s4_1 s4_2 70
+c1 s4_1 vss 3f
+c2 s4_2 vss 4f
+.ends sigsm11_4
+
+.subckt sigsm11_5 s5_1 s5_2
+r1 s5_1 s5_2 300
+c1 s5_1 vss 7f
+c2 s5_2 vss 9f
+.ends sigsm11_5
+
+.subckt sigsm11_6 s6_1 s6_2
+r1 s6_1 s6_2 300
+c1 s6_1 vss 8f
+c2 s6_2 vss 4f
+.ends sigsm11_6
+
+.subckt m11 a b ck vdd vss
+xinv1 a_1 s1_1 vdd vss inv
+xff1 s1_2 ck_1 s2_1 vdd vss ff
+xinv2 s2_2 s3_1 vdd vss inv
+xff2 s3_2 ck_2 s4_1 vdd vss ff
+xinv3 s4_2 s5_1 vdd vss inv
+xff3 s5_2 ck_3 s6_1 vdd vss ff
+xinv4 s6_2 b_1 vdd vss inv
+xsiga a_1 a siga
+xsigb b_1 b sigb
+xsigck ck_1 ck_2 ck_3 ck sigm11ck
+xsigs1 s1_1 s1_2 sigsm11_1
+xsigs2 s2_1 s2_2 sigsm11_2
+xsigs3 s3_1 s3_2 sigsm11_3
+xsigs4 s4_1 s4_2 sigsm11_4
+xsigs5 s5_1 s5_2 sigsm11_5
+xsigs6 s6_1 s6_2 sigsm11_6
+.ends m11
+

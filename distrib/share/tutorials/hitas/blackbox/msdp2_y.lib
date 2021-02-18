@@ -1,0 +1,162 @@
+/************************************************************************/
+/*                                                                      */
+/*  Avertec Release v2.9p5 (32 bits on SunOS 5.8)                       */
+/*  argv: db.tcl                                                        */
+/*                                                                      */
+/*  User: olivier                                                       */
+/*  Generation date Wed Nov 22 11:57:36 2006                            */
+/*                                                                      */
+/*  liberty data flow `msdp2_y.lib`                                     */
+/*                                                                      */
+/************************************************************************/
+
+
+
+library (msdp2_y.lib) {
+
+    technology (cmos) ;
+    date                          : "Wed Nov 22 11:57:36 2006" ;
+    delay_model                   : table_lookup ;
+    nom_voltage                   : 1.62 ;
+    nom_temperature               : 125.0 ;
+    nom_process                   : 1.0 ;
+    slew_derate_from_library      : 1.0 ;
+    default_fanout_load           : 1000.0 ;
+    default_inout_pin_cap         : 1000.0 ;
+    default_input_pin_cap         : 1000.0 ;
+    default_output_pin_cap        : 0.0 ;
+    voltage_unit                  : "1V" ;
+    time_unit                     : "1ps" ;
+    capacitive_load_unit            (1,ff) ;
+    pulling_resistance_unit       : "1ohm" ;
+    current_unit                  : "1mA" ;
+    input_threshold_pct_rise      : 50.0 ;
+    input_threshold_pct_fall      : 50.0 ;
+    output_threshold_pct_rise     : 50.0 ;
+    output_threshold_pct_fall     : 50.0 ;
+    slew_lower_threshold_pct_fall : 20.0 ;
+    slew_upper_threshold_pct_fall : 80.0 ;
+    slew_lower_threshold_pct_rise : 20.0 ;
+    slew_upper_threshold_pct_rise : 80.0 ;
+
+    lu_table_template (inslew_load_5x5__1) {
+        variable_1 : input_net_transition;
+        index_1 ("45.0, 95.0, 200.0, 410.0, 880.0");
+        variable_2 : total_output_net_capacitance;
+        index_2 ("35.00, 73.00, 150.00, 310.00, 680.00");
+    }
+    lu_table_template (load_5__1) {
+        variable_1 : total_output_net_capacitance;
+        index_1 ("35.00, 73.00, 150.00, 310.00, 680.00");
+    }
+    lu_table_template (inslew_load_5x5__0) {
+        variable_1 : input_net_transition;
+        index_1 ("45.0, 95.0, 200.0, 410.0, 880.0");
+        variable_2 : total_output_net_capacitance;
+        index_2 ("20.00, 42.00, 89.00, 180.00, 390.00");
+    }
+    lu_table_template (load_5__0) {
+        variable_1 : total_output_net_capacitance;
+        index_1 ("20.00, 42.00, 89.00, 180.00, 390.00");
+    }
+    lu_table_template (inslew_ckslew_5x5__0) {
+        variable_1 : constrained_pin_transition;
+        index_1 ("45.0, 95.0, 200.0, 410.0, 880.0");
+        variable_2 : related_pin_transition;
+        index_2 ("45.0, 95.0, 200.0, 410.0, 880.0");
+    }
+    lu_table_template (inslew_5__0) {
+        variable_1 : input_net_transition;
+        index_1 ("45.0, 95.0, 200.0, 410.0, 880.0");
+    }
+    lu_table_template (temp_cst) {
+        variable_1 : input_net_transition;
+        variable_2 : total_output_net_capacitance;
+        index_1 ("1.0, 2.0");
+        index_2 ("1.0, 2.0");
+    }
+    lu_table_template (temp_set_hol_cst) {
+        variable_1 : constrained_pin_transition;
+        variable_2 : related_pin_transition;
+        index_1 ("1.0, 2.0");
+        index_2 ("1.0, 2.0");
+    }
+
+
+
+    cell (msdp2_y) {
+        area : 0.0 ;
+        pin (ck) {
+            direction : input ;
+            capacitance : 12.72 ;
+        }
+        pin (di) {
+            direction : input ;
+            capacitance : 26.60 ;
+            timing (di_ck_setup_falling) {
+                timing_type : setup_falling ;
+                related_pin : "ck" ;
+                rise_constraint (inslew_ckslew_5x5__0) {
+                    values ("-11.2, -22.4, -40.4, -120.2, -265.0", \
+                            "-20.0, -31.2, -49.1, -129.0, -273.8", \
+                            "-35.3, -46.5, -64.5, -144.3, -289.1", \
+                            "-50.7, -61.9, -79.9, -159.7, -304.5", \
+                            "-92.4, -103.6, -121.6, -201.4, -346.2");
+                }
+                fall_constraint (inslew_ckslew_5x5__0) {
+                    values ("-58.9, -70.1, -88.0, -167.9, -312.7", \
+                            "-67.9, -79.1, -97.0, -176.9, -321.7", \
+                            "-85.6, -96.8, -114.8, -194.6, -339.4", \
+                            "-48.6, -59.8, -77.7, -157.6, -302.4", \
+                            "3.4, -7.8, -25.8, -105.6, -250.4");
+                }
+            }
+            timing (di_ck_hold_falling) {
+                timing_type : hold_falling ;
+                related_pin : "ck" ;
+                rise_constraint (inslew_ckslew_5x5__0) {
+                    values ("205.4, 216.6, 234.6, 314.4, 459.2", \
+                            "214.2, 225.4, 243.3, 323.2, 468.0", \
+                            "229.5, 240.7, 258.7, 338.5, 483.3", \
+                            "244.9, 256.1, 274.1, 353.9, 498.7", \
+                            "286.6, 297.8, 315.8, 395.6, 540.4");
+                }
+                fall_constraint (inslew_ckslew_5x5__0) {
+                    values ("113.6, 124.8, 142.7, 222.6, 367.4", \
+                            "122.6, 133.8, 151.7, 231.6, 376.4", \
+                            "140.3, 151.5, 169.5, 249.3, 394.1", \
+                            "103.3, 114.5, 132.4, 212.3, 357.1", \
+                            "51.3, 62.5, 80.5, 160.3, 305.1");
+                }
+            }
+        }
+        pin (t) {
+            direction : output ;
+            timing (maxd_t_ck_falling_edge) {
+                timing_type : falling_edge ;
+                related_pin : "ck" ;
+                cell_fall (inslew_load_5x5__1) {
+                    values ("556.6, 600.0, 673.5, 804.6, 1083.2", \
+                            "567.8, 611.3, 684.8, 815.9, 1094.4", \
+                            "585.7, 629.2, 702.7, 833.8, 1112.3", \
+                            "665.6, 709.0, 782.6, 913.7, 1192.2", \
+                            "810.4, 853.8, 927.3, 1058.5, 1337.0");
+                }
+                fall_transition (load_5__1) {
+                    values ("89.1, 129.2, 205.1, 359.7, 724.8");
+                }
+                cell_rise (inslew_load_5x5__0) {
+                    values ("428.5, 466.8, 537.9, 658.0, 913.7", \
+                            "439.7, 478.0, 549.1, 669.2, 924.9", \
+                            "457.6, 495.9, 567.0, 687.1, 942.9", \
+                            "537.5, 575.8, 646.9, 767.0, 1022.7", \
+                            "682.3, 720.6, 791.7, 911.8, 1167.5");
+                }
+                rise_transition (load_5__0) {
+                    values ("99.2, 137.1, 213.7, 359.0, 698.4");
+                }
+            }
+        }
+    }
+
+}

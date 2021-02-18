@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>GNS Built-in</title>
+<p>
+The gen_builtin_funtions API provides a set of basic functions useful in GNS actions which need to generate output files.
+</p>
+&gen_builtin_functions;
+</section>

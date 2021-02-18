@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<glossary>
+<row type="split"><article><index>tasHierarchicalMode</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Hierarchical analysis mode.</def></row>
+<row><article><f>no</f></article><def>Default, flat transistor analysis mode.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasBlackboxRequiresTimings</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>&tool; Reads a hierarchical netlist where some instances are 
+considered as blackboxes. The name of these instances should be specified using the  
+<f>avt_SetBlackBoxes</f> command. The hierarchical netlist is then flattened to the transistor level, apart from the 
+blackbox instances, to generate a hybrid transistor and instance netlist. The database construction is performed 
+on this hybrid netlist and then &tool; will incorporate timing for the blackboxed instances from an external
+timing database for the model of the instances which must exist.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasTreatBlackboxHierarchically</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>&tool; Reads a hierarchical netlist where some instances 
+are considered as blackboxes. The name of these instances should be specified using the  
+<f>avt_SetBlackBoxes</f> command. &tool; creates an intermediate subcircuit containing only the non-blackbox instances. 
+A top-level is also created, and instantiates the intermediate subcircuit and the blackbox instances. Database 
+construction is performed on the intermediate subcircuit.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>tasFigName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name of the subcircuit to read, or to 
+rename the database.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasBefig</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Generates a behavioral description of the design</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasFlatcells</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Flattens the timing views of all the models given in 
+the catalogue file specified by <f>avtCatalogueName</f>.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>tasSilentMode</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>&tool; redirects <f>stdout</f> and <f>stderr</f> respectively to 
+<f>.tou</f> and <f>.ter</f> files.</def></row>
+<row><article><f>no</f></article><def></def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasPathFactorisation</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>&tool; keeps paths starting and stopping at factorization points 
+that are not reference points. This in order to decrease the number of path of the TTX.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+</glossary>
+

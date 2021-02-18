@@ -1,0 +1,20 @@
+
+       void inf_DefineIgnore(char *type, List *list);
+
+DDEESSCCRRIIPPTTIIOONN
+       The  tool  ignores  specified  components. Equivalent to commenting out
+       elements in a SPICE netlist.
+
+AARRGGUUMMEENNTTSS
+       lliisstt          Pointer on the list of components to ignore. An component
+                     name can be a regular expression.
+
+       ttyyppee          Supported  types are _I_n_s_t_a_n_c_e_s, _T_r_a_n_s_i_s_t_o_r_s, _R_e_s_i_s_t_a_n_c_e_s,
+                     _C_a_p_a_c_i_t_a_n_c_e_s, _D_i_o_d_e_s, _P_a_r_a_s_i_t_i_c_s and  _S_i_g_n_a_l_N_a_m_e_s.  _P_a_r_a_-
+                     _s_i_t_i_c_s  affects only DSPF files. _S_i_g_n_a_l_N_a_m_e_s affects only
+                     the flattening of a hierarchical netlist, by ignoring the
+                     given  name  if  several hierarchical names are available
+                     for one net.
+
+       EEXXAAMMPPLLEE       _i_n_f___D_e_f_i_n_e_I_g_n_o_r_e _T_r_a_n_s_i_s_t_o_r_s _*_._M_2_3_*
+

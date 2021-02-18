@@ -1,0 +1,16 @@
+
+       void   ttv_SetLineCommand(TimingLine   *tl,   char  *max_command,  char
+       *min_command, char *dir);
+
+DDEESSCCRRIIPPTTIIOONN
+       Associates commands to a line. The command is the signal  that  enables
+       reading or writing in a latch point.
+
+AARRGGUUMMEENNTTSS
+       mmaaxx__ccoommmmaanndd   Command generating the maximum delay
+
+       mmiinn__ccoommmmaanndd   Command generating the minimum delay
+
+       ddiirr           First  character  is  the edge of the max command and the
+                     second of the min command.
+

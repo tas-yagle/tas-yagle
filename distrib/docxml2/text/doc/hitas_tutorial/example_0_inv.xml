@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Inverter</title>
+<section niv='2'><title>Design Description</title>
+<p>This example presents &tool; elementary concepts, based upon a simple inverter design and later an inverter chain.</p>
+<p>The first example takes place in the <f>inv/</f> directory. </p>
+</section>
+
+<section niv='2'><title>Database Generation</title>
+<section niv='3'><title>Principles</title>
+<p>The database generation follows the steps below:</p>
+<list>
+<item>Design partitioning: the algorithm creates a net-list of pseudo-gates from the flat transistor net-list. Partitions are called "cones" and have the property to be electrically independent from one to the other.</item>
+<item>Automatic memory components recognition: a memory-identification engine analyzes cones and loop between cones, and flags latches and pre-charged elements.</item>
+<item>Graph modeling: a cone is modeled as a graph, where edges are events on signals, and where arcs are possible causality relations between events. Causality relations are also called timing arcs.</item>
+<item>Creation of delay models: a delay model, derived from the BSIM MOS equations, is associated with each timing arc.</item>
+<item>Creation of all the timing paths: the successive timing arcs between connectors and memory elements are merged to create timing paths. All the possible timing paths in the design are saved into the database.</item>
+</list>
+</section>
+
+<section niv='3'><title>Global Configuration</title>
+<p>The complete configuration required for the database generation takes place in the <f>db.tcl</f>. The script also launches the commands that effectively generate that database. </p>
+<p>Configuration variables are set in the Tcl script by the mean of the <f>avt_config</f> function.</p>
+<glossary>
+<row type='split'><article><f>avt_config tasGenerateConeFile yes</f></article>
+<def>tells the tool to dump on disk the .cns file, which contains the partitions (the cones) created by the partitioning algorithm.</def></row>
+
+<row type='split'><article><f>avt_config avtVerboseConeFile yes</f></article>
+<def>tells the tool to dump on disk the .cnv file, which is a more readable version.</def></row>
+
+<row type='split'><article><f>avt_config simVthHigh 0.8</f></article>
+<def>High threshold of the slope.</def></row>
+
+<row type='split'><article><f>avt_config simVthLow 0.2</f></article>
+<def>Low threshold of the slope.</def></row>
+
+<row type='split'><article><f>avt_config simSlope 20e-12</f></article>
+<def>Transient time of the slope in second.</def></row>
+<row type='split'><article><f>avt_config simToolModel ngspice</f></article>
+<def>tells the tool the technology file type (which simulator it is designed for)</def></row>
+</glossary>
+
+<p>The temperature and supplies specifications take place in the <f>inv.spi</f> file:</p>
+<code>
+<cl>.TEMP 125</cl>
+<cl>Vsupply vdd 0 DC 1.62</cl>
+<cl>Vground vss 0 DC 0</cl>
+</code>
+</section>
+
+<section niv='3'><title>Technology Integration</title>
+<p>The technology file is included with a SPICE <f>.INCLUDE</f> directive in the <f>inv.spi</f> file (in the case of recursive inclusions, paths must be absolute).</p>
+<p>In the present example, the <f>.INCLUDE</f> directive is used.</p>
+<code>.INCLUDE ../techno/bsim4_dummy.ng</code>
+</section>
+
+<section niv='3'><title>Database Generation</title>
+<p>The generation launch is done through the command <f>hitas</f>:</p>
+<code>
+<cl>avt_LoadFile inv.spi spice</cl>
+<cl>set fig [hitas inv] </cl>
+</code>
+<p>The <f>hitas</f> function takes as argument the name of the figure (the subckt for a SPICE netlist) to analyze. The tas function returns a pointer on the timing database newly created. This pointer can be used as an input to further steps of verification, thus avoiding costly re-reading of the timing database from the disk.</p>
+<p>To perform the database generation, just launch the script <f>db.tcl</f></p>
+</section>
+
+
+</section>
+
+<section niv='2'><title>Database Analysis</title>
+<section niv='3'><title>Database overview</title>
+<p>At this step of the analysis process, the timing database of the adder sub-circuit consists of four files:</p>
+<glossary>
+<row>
+<article>DTX file</article>
+<def> All the timing arcs of the sub-circuit, based upon the characterization of the "cones" created during the partitioning phase.</def>
+</row>
+<row>
+<article>STM file</article>
+<def>The models that allow to computing the delay values for timing arcs and timing paths.</def>
+</row>
+<row>
+<article>RCX file</article>
+<def>The interconnect elements (RC) at the physical boundary of the sub-circuit. This file is used for hierarchy purposes, allowing the partial flatten of interconnections at upper levels of hierarchy. </def>
+</row>
+</glossary>
+
+<section niv='3'><title>Database properties</title>
+<p>The script <f>db.tcl</f> presents also Tcl access to the properties of the database:</p>
+<list>
+<item>Temperature</item>
+<item>Power supply</item>
+</list>
+<p>Other properties are available. See &tool; Reference Guide.</p>
+</section>
+
+</section>
+
+
+</section>
+</section>
+
+<section niv='1'><title>Inverter Chain</title>
+<section niv='2'><title>Design Description</title>
+<p>This second example (also in directory <f>inv/</f>) presents &tool; database construction and database browsing concepts, based upon a inverter-chain design (file <f>inv_chain.spi</f>).</p>
+</section>
+
+<section niv='2'><title>Database properties</title>
+<p>The script <f>db_chain.tcl</f> performs the database construction in the same way than the previous example.
+It also presents Tcl acces to the properties of the database:</p>
+<list>
+<item>Temperature</item>
+<item>Power supply</item>
+<item>Input slope</item>
+<item>Output load</item>
+<item>Generation date</item>
+</list>
+<p>Other properties are available. See &tool; Reference Guide.</p>
+</section>
+
+<section niv='2'><title>Path Reports</title>
+<p>The script <f>report.tcl</f> shows a typical path report. The commands in the script are the following:</p>
+
+<p><f>set fig [ttv_LoadSpecifiedTimingFigure inv_chain]</f></p>
+<p>This command loads the timing database (<f>.dtx</f>, <f>.stm</f> and <f>.cns</f> files) into the program's memory.</p>
+
+<p><f>set clist [ttv_GetPaths $fig * * rf 5 critic path max]</f></p>
+<p>This command looks for the 5 longest paths (<f>5 critic path max</f>) in the circuit starting and ending on any terminal node (<f>* *</f>), with a rising transition on start node and a falling transition on the end node (<f>rf</f>). A terminal node is a pin or a latch.</p>
+
+<p><f>set f [fopen inv_chain.paths "w+"]</f></p>
+<p>This commands opens a file <f>inv_chain.paths</f> for further writing.</p>
+
+<p><f>ttv_DisplayPathListDetail $f $clist</f></p>
+<p>This command prints in file <f>inv_chain.paths</f> the result (<f>$clist</f>) of the previous command <f>ttv_GetPaths</f>. 
+For results on standard output, replace <f>$f</f> by <f>stdout</f>. The output looks like:</p> 
+
+<smallcode>
+<cl> </cl>
+<cl>     Voltage :        1.62V </cl>
+<cl>     Temperature :    125 degree C </cl>
+<cl> </cl>
+<cl>      *** Path list (unit:[ns]) *** </cl>
+<cl> </cl>
+<cl> Path     Start     Start      Path     Total      Data    Ending       Start                  </cl>
+<cl>           time     slope     delay     delay       lag     slope       From_node      To_node </cl>
+<cl>______________________________________________________________________________________________ </cl>
+<cl>    1     0.000     0.200     0.397     0.397     0.000     0.031   (R) in         (F) out     </cl>
+<cl> </cl>
+<cl>Node type Index: </cl>
+<cl>   (C) : Clock node          (L) : Latch node         (F) : Flip-flop node </cl>
+<cl>   (B) : Breakpoint node     (K) : Latch command node (S) : Output connector node </cl>
+<cl>   (SZ): Output HZ connector (N) : Precharge node </cl>
+<cl> </cl>
+<cl>      *** Path details (unit:[ns]) *** </cl>
+<cl> </cl>
+<cl>Path (1) :  </cl>
+<cl> </cl>
+<cl>        Delay                                                                        </cl>
+<cl>      Acc    Delta    R/F     Cap[pf]   Type   Node_Name        Net_Name     Line    </cl>
+<cl>   _________________________________________________________________________________ </cl>
+<cl>     0.000   0.000 0.200 R      0.020          in               in                   </cl>
+<cl>     0.070   0.070 0.094 F      0.027          1                1             inv    </cl>
+<cl>     0.186   0.116 0.111 R      0.027          2                2             inv    </cl>
+<cl>     0.258   0.072 0.074 F      0.027          3                3             inv    </cl>
+<cl>     0.372   0.114 0.106 R      0.027          4                4             inv    </cl>
+<cl>     0.397   0.025 0.031 F      0.007    (S)   out              out           inv    </cl>
+<cl>   _________________________________________________________________________________ </cl>
+<cl>     0.397   0.397            (total)                                                </cl>
+<cl> </cl>
+</smallcode>
+
+<p>There is actually only one path in this inverter chain.</p>
+
+</section>
+
+</section>
+</chapter>

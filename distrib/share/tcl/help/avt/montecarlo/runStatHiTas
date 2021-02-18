@@ -1,0 +1,43 @@
+
+           runStatHiTas   <numberofruns>   [-slavescript  <name>]  [-jobscript
+       <name>] [-datafile <name>] [-incremental | -override] ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Initiates monte-carlo statistical timing runs through the call of  sev-
+       eral independent hitas (slave) runs.
+           This command creates a master process which will centralize all the
+       different monte-carlo results.
+           The TCL variable _s_s_t_a___M_a_s_t_e_r_P_a_t_h is available in the slave runs and
+       indicates the directory where the master script is run.
+
+AARRGGUUMMEENNTTSS
+       nnuummbbeerrooffrruunnss  Scheduling  description of the jobs define as _<_t_o_t_a_l _n_u_m_-
+                     _b_e_r _o_f _r_u_n_s_>_:_<_m_a_x_i_m_u_m _n_u_m_b_e_r _o_f _p_a_r_a_l_l_e_l _r_u_n_s_> to run. Or
+                     simply  the  number  of  run desired if no parallelism is
+                     wanted.
+
+       --jjoobbssccrriipptt <<nnaammee>>
+                     Script file name. This script is  called  to  spawn  each
+                     slave  runs. By default the slave scripts run on the same
+                     machine in separate sub-directories.
+
+       --ssllaavveessccrriipptt <<nnaammee>>
+                     The slave monte-carlo script  name  which  run  a  single
+                     monte  carlo  job. This argument can be used if the slave
+                     script is not the one  using  the  API  runStatHiTas.  By
+                     default it's the current script.
+
+       --ddaattaaffiillee <<nnaammee>>
+                     Result file name. If the file already exists, a number is
+                     added to the filename if neither _-_i_n_c_r_e_m_e_n_t_a_l nor  _-_o_v_e_r_-
+                     _r_i_d_e  are  specified.  By  default  the  name  is  set to
+                     "ssta_data.log".
+
+       --iinnccrreemmeennttaall  Force all the results to be added at the end of the  data
+                     file preserving previous results.
+
+       --oovveerrrriiddee     Overrides existing datafile.
+
+       EEXXAAMMPPLLEE       _r_u_n_S_t_a_t_H_i_T_a_s    _5_0_0_:_2    _-_s_l_a_v_e_s_c_r_i_p_t    _s_l_a_v_e_-_s_c_r_i_p_t_._t_c_l
+                     _-_d_a_t_a_f_i_l_e _m_o_n_t_e_-_d_a_t_a_._l_o_g
+

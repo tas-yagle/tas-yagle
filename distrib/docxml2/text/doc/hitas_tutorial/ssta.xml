@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>SSTA</title>
+
+<section niv='2'><title>Principles</title>
+<p>&tool; SSTA is a Monte-Carlo like analysis: it is based on a collection of STA samples.
+Each STA sample is based upon the creation of a timing database sample, constructed by picking up random values for the statistical parameters 
+embedded in either the SPICE netlist or the technology files. 
+An SSTA sample consists therefore of a timing database and a STA run.
+In the end, there are as many different timing databases and STA runs as SSTA samples. STA runs are of course highly configurable, in order to extract
+any relevant information.  </p>
+</section>
+
+<section niv='2'><title>Analysis on the ADDACCU</title>
+<p>This example features 2 analysis: A SSTA analysis and the PATH analysis. In the SSTA analysis, slacks are computed, sorted and displayed in an efficient way. In the PATH analysis, particular paths are retrieved and their variations are displayed.
+For each of those analyses, 50 runs are performed on the ADDACCU design. </p>
+
+<section niv='3'><title>Generating the data for the SSTA analysis</title>
+<p>The script to generate the SSTA data is no different from a standard STA script except for 2 TCL instructions inserted at the
+beginning and at the end of the script. The script used to generate those data is named <f>ssta.tcl</f>. 
+</p>
+<p>The first instruction is responsible for the handling of the 50 runs:</p>
+<code>
+<cl>runStatHiTas 50 -incremental -result slacks.ssta -storedir store</cl>
+</code>
+<p>In case the configuration variable <f>avtLibraryDirs</f> is used, this instruction must be placed after the configuration because modifications are applied to this configuration variable to get proper search paths.</p>
+<p>
+Calling <f>runStatHiTas</f> will launch 50 separate runs of the <f>ssta.tcl</f> script one by one (multiprocessing is not used in the tutorial). Each run will have its data written into the file <f>slacks.ssta</f>
+and the required information to display the slack details will be stored in the directory <f>store</f>.</p>
+<p>Using the option <f>-storedir</f> is not mandatory but if it is not used, only the slack summaries will be available.</p>
+<p>The <f>-incremental</f> flag is set to enrich any previous execution of the SSTA database so 50 more runs will be added to any existing set of runs.
+</p>
+<p>The second instruction is responsible for the handling of STA data:</p>
+<code>
+<cl>ssta_SlackReport -senddata $stbfig simple</cl>
+</code>
+<p>
+<f>ssta_SlackReport</f> is called after the <f>stb</f> API execution. The stability figure and a slack data output mode is given to the function. The only mode available at the moment is <f>simple</f>.
+Called in this form, it retrieves at most the 10000 worst negative slacks from the stability figure. If no negative slacks are found, the worst positive one is searched.
+The slack descriptions are then written to the file <f>slacks.ssta</f> for a future use.
+</p>
+</section>
+<section niv='3'><title>Reporting the results for SSTA analysis</title>
+<p>
+The script <f>slack_analysis.tcl</f> reads the <f>slacks.ssta</f> file and uses the data in the directory <f>store</f> to display some results.
+</p>
+<section niv='4'><title>Slack occurrence</title>
+<p>The first kind of result output is generated using the command:</p>
+<code>
+ssta_SlackReport -display "slacks.ssta" $ofile -storedir store
+</code>
+<p>
+The report is driven to the file <f>slack_report.log</f>.
+</p>
+<p>At the beginning of the report, yield information is printed: the total number of runs, the number of runs with negative holds, the number of runs with negative setups, the number of runs with PVT errors and the global yield.
+</p>
+<p>
+In a second part, each negative slack is printed with the number of occurrence the of slack, the run number where the slack is the worst, some statistical information and the slack description.
+As the <f>store</f> directory is given as an argument to the function, the detail of each negative slack is displayed after this summary.
+</p>
+<p>
+Finally, at the end, a list with the different seeds used to generate each run database is displayed.
+</p>
+</section>
+<section niv='4'><title>Worst slack distributions</title>
+<p>The second kind of result is output in a set of file through a gnuplot graphical file representation by using the command:</p>
+<code>
+ssta_SlackReport -plot "slacks.ssta" "distrib"
+</code>
+<p>
+<f>distrib</f> is a prefix that will be used to generate the gnuplot files. There are 2 plots: 1 for the setups slacks and 1 for the holds slacks.
+</p>
+<p>The gnuplot command file will be named <f>distrib.holds.plt</f> and <f>distrib.setups.plt</f>. 
+The corresponding data files are <f>distrib.holds.plt.dat</f> and <f>distrib.holds.plt.dat</f>.
+</p>
+
+<p>The distributions can be viewed using the UNIX command:</p>
+<code>
+<cl>gnuplot &lt;command file&gt;</cl>
+</code>
+</section>
+</section>
+
+
+
+<section niv='3'><title>Generating the data for the PATH analysis</title>
+<p>The script to generate the PATH data is very easy. In this case there is no need for stability to be performed. The only operation to be done is to retrieve the list of desired paths to analyse. In this example all paths and accesses will be taken. As for the SSTA data generation, 2 TCL instructions are inserted at the
+beginning and at the end of the script. In between, the UTD is built and the path search is performed. The script used to generate those data is named <f>paths.tcl</f>. 
+</p>
+<p>The first instruction is responsible for the handling of the 50 runs:</p>
+<code>
+<cl>runStatHiTas 50 -incremental -result paths.ssta -storedir store_paths</cl>
+</code>
+<p>The instruction is placed after the configuration variable <f>avtLibraryDirs</f></p>
+<p>
+After the UTD generation, the list of accesses and paths are extracted from the UTD and merged together:</p>
+<code>
+<cl>set paths [concat [ttv_GetPaths $fig -access] [ttv_GetPaths $fig]] </cl>
+</code>
+
+
+<p>The last instruction is responsible for the handling of PATH data:</p>
+<code>
+<cl>ssta_PathReport -senddata $paths simple</cl>
+</code>
+<p>
+<f>ssta_PathReport</f> is called with the path list and a path data output mode. The only mode available at the moment is <f>simple</f>.
+The path descriptions are written into the file <f>paths.ssta</f> for a future use.
+</p>
+</section>
+
+<section niv='3'><title>Reporting the results for SSTA analysis</title>
+<p>
+The script <f>path_analysis.tcl</f> reads the <f>paths.ssta</f> file and uses the data in the directory <f>store_paths</f> to display some results.
+</p>
+<p>The path result report is generated using the command:</p>
+<code>
+ssta_PathReport -display "paths.ssta" $ofile -storedir store_paths
+</code>
+<p>
+The report is driven to the file <f>path_report.log</f>.
+</p>
+<p>A summary of all paths/accesses is printed at the beginning of the report.
+Each path has an entry in the summary with some statistical information, the minimum delay of the path and the corresponding run number, the maximum delay and the corresponding run number and finally the path description.
+</p>
+<p>
+As the <f>store_paths</f> directory is given as an argument to the function, the detail of each path is displayed after this summary. There are 2 details for each path: the detail for the minimum path value and the detail for the maximum path value.
+</p>
+<p>
+Finally, at the end, a list with the different seeds used to generate each run database is displayed.
+</p>
+</section>
+
+</section>
+
+
+<!--
+<section niv='4'><title>The db.tcl script </title>
+
+<p>The database generation and STA is performed in the <f>db.tcl</f> script.
+The result of the STA run is printed in a file given as first argument to the script:</p>
+<code>
+<cl>set filename [ lindex $argv 0 ]</cl>
+</code>
+
+<p>You will find in this script the procedure <f>build_slack_string</f>. After the STA, it retrieves the worst setup slack and the worst hold slack 
+of the STA. The worst slack is retrieved by limiting the number of slacks to 1 and the margin to 1s.</p>
+<code>
+<cl>set sl [ stb_GetSlacks $stbfig -nbslacks 1 $type -margin 1 ]</cl>
+</code>
+
+<p>The procedure <f>build_slack_string</f> is subsequently called as follows:</p>
+
+<code>
+<cl>set setupstring [build_slack_string $stbfig -setuponly]</cl>
+<cl>set holdstring [build_slack_string $stbfig -holdonly]</cl>
+</code>
+
+<p>The procedure <f>build_slack_string</f> returns a string with the slack type, the start, thru and end event of the slack DATA VALID 
+and finally the corresponding slack value. The start, thru and end event strings are obtained 
+by the function "ssta_GetEventName" which returns the NET_NAME of the signal followed by the transition 
+direction of the event. The thru event is set to "- -" in case the DATAVALID is not an access.</p>
+<p>The returned string of the procedure <f>build_slack_string</f> looks like:</p>
+<code>
+<cl>"-setuponly sel u - - l3.sff_m d 5.5e-10"</cl>
+</code>
+
+<p>The <f>db.tcl</f> script then creates the result file and a line is written with the setup string and the hold string side by side:</p>
+
+<code>
+<cl>puts $channel "$setupstring $holdstring"</cl>
+</code>
+
+<p>So the result file for one SSTA run contains one line with 16 fields which will be further analyzed.</p>
+<p>You can write here any procedure you want, and analyze statistically any characteristics of your design.</p> 
+</section>
+</section>
+
+<section niv='3'><title>Performing 50 STA samples</title>
+
+<p>The script <f>ssta_top.tcl</f> runs 50 STA scripts, creating 50 SSTA samples.
+It creates a directory named <f>ssta_results/</f> which stores intermediate results:</p>
+<code>
+<cl>set resdir ssta_results</cl>
+<cl>catch {file mkdir $resdir}</cl>
+</code>
+
+<p>The script iterates from 1 to 50, generating 50 different result files:</p>
+<code>
+<cl>set filename "$resdir/ssta_run$i"</cl>
+</code>
+
+<p><f>ssta_sample.tcl</f> is invoked with this filename as argument:</p>
+<code>
+<cl>catch [list exec ./ssta_sample.tcl $filename] msg</cl>
+</code>
+
+<p>The filename is stored in a list of files to merge.</p>
+<code>
+<cl>lappend reslist $filename</cl>
+</code>
+
+<p>Finally, all files are packed together in <f>result.ssta</f>:</p>
+<code>
+<cl>eval "exec cat $reslist >> result.ssta"</cl>
+</code>
+</section>
+
+<section niv='3'><title>Example of SSTA Results Usage</title>
+
+<p><f>data_analysis.tcl</f> reads in <f>results.ssta</f> and computes the circuit timing yield, and setup and hold slacks distribution.</p>
+<p>The API ssta_ToolBox provides some functions to handle SSTA results. The setup and hold value list is extracted from the result file using:</p>
+<code>
+<cl>set lsetup [ ssta_ToolBox -filename $file -getfield 8 ]</cl>
+<cl>set lhold [ ssta_ToolBox -filename $file -getfield 16 ]</cl>
+</code>
+
+<p>The setup and hold values are the 8th and 16th field of each line.</p>
+<p>The yield is computed using the function <f>get_yield</f> and <f>get_nb_neg</f>.</p>
+
+<p>The same API is used in another mode to build graphical distribution display by generating gnuplot 
+data and command files from the setup and hold value lists:</p>
+<code>
+<cl>ssta_ToolBox -plot -values $lhold -filename result_hold.plt -title "Hold Slacks"</cl>
+<cl>ssta_ToolBox -plot -values $lsetup -filename result_setup.plt -title "Setup Slacks"</cl>
+</code>
+
+<p>The gnuplot command file will be named <f>result_hold.plt</f> and <f>result_setup.plt</f> respectively. 
+The corresponding data files are <f>result_hold.plt.dat</f> and <f>result_setup.plt.dat</f>.</p>
+
+<p>The distributions can be viewed using the UNIX command:</p>
+<code>
+<cl>gnuplot &lt;command file&gt;</cl>
+</code>
+</section>
+
+</section>
+-->
+
+<!-- <section niv='2'><title>SSTA on the cpu</title>
+<p>This example runs the STA 30 times on the cpu. Each result is sent to a master script packing results together in a file. 
+The master script runs an API dealing with the parallel SSTA runs through a user defined script. 
+The advantage of using this script is that the number of parallel runs is handled transparently and the user given 
+script to launch a SSTA run has all the freedom necessary to launch remote execution for example.</p>
+
+<section niv='3'><title>One sample of STA analysis</title>
+
+<p>The STA is done by 2 scripts.
+The script (slave.tcl) enables the statistical functions and then calls the STA script (db.tcl). 
+The slave.tcl script is supposed to have been launched by the master.tcl script which handles the parallelism. 
+Once db.tcl finished, slave.tcl finishes by building a result string and sending it to the master.tcl script.</p>
+<p>The activation of statistical functions is done by using the command:</p>
+<code>
+<cl>avt_config spiActivateStatisticalFunctions yes</cl>
+</code>
+
+<p>The slave.tcl script is supposed to be called with an argument representing the absolute path where 
+to find the source files. As the script can be run remotely, the file search path is enriched with this path:</p>
+<code>
+<cl>set srcdir [ lindex $argv 0 ]</cl>
+<cl>avt_config avtLibraryDirs .:$srcdir</cl>
+</code>
+
+<p>The UTD generation and STA is performed in the db.tcl script.</p>
+
+<p>After the stability figure generation, the slave.tcl creates a result string using the function "build_slack_list".
+The function "build_slack_list" is called to retrieve at most the 1000 worst negative setup or hold slacks. 
+The function is also called with the stability figure and a flag to use with the API "stb_GetSlacks". This flag set 
+the choice between setup (-setuponly) and hold (-holdonly):</p>
+<p>In the case there are negative slacks, the function will retrieve the first worst positive slack.</p>
+
+<p>At the end, the function returns a TCL list which contains the description of each slack:</p>
+<p>(the start, thru and end event of the DATA VALID and the corresponding slack value)</p>
+<p>The start, thru and end event strings are obtained by the function "ssta_GetEventName" which returns 
+the NETNAME of the signal followed by the transition direction of the event. 
+The thru event is set to "- -" in case the DATAVALID is not an access.</p>
+
+<p>The result list is a list with the word "setup" followed by the list of setup slacks, 
+the word "hold" followed by the list of hold slacks:</p>
+<code>
+<cl>set reslist [list setup [build_slack_list $stbfig -setuponly] hold [build_slack_list $stbfig -holdonly]]</cl>
+</code>
+
+<p>The result looks like the following:</p>
+
+<code>
+<cl>setup {{{ck d} {ram_m_1_0_dff_s d} {accu_m2_dff_m u} -1.35e-10} {{ck d} {ram_m_1_0_dff_s d} {accu_m3_dff_m u} -9.36e-11}}} hold {{{scin d} {- -} {accu_m0_dff_m u} 1.19e-12}}</cl>
+</code>
+
+<p>Finally, the result list is sent to the master script using the API "avt_McPostData" which should be the last command of the script:</p>
+<code>
+<cl>avt_McPostData $reslist</cl>
+</code>
+
+</section>
+
+<section niv='3'><title>Performing the 30 SSTA runs</title>
+
+<p>The script (master.tcl) exists for the purpose of launching several runs of single SSTA runs in a parallel oriented way.</p>
+<p>The API runStatHiTas is used for this:</p>
+<code>
+<cl>runStatHiTas 30:2 ./exec_stat.sh slave.tcl data.log</cl>
+</code>
+
+<p>This means that a total of 30 runs must be done but only 2 are authorized simultaneously. 
+The script (exec_stat.sh) is responsible for the launching of the script (slave.tcl). 
+All the results sent back to the master will be written in the result file "data.log". 
+If this file already exists, it will not be overwritten but a number will be added to the filename "data_xxx.log".</p>
+ 
+<p>For this example, the (exec_stat.sh) will not run remote (slave.tcl) but will execute the runs on the same machine. 
+The script is written in "sh" format and is always called with 4 arguments:</p>
+<code>
+<cl>- the name of the slave script to run</cl>
+<cl>- the sample number ranging from 1 to 30 in our example</cl>
+<cl>- the parallel job number ranging from 1 to 2 in our example</cl>
+<cl>- communication data between master and slave which must be the last argument given to the slave script to run</cl>
+</code>
+
+<p>The script gets the current working directory where the data file resides into the variable "curw".</p>
+<p>It creates a temporary directory using the sample number given and moves into it.</p>
+<p>Then, the slave script is executed with the "curw" as first argument and the communication data as the last one.</p>
+<p>Finally in case of success of the slave script run, the temporary directory will be erased.</p>
+
+</section>
+
+<section niv='3'><title>An example of the SSTA result utilization</title>
+
+<p>The script (data_analysis.tcl) reads the result file "data.log", computes the yield of the circuit, 
+the distribution of the setup and hold slacks and the number of negative slacks.</p>
+
+<p>The script must be called with one argument which is the data file name.
+The content of the file can be read with the API "ssta_ToolBox" which returns a list with one entry for each SSTA run.
+The script loops thru all the entries doing the following operations:</p>
+<code>
+<cl>- get the worst setup and add it to the lsetup list</cl>
+<cl>- get the worst hold and add it to the lhold list</cl>
+<cl>- for each setup slack, append the slack value to a list of slacks associated to the slack description in the tcl dictionary setupdict</cl>
+<cl>- for each hold slack, append the slack value to a list of slacks associated to the slack description in the tcl dictionary holddict</cl>
+</code>
+
+<p>A list of occurrences is built and sorted from the most present slack description to the less one.</p>
+<p>The list is displayed for each slack description with the number of occurrence, 
+the mean slack value and the slack description. This is done for the setup and hold dictionary built.</p>
+
+<p>The API "ssta_ToolBox" is used in the plot mode to build graphical distribution display by generating gnuplot data 
+and command files from the setup and hold value lists:</p>
+<code>
+<cl>ssta_ToolBox -plot -values $lhold -filename result_hold.plt -title "Hold Slacks" -nbrange 10</cl>
+<cl>ssta_ToolBox -plot -values $lsetup -filename result_setup.plt -title "Setup Slacks" -nbrange 10</cl>
+</code>
+
+<p>The gnuplot command file will be named "result_hold.plt" and "result_setup.plt" respectively. 
+The corresponding data files are "result_hold.plt.dat" and "result_setup.plt.dat".</p>
+
+<p>The distributions can be viewed using the unix command:</p>
+<code>
+<cl>gnuplot &lt;command file&gt;</cl>
+</code>
+</section>
+
+
+</section>-->
+
+</section>
+
+</chapter>
+
+
+
+

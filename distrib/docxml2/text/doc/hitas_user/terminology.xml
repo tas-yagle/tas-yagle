@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Glossary</title>
+
+<section niv='2'><title>Logical Description</title>
+<glossary>
+<row><article>Subcircuit</article><def>Base object of a hierarchical description. The subcircuit is defined by its components,
+which may be elementary objects (transistors, resistances, capacitances...) or instances of other subcircuits.</def></row>
+<row><article>Cell</article><def>Predefined subcircuit, only containing elementary objects, that may be selected and arranged to create custom or semi-custom integrated circuit. </def></row>
+<row><article>Instance</article><def>Call of a subcircuit in a specific context</def></row>
+<row><article>(Logical) Signal</article><def>Object carrying logical information between instances or elementary objects</def></row>
+<row><article>Connector</article><def>Object carrying the logical information of a signal through the interface of an instance.</def></row>
+</glossary>
+</section>
+
+<section niv='2'><title>Physical Description</title>
+<glossary>
+<row><article>RC network</article><def>Connected set of R and C devices</def></row>
+<row><article>Net</article><def>Individual RC network linked to a logical signal. The RC network
+presents a resistive path between connectors of connected instances. Capacitances are substrate or coupling ones.</def></row>
+<row><article>Node</article><def>Single point in a RC network</def></row>
+</glossary>
+</section>
+
+<section niv='2'><title>Timing Description</title>
+<glossary>
+<row><article>(Timing) Signal</article><def>Point of the circuit where the timing propagation of the logical information is 
+measured. Whereas the logical signal is linked to a net, the timing signal is linked to a node. 
+Indeed, as propagation delays in RC networks must be taken into account, it is necessary to measure the 
+timing propagation of the logical information on several points of the net. The methodology in &tool; is to associate 
+a timing signal with each terminal node of a net. As a result, several timing signals may exist where only one 
+logical signal exist.</def></row>
+<row><article>Event</article><def>Rising or falling logical transition on a timing signal</def></row>
+<row><article>Reference point</article><def>Timing signal where timing checks must be performed: input or output 
+connectors, latch, precharge, latch or precharge commands.</def></row>
+<row><article>Path</article><def>List of timing signals, from reference point to reference point, 
+through which logical information is carried</def></row>
+<row><article>Break point</article><def>User defined reference point</def></row>
+</glossary>
+</section>
+
+<imgsize namehtml="terminology.gif" namepdf="terminology.gif" hpdf="300pt"/>
+</section>
+</chapter>

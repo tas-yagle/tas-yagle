@@ -1,0 +1,21 @@
+
+       TimingLine   *ttv_AddHZAccess(char   *input,   char   *output,   double
+       max_delay, double min_delay, char *dir);
+
+DDEESSCCRRIIPPTTIIOONN
+       Creates a HZ data access line.
+
+AARRGGUUMMEENNTTSS
+       iinnppuutt         Delay line start point
+
+       oouuttppuutt        Delay line end point
+
+       mmaaxx__ssllooppee     Maximum slope associated with delay line
+
+       mmaaxx__ddeellaayy     Maximum propagation delay associated with delay line
+
+       ddiirr           Transitions on start and end points: _u_u  for  input  ris-
+                     ing/output rising, _u_d for input rising/output falling, _d_d
+                     for  input   falling/output   falling,   _d_u   for   input
+                     falling/output rising.
+

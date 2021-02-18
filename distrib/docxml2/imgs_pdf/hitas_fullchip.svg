@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 9.0, SVG Export Plug-In  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20000303 Stylable//EN"   "http://www.w3.org/TR/2000/03/WD-SVG-20000303/DTD/svg-20000303-stylable.dtd" [
+	<!ENTITY st0 "font-size:6.3838;">
+	<!ENTITY st1 "font-size:10.4076;">
+	<!ENTITY st2 "fill:none;stroke:#000000;stroke-width:2.3593;stroke-linejoin:round;stroke-miterlimit:10;">
+	<!ENTITY st3 "fill-rule:evenodd;clip-rule:evenodd;fill:none;">
+	<!ENTITY st4 "font-family:'Helvetica';font-weight:bold;">
+	<!ENTITY st5 "fill-rule:evenodd;clip-rule:evenodd;">
+	<!ENTITY st6 "fill:none;stroke:#000000;stroke-width:2.3593;stroke-miterlimit:10;">
+	<!ENTITY st7 "fill:#FFFFFF;">
+	<!ENTITY st8 "fill-rule:evenodd;clip-rule:evenodd;fill:#F96611;">
+	<!ENTITY st9 "fill-rule:evenodd;clip-rule:evenodd;fill:#C0C0C0;">
+	<!ENTITY st10 "font-size:5.8287;">
+	<!ENTITY st11 "font-size:16.2364;">
+	<!ENTITY st12 "fill-rule:nonzero;clip-rule:nonzero;stroke:#000000;stroke-miterlimit:4;">
+	<!ENTITY st13 "stroke:none;">
+	<!ENTITY st14 "font-size:9.2982;">
+	<!ENTITY st15 "clip-path:url(#aiclp1);">
+]>
+<svg  width="375.381pt" height="206.484pt" viewBox="0 0 375.381 206.484" xml:space="preserve">
+	<g id="Calque_x0020_1" style="&st12; &st4; &st14;">
+		<g style="&st13;">
+			<path style="&st8;" d="M103.533,19.846c-8.604,0-15.683,7.078-15.683,15.683s7.078,15.544,15.683,15.544h62.453c8.604,0,15.544-6.939,15.544-15.544s-6.939-15.683-15.544-15.683h-62.453z"/>
+			<text transform="matrix(1 0 0 1 120.6035 32.8916)"><tspan x="0" y="0" style="&st1;">HiT</tspan></text>
+			<text transform="matrix(1 0 0 1 136.6021 32.8916)"><tspan x="0" y="0" style="&st1;">as</tspan></text>
+			<text transform="matrix(1 0 0 1 96.8711 45.3818)"><tspan x="0" y="0" style="&st1;">Custom Blocks</tspan></text>
+			<g>
+				<clipPath id="aiclp1" style="&st3;">
+					<path d="M215.949,197.767h5.135v-18.598h10.408v18.598h5.273l-10.408,6.246l-10.408-6.246z"/>
+				</clipPath>
+				<g style="&st15;">
+					<image width="256" height="1" xlink:href="data:;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAAABGdBTUEAANbY1E9YMgAAABl0RVh0
+U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADFSURBVHjalFHREsIwCAupp///w1YKoXTe
+fJDdrgUSSDYD8Ho9yWG0xxg0Dxph/gBz4j2nl/zurzG6mcbhWdzFE8ysMauFCNt1khcMimuiLMxK
+ILxpqhOTop05V9NwTONuSkJbYCLQulcxulJbwhiolBZEWaCkpsRgSoG2GAfTcyrPKbHnsncLrO1l
+NlbSD7bFMt7W94j4pNp+3wKKOo67js3KTThCXPQvrM7GV25NPH55Fw2XKGtfY/+onMJuWvzZOuMj
+wAC9FwbBkw3I1gAAAABJRU5ErkJggg==" transform="matrix(0 -0.0976 -20.9564 0 236.9741 204.1519)"/>
+				</g>
+			</g>
+			<text transform="matrix(1 0 0 1 206.9272 192.771)"><tspan x="0" y="0" style="&st1;">Sign-Off</tspan></text>
+			<path style="&st8;" d="M283.953,20.4c-8.605,0-15.683,7.078-15.683,15.683c0,8.605,7.077,15.544,15.683,15.544h62.453c8.604,0,15.543-6.938,15.543-15.544c0-8.604-6.939-15.683-15.543-15.683h-62.453z"/>
+			<text transform="matrix(1 0 0 1 299.6353 33.4463)"><tspan x="0" y="0" style="&st1;">HiT</tspan></text>
+			<text transform="matrix(1 0 0 1 315.6343 33.4463)"><tspan x="0" y="0" style="&st1;">as </tspan></text>
+			<text transform="matrix(1 0 0 1 288.5327 45.9375)"><tspan x="0" y="0" style="&st1;">Gate-Level</tspan></text>
+			<path style="&st8;" d="M103.533,74.249c-8.604,0-15.683,6.939-15.683,15.544c0,8.743,7.078,15.683,15.683,15.683h242.873c8.604,0,15.543-6.94,15.543-15.683c0-8.604-6.939-15.544-15.543-15.544H103.533z"/>
+			<text transform="matrix(1 0 0 1 166.1245 95.4834)"><tspan x="0" y="0" style="&st11;">H</tspan></text>
+			<text transform="matrix(1 0 0 1 177.8169 95.4834)"><tspan x="0" y="0" style="&st11;">i</tspan></text>
+			<text transform="matrix(1 0 0 1 182.3491 95.4834)"><tspan x="0" y="0" style="&st11;">T</tspan></text>
+			<text transform="matrix(1 0 0 1 191.021 95.4834)"><tspan x="0" y="0" style="&st11;">a</tspan></text>
+			<text transform="matrix(1 0 0 1 201.2798 95.4834)"><tspan x="0" y="0" style="&st11;">s</tspan></text>
+			<text transform="matrix(1 0 0 1 209.0562 95.4834)"><tspan x="0" y="0" style="&st11;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 214.8081 95.4834)"><tspan x="0" y="0" style="&st11;">F</tspan></text>
+			<text transform="matrix(1 0 0 1 223.4565 95.4834)"><tspan x="0" y="0" style="&st11;">u</tspan></text>
+			<text transform="matrix(1 0 0 1 234.6167 95.4834)"><tspan x="0" y="0" style="&st11;">l</tspan></text>
+			<text transform="matrix(1 0 0 1 237.8735 95.4834)"><tspan x="0" y="0" style="&st11;">l</tspan></text>
+			<text transform="matrix(1 0 0 1 243.6265 95.4834)"><tspan x="0" y="0" style="&st11;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 246.8823 95.4834)"><tspan x="0" y="0" style="&st11;">C</tspan></text>
+			<text transform="matrix(1 0 0 1 259.8296 95.4834)"><tspan x="0" y="0" style="&st11;">h</tspan></text>
+			<text transform="matrix(1 0 0 1 268.4995 95.4834)"><tspan x="0" y="0" style="&st11;">i</tspan></text>
+			<text transform="matrix(1 0 0 1 274.2456 95.4834)"><tspan x="0" y="0" style="&st11;">p</tspan></text>
+			<path style="&st6;" d="M74.458,90.14h4.164"/>
+			<path style="&st5;" d="M78.898,94.858l9.021-4.857l-9.298-4.441l0.277,9.299z"/>
+			<text transform="matrix(1 0 0 1 317.6772 6.3838)"><tspan x="0" y="0" style="&st0;">H</tspan></text>
+			<text transform="matrix(1 0 0 1 322.271 6.3838)"><tspan x="0" y="0" style="&st0;">i</tspan></text>
+			<text transform="matrix(1 0 0 1 324.0542 6.3838)"><tspan x="0" y="0" style="&st0;">e</tspan></text>
+			<text transform="matrix(1 0 0 1 327.5815 6.3838)"><tspan x="0" y="0" style="&st0;">r</tspan></text>
+			<text transform="matrix(1 0 0 1 330.0796 6.3838)"><tspan x="0" y="0" style="&st0;">a</tspan></text>
+			<text transform="matrix(1 0 0 1 333.603 6.3838)"><tspan x="0" y="0" style="&st0;">r</tspan></text>
+			<text transform="matrix(1 0 0 1 336.105 6.3838)"><tspan x="0" y="0" style="&st0;">c</tspan></text>
+			<text transform="matrix(1 0 0 1 339.6245 6.3838)"><tspan x="0" y="0" style="&st0;">h</tspan></text>
+			<text transform="matrix(1 0 0 1 343.5405 6.3838)"><tspan x="0" y="0" style="&st0;">y</tspan></text>
+			<text transform="matrix(1 0 0 1 347.062 6.3838)"><tspan x="0" y="0" style="&st0;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 348.8589 6.3838)"><tspan x="0" y="0" style="&st0;">h</tspan></text>
+			<text transform="matrix(1 0 0 1 352.7202 6.3838)"><tspan x="0" y="0" style="&st0;">a</tspan></text>
+			<text transform="matrix(1 0 0 1 356.2964 6.3838)"><tspan x="0" y="0" style="&st0;">n</tspan></text>
+			<text transform="matrix(1 0 0 1 360.1577 6.3838)"><tspan x="0" y="0" style="&st0;">d</tspan></text>
+			<text transform="matrix(1 0 0 1 364.0815 6.3838)"><tspan x="0" y="0" style="&st0;">l</tspan></text>
+			<text transform="matrix(1 0 0 1 365.8237 6.3838)"><tspan x="0" y="0" style="&st0;">i</tspan></text>
+			<text transform="matrix(1 0 0 1 367.6226 6.3838)"><tspan x="0" y="0" style="&st0;">n</tspan></text>
+			<text transform="matrix(1 0 0 1 371.4819 6.3838)"><tspan x="0" y="0" style="&st0;">g</tspan></text>
+			<path style="&st2;" d="M136.494,51.142v14.572"/>
+			<path style="&st5;" d="M131.914,65.714l4.58,9.299l4.719-9.299h-9.299z"/>
+			<path style="&st2;" d="M316.914,51.142v14.572"/>
+			<path style="&st5;" d="M312.333,65.714l4.58,9.299l4.719-9.299h-9.299z"/>
+			<path style="&st6;" d="M225.177,55.722v9.298h-0.139v0.14"/>
+			<path style="&st5;" d="M220.458,65.159l4.58,9.298l4.719-9.298h-9.299z"/>
+			<path style="&st6;" d="M225.039,105.544v4.303"/>
+			<path style="&st5;" d="M220.458,110.125l4.857,9.021l4.441-9.299l-9.299,0.277z"/>
+			<path style="&st6;" d="M225.316,148.845v13.186h89.516v4.162"/>
+			<path style="&st5;" d="M310.251,166.193l4.719,9.299l4.58-9.299h-9.299z"/>
+			<path style="&st6;" d="M225.316,148.845v13.186h-92.014v4.162"/>
+			<path style="&st5;" d="M128.722,166.193l4.719,9.299l4.58-9.299h-9.299z"/>
+			<path style="&st6;" d="M225.316,148.845v13.186h147.111V10.062h-57.18v1.249"/>
+			<path style="&st5;" d="M310.667,11.311l4.58,9.299l4.719-9.299h-9.299z"/>
+			<path style="&st8;" d="M95.067,119.076c-2.775,0-4.996,2.221-4.996,4.996v19.709c0,2.775,2.221,4.996,4.996,4.996h260.36c2.775,0,4.996-2.221,4.996-4.996v-19.709c0-2.775-2.221-4.996-4.996-4.996H95.067z"/>
+			<text transform="matrix(1 0 0 1 164.043 137.5347)"><tspan x="0" y="0" style="&st1;">Unified T</tspan></text>
+			<text transform="matrix(1 0 0 1 208.3804 137.5347)"><tspan x="0" y="0" style="&st1;">iming DataBase</tspan></text>
+			<path style="&st9;" d="M275.625,175.285c-2.776,0-5.136,2.359-5.136,5.135v20.816c0,2.777,2.359,5.137,5.136,5.137H353.9c2.914,0,5.135-2.359,5.135-5.137v-20.816c0-2.775-2.221-5.135-5.135-5.135h-78.274z"/>
+			<text transform="matrix(1 0 0 1 299.6353 184.9995)"><tspan x="0" y="0">T</tspan></text>
+			<text transform="matrix(1 0 0 1 305.1226 184.9995)"><tspan x="0" y="0">i</tspan></text>
+			<text transform="matrix(1 0 0 1 307.8901 184.9995)"><tspan x="0" y="0">m</tspan></text>
+			<text transform="matrix(1 0 0 1 315.9331 184.9995)"><tspan x="0" y="0">i</tspan></text>
+			<text transform="matrix(1 0 0 1 318.728 184.9995)"><tspan x="0" y="0">n</tspan></text>
+			<text transform="matrix(1 0 0 1 324.1675 184.9995)"><tspan x="0" y="0">g</tspan></text>
+			<text transform="matrix(1 0 0 1 289.0874 196.2397)"><tspan x="0" y="0">A</tspan></text>
+			<text transform="matrix(1 0 0 1 295.769 196.2397)"><tspan x="0" y="0">b</tspan></text>
+			<text transform="matrix(1 0 0 1 301.4536 196.2397)"><tspan x="0" y="0">s</tspan></text>
+			<text transform="matrix(1 0 0 1 306.5933 196.2397)"><tspan x="0" y="0">t</tspan></text>
+			<text transform="matrix(1 0 0 1 309.7065 196.2397)"><tspan x="0" y="0">r</tspan></text>
+			<text transform="matrix(1 0 0 1 313.2905 196.2397)"><tspan x="0" y="0">a</tspan></text>
+			<text transform="matrix(1 0 0 1 318.4702 196.2397)"><tspan x="0" y="0">c</tspan></text>
+			<text transform="matrix(1 0 0 1 323.6069 196.2397)"><tspan x="0" y="0">t</tspan></text>
+			<text transform="matrix(1 0 0 1 326.7222 196.2397)"><tspan x="0" y="0">i</tspan></text>
+			<text transform="matrix(1 0 0 1 329.2749 196.2397)"><tspan x="0" y="0">o</tspan></text>
+			<text transform="matrix(1 0 0 1 334.9565 196.2397)"><tspan x="0" y="0">n</tspan></text>
+			<text transform="matrix(1 0 0 1 302.4106 203.8745)"><tspan x="0" y="0" style="&st7; &st10;">L</tspan></text>
+			<text transform="matrix(1 0 0 1 305.9429 203.8745)"><tspan x="0" y="0" style="&st7; &st10;">I</tspan></text>
+			<text transform="matrix(1 0 0 1 307.5776 203.8745)"><tspan x="0" y="0" style="&st7; &st10;">B</tspan></text>
+			<text transform="matrix(1 0 0 1 311.7378 203.8745)"><tspan x="0" y="0" style="&st7; &st10;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 313.394 203.8745)"><tspan x="0" y="0" style="&st7; &st10;">/</tspan></text>
+			<text transform="matrix(1 0 0 1 314.9644 203.8745)"><tspan x="0" y="0" style="&st7; &st10;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 316.6187 203.8745)"><tspan x="0" y="0" style="&st7; &st10;">T</tspan></text>
+			<text transform="matrix(1 0 0 1 320.1147 203.8745)"><tspan x="0" y="0" style="&st7; &st10;">L</tspan></text>
+			<text transform="matrix(1 0 0 1 323.7124 203.8745)"><tspan x="0" y="0" style="&st7; &st10;">F</tspan></text>
+			<path style="&st9;" d="M94.79,175.285c-2.915,0-5.274,2.359-5.274,5.135v20.816c0,2.777,2.359,5.137,5.274,5.137h76.886c2.776,0,5.135-2.359,5.135-5.137v-20.816c0-2.775-2.359-5.135-5.135-5.135H94.79z"/>
+			<text transform="matrix(1 0 0 1 107.6963 188.4683)"><tspan x="0" y="0">T</tspan></text>
+			<text transform="matrix(1 0 0 1 113.1841 188.4683)"><tspan x="0" y="0">i</tspan></text>
+			<text transform="matrix(1 0 0 1 115.9512 188.4683)"><tspan x="0" y="0">m</tspan></text>
+			<text transform="matrix(1 0 0 1 123.9941 188.4683)"><tspan x="0" y="0">i</tspan></text>
+			<text transform="matrix(1 0 0 1 126.7891 188.4683)"><tspan x="0" y="0">n</tspan></text>
+			<text transform="matrix(1 0 0 1 132.2285 188.4683)"><tspan x="0" y="0">g</tspan></text>
+			<text transform="matrix(1 0 0 1 138.1201 188.4683)"><tspan x="0" y="0"> </tspan></text>
+			<text transform="matrix(1 0 0 1 140.479 188.4683)"><tspan x="0" y="0">&amp;</tspan></text>
+			<text transform="matrix(1 0 0 1 147.3848 188.4683)"><tspan x="0" y="0"> </tspan></text>
+			<text transform="matrix(1 0 0 1 149.7642 188.4683)"><tspan x="0" y="0">S</tspan></text>
+			<text transform="matrix(1 0 0 1 156.1392 188.4683)"><tspan x="0" y="0">I</tspan></text>
+			<text transform="matrix(1 0 0 1 115.6069 199.7104)"><tspan x="0" y="0">R</tspan></text>
+			<text transform="matrix(1 0 0 1 122.2886 199.7104)"><tspan x="0" y="0">e</tspan></text>
+			<text transform="matrix(1 0 0 1 127.4673 199.7104)"><tspan x="0" y="0">p</tspan></text>
+			<text transform="matrix(1 0 0 1 133.1113 199.7104)"><tspan x="0" y="0">o</tspan></text>
+			<text transform="matrix(1 0 0 1 138.7983 199.7104)"><tspan x="0" y="0">r</tspan></text>
+			<text transform="matrix(1 0 0 1 142.3911 199.7104)"><tspan x="0" y="0">t</tspan></text>
+			<text transform="matrix(1 0 0 1 145.498 199.7104)"><tspan x="0" y="0">s</tspan></text>
+			<path style="&st9;" d="M199.294,15.266c-3.748,0-6.801,3.054-6.801,6.801V48.99c0,3.608,3.053,6.662,6.801,6.662h51.627c3.748,0,6.662-3.054,6.662-6.662V22.066c0-3.747-2.914-6.801-6.662-6.801h-51.627z"/>
+			<text transform="matrix(1 0 0 1 197.3511 29.6992)"><tspan x="0" y="0">B</tspan></text>
+			<text transform="matrix(1 0 0 1 204.0327 29.6992)"><tspan x="0" y="0">l</tspan></text>
+			<text transform="matrix(1 0 0 1 206.6362 29.6992)"><tspan x="0" y="0">o</tspan></text>
+			<text transform="matrix(1 0 0 1 212.2671 29.6992)"><tspan x="0" y="0">c</tspan></text>
+			<text transform="matrix(1 0 0 1 217.4614 29.6992)"><tspan x="0" y="0">k</tspan></text>
+			<text transform="matrix(1 0 0 1 222.5835 29.6992)"><tspan x="0" y="0"> </tspan></text>
+			<text transform="matrix(1 0 0 1 225.2026 29.6992)"><tspan x="0" y="0">t</tspan></text>
+			<text transform="matrix(1 0 0 1 228.2476 29.6992)"><tspan x="0" y="0">i</tspan></text>
+			<text transform="matrix(1 0 0 1 230.8706 29.6992)"><tspan x="0" y="0">m</tspan></text>
+			<text transform="matrix(1 0 0 1 239.0581 29.6992)"><tspan x="0" y="0">i</tspan></text>
+			<text transform="matrix(1 0 0 1 241.7085 29.6992)"><tspan x="0" y="0">n</tspan></text>
+			<text transform="matrix(1 0 0 1 247.2925 29.6992)"><tspan x="0" y="0">g</tspan></text>
+			<text transform="matrix(1 0 0 1 200.1265 40.8018)"><tspan x="0" y="0">d</tspan></text>
+			<text transform="matrix(1 0 0 1 205.7788 40.8018)"><tspan x="0" y="0">e</tspan></text>
+			<text transform="matrix(1 0 0 1 210.9526 40.8018)"><tspan x="0" y="0">s</tspan></text>
+			<text transform="matrix(1 0 0 1 216.0952 40.8018)"><tspan x="0" y="0">c</tspan></text>
+			<text transform="matrix(1 0 0 1 221.269 40.8018)"><tspan x="0" y="0">r</tspan></text>
+			<text transform="matrix(1 0 0 1 224.8667 40.8018)"><tspan x="0" y="0">i</tspan></text>
+			<text transform="matrix(1 0 0 1 227.4575 40.8018)"><tspan x="0" y="0">p</tspan></text>
+			<text transform="matrix(1 0 0 1 233.1011 40.8018)"><tspan x="0" y="0">t</tspan></text>
+			<text transform="matrix(1 0 0 1 236.2183 40.8018)"><tspan x="0" y="0">i</tspan></text>
+			<text transform="matrix(1 0 0 1 238.7681 40.8018)"><tspan x="0" y="0">o</tspan></text>
+			<text transform="matrix(1 0 0 1 244.4526 40.8018)"><tspan x="0" y="0">n</tspan></text>
+			<text transform="matrix(1 0 0 1 204.5679 48.5742)"><tspan x="0" y="0" style="&st7; &st10;">L</tspan></text>
+			<text transform="matrix(1 0 0 1 208.1001 48.5742)"><tspan x="0" y="0" style="&st7; &st10;">I</tspan></text>
+			<text transform="matrix(1 0 0 1 209.7349 48.5742)"><tspan x="0" y="0" style="&st7; &st10;">B</tspan></text>
+			<text transform="matrix(1 0 0 1 213.895 48.5742)"><tspan x="0" y="0" style="&st7; &st10;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 215.5503 48.5742)"><tspan x="0" y="0" style="&st7; &st10;">/</tspan></text>
+			<text transform="matrix(1 0 0 1 217.1206 48.5742)"><tspan x="0" y="0" style="&st7; &st10;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 218.7769 48.5742)"><tspan x="0" y="0" style="&st7; &st10;">T</tspan></text>
+			<text transform="matrix(1 0 0 1 222.2729 48.5742)"><tspan x="0" y="0" style="&st7; &st10;">L</tspan></text>
+			<text transform="matrix(1 0 0 1 225.8687 48.5742)"><tspan x="0" y="0" style="&st7; &st10;">F</tspan></text>
+			<text transform="matrix(1 0 0 1 229.3647 48.5742)"><tspan x="0" y="0" style="&st7; &st10;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 231.0366 48.5742)"><tspan x="0" y="0" style="&st7; &st10;">/</tspan></text>
+			<text transform="matrix(1 0 0 1 232.5913 48.5742)"><tspan x="0" y="0" style="&st7; &st10;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 234.2622 48.5742)"><tspan x="0" y="0" style="&st7; &st10;">S</tspan></text>
+			<text transform="matrix(1 0 0 1 238.0679 48.5742)"><tspan x="0" y="0" style="&st7; &st10;">D</tspan></text>
+			<text transform="matrix(1 0 0 1 242.3257 48.5742)"><tspan x="0" y="0" style="&st7; &st10;">F</tspan></text>
+			<path style="&st9;" d="M5.413,73.833C2.498,73.833,0,76.192,0,79.245v21.65c0,2.915,2.498,5.413,5.413,5.413h63.563c2.915,0,5.413-2.498,5.413-5.413v-21.65c0-3.053-2.498-5.412-5.413-5.412H5.413z"/>
+			<text transform="matrix(1 0 0 1 21.5112 84.2412)"><tspan x="0" y="0">G</tspan></text>
+			<text transform="matrix(1 0 0 1 28.7075 84.2412)"><tspan x="0" y="0">l</tspan></text>
+			<text transform="matrix(1 0 0 1 31.3145 84.2412)"><tspan x="0" y="0">o</tspan></text>
+			<text transform="matrix(1 0 0 1 36.9424 84.2412)"><tspan x="0" y="0">b</tspan></text>
+			<text transform="matrix(1 0 0 1 42.6455 84.2412)"><tspan x="0" y="0">a</tspan></text>
+			<text transform="matrix(1 0 0 1 47.7676 84.2412)"><tspan x="0" y="0">l</tspan></text>
+			<text transform="matrix(1 0 0 1 50.3867 84.2412)"><tspan x="0" y="0"> </tspan></text>
+			<text transform="matrix(1 0 0 1 11.519 95.4834)"><tspan x="0" y="0">C</tspan></text>
+			<text transform="matrix(1 0 0 1 18.2002 95.4834)"><tspan x="0" y="0">o</tspan></text>
+			<text transform="matrix(1 0 0 1 23.8853 95.4834)"><tspan x="0" y="0">n</tspan></text>
+			<text transform="matrix(1 0 0 1 29.5312 95.4834)"><tspan x="0" y="0">s</tspan></text>
+			<text transform="matrix(1 0 0 1 34.71 95.4834)"><tspan x="0" y="0">t</tspan></text>
+			<text transform="matrix(1 0 0 1 37.7837 95.4834)"><tspan x="0" y="0">r</tspan></text>
+			<text transform="matrix(1 0 0 1 41.4072 95.4834)"><tspan x="0" y="0">a</tspan></text>
+			<text transform="matrix(1 0 0 1 46.5474 95.4834)"><tspan x="0" y="0">i</tspan></text>
+			<text transform="matrix(1 0 0 1 49.1484 95.4834)"><tspan x="0" y="0">n</tspan></text>
+			<text transform="matrix(1 0 0 1 54.7822 95.4834)"><tspan x="0" y="0">t</tspan></text>
+			<text transform="matrix(1 0 0 1 57.9092 95.4834)"><tspan x="0" y="0">s</tspan></text>
+			<text transform="matrix(1 0 0 1 14.4336 103.1162)"><tspan x="0" y="0" style="&st7; &st10;">S</tspan></text>
+			<text transform="matrix(1 0 0 1 18.29 103.1162)"><tspan x="0" y="0" style="&st7; &st10;">D</tspan></text>
+			<text transform="matrix(1 0 0 1 22.4971 103.1162)"><tspan x="0" y="0" style="&st7; &st10;">C</tspan></text>
+			<text transform="matrix(1 0 0 1 26.6753 103.1162)"><tspan x="0" y="0" style="&st7; &st10;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 28.3125 103.1162)"><tspan x="0" y="0" style="&st7; &st10;">/</tspan></text>
+			<text transform="matrix(1 0 0 1 29.9014 103.1162)"><tspan x="0" y="0" style="&st7; &st10;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 31.5386 103.1162)"><tspan x="0" y="0" style="&st7; &st10;">G</tspan></text>
+			<text transform="matrix(1 0 0 1 36.0186 103.1162)"><tspan x="0" y="0" style="&st7; &st10;">C</tspan></text>
+			<text transform="matrix(1 0 0 1 40.248 103.1162)"><tspan x="0" y="0" style="&st7; &st10;">F</tspan></text>
+			<text transform="matrix(1 0 0 1 43.7598 103.1162)"><tspan x="0" y="0" style="&st7; &st10;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 45.415 103.1162)"><tspan x="0" y="0" style="&st7; &st10;">/</tspan></text>
+			<text transform="matrix(1 0 0 1 46.9858 103.1162)"><tspan x="0" y="0" style="&st7; &st10;"> </tspan></text>
+			<text transform="matrix(1 0 0 1 48.6411 103.1162)"><tspan x="0" y="0" style="&st7; &st10;">S</tspan></text>
+			<text transform="matrix(1 0 0 1 52.4619 103.1162)"><tspan x="0" y="0" style="&st7; &st10;">T</tspan></text>
+			<text transform="matrix(1 0 0 1 56.061 103.1162)"><tspan x="0" y="0" style="&st7; &st10;">B</tspan></text>
+		</g>
+	</g>
+</svg>

@@ -1,0 +1,31 @@
+<glossary>
+<row type="split"><article><index>avtVhdlMaxError</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Maximum number of errors before the VHDL structural 
+parser abandons.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtStructuralVhdlConfigure</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>VHDL structural driver generates the appropriate configuration 
+statement to allow simulation.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtStructuralVhdlSuffix</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Suffix of VHDL structural (netlist) file. 
+The default is <f>vhd</f></def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtBehavioralVhdlSuffix</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Suffix of VHDL behavioral file. 
+The default is <f>vhd</f></def></row>
+</glossary>
+</def></row>
+
+</glossary>

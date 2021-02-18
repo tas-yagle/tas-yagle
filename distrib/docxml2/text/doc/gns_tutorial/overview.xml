@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Overview</title>
+<section niv='2'><title>The verification flow</title>
+
+<p>The Random Access Memory generator generates the layout of RAMs of different sizes, ranging 
+from 256 bits to 512 kbits. The principle of the validation flow we present here is as follow:</p>
+<imgsize namehtml="verif_flow.gif" namepdf="verif_flow.gif" hpdf="235pt" wpdf="160pt" />
+<list>
+<item>The transistor netlist is extracted from the generated layout of the RAM.</item>
+<item>&tool; applies on this transistor netlist structural rules, which are the 
+recognition of VHDL structural descriptions.</item>
+<item>When all the rules are satisfied, &tool; generates the behavioral VHDL of the RAM, 
+from the behavioral descriptions associated with the structural descriptions.</item>
+<item>The VHDL is analyzed by simulation.</item>
+</list> 
+<p>This tutorial presents the generation with YAGLE-GNS of the VHDL of several examples of generated RAMs.</p> 
+
+</section>
+<section niv='2'><title>The tutorial organization</title>
+
+<p>This tutorial presents a step-by-step organization guiding the reader through all the steps of 
+setting up the validation flow. Following this tutorial, you will be able to:</p>
+<list>
+<item>Understand the architecture of the generated RAMs. A presentation of this architecture 
+is made through sections 2.1 to 2.3.</item>
+<item>Understand &tool; operating modes. Chapter 3 explains the validation concepts of
+&tool; and how to apply them on the generated RAMs.</item>
+<item>Write &tool; rules for structural validation. The writing of the structural rules
+is thoroughly explained in chapter 4. Following the steps described in this chapter, you will 
+progressively integrate all the rules until complete validation.</item>
+<item>Write generic actions, generating a simulatable VHDL for a RAM of any size.</item>
+</list>
+
+</section>
+<section niv='2'><title>Files</title>
+<section niv='3'><title>Installation location</title>
+
+<p>All the pathes mentioned below are given relatively to your installation directory, which
+will be refered as <f>AVT_TOOLS_DIR</f>. The variable <f>AVT_OS</f> specifies the type of
+architecture you are working on (Linux or Solaris_2.5 to Solaris_2.8).</p>
+
+</section>
+<section niv='3'><title>YAGLE-GNS</title>
+
+
+<p>The executable of &tool; is:</p>
+
+<p><f>$AVT_TOOLS_DIR/tools/$AVT_OS/bin/yagle</f></p>
+
+<p>&tool; uses the configuration file <f>avttools.conf</f>, and the directory <f>cells/</f> containing the rules for 
+both structural and functional validation.</p>
+
+<p>The <f>avttools.conf</f> and the directory <f>cells/</f> are located in the working directory (see below).</p>
+
+
+</section>
+
+<section niv='3'><title>Working directories</title>
+
+<p>The root working directory is:</p> 
+
+<p><f>$AVT_TOOLS_DIR/tutorial/&MIN;</f></p> 
+
+<p>It contains four directories: the three directories, <f>ram4x128/</f>, <f>ram8x256/</f> and <f>ram4x4096/</f>,
+referring to the three RAM examples, and the directory <f>cells/</f>, containing the recognition rules. 
+Each of the three directories <f>ram4x128/</f>, <f>ram8x256/</f> and <f>ram4x4096/</f>, contains four files.</p>
+
+<p>The file <f>avttools.conf</f> is the configuration file for &tool;.</p>
+
+<p>The files <f>ram4x128.spi</f>, <f>ram8x256.spi</f> or <f>ram4x4096.spi</f> are the extracted netlists (with
+resistances and capacitances) of the three different RAMs in SPICE format.</p>
+
+<p>The files <f>tb_ram4x128.vhd</f>, <f>tb_ram8x256.vhd</f> or <f>tb_ram4x4096.vhd</f> are the test benches for the
+simulation.</p>
+
+<p>The files <f>ram4x128.pat</f>, <f>ram8x256.pat</f> or <f>ram4x4096.pat</f> are the corresponding pattern files.</p>
+
+
+</section>
+</section>
+
+</section></chapter>

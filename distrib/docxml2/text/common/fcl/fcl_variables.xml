@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>Environment Variables</title>
+<glossary>
+<row><article>FCL_LIB_PATH</article><def>Indicates the access path to the directory containing the user-defined cell library used if the -fcl option is set. The default is a directory /cells in MBK_WORK_LIB.</def></row>
+<row><article>FCL_LIB_NAME</article><def>The name of the file (located in FCL_LIB_PATH ) containing the list of cells in the user-defined cell library used if the -fcl option is set. The default is LIBRARY.</def></row>
+</glossary>
+</section>

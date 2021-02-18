@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+<row type='split'><article><index>xyagIconLibrary</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Full path of a specific .slib icon library</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>xyagMakeCells</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Complex gates are represented using a single icon</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+</glossary>
+

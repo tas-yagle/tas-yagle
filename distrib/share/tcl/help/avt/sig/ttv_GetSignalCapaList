@@ -1,0 +1,13 @@
+
+       DoubleList *ttv_GetSignalCapaList(TimingSignal *tvs);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns  the  list of capacitance values (in Farads) for a given timing
+       signal. Values are given in the order: nominal, min and  max  for  rise
+       transition then nominal, min and max for fall transition.
+
+AARRGGUUMMEENNTTSS
+       ttvvss           Pointer on the timing signal to consider
+
+       EEXXAAMMPPLLEE       _s_e_t _c_a_p_a___l_i_s_t _[_t_t_v___G_e_t_S_i_g_n_a_l_C_a_p_a_L_i_s_t_]
+

@@ -1,0 +1,204 @@
+<section niv='2'><title>File Loading</title>
+<p> The purpose of this section is to show how to load files containing:</p>
+<list>
+<item>Transistor technology models</item>
+<item>Design netlist</item>
+<item>Parasitic back-annotation</item>
+</list>
+<p>File loading is done with the Tcl command <f>avt_LoadFile</f>. Depending on
+the file format being read, and on the netlist specificities (such as vectors,
+connector order,...), additional configuration is sometimes required. 
+Additional configuration should be set with <f>avt_config</f> Tcl commands,
+before invoking <f>avt_LoadFile</f>.</p>
+
+<section niv='3'><title>Transistor Technology Models</title>
+<p>Transistor technology models are necessary to compute timings. If those transistor models
+appear in a separate file, they should be loaded in the Tcl script with the <f>avt_LoadFile</f> function. 
+The <f>avt_LoadFile</f> function takes as first argument the name of the file to load, and as second argument 
+its format. A typical loading of a technology file will be such as:</p>
+
+<code>avt_LoadFile ../models/bsim3.tech spice</code>
+
+<p>If the technology file makes inclusions of other files then inclusion paths should be absolute.
+If paths are relative, further configuration will be needed to specify the location of those files:</p>
+<code>avt_config avtLibraryDirs .:../models</code>
+
+<p>Technology file can also appear as an inclusion (<f>.INCLUDE</f> or <f>.LIB</f>) in a Spice netlist. In such a case, 
+it will be loaded at the time the Spice netlist is loaded.</p>
+<p>Different industry-standard electrical simulators have different interpretations of the parameters of <f>.MODEL</f> 
+statement, which also deviate from the Berkeley model (see Berkeley's BSIM3v3.2.4 or BSIM4.3.0 MOSFET Model User's Manual). 
+This can lead to significant differences in the results given by different simulators.</p>
+<p>Besides, the LEVEL parameter which appears in the model files is not discriminant enough. Different simulators may interpret
+differently a same LEVEL value (as it is the case for LEVEL 49, differently interpreted by HSPICE and ELDO). Therefore, it is necessary 
+to specify the targetted simulator of the transistor model. It should be done with the following variable:</p> 
+<code>avt_Config simToolModel ELDO</code>
+<p>If the <f>simToolModel</f> variable is not specified, &tool; will interpret the transistor model as HSPICE does (default value), and check the LEVEL
+against the following list:</p>
+
+<code>
+<cl>TOOL hspice </cl>
+<cl>BSIM3V3  param level   49 </cl>
+<cl>BSIM3V3  param level   53 </cl>
+<cl>BSIM4    param level   54 </cl>
+<cl>PSP      param level 1020 </cl>
+<cl>PSPB     param level 1021 </cl>
+<cl> </cl>
+<cl>TOOL eldo </cl>
+<cl>BSIM3V3  param level   49 </cl>
+<cl>BSIM3V3  param level   53 </cl>
+<cl>BSIM4    param level   60 </cl>
+<cl>PSP      param level 1020 </cl>
+<cl>PSPB     param level 1021 </cl>
+<cl> </cl>
+<cl>TOOL ngspice </cl>
+<cl>BSIM3V3  param level    8 </cl>
+<cl>BSIM4    param level   14 </cl>
+<cl> </cl>
+<cl> </cl>
+<cl>TOOL titan </cl>
+<cl>BSIM3V3  model BSM3 setdefault version 3.0 </cl>
+<cl>BSIM3V3  model BS32 setdefault version 3.24 </cl>
+<cl>BSIM4    model BS4  setdefault version 4.2 </cl>
+<cl>BSIM4    model BS41 setdefault version 4.1 </cl>
+<cl>BSIM4    model BS42 setdefault version 4.21 </cl>
+</code>
+
+<p>If there is a conflict, for example if LEVEL=60 is given and <f>simToolModel</f> is not specified (defaulted to HSPICE), the tool will exit. User needs to 
+properly set the <f>simToolModel</f> value.</p>
+
+</section>
+
+
+<section niv='3'><title>Input Netlist</title>
+<p>In a way or another, one must 
+always provide a transistor-level description of the design. If impossible to give a transistor description
+for some parts of the netlist, &tool; can also take <f>.lib</f> files as input, but it should be understood that &tool; is
+primarily designed for digital transistor-level analysis, and that providing <f>.lib</f> files should only apply
+to parts of the netlist where &tool; does not apply, e.g. analog parts. Integration of <f>.lib</f> files will be
+discussed later.</p>
+<p>A transistor level description can be provided within the following formats:</p>
+<list>
+<item>Flat-transistor extracted Spice netlist</item>
+<item>Hierarchical Spice netlist, with Spice transistor-level leaf cells</item> 
+<item>Hierarchical Verilog netlist, with Spice transistor-level leaf cells</item> 
+<item>Hierarchical VHDL netlist, with Spice transistor-level leaf cells</item> 
+</list>
+
+<p><b>Flat-transistor Spice netlist</b></p>
+
+<p>A flat-transistor extracted Spice netlist is simply loaded with the following command:</p>
+<code>avt_LoadFile my_design.spi spice</code>
+<p>The file can contain parasitics, and preferably contains a <f>.SUBCKT</f> statement. If not, an implicit
+top-level is created, with all the nodes in the netlist reported on the interface. This can lead
+to computational explosion in further steps of the analysis.</p>
+
+<p><b>Hierarchical Spice netlist</b></p>
+
+<p>A hierarchical Spice netlist can be represented by several files. Those
+files can be loaded either through possibly recursive <f>.INCLUDE</f> statements, or through several 
+<f>avt_LoadFile</f> commands. However, at least one <f>avt_LoadFile</f> command must appear in the Tcl script. 
+The netlist is automatically flattened to 
+the transistor-level, when all the dependancies have been resolved, e.g.
+when all instanciated sub-circuits correspond to a sub-circuit definition.</p> 
+
+<p>In a separate <f>avt_LoadFile</f> command, sub-circuit definition can appear after its instanciation, the order is 
+not relevant. For example, the following file can be loaded by <f>avt_LoadFile my_design.spi spice</f>:</p>
+
+<code>
+<cl>.SUBCKT my_design ...</cl>
+<cl>...</cl>
+<cl>.ENDS my_design</cl>
+<cl> </cl>
+<cl>.INCLUDE ../leaf_cells/n1_y.spi</cl>
+<cl>.INCLUDE ../leaf_cells/o3_y.spi</cl>
+<cl>.INCLUDE ../leaf_cells/mx2_y.spi</cl>
+</code>
+
+
+<p>Order is relevant if sub-circuit definitions appear in files read by separate <f>avt_LoadFile</f> commands.
+In that case reading the files containing sub-circuit definitions must be done before reading the
+files containing their instanciation, as shown in the follwing example:</p> 
+<code>
+<cl>avt_LoadFile leaf_cells/n1_y.spi spice</cl>
+<cl>avt_LoadFile leaf_cells/o3_y.spi spice</cl>
+<cl>avt_LoadFile leaf_cells/mx2_y.spi spice</cl>
+<cl>avt_LoadFile my_design.spi spice</cl>
+</code>
+
+<p><b>Hierarchical Verilog/VHDL netlist</b></p>
+
+<p>The same example applies to a Verilog netlist and Spice transistor-level leaf-cells:</p>
+<code>
+<cl>avt_LoadFile leaf_cells/n1_y.spi spice</cl>
+<cl>avt_LoadFile leaf_cells/o3_y.spi spice</cl>
+<cl>avt_LoadFile leaf_cells/mx2_y.spi spice</cl>
+<cl>avt_LoadFile my_design.v verilog</cl>
+</code>
+<p>or</p>
+<code>
+<cl>avt_LoadFile my_design.vhd vhdl</cl>
+</code>
+
+</section>
+
+<section niv='3'><title>Parasitics</title>
+<p>&tool; treats parasitics files of two kinds:</p>
+<list>
+<item>Parasitics used as a back-annotation of schematic netlists. In such as case, the connectivity
+of the schematic netlist is ensured without the parasitics file, which just brings additionnal information.
+The formats supported for back-annotation are DSPF and SPEF.</item>
+<item>Parasitics used to complete the description of the netlist. In such a case, the netlist is not connected
+without the parasitic information. Typically, the RC networks make the connectivity. The formats supported for
+connectivity description are Spice and DSPF (in this case the DSPF is used as a Spice file).</item>
+</list>
+
+<p><b>Back-annotation</b></p>
+<p>When a parasitic file is used to back-annotate a schematic netlist, the schematic netlist
+must be loaded first, through a separate <f>avt_LoadFile</f> command. Just invoking the load of the 
+parasitic file afterwards is enough to perform the back-annotation:</p>
+<code>
+<cl>avt_loadfile my_design.spi spice</cl>
+<cl>avt_loadfile parasitics.spef spef</cl>
+</code>
+<p>or</p>
+<code>
+<cl>avt_loadfile my_design.spi spice</cl>
+<cl>avt_loadfile parasitics.spf dspf</cl>
+</code>
+
+<p>When using back-annotation, special attention should be paid to name consistency between netlist and
+parasitics, especially regarding vectors (see next chapter).</p>
+
+<p><b>Connectivity</b></p>
+<p>If the parasitics file is necessary to ensure the connectivity of the netlist, the parasitics 
+and netlist files should be loaded through a single <f>avt_LoadFile</f> command. Parasitic files
+should be included at appropriate levels of hierarchy with <f>.INCLUDE</f> statements.</p> 
+
+</section>
+
+</section>
+
+<section niv='3'><title>Vectorization</title>
+<p>&tool; has two operating modes regarding vectors. One can choose between a mode where vectors
+are represented internally as they appear in the source file, and a mode where they are identified 
+as special signals and represented internally accordingly. When a vector is identified as a special signal,
+the internal representation is a string containing the radical and the index separated by a space character. For
+example the vector <f>dummy[0]</f> is represented as <f>dummy 0</f>.</p>
+<p>Different delimiters can be used to represent vectors. Configuration of legal delimiters, as well as the
+choice to treat vectors as special, should be done with the <f>avtVectorize</f> configuration variable:</p>
+<code>
+<cl>avt_config avtVectorize "[],&lt;&gt;"</cl>
+</code>
+<p>Treating vectors as special signals is usefull when the same vectors can appear with different delimiters
+in different files. For example if a vector is referred to as <f>dummy[0]</f> in a Verilog file, and as
+<f>dummy&lt;0&gt;</f> in a SPEF file, the previous configuration is necessary to make the correspondance between
+the two names.</p>
+</section>
+
+<section niv='3'><title>Ignoring Elements</title>
+<p>For a reason or another, some elements in the source files may be unsupported by &tool; or may not respect
+standard format syntax. To work around those elements, &tool; provides the means to ignore them during the 
+parse of the source netlist. The elements that can be ignored are instances, transistors, resistances and 
+capacitances. For further information please refer to the <f>inf_DefineIgnore</f> command documentation.</p>
+</section>
+

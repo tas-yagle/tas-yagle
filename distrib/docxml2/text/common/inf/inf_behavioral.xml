@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>Behavioral Model Directives</title>
+
+<section niv='4'><title>SUPPRESS</title>
+
+<p>The user can specify a list of signals which to be eliminated by Boolean simplification of the final behavioral description.</p>
+<code>
+<cl>SUPPRESS</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2;</cl>
+<cl>    sigs*;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+<p>It is possible to use the wildcard '*' as for signal renaming.</p>
+</section>
+
+<section niv='4'><title>SENSITIVE</title>
+
+<p>This directive is useful in the case of functional abstraction with timing information. The user can specify a list of bussed signals for which the most precise timed behavioral model will be used. This is only required for certain critical signals.</p>
+<code>
+<cl>SENSITIVE</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2;</cl>
+<cl>    sigs*;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+<p>It is possible to use the wildcard '*' as for signal renaming.</p>
+</section>
+</section>

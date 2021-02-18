@@ -1,0 +1,18 @@
+rm -f cpu2901.dtx
+rm -f cpu2901.ttx
+rm -f cpu2901.stm
+rm -f cpu2901.cns
+rm -f cpu2901.cnv
+rm -f cpu2901.rcx
+rm -f cpu2901.rep
+rm -f cpu2901.sto
+rm -f cpu2901.str
+rm -f cpu2901.ctk
+rm -f cpu2901.ctx
+rm -f cpu2901.inf
+rm -f cpu2901.agr
+rm -f cpu2901.lib
+rm -f path.log
+rm -f *.rep
+rm -f cpu2901.PathMargins
+

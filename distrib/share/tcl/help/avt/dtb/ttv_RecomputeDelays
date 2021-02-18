@@ -1,0 +1,12 @@
+
+       void ttv_RecomputeDelays(TimingFigure *tvf);
+
+DDEESSCCRRIIPPTTIIOONN
+       Recomputes  delays and slopes in a timing figure according to new input
+       slopes and output capacitances.
+
+AARRGGUUMMEENNTTSS
+       ttvvff           Pointer on the timing figure
+
+       EEXXAAMMPPLLEE       _t_t_v___R_e_c_o_m_p_u_t_e_D_e_l_a_y_s _$_f_i_g
+

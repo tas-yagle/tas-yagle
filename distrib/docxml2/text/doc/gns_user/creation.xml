@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Creating a User-Defined Dynamic Library API</title>
+
+
+
+<section niv='2'><title>Description</title>
+
+
+<p>It is an extremely simple task for the user to generate his own APIs which can be dynamically linked into an Avertec verification flow. In order to do this, we provide the genapi tool which, from a set of C source files, together with header files declaring the visible functions, creates a shared library which can be used in exactly the same way as the supplied APIs.</p>
+
+
+</section>
+
+
+<section niv='2'><title>Executing the Genapi Tool</title>
+
+
+<p>To generate your own dynamic library for linking with the Avertec tools, you should use the Genapi tool as follows:</p>
+<code>genapi &lt;f.c g.c ...&gt; -i &lt;interface.h&gt; [-o &lt;lib.so&gt;] [--keep_files] [-kf]</code>
+<p>This takes the specified set of C source code files, together with a header file declaring the visible functions and generates directly a shared library compatible with GNS actions. The header file must contain full ANSI prototype declarations, since this is used to create wrapper functions for the functions to be made visible. By default the shared library generated (file with ".so" suffix) has the same base name as the header file but this can be modified using the "-o" option. The "-kf" (or "--keep_files") option prevents the removal of the intermediate files generated, such as the source code for the wrapper functions and the Makefile.</p>
+
+</section>
+</section>
+</chapter>

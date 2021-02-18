@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Adder</title>
+
+<p>This example tackles similar concepts as the ones described in the previous example. It just illustrates them on a more slightly complex design,
+a combinational full adder.</p>
+<p>This example takes place in the <f>adder/</f> directory.</p>
+
+<section niv='2'><title>Database Generation</title>
+
+<section niv='3'><title>Global Configuration</title>
+<p>The complete configuration required for the database generation takes place in the <f>db.tcl</f>. It is the same as in the previous example (inverters). The script also launches the commands that effectively generate that database. </p>
+
+<p>The temperature and supplies specifications take place in the <f>adder.spi</f> file:</p>
+<code>
+<cl>.TEMP 125</cl>
+<cl>.GLOBAL vdd vss</cl>
+<cl>Vsupply vdd 0 DC 1.62</cl>
+<cl>Vground vss 0 DC 0</cl>
+</code>
+<p>As the <f>adder.spi</f> subcircuit is not instantiated, the <f>vdd</f> and <f>vss</f> signals appear in the <f>.GLOBAL</f>
+statement.</p>
+</section>
+
+<p>The technology file is included with a SPICE <f>.INCLUDE</f> directive in the <f>adder.spi</f> file.</p>
+<code>.INCLUDE ../techno/bsim4_dummy.ng</code>
+
+<section niv='3'><title>Database Generation</title>
+<p>The generation launch is done through the command <f>hitas</f>:</p>
+<code>
+<cl>avt_LoadFile adder.spi spice</cl>
+<cl>set fig [hitas adder] </cl>
+</code>
+<p>The <f>hitas</f> function takes as argument the name of the figure (the subckt for a SPICE netlist) to analyze. The tas function returns a pointer on the timing database newly created. This pointer can be used as an input to further steps of verification, thus avoiding costly re-reading of the timing database from the disk.</p>
+<p>To perform the database generation, just launch the script <f>db.tcl</f></p>
+</section>
+
+
+</section>
+
+
+<section niv='2'><title>Path Searching with the Tcl Interface</title>
+<p>The complete configuration required for the database browsing takes place in the <f>report.tcl</f>. </p>
+<p>The command:</p>
+<code>set fig [ttv_LoadSpecifiedTimingFigure adder]</code>
+<p>reads the timing database from disk (as said before, the re-reading of the database can be avoided by directly taking as an input the return value of the <f>hitas</f> function. For the sake of clarity, and because we are dealing with small timing databases, we preferred to split different verification steps into different scripts).</p>
+<p>The command:</p>
+<code>set clist [ttv_GetPaths $fig * * rr 5 critic path max]</code>
+<p>gives the 5 most critical paths (<f>critic</f> and <f>path</f> arguments) of the design, that begin and end on a rising transition (<f>rr</f> argument), with no specification of signal name (<f>* *</f> arguments), in the database pointed out by <f>$fig</f>. The function returns a pointer on the newly created list.</p>
+<p>The command:</p>
+<code>ttv_DisplayPathListDetail stdout $clist</code>
+<p>displays on the standard output the detail of all the paths of the path list given by the <f>ttv_GetPaths</f> function.</p>
+<p>To get these paths, launch the script <f>report.tcl</f>.</p>
+</section>
+
+<section niv='2'><title>Exercises</title>
+<list> 
+<item>Ex 1.1. Get the list of connectors with the Tcl interface and with the GUI.</item>
+<item>Ex 1.2. Get the critical paths between selected connectors, with any transition, with the Tcl interface and with the GUI</item>
+<item>Ex 1.3. Get all the parallel paths of the most critical path with the Tcl interface and with the GUI</item>
+<item>Ex 1.4 Get the detail of a parallel path and identify divergence</item>
+<item>Ex 1.5 Hide the column <f>Line Type</f> in the report and observe the results</item>
+<item>Ex 1.6 Change the unit of the report from <f>ns</f> <f>ps</f> (<f>ttv_SetupReport</f>)</item>
+</list>
+
+</section>
+
+<section niv='2'><title>Solutions</title>
+<code>
+<cl>#!/usr/bin/env avt_shell </cl>
+<cl> </cl>
+<cl># Ex adder.1 </cl>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure adder] </cl>
+<cl>set clist [ttv_GetTimingSignalList $fig connector interface]</cl>
+<cl>foreach c $clist { </cl>
+<cl>  puts "[ttv_GetTimingSignalProperty $c NAME] [ttv_GetTimingSignalProperty $c DIR]"</cl>
+<cl>} </cl>
+<cl> </cl>
+<cl># Ex adder.2 </cl>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure adder] </cl>
+<cl>set clist [ttv_GetPaths $fig a_0 cout ?? 5 critic path max] </cl>
+<cl>ttv_DisplayPathListDetail stdout $clist </cl>
+<cl> </cl>
+<cl># Ex adder.3 and adder.4</cl>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure adder] </cl>
+<cl>set clist [ttv_GetPaths $fig * * rr 5 critic path max] </cl>
+<cl>set plist [ttv_GetParallelPaths [lindex $clist 1] 10] </cl>
+<cl>ttv_DisplayPathListDetail stdout $plist </cl>
+<cl> </cl>
+<cl># Ex adder.5 and adder.6</cl>
+<cl>ttv_DisplayPathDetailHideColumn dt.linetype</cl>
+<cl>ttv_SetupReport ps</cl>
+<cl>ttv_DisplayPathListDetail stdout $plist </cl>
+</code>
+</section>
+
+
+</section>
+
+</chapter>

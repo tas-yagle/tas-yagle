@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Lab9. Block By Block Illustration</title>
+<p>This lab is an illustration of the block by block methodology.</p>
+<p>This lab is based upon 2 crossbars, 1 NAND-RS clock generator and 8 flip-flops studied before.</p>
+<p>It takes place in the directory <f>lab9_b-b-b</f></p>
+
+
+<section niv='2'><title>Database Generation</title>
+<p>The database generation is done in the <f>db.tcl</f> script.</p>
+<glossary>
+<row type='split'><article><f>inf_DefineMutex cmpup [list dblmat.mat0.column4_0.n2 dblmat.mat0.column4_0.n3]</f></article>
+<def>adds mutual exclusion constraints on signals (only one of the signals can be up at the same time).</def></row>
+<row type='split'><article><f>inf_DefineIgnore Instances DBLMAT.MAT*.COLUMN4_*.MEM_0</f></article>
+<def>tells the tool to ignore the instances name matched with DBLMAT.MAT*.COLUMN4_*.MEM_0.</def></row>
+<row type='split'><article><f>inf_DisableTimingArc CK RSCLOCK.bcks ud</f></article>
+<def>disables the construction of timing arc between timing signal CK (up) and RSCLOCK.bcks (down).</def></row>
+<row type='split'><article><f>create_clock -period 1000 -waveform {500 0} CK</f></article>
+<def>creates a clock on CK pin. (clock of 1000ps period, falling at 0ps and rising at 500ps)</def></row>
+</glossary>
+<code>
+<cl>avt_LoadFile ../techno/bsim4_dummy.hsp</cl>
+<cl>avt_LoadFile big_one.spi spice</cl>
+<cl> </cl>
+<cl>set fig [hitas big_one]</cl>
+</code>
+</section>
+
+</section>
+</chapter>
+

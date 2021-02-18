@@ -1,0 +1,24 @@
+* multicycle path example
+
+.temp 60
+
+.include bsim4_dummy.hsp
+.include cells.spi
+
+.subckt multicycle i o ck
+xinvck1  ck ck_1 vdd vss inv_x1
+xinvck2  ck_1 ck_2 vdd vss inv_x1
+xff1 ck_2 i ff1q vdd vss sff1_x4
+xinv1 ff1q net1 vdd vss inv_x1
+xinv2 net1 net2 vdd vss inv_x1
+xinv3 net2 net3 vdd vss inv_x1
+xinv4 net3 net4 vdd vss inv_x1
+xinv5 net4 net5 vdd vss inv_x1
+xinv6 net5 net6 vdd vss inv_x1
+xinv7 net6 net7 vdd vss inv_x1
+xinv8 net7 net8 vdd vss inv_x1
+xinv9 net8 net9 vdd vss inv_x1
+xinv10 net9 ff2i vdd vss inv_x1
+xff2 ck_2 ff2i o vdd vss sff1_x4
+
+.ends

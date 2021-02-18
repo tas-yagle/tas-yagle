@@ -1,0 +1,313 @@
+###############################################################################
+# AvtTools version 2.7p11 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# November 28th, 2005
+#
+###############################################################################
+
+# 1 - New functionalities
+  - avtSpiNoRCCapaToGnd is no longer supported
+
+# 2 - Major functionality Changes
+  - The ctk file is not generated in default mode
+  - All configuration variables beginning with 'yagle' now begin with 'yag' (old
+  syntax still supported)
+
+# 3 - Enhancements
+  - Support for GEOMOD and full support for NFING parameters
+  - Crosstalk models for long RC networks
+
+# 4 - Bug fix
+  - Vectors in the set_case_analysis / CONSTRAINT
+  - Proper filtering by start and end nodes for slack report
+  - set_false_path -setup or -hold handled in slack report
+  - ttv_DisplayClockPathReport filters correctly
+  - Automatic Flip-Flop marking error corrected
+  
+###############################################################################
+# AvtTools version 2.7p10 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# October 25th, 2005
+#
+###############################################################################
+
+# 1 - New functionalities
+
+# 2 - Major functionality Changes
+
+# 3 - Enhancements
+
+# 4 - Bug fix
+  - instanciation-dependant parameters taken into account for capacitance
+  models
+  
+###############################################################################
+# AvtTools version 2.7p9 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# October 21st, 2005
+#
+###############################################################################
+
+# 1 - New functionalities
+  - API for clock path reporting
+  - Log file enriched with delay calculation info, especially multi-voltage
+    report (avt_config "delay_calc:1")
+
+# 2 - Major functionality Changes
+  - ttv_SimulatePathDetail is no longer supported, use ttv_DriveSpiceDeck
+    instead
+
+# 3 - Enhancements
+  - Improved error message display and documentation
+  - Better memory efficiency in SpiceDeck generation
+
+# 4 - Bug fix
+  - binning parameters ignored in rare cases
+  - Correct default volatge in timing db even if no "simPowerSupply"
+  
+###############################################################################
+# AvtTools version 2.7p8 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# October 10th, 2005
+#
+###############################################################################
+
+# 1 - New functionalities
+  - New Tcl function tlf_DriveFile
+
+# 2 - Major functionality Changes
+
+# 3 - Enhancements
+  - Better handling of latch command in feedback loop 
+  - Better STA documentation
+
+# 4 - Bug fix
+  - Correct vectorization of names in Tcl script
+  - Correct parse of FALSEPATH section in .inf file  
+  
+###############################################################################
+# AvtTools version 2.7p7 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# October 3rd, 2005
+#
+###############################################################################
+
+# 1 - New functionalities
+  - New API function ttv_DisplayConnectorToLatchMargin added to generate a
+    report of the setup/margins at specified input connectors due to all
+    relevant internal latches.
+
+# 2 - Major functionality Changes
+  - The API function stb_DisplayConnectorToLatchError has been removed.
+
+# 3 - Enhancements
+  - Improved formatting in all TCL reporting functions.
+  - Displaying of data and clock details in slack report in the cycle
+    used for slack calculation.
+
+###############################################################################
+# AvtTools version 2.7p6 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# September 26th, 2005
+#
+###############################################################################
+
+# 1 - New functionalities
+  - An automatic flip-flop detection engine, controlled by 
+  yagleAutomaticFlipFlopDetection, has been introduced to distinguish between 
+  master and slave latches, with ability to report it in the .rep file>
+  - Function inf_DefineNotLatch has been added
+  - The support of SDC function set_false_path now includes -hold and -setup 
+  options
+
+# 2 - Major functionality Changes
+  - avtVectorize now controls vectors originating from all formats, including 
+  INF files. It also accepts an additional parameter specifying the vector 
+  format
+  - avtSpiInputVector is no longer supported (after brief existence...)
+  - Default value of xtasTextualDisplay is now yes.
+
+# 3 - Enhancements
+  - The spice parser has been optimized in order to cope with subcircuits with 
+  thousands of connectors
+  - Better consideration of latches intrinsic setup/hold values for slack 
+  calculation 
+  
+###############################################################################
+# AvtTools version 2.7p4 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# September 7th, 2005
+#
+###############################################################################
+
+# 1 - New functionalities
+  - The log file mechanism has been re-built and unified. It is now activated 
+  with the variables avtLogFile and avtLogEnable. The avtCharacTraceLevel and 
+  yagleTraceLevel variables become obsolete, as well as the MBK_TRACE_FILE, 
+  MBKLOGFILE and MBK_SPI_DISPLAY_IGNORED environment variables.
+  - The avtSpiInputVector variable allows configuration of input vectors 
+  recognition.
+  - The following Tcl functions have been added
+    * stb_GetSignalHold
+    * stb_GetSignalSetup
+    * stb_DisplayConnectorToLatchError
+    * stb_DisplaySlackReport
+    * ttv_SetupReport
+    * ttv_RemoveDuplicatedPath
+    * inf_DefineSlopeRange
+    * inf_DefineCapacitanceRange
+
+# 2 - Major functionality Changes
+  - The include parameter has been added to the avtSpiParseFirstLine variable 
+  - The avtDoNotDevectNames variable becomes avtVectorize
+  - The avtSpiNotMergeConnector variable becomes avtSpiMergeConnector
+  - The inf_DefineIgnore Tcl function accepts the new argument SignalNames, 
+  used to filter undesirable names when flattening a netlist.
+  - Hiding the dt.linetype column in the ttv_DisplayPathDetailHideColumn Tcl 
+  function activates the merge of RC and gate delays in reports.
+  - The STR file now shows the transparency time of latches.
+
+# 3 - Enhancements
+  - The existence of the signals specified in the INF file is now checked during 
+  the execution. The check is done as soon as possible, issuing the following 
+  message: [Info][inf] Check level I/II/II.
+  - Section Ignore in the INF file has a new sub section: SignalNames, used to 
+  filter undesirable names when flattening a netlist.
+  - The "Get Detailed Path" intermediate window has been suppressed in the Xtas 
+  GUI.
+  
+
+###############################################################################
+# AvtTools version 2.7p3 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# July 22nd, 2005
+#
+###############################################################################
+
+# 1 - New functionalities
+  - Handling of NRS, NRD, M and NFING transistor parameters
+  - APIs for extraction of gate netlist segments
+  - Reading of STO (stability output) files in XTAS
+
+# 2 - Major functionality Changes
+  none
+
+# 3 - Enhancements
+  - Improved constraint propagation and reporting
+  - Simpified APIs for path browsing
+  - Simplification of Spice parser configuration
+  - Improved Vcard handling
+  
+###############################################################################
+# AvtTools version 2.7p2 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# June 30th, 2005
+#
+###############################################################################
+
+# 1 - New functionalities
+  - APIs for timing database construction
+  - Escaped vectors in Verilog
+  - Tutorial for HiTAS GNS option
+  - HiTAS silent mode in TCL (tasSilentMode)
+  - Blackbox TCL configuration (avt_SetBlackBoxes)
+  - Configuration of input pin swing (inf_DefineConnectorSwing)
+
+# 2 - Major functionality Changes
+  none
+
+# 3 - Enhancements
+  - Name configuration of .REP, .CNS, .CNV files
+  - Handling looped dependancy in Spice parser
+  - Correction of DSPF parsing issues
+
+###############################################################################
+# AvtTools version 2.7 Release Notes
+# Copyright (c) 1998-2005, AVERTEC All Rights Reserved
+# June 10th, 2005
+#
+###############################################################################
+
+# Overview:
+  This document outlines the changes made since the previous versions. 
+For detailed information about using a particular product, please refer
+to the online Help (http://www.avertec.com or e-mail:support@avertec.com)
+and the documentation.
+
+  AvtTools is available for the following OS: 
+    - Solaris : 2.6, 2.8, 2.8 64bit, 2.9, and 2.9 64bit
+    - Linux   : RedHat 8.0 and RedHat Enterprise Linux 3.0
+  
+  
+# IMPORTANT note:
+A new license file is required to use the v2.7 release as the Flexnet tokens
+structure has been modified in order to integrate new features and match
+product offering.
+
+
+  This document describes (1) New functionalities, (2) Major functionality 
+Changes, (3) Enhancements, (4) Tools included within this version,
+(5) Linux configuration.
+
+# 1 - New functionalities
+  - Enhanced slope modeling
+  - Current induced behavior
+  - Ideal clock
+  - Netlist ignore elements
+  - Advance MS deck generation
+
+# 2 - Major functionality Changes
+  - Tas binary has disappeared and is now fully included within HiTas
+  - New TCL API structure
+  - New documentation system
+  - Some variables and options have changed:
+    * Semantic of avt(Vdd|Vss)Name and avtGlobal(Vdd|Vss)Name changed to reflect use of
+      Spice Vcards and .GLOBAL directive, these variables are no longer required if
+      Supplies are specified in the Spice netlist
+    * XtasDatabaseFilter no longer supported
+    * tasbreakloops no longer supported
+    * Option -bk no longer supported
+    * "slew" becomes "slope" in STM file
+    * infDefineSlope replaces infDefineSlew in INF Apis
+    * "PINSLOPE" replaces "PINSLEW" in INF file
+    * tasInputConnectorSlope replaces tasInputConnectorSlew configuration variable.
+
+# 3 - Enhancements
+  - Enhanced diode modeling
+  - Improved spice card handling
+  - Optimized delay calculator
+  
+# 4 - Tools version
+  AvtTools include the following tools:
+  
+    - avt_shell              1.4.0
+    - avtman                   - 
+    - cnsdiff                1.0.1
+    - etas                   2.5.0
+    - genapi                   -
+    - genelp                 2.6.0
+    - gnstest                  -
+    - hitas                  6.7.0
+    - netutil                1.1
+    - stb                    2.7.0
+    - tma                    2.7.0
+    - ttvdiff                1.0.4
+    - ttvren                 1.0.2
+    - wrap                   1.2.0
+    - x2v                    2.4.0
+    - xtas                   5.7.0
+    - xyagle                 2.7.0
+    - yagle                  4.7.0
+    - FlexNet utilities     10.1
+    - avtlicense utilities   2.2.0
+
+# 5 - Linux configuration
+AvtTools is compliant with two (2) RedHat Linux distributions:
+  - RedHat Linux 8.0 with kernel 2.4.18-14 or above (RedHat 8.0-8)
+  - RedHat Enterprise Linux 3.0 with kernel 2.4.21-4 or above (RedHat EL 3WS-1)
+  
+Get your kernel version (uname -r) and your RedHat release number
+(rpm -qa | grep release) in order to check the compatibility of your
+system with AVERTEC's Linux distributions.
+
+

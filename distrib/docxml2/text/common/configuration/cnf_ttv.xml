@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<glossary>
+
+<row type='split'><article><index>avtPrecisionLevel</index></article><def>
+<glossary width='small'>
+<row><article><f>0</f></article><def>Default, slope propagation is done according to <f>tasDelayPropagation</f></def></row>
+<row><article><f>1</f></article><def>When computing propagation time for a path, the tool re-propagates the 
+slope from start point, and computes delays along the path accordingly. </def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtMaxPathPeriodDepth</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>When performing a path search, the tool needs 
+a parameter to avoid loop search. This is the maximum number of period that a path can go through or 
+the maximum number of latches at the same clock edge. Default value is 1.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtTransparentPrecharge</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Sets <f>avtMaxPathPeriodDepth=1</f> only for the precharges so it's possible to report paths through domino precharges.</def></row>
+<row><article><f>no</f></article><def>Default. </def></row>
+<row><article><f>unfiltered</f></article><def>Same as <f>yes</f> but deactivates the precharge filtering effect so non existing path due to filtering will be kept.</def></row>
+</glossary>
+</def></row>
+
+</glossary>
+

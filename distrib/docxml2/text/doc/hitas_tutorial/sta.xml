@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Static Timing Analysis</title>
+
+<section niv='2'><title>Timing Analysis Theory</title>
+
+<section niv='3'><title>Timing Analysis Goals</title>
+
+<p>The Timing analysis should answer the following questions:</p>
+<list>
+ <item>Does the chip work? With which external timing contraints?</item>
+ <item>What are the hold margins?</item>
+ <item>What are the sensible paths?</item>
+ <item>What is the sensitivity to process variations?</item>
+ <item>What is the sensitivity to operating variations (voltage, temperature)?</item>
+ <item>What is the chip operating frequency?</item>
+ <item>How to improve the design in order to reach the specs</item>
+</list>
+<p>In a top-down approach, Timing Analysis is used for verification purposes. 
+Timing Analysis must say, given the direct environment of the chip (i.e. timing 
+constraints on the interface), if the chip will be able to work properly. </p>
+<p>In a bottom-up approach, Timing Analysis is used for characterization purposes. </p>
+
+
+</section>
+
+
+
+
+<section niv='3'><title>Timing Analysis in the Design Flow</title>
+
+<p>As timing performance of a chip under design is one of the main concerns facing designers, 
+it must be controlled and refined at each stage of the design flow. </p>
+
+<p>In a classical top-down methodology, timing constraints are set at system-level, and synthesis and PR 
+tools are timing-driven. A first Timing Analysis run is done after synthesis, and then after floorplanning and 
+placement. In those cases delays are only estimated, not taking into account the parasistics induced by global routing.</p>
+
+<p>The final sign-off Timing Analysis and characterization is done after global routing, on a netlist back-annotated 
+with extracted parasitics (a post-layout netlist).</p>
+
+<p>Since synthesis and PR tools are timing-driven, timing characterizations of the building blocks are also 
+now needed. Those building blocks are sometimes large third-party IPs, with fixed timing characterizations. 
+In such cases, timing constraints are also set by those blocks, and the methodology aquires bottom-up aspects.</p>
+
+</section>
+
+
+
+</section>
+
+<section niv='2'><title>Definitions</title>
+
+
+<p></p>
+
+
+
+
+<section niv='3'><title>Delay Modeling</title>
+
+
+<p></p>
+
+
+
+
+<section niv='4'><title>Signal Propagation through a Simple Inverter</title>
+
+
+<imgsize wpdf='434pt' hpdf='142pt' namehtml='sta_course_image001.gif' namepdf='sta_course_image001.gif'/>
+
+<glossary>
+<row>
+  <article>Signal Transition</article>
+  <def>A transition is a change in the state of a signal. A rising 
+  transition occurs when the signal's voltage swings from a low level to 
+  a high level (from 0V to VMAX).  A falling transistion occurs when the 
+  signal's voltage goes from a high level  to a low level (from VMAX to 0V). In 
+  Avertec methodology, a signal transition is also refered to as a timing event
+  </def>
+</row>
+<row>
+  <article>Threshold</article>
+  <def>The delay threshold is the voltage ratio where a signal is considered 
+  as having changed state. 
+  Typically, this ratio is 50%. The threshold is also the measurement point for
+  delay calculation.
+  </def>
+</row>
+<row>
+  <article>Delay</article>
+  <def>A delay is defined between two signal's transitions, 
+  having a causality relation (the first transition implying the second). 
+  The value of a delay is the elapsed time between the instant of the 
+  first signal's transition crossing the threshold and the instant of 
+  the second signal's transition crossing the threshold. As a result of this
+  definition, it is possible to have negative delays (especially with a long 
+  input slope)
+
+
+  </def>
+</row>
+</glossary>
+
+<imgsize wpdf='263pt' hpdf='155pt' namehtml='sta_course_image002.gif' namepdf='sta_course_image002.gif' />
+
+
+</section>
+
+
+
+
+<section niv='4'><title>Signal Propagation through an RC Network</title>
+
+
+<p>Delays can be measured either on the direct output of the gate,
+or on any node of the RC interconnect network. Signal propagation through the 
+RC interconnect network causes additionnal delay.</p>
+  
+  <imgsize wpdf='465pt' hpdf='142pt' namehtml='sta_course_image003.gif' namepdf='sta_course_image003.gif'/>
+
+
+</section>
+
+
+</section>
+
+
+
+
+<section niv='3'><title>Slope Modeling</title>
+
+
+<p>The transition of a signal is modeled by its slope:</p>
+
+<imgsize wpdf='268pt' hpdf='149pt' namepdf='sta_course_image004.gif' namehtml='sta_course_image004.gif'/>
+
+<glossary>
+<row>
+  <article>Slope</article>
+  <def>A slope is defined between two thresholds: 
+  a high threshold (VTH HIGH) and a low threshold (VTH LOW). 
+  The value of the slope is the elapsed time between the instant of 
+  the signal's transition crossing VTH LOW (VTH HIGH) and the instant 
+  of the signal's transition crossing VTH HIGH (VTH LOW).
+  </def>
+</row>
+</glossary>
+
+<p>Typically, VTH LOW varies from 5% to 40% of VMAX, and VTH HIGH  
+varies from 60% to 95% of VMAX. A single value defined between two thresholds is
+a very reductive way to model slopes, as it gives no information about the shape
+of the slope. The most basic approach is to assume that the slope is linear. In
+Avertec methodology, the shape of the slope is assumed to be an
+hyperbolic tangent.</p>
+
+
+</section>
+
+
+
+
+<section niv='3'><title>Delay Dependancies</title>
+
+
+<p>The delays and slopes of a given gate depend on three different kinds of factors:</p>
+
+<list>
+  <item>Internal factors: the implementation of the gate itself. For example, an inverter 
+  can be designed in many ways.</item>
+  <item>Local external factors: the immediate environment of the gate. </item>
+  <item>Global external factors: the environment of the chip.</item>
+  <item>Below 90nm: local internal factors: effective length, stress effect, proximity effects.</item>
+</list>
+
+<glossary>
+<row>
+  <article>Internal Factors</article>
+  <def>
+    <list>
+      <item>Gate design, transistor sizes</item>
+      <item>Transistor models (MOS9, BSIM3, BSIM4, ...)</item>
+      <item>Foundry, technology size (0.13microns, 0.09microns ...)</item>
+    </list>
+  </def>
+</row>
+<row>
+  <article>Global External Factors</article>
+  <def>
+    <list>
+      <item>Process: best, worst, nominal</item>
+      <item>Voltage: global chip power supply</item>
+      <item>Temperature</item>
+    </list> 
+  </def>
+</row>
+<row>
+  <article>Local External Factors</article>
+  <def>
+    <list>
+      <item>Input Slope</item>
+      <item>Output Load (RC network and fanout)</item>
+    </list>  
+  </def>
+</row>
+</glossary>
+
+    <imgsize wpdf='198pt' hpdf='83pt' namepdf='sta_course_image005.gif' namehtml='sta_course_image005.gif'/>
+
+</section>
+
+
+
+</section>
+
+<section niv='2'><title>Delay Calculation</title>
+
+
+<section niv='3'><title>Electrical Simulation</title>
+
+
+
+<section niv='4'><title>Simple Gates</title>
+
+<p>When dealing with simple gates, delays are  most often calculated by 
+electrical simulation (SPICE simulation). The operating mode for calculating
+delays characterizing a gate is as follow:</p>
+<list>
+<item>For each input of the gate: Identify (from the gate's truth table) the
+causality relations between possible transitions on the input and possible 
+transitions on the output.</item>
+<item>For  each identified relation: Set the pattern (the states of other inputs)
+that condition this relation.</item>
+<item>Simulate the design </item>
+<item>Measure the delay associated with the causality relation, i.e. the delay 
+between the input transition and the resulting output transition. The measurement
+is performed as explained in the preceding section.</item>
+</list>
+<p>As an example, let's consider the following gate, and its 
+associated truth table:</p>
+<imgsize wpdf='281pt' hpdf='95pt' namepdf='sta_course_image006.gif' namehtml='sta_course_image006.gif'/>
+<p>The four identified causality relations and associated delays are reported 
+below. The state of the other input that conditions the causality relation is 
+given between brackets.</p>
+<code>
+<cl>delay0: I0 rising -&gt; 0 falling (I1 = 0)</cl>
+<cl>delay1: I0 falling -&gt; 0 rising (I1 = 0)</cl>
+<cl>delay2: I1 rising -&gt; 0 falling (I0 = 0)</cl>
+<cl>deIay3: 1 falling -&gt; 0 rising (I0 = 0)</cl>
+</code>
+<p>Four successive electrical simulations are then necessary to completely characterize the gate.</p>
+
+</section>
+
+
+<section niv='4'><title>Complex Designs</title>
+
+<p>The same kind of delay calculations can be done on more complex designs. 
+For example, let consider the following design.</p>
+<imgsize wpdf='242pt' hpdf='73pt' namepdf='sta_course_image007.gif' namehtml='sta_course_image007.gif'/>
+<p>We can deduce from the connectivity of the gates, and from their truth 
+tables, causality relations between the transitions on inputs A, B, C, D 
+and the transitions on the output I. All the possible causality relations,
+and the delay associated with each, are given below. The pattern 
+conditioning each relation is given between brackets.</p>
+<code>
+<cl>delay0: A rising -&gt; I rising (B = 0, C = 0, D = 1)</cl>
+<cl>delay1: A falling -&gt; I falling (B = 0, C = 0, D = 1)</cl>
+<cl>delay2: B rising -&gt; I rising (A = 0, C = 0, D = 1)</cl>
+<cl>delay3: B falling -&gt; I falling (A = 0, C = 0, D = 1)</cl>
+<cl>delay4: C rising -&gt; I rising (A = 0, B = 0, D = 1)</cl>
+<cl>delay5: C falling -&gt; I falling (A = 0, B = 0, D = 1)</cl>
+<cl>delay6: D rising -&gt; I falling (A = 0, B = 0, C = 0)</cl>
+<cl>delay7: D falling -&gt; I rising (A = 0, B = 0, C = 0)</cl>
+</code>
+<p>See below an illustration of the calculation of  delay0 between A rising and H rising. 
+A rising implies E falling if B = 0, which sets the value of input B. 
+E falling implies G rising, which in turn implies I falling if H = 0. 
+H = 0 if F = 1 and D = 1, which sets the value of input D. 
+F = 1 if C = 0, which sets the value of input C.</p>
+<imgsize wpdf='242pt' hpdf='76pt' namepdf='sta_course_image008.gif' namehtml='sta_course_image008.gif'/>
+<p>The pattern conditioning <f>A rising -&gt; I rising</f> is then B = 0, C = 0 and D = 1.</p>
+
+</section>
+
+
+<section niv='4'><title>Limitations</title>
+
+<p>Though being quite simple, the above circuit has necessited eight simulations of the
+full design to completely characterize it.</p>
+<p>Actually, for a design of n inputs and m outputs, there may exist up to 2n x 2m causality
+relations between input and output transistions. This can lead to a maximum of 2n x 2m electrical
+simulations to calculate all the delays associated with those relations, i.e. to characterize the design.</p>    
+<p>Furthermore, a causality relation is not easy to identify, and the setting of the pattern
+conditioning it is a very complex task.</p>
+<p>Apart of very regular designs, such as memories, where causality relations are quite 
+simple to establish, and where simulation can be aggressively optimized, these severe 
+drawbacks render electrical simulation impossible to apply on designs exceeding a 
+thousand transistors.</p>
+
+</section>
+
+
+
+</section>
+<section niv='3'><title>Static Timing Analysis</title>
+
+
+
+<section niv='4'><title>STA Basics</title>
+
+<p>Static Timing Analysis has arisen from two constatations.</p>
+<p>The first constatation was that, causality being a transitive relation, a global
+causality relation (from an input pin to an output pin) could be discomposed into 
+elementary (gate) causality relations. If we take the example above, the causality 
+relation <f>A rising -&gt; I rising</f> can be decomposed into 
+<f>A rising -&gt; E falling -&gt; G rising -&gt; I rising</f>.
+A typical timing representation of such a causality relation is given by a timing diagram, 
+as illustrated below.</p>
+<imgsize wpdf='316pt' hpdf='173pt' namepdf='sta_course_image009.gif' namehtml='sta_course_image009.gif'/>
+<p>The second constatation was that, as a first approximation, delays associated 
+with elementary causality relations could be added to get the delay of the global causality
+relation. From this statement we can see that it is possible to calculate (by electrical simulation) the delays
+associated with a gate only once, and thus achieve significant gains in calculation
+complexity: the delay of a global causality relation can be calculated by just adding 
+elementary delays.</p>
+<p>This statement supposes that delays are independent of their local environment. We have already
+seen that this is not really the case, and so this leads to some inaccuracy in the delay calculation.
+We will now see how to refine the delay modelization to attain a accuracy near the one obtained
+by electrical simulation.</p>
+
+</section>
+
+
+<section niv='4'><title>Graph Modeling</title>
+
+<p>The previous constatations allow us to model designs using weighted graphs, where an
+edge is a signal transition, and an arc is a causality relation. The arcs are weighted by
+the delay of the causality relation. The graph of a simple gate (a nor) has the 
+following appearance:</p>
+<imgsize wpdf='160pt' hpdf='236pt' namepdf='sta_course_image010.gif' namehtml='sta_course_image010.gif'/>
+<p>The graph of a gate-level design such as the one below is made by the connexion of the gates' graphs.</p>
+<imgsize wpdf='242pt' hpdf='73pt' namepdf='sta_course_image011.gif' namehtml='sta_course_image011.gif'/>
+<p>Thus, the graph of the design described above has the following appearance:</p>
+<imgsize wpdf='262pt' hpdf='293pt' namepdf='sta_course_image012.gif' namehtml='sta_course_image012.gif'/>
+<p>This graph is known as a causality graph. A global causality relation is represented 
+here by what is called a path in graph theory terminology. </p>
+<p>A graph representation allows us to apply well-known efficient algorithms, such
+as path searching. In a quite straightforward manner (compexity O(n)), by just following the
+arcs, we can identify all the timing paths of the design (the eight global causality 
+relations described above).</p>
+<imgsize wpdf='262pt' hpdf='293pt' namepdf='sta_course_image013.gif' namehtml='sta_course_image013.gif'/>
+
+</section>
+
+
+
+</section>
+<section niv='3'><title>Gate Characterization Methodology</title>
+
+<p>As stated in chapter 1.2.3, gate delays depend on internal factors, global external factors and local external factors. Until 90nm,
+internal factors don't change for a given chip, and global external factors don't change for a given timing analysis run. The only variable factors are the local external factors, i.e. the input slope and the output load of the gate.</p>
+<p>When calculating paths delays, we sum gate delays. As a first approximation, a gate delay can be modeled by a simple value. Experience has showed that this is very unrealistic, since the local external factors can vary a lot from one instance of a gate to another. This has led to a more wide-ranging approach to gate characterization: gate delays are given for a set of input slopes and a set of output loads.</p>
+<p>The most common way to describe this set of delay is a lookup table. A common lookup table is a 2D matrix, having for axes the input load and the output capacitance. The following figure illustrates a typical lookup-table.  </p>
+<p>Lookup table characterizations are most often provided with the gate-library itself. Since they are given for a limited range of PVT, it is often necessary to re-characterize them.</p>
+<p>In 90nm and below, other factors may also change: local power supply due to IR-drop, instance dependant parameters (stress
+effect, proximity effect). This limits the acccuracy a lookup-table based characterization.</p>
+<imgsize wpdf='422pt' hpdf='295pt' namepdf='sta_course_image014.gif' namehtml='sta_course_image014.gif'/>
+
+</section>
+
+
+
+</section>
+
+
+<section niv='2'><title>Timing Analysis</title>
+
+
+<p></p>
+
+
+
+
+<section niv='3'><title>What Needs to be Checked?</title>
+
+
+<p>In terms of timing, designs are made of combinational elements, 
+and of sequential (clocked) elements.</p>
+
+<p>What we called combinational elements are elements (logic gates) that just propagate 
+signals, independantly to any clock.</p>
+
+<p>Sequential elements are clocked elements. In most cases, they have a 
+memorizing behavior controlled by clock signals (latches, flip-flops). 
+In order to operate correctly, these elements must respect timing constraints 
+(typically the setting of the data to memorize relative to the clock 
+signals).</p>
+
+<p>A kind of clocked element is the dynamic logic stage (precharged logic). 
+It must also respect timing constraints.</p>
+
+<p>The main purpose of the timing analysis process is:</p>
+
+<list>
+  <item>To verify that the design is implemented in such a way that 
+  timing constraints are met on the inner sequential elements.</item>
+  <item>To compute the maximum frequencies of the clock signals that 
+  still allow the design to operate correctly.</item>
+  <item>To compute constraints on the input pins, that if respected, allow the 
+  design to work in any environment (CPU, SoC, Board).</item>
+</list>
+
+<p>In the following sections, we will first study the timing behavior of  
+sequential elements such as latches, flip-flops and dynamic logic gates.</p>
+<p>We will then discuss the constraints sequential elements set on the 
+interface of the design (setup and hold times, access times, frequency)</p>  
+<p>Then we will study how to integrate those elements in such a way 
+that the design can operate correctly.</p>
+
+
+</section>
+
+
+
+
+<section niv='3'><title>The Behavior of Sequential Elements </title>
+
+
+<p></p>
+
+
+
+
+<section niv='4'><title>Latch</title>
+
+<p>Below is the schematic of a simple latch:</p>
+
+<imgsize wpdf='207pt' hpdf='86pt' namepdf='sta_course_image015.gif' namehtml='sta_course_image015.gif'/>
+
+<p>The following timing diagram describes the timing behavior of the latch.</p>
+
+<imgsize wpdf='285pt' hpdf='167pt' namepdf='sta_course_image016.gif' namehtml='sta_course_image016.gif'/>
+
+<p>When CK is high, the latch is said to be in transparant mode, i.e. the 
+value on the input <f>DIN</f> is observable on the output <f>DOUT</f>, after the delay 
+<f>Ttransparent</f>, also refered to as <f>transparancy</f>.</p>
+
+<p>When CK goes from high to low (the latch closes), the value of <f>DIN</f> is memorized 
+in the latch. <f>DIN</f> must be stable at the time CK falls. Actually, to ensure the stabilization
+ of the memory loop, <f>DIN</f> must not only be stable at the time CK falls, but also for a 
+ certain amount of time before CK falls, and for a certain amount of time after CK falls. 
+ These times are refered to as <f>setup time</f> and <f>hold time</f> respectively.</p>
+
+<p>When CK is low, the latch is said to be in memorizing mode. The value observable on 
+<f>DOUT</f> is the value memorized when the latch is closed.</p>
+
+<p>When CK goes from low to high, the latch comes back in transparent mode, and a new 
+value on the input <f>DIN</f> becomes observable on the output <f>DOUT</f> after the 
+delay <f>taccess</f>, also refered to as <f>access time</f>.</p>
+
+<p>A latch is characterized by four intrinsic values: the transparency, setup,
+hold and access times.</p>
+
+
+</section>
+
+
+
+<section niv='4'><title>Flip-Flop</title>
+
+
+<p>A typical flip-flop is made of two latches in series, where the clocks are inverted.</p>
+
+<imgsize wpdf='373pt' hpdf='98pt' namepdf='sta_course_image017.gif' namehtml='sta_course_image017.gif'/>
+
+<p>The following timing diagram describes the timing behavior of the flip-flop.</p>
+
+<imgsize wpdf='420pt' hpdf='239pt' namepdf='sta_course_image018.gif' namehtml='sta_course_image018.gif'/>
+
+<p>When CK is high (<f>transp1</f>):</p>
+
+<list>
+  <item>the first latch is transparent. The value on <f>DIN</f> propagates until M.</item>
+  <item>the second latch is memorizing (closed)</item>
+</list>
+
+<p>When CK goes from high to low (<f>transp1 -&gt; memo1</f>):</p>
+
+<list>
+  <item>the first latch closes, and the value on <f>DIN</f> is memorized.</item>  
+  <item>the second latch opens (becomes transparent). The value on M (the   
+  memorized value) becomes observable on <f>DOUT</f> after the delay taccess 
+  (the time taken to traverse the second latch).</item>
+</list>
+
+<p>When CK is low (<f>memo1</f>):</p>
+
+<list>  
+  <item>the first latch is memorizing, and the value on M does not change</item>
+  <item>the second is transparent, the value observable on <f>DOUT</f>
+  is still the value on M.</item>
+</list>
+
+<p>When CK goes from low to high (<f>memo1 -&gt; transp2</f>):</p>
+
+<list>  
+  <item>the first latch becomes transparent, and a new value 
+  becomes observable on M</item>  
+  <item>the second latch must close before the value on M 
+  changes, i.e. <f>tCK-&gt;CK'</f> must be smaller than <f>tDIN-&gt;M'</f>
+  ,otherwise the new value is memorized in the second latch.</item>
+</list>
+
+
+</section>
+
+
+
+<section niv='4'><title>Dynamic Logic</title>
+
+
+<p>Below is a typical implementation of Dynamic CMOS logic 
+(precharge-evaluate logic).</p>
+
+<imgsize wpdf='208pt' hpdf='169pt' namepdf='sta_course_image019.gif' namehtml='sta_course_image019.gif'/>
+
+<p>During the precharge phase, the output node of the dynamic 
+CMOS stage is precharged to a high logic level. When the clock 
+signal rises at the beginning of the evaluation phase, there are 
+two possibilities: the output node of the dynamic CMOS stage is 
+either discharged to a low level through the NMOS circuitry 
+(falling transition), or it remains high. Regardless of the input 
+voltages applied to the dynamic CMOS stage, it is not possible for 
+the output node to make a rising transition during the evaluation 
+phase. Consequently, the input configuration must have been set 
+before the evaluation phase and must remain stable during it, 
+otherwise an unwanted conducting path may appear through the NMOS 
+circuitry, leading to an erroneous low-level state of the output 
+node.</p>
+
+<imgsize wpdf='423pt' hpdf='140pt' namepdf='sta_course_image020.gif' namehtml='sta_course_image020.gif'/>
+
+
+</section>
+
+
+
+</section>
+
+
+
+
+<section niv='3'><title>Sequential Design Analysis</title>
+
+
+<section niv='4'><title>Maximum Operating Frequency in Flip-Flop Based Designs</title>
+
+<p>Let's consider the following design made up of two flip-flops:</p>
+<imgsize wpdf='220pt' hpdf='124pt' namepdf='sta_course_image021.gif' namehtml='sta_course_image021.gif'/>
+<p>The following timing diagram illustrates the correct operating mode of the design:
+the value v2 stored in FF0 becomes accessible on B on the first falling edge of CK,
+then v2 propagates through the combinational block, finally v2 is stored by FF1 on
+the second falling edge of CK.</p>
+<imgsize wpdf='421pt' hpdf='205pt' namepdf='sta_course_image022.gif' namehtml='sta_course_image022.gif'/>
+<p>The design operates correctly because  
+<f>period - tsetup(FF1)  &gt; taccess(FF0)  + tcomb</f>. 
+Otherwise, as illustrated in the timing diagram below, if  
+<f>period - tsetup(FF0) &lt; taccess(FF1)  + tcomb</f>, 
+the second falling edge of CK occurs before the value v2 stored in FF0 has propagated 
+through the combinational block. The value stored by FF1 is v1, the value stored by 
+FF0 in the preceding phase. </p>
+<imgsize wpdf='421pt' hpdf='230pt' namepdf='sta_course_image023.gif' namehtml='sta_course_image023.gif'/>
+<p>From these observations, we can deduce that there exists a minimum period (and a maximum frequency) 
+allowing the design to operate correctly.</p>
+
+</section>
+
+
+<section niv='4'><title>Skew Impact Analysis</title>
+
+<p>Synchronous designs are based upon the communication between memory elements, 
+such as latches or flip-flops, this communication being controlled by the clock
+signal. Therefore, a single clock signal is connected to an important number of
+memory elements in the design, and it is very difficult to ensure that the clock
+signal will propagate homogenously (with the same delay) towards every memory
+element, even by inserting clock-tree bufferization.
+This phenomena is known as clock skew.
+The following diagram presents asymmetric clock buffering, leading to
+skew between the two flip-flops.</p>
+<p>The communication between the two flip-flops, taking into account the skew, is 
+illustrated in the following timing diagram.</p>
+<p>if <f>taccess + tcomb &gt; skew</f>, the design will operate correctly.</p>
+<imgsize wpdf='424pt' hpdf='268pt' namepdf='sta_course_image024.gif' namehtml='sta_course_image024.gif'/>
+<p>Otherwise, if <f>taccess + tcomb &lt; skew</f>, the design will not work. Note that
+this timing error is independent of the period.</p>
+<imgsize wpdf='424pt' hpdf='268pt' namepdf='sta_course_image025.gif' namehtml='sta_course_image025.gif'/>
+
+</section>
+
+
+</section>
+
+
+<section niv='3'><title>Global Characterization</title>
+
+
+
+<section niv='4'><title>Global Setup and Hold Times</title>
+
+<p>When a flip-flop input is directly connected to an input pin, or is 
+connected through a combinational path to an input pin, the respect of
+setup/hold constraints depends on the stability window of the input signal
+itself, and on the propagation delays of the input and clock signals 
+towards the flip-flop. </p>
+<p>The input signal's stability window may occur too soon or too late, 
+relative to the clock signal, to ensure the respect of the setup/hold
+constraints of the flip-flop.</p>
+<p>The final purpose of any design being its integration into a 
+higher-level design, it is therefore necessary to provide information on the 
+constraints that apply on the input pins of the design, i.e. in which timing
+windows input signals must be stable to ensure the respect of internal sequential
+elements. It is then possible to make the higher-level design in such a way
+that the stability windows are correctly set on the inputs of the design 
+it integrates.</p>
+<p>The constraints are obtained by calculating global setup and hold times.</p>
+ <p>Let's consider the following design, where I and CK are input pins.</p>
+<imgsize wpdf='172pt' hpdf='151pt' namepdf='sta_course_image026.gif' namehtml='sta_course_image026.gif'/>
+<p>The diagram below illustrates the calculation of global setup/hold times.</p>
+<imgsize wpdf='422pt' hpdf='236pt' namepdf='sta_course_image027.gif' namehtml='sta_course_image027.gif'/>
+<code>
+<cl>global_setup = setup + tcomb_I - tcomb_CK</cl>
+<cl>global_hold = hold + tcomb_CK - tcomb_I</cl>
+</code>
+
+</section>
+
+
+<section niv='4'><title>Access Time</title>
+
+<p>Another useful information is the access time, which tells the designer
+when the data on an output pin is available, relative to a clock edge.
+In the following design, O is an output pin.</p>
+<imgsize wpdf='150pt' hpdf='151pt' namepdf='sta_course_image028.gif' namehtml='sta_course_image028.gif'/>
+<p>The global access time is illustrated in the timing diagram below.</p>
+<imgsize wpdf='422pt' hpdf='219pt' namepdf='sta_course_image029.gif' namehtml='sta_course_image029.gif'/>
+<code>
+<cl>global_access = tcomb_CK + access +  tcomb_O</cl>
+</code>
+
+</section>
+
+
+</section>
+
+
+
+</section>
+
+</section>
+</chapter>
+

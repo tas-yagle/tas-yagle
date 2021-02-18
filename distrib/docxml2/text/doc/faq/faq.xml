@@ -1,0 +1,20 @@
+<!DOCTYPE notice SYSTEM "../../common/common_entity.xml" [
+<!ENTITY presentation SYSTEM "presentation.xml">
+<!ENTITY about SYSTEM "about.xml">
+<!ENTITY tool "HITAS">
+<!ENTITY faq SYSTEM "questions.xml">
+
+]>
+
+<notice>
+    <presentation>
+       &presentation; 
+    </presentation>
+    <introduction>
+        &about;
+    </introduction>
+    <document>
+        &faq;    
+    </document>
+</notice>
+

@@ -1,0 +1,139 @@
+#!/bin/csh -f
+
+set clean = 0
+set files = ""
+set lib = ""
+set interface = ""
+set manpth = ""
+set manpth = "."
+set keep_files = 0
+set f = 1
+set h = 0
+set o = 0
+set p = 0
+
+if ("$1" == "" || "$1" == '-h' || "$1" == '-help') then
+    echo; echo 'usage: genapi <f.c g.c ...> -i <interface.h> [-o <lib.so>] [--keep_files] [-kf]'
+    echo 'usage: genapi -clean'
+    echo 'usage: genapi -realclean'; echo
+    exit 1
+endif
+
+if ("$1" == '-clean') then
+    set clean = 1
+endif
+
+if ("$1" == '-realclean') then
+    set clean = 2
+endif
+
+if ($clean == 0) then
+
+    foreach arg ($argv)
+        if (("$arg" == '-kf') || ("$arg" == '--keep_files')) then
+            set keep_files = 1
+        else if ("$arg" == '-o') then
+            set h = 0
+            set f = 0
+            set o = 1
+            set p = 0
+        else if ("$arg" == '-i') then
+            set h = 1
+            set f = 0
+            set o = 0
+            set p = 0
+        else if ("$arg" == '-p') then
+            set h = 0
+            set f = 0
+            set o = 0
+            set p = 1
+        else if ($f == 1) then
+            if (${arg:e} != 'c') then
+                echo; echo '[GENAPI ERR] Files must have a .c extension'; echo
+                exit 1
+            endif
+            set files = ($files " " $arg)
+        else if ($h == 1) then
+            if (${arg:e} != 'h') then
+                echo; echo '[GENAPI ERR] Interface file must have a .h extension'; echo
+                exit 1
+            endif
+            set interface = $arg
+            set o = 0
+        else if ($o == 1) then
+            if (${arg:e} != 'so') then
+                echo; echo '[GENAPI ERR] Shared library name must have a .so extension'; echo
+                exit 1
+            endif
+            set lib = $arg
+        else if ($p == 1) then
+            set manpth = $arg
+            set p = 0
+        endif
+    end
+
+    echo $interface
+    echo $files
+    echo $lib
+
+    if ("$interface" == "" || "$files" == "") then
+        echo; echo 'usage: genapi <f.c g.c ...> -i <header.h> [-o <lib.so>]'; echo
+        exit 1
+    endif
+    if ($lib == "") set lib = ${interface:r}.so
+    
+
+    cat << EOF  > Makefile.api
+
+CC = gcc
+
+SHELL = /bin/sh
+
+SHARED_FILES = $files
+SHARED_INTERFACE = $interface
+SHARED_LIB = $lib
+
+CFLAGS = -g -Wall -W -fPIC
+
+WRAPPER_GEN = wrap
+LOCAL_INC = -I\$(AVT_DISTRIB_DIR)/api_include -I\$(AVT_TOOL_DIR)/api_include
+LOCAL_CFLAGS = \$(CFLAGS) -shared \$(LOCAL_INC) 
+
+WRAPPER = \$(SHARED_INTERFACE:%.h=%_wrap.c)
+
+\$(SHARED_LIB): \$(SHARED_FILES) \$(WRAPPER)
+	\$(CC) \$(LOCAL_CFLAGS) \$(SHARED_FILES) \$(WRAPPER) -o \$(SHARED_LIB) 
+
+\$(WRAPPER): \$(SHARED_INTERFACE)
+	\$(WRAPPER_GEN) -p $manpth \$(SHARED_INTERFACE)
+
+.c.o:
+	\$(CC) \$(CFLAGS) \$<
+
+clean:
+	-@\$(RM) -f *.o
+	-@\$(RM) -f \$(WRAPPER)
+
+realclean: clean
+	-@\$(RM) \$(SHARED_LIB)
+
+EOF
+
+endif
+
+if ($clean == 0) then
+    make -f Makefile.api
+    if ($keep_files == 0) then
+        /bin/rm *_wrap.c
+    endif
+endif
+
+if ($clean == 1) then
+    make -f Makefile.api clean
+endif
+
+if ($clean == 2) then
+    make -f Makefile.api realclean
+    /bin/rm Makefile.api
+endif
+   

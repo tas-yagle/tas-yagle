@@ -1,0 +1,21 @@
+
+       void  avt_DisplayResistivePath(FILE  *f, Netlist *lf, char *connector1,
+       char *connector2);
+
+DDEESSCCRRIIPPTTIIOONN
+       Displays one resistive path between two connectors at the interface  of
+       a netlist.
+
+AARRGGUUMMEENNTTSS
+       ff             Pointer  on the file where to save information, for stan-
+                     dard output set _s_t_d_o_u_t
+
+       llff            Pointer on the netlist
+
+       ccoonnnneeccttoorr11    first connector name
+
+       ccoonnnneeccttoorr22    second connector name
+
+       EEXXAAMMPPLLEE       _a_v_t___D_i_s_p_l_a_y_R_e_s_i_s_t_i_v_e_P_a_t_h      _s_t_d_o_u_t      _[_a_v_t___G_e_t_N_e_t_l_i_s_t
+                     _"_m_y_n_e_t_l_i_s_t_n_a_m_e_"_] _v_d_d___0 _v_d_d___1
+

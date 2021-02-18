@@ -1,0 +1,18 @@
+
+.subckt nand i0 i1 f vdd vss 
+M1 vdd i0 f vdd TP L=0.18U W=2.232U AS=0.80352P AD=0.80352P PS=5.184U 
++ PD=5.184U 
+M2 f i1 vdd vdd TP L=0.18U W=2.232U AS=0.80352P AD=0.80352P PS=5.184U 
++ PD=5.184U 
+M3 f i0 s1 vss TN L=0.18U W=2.232U AS=0.80352P AD=0.80352P PS=5.184U PD=5.184U 
++ 
+M4 s1 i1 vss vss TN L=0.18U W=2.232U AS=0.80352P AD=0.80352P PS=5.184U 
++ PD=5.184U 
+C0 i0 vss 1.32192e-15
+
+C1 i1 vss 1.32192e-15
+
+C2 f vss 1.62e-15
+
+.ends nand
+

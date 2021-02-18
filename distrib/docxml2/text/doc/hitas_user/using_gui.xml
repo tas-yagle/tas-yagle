@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Using the GUI</title>
+
+
+<section niv='2'><title>Timing Database Browsing with &xtas_tool;</title>
+<section niv='3'><title>Overview</title>
+
+<p>Execution of the &tool; results in the generation of a
+flat or hierarchical timing database (UTD) describing, in a compressed
+form, all the timing paths, cone details and interconnect details
+in the design under analysis. Xtas should be used in order to visualize the information
+in this timing database. It provides a
+fast, interactive and user friendly environment in which to perform
+timing requests. It also provides the means of performing the
+full static timing analysis and the visualization of accurate
+timing diagrams for any signals which do not satisfy the
+constraints. </p>
+
+</section>
+<section niv='3'><title>Description</title>
+
+<p>The XTas tool is used after generation of the UTD. It is used in
+order to interpret the information in the DTX file.
+The timing database must
+first be loaded into XTas. The DTX file contains gate details. 
+In the case of a hierarchical database, it
+is the top-level DTX file which should be specified.</p>
+<p>After loading the database, reference points (connectors,
+latches, commands, and precharges) can easily be visualized.
+You can then ask XTas to display critical and near-critical
+paths based on constraints such as, for example, the display of the 
+ten longest paths ending on a particular point. For any 
+given critical path, it is possible to display instantaneously
+paths with the same reference points but not the most critical; these are
+the so-called parallel or near critical paths. Optimization of a 
+critical path is often useless if parallel paths are not similarly 
+optimized.</p>
+<p>For any critical or near-critical path, XTas can also instantaneously
+display the full gate and interconnection details of the path.
+Unlike most timing analyzers, this is possible even if the path
+traverses several levels of the hierarchy.</p>
+<p>Finally, it is also possible to launch the static timing analysis engine
+from within XTas. In order to perform this analysis, it is first
+necessary to create a constraints file (see chapter "Static Timing Analisys" of this Guide).
+If this file exists alongside the timing database, then a single
+button launches the analysis after specifying a few options. Any
+violations are displayed in a new window from which the timing
+diagrams can be obtained.</p>
+
+</section>
+<section niv='3'><title>Execution</title>
+
+<section niv='4'><title>&xtas_tool; Command</title>
+
+<p>&xtas_tool; is started as follow:</p>
+<command>&xtas_tool;</command>
+<p>Upon entering this command the &xtas_tool; main window appears.</p>
+
+</section>
+<section niv='4'><title>&xtas_tool; Resource File</title>
+
+<p>The file AvtTools/etc/Xtas allows modification of certain characteristics of the graphical interface. 
+For example, the color and the size of the windows of xtas can be modified in this file.</p>
+
+</section>
+<section niv='4'><title>&xtas_tool; Splash Screen</title>
+
+<p>The &xtas_tool; main desk window is the starting point for using &xtas_tool;.
+You can choose to use the menus or the buttons. Buttons are shortcuts giving the same results as a selection in the menus.</p>
+<p>The Main window looks like:</p>
+ <imgsize namehtml="xtasmain.gif" namepdf="xtasmain.gif" wpdf="264pt" hpdf="156pt" />
+
+</section>
+
+</section>
+</section>
+
+
+<section niv='2'><title>Configuration</title>
+
+<p>The "Config" menu in &xtas_tool; provides access to a number of dialogs containing configuration options affecting the performance and appearance of the graphical database browser. These options are detailed in the following sections.</p>
+
+<section niv='3'><title>Memory Size</title>
+
+<p>The memory size dialog allows the user to set the maximum and the current amount of memory used as the cache for loading delay and signal details. This dialog looks as follows:</p>
+<imgsize namehtml="memosize.gif" namepdf="memosize.gif" wdpf="227pt" hpdf="86pt"/>
+
+</section>
+<section niv='3'><title>Toolbar Buttons</title>
+
+<p>This dialog box allows the user to add or remove Xtas' tool bar buttons. If a button is not checked, it does not appear in the Xtas' tool bar. The dialog also indicates which action corresponds to the button and in which menu this action is also available. In addition, the user can customize the button's bar by checking or not a button. This dialog appears as follows:</p>
+<imgsize namehtml="buttonconfig.gif" namepdf="buttonconfig.gif" wdpf="126pt" hpdf="302pt"/>
+<p>A similar dialog is available in the menu "Option" of other windows.</p>
+
+</section>
+<section niv='3'><title>Display Type</title>
+
+<p>This dialog allows the user to choose between a graphical or textual display for the path or delay windows. The graphical display uses static text boxes and icons whereas the textual one displays information in plain text. The textual display is recommended for long signal names and long lists as it has faster display. This dialog appears as follows:</p>
+<imgsize namehtml="displaytype.gif" namepdf="displaytype.gif" wdpf="154pt" hpdf="67pt"/>
+<p>The textual display can be forced as default using the <f>xtasTextualDisplay</f> configuration variable. </p>
+
+</section>
+</section>
+
+
+<section niv='2'><title>Loading the Timing Database</title>
+
+<section niv='3'><title>Timing Database</title>
+
+<p>After opening the &xtas_tool; main window you need to load a DTX format timing database. 
+Choose open in the file menu of the &xtas_tool; main window.</p>
+<glossary><row mode="button">
+<article ><imgsize namehtml="button.gif" namepdf="button.gif" hpdf="39pt" wpdf="39pt" /></article>
+<def>This button acts like a shortcut for the opening of the database.</def>
+</row></glossary>
+<p>you will then be presented with the &xtas_tool; database request dialog. 
+Choose which timing database to load by selecting it in this dialog.</p>
+<imgsize namehtml="xtasrequest.gif" namepdf="xtasrequest.gif" wdpf="98pt" hpdf="156pt"/> 
+<p>The default filter can be changed using the <f>xtasDatabaseFilter</f> configuration variable.</p>
+
+</section>
+
+<section niv='3'><title>Crosstalk Timing Database</title>
+
+<p>It is also possible to load a CTX format timing database containing information given by crosstalk analysis (See chapter 'Output Files' of the &tool; Reference Guide for further information on this format).</p>
+<p>To do this, you must select the timing database in DTX format in the &xtas_tool; database request dialog (change Filter to "*.dtx" to have access to the list of DTX files). Then, if a corresponding CTX file exists, the following dialog will appear asking confirmation to load it:</p>
+
+<imgsize namehtml="questionctx.gif" namepdf="questionctx.gif" wdpf="108pt" hpdf="59pt"/> 
+
+
+</section>
+
+</section>
+
+
+<section niv='2'><title>Accessing &xtas_tool; Features</title>
+
+<section niv='3'><title>Exiting &xtas_tool;</title>
+
+<p>Choose exit in the File menu in order to close &xtas_tool;.</p>
+<glossary><row mode='button'>
+<article><imgfix ref="buttonclose.gif" /></article>
+<def>Clicking this button in the main window will exit &xtas_tool;.
+In any other window, it will close the current window.</def>
+</row></glossary>
+
+</section>
+<section niv='3'><title>Browsing Connectors</title>
+
+<p>Select Connectors in the View menu of the &xtas_tool; main window in order to open the &xtas_tool; connectors window</p>
+<glossary><row mode='button'>
+<article><imgfix ref="buttonconnector.gif" /></article>
+<def>This button opens the &xtas_tool; connectors window.</def>
+</row></glossary>
+<p>The &xtas_tool; connector window allows viewing of the list of the connectors of
+the Instance.
+This list can be filtered according to name and/or hierarchical level.</p>
+
+</section>
+<section niv='3'><title>Browsing Registers</title>
+
+<p>Select Registers in the View menu of the &xtas_tool; main window in order to open the &xtas_tool; registers window</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttonregister.gif" /></article>
+<def>This button opens the &xtas_tool; registers window.</def>
+</row></glossary>
+<p>The &xtas_tool; registers window allows viewing of the list of the registers of 
+the Instance.
+This list can be filtered according to name and/or hierarchical level.</p>
+
+</section>
+<section niv='3'><title>Browsing Commands</title>
+
+<p>Select Commands in the View menu of the &xtas_tool; main window in order to open the &xtas_tool; commands window</p>
+<glossary><row mode='button'>
+<article><imgfix ref="buttoncommand.gif" /></article>
+<def>This button opens the &xtas_tool; commands window.</def>
+</row></glossary>
+<p>The &xtas_tool; commands window allows viewing of the list of the commands of the Instance.
+This list can be filtered according to name and/or hierarchical level.</p>
+
+</section>
+<section niv='3'><title>Browsing Precharges</title>
+
+<p>Select Precharges in the View menu of the &xtas_tool; main window in order to open the &xtas_tool; precharges window</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttonprecharge.gif" /></article>
+<def>This button opens the &xtas_tool; precharges window.</def>
+</row></glossary>
+<p>The &xtas_tool; precharges window allows viewing of the list  of the precharges of the Instance.
+This list can be filtered according to name and/or hierarchical level.</p>
+
+</section>
+<section niv='3'><title>Browsing Break Points</title>
+
+<p>Select Break Points in the View menu of the &xtas_tool; main window in order to open the &xtas_tool; break points window</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttonbreak.gif" /></article>
+<def>This button opens the &xtas_tool; break points window.</def>
+</row></glossary>
+<p>The &xtas_tool; break points window allows viewing of the list of the break points of the Instance.
+This list can be filtered according to name and/or hierarchical level.</p>
+
+</section>
+<section niv='3'><title>Browsing Internal Signals</title>
+
+<p>Select Internal Signals in the View menu of the &xtas_tool; main window in order to open the &xtas_tool; all signals window</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttonallsig.gif" /></article>
+<def>This button opens the &xtas_tool; all signals window.</def>
+</row></glossary>
+<p>The &xtas_tool; all signals window allows viewing of the list of all internal signals of the Instance.
+This list can be filtered according to name and/or hierarchical level.</p>
+
+</section>
+<section niv='3'><title>Browsing Paths</title>
+
+<p>Select Get Paths in the Tools menu of the &xtas_tool; main window in order to open the &xtas_tool; get paths window</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttongetpath.gif" /></article>
+<def>This button opens the &xtas_tool; get paths window.</def>
+</row></glossary>
+<p>The &xtas_tool; get paths window allows the setting of numerous parameters. From these parameters &xtas_tool; will display the selected critical paths.</p>
+
+</section>
+<section niv='3'><title>Browsing Delays</title>
+
+<p>Select Get Delays in the Tools menu of the &xtas_tool; main window in order to open the &xtas_tool; get delay window</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttondelay.gif" /></article>
+<def>This button opens the &xtas_tool; get delay window.</def>
+</row></glossary>
+<p>The &xtas_tool; get delay window allows the setting of numerous parameters. From these parameters &xtas_tool; will display the selected max delays.</p>
+
+</section>
+<section niv='3'><title>Stability Analysis</title>
+
+<p>Select Stability in the Tools menu of the &xtas_tool; main window in order to open the &xtas_tool; stability parameterization window</p>
+<glossary><row mode='button'>
+<article><imgfix ref="buttonstabilite.gif" /></article>
+<def>This button opens the &xtas_tool; stability parameterization window.</def>
+</row></glossary>
+<p>The stability parameterization window allows you to specify the stability 
+and/or crosstalk analysis options and then performs the analysis.</p>
+
+</section>
+<section niv='3'><title>Common applications</title>
+
+<p>From any window in &xtas_tool; it is possible to identify the use and associated menu of any of the Xtas' tool bar buttons. To do this, open the &xtas_tool; Button Configuration window from the Options menu.</p>
+<p>The following functions are available from most of the window types:</p>
+<glossary>
+<row mode='button'><article><imgfix ref="buttontomain.gif" /></article>
+<def>Clicking this button will make the &xtas_tool; main window appear at the foreground.</def></row>
+<row mode='button'><article><imgfix ref="buttonclose.gif" /></article>
+<def>This button closes the current window.</def></row>
+<row mode='button'><article><imgfix ref="buttoninfosig.gif" /></article>
+<def>This button opens the &xtas_tool; Signals Info window.</def></row>
+<row mode='button'><article><imgfix ref="buttonctki.gif" /></article>
+<def>This button opens the &xtas_tool; Crosstalk Info window.</def></row>
+</glossary>
+<p>If the INF file has been modified during a &xtas_tool; session (for example for false path information), it is possible to reload it from the File menu.</p>
+
+</section>
+</section>
+
+
+<section niv='2'><title>Browsing Timing Signals</title>
+
+<p>This section describes timing signals browsing features. Example is given below for memory
+elements. Browsing of connectors, commands, precharges, break points and internal signals is done the
+same way.</p>
+
+<p>Open the &xtas_tool; Registers window in order to display the memory elements.</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttonregister.gif" /></article>
+<def>Clicking this button opens the &xtas_tool; registers window.</def>
+</row></glossary>
+<p>The following options are available:</p>
+<glossary>
+<row>
+<article>Signal Mask</article>
+<def>You can give the name of a particular register in order to display this register. The '*' is a wildcard you can use to select a set of signals whose names will fit the conditions you have given.
+The default value is '*' and will display all the registers.</def>
+</row>
+<row>
+<article>Figure name</article>
+<def>This is the name of the database you have load in &xtas_tool;</def>
+</row>
+<row>
+<article>Instance name</article>
+<def>This is the name of the instance whose registers you are looking for.</def>
+</row>
+<row>
+<article>List</article>
+<def>This option opens the Hierarchy window. It displays the hierarchy of the figure, and allows you to select another instance. It is possible to make the search through all levels. An On-Line help is available for this option in the hierarchy window.</def>
+</row>
+<row>
+<article>Items</article>
+<def>You can set the number of registers you want to display in the Information Area.
+The resulting list will be given either in a single page or on several pages depending if the number of registers is greater than the value given.</def>
+</row>
+<row>
+<article>Search</article>
+<def>Displays the registers in the Information Area.</def>
+</row>
+<row>
+<article>Signals List</article>
+<def>If the number of register is greater than the figure for Item &xtas_tool; will give the registers list on several pages. The signals list allows you to access all the signals. If the number of register is inferior to the value given, there is only one page.</def>
+</row>
+<row>
+<article></article>
+<def>After Search, this option shows information on a selected signal.</def>
+</row>
+</glossary>
+<p>The resulting &xtas_tool; Registers window of a Search looks like:</p>
+<imgsize namehtml="xtasregister.gif" namepdf="xtasregister.gif" wpdf="205pt" hpdf="206pt" />
+<p>Double clicking on a register displays more information about that register in the &xtas_tool; Signals Info Window.</p>
+<imgsize namehtml="xtasreginfo.gif" namepdf="xtasreginfo.gif" wpdf="116pt" hpdf="166pt" />
+
+</section>
+
+
+<section niv='2'><title>Browsing Critical Paths</title>
+<section niv='3'><title>General Procedure</title>
+
+<p>Open the &xtas_tool; Get Paths window in order to select options for
+ displaying critical paths.</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttongetpath.gif" /></article>
+<def>Clicking this button opens the &xtas_tool; Get Paths window.</def>
+</row></glossary>
+<p>The &xtas_tool; Get Paths window looks like:</p>
+<imgsize namehtml="xtasgetpath.gif" namepdf="xtasgetpath.gif" wpdf="348pt" hpdf="220pt" />
+<p>This window is the first step to viewing the critical paths of the instance. 
+Use the options to set criteria for displaying critical paths.</p>
+
+</section>
+<section niv='3'><title>Options</title>
+
+<p>You can use the following options in the &xtas_tool; Get Paths window:</p>
+<glossary>
+<row type="split"><article>Start Text Box</article><def>
+This text box describes the regexp (including *) to be matched
+for the beginning signal of the path. The Start button permits
+browsing of path extremity signals in the loaded figure.</def></row>
+<row type="split"><article>End Text Box</article><def>
+This text box describes the regexp (including *) to be matched
+for the terminating signal of the path. The End button permits
+browsing of path extremity signals in the loaded figure.</def></row>
+<row type="split"><article>Clock(s) Text Box</article><def>
+This text box describes the regexp (including *) to be matched
+for the clock signal when viewing access.</def></row>
+<row type="split"><article>Time Bounds</article>
+<def>These text boxes indicate the time bounds between which paths must be 
+found. </def>
+</row>
+<row type="split"><article>Request Type</article>
+<def>Choose the search criteria. When choosing to view "Paths and Access" 
+the "Clock(s)" text box becomes available.</def>
+</row>
+<row type="split">
+<article>Slopes Mask</article>
+<def>Select here the desired types of transitions between the start
+signal and the end signal.  </def>
+</row>
+<row type="split"><article>Max/Min</article>
+<def>The Max button performs the search for the longest paths.
+The Min button performs the search for the shortest paths.</def>
+</row>
+<row type="split"><article>Order by</article>
+<def>These buttons select the source signal of the paths search. In order 
+ to reduce computing time, the signal (start or end) with the most
+restrictive mask must be chosen. </def>
+</row>
+<row type="split"><article>Search Level</article>
+<def>These text boxes allow limiting of the path search to certain levels
+of hierarchy. The List button allows selecting of instances. By
+default, search is performed in all levels of hierarchy.  </def>
+</row>
+</glossary> 
+
+</section>
+<section niv='3'><title>Critical Paths Display</title>
+
+<p>&xtas_tool; display the &xtas_tool; Critic Paths Window:</p>
+<imgsize namehtml="xtascriticalpath.gif" namepdf="xtascriticalpath.gif" wpdf="275pt" hpdf="236pt" />
+<p>Each line in the window corresponds to a critical path.
+The name and transition of the path terminals are given, together with the path delay and output slope.</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttongetcmdpath.gif" /></article>
+<def>Select a register signal in the list to get all the paths that end on the command of this register by clicking on this button. It will open the &xtas_tool; Get Paths window with the End Text Box filled with the name of all the commands of that register.</def></row>
+</glossary>
+
+</section>
+
+
+</section>
+
+
+<section niv='2'><title>Browsing Near Critical Paths</title>
+<section niv='3'><title>Overview</title>
+
+<p>Near critical paths (or parallel paths) are paths with the same terminals as a critical path.  Optimization of a critical path is often useless if parallel paths are not similarly optimized.</p>
+
+</section>
+<section niv='3'><title>Options</title>
+
+<p>In the &xtas_tool; Critic Paths window open the &xtas_tool; Get Parallel Paths in order to view the near critical paths.</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttonparallel.gif" /></article>
+<def>Clicking this button opens the &xtas_tool; Get Parallel Paths window.</def>
+</row></glossary>
+<p>The &xtas_tool; Get Parallel Paths window looks like:</p>
+<imgsize namehtml="xtasgetparallel.gif" namepdf="xtasgetparallel.gif" wpdf="300pt" hpdf="163pt"/>
+<p>This window is the first step to viewing the near critical paths. </p>
+<p>The following options are available:</p>
+<glossary>
+<row><article>Signals Bounds</article>
+<def>The On Path text box describes the regexp (including *) to be 
+matched for intermediary signals of the parallel path. The 
+On Path button permits browsing of signals in the loaded 
+figure.</def>
+</row>
+<row>
+<article>Slopes Mask</article>
+<def>Select here the desired type of selection of the intermediary
+signal. Available types of selection are:<list>
+<item>And: All signals must appear on parallel paths.</item>
+<item>Or: At least one signal must appear parallel paths.</item>
+<item>Not: the signals must not appear on parallel paths.</item></list>
+</def>
+</row>
+<row><article>Max/Min</article>
+<def>The Max button performs the search for the longest paths.
+The Min button performs the search for the shortest paths.</def>
+</row>
+<row><article>Order by</article>
+<def>These buttons select the source signal of the paths search. In order 
+ to reduce computing time, the signal (start or end) with the most
+restrictive mask must be chosen. </def>
+</row>
+<row><article>Time Bounds</article>
+<def>These text boxes indicate the time bounds between which paths must be 
+found. Only critical paths or all paths can be searched, by selecting
+or not the button Critical Paths.</def>
+</row>
+<row><article>Search Level</article>
+<def>These text boxes allow limiting of the path search to certain levels
+of hierarchy. The List button allows selecting instances. By
+default, search is performed in all levels of hierarchy.  </def>
+</row>
+</glossary> 
+
+</section>
+<section niv='3'><title>Near Critical Paths Display</title>
+
+<p>&xtas_tool; display the &xtas_tool; Parallel Paths Window:</p>
+<imgsize namehtml="xtasparallelpath.gif" namepdf="xtasparallelpath.gif" wpdf="283pt" hpdf="242pt" />
+
+</section>
+</section>
+
+
+<section niv='2'><title>Browsing Path Details</title>
+<section niv='3'><title>Overview</title>
+
+<p>If a DTX file has been generated, it is possible to display elementary gate or RC delays according to certain criteria.</p>
+</section>
+<section niv='3'><title>Options</title>
+
+<p>In the &xtas_tool; Main window open the &xtas_tool; Get Delay window in order to view elementary delays.</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttondelay.gif" /></article>
+<def>Clicking this button opens the &xtas_tool; Get delay window.</def>
+</row></glossary>
+<p>The &xtas_tool; Get Delay window looks like:</p>
+<imgsize namehtml="xtasgetdelay.gif" namepdf="xtasgetdelay.gif" wpdf="208pt" hpdf="182pt" />
+<p>The following options are available:</p>
+<glossary>
+<row><article>Start Text Box</article><def>
+This text box describes the regexp (including *) to be matched
+for the beginning signal of the path. The Start button permits
+browsing of path extremity signals in the loaded figure.</def></row>
+<row><article>End Text Box</article><def>
+This text box describes the regexp (including *) to be matched
+for the terminating signal of the path. The End button permits
+browsing of path extremity signals in the loaded figure.</def></row>
+<row><article>Slopes Mask</article>
+<def>Select here the desired types of transitions between the start
+signal and the end signal.  </def>
+</row>
+<row><article>Max/Min</article>
+<def>The Max button performs the search of the maximum delays.
+The Min button performs the search of the minimum delays.</def>
+</row>
+<row><article>Order by</article>
+<def>Those buttons select the type of delay to be searched. RC means
+interconnect delays, Gate means Gate delays.</def>
+</row>
+<row><article>Time Bounds</article>
+<def>Those text boxes indicate the time bounds between which paths must be 
+found. Only critical paths or all paths can be searched, by selecting
+or not the button Critical Paths.</def>
+</row>
+<row><article>Search Level</article>
+<def>Those text boxes allow the search of paths in but chosen levels
+of hierarchy. The List button permits to select instances. By 
+default, search is performed in all levels of hierarchy.</def>
+</row>
+</glossary>
+
+</section>
+<section niv='3'><title>Delay Display</title>
+
+<p>Xtas display the Xtas Delay Max Window: </p>
+<imgsize namehtml="xtasdelay.gif" namepdf="xtasdelay.gif" wpdf="329pt" hpdf="222pt" />
+<p>Each line in the window corresponds to an elementary delay or timing arc.
+The input and output transitions of the timing arc are given, as well as the delay and the output slope.
+The type icon identifies the delay as corresponding to a gate or RC interconnection.</p>
+
+</section>
+</section>
+
+
+<section niv='2'><title>CPE Path Simulation</title>
+<section niv='3'><title>Overview</title>
+
+<p>When designers use an electrical simulator such as ELDO or HSPICE to obtain path timing information, the path must be extracted manually and appropriate stimuli provided. &xtas_tool; can automate this procedure for any identified path.</p>
+<p>From the &xtas_tool; Path Detail window, it is possible to run a simulation with the electrical simulator of your choice. You need only to configure the simulation parameters. Path extraction and stimuli generation are automatic.</p>
+<p>In a new &xtas_tool; Path Detail window, you can compare results given by &tool; with these given by the simulator.</p>
+
+</section>
+<section niv='3'><title>Options</title>
+ 
+<glossary><row mode='button' >
+<article><imgfix ref="buttonsimu.gif" /></article>
+<def>Clicking this button opens the &xtas_tool; Simulation Parameterization window.</def>
+</row></glossary>
+<p>The &xtas_tool; Simulation Parameterization window looks like:</p>
+<imgsize namehtml="xtassimuparam.gif" namepdf="xtassimuparam.gif" wpdf="213pt" hpdf="253pt"/>
+<p>This window is the first step to simulate a path. </p>
+<p>The following options are available:</p>
+<glossary>
+<row><article>Technology File</article>
+<def>Click on the Open button to choose the directory of the technology file and select it in the list. This is equivalent to the <f>avtTechnologyName</f> configuration variable.</def></row>
+<row><article>Simulation Tool</article>
+<def>Allows the user to choose the electrical simulator he wants to use and the corresponding command line. He can also specify the output format generated by the simulator and the file format for stdout redirection. It is equivalent to the <f>simToolModel</f>, the <f>avtSpiceString</f>, the <f>avtSpiceOutFile</f> and the <f>avtSpiceStdoutFile</f> configuration variables respectively. Checking the "Use Print" box allows getting an array of value for a node, it is equivalent to setting <f>simUsePrint</f> configuration variable to "yes". Checking the "Use Measure" box specify to extract value from waveform using combination of arithmetic expressions, it is equivalent to setting <f>simUseMeasure</f> configuration variable to "yes".</def></row>
+<row><article>Constraints</article>
+<def>Allows the user to set the input/output constraints parameters for simulation. Specify the input slope start time and the transient time of the input slope in picoseconds. Specify the output capacitance value in Femto-farads. It is equivalent to the <f>simInputStartTime</f> and the <f>simSlope</f> and the <f>simOutCapaValue</f> configuration variables.</def></row>
+<row><article>Conditions</article>
+<def>Allows the user to set the simulation conditions like the duration (in nanoseconds), the maximum voltage (in Volts) and the temperature (in degrees Celsius). It is equivalent to the <f>simTransientTime</f>, the <f>simPowerSupply</f> and the <f>simTemperature</f> configuration variables respectively. The user can also specify the spice options to be driven into the spice file for simulation it is equivalent to the <f>simSpiceOptions</f> configuration variable.</def></row>
+<row><article>Thresholds</article>
+<def>Allows the user to set the thresholds of a slope as a percentage of VDD. It is equivalent to the <f>simVth</f>, the <f>simVthHigh</f> and the <f>simVthLow</f> configuration variables.</def></row>
+<row><article>Step</article>
+<def>Allows the user to set the transient calculation step for the simulation in nanoseconds. Equivalent to the <f>simTransientStep</f> configuration variable.</def></row>
+</glossary>
+
+</section>
+<section niv='3'><title>Simulation Path Display</title>
+
+<p>Xtas displays the Xtas Simulated Critic Max Path Detail Window: </p>
+<imgsize namehtml="xtaspathsimu.gif" namepdf="xtaspathsimu.gif" wpdf="475pt" hpdf="204pt" />
+<p>For all timing arc data (Slope, Delay and Total) there are two columns:</p>
+<glossary>
+<row><article>
+<imgfix ref="xtastitletas.gif" />
+</article>
+<def><p></p>These columns give the values obtained with the static timing analysis.</def></row>
+<row><article>
+<imgfix ref="xtastitlespice.gif" />
+</article>
+<def><p></p>These columns give the values obtained with the selected simulator.</def></row>
+</glossary>
+
+</section>
+</section>
+
+
+<section niv='2'><title>Path Visualization</title>
+<section niv='3'><title>Overview</title>
+
+<p>It is possible to view a graphical representation of a path.</p>
+
+</section>
+<section niv='3'><title>Options</title>
+ 
+<glossary><row mode='button' >
+<article><imgfix ref="buttonvisu.gif" /></article>
+<def>Clicking this button opens the &xtas_tool; Path Visualization window.</def>
+</row></glossary>
+<p>The &xtas_tool; Path Visualization window looks like:</p>
+<imgsize namehtml="xtasvisuparam.gif" namepdf="xtasvisuparam.gif" wdpf="88pt" hpdf="78pt"/>
+<p>This window is the first step to visualize a path. </p>
+<p>There are two modes of representation:</p>
+<glossary>
+<row><article>Highlight</article>
+<def>displays all the circuit and highlights the selected path.</def></row>
+<row><article>Extract</article>
+<def>displays only the selected path.</def></row>
+</glossary>
+
+</section>
+<section niv='3'><title>Path Visualization Display</title>
+
+<p>Xtas displays the following window: </p>
+<imgsize namehtml="xtaspathvisu.gif" namepdf="xtaspathvisu.gif" wpdf="380pt" hpdf="267pt" />
+
+</section>
+</section>
+
+
+<section niv='2'><title>Browsing Delays</title>
+
+<section niv='3'><title>Overview</title>
+
+<p>If a DTX file has been generated, it is possible to display elementary gate or RC delays according to certain criteria.</p>
+</section>
+<section niv='3'><title>Options</title>
+
+<p>In the &xtas_tool; Main window open the &xtas_tool; Get Delay window in order to view elementary delays.</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttondelay.gif" /></article>
+<def>Clicking this button opens the &xtas_tool; Get delay window.</def>
+</row></glossary>
+<p>The &xtas_tool; Get Delay window looks like:</p>
+<imgsize namehtml="xtasgetdelay.gif" namepdf="xtasgetdelay.gif" wpdf="208pt" hpdf="182pt" />
+<p>The following options are available:</p>
+<glossary>
+<row><article>Start Text Box</article><def>
+This text box describes the pattern (including *) to be matched
+for the beginning signal of the path. The Start button permits
+browsing of path extremity signals in the loaded figure.</def></row>
+<row><article>End Text Box</article><def>
+This text box describes the pattern (including *) to be matched
+for the terminating signal of the path. The End button permits
+browsing of path extremity signals in the loaded figure.</def></row>
+<row><article>Slopes Mask</article>
+<def>Select here the desired types of transitions between the start
+signal and the end signal.  </def>
+</row>
+<row><article>Max/Min</article>
+<def>The Max button performs the search of the maximum delays.
+The Min button performs the search of the minimum delays.</def>
+</row>
+<row><article>Order by</article>
+<def>Those buttons select the type of delay to be searched. RC means
+interconnect delays, Gate means Gate delays.</def>
+</row>
+<row><article>Time Bounds</article>
+<def>Those text boxes indicate the time bounds between which paths must be 
+found. Only critical paths or all paths can be searched, by selecting
+or not the button Critical Paths.</def>
+</row>
+<row><article>Search Level</article>
+<def>Those text boxes allow the search of paths in but chosen levels
+of hierarchy. The List button permits to select instances. By 
+default, search is performed in all levels of hierarchy.</def>
+</row>
+</glossary>
+
+</section>
+<section niv='3'><title>Delay Display</title>
+
+<p>Xtas display the Xtas Delay Max Window: </p>
+<imgsize namehtml="xtasdelay.gif" namepdf="xtasdelay.gif" wpdf="329pt" hpdf="222pt" />
+<p>Each line in the window corresponds to an elementary delay or timing arc.
+The input and output transitions of the timing arc are given, as well as the delay and the output slope.
+The type icon identifies the delay as corresponding to a gate or RC interconnection.</p>
+
+</section>
+
+</section>
+
+
+
+<section niv='2'><title>Static Timing Analysis and Signal Integrity</title>
+<section niv='3'><title>Overview</title>
+
+<p>It is possible to launch the static timing analyzer with or without the crosstalk
+analysis from within XTas.
+In order to perform this analysis, it is first
+necessary to create a constraints file (.inf file).
+If this file exists alongside the timing database, then a single
+button launches the analysis after specifying a few options. Any
+violations are displayed in a new window from which the timing
+diagrams can be obtained and the noise analysis can be launched.</p>
+
+</section>
+<section niv='3'><title>Static Timing Analysis Results</title>
+
+<section niv='4'><title>Launching the Analysis</title>
+
+<p>In the &xtas_tool; Main window open the &xtas_tool; in order to begin the static timing analysis.</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttonstabilite.gif" /></article>
+<def>Clicking this button opens the &xtas_tool; Stability Parameterization window.</def>
+</row></glossary>
+<p>The &xtas_tool; Stability Parameterization window looks like:</p>
+<imgsize namehtml="xtasstaberrorparam.gif" namepdf="xtasstaberrorparam.gif" wpdf="346pt" hpdf="283pt" />
+<p>This window is the first step of the static timing analysis. </p>
+</section>
+
+<section niv='4'><title>Loading Switching Windows</title>
+<p>If static timing analysis has been performed on the current figure, the user can directly load the results from the .sto file.</p>
+</section>
+
+<section niv='4'><title>Crosstalk Analysis Parameterization</title>
+
+<p>The user can choose to perform the static timing analysis with full handling of crosstalk effects. If this box is checked, the user has access to the crosstalk analysis parameterization area. See the &tool; Reference Manual for more detailed explanations of the configuration options.</p>
+<glossary>
+<row type="split"><article>Crosstalk Analysis Type</article>
+<def>In the "Remove Non-Aggression" mode, all aggression is assumed initially. 
+In the "Detect Aggression" mode, no aggression is assumed initially. In addition to that mode, you can check the box "Observable Only" in order to have less pessimistic results.</def></row>
+<row type="split"><article>No More Aggressions Stop Conditions</article>
+<def> These are conditions for stopping slope recalculation when no further aggression is detected or removed: "Min Slope Change" represents the minimum significant slope variation in picoseconds (equivalent to the <f>stbCtkMinSlopeChange</f> configuration variable) and "Max Iteration Number" represents the maximum number of recalculation iterations (equivalent to the <f>stbCtkMaxLastIter</f> configuration variable).</def></row>
+<row type="split"><article>Crosstalk Model</article>
+<def>
+    <glossary width="small">
+    <row type="split"> <article>Capacitance For Delays</article>
+    <def>Is equivalent to setting the <f>rcxCtkModel</f> configuration variable: "0C 1C 2C" corresponds to the MILLER_0C2C value, "OC to 2C" corresponds to the MILLER_NOMINAL value and "-1C to 3C" corresponds to the MILLER_NC3C value.</def></row>
+    <row type="split"> <article>Noise For Delays</article>
+    <def>Is equivalent to setting the <f>rcxCtkNoise</f> configuration variable.</def></row>
+    <row type="split"> <article>Aggression Margin</article>
+    <def>Is equivalent to setting the <f>stbCtkMargin</f> configuration variable.</def></row>
+    <row type="split"> <article>Slope For Noise</article>
+    <def>Is equivalent to setting the <f>rcxCtkSlopeNoise</f> configuration variable.</def></row>
+    <row type="split"> <article>Slope For Delays</article>
+    <def>Is equivalent to setting the <f>rcxCtkSlopeDelay</f> configuration variable.</def></row>
+    </glossary>
+</def></row>
+<row type="split"><article>Options</article>
+<def>The crosstalk analysis can generate a report file (.ctk), which contains delay changes, detailed aggression reports and noise estimation.
+You can set lower limits to avoid reporting excessive information:
+    <glossary width="small">
+    <row type="split"><article>Minimum delta delay</article>
+    <def>Equivalent to the <f>ctkDeltaDelayMin</f> configuration variable.</def></row>
+    <row type="split"><article>Minimum delta slope</article>
+    <def>Equivalent to the <f>ctkDeltaSlopeMin</f> configuration variable.</def></row>
+    <row type="split"><article>Minimum noise</article>
+    <def>Equivalent to the <f>ctkNoiseMin</f> configuration variable.</def></row>
+    <row type="split"><article>Minimum crosstalk</article>
+    <def>Equivalent to the <f>ctkCapaMin</f> configuration variable.</def></row>
+    </glossary>
+In order to manage the memory more efficiently, you can choose to use a cache and give its size in Megabytes. The bigger the cache, the faster the analysis. It is equivalent to setting the <f>avtParasiticCacheSize</f> configuration variable.</def></row>
+</glossary>
+</section>
+
+<section niv='4'><title>Stability Parameterization</title>
+
+<glossary>
+<row><article>Analysis type</article>
+<def>The best case analysis is performed by assuming that in the 
+initial conditions, latch transparency is at maximum.  
+The worst case analysis is performed by assuming that in the 
+initial conditions, there is no latch transparency. In Multi-Interval 
+mode, all switching windows are maintained whereas in Mono-Interval mode,
+they are merged into a single interval for setup/hold verification. To perform 
+the crosstalk analysis, the Mono-Interval mode is required. See &tool; Reference Guide 
+for further information.</def>
+</row>
+<row><article>Monophase Latch</article>
+<def>In the Flip-Flop mode, a latch clocked on the same phase than 
+the latch generating its input data is assumed to be a flip-flop.
+In the Transparent mode, a latch clocked on the same phase than 
+the latch generating its input data is always transparent.
+In the Error mode, a latch clocked on the same phase than the 
+latch generating is input data is not allowed, and an error is 
+reported. See &tool; Reference Guide for further information.</def>
+</row>
+<row><article>Level</article>
+<def>In the All Levels mode, constraints are calculated using all paths throughout the hierarchy. In the Top Level mode, constraints are calculated using only the paths at the top level (i.e. the interconnections at the top level).</def>
+</row>
+<row><article>Error Type</article>
+<def>In the Setup mode, only errors due to setup time violations are reported. In the Hold mode, only errors due to hold time violations are reported</def>
+</row>
+<row><article>Error Reports</article>
+<def>In sto mode, a .sto file is driven. This file contains the switching windows of all the signals in the figure. In str mode, a .str file is driven. This contains the signals on which a setup or hold violation occurs. For each error on a signal, the corresponding origin signals are also reported.</def>
+</row>
+<row><article>Error Report</article>
+<def>The Error Margin is added to the hold and setup constraints of the figure. For example, if there is an error margin of 100ps, a signal with a setup or a hold time below 100ps will be reported as an error.</def>
+</row>
+<row><article>Information File</article>
+<def>Specification for the stability analysis can be loaded from information file. Click on the 'Open' button to choose this file. It is possible to merge information from several files. In that way, you have to select files one by one setting the 'Complete' option. If you want to erase all information to load a new one, choose the 'Replace' option. If the <f>avtReadInformation File</f> is set, no need to do this operation, unless you want to merge another information. About the information file see the chapter 'Input File' of the &tool; Reference Guide.</def>
+</row>
+</glossary>
+
+</section>
+<section niv='4'><title>The Crosstalk Analysis Results</title>
+
+<p>After performing crosstalk analysis from within &xtas_tool;, all delays are subsequently given with crosstalk effect values (see &tool; Reference Guide for further information). To view these new delay values you have to open the critic path detail window (see section 'Viewing Path Details').
+</p>
+
+</section>
+<section niv='4'><title>The Violating Signals Display</title>
+
+<imgsize namehtml="xtasstaberror.gif" namepdf="xtasstaberror.gif" wpdf="293pt" hpdf="202pt" />
+<p>Any reference points for which the timing checks show errors re displayed in the static timing analysis results window.</p>
+<p>In order to understand the violations, it is possible to display detailed timing diagrams for any terminal in the circuit.</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttonchrono.gif" />
+</article>
+<def>Click on this button to open the signal Selection dialog.</def>
+</row></glossary>
+<p>Enter the name of any terminal in this dialog. If you selected a signal in the list of errors this signal is given by default. When you click on OK then &xtas_tool; displays the Debug... window.</p>
+<p>The &xtas_tool; Debug window looks like:</p>
+<imgsize namehtml="xtasstabchronodisplay.gif" namepdf="xtasstabchronodisplay.gif" wpdf="418pt" hpdf="276pt" />
+<p>The Input Signals List displays the input terminals of the paths which give rise to violations at the specified signal.</p>
+<p>Selecting an input signal displays a timing diagram giving the signal switching windows of the path terminals as well as illustrating the required timing constraints.</p>
+
+</section>
+
+</section>
+<section niv='3'><title>Noise Analysis</title>
+
+<section niv='4'><title>Overview</title>
+
+<p>
+Coupling capacitance has the effect of generating noise on signals.
+The Noise Analysis calculates upper and lower peak voltages on a signal
+as a result of any aggression due to crosstalk. Then &xtas_tool; displays the results of the analysis as a list of signals sorted according to the peak noise value.
+</p>
+
+</section>
+<section niv='4'><title>Analysis</title>
+
+<p>The Noise Analysis needs to obtain information on aggressor and victim signals 
+from memory. So Crosstalk Analysis must have been run from &xtas_tool; before
+launching the Noise Analysis. 
+In the Static Timing Analysis Results window open the noise window in order 
+to begin the Noise Analysis. </p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttonnoise.gif" /></article>
+<def>Clicking this button opens the &xtas_tool; Noise Parameterization window.</def>
+</row></glossary>
+<p>The &xtas_tool; Noise Parameterization window looks like:</p>
+<imgsize namehtml="xtasnoiseparam.gif" namepdf="xtasnoiseparam.gif" wpdf="102pt" hpdf="68pt" />
+<p>This window is the first step of the noise analysis. </p>
+<p>The user can configure the results display by giving the number of item he wants to view per page.</p>
+
+</section>
+<section niv='4'><title>Noise Analysis Results</title>
+
+<p>The Noise analysis results window looks like:</p>
+<imgsize namehtml="xtasnoiseresults.gif" namepdf="xtasnoiseresults.gif" wdpf="395pt" hpdf="244pt"/>
+<p>The results are displayed as a list of signals with their noise information. To check which signals present a risk of crosstalk errors, a score based place is
+performed. There are four criteria: one for the crosstalk impact and three for the probability
+the aggression occurs. Each of these criteria gives a mark on 10 points.</p>
+<p>Each line of the results list gives the following information on the 
+corresponding signal:</p>
+<glossary>
+<row type="split"><article>General Information</article>
+<def><list>
+<item>The rank in descending order of peak noise value</item>
+<item>The static level of the signal (High or Low).</item>
+<item>The signal name.</item>
+</list></def></row>
+
+<row type="split"><article>Rise and Fall Peak Information</article>
+<def><list>
+<item>The electrical model used to evaluate peak noise.</item>
+<item>The "real" noise calculated considering possible switching configurations
+of aggressors.</item>
+<item>The maximum noise calculated with all aggressors considered active.</item>
+</list></def></row>
+
+<row type="split"><article>Scores</article>
+<def><list>
+<item>Global: the total score computed with weighting provided by user (see next section).</item>
+<item>Noise: the impact of the noise peak. A mark of 10 means the noise peak reaches or exceeds the static threshold of the following gate.</item>
+<item>Interval: the part of aggressors which crosstalk can be simultaneously active at the same time.</item>
+<item>Crosstalk: the number of significant aggressors. The more the mark is about 10, the more the most significant part of crosstalk is due to a few number of aggressors.</item>
+<item>Activity: the activity of aggressor. For now, only aggressors located on a path clock are supposed to be always active, weighted by the part of crosstalk capacitance to this aggressor.</item>
+</list></def></row>
+</glossary>
+
+<p>The user can find the same information in the Noise section of the Crosstalk Report (.ctk file). See &tool; Reference Guide for further information.</p>
+
+<p>The user can sort the results on his favorite criterion by clicking on the corresponding button. The sort is always in descending order. The first five buttons from the right allows to sort on the corresponding score (Global, Noise, Interval, Crosstalk or Activity). The other criteria, based on the noise peak value, are the following:</p>
+<glossary>
+<row type="split"><article>Inside Alim Max</article>
+<def>Signals are sorted on the maximum peak noise value, according to their level. This means that if the level of a signal is High, the selected peak noise value is the maximum fall peak noise value. If the level of a signal is Low, the selected peak noise value is the maximum rise peak noise value.</def></row>
+<row type="split"><article>Inside Alim Real</article>
+<def>Signals are sorted on the real peak noise value, according to their level. This means that if the level of a signal is High, the selected peak noise value is the real fall peak noise value. If the level of a signal is Low, the selected peak noise value is the real rise peak noise value.</def></row>
+<row type="split"><article>Rise Peak Max</article>
+<def>Signals are sorted on the maximum rise peak noise value, regardless of the static level.</def></row>
+<row type="split"><article>Rise Peak Real</article>
+<def>Signals are sorted on the real rise peak noise value, regardless of the static level.</def></row>
+<row type="split"><article>Fall Peak Max</article>
+<def>Signals are sorted on the maximum fall peak noise value, regardless of the static level.</def></row>
+<row type="split"><article>Fall Peak Real</article>
+<def>Signals are sorted on the real fall peak noise value, regardless of the static level.</def></row>
+</glossary>
+
+
+</section>
+<section niv='4'><title>Scores Configuration</title>
+
+<p>In the Noise Analysis Results window the user can configure the scores coefficients and minimum values.</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttonnoisescore.gif" /></article>
+<def>Clicking on this button opens the Scores Configuration window.</def>
+</row></glossary>
+<p>The Scores Configuration window looks like:</p>
+<imgsize namehtml="xtasnoisescoresconfig.gif" namepdf="xtasnoisescoresconfig.gif" wdpf="107pt" hpdf="126pt"/>
+<p>This window allows the user to set two parameters for each score (Noise, Interval, Crosstalk and Activity). The first one is the weighting to compute the global score obtained by each signal.
+The second one is the minimum value required for the signal to be reported in the results list. These actions are equivalent to set the following configuration variables: </p>
+<glossary>
+<row><article>Noise</article>
+<def><f>stbCtkCoefNoise</f> and <f>stbCtkMinNoise</f>.</def></row>
+<row><article>Interval</article>
+<def><f>stbCtkCoefInterval</f> and <f>stbCtkMinInterval</f>.</def></row>
+<row><article>Crosstalk</article>
+<def><f>stbCtkCoefCtk</f> and <f>stbCtkMinCtk</f>.</def></row>
+<row><article>Activity</article>
+<def><f>stbCtkCoefActivity</f> and <f>stbCtkMinActivity</f>.</def></row>
+</glossary>
+
+</section>
+<section niv='4'><title>Crosstalk Information</title>
+
+<p>In the Noise Analysis Results window the user can access crosstalk
+information.</p>
+<glossary><row mode='button' >
+<article><imgfix ref="buttonctki.gif" /></article>
+<def>Selecting a signal and clicking on this button opens the Crosstalk Information 
+window.</def>
+</row></glossary>
+<p>The Crosstalk Information window looks like:</p>
+<imgsize namehtml="xtasctki.gif" namepdf="xtasctki.gif" wdpf="288pt" hpdf="178pt"/>
+<glossary>
+<row><article>General</article>
+<def>This part gives the signal state and its name. It gives also 
+the ground capacitance and the total crosstalk capacitance on this signal.</def></row>
+<row><article>Noise</article>
+<def>This part displays the electrical noise on the signal as it is specified in
+ the Noise Analysis Results window (See previous section). Vth is the static threshold
+ of the following gate.</def></row>
+<row><article>Aggressors List</article>
+<def>This part gives the list of the signal aggressors. Each line
+indicates the aggressor signal Name, its Net Name, the kind of influence it has 
+on the victim and the coupling capacitance on the victim due to this aggressor.
+
+<p>If the signal does not appear on the line, there
+is no corresponding timing signal. As no stability information is provided for
+this signal, the crosstalk engine assumes that this signal is always an active aggressor.</p>
+<p></p>
+<p>If the character 'B' or 'W' or both are present on a line, this means that the
+aggressor can modify minimum propagation delays (B = Best Case) or maximum 
+propagation delays (W = Worst Case). </p>
+<p>If the character 'R' or 'F' or both are present on a line, this means that the
+aggressor has made a contribution to calculate the real rise (R) peak noise value 
+or the real fall (F) peak noise value.</p>
+<p>These characters can appear in lower case ('b','w','r','f') when crosstalk mutex 
+are used. This means the influence of the signal is ignored because of the crosstalk mutex. </p>
+
+<p></p>
+<p>Aggressors can be sorted by the signal name or by the capacitance value using the 
+button at the top of the corresponding column. Successive press on the button 
+sort alternatively in ascending or descending order.</p></def></row>
+
+</glossary>
+The user can find the same information in the Crosstalk section of the 
+Crosstalk Report. 
+
+</section>
+
+</section>
+</section>
+</section></chapter>
+
+

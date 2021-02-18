@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="mgl">
+
+<err>
+    <lib>MGL-</lib><num>001</num>
+    <msg>syntax error line %d\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>MGL-</lib><num>002</num>
+    <msg>illegal vector range specification at line %d\n</msg>
+    <doc>The bounds specified for a bussed signal are not numerical values.</doc>
+</err>
+
+<err>
+    <lib>MGL-</lib><num>003</num>
+    <msg>port '%s' already declared at line %d\n</msg>
+    <doc>An external connector with the same name has already been declared in the module.</doc>
+</err>
+
+<err>
+    <lib>MGL-</lib><num>004</num>
+    <msg>net '%s' already declared at line %d\n</msg>
+    <doc>A net with the same name has already been declared in the module.</doc>
+</err>
+
+<err>
+    <lib>MGL-</lib><num>005</num>
+    <msg>net '%s' used out of declared range at line %d\n</msg>
+    <doc>A bit a range of bits is refered to for the given net despite being beyond the bounds specified in the net declaration.</doc>
+</err>
+
+<err>
+    <lib>MGL-</lib><num>006</num>
+    <msg>width or/and type mismatch at line %d\n</msg>
+    <doc>A port connection in an instantiation does not match the port specification of the module being instantiated.</doc>
+</err>
+
+<err>
+    <lib>MGL-</lib><num>007</num>
+    <msg>escaped vector '%s' not declared in strict bit ascending/descending order at line %d\n</msg>
+    <doc>Only occurs if avtStructuralVerilogVector is set to yes. Escaped vectors declared as individual bits can be handled correctly only if the bits are declared in a strict ascending or descending order without any gaps.</doc>
+</err>
+
+<err>
+    <lib>MGL-</lib><num>008</num>
+    <msg>escaped vector '%s' not declared with all bits together at line %d\n</msg>
+    <doc>Only occurs if avtStructuralVerilogVector is set to yes. Escaped vectors declared as individual bits can be handled correctly only if the bits are declared together.</doc>
+</err>
+
+<err>
+    <lib>MGL-</lib><num>009</num>
+    <msg>Missing external connector for external signal '%s' driving verilog netlist '%s'\n</msg>
+    <doc>Occurs when driving an incoherent verilog netlist.</doc>
+</err>
+
+<err>
+    <lib>MGL-</lib><num>010</num>
+    <msg>Cannot open file to drive verilog netlist '%s'\n</msg>
+    <doc>File I/O error, check disk space and privileges.</doc>
+</err>
+
+</messages>

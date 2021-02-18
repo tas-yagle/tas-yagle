@@ -1,0 +1,14 @@
+
+       TimingSignalList *ttv_GetClockList(TimingFigure *tvf);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns  the  list of signals marked as clock in a given timing figure,
+       with a _c_r_e_a_t_e___c_l_o_c_k command for example.
+           Returns an empty list if the timing figure is NULL, or if there are
+       no clock connectors.
+
+AARRGGUUMMEENNTTSS
+       ttvvff           Pointer on a timing figure
+
+       EEXXAAMMPPLLEE       _s_e_t _c_l_o_c_k___l_i_s_t _[_t_t_v___G_e_t_C_l_o_c_k_L_i_s_t _$_f_i_g_]
+

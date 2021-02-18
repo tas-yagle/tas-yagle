@@ -1,0 +1,72 @@
+<glossary>
+<row type='split'><article><index>avtInputFilter</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Shell command line used to decompress an input netlist</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtOutputFilter</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Shell command used to compress an output file</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtFilterSuffix</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Suffix of the compressed files</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtDisableCompression</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Space separated filename list for which compression must be ignored. EXAMPLE: "*.rcx *.rep" </def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtAnnotationKeepCards</index></article><def>
+<glossary width='small'>
+<row><article><f>transistor</f></article><def><f>M</f> character is kept before the transistor name</def></row>
+<row><article><f>diode</f></article><def><f>D</f> character is kept before the diode name</def></row>
+<row><article><f>resistance</f></article><def><f>R</f> character is kept before the resistance name</def></row>
+<row><article><f>instance</f></article><def><f>X</f> character is kept before the instance name</def></row>
+<row><article><f>capacitance</f></article><def><f>C</f> character is kept before the capacitor name</def></row>
+<row><article><f>none</f></article><def>No character is kept</def></row>
+<row><article><f>all</f></article><def><f>M</f>, <f>R</f>, <f>X</f>, <f>C</f>, <f>D</f> characters are kept</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtMaxCacheFile</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>If cache mechanisms are used, sets the maximum number 
+of files that can be opened at the same time. Larger the value is, faster is the disk access. 
+Default value is 128. Maximum value depend on your system (see UNIX command <f>limit</f>).</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtParasiticCacheSize</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;[Kb|Mb|Gb]</f></article><def>Size (bytes) of the memory cache for all 
+applications dealing with parasitics. Value represents the maximum amount of information stored 
+in memory. Increase this value to lessen disk access and speed-up application. 
+<f>avtParasiticCacheSize</f> cannot be used together with compressed files.</def></row>
+<row><article><f>10Mb</f></article><def>Default</def></row>
+<row><article><f>0</f></article><def>Disable cache and load all the parasitic information</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtFlattenForParasitic</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>&tool; flattens a hierarchical netlist in order to 
+annotate the netlist with SPEF or DSPF parasitics. To be used together with <f>avtCatalogueName</f></def></row>
+<row><article><f>no </f></article><def>default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtVddVssThreshold</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Value (in volts) defining the absolute voltage 
+value level above which a node is considered to be a power supply node. Default value is 0.5. </def></row>
+</glossary>
+</def></row>
+
+</glossary>

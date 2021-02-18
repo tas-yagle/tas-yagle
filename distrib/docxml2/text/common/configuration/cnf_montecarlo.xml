@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+
+<row type='split'><article><index>spiActivateStatisticalFunctions</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Enables montecarlo runs. The statitical functions will no more return the nominal values.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtStatisticalDiscretisation</index></article><def>
+<glossary width='small'>
+<row><article><f>number</f></article><def>Apply a discretisation to the values returned by random functions. The default value is 10. A high value means less discretisation but 0 deactivates the discretisation. This variable can have a great impact on HiTas speed.
+</def></row>
+</glossary>
+</def></row>
+
+</glossary>
+

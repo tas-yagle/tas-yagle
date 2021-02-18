@@ -1,0 +1,12 @@
+
+       void inf_DefineConnectorDirections(char *type, List *list);
+
+DDEESSCCRRIIPPTTIIOONN
+       Modifies the direction of connectors
+
+AARRGGUUMMEENNTTSS
+       ttyyppee          Affected  direction,  can  be _I_n_p_u_t, _O_u_t_p_u_t, _I_n_O_u_t, _T_r_i_s_-
+                     _t_a_t_e, _H_Z or _U_n_k_n_o_w_n
+
+       lliisstt          List of signals a new direction will be affected to
+

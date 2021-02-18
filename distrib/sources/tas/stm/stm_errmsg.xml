@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="stm">
+
+<err>
+<lib>STM-</lib>
+<num>000</num><msg>Array bound write in model '%s'\n</msg> 
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>001</num><msg>Parse error file '%s' line %d\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>002</num><msg>solvepi (): non convergence\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>003</num><msg>Negative capacitance found on signal %s\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>004</num><msg>Deleting more models than allocted\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>005</num><msg>stm_cell_delmodel: null cell\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>006</num><msg>stm_cell_delmodel: null model\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>007</num><msg>Can't open file '%s'\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>008</num><msg>stm_addht impossible: hash table size is '0'\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>009</num><msg>stm_addhtitem impossible: value is STM_EMPTYHT or STM_DELETEHT\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>010</num><msg>Constraint calculation meaningless in SCM model\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>011</num><msg>Cannot resolve pi tree with tables: taking c1 + c2\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>012</num><msg>Cannot resolve pi tree with polynoms: taking c1 + c2\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>013</num><msg>Load parameter not yet implemented for polynoms\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>014</num><msg>Clock slew parameter meaningless in SCM models\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>015</num><msg>Clock slew parameter not yet implemented for polynoms\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>016</num><msg>Data slew parameter meaningless in SCM models\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>017</num><msg>Data slew parameter not yet implemented for polynoms\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>018</num><msg>imax not yet implemented for tables\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>019</num><msg>imax not yet implemented for polynoms\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>020</num><msg>Slew parameter not yet implemented for polynoms\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>021</num><msg>Merge of polynom models not yet implemented\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>022</num><msg>Reduction of polynoms not yet implemented\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>023</num><msg>Shift of polynoms not yet implemented\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>024</num><msg>Negation of polynoms not yet implemented\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>025</num><msg>No model type for signature\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>026</num><msg>STM cannot compute imax from constant model\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>027</num><msg>STM cannot compute vth from constant model\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>028</num><msg>STM cannot compute slope from constant model\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>029</num><msg>NULL model\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>030</num><msg>Lost memory consistency \n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>031</num><msg>Shift of SCM models meaningless\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>032</num><msg>Negation of SCM models meaningless\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>033</num><msg>Table extrapolation\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>034</num><msg>Noise created twice\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>035</num><msg>Cannot get current file position\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>036</num><msg>Cannot set file position\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>037</num><msg>Bad unit for STM_CACHESIZE\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>038</num><msg>invth created twice\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>039</num><msg>Default capacitance range used for function model\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>040</num> <msg>Could not find timing model file for figure '%s'\n</msg>
+<doc>The .stm file might not be accessible to the tool.</doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>041</num> <msg>Constant and table cannot be both valid\n</msg>
+<doc></doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>042</num> <msg>CALL_SIMULATION called out of context\n</msg>
+<doc></doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>043</num> <msg>CALL_SIMULATION can't find association for %p '%s'\n</msg>
+<doc></doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>044</num> <msg>CALL_SIMULATION_ENV called out of context\n</msg>
+<doc></doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>045</num> <msg>CALL_SIMULATION_ENV can't find association for %p '%s'\n</msg>
+<doc></doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>046</num> <msg>CALL_CTK_ENV called out of context\n</msg>
+<doc></doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>047</num> <msg>CALL_CTK_ENV can't find association for '%s'\n</msg>
+<doc></doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>048</num> <msg>GNS information not loaded, can't compute\n</msg>
+<doc></doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>049</num> <msg>Could not retreive instance %s\n</msg>
+<doc></doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>050</num> <msg>Round overflow\n</msg>
+<doc></doc>
+</err>
+            
+<err>
+<lib>STM-</lib>
+<num>051</num><msg>Parse error while reading TLF file line %d\n</msg>
+<doc> </doc>
+</err>
+
+<err>
+<lib>STM-</lib>
+<num>052</num><msg>Imprecision risk for delay '%s(%c)' to '%s(%c)', slope = %dps, load = %dfF.\n</msg>
+<doc> </doc>
+</err>
+
+</messages>

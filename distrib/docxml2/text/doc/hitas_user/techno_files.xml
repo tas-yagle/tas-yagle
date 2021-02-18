@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Esoteric Technology Handling</title>
+
+
+<section niv='2'><title>Overview</title>
+
+<p>Users will need &elp_tool; only if using neither BSIM3 nor BSIM4 technology file formats. In such a
+case, &tool; requires an additional technology file (<f>.elp</f> file)</p>
+<p>The details of how to generate the parameters of this technology file are given 
+in the following sections. Computation is performed in two phases
+to insure the robustness of the parameters. The first phase is an initialization
+deduced directly from the foundry electrical parameters. The second phase
+optimizes the precision by adjusting the most sensitive parameters of the 
+Transistor Short Channel Model, relative to SPICE simulations.</p>
+
+</section>
+
+
+<section niv='2'><title>Modes of &elp_tool;</title>
+
+<section niv='3'><title>Interactive Mode</title>
+
+<p>Without any option specified &elp_tool; is launched in interactive mode.</p>
+<p>In this mode the user enters all the parameters needed for the model
+characterization. All the parameters are saved in the .mccgenelp file in order
+to be available for the next execution of &elp_tool;.</p>
+</section>
+
+<section niv='3'><title>Fast Mode</title>
+
+<p>The fast mode is launched with the option <f>-f</f></p>
+<p>The user runs &elp_tool; with the parameters saved in the .mccgenelp file.
+The fast mode cannot be launched before having run &elp_tool; in the interactive mode.</p>
+</section>
+
+<section niv='3'><title>Expert Mode</title>
+
+<p>The expert mode is launched with the option <f>-e</f></p>
+<p>The user chooses more parameters in the expert mode. For a better accuracy
+the user can modify the number of instances to fit the parameters of
+time and step in the SPICE simulation.</p>
+</section>
+
+<section niv='3'><title>Script Generation Mode</title>
+
+<p>The script generation mode is launched with the option <f>-l</f></p>
+<p>This mode allows the user to generate a characterization script specifically tuned for 
+the transistors of a given netlist. ELP models will then be created for each transistor of the netlist. 
+In this mode, Genelp parses the netlists listed in the library file (see the 'avtLibraryFile' variable). 
+It then groups the transistors of the netlists in NP-couples, by associating N-Channel and P-Channel transistors of close sizes. 
+N models and P-Channel models are associated following their order in the <f>avtSpiTPModelName</f> and <f>avtSpiTNModelName</f> 
+variables (the first model of <f>avtSpiTPModelName</f> is associated with the first model of <f>avtSpiTNModelName</f> and so on).</p>
+<p>With no other configuration, a Genelp environment is printed in the script file for each NP-couple. This
+can lead to a huge number of calls to Genelp. In order to reduce the parameterization time, transistors of the same 
+model and of close size can be allowed to share the same ELP model. This can be done by setting the 
+<f>avtCharacAllowRangeMargin</f> variable to <f>yes</f> and the <f>avtCharacRangeMargin</f> variable to a value v between 0 and 1.
+An ELP model of size s will then match transistors whose sizes vary from s - s * (v / 2) to s + s * (v / 2).</p>
+</section>
+
+</section>
+
+
+
+<section niv='2'><title>Options of &elp_tool;</title>
+
+<p>Usage:</p>
+<code>genelp [-f|-e|-h|-p|-a|-n|-s|-l|-i|-v]
+[-tec=&lt;size&gt;] [-temp=&lt;temp&gt;]
+[-ps=&lt;volt&gt;] [-tn=&lt;tnname&gt;]</code>
+<p>These options have the following use:</p>
+<glossary>
+<row><article>-f</article>
+<def>fast mode use .mccgenelp file</def></row>
+<row><article>-e</article>
+<def> expert mode</def></row>
+<row><article>-p</article>
+<def>generate a gnuplot file</def></row>
+<row><article>-a</article>
+<def>run in automatic mode</def></row>
+<row><article>-n</article>
+<def>add model to elp file</def></row>
+<row><article>-s</article>
+<def>do not run spice</def></row>
+<row><article>-l</article>
+<def>generate a parameterization script</def></row>
+<row><article>-i</article>
+<def>do not fit parameters</def></row>
+<row><article>-v</article>
+<def>do not calculate threshold voltage</def></row>
+<row><article>-tec=&lt;size&gt;</article>
+<def>technology size</def></row>
+<row><article>-temp=&lt;temp&gt;</article>
+<def>temperature</def></row>
+<row><article>-ps=&lt;volt&gt;</article>
+<def>power supply</def></row>
+<row><article>-tn=&lt;tnname&gt;</article>
+<def>N-Channel transistor model name</def></row>
+<row><article>-tp=&lt;tpname&gt;</article>
+<def>P-Channel transistor model name</def></row>
+<row><article>elpname</article>
+<def>output elp parameters file name</def></row>
+<row><article>technoname</article>
+<def>input transistor model file name</def></row>
+</glossary>
+
+</section>
+
+
+<section niv='2'><title>Running &elp_tool;</title>
+<section niv='3'><title>Model Characterization</title>
+
+<b>Transistor Model File</b>
+
+<p>The transistor model file name has the .wc extension. By default this is techno.wc.</p>
+<code>
+<cl>Transistor model file name [techno.wc]:</cl>
+</code>
+
+
+<b>ELP</b>
+<p> </p>
+
+<p>This is information on the elp file and version you are using.</p>
+<code>
+<cl>elp file name [techno.elp]:</cl>
+<cl>elp version   [1.0]:</cl>
+</code>
+
+
+<b>Electrical Simulation Temperature</b>
+<p> </p>
+
+<p>Be careful, the temperature of the electrical simulation is set in celsius. A default value is available.</p>
+<code>
+<cl>Electrical simulation temperature (in degree) [-273.15:1000] [70]:</cl>
+</code>
+
+
+<b>Model Name</b>
+<p> </p>
+
+<p>These are the names of the N-Channel and P-Channel transistors. Each type has a name. By default N-Channel transistors are referenced as tn and P-Channel transistors as tp .</p>
+<code>
+<cl>N Transistor model name [tn]:</cl> 
+<cl>P Transistor model name [tp]:</cl>
+</code>
+
+
+<b>Model for the Simulation Settings</b>
+<p> </p>
+
+<p>This is the model you will use for simulation and parameters calculation.</p>
+<code>
+<cl>Model type [MOS2 BSIM3V3 BSIM3V31 BSIM3V32 MM9] [MOS2]: </cl>
+</code>
+
+
+<b>Spice Settings</b>
+<p> </p>
+
+<p>You can set the information on the SPICE file you want to use
+for the characterization. $ stands for the file name.</p>
+<code>
+<cl>Spice string  [spice $]:</cl>
+<cl>Spice tool name [spice]:</cl> 
+<cl>Spice standard out file [$.out]:</cl> 
+<cl>Spice out file  [$.out]:</cl> 
+</code>
+
+<p>You must add all the options required for the non-interactive mode of SPICE</p>
+
+<b>&tool; Tool Name</b>
+<p> </p>
+
+<p>Set the &tool; tool name, including the path.</p>
+<code>
+<cl>Tas tool name [tas]:</cl>
+</code>
+
+
+<b>Technology Size</b>
+<p> </p>
+
+<p>You can set the size of the technology you are using.</p>
+<code>
+<cl>technology size (in micro-meter) [0:100] [0]: </cl>
+</code>
+
+
+<b>Transistor Size</b>
+<p> </p>
+
+<p>The size of the transistor is set in microns.
+Both length and width have to be set for each type of transistor. 
+A default value for each size is calculated from the technology size.</p>
+<code>
+<cl>N MOS transistor length size (in micro-meter) [0.01:10] [1] :</cl>
+<cl>N MOS transistor width size (in micro-meter)  [0.1:100] [6] :</cl>
+<cl>P MOS transistor length size (in micro-meter) [0.01:10] [1] :</cl>
+<cl>P MOS transistor width size (in micro-meter)  [0.1:100] [12]:</cl> 
+</code>
+
+
+<b>Power Supply</b>
+<p> </p>
+
+<p>The power supply is set in volts. A default value is available.</p>
+<code>
+<cl>Power supply (in Volt) [0.1:10] [5]:</cl>
+</code>
+
+
+<b>Electrical Simulation</b>
+<p> </p>
+
+<p>These parameters are available only if you are running the expert mode</p>
+<p>They allow the setting of the SPICE simulation step and time.</p>
+<code> 
+<cl>Electrical simulation step      [1e-05:0.1] [0.001]:</cl>
+<cl>Electrical simulation time (in ns)  [20:1000] [100]:</cl>
+</code>
+
+
+<b>Number of Instances to Fit Parameters</b>
+<p> </p>
+
+<p>These parameters are available only if you are running the expert mode</p>
+<code>
+<cl>Number of instances to fit parameters  [10:100] [15]:</cl>
+</code>
+
+<b>Capacitance to Fit Current Parameter</b>
+<p> </p>
+
+<p>This parameter is available only if you are running the expert mode</p>
+<p>The capacitance is set in Femto-farads. This capacitance must be much greater
+than the transistor capacitance.</p>
+<code>
+<cl>Capacitance to fit current parameters (in fF)  [10:10000] [500]:</cl>
+</code>
+
+
+<b>Number of Inverters to Fit Gate Capacitance</b>
+<p> </p>
+
+<p>This parameter is available only if you are running the expert mode.</p>
+<p>This parameter is used to fit the grid capacitance.</p>
+<code>
+<cl>Number of inverters to fit gate capacitance  [1:100] [5]:</cl>
+</code>
+
+
+<b>Number of Transistors to Fit Diffusion Capacitance</b>
+<p> </p>
+
+<p>These parameters are available only if you are running the expert mode.</p>
+<p>This parameter is used to fit the diffusion capacitance.</p>
+<code>
+<cl>Number of transistors to fit diffusion capacitance  [1:100] [12]:</cl>
+</code>
+
+
+<b>Model File Name</b>
+<p> </p>
+
+<p>The user can set the name of the model file. If it is different 
+to the SPICE simulation file.</p>
+<code>
+<cl>model file name [techno.wc]:</cl>
+</code>
+
+
+<b>Spice Model Level</b>
+<p> </p>
+
+<p>Set the level of the spice model.</p>
+<code>
+<cl>Spice model level  [1:100] [2]:</cl>
+</code>
+
+
+<b>Transistor Model and Corner</b>
+<p> </p>
+
+<p>For both N-Channel and P-Channel transistors the user can set the model type name and the corner.
+The corner is the case the user wants for the transistor characterization: typical, worst or best.</p>
+<p>TYPICAL is used for long and short paths, WORST for long paths and BEST for short paths.
+Use "TYPICAL" if you want to use the same model characterization for long and short paths.</p>
+<code>
+<cl>N Transistor model type name [tn]:</cl>
+<cl>N transistor corner [WORST BEST TYPICAL] [TYPICAL]:</cl>
+<cl>P Transistor model type name [tp]:</cl>
+<cl>P transistor corner [WORST BEST TYPICAL] [TYPICAL]:</cl>
+</code>
+
+
+<b>Min and Max Size of Transistors</b>
+<p> </p>
+
+<p>For both N-Channel and P-Channel transistors the user can set the minimum and maximum length and width.</p>
+<p>These parameters define the range of the transistor size in the model.</p>
+<code>
+<cl>N Transistor minimum length [0:1.0e99] [0]:</cl>
+<cl>N Transistor maximum length [0:1.0e99] [1e+99]:</cl>
+<cl>N Transistor minimum width  [0:1.0e99] [0]:</cl>
+<cl>N Transistor maximum width  [0:1.0e99] [1e+99]:</cl>
+<cl>P Transistor minimum length [0:1.0e99] [0]:</cl>
+<cl>P Transistor maximum length [0:1.0e99] [1e+99]:</cl>
+<cl>P Transistor minimum width  [0:1.0e99] [0]:</cl>
+<cl>P Transistor maximum width  [0:1.0e99] [1e+99]:</cl>
+</code>
+
+
+<b>Transistor Dimension Scale</b>
+<p> </p>
+
+<p>These parameters are available only if you are running the expert mode</p>
+<p>For both N-Channel and P-Channel transistors the user can set the scale for the width and the length.</p>
+<code>
+<cl>N Transistor width scale  [0.1:1] [1]:</cl>
+<cl>N Transistor length scale [0.1:1] [1]:</cl>
+<cl>P Transistor width scale  [0.1:1] [1]:</cl>
+<cl>P Transistor length scale [0.1:1] [1]:</cl>
+</code>
+
+
+<b>Shrink Parameters</b>
+<p> </p>
+
+<p>For both N-Channel and P-Channel transistors the user can set the shrink parameter for the length and the width of the transistor.</p>
+<p>These parameters are automatically calculated but you can modify them.</p>
+<code>
+<cl>N transistor width shrink parameter (in micro-meter)  [-100:100] [0.0]:</cl>
+<cl>N transistor length shrink parameter (in micro-meter) [-100:100] [0.0]:</cl>
+<cl>P transistor width shrink parameter (in micro-meter)  [-100:100] [0.0]:</cl>
+<cl>P transistor length shrink parameter (in micro-meter) [-100:100] [0.0]:</cl>
+</code>
+
+
+<b>Threshold Voltage</b>
+<p> </p>
+
+<p>The user set the threshold voltage for the N-Channel and the P-Channel transistor.</p>
+<p>These parameters are automatically calculated but you can modify them.</p>
+<code>
+<cl>N transistor threshold voltage (in volt)  [0:5] [0.7]:</cl>
+<cl>P transistor threshold voltage (in volt)  [0:5] [0.8]:</cl>
+</code>
+
+
+<b>Transistor Gate Capacitance</b>
+<p> </p>
+
+<p>For both N-Channel and P-Channel transistors the user can set the gate capacitance.</p>
+<p>These parameters are automatically calculated but you can modify them.</p>
+<code>
+<cl>N transistor gate capacitance (in pF/u2)  [0:1] [0.002]:</cl>
+<cl>P transistor gate capacitance (in pF/u2)  [0:1] [0.002]:</cl>
+</code>
+
+
+<b>Transistor Gate Diffusion Capacitance</b>
+<p> </p>
+
+<p>For both N-Channel and P-Channel transistors the user can set the gate diffusion capacitance.</p>
+<p>These parameters are automatically calculated but you can modify them.</p>
+<code>
+<cl>N transistor gate diffusion capacitance (in pF/u)  [0:1] [0.0002]:</cl>
+<cl>P transistor gate diffusion capacitance (in pF/u)  [0:1] [0.0002]:</cl>
+</code>
+
+
+<b>Area and Perimeter Transistor Diffusion</b>
+<p> </p>
+
+<p>For both N-Channel and P-Channel transistors the user can set the area and perimeter diffusion capacitance.</p>
+<p>These parameters are automatically calculated but you can modify them.</p>
+<code>
+<cl>Area N transistor diffusion capacitance (in pF/u2)      [0:1] [0.0003]:</cl>
+<cl>Area P transistor diffusion capacitance (in pF/u2)      [0:1] [0.0004]:</cl>
+<cl>Perimeter N transistor diffusion capacitance (in pF/u)  [0:1] [0.0002]:</cl>
+<cl>Perimeter P transistor diffusion capacitance (in pF/u)  [0:1] [0.0003]:</cl>
+</code>
+
+
+<b>Transistor Diffusion Width</b>
+<p> </p>
+
+<p>The transistor diffusion width is set in micro-meter for both N-Channel and P-Channel transistors.
+Default values are available.</p>
+<code>
+<cl>Width N transistor diffusion capacitance (in pF/u) [0:1] [0.0003]: </cl>
+<cl>Width P transistor diffusion capacitance (in pF/u) [0:1] [0.0002]: </cl>
+</code>
+
+
+<b>Max Err to Fit Parameters</b>
+<p> </p>
+
+<p>This parameter is available only if you are running the expert mode</p>
+<p>This parameter is used to stop the fit if the difference between the SPICE
+and &tool; delay is less than this value.</p>
+<code>
+<cl>Max error to fit parameters (in %)  [0.1:100] [1]:</cl>
+</code>
+
+
+<b>Max Number of Loops to Fit Parameters</b>
+<p> </p>
+
+<p>This parameter is available only if you are running the expert mode</p>
+<p>It is the number of loops to fit used for each parameter.</p>
+<code>
+<cl>Maximum number of loop to fit parameters  [1:100] [10]:</cl>
+</code>
+
+
+
+</section>
+<section niv='3'><title>Other model</title>
+
+<p>After this characterization you can give another model and set new parameters.</p>
+<code>
+Do you want to characterize other models y/n:
+</code>
+
+</section>
+</section>
+
+
+<section niv='2'><title>Example</title>
+<section niv='3'><title>An ELP techno file</title>
+
+<code>
+<cl>#TAS PARAMETER FILE</cl>
+<cl></cl>
+<cl>Technologie: techno   Version: 1</cl>
+<cl></cl>
+<cl>#General parameters</cl>
+<cl></cl>
+<cl>#Reference Simulator</cl>
+<cl>ESIM  = spice</cl>
+<cl>LEVEL = 8</cl>
+<cl></cl>
+<cl>#simulation parameters</cl>
+<cl>TEMP   = 125</cl>
+<cl>VDDmax = 1.62</cl>
+<cl>DTHR   = 0.5</cl>
+<cl>SLOPE  = 200</cl>
+<cl>ACM    = 0</cl>
+<cl></cl>
+<cl></cl>
+<cl>BEGIN TN [0]</cl>
+<cl></cl>
+<cl>#transistor identification</cl>
+<cl>TYPE = NMOS</cl>
+<cl></cl>
+<cl>#model for best, typical or worst case</cl>
+<cl>CASE = TYPICAL</cl>
+<cl></cl>
+<cl>#voltage and temperature characteristics</cl>
+<cl>VDDmax = 1.62</cl>
+<cl>VDEG   = 0.93854</cl>
+<cl>VBULK  = 0</cl>
+<cl>TEMP   = 125</cl>
+<cl></cl>
+<cl>#dimension range (micron)</cl>
+<cl>LMIN = 0.18</cl>
+<cl>LMAX = 0.18</cl>
+<cl>WMIN = 1.62</cl>
+<cl>WMAX = 1.62</cl>
+<cl></cl>
+<cl>#shrink parameters (micron)</cl>
+<cl>DL   = -0.02</cl>
+<cl>DW   = -0.02</cl>
+<cl>DLC  = -0.006</cl>
+<cl>DWC  = -0.02</cl>
+<cl>DWCJ = -0.02</cl>
+<cl></cl>
+<cl>#mult factor on dimension</cl>
+<cl>LMLT = 1</cl>
+<cl>WMLT = 1</cl>
+<cl></cl>
+<cl>#transistor characteristics</cl>
+<cl>VT = 0.419348</cl>
+<cl>KT = 0.262815</cl>
+<cl>A  = 0.00019296</cl>
+<cl>B  = 2.67789</cl>
+<cl>RT = 7476.49</cl>
+<cl>RS = 203810</cl>
+<cl>KS = 0.54698</cl>
+<cl>KR = 0.892548</cl>
+<cl>MULU0  = 1</cl>
+<cl>DELVT0 = 0</cl>
+<cl></cl>
+<cl>#dynamic capacitance: grid capacitance (in pF/u and pF/u2)</cl>
+<cl>CGS     = 0.00615677</cl>
+<cl>CGSU    = 0.00384994</cl>
+<cl>CGSUMIN = 0.00558456</cl>
+<cl>CGSUMAX = 0.00651678</cl>
+<cl>CGSD    = 0.00846359</cl>
+<cl>CGSDMIN = 0.00651678</cl>
+<cl>CGSDMAX = 0.00651678</cl>
+<cl>CGP     = 0.0003665</cl>
+<cl>CGPUMIN = 0.0003665</cl>
+<cl>CGPUMAX = 0.000595562</cl>
+<cl>CGPDMIN = 0.0003665</cl>
+<cl>CGPDMAX = 0.000595562</cl>
+<cl>CGD     = 0</cl>
+<cl></cl>
+<cl>#dynamic capacitance: drain capacitance (in pF/u and pF/u2)</cl>
+<cl>CDS = 0.000787412</cl>
+<cl>CDP = 0.000178861</cl>
+<cl>CDW = 0.000603954</cl>
+<cl></cl>
+<cl>#dynamic capacitance: source capacitance (in pF/u and pF/u2)</cl>
+<cl>CSS = 0.000787412</cl>
+<cl>CSP = 0.000178861</cl>
+<cl>CSW = 0.000603954</cl>
+<cl></cl>
+<cl>END TN [0]</cl>
+<cl></cl>
+<cl>BEGIN TP [0]</cl>
+<cl></cl>
+<cl>#transistor identification</cl>
+<cl>TYPE = PMOS</cl>
+<cl></cl>
+<cl>#model for best, typical or worst case</cl>
+<cl>CASE = TYPICAL</cl>
+<cl></cl>
+<cl>#voltage and temperature characteristics</cl>
+<cl>VDDmax = 1.62</cl>
+<cl>VDEG   = 0.660103</cl>
+<cl>VBULK  = 1.62</cl>
+<cl>TEMP   = 125</cl>
+<cl></cl>
+<cl>#dimension range (micron)</cl>
+<cl>LMIN = 0.18</cl>
+<cl>LMAX = 0.18</cl>
+<cl>WMIN = 1.98</cl>
+<cl>WMAX = 1.98</cl>
+<cl></cl>
+<cl>#shrink parameters (micron)</cl>
+<cl>DL   = -0.03</cl>
+<cl>DW   = -0.03</cl>
+<cl>DLC  = -0.004</cl>
+<cl>DWC  = -0.03</cl>
+<cl>DWCJ = -0.03</cl>
+<cl></cl>
+<cl>#mult factor on dimension</cl>
+<cl>LMLT = 1</cl>
+<cl>WMLT = 1</cl>
+<cl></cl>
+<cl>#transistor characteristics</cl>
+<cl>VT = 0.347474</cl>
+<cl>KT = 0.311793</cl>
+<cl>A  = 3.43619e-05</cl>
+<cl>B  = 0.900607</cl>
+<cl>RT = 25836.2</cl>
+<cl>RS = 309230</cl>
+<cl>KS = 1.58347</cl>
+<cl>KR = 0.951312</cl>
+<cl>MULU0  = 1</cl>
+<cl>DELVT0 = 0</cl>
+<cl></cl>
+<cl>#dynamic capacitance: grid capacitance (in pF/u and pF/u2)</cl>
+<cl>CGS     = 0.00634134</cl>
+<cl>CGSU    = 0.00846359</cl>
+<cl>CGSUMIN = 0.00686594</cl>
+<cl>CGSUMAX = 0.00686594</cl>
+<cl>CGSD    = 0.00421909</cl>
+<cl>CGSDMIN = 0.00590726</cl>
+<cl>CGSDMAX = 0.00686594</cl>
+<cl>CGP     = 0.000328</cl>
+<cl>CGPUMIN = 0.000328</cl>
+<cl>CGPUMAX = 0.000533</cl>
+<cl>CGPDMIN = 0.000328</cl>
+<cl>CGPDMAX = 0.000533</cl>
+<cl>CGD     = 0</cl>
+<cl></cl>
+<cl>#dynamic capacitance: drain capacitance (in pF/u and pF/u2)</cl>
+<cl>CDS = 0.000879165</cl>
+<cl>CDP = 0.000203226</cl>
+<cl>CDW = 0.000660912</cl>
+<cl></cl>
+<cl>#dynamic capacitance: source capacitance (in pF/u and pF/u2)</cl>
+<cl>CSS = 0.000879165</cl>
+<cl>CSP = 0.000203226</cl>
+<cl>CSW = 0.000660912</cl>
+<cl></cl>
+<cl>END TP [0]</cl>
+</code>
+
+</section>
+<pagebreak/>
+<section niv='3'><title>Parameters Explanation</title>
+
+<section niv='4'><title>First Determination of Parameters</title>
+
+<p>In the first phase &elp_tool; performs the simulation in param.spi in
+order to initialize the parameters.</p>
+<p>The output file of the simulations is used to make the &tool; 
+technology file as follows:</p>
+<glossary>
+<row type="split"><article>Reference simulator</article><def>Simulator used for
+parameter computations 
+<list mode="table">
+<item mode="table">ESIM: name of the electrical simulator used</item>
+<item mode="table">MODEL: name of the model of transistor</item>
+<item mode="table">LEVEL: name of the model of transistor used</item>
+</list></def>
+</row>
+<row type="split"><article>Shrink parameters (microns)</article>
+<def> From the foundry process parameters
+and written in the output file of the simulator in section concerning DL and DX.</def></row>
+<row type="split"><article>Transistor characteristics</article>
+<def>Parameters of the &tool; MOS model.
+They are given for the NMOS transistor first and
+then for the PMOS transistor
+<list mode="table">
+<item mode="table">VT: Zero-bias threshold voltage of the transistor (volts),
+written in the output file of the simulator in section
+concerning element parameters of the transistors.</item>
+<item mode="table">A: consider the parameter 'beta' (HSPICE) or 'K0' (ELDO) 
+written in the output file of the simulator, in section
+concerning element parameters of the transistors</item>
+<item mode="table">B: depends on the maximum current between drain and
+source for each type of transistor.</item>
+<item mode="table">Linear resistance RT: models the transistor in the linear
+mode</item>
+</list>
+</def></row>
+<row type="split"><article>General parameters</article>
+<def>
+<list mode="table">
+<item mode="table">VDDmax: power supply (volts), worse case</item>
+<item mode="table">DTHR: threshold voltage (volts), often 0.5</item>
+<item mode="table">Vdeg: when the power, respectively ground, supply is accessed through a NMOS transistor,
+respectively PMOS, the resulting voltage at the transistor source is lower, respectively upper, than VDD, 
+respectively VSS it is called the degraded power, respectively ground, supply.</item>
+<item mode="table">TEMP: temperature needed for simulation (Celsius). Take the worse case one.</item>
+</list>
+</def></row>
+<row type="split"><article>Dynamic capacitance</article>
+<def>Grid capacitance (in pF/u and pF/u2)
+<list mode="table">
+<item mode="table">CGS: oxide capacitance per unit area for NMOS and PMOS
+transistor (pF/mu^{2}). The COX value, given in the foundry models of the transistors, is used.</item>
+<item mode="table">CGP: gate-drain or gate-source overlapping capacitance
+(pF/mu) for the NMOS and PMOS transistor.
+The CGDO value, given in the NMOS and PMOS model of the transistor, is used.</item>
+</list>
+</def></row>
+<row type="split"><article>Dynamic capacitance</article>
+<def>Drain capacitance (in pF/u and pF/u2)
+<list mode="table">
+<item mode="table">CDS: junction capacitance 
+(pF/\mu^{2}) for the NMOS and PMOS transistor.
+The CJ value, given in the model of the transistor, is used.</item>
+<item mode="table">CDP: sidewall junction capacitance
+(pF/\mu) for the NMOS and PMOS transistor.
+The CJSW value, given in the model of the transistor, is used.</item>
+<item mode="table">CDW: sidewall junction facing gate capacitance
+(pF/\mu) for the NMOS and PMS transistor.
+The CGDO value, given in the model of the transistor, is used.</item>
+</list>
+</def></row>
+<row type="split"><article>Dynamic capacitance</article>
+<def>Source capacitance (in pF/u and pF/u2)
+The values are the same as for the drain capacitances.
+<list mode="table">
+<item mode="table">CSS: same as CDS</item>
+<item mode="table">CSP: same as CDP</item>
+<item mode="table">CSW same as CDW</item>
+</list>
+</def></row>
+</glossary>
+
+</section>
+<section niv='4'><title>Second Determination of Parameters</title>
+
+<p>With this first determination of &tool; technology parameters,
+running &tool; and comparing with SPICE simulations shows that &tool; can
+usually estimate the delay through a path to within 10 percent of SPICE. This
+lack of precision has two main sources:</p>
+<list>
+<item>the determination of the conductance parameter A has been performed thanks to a
+static simulation.</item>
+<item>the values of the capacitances come directly from other models that the TSCM
+model, which is simpler and considers, in particular, that 
+the capacitance values do not depend on the voltage and that the 
+capacitances are set in between a node of the transistor 
+(gate, drain or source) and the ground node.</item>
+</list>
+<p>An efficient way to improve the value of &tool; parameters would be to find
+circuits that are sensitive to one single parameter. This is of course
+impossible. Yet it is possible to get close to this ideal state by designing
+small circuits that are much more sensitive to one particular TSCM model
+parameter than to the other parameters.
+To get rid of special effects due to the shape of the input rise, the circuits
+are always driven by six series connected inverters, the first of which
+is driven with a piece-wise linear function .</p>
+<p>For each special circuit designed to adjust one particular TSCM parameter, 
+two delays are generated: one by running SPICE transient simulations  
+the second by running &tool;. The time delay given by SPICE (dspi) is
+divided by the time delay given by &tool; (dtas)
+to produce the correcting ratio (cr).
+The parameter under study pfirst is modified in proportion 
+to the correcting ratio to get his new value (pfit):</p>
+<code>cr = dspi/dtas</code>
+<code>pfit = pfirst . cr</code>
+<p>Values resulting from the First determination of parameters
+are taken as initial values. Iteration is performed till the TSCM model fits the
+electrical simulator. Convergence is achieved generally in  3 steps.</p>
+<glossary>
+<row type="split">
+<article>Conductance parameter</article>
+<def>AN (or AP). Five inverters, 
+each one driving a large load, are
+connected in series. The large load is chosen to get rid of the lack of
+precision on the gate and diffusion capacitances.
+The delays resulting from SPICE run are averaged over the first four
+inverters.
+<list mode='table'>
+<item mode='table'>A: take the delays resulting from rising input and falling output of
+inverter</item>
+</list>
+</def></row>
+<row type="split">
+<article>Gate capacitances</article>
+<def>Consider the same five inverters, but replace the
+capacitive load by 5 inverters in parallel to increase the effect of gate
+capacitance versus diffusion capacitance.
+All the gate capacitances (namely CGS,CGP) are modified by the
+same correcting ratio.</def></row>
+<row type="split">
+<article>Diffusion capacitances</article>
+<def>Their values are particularly important in the case of
+circuits with pass-transistors.
+<list mode='table'>
+<item mode='table'>CDP of the NMOS, respectively PMOS transistors: one inverter is used,
+loaded with 13 NMOS, respectively PMOS, transistors turned
+off to emulate such precharged circuits where one transistor in turned on in
+parallel with many transistors turned off. 
+The average of
+the delay resulting from rising output and falling output is considered.</item>
+</list>
+<p>CDW are not modified.</p>
+</def></row>
+</glossary>
+
+</section>
+
+</section>
+</section>
+</section></chapter>

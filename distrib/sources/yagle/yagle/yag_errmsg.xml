@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="yag">
+
+<err>
+    <lib>YAG-</lib><num>001</num>
+    <msg>Circuit not found\n</msg>
+    <doc>Attempt to disassemble a circuit entity which does not exist.</doc>
+</err>
+
+<err>
+    <lib>YAG-</lib><num>002</num>
+    <msg>RC cache must be deactivated in this mode\n</msg>
+    <doc>Disassembly modes which involve manipulation of hierarchy require that the RC be deactivated.</doc>
+</err>
+
+<err>
+    <lib>YAG-</lib><num>003</num>
+    <msg>Connector '%s' is power supply AND ground\n</msg>
+    <doc>The given external connector has been detected as both Vdd and Vss. This error is fatal.</doc>
+</err>
+
+<err>
+    <lib>YAG-</lib><num>004</num>
+    <msg>No VDD signal in the circuit\n</msg>
+    <doc>No Vdd power supply has been identified in the circuit to disassemble. This error is not fatal, however, it is recommended to check the power supply configuration.</doc>
+</err>
+
+<err>
+    <lib>YAG-</lib><num>005</num>
+    <msg>No VSS signal in the circuit\n</msg>
+    <doc>No Vss power supply has been identified in the circuit to disassemble. This error is not fatal, however, it is recommended to check the power supply configuration.</doc>
+</err>
+
+<err>
+    <lib>YAG-</lib><num>006</num>
+    <msg>Can't open file '%s'\n</msg>
+    <doc>The specified file cannot be opened. Check disk space and access privileges. This error may be fatal.</doc>
+</err>
+
+<err>
+    <lib>YAG-</lib><num>007</num>
+    <msg>Can't close file '%s'\n</msg>
+    <doc>The specified file cannot be closed. Check disk space and access privileges.</doc>
+</err>
+
+<err>
+    <lib>YAG-</lib><num>008</num>
+    <msg>Unrecognized contraint '%s' in the circuit\n</msg>
+    <doc>The specified mutual exclusion constraint has no correspondance in the circuit to disassemble.</doc>
+</err>
+
+<err>
+    <lib>YAG-</lib><num>009</num>
+    <msg>Can't name toplevel %s in Blackbox mode\n</msg>
+    <doc>Attempt to rename the top-level figure using a name which is already in use.</doc>
+</err>
+
+<err>
+    <lib>YAG-</lib><num>010</num>
+    <msg>Figure '%s' has no transistors and no instances\n</msg>
+    <doc>Circuit contains no elements to disassemble.</doc>
+</err>
+
+<err>
+    <lib>YAG-</lib><num>011</num>
+    <msg>Transistors in non-leaf figure '%s'\n</msg>
+    <doc>In hierarchical disassembly mode, if a no-leaf figure contains a mixture of transistors and instances then the result may not be as expected.</doc>
+</err>
+
+<err>
+    <lib>YAG-</lib><num>012</num>
+    <msg>Signal '%s' is not driven in behavioural figure\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

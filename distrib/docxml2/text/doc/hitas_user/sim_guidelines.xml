@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Spice Deck Generation</title>
+<p>The &tool; platform provides the means to generate a simulatable netlist of any timing 
+path of the timing database. This generated simulatable netlist contains all the transistors
+that participate to the timing path. Actually, as a timing path runs through a set of cones (partitions),
+the simulatable netlist contains the transistors belonging to this set of cones. Transistors that do not
+directly participate to the path (out-of-path transistors) can be either modeled as blocked transistors or
+as equivalent capacitances.</p>
+<p>The path transistor netlist comes with all the stimuli enabling the propagation of the signal through the 
+path. The tool automatically generates the stimuli enabling the appropriate transitions.
+The path transistor netlist and the stimuli form what is called the Spice Deck.</p>
+<p>The &tool; platform also provides the means to link with external Spice simulators for simulating
+the Spice Deck, and to get back the results for pertinent comparison of &tool; results. 
+The accuracy of most of Spice simulators is heavily dependant on their operating mode (digital/analog)
+and on convergence configuration. Pertinent comparison of &tool; results should be made with simulators
+in the mode allowing the most accurate results.</p>
+<p>Path simulation is not available for hierarchical timing databases.</p>
+
+<section niv='2'><title>Simulator Configuration</title>
+<p>First a few variables need to be set to control spice deck generation. They are related to the 
+simulator being used. Supported simulators are:</p>
+<list>
+<item>ELDO (Mentor Graphics)</item>
+<item>HSPICE (Synopsys)</item>
+<item>TITAN (Infineon)</item>
+<item>NGSPICE (GEDA)</item>
+</list>
+<p>The minimal required configuration is as follow (example is given for ELDO):</p>
+<code>
+<cl># Spice deck target simulator</cl>
+<cl>avt_config SimToolModel eldo</cl>
+<cl> </cl>
+<cl># Simulator invoking (command line)</cl>
+<cl>avt_config avtSpiceString "/tools/eldo $"</cl>
+<cl> </cl>
+<cl># Transistor models (.INCLUDE to be added in spice deck)</cl>
+<cl>avt_config SimTechnologyName bsim3_018.tech</cl>
+</code>
+
+<p>Setting the <f>SimToolModel</f> variable to a specific simulator also controls the default
+value of the following variables:</p>
+<list>
+<item><f>avtSpiceOutFile</f></item>
+<item><f>avtSpiceStdOutFile</f></item>
+<item><f>simSpiceOptions</f></item>
+<item><f>simExtractRule</f></item>
+<item><f>simMeasCmd</f></item>
+</list>
+<p>Be aware that setting values for those variable overwrite their default value.</p>
+</section>
+
+<section niv='2'><title>Spice Deck Generation</title>
+<p>A spice deck is related to a timing path, and spice deck generation is based upon the detail
+of the timing path. Therefore, one should be able to get a timing path from a
+timing database before generating the spice deck. The following operations must be performed:</p>
+<code>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure my_design]</cl>
+<cl>set paths [ttv_GetPaths $fig * * ?? 1 critic path max]</cl>
+<cl>set path [lindex $paths 0]</cl>
+<cl> </cl>
+<cl>set detail  [ttv_GetPathDetail $path]</cl>
+</code>
+<p>The spice deck generation is then done as follow:</p>
+<code>
+<cl>ttv_DriveSpiceDeck $fig $detail "path.spicedeck"</cl>
+</code>
+<p>This method only generates the spice deck file <f>path.spicedeck</f>. It does not allow the reading of the
+results for comparison. Thsi operation is described in the next section.</p>
+
+</section>
+
+<section niv='2'><title>Spice Deck Simulation</title>
+<p>Spice deck generation, simulator launch and result reading can be all done together within the
+function <f>ttv_DisplayPathListDetail</f>, given that it has been enabled through the <f>ttv_DisplayActivateSimulation</f>
+function. The <f>ttv_DisplayPathListDetail</f> requires a timing path as argument, but no timing detail. It
+gets it automatically:</p>
+
+<code>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure my_design]</cl>
+<cl>set paths [ttv_GetPaths $fig * * ?? 1 critic path max]</cl>
+<cl>set path [lindex $paths 0]</cl>
+<cl> </cl>
+<cl>ttv_SetupReport "ps ff"</cl>
+<cl>ttv_DisplayActivateSimulation y</cl>
+<cl>ttv_DisplayPathListDetail stdout $path</cl>
+</code>
+
+<p>This script performs the following actions:</p>
+<list>
+<item>Gets the timing path <f>$path</f></item>
+<item>Activates the simulation engine</item>
+<item>Generates the spice deck: <f>my_design_ext.spi</f> and <f>cmd_my_design_ext.spi</f></item>
+<item>Performs the simulation: <f>/tools/eldo cmd_my_design_ext.spi</f></item>
+<item>Reads the simulation result: <f>cmd_my_design_ext.chi</f></item>
+<item>Prints the path detail on standard output, displaying &tool; and simulator delay and slope values</item>
+</list>
+</section>
+
+<section niv='2'><title>Out-of-path Transistors</title>
+<p>The variable <f>simOutLoad</f> controls the way out-of-path transistors are modeled.</p>
+<p>If <f>simOutLoad</f> is set to <f>dynamic</f>, the tool transforms out-of-path transistors 
+into equivalent capacitances in the spicedeck. In such a case transistor models are needed for the grid and source/drain 
+capacitances evaluations. </p>
+<p>If <f>simOutLoad</f> is set to <f>transistor</f>, the tool does not transform out-of-path transistors into 
+capacitances, but just print them in the spicedeck in a blocked configuration. In such a case the transistor models 
+are not needed. One must be careful with this configuration, as the generated spice deck may be very big, for a 
+very little accuracy gain.</p>
+<p>The load of a file containing transistor models (<f>bsim3_018.tech</f>) at the beginning of the script is necessary when
+<f>simOutLoad</f> is set to <f>dynamic</f>.</p>
+</section>
+
+</section>
+
+</chapter>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+<row type='split'><article><index>gnsLibraryName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name of the file (recognition library) containing the list of cells
+to recognize. Default is <f>LIBRARY</f>.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>gnsLibraryDir</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Access path to the directory containing the recognition library. 
+Default is directory <f>cells/</f> in <f>avtWorkDir</f>.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>gnsKeepAllCells</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>All matched structures are extracted from the netlist.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+
+<row type='split'><article><index>gnsTemplateDir</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Directory where to find the GNS templates. 
+Default is <f>$AVT_TOOLS_DIR/gns_templates</f>.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>gnsTraceLevel</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>From 0 to 6. Indicates the level of trace displayed during 
+the recognition phase. Default is 0.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>gnsTraceFile</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name of the output trace file. Default is stdout.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>gnsTraceModel</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>When tracing the recognition, indicates the name 
+of the recognized model to trace. If not specified, traces all models.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>gnsFlags</index></article><def>
+This configuration controls the behavior of GNS. The values (flags) are added separated with commas. Available flags are:
+<glossary width='small'>
+<row><article><f>EnableCore</f></article><def>Enable the generation of a core file for a crash in a user compiled API.</def></row>
+<row><article><f>NoGns</f></article><def>Disables the generation of the <f>.gns</f> file</def></row>
+<row><article><f>VerboseGns</f></article><def>Produces a more readable <f>.gns</f> file.</def></row>
+<row><article><f>NoOrdering</f></article><def>Disables the top-level instance connectors reordering. 
+Should not be set if using the BEG functions.</def></row>
+</glossary>
+</def></row>
+</glossary>
+

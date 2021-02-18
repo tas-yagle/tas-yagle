@@ -1,0 +1,13 @@
+
+       TimingFigure *ttv_LoadSpecifiedTimingFigure(char *name);
+
+DDEESSCCRRIIPPTTIIOONN
+       Reads a DTX timing figure from disk.
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Timing  figure's  name.  The  name  of  the timing figure
+                     should be the same as its file name, without the _d_t_x suf-
+                     fix.
+
+       EEXXAAMMPPLLEE       _s_e_t _f_i_g _[_t_t_v___L_o_a_d_S_p_e_c_i_f_i_e_d_T_i_m_i_n_g_F_i_g_u_r_e _"_m_y___d_e_s_i_g_n_"_]
+

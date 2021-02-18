@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="sdc">
+
+<err>
+    <lib>SDC-</lib><num>000</num>
+    <msg>Command '%s' not supported\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>SDC-</lib><num>001</num>
+    <msg>Line %d: Ambiguous list of connectors of the option \"-through\":\nConsider an AND between the first and the second connectors.\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>SDC-</lib><num>002</num>
+    <msg>Line %d: clock reference '%s' is unknown.\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>SDC-</lib><num>003</num>
+    <msg>Line %d: Reference clock is virtual.\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>SDC-</lib><num>004</num>
+    <msg>set_load options -min, -max, -substract_pin_load, -pin_load, -wire_load not supported\n</msg>
+    <doc></doc>
+</err>
+
+
+</messages>

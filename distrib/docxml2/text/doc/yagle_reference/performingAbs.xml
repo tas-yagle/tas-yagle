@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Command-line Tools</title>
+
+
+<section niv='3'><title>Execution Modes</title>
+
+<p>In general, the &tool; command is used as follows :</p>
+<command>yagle [options] input_name [output_name]</command>
+<p>&tool; reads the transistor net-list given by input_name and generates a VHDL data flow description in output_name. If no output_name is given then input_name is used. If input_name corresponds to the top level of a hierarchical net-list, then this net-list is first flattened. The functional abstraction is hence performed upon the flat net-list to generate a flat VHDL RTL description of the complete net-list.</p>
+<p>The exception to this behavior is the "-bx" or blackbox option. With this option, &tool; reads a hierarchical net-list in which some of the cells are considered to be black boxes (i.e. their internal structure is unavailable). The list of these cells is given by the user in a file whose default name is BLACKBOX. &tool; creates a new intermediate net-list containing only the non-black box cells, and modifies the original net-list to instantiate this new figure and the black box cells. The modified original net-list is saved to disk, and the functional abstraction is performed on the intermediate figure.</p>
+
+</section>
+
+
+<section niv='2'><title>Options Available</title>
+
+<p>Options may appear in any order before or after the input filename. Options of a single letter can be concatenated (e.g. -bei).</p>
+
+<section niv='3'><title>General Options</title>
+
+<glossary>
+<row><article>-fig=&lt;name&gt;</article><def>Allows the user to specify the name of the input figure to read when it is not the same as the file name.</def></row>
+<row><article>-t</article><def>The trace mode. Writes a detailed execution trace to stdout of all the steps of the disassembly and functional abstraction.</def></row>
+<row><article>-ns</article><def>Not strict mode. In this mode, certain aspects of the net-list coherency are not verified. For example, un-driven transistor gates will not result in an error. This allows generation of the VHDL or use of HiTAS on incoherent net-lists. This option should be used with caution.</def></row>
+<row><article>-elp</article><def>To be used if the CNS data structure will be used by timing or power analysis tools. Updates the capacitances to take into account technology dependant factors, such as diffusion capacitance, gate capacitance and shrink.</def></row>
+<row><article>-nrc</article><def>Removes all parasitic information from the transistor net-list. Improves memory efficiency if timing or power analysis will not be performed on the output (i.e. exclusively for functional abstraction).</def></row>
+<row><article>-bx</article><def>Performs the disassembly and functional abstraction excluding any cells defined as black boxes (refer to the Execution Modes of &tool;).</def></row>
+<row><article>-bi</article><def>When this option is set, Yagle reads a hierarchical netlist in which some of the instances are considered to be black boxes. The name of these instances is given in a file whose name is given by <f>avtBlackBoxFile</f>. The hierarchical netlist is then flattened to the transistor level apart from the black box instances to generate a hybrid transistor and instance netlist. The functional abstraction is performed on this hybrid netlist.</def></row> 
+</glossary>
+
+</section>
+<section niv='3'><title>Output File Generation</title>
+
+<glossary>
+<row><article>-nb</article><def>This option disables the generation of the VHDL output, as well as the internal behavioral characterization of complex gates. Used to reduce execution time or to avoid problems in the case of an incoherent net-list</def></row>
+<row><article>-d</article><def>Generates a standard CNS file containing the list of transistors and the structures of the disassembled gates (cones), which represents the partitioning performed by &tool;..</def></row>
+<row><article>-c</article><def>Generates an enriched CNS file which can be parsed to reconstitute the full transistor net-list together with parasitics.</def></row>
+<row><article>-hier</article><def>Generates a single level hierarchical gate net-list.</def></row>
+<row><article>-ch</article><def>Generates a structural description of the disassembled gates together with a behavioral model for each distinct gate type.</def></row>
+</glossary>
+</section>
+<section niv='3'><title>User Information</title>
+
+<glossary>
+<row><article>-i</article><def>This option makes &tool; read the INF file. This file has the same name than the root_file with the inf extension. It may contain mutual exclusion conditions on ports of the circuit for the functional analysis process as well as information about signal renaming. See the chapter 'INF - User Information File' for more information.</def></row>
+</glossary>
+
+</section>
+<pagebreak/>
+<section niv='3'><title>Latch Detection</title>
+
+<p>By default &tool; recognizes latches uses a predefined library of standard latch primitives. These primitives are sufficiently general to cover the majority of situations. Complex memory elements, such as master-slave flip-flops are subsequently recognized as particular configurations of latch pairs.</p>
+<p>This latch detection strategy is complemented by a more generalized method which uses the Boolean derivative to determine the conditions of stability of combinatorial loops. The write conditions are deduced from this, and used, together with electrical conflict resolution, to automatically generate a behavioral model.</p>
+<p>In addition FCL (see command line user-defined pattern recognition  and INF input file sections) can be used to allow the user to specify the structure (as a SPICE netlist) of any kind of latch or flip-flop together with its behavioral description if desired.</p>
+<glossary>
+<row><article>-nl</article><def>Disables the detection of latches and memory points using the built-in latch library. This option is useful if all memory points are to be recognized by the use of a user-defined library (-fcl option), or by automatic loop analysis (-la option).</def></row>
+<row><article>-la</article><def>Activates the use of a Boolean loop analysis algorithm to automatically detect and model static latches. More general than the default method but can increase runtimes and does not yet support full flip-flop recognition.</def></row>
+<row><article>-nc</article><def>Disables the recognition of complex gates such as master-slave flip-flops.</def></row>
+<row><article>-ffs</article><def>When this option is set, the slave node is considered to be the memorizing node in a master-slave flip-flop, by default it the master which is considered to be the memory node for the VHDL description.</def></row>
+<row><article>-cs</article><def>To be used when complex gate detection has not been deactivated. Allows individual gates to be shared by multiple complex gates. Useful if a clock inverter is used by several master-slave flip-flops.</def></row>
+</glossary>
+
+</section>
+<section niv='3'><title>User-defined Pattern Recognition</title>
+
+<glossary>
+<row><article>-fcl</article><def>This option makes &tool; use library-based transistor netlist recognition. This allows the user to specify a number of netlists to be identified within the circuit to be disassembled. These netlists are specified in the Spice format and can contain a number of special directives for the marking of the identified signals and transistors in the circuit. This option can also be used to detect certain types of latches or flip-flops. If a behavioral description is specified then this will be substituted in the flat VHDL description of the complete circuit.</def></row>
+<row><article>-xfcl</article><def>Same as -fcl. In addition, it makes &tool; stop after the recognition process.</def></row>
+<row><article>-gns</article><def>Extends the simple pattern recognition of FCL to allow the recognition of hierarchically defined structures of generic size. Each recognized structure can be associated with a corresponding action written in a dedicated subset of 'C' which is used to write the behavioral description. The structures are described in structural VHDL. For more information, see the Yagle-GNS user guide.</def></row>
+</glossary>
+<p>The original net-list is cut up by removing the transistors recognized, generating an intermediate hierarchy level in a similar way to the black box mode. These remaining transistors are subsequently sent to the automatic disassembler. This capability is currently under final validation, see distribution files for an example of its use.</p>
+<glossary>
+<row><article>-xg</article><def>Stops the execution after the hierarchical pattern recognition phase.</def></row>
+<row><article>-nrp</article><def>When this option is set, reduction of transistors connected in parallel to an equivalent transistor is disabled.</def></row>
+</glossary>
+
+</section>
+<section niv='3'><title>Behavioral Model Generation</title>
+
+<glossary>
+<row><article>-v</article><def>When this option is set, the interface and the internal signals of the VHDL description of the circuit are vectorized</def></row>
+<row><article>-s</article><def>This option provides only one power supply and ground connector in the interface of the behavioral description. This can be useful in order to use tools which only allow one in the specification, whilst there are more than one in the circuit to be abstracted. When this option is set, the name of power supply an ground are given by MBK_VDD and MBK_VSS.</def></row>
+<row><article>-td(max|med|min)</article><def>When one of these options is used, then a built-in automatic delay calculator is used to annotate the behavioral description with timing information. The timing calculation is parameterized using a special parameters file (see genelp) or directly with foundry technology files. Any parasitics are also accounted for in the calculation. The delay of a gate can vary according to which inputs change, the three option variants affect how the simplification to generate a behavioral model is performed.</def></row>
+<row><article>-ba</article><def>When this option is set, a functional analysis algorithm is used to distinguish individual drivers of bussed signals.</def></row>
+<row><article>-mi</article><def>When this option is set, chains of invertors are reduced in the final model.</def></row>
+</glossary>
+
+</section>
+<section niv='3'><title>Transistor orientation</title>
+
+<glossary>
+<row><article>-a</article><def>Activate transistor orientation taking into account the _s convention on signal's names. This method is sometimes used instead of external constraints (INF file) if there exists correlation between external connectors.</def></row>
+<row><article>-o</article><def>Activate a simple transistor orientation heuristic. Can sometimes accelerate the disassembly, however, it is more robust to rely exclusively upon the functional analysis.</def></row>
+</glossary>
+
+</section>
+<section niv='3'><title>Functional analysis</title>
+
+<glossary>
+<row><article>-p=&lt;n&gt;</article><def>This option sets the depth for the functional analysis. This is the number of gates that will be taken into account for the functional analysis, so that &tool; can detect re-convergence in the circuit. The default value is 7. When depth=0, the functional analysis process is disabled.</def></row>
+<row><article>-z</article><def>When this option is set, the functional analysis phase exploits high impedance nodes. This allows, for instance, the resolution of false conflicts in circuits which use precharged logic.</def></row>
+</glossary>
+
+</section>
+</section>
+
+
+<section niv='2'><title>Output Files</title>
+
+<p>The base name of the generated files (output_file) is either root_file (default option) or filename.</p>
+<glossary>
+<row type="split"><article>&lt;output_name&gt;.vhd</article><def>The behavioral description in VHDL RTL format.</def></row>
+<row type="split"><article>&lt;input_name&gt;.rep</article><def>The file containing the execution report of disassembly. See the report file description for details of the contents.</def></row>
+<row type="split"><article>&lt;input_name&gt;.cns</article><def>The file containing the cone view (gate netlist) of the circuit. Used for debugging. Created if the -d or  -c options are used.</def></row>
+<row type="split"><article>&lt;input_name&gt;_yagh.[vst|spi]</article><def>The structural gate net-list in structural VHDL or SPICE format. Created if the -h option is used.</def></row>
+<row type="split"><article>&lt;input_name&gt;.fcl</article><def>A file detailing all the matched instances in the FCL pattern recognition. This file gives the correspondences between the transistors and signals in the model and the transistors and signals of the recognized instances. Created if the environment variable FCL_FILE is set to 'y'.</def></row>
+<row type="split"><article>&lt;input_name&gt;.loop</article><def>If a combinatorial loop is detected in the circuit &tool; reports it in this file. Created if the environment variable YAGLE_LOOP_MODE is set to 'y'.</def></row>
+</glossary>
+</section>
+</section>
+</chapter>

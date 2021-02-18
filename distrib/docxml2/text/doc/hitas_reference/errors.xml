@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<chapter>
+<section niv='1'><title>Error Codes</title>
+
+    <section niv='2'><title>API</title>&api_errmsg;</section>
+    <section niv='2'><title>API AVT</title>&avt_api_errmsg;</section>
+    <section niv='2'><title>API BEG</title>&beg_api_errmsg;</section>
+    <section niv='2'><title>API CNS</title>&cns_api_errmsg;</section>
+    <section niv='2'><title>API CTK</title>&ctk_api_errmsg;</section>
+    <section niv='2'><title>API FCL</title>&fcl_api_errmsg;</section>
+    <section niv='2'><title>API GNS</title>&gns_api_errmsg;</section>
+    <section niv='2'><title>API INF</title>&inf_api_errmsg;</section>
+    <section niv='2'><title>API SIM</title>&sim_api_errmsg;</section>
+    <section niv='2'><title>API STB</title>&stb_api_errmsg;</section>
+    <section niv='2'><title>API TMA</title>&tma_api_errmsg;</section>
+    <section niv='2'><title>API TTV</title>&ttv_api_errmsg;</section>
+    <section niv='2'><title>AVT</title>&avt_errmsg;</section>
+    <section niv='2'><title>BEF</title>&bef_errmsg;</section>
+    <section niv='2'><title>BEG</title>&beg_errmsg;</section>
+    <section niv='2'><title>BEH</title>&beh_errmsg;</section>
+    <section niv='2'><title>BHL</title>&bhl_errmsg;</section>
+    <section niv='2'><title>BGL</title>&bgl_errmsg;</section>
+    <section niv='2'><title>BVL</title>&bvl_errmsg;</section>
+    <section niv='2'><title>CBH</title>&cbh_errmsg;</section>
+    <section niv='2'><title>CGV</title>&cgv_errmsg;</section>
+    <section niv='2'><title>CNS</title>&cns_errmsg;</section>
+    <section niv='2'><title>EFG</title>&efg_errmsg;</section>
+    <section niv='2'><title>EQT</title>&eqt_errmsg;</section>
+    <section niv='2'><title>GNS</title>&gns_errmsg;</section>
+    <section niv='2'><title>GSP</title>&gsp_errmsg;</section>
+    <section niv='2'><title>INF</title>&inf_errmsg;</section>
+    <section niv='2'><title>LOG</title>&log_errmsg;</section>
+    <section niv='2'><title>MBK</title>&mbk_errmsg;</section>
+    <section niv='2'><title>MCC</title>&mcc_errmsg;</section>
+    <section niv='2'><title>MGL</title>&mgl_errmsg;</section>
+    <section niv='2'><title>SDC</title>&sdc_errmsg;</section>
+    <section niv='2'><title>SIM</title>&sim_errmsg;</section>
+    <section niv='2'><title>SLIB</title>&slib_errmsg;</section>
+    <section niv='2'><title>SPF</title>&spf_errmsg;</section>
+    <section niv='2'><title>SPE</title>&spe_errmsg;</section>
+    <section niv='2'><title>SPI</title>&spi_errmsg;</section>
+    <section niv='2'><title>STB</title>&stb_errmsg;</section>
+    <section niv='2'><title>STM</title>&stm_errmsg;</section>
+    <section niv='2'><title>TAS</title>&tas_errmsg;</section>
+    <section niv='2'><title>TRC</title>&trc_errmsg;</section>
+    <section niv='2'><title>TTV</title>&ttv_errmsg;</section>
+    <section niv='2'><title>VAL</title>&val_errmsg;</section>
+    <section niv='2'><title>X2V</title>&x2v_errmsg;</section>
+    <section niv='2'><title>YAG</title>&yag_errmsg;</section>
+    <section niv='2'><title>ZEN</title>&zen_errmsg;</section>
+ 
+</section>    
+</chapter>
+ 

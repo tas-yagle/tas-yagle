@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<glossary>
+<row type="split"><article><index>avtSpiCreateTopFigure</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, parser automatically creates a top-level for all 
+elements outside of SUBCKT definition. All equipotentials are made into external connectors. The name of 
+the top-level is the same as the filename without the extension unless a subcircuit of this name exists, in 
+which case the name is prefixed by <f>top_</f></def></row>
+<row><article><f>no</f></article><def>No top-level is created</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiParseFirstLine</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>First line of all SPICE files are taken into account, unlike the 
+behavior in standard SPICE</def></row>
+<row><article><f>no</f></article><def>First line of all SPICE files are ignored</def></row>
+<row><article><f>include</f></article><def>Default, first line of the top-level SPICE file is ignored, but the first 
+line of included files are parsed normally</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiReplaceTensionInExpressions</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Avoids expression evaluation errors due to unhandled dynamic tensions in expression. The voltage is considered to be 0. 
+</def></row>
+<row><article><f>no</f></article><def>Default.</def></row>
+</glossary>
+</def></row>
+
+
+
+<!--<row type="split"><article><index>avtSpiTnModelName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name used for the SPICE N-channel transistor 
+model. Multiple names may be concatenated using the character <f>:</f></def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiTpModelName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name used for the SPICE P-channel transistor model. 
+Multiple names may be concatenated using the character <f>:</f></def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiDnModelName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name used for the SPICE N-channel diode model</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiDpModelName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name used for the SPICE P-channel diode model</def></row>
+</glossary>
+</def></row>-->
+
+
+<!--<row type="split"><article><index>avtSpiNoSigPrefix</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, names beginning with a digit are not prefixed</def></row>
+<row><article><f>no</f></article><def>Names beginning with a digit are prefixed, and 
+prefix is <f>n</f></def></row>
+</glossary>
+</def></row>-->
+<row type="split"><article><index>avtEnableMultipleConnectorsOnNet</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>By default, there can only be one external connector per net after
+a netlist parse. If multiple connectors are found, they are merged into one. This can have a big drawback.
+Connectors required on the interface of a top level netlist can be missing. There can also be issues for
+ignoring instances with transparencies using hierarchical names as transparences are analysed to build nets prior
+to check ignored instance resistors. Setting this variable to yes allows multiple external connectors on nets so transparences
+are analysed during the resistor removal step without the nets being shorted already. This has an effect on ignored
+instances containing transparences. It affects &tool; behaviour and may make it not work in hierarchical mode.  </def></row>
+<row><article><f>no</f></article><def>Default.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiMergeConnector</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, connectors with the same radical, but different node indexes, 
+will be merged (they are supposed to belong to the equipotential outside the subcircuit). The separator
+between the radical and the index is given by <f>avtSpiConnectorSeparator</f>.</def></row>
+<row><article><f>no</f></article><def>Connectors are not merged</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiConnectorSeparator</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;char&gt;</f></article><def>Character used to separate a connector radical 
+name from its node index (<f>ck.1</f>, <f>ck.2</f> ... for example).</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiKeepNames</index></article><def>
+<glossary width='small'>
+<row><article><f>transistor</f></article><def>Transistor name is kept in the database</def></row>
+<row><article><f>diode</f></article><def>Diode name is kept in the database</def></row>
+<row><article><f>resistance</f></article><def>Resistance name is kept in the database</def></row>
+<row><article><f>allnodes</f></article><def>All node names are kept for signals in the database</def></row>
+<row><article><f>none</f></article><def>No name is kept in the database</def></row>
+<row><article><f>all</f></article><def>All names are kept in the database</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiKeepCards</index></article><def>
+<glossary width='small'>
+<row><article><f>transistor</f></article><def><f>M</f> character is kept before the transistor name</def></row>
+<row><article><f>diode</f></article><def><f>D</f> character is kept before the diode name</def></row>
+<row><article><f>resistance</f></article><def><f>R</f> character is kept before the resistance name</def></row>
+<row><article><f>instance</f></article><def><f>X</f> character is kept before the instance name</def></row>
+<row><article><f>capacitance</f></article><def><f>C</f> character is kept before the capacitor name</def></row>
+<row><article><f>none</f></article><def>No character is kept</def></row>
+<row><article><f>all</f></article><def><f>M</f>, <f>R</f>, <f>X</f>, <f>C</f>, <f>D</f> characters are kept</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiNameNodes</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, nodes names are used rather than the node numbers</def></row>
+<row><article><f>no</f></article><def>Only node numbers are used</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiNodeSeparator</index></article><def> 
+<glossary width='small'>
+<row><article><f>&lt;char&gt;</f></article><def>Character that will be used as a separator between 
+the node name and the node number. The default value is <f>_</f> </def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiInstanceMultiNode</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, allows two or more identical nodes to be declared in a 
+subckt interface</def></row>
+<row><article><f>no</f></article><def>Only the first node declared is taken into account</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiIgnoreDiode</index></article><def>	
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Diodes are ignored by the SPICE parser.</def></row>
+<row><article><f>no</f></article><def>Diodes are characterized.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiMergeDiodes</index></article><def>	
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Diodes are merged with neighboring transistors if the 
+transistor is of the same type and area of the connected source or drain is 0.</def></row>
+<row><article><f>no</f></article><def>Diodes are characterized independantly.</def></row>
+</glossary>
+</def></row>
+
+<!--<row type="split"><article><index>avtSpiIgnoreCapa</index></article><def>	
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Capacitances are ignored by the SPICE parser.</def></row>
+<row><article><f>no</f></article><def>Capacitances are not ignored.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiIgnoreResistance</index></article><def>	
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Resistances are ignored by the SPICE parser.
+To be used with caution since the netlist connectivity can be altered.</def></row>
+<row><article><f>no</f></article><def>Resistances are not ignored.</def></row>
+</glossary>
+</def></row>-->
+
+<row type="split"><article><index>avtSpiIgnoreVoltage</index></article><def>	
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Voltage sources are ignored by the SPICE parser.</def></row>
+<row><article><f>no</f></article><def>Voltage sources are not ignored.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiIgnoreModel</index></article><def>	
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Model directives are ignored by the SPICE parser.</def></row>
+<row><article><f>no</f></article><def>Model directives are not ignored.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiIgnoreCrypt</index></article><def>	
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Encryption directives (used to indicate encrypted data) are ignored.</def></row>
+<row><article><f>no</f></article><def>The default. Encryption directives must surround encrypted test obtained by <f>avt_EncryptSpice</f> function.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiJFETisResistance</index></article><def>	
+<glossary width='small'>
+<row><article><f>yes</f></article><def>JFETs are considered to be resistances. Values 
+are resolved by the SPICE parser.</def></row>
+<row><article><f>no</f></article><def></def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiShortCircuitZeroVolts</index></article><def>	
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Voltage sources with a value of 0 are modeled by 
+the SPICE parser as resistances of 0 Ohms.</def></row>
+<row><article><f>no</f></article><def></def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiMaxResistance</index></article><def>	
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>If a resistance's value is greater than <f>float</f> 
+(in Ohms), then the resistance is considered to be open circuit.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiMinResistance</index></article><def>	
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>If a resistance's value is less than <f>float</f> 
+(in Ohms), then the resistance is considered to be short circuit.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiMinCapa</index></article><def>	
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>If a capacitance's value is less than <f>float</f> 
+(in Ohms), then the capacitance is ignored</def></row>
+</glossary>
+</def></row>
+
+
+
+
+<row type="split"><article><index>avtSpiOneNodeNoRc</index></article><def>
+<glossary width='small'>
+<row><article><f>no</f></article><def>Removes on all nets containing only one node all parasitics 
+information at the end of the parse.</def></row>
+<row><article><f>yes</f></article><def> </def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiOrderPinPower</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Uses the name (in the same manner as <f>avtSpiDspfBuildPower</f>) 
+of the instance nodes to ensure a correct order for power supply connectors.</def></row>
+<row><article><f>no</f></article><def> </def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiFlags</index></article><def>This configuration is used to control the behavior of the spice parser/driver. The values (flags) are added separated with commas. 
+<glossary width='small2'>
+<row><article><f>DriveInstanceParameters</f></article><def>Enables the drive of the instances with 
+all their parameters</def></row>
+<row><article><f>IgnoreGlobalParameters</f></article><def>Works with <f>DriveInstanceParameters</f> 
+and removes all the global parameters from the instance parameters to drive. Useful 
+when the netlist has been flattened and the parameters inherited by the leaf instances.</def></row>
+<row><article><f>KeepBBOXContent</f></article><def>Will keep the content of the figures set 
+as blackboxes whereas by default only the interfaces are kept.</def></row>
+<row><article><f>TransfertTopLevelVcards</f></article><def>Will transfert voltage sources connected to instances, who are defined
+out of a subckt in the spice file, in their corresponding circuit subckt so the Vcards can be taken into account when working on one
+of this instance circuit.
+This option is enabled by default. It can be unset by adding '!' in front of the option: '!TransfertTopLevelVcards'.
+</def></row>
+<row><article><f>ExplicitInstanceNames</f></article><def>If enabled then instance names specified in the netlist are prefixed by the subckt name in order to create the internally used name.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiTolerance</index></article><def>
+<p>This variable tunes the tolerance of the SPICE parser regarding unrecognized syntaxes for R (resistances) and C (capacitances) devices.</p>
+<glossary width='small'>
+<row><article><f>low</f></article><def>Parser exits when encountering unknown syntax</def></row>
+<row><article><f>medium</f></article><def>Parser continues and tries to keep only the nominal value of the device, issuing a warning message</def></row>
+<row><article><f>high</f></article><def>Same as in the <f>medium</f> configuration, but no warning message is issued</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtSpiHandleGlobalNodes</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, global nodes defined in spice netlist without 
+resistances will be considered equipotential.</def></row>
+<row><article><f>no</f></article><def> </def></row>
+</glossary>
+</def></row>
+
+</glossary>
+

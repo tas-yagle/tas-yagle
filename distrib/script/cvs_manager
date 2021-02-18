@@ -1,0 +1,299 @@
+#!/bin/sh
+#
+# Procédure automatique qui:
+#     - Ecrit ou lit un fichier contenant pour chaque fichier sa version CVS
+#     - menu Help sur ligne commande de commande vide
+#     - Demande nawk sur la machine
+#     - CVS_ROOT doit etre valable
+#
+##########################################################################
+
+##########################################################################
+#  CVS_ROOT indique le repository de CVS
+#
+##########################################################################
+
+CVS_ROOT="/users/disk02/sources/sources"
+
+##########################################################################
+#  sce_cvs_version : redige un fichier contenant les versions
+#
+##########################################################################
+
+sce_cvs_version()
+{
+  DIR=$1
+  LIST_FILE=$2
+
+  echo "Archivage des versions CVS"
+  echo "Creation de $LIST_FILE a partir de $DIR"
+
+  if [ -f "$LIST_FILE" ] ; then
+    rm $LIST_FILE
+  fi
+  
+  echo "#### check $DIR"
+  CVS_FILE=`cvs status $DIR 2> /dev/null | gawk '{if ($1 ~ /Working/) workversion = $3 ; else if ($1 ~ /Repository/) print workversion $4 }' | sed 's/,v$//g'` 
+  L_MODIFY=`cvs status $DIR 2> /dev/null | grep "Locally Modify" |  awk '{ print $2 }'` 
+
+  if [ "$L_MODIFY" != "" ] ; then
+    for l_modify in $L_MODIFY ; do
+      echo "WARNING !!! $l_modify locally modify" >> $LIST_FILE
+    done
+  fi
+
+  i=0
+  for cvs_file in $CVS_FILE ; do
+    version="`echo $cvs_file  | nawk -F${CVS_ROOT}/ '{ print $1 }'`"
+    path="`echo $cvs_file | nawk -F${CVS_ROOT}/ '{ print $2 }'`"
+    echo "${version}/${path}" >> $LIST_FILE
+    echon $i
+    i=`expr $i + 1`
+  done
+  echo ""
+}
+
+##########################################################################
+#  dup_cvs_list : checkout les versions du fichier
+#
+##########################################################################
+
+dup_cvs_list()
+{
+  TARGET=$1
+  LIST_FILE=$2
+
+  echo "Restauration des versions CVS"
+  echo "Creation dans $TARGET a partir de $LIST_FILE"
+
+  CVS_LISTE=`more $LIST_FILE | sed 's/ //g'`
+
+  if [ -d "$TARGET" ] ; then
+    cd $TARGET
+  else
+    mkdir $TARGET
+    cd $TARGET
+  fi
+
+  i=0
+  for cvs_liste in $CVS_LISTE ; do
+    CVS_NUM="`echo $cvs_liste | sed 's/\/.*//'`"
+    CVS_NAME="`echo $cvs_liste | sed 's/^[0-9.]*\///'`"
+    cvs checkout -r $CVS_NUM $CVS_NAME > /dev/null
+    echon $i
+    i=`expr $i + 1`
+  done
+  echo ""
+}
+
+##########################################################################
+#  compare_files : compare deux fichiers generés par le script
+#
+##########################################################################
+
+compare_files()
+{
+  CURRENT=`grep "^[0-9]" $1`
+  PREVIOUS=`grep "^[0-9]" $2`
+  
+  CURRENT_UNMATCH=""
+  PREVIOUS_UNMATCH=""
+  COMP_FILE="comp_$1_$2"
+  
+  if [ -f "$COMP_FILE" ] ; then
+    rm $COMP_FILE
+  fi
+  
+  echo "Parcours de $1 en cours..."
+  i=0
+  for current in $CURRENT ; do
+    echon $i 30
+    current_num="`echo $current | sed 's/\/.*//'`"
+    current_name="`echo $current | sed 's/^[0-9.]*\///'`"
+    
+    previous_list=`grep $current_name $2`
+    current_match="non"
+    for prev_list in $previous_list ; do
+      previous_num="`echo $prev_list | sed 's/\/.*//'`"
+      previous_name="`echo $prev_list | sed 's/^[0-9.]*\///'`"
+      if [ "$previous_name" = "$current_name" ] && [ "$previous_num" != "$current_num" ] ; then
+        current_match="$current_name;$previous_num;$current_num"
+      elif  [ "$previous_name" = "$current_name" ] && [ "$previous_num" = "$current_num" ] ; then
+        current_match="oui"
+      fi
+    done
+    if [ "$current_match" = "non" ] ; then
+      CURRENT_UNMATCH="$CURRENT_UNMATCH $current_name;x;$current_num"
+    elif  [ "$current_match" != "oui" ] ; then
+      echo "$current_match" >> $COMP_FILE
+    fi
+    i=`expr $i + 1`
+  done
+  
+  echo ""
+  echo "Parcours de $2 en cours..."
+  i=0
+  for previous in $PREVIOUS ; do
+    echon $i 30
+    previous_num="`echo $current | sed 's/\/.*//'`"
+    previous_name="`echo $current | sed 's/^[0-9.]*\///'`"
+
+    current_list=`grep $previous_name $1`
+    previous_match="non"
+    for curr_list in $current_list ; do
+      current_name="`echo $curr_list | sed 's/^[0-9.]*\///'`"
+      if [ "$previous_name" = "$current_name" ] ; then
+        previous_match="oui"
+      fi
+    done
+
+    if [ "$previous_match" = "non" ] ; then
+      PREVIOUS_UNMATCH="$PREVIOUS_UNMATCH $previous_name;$previous_num;x"
+    fi
+    i=`expr $i + 1`
+  done
+
+  HTML_COMP="comp_$1_$2.html"
+  
+  if [ -f "$HTML_COMP" ] ; then
+    rm $HTML_COMP
+  fi
+  
+  echo ""
+  echo "$HTML_COMP en cours d'ecriture...."
+  echo "<html><body><h2><center>CVS STATUS REPORT FILE</center></h2><hr>" >> $HTML_COMP
+  echo "<br><br>Ficher Reference: $2<br>Fichier Courant: $1<br><hr><br>" >> $HTML_COMP
+  echo "<table>" >> $HTML_COMP
+  echo "<tr><td><i>Fichier</i></td><td><i>Ancienne Version</i></td><td><i>Version Actuelle</i></td></tr>">> $HTML_COMP
+  echo "<tr><td colspan='3'><br><b>Divergences de Version:</b><br><hr></td></tr>" >> $HTML_COMP
+  if [ -f "$COMP_FILE" ] ; then
+    for diff in `grep \^ $COMP_FILE` ; do
+      diff_file="`echo $diff | awk -F\; '{ print $1 }'`"
+      diff_old="`echo  $diff | awk -F\; '{ print $2 }'`"
+      diff_new="`echo  $diff | awk -F\; '{ print $3 }'`"
+      echo "<tr><td>$diff_file</td><td><center>$diff_old</center></td><td><center>$diff_new</center></td></tr>" >> $HTML_COMP
+    done
+  else
+    echo "<tr><td colspan='3'><p>Pas de différence de version détectée dans les fichiers parcourus.</p></td></tr>">> $HTML_COMP
+  fi
+  echo "<tr><td colspan='3'><br><b>Nouveaux Fichiers:</b><br><hr></td></tr>" >> $HTML_COMP
+  if [ "$CURRENT_UNMATCH" != "" ] ; then
+    for diff in  $CURRENT_UNMATCH ; do
+      diff_file="`echo $diff | awk -F\; '{ print $1 }'`"
+      diff_old="`echo  $diff | awk -F\; '{ print $2 }'`"
+      diff_new="`echo  $diff | awk -F\; '{ print $3 }'`"
+      echo "<tr><td>$diff_file</td><td><center>$diff_old</center></td><td><center>$diff_new</center></td></tr>" >> $HTML_COMP
+    done
+  else
+    echo "<tr><td colspan='3'><p>Pas de nouveaux fichiers</p></td></tr>" >> $HTML_COMP
+  fi
+  echo "<tr><td colspan='3'><br><b>Fichiers Effacés:</b><br><hr></td></tr>" >> $HTML_COMP
+  if [ "$PREVIOUS_UNMATCH" != "" ] ; then
+    for diff in  $PREVIOUS_UNMATCH ; do
+      diff_file="`echo $diff | awk -F\; '{ print $1 }'`"
+      diff_old="`echo  $diff | awk -F\; '{ print $2 }'`"
+      diff_new="`echo  $diff | awk -F\; '{ print $3 }'`"
+      echo "<tr><td>$diff_file</td><td><center>$diff_old</center></td><td><center>$diff_new</center></td></tr>" >> $HTML_COMP
+    done
+  else
+    echo "<tr><td colspan='3'><p>Pas de fichiers effacés</p></td></tr>" >> $HTML_COMP
+  fi
+  echo "</table>" >> $HTML_COMP
+  echo "</body></html>" >> $HTML_COMP
+
+}
+
+##########################################################################
+#  usage : Menu d'aide
+#
+##########################################################################
+
+usage()
+{
+  echo "*********************************************"
+  echo "$1"
+  echo "   cvs_manager  [-w|-r] [dirname]  [filename]"
+  echo "   cvs_manager  [-c]    [newfile]     [oldfile]"
+  echo "   [-w|-r]      : mode [write | read] file"
+  echo "   [-c]         : mode compare files"
+  echo "   CVS Reference: $CVS_ROOT"
+  echo ""
+}
+
+##########################################################################
+#  echon : affichage de "*" pendant la redaction des fichiers
+#
+##########################################################################
+
+echon()
+{
+  if [ "$2" = "" ] ; then
+    indent=15
+  else
+    indent=$2
+  fi
+  
+  if [ "$1" = "" ] ; then
+    n=$indent
+  else
+    n=$1
+  fi
+  
+  opp=`expr $n / $indent \* 10`
+  max=`expr $n \* 10 / $indent`
+  if [ "$opp" = "$max" ] ; then
+    echo -n "*"
+  fi
+}
+
+##########################################################################
+#  read_entry: appel sce_cvs_version ou dup_cvs_list
+#      
+#
+##########################################################################
+
+read_entry()
+{
+  if [ "$1" = "-w" ] ; then
+    if [ "$2" = "" ] || [ "$3" = "" ] ; then
+      usage "Commande incomplete:"
+    elif [ -d "$2" ] ; then
+      sce_cvs_version $2 $3
+    else
+      usage "[dirname] non valide:"
+    fi
+  elif [ "$1" = "-r" ] ; then
+    if [ "$2" = "" ] || [ "$3" = "" ] ; then
+       usage "Commande incomplete:"
+    elif [ -f "$3" ] ; then
+      dup_cvs_list $2 $3
+    else
+      usage "[filename] non valide:"
+    fi
+  elif [ "$1" = "-c" ] ; then
+    if [ "$2" = "" ] || [ "$3" = "" ] ; then
+      usage "Commande incomplete:"
+    elif [ -f "$2" ] && [ -f "$3" ] ; then
+      compare_files $2 $3
+    else
+      usage "[dirname] non valide:"
+    fi
+  else
+    usage "COMMANDE NON VALIDE:"
+  fi
+}
+
+
+
+##########################################################################
+#  MAIN..... :)
+#
+##########################################################################
+
+if [ "$*" = "" ] || [ "$1" = "-h" ] || [ "$1" = "h" ] || [ "$1" = "-help" ] || [ "$1" = "help" ] ; then
+  usage "Usage:"
+else
+  read_entry $*
+fi
+
+exit 0

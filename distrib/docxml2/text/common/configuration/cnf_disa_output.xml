@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+
+<row type="split"><article><index>yagOutputName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name given to the generated behavioral data flow description</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagGeniusTopName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name given to the root structural figure of a hierarchical netlist 
+generated as a result of GNS</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagGenerateBehavior</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, generates the behavioral data flow description.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagGenerateConeFile</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>A <f>.cns</f> file is generated, giving details of the disassembled gates</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagGenerateConeNetList</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Generates a structural description of the disassembled gates together 
+with a behavioral model for each distinct gate type</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagHierarchyGroupTransistors</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>In hierarchical abstraction mode, any transistors left in an otherwise fully modeled design hierarchy, are grouped together and abstracted as if they were in their own subckt.</def></row>
+<row><article><f>no</f></article><def>Default. Any transistors left over will be driven as such (in verilog) or ignored (in vhdl).</def></row>
+</glossary>
+</def></row>
+
+</glossary>

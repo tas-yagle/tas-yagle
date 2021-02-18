@@ -1,0 +1,17 @@
+<glossary>
+<row type='split'><article><index>sdcUnits</index></article><def>
+Sets the time unit and capacitance unit used in the Synopsys Design Constraint (SDC) files. Unit for time and
+unit for capacitance should appear both in a space-separated list (ex: <f>"1ps 1ff"</f>). Available values are:
+<glossary width='small'>
+<row><article><f>1ps</f></article><def>Default</def></row>
+<row><article><f>10ps</f></article><def></def></row>
+<row><article><f>100ps</f></article><def></def></row>
+<row><article><f>1ns</f></article><def></def></row>
+<row><article><f>1ff</f></article><def></def></row>
+<row><article><f>10ff</f></article><def></def></row>
+<row><article><f>100ff</f></article><def></def></row>
+<row><article><f>1pf</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+</glossary>
+

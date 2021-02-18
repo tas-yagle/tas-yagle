@@ -1,0 +1,3 @@
+depth = 6: OK
+depth = 5: some false branches
+depth = 4: KO

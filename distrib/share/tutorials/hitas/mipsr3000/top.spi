@@ -1,0 +1,5 @@
+
+.temp 25
+.option tnom=25
+.include bsim4_dummy.hsp
+.include mips_chip.spi

@@ -1,0 +1,5 @@
+
+.subckt cells bl0_up blb0_up bl1_dn blb1_dn wl0 wl1
+* |condir bl0_up inout, blb0_up inout, bl1_dn inout, blb1_dn inout
+* |condir wl0 in, wl1 in
+.ends

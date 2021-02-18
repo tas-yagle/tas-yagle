@@ -1,0 +1,2134 @@
+/* avertec icones library for xcones and xyagle */
+
+library("avt.sdb") {
+
+TRUE = 1;
+FALSE = 0;
+ROUTE_GRID = 1024;
+INCHES_PER_GRID = .1;
+
+set_route_grid(ROUTE_GRID);
+
+AND_HEIGHT = 4;
+OR_HEIGHT = 4;
+
+GRIDS_PER_INCH = 1 / INCHES_PER_GRID;
+
+AND_WIDTH = 0.50 * GRIDS_PER_INCH;
+OR_INTERNAL_WIDTH = 0.50 * GRIDS_PER_INCH;
+INVERTER_HEIGHT = .35 * GRIDS_PER_INCH;
+XOR_GAP = (1.0 / 13.0) * GRIDS_PER_INCH;   
+BUBBLE_DIAMETER = .08 * GRIDS_PER_INCH;
+
+OR_X_ORIGIN = 3;
+OR_Y_ORIGIN = 2;
+AND_X_ORIGIN = 3;
+AND_Y_ORIGIN = 2;
+INVERTER_X_ORIGIN = 1;
+INVERTER_Y_ORIGIN = INVERTER_HEIGHT / 2.0;
+
+EXTRA_WING_SPAN = .5;
+GATE_GAP = 0;
+
+BUBBLE_RADIUS = BUBBLE_DIAMETER / 2.0;
+
+FONT_SIZE = 1.25;
+
+symbol(triangle) {
+
+    INVERTER_LEFT_X = - INVERTER_X_ORIGIN;
+    INVERTER_BOTTOM_Y = - INVERTER_Y_ORIGIN;
+
+    INVERTER_RIGHT_X = INVERTER_LEFT_X + INVERTER_HEIGHT * SQRT(3) / 2.0;
+    INVERTER_TOP_Y = INVERTER_BOTTOM_Y + INVERTER_HEIGHT;
+    INVERTER_MIDDLE_Y = INVERTER_BOTTOM_Y + INVERTER_HEIGHT / 2.0;
+
+    line(INVERTER_LEFT_X, INVERTER_TOP_Y, INVERTER_RIGHT_X, INVERTER_MIDDLE_Y);
+    line(INVERTER_RIGHT_X, INVERTER_MIDDLE_Y,  	       	       	       	      \
+	 INVERTER_LEFT_X, INVERTER_BOTTOM_Y);
+    line(INVERTER_LEFT_X, INVERTER_BOTTOM_Y, INVERTER_LEFT_X, INVERTER_TOP_Y);
+  }
+
+symbol(i1x) {
+    canonical_name : "Ia1.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(z, 1);
+
+    sub_symbol(triangle, 0,0,0);
+
+    circle(INVERTER_RIGHT_X + BUBBLE_RADIUS, INVERTER_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, INVERTER_RIGHT_X + BUBBLE_DIAMETER, INVERTER_MIDDLE_Y, RIGHT);
+    pin(a, INVERTER_LEFT_X, INVERTER_MIDDLE_Y, LEFT);
+  }
+
+
+symbol(nd_out) {
+    AND_LEFT_X = - AND_X_ORIGIN;
+    AND_BOTTOM_Y = - AND_Y_ORIGIN;
+
+    AND_TOP_Y = AND_BOTTOM_Y + AND_HEIGHT;
+    X_START_OF_ARC = AND_LEFT_X + AND_WIDTH - AND_HEIGHT / 2.0;
+    AND_MIDDLE_Y = AND_BOTTOM_Y + AND_HEIGHT / 2.0;
+    AND_RIGHT_X = AND_LEFT_X + AND_WIDTH;
+
+    line(AND_LEFT_X, AND_TOP_Y, X_START_OF_ARC, AND_TOP_Y);
+    line(AND_LEFT_X, AND_BOTTOM_Y, X_START_OF_ARC, AND_BOTTOM_Y);
+    arc(X_START_OF_ARC, AND_TOP_Y, X_START_OF_ARC, AND_BOTTOM_Y,       	      \
+	X_START_OF_ARC, AND_MIDDLE_Y);
+  }
+
+symbol(and) {
+    sub_symbol(nd_out, 0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y, AND_LEFT_X, AND_TOP_Y);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 3, LEFT);
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 1, LEFT);
+    pin(z, AND_RIGHT_X, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(and1) {
+    canonical_name : "anr";
+    sub_symbol(nd_out, 0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y, AND_LEFT_X, AND_TOP_Y);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 2, LEFT);
+    pin(z, AND_RIGHT_X, AND_MIDDLE_Y, RIGHT);
+    canonical_pin_number(a, 0);
+    canonical_pin_number(z, 1);
+  }
+
+symbol(and2) {
+    canonical_name : "a2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(z, 2);
+
+    sub_symbol(and,0,0,0);
+  }
+
+symbol(andnot) {
+    canonical_name : "andnot";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(z, 2);
+
+    sub_symbol(nd_out, 0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y, AND_LEFT_X, AND_TOP_Y);
+    circle(AND_LEFT_X - BUBBLE_RADIUS, AND_BOTTOM_Y + 1, BUBBLE_RADIUS);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 3, LEFT);
+    pin(b, (AND_LEFT_X - BUBBLE_DIAMETER), AND_BOTTOM_Y + 1, LEFT);
+    pin(z, AND_RIGHT_X, AND_MIDDLE_Y, RIGHT);
+  }
+
+
+  OR_LEFT_X = - OR_X_ORIGIN;
+  OR_BOTTOM_Y = - OR_Y_ORIGIN;
+
+  OR_TOP_Y = OR_BOTTOM_Y + OR_HEIGHT;
+  OR_LEFT_ARC_CENTER_X = OR_LEFT_X - sqrt(.75 * OR_HEIGHT * OR_HEIGHT);
+  OR_MIDDLE_Y = OR_BOTTOM_Y + OR_HEIGHT / 2.0;
+  OR_RIGHT_X = OR_LEFT_ARC_CENTER_X + OR_HEIGHT + OR_INTERNAL_WIDTH;
+
+  OR_WIDTH = OR_RIGHT_X - OR_LEFT_X;
+
+symbol(left_side_of_or) {
+    arc(OR_LEFT_X,OR_TOP_Y,OR_LEFT_X, OR_BOTTOM_Y,     	       	       	      \
+	OR_LEFT_ARC_CENTER_X, OR_MIDDLE_Y);
+  }
+
+
+symbol(nr_out) {
+    sub_symbol(left_side_of_or, 0,0,0);
+
+    OR_RIGHT_ARCS_X_START = OR_RIGHT_X - sqrt(.75 * OR_HEIGHT * OR_HEIGHT);
+
+    arc(OR_RIGHT_ARCS_X_START, OR_TOP_Y, OR_RIGHT_X, OR_MIDDLE_Y,      	      \
+	OR_RIGHT_ARCS_X_START, OR_BOTTOM_Y);
+    arc(OR_RIGHT_X, OR_MIDDLE_Y, OR_RIGHT_ARCS_X_START, OR_BOTTOM_Y,   	      \
+	OR_RIGHT_ARCS_X_START, OR_TOP_Y);
+
+    line(OR_LEFT_X, OR_TOP_Y, OR_RIGHT_ARCS_X_START, OR_TOP_Y);
+    line(OR_LEFT_X, OR_BOTTOM_Y, OR_RIGHT_ARCS_X_START, OR_BOTTOM_Y);
+  }
+
+  OR_EVEN_LEFT_PIN_X = OR_LEFT_ARC_CENTER_X + sqrt((15.0 / 16.0) *     	      \
+						   OR_HEIGHT * OR_HEIGHT );
+  OR_ODD_LEFT_PIN_X = OR_LEFT_ARC_CENTER_X + OR_HEIGHT;
+
+symbol(or) {
+    sub_symbol(nr_out,0,0,0);
+
+    pin(a, OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 3, LEFT);
+    pin(b, OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 1, LEFT);
+    pin(z, OR_RIGHT_X, 0, RIGHT);
+  }
+
+symbol(or1) {
+    canonical_name : "orr";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(z, 1);
+
+    sub_symbol(nr_out,0,0,0);
+
+    pin(a, OR_ODD_LEFT_PIN_X, OR_BOTTOM_Y + 2, LEFT);
+    pin(z, OR_RIGHT_X, 0, RIGHT);
+  }
+
+symbol(or2b) {
+    canonical_name : "Ia2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(z, 2);
+
+    sub_symbol(or,0,0,0);
+  }
+
+  OR_NOT_CIRCLE_X = OR_LEFT_ARC_CENTER_X + sqrt(((OR_HEIGHT - BUBBLE_RADIUS) * \
+					      (OR_HEIGHT - BUBBLE_RADIUS)) - 1);
+symbol(ornot) {
+    canonical_name : "ornot";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(z, 2);
+
+    sub_symbol(nr_out, 0,0,0);
+
+    circle(OR_NOT_CIRCLE_X, OR_BOTTOM_Y + 1, BUBBLE_RADIUS);
+
+    pin(a, OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 3, LEFT);
+    pin(b, OR_NOT_CIRCLE_X - BUBBLE_RADIUS, OR_BOTTOM_Y + 1, LEFT);
+    pin(z, OR_RIGHT_X, 0, RIGHT);
+  }
+
+
+symbol(nd1) {
+    canonical_name : "ndr";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(z, 1);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y, AND_LEFT_X, AND_TOP_Y);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 2, LEFT);
+
+    circle(AND_RIGHT_X + BUBBLE_RADIUS, AND_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, AND_RIGHT_X + BUBBLE_DIAMETER, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nd2) {
+    canonical_name : "Ia2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(z, 2);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y, AND_LEFT_X, AND_TOP_Y);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 3, LEFT);
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 1, LEFT);
+
+    circle(AND_RIGHT_X + BUBBLE_RADIUS, AND_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, AND_RIGHT_X + BUBBLE_DIAMETER, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nd2i1) {
+    canonical_name : "Ia2.1";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(z, 2);
+
+    sub_symbol(nd_out,0,0,0);
+    line(AND_LEFT_X, AND_BOTTOM_Y, AND_LEFT_X, AND_TOP_Y);
+
+    circle(AND_LEFT_X - BUBBLE_RADIUS, AND_BOTTOM_Y + 3, BUBBLE_RADIUS);
+    pin(a, AND_LEFT_X - BUBBLE_DIAMETER, AND_BOTTOM_Y + 3, LEFT);
+
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 1, LEFT);
+
+    circle(AND_RIGHT_X + BUBBLE_RADIUS, AND_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, AND_RIGHT_X + BUBBLE_DIAMETER, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr1) {
+    canonical_name : "nrr";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(z, 1);
+
+    sub_symbol(nr_out,0,0,0);
+    pin(a, OR_ODD_LEFT_PIN_X, OR_BOTTOM_Y + 2, LEFT);
+
+    circle(OR_RIGHT_X + BUBBLE_RADIUS, OR_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, OR_RIGHT_X + BUBBLE_DIAMETER, OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr2) {
+    canonical_name : "a2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(z, 2);
+
+    sub_symbol(nr_out,0,0,0);
+    pin(a, OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 3, LEFT);
+    pin(b, OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 1, LEFT);
+    circle(OR_RIGHT_X + BUBBLE_RADIUS, OR_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, OR_RIGHT_X + BUBBLE_DIAMETER, OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr2i1) {
+    canonical_name : "a2.1";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(z, 2);
+
+    sub_symbol(nr_out,0,0,0);
+    pin(b, OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 1, LEFT);
+    circle(OR_RIGHT_X + BUBBLE_RADIUS, OR_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, OR_RIGHT_X + BUBBLE_DIAMETER, OR_MIDDLE_Y, RIGHT);
+    circle(OR_EVEN_LEFT_PIN_X - BUBBLE_RADIUS, OR_BOTTOM_Y + 3, BUBBLE_RADIUS);
+    pin(a, OR_EVEN_LEFT_PIN_X - BUBBLE_DIAMETER, OR_BOTTOM_Y + 3, LEFT);
+  }
+
+symbol(and3) {
+    canonical_name : "a3.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y - EXTRA_WING_SPAN,   	       	       	      \
+	 AND_LEFT_X, AND_TOP_Y + EXTRA_WING_SPAN);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 4, LEFT);
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 2, LEFT);
+    pin(c, AND_LEFT_X, AND_BOTTOM_Y + 0, LEFT);
+    pin(z, AND_RIGHT_X, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(or3_outline) {
+    sub_symbol(nr_out,0,0,0);
+
+    line(OR_LEFT_X, OR_TOP_Y, OR_LEFT_X, OR_TOP_Y + EXTRA_WING_SPAN);
+    line(OR_LEFT_X, OR_BOTTOM_Y, OR_LEFT_X, OR_BOTTOM_Y - EXTRA_WING_SPAN);
+
+    pin(a, OR_LEFT_X, OR_BOTTOM_Y + 4, LEFT);
+    pin(b, OR_ODD_LEFT_PIN_X, OR_BOTTOM_Y + 2, LEFT);
+    pin(c, OR_LEFT_X, OR_BOTTOM_Y, LEFT);
+  }
+
+symbol(or3) {
+    canonical_name : "Ia3.3";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(or3_outline,0,0,0);
+    pin(z, OR_RIGHT_X, OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nd3) {
+    canonical_name : "Ia3.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y - EXTRA_WING_SPAN,   	       	       	      \
+	 AND_LEFT_X, AND_TOP_Y + EXTRA_WING_SPAN);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 4, LEFT);
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 2, LEFT);
+    pin(c, AND_LEFT_X, AND_BOTTOM_Y + 0, LEFT);
+
+    circle(AND_RIGHT_X + BUBBLE_RADIUS, AND_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, AND_RIGHT_X + BUBBLE_DIAMETER, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nd3i1) {
+    canonical_name : "Ia3.1";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y - EXTRA_WING_SPAN,   	       	       	      \
+	 AND_LEFT_X, AND_TOP_Y + EXTRA_WING_SPAN);
+
+    circle(AND_LEFT_X - BUBBLE_RADIUS, AND_BOTTOM_Y + 4, BUBBLE_RADIUS);
+    pin(a, AND_LEFT_X - BUBBLE_DIAMETER, AND_BOTTOM_Y + 4, LEFT);
+
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 2, LEFT);
+    pin(c, AND_LEFT_X, AND_BOTTOM_Y + 0, LEFT);
+
+    circle(AND_RIGHT_X + BUBBLE_RADIUS, AND_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, AND_RIGHT_X + BUBBLE_DIAMETER, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nd3i2) {
+    canonical_name : "Ia3.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y - EXTRA_WING_SPAN,   	       	       	      \
+	 AND_LEFT_X, AND_TOP_Y + EXTRA_WING_SPAN);
+
+    circle(AND_LEFT_X - BUBBLE_RADIUS, AND_BOTTOM_Y + 4, BUBBLE_RADIUS);
+    pin(a, AND_LEFT_X - BUBBLE_DIAMETER, AND_BOTTOM_Y + 4, LEFT);
+
+    circle(AND_LEFT_X - BUBBLE_RADIUS, AND_BOTTOM_Y + 2, BUBBLE_RADIUS);
+    pin(b, AND_LEFT_X - BUBBLE_DIAMETER, AND_BOTTOM_Y + 2, LEFT);
+
+    pin(c, AND_LEFT_X, AND_BOTTOM_Y + 0, LEFT);
+
+    circle(AND_RIGHT_X + BUBBLE_RADIUS, AND_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, AND_RIGHT_X + BUBBLE_DIAMETER, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr3) {
+    canonical_name : "a3.3";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(or3_outline,0,0,0);
+    circle(OR_RIGHT_X + BUBBLE_RADIUS, OR_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, OR_RIGHT_X + BUBBLE_DIAMETER, OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr3_no_ab) {
+    sub_symbol(nr_out,0,0,0);
+
+    line(OR_LEFT_X, OR_TOP_Y, OR_LEFT_X, OR_TOP_Y + EXTRA_WING_SPAN);
+    line(OR_LEFT_X, OR_BOTTOM_Y, OR_LEFT_X, OR_BOTTOM_Y - EXTRA_WING_SPAN);
+
+    pin(c, OR_LEFT_X, OR_BOTTOM_Y, LEFT);
+
+    circle(OR_RIGHT_X + BUBBLE_RADIUS, OR_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, OR_RIGHT_X + BUBBLE_DIAMETER, OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr3i1) {
+    canonical_name : "a3.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(nr3_no_ab,0,0,0);
+
+    circle(OR_LEFT_X - BUBBLE_RADIUS, OR_BOTTOM_Y + 4, BUBBLE_RADIUS);
+    pin(a, OR_LEFT_X - BUBBLE_DIAMETER, OR_BOTTOM_Y + 4, LEFT);
+    pin(b, OR_ODD_LEFT_PIN_X, OR_BOTTOM_Y + 2, LEFT);
+  }
+
+symbol(nr3i2) {
+    canonical_name : "a3.1";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(nr3_no_ab,0,0,0);
+
+    circle(OR_LEFT_X - BUBBLE_RADIUS, OR_BOTTOM_Y + 4, BUBBLE_RADIUS);
+    pin(a, OR_LEFT_X - BUBBLE_DIAMETER, OR_BOTTOM_Y + 4, LEFT);
+
+    circle(OR_ODD_LEFT_PIN_X - BUBBLE_RADIUS, OR_BOTTOM_Y + 2, BUBBLE_RADIUS);
+    pin(b, OR_ODD_LEFT_PIN_X - BUBBLE_DIAMETER, OR_BOTTOM_Y + 2, LEFT);
+  }
+
+symbol(and4) {
+    canonical_name : "a4.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y - EXTRA_WING_SPAN - 1,       	       	      \
+	 AND_LEFT_X, AND_TOP_Y + EXTRA_WING_SPAN + 1);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 5, LEFT);
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 3, LEFT);
+    pin(c, AND_LEFT_X, AND_BOTTOM_Y + 1, LEFT);
+    pin(d, AND_LEFT_X, AND_BOTTOM_Y - 1, LEFT);
+    pin(z, AND_RIGHT_X, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(or4_outline) {
+    sub_symbol(nr_out,0,0,0);
+
+    line(OR_LEFT_X, OR_TOP_Y, OR_LEFT_X, OR_TOP_Y + EXTRA_WING_SPAN + 1);
+    line(OR_LEFT_X, OR_BOTTOM_Y, OR_LEFT_X, OR_BOTTOM_Y - EXTRA_WING_SPAN - 1 );
+
+    pin(a, OR_LEFT_X, OR_BOTTOM_Y + 5, LEFT);
+    pin(b, OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 3, LEFT);
+    pin(c, OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 1, LEFT);
+    pin(d, OR_LEFT_X, OR_BOTTOM_Y - 1, LEFT);
+  }
+
+symbol(or4) {
+    canonical_name : "Ia4.4";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(or4_outline,0,0,0);
+    pin(z, OR_RIGHT_X,OR_MIDDLE_Y,RIGHT);
+  }
+
+symbol(nd4) {
+    canonical_name : "Ia4.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y - EXTRA_WING_SPAN - 1,       	       	      \
+	 AND_LEFT_X, AND_TOP_Y + EXTRA_WING_SPAN + 1);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 5, LEFT);
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 3, LEFT);
+    pin(c, AND_LEFT_X, AND_BOTTOM_Y + 1, LEFT);
+    pin(d, AND_LEFT_X, AND_BOTTOM_Y - 1, LEFT);
+
+    circle(AND_RIGHT_X + BUBBLE_RADIUS, AND_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, AND_RIGHT_X + BUBBLE_DIAMETER, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr4) {
+    canonical_name : "a4.4";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(or4_outline,0,0,0);
+    circle(OR_RIGHT_X + BUBBLE_RADIUS, OR_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, OR_RIGHT_X + BUBBLE_DIAMETER, OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(and5) {
+    canonical_name : "a5.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y - EXTRA_WING_SPAN - 2,       	       	      \
+	 AND_LEFT_X, AND_TOP_Y + EXTRA_WING_SPAN + 2);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 6, LEFT);
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 4, LEFT);
+    pin(c, AND_LEFT_X, AND_BOTTOM_Y + 2, LEFT);
+    pin(d, AND_LEFT_X, AND_BOTTOM_Y - 0, LEFT);
+    pin(e, AND_LEFT_X, AND_BOTTOM_Y - 2, LEFT);
+    pin(z, AND_RIGHT_X, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(or5_outline) {
+    sub_symbol(nr_out,0,0,0);
+    sub_symbol(left_side_of_or, 0, 4,0);
+    sub_symbol(left_side_of_or, 0, - 4,0);
+
+    pin(a,OR_ODD_LEFT_PIN_X,OR_BOTTOM_Y + 6,LEFT);
+    pin(b,OR_LEFT_X,OR_BOTTOM_Y + 4,LEFT);
+    pin(c,OR_ODD_LEFT_PIN_X,OR_BOTTOM_Y + 2,LEFT);
+    pin(d,OR_LEFT_X,OR_BOTTOM_Y,LEFT);
+    pin(e,OR_ODD_LEFT_PIN_X,OR_BOTTOM_Y - 2,LEFT);
+  }
+
+symbol(or5) {
+    canonical_name : "Ia5.5";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(or5_outline,0,0,0);
+    pin(z, OR_RIGHT_X,OR_MIDDLE_Y,RIGHT);
+  }
+
+symbol(nd5) {
+    canonical_name : "Ia5.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y - EXTRA_WING_SPAN - 2,       	       	      \
+	 AND_LEFT_X, AND_TOP_Y + EXTRA_WING_SPAN + 2);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 6, LEFT);
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 4, LEFT);
+    pin(c, AND_LEFT_X, AND_BOTTOM_Y + 2, LEFT);
+    pin(d, AND_LEFT_X, AND_BOTTOM_Y - 0, LEFT);
+    pin(e, AND_LEFT_X, AND_BOTTOM_Y - 2, LEFT);
+
+    circle(AND_RIGHT_X + BUBBLE_RADIUS, AND_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, AND_RIGHT_X + BUBBLE_DIAMETER, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr5) {
+    canonical_name : "a5.5";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(or5_outline,0,0,0);
+    circle(OR_RIGHT_X + BUBBLE_RADIUS, OR_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, OR_RIGHT_X + BUBBLE_DIAMETER, OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(or6_outline) {
+    sub_symbol(nr_out,0,0,0);
+    sub_symbol(left_side_of_or, 0, 4,0);
+    sub_symbol(left_side_of_or, 0, - 4,0);
+
+    pin(a,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 7, LEFT);
+    pin(b,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 5, LEFT);
+    pin(c,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 3, LEFT);
+    pin(d,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 1, LEFT);
+    pin(e,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y - 1, LEFT);
+    pin(f,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y - 3, LEFT);
+  }
+
+symbol(or6) {
+    canonical_name : "Ia6.6";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(z, 6);
+
+    sub_symbol(or6_outline,0,0,0);
+    pin(z, OR_RIGHT_X,OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(and6) {
+    canonical_name : "a6.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(z, 6);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y - EXTRA_WING_SPAN - 3,       	       	      \
+	 AND_LEFT_X, AND_TOP_Y + EXTRA_WING_SPAN + 3);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 7, LEFT);
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 5, LEFT);
+    pin(c, AND_LEFT_X, AND_BOTTOM_Y + 3, LEFT);
+    pin(d, AND_LEFT_X, AND_BOTTOM_Y + 1, LEFT);
+    pin(e, AND_LEFT_X, AND_BOTTOM_Y - 1, LEFT);
+    pin(f, AND_LEFT_X, AND_BOTTOM_Y - 3, LEFT);
+    pin(z, AND_RIGHT_X, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nd6) {
+    canonical_name : "Ia6.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(z, 6);
+
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y - EXTRA_WING_SPAN - 3,       	       	      \
+	 AND_LEFT_X, AND_TOP_Y + EXTRA_WING_SPAN + 3);
+
+    pin(a, AND_LEFT_X, AND_BOTTOM_Y + 7, LEFT);
+    pin(b, AND_LEFT_X, AND_BOTTOM_Y + 5, LEFT);
+    pin(c, AND_LEFT_X, AND_BOTTOM_Y + 3, LEFT);
+    pin(d, AND_LEFT_X, AND_BOTTOM_Y + 1, LEFT);
+    pin(e, AND_LEFT_X, AND_BOTTOM_Y - 1, LEFT);
+    pin(f, AND_LEFT_X, AND_BOTTOM_Y - 3, LEFT);
+
+    circle(AND_RIGHT_X + BUBBLE_RADIUS, AND_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, AND_RIGHT_X + BUBBLE_DIAMETER, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr6) {
+    canonical_name : "a6.6";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(z, 6);
+
+    sub_symbol(or6_outline,0,0,0);
+
+    circle(OR_RIGHT_X + BUBBLE_RADIUS, OR_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, OR_RIGHT_X + BUBBLE_DIAMETER, OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr7) {
+    canonical_name : "a7.7";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(g, 6);
+    canonical_pin_number(z, 7);
+
+    sub_symbol(nr_out,0,0,0);
+    sub_symbol(left_side_of_or, 0, 4, 0);
+    sub_symbol(left_side_of_or, 0, - 4, 0);
+
+    line(OR_LEFT_X, OR_TOP_Y + 4, OR_LEFT_X, OR_TOP_Y + 4 + EXTRA_WING_SPAN);
+    line(OR_LEFT_X, OR_BOTTOM_Y - 4, OR_LEFT_X, OR_BOTTOM_Y - 4 - EXTRA_WING_SPAN);
+
+    pin(a,OR_ODD_LEFT_PIN_X,OR_BOTTOM_Y + 8,LEFT);
+    pin(b,OR_ODD_LEFT_PIN_X,OR_BOTTOM_Y + 6,LEFT);
+    pin(c,OR_ODD_LEFT_PIN_X,OR_BOTTOM_Y + 4,LEFT);
+    pin(d,OR_ODD_LEFT_PIN_X,OR_BOTTOM_Y + 2,LEFT);
+    pin(e,OR_ODD_LEFT_PIN_X,OR_BOTTOM_Y,LEFT);
+    pin(f,OR_ODD_LEFT_PIN_X,OR_BOTTOM_Y - 2,LEFT);
+    pin(g,OR_ODD_LEFT_PIN_X,OR_BOTTOM_Y - 4,LEFT);
+
+    circle(OR_RIGHT_X + BUBBLE_RADIUS, OR_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, OR_RIGHT_X + BUBBLE_DIAMETER, OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(and8_outline) {
+    sub_symbol(nd_out,0,0,0);
+
+    line(AND_LEFT_X, AND_BOTTOM_Y - EXTRA_WING_SPAN - 5,       	       	      \
+	 AND_LEFT_X, AND_TOP_Y + EXTRA_WING_SPAN + 5);
+
+    pin(a,AND_LEFT_X,AND_BOTTOM_Y + 9,LEFT);
+    pin(b,AND_LEFT_X,AND_BOTTOM_Y + 7,LEFT);
+    pin(c,AND_LEFT_X,AND_BOTTOM_Y + 5,LEFT);
+    pin(d,AND_LEFT_X,AND_BOTTOM_Y + 3,LEFT);
+    pin(e,AND_LEFT_X,AND_BOTTOM_Y + 1,LEFT);
+    pin(f,AND_LEFT_X,AND_BOTTOM_Y - 1,LEFT);
+    pin(g,AND_LEFT_X,AND_BOTTOM_Y - 3,LEFT);
+    pin(h,AND_LEFT_X,AND_BOTTOM_Y - 5,LEFT);
+  }
+
+symbol(and8) {
+    canonical_name : "a8.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(g, 6);
+    canonical_pin_number(h, 7);
+    canonical_pin_number(z, 8);
+
+    sub_symbol(and8_outline,0,0,0);
+    pin(z, AND_RIGHT_X, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(or8_outline) {
+    sub_symbol(nr_out,0,0,0);
+    sub_symbol(left_side_of_or, 0, 4,0);
+    sub_symbol(left_side_of_or, 0, - 4,0);
+
+    line(OR_LEFT_X, OR_TOP_Y + 4, OR_LEFT_X, OR_TOP_Y + 5 + EXTRA_WING_SPAN);
+    line(OR_LEFT_X, OR_BOTTOM_Y - 4, OR_LEFT_X, OR_BOTTOM_Y - 5 - EXTRA_WING_SPAN);
+
+    pin(a,OR_LEFT_X, OR_BOTTOM_Y + 9, LEFT);
+    pin(b,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 7, LEFT);
+    pin(c,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 5, LEFT);
+    pin(d,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 3, LEFT);
+    pin(e,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 1, LEFT);
+    pin(f,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y - 1, LEFT);
+    pin(g,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y - 3, LEFT);
+    pin(h,OR_LEFT_X, OR_BOTTOM_Y - 5, LEFT);
+  }
+
+symbol(or8) {
+    canonical_name : "Ia8.8";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(g, 6);
+    canonical_pin_number(h, 7);
+    canonical_pin_number(z, 8);
+
+    sub_symbol(or8_outline,0,0,0);
+    pin(z, OR_RIGHT_X, OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nd8) {
+    canonical_name : "Ia8.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(g, 6);
+    canonical_pin_number(h, 7);
+    canonical_pin_number(z, 8);
+
+    sub_symbol(and8_outline,0,0,0);
+
+    circle(AND_RIGHT_X + BUBBLE_RADIUS, AND_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, AND_RIGHT_X + BUBBLE_DIAMETER, AND_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr8) {
+    canonical_name : "a8.8";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(g, 6);
+    canonical_pin_number(h, 7);
+    canonical_pin_number(z, 8);
+
+    sub_symbol(or8_outline,0,0,0);
+
+    circle(OR_RIGHT_X + BUBBLE_RADIUS, OR_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, OR_RIGHT_X + BUBBLE_DIAMETER, OR_MIDDLE_Y, RIGHT);
+  }
+
+symbol(nr16) {
+    canonical_name : "a16.16";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(g, 6);
+    canonical_pin_number(h, 7);
+    canonical_pin_number(i, 8);
+    canonical_pin_number(j, 9);
+    canonical_pin_number(k, 10);
+    canonical_pin_number(l, 11);
+    canonical_pin_number(m, 12);
+    canonical_pin_number(n, 13);
+    canonical_pin_number(o, 14);
+    canonical_pin_number(p, 15);
+    canonical_pin_number(z, 16);
+
+    sub_symbol(nr_out,0,0,0);
+    sub_symbol(left_side_of_or, 0, 4,0);
+    sub_symbol(left_side_of_or, 0, - 4,0);
+    sub_symbol(left_side_of_or, 0, 8,0);
+    sub_symbol(left_side_of_or, 0, - 8,0);
+    sub_symbol(left_side_of_or, 0, 12,0);
+    sub_symbol(left_side_of_or, 0, - 12,0);
+    sub_symbol(left_side_of_or, 0, 16,0);
+    sub_symbol(left_side_of_or, 0, - 16,0);
+
+
+    pin(a,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 17, LEFT);
+    pin(b,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 15, LEFT);
+    pin(c,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 13, LEFT);
+    pin(d,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 11, LEFT);
+    pin(e,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 9, LEFT);
+    pin(f,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 7, LEFT);
+    pin(g,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 5, LEFT);
+    pin(h,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 3, LEFT);
+    pin(i,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y + 1, LEFT);
+    pin(j,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y - 1, LEFT);
+    pin(k,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y - 3, LEFT);
+    pin(l,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y - 5, LEFT);
+    pin(m,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y - 7, LEFT);
+    pin(n,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y - 9, LEFT);
+    pin(o,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y - 11, LEFT);
+    pin(p,OR_EVEN_LEFT_PIN_X, OR_BOTTOM_Y - 13, LEFT);
+
+    circle(OR_RIGHT_X + BUBBLE_RADIUS, OR_MIDDLE_Y, BUBBLE_RADIUS);
+    pin(z, OR_RIGHT_X + BUBBLE_DIAMETER, OR_MIDDLE_Y, RIGHT);
+  }
+
+  XOR_ARC_CENTER_X = OR_LEFT_ARC_CENTER_X - XOR_GAP;
+  XOR_ARC_START_X = OR_LEFT_X - XOR_GAP;
+
+symbol(xn) {
+    canonical_name : "Ixor2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(z, 2);
+
+    sub_symbol(nr2,0,0,0);
+    arc(XOR_ARC_START_X, OR_TOP_Y ,XOR_ARC_START_X, OR_BOTTOM_Y,       	      \
+	XOR_ARC_CENTER_X, OR_MIDDLE_Y);
+  }
+symbol(xn1) {
+    canonical_name : "Ixorr";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(z, 1);
+
+    sub_symbol(nr1,0,0,0);
+    arc(XOR_ARC_START_X, OR_TOP_Y ,XOR_ARC_START_X, OR_BOTTOM_Y,       	      \
+	XOR_ARC_CENTER_X, OR_MIDDLE_Y);
+  }
+
+symbol(xr) {
+    canonical_name : "xor2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(z, 2);
+
+    sub_symbol(or,0,0,0);
+    arc(XOR_ARC_START_X, OR_TOP_Y ,XOR_ARC_START_X, OR_BOTTOM_Y,       	      \
+	XOR_ARC_CENTER_X, OR_MIDDLE_Y);
+  }
+
+symbol(xr1) {
+    canonical_name : "xorr";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(z, 1);
+
+    sub_symbol(or1,0,0,0);
+    arc(XOR_ARC_START_X, OR_TOP_Y ,XOR_ARC_START_X, OR_BOTTOM_Y,       	      \
+	XOR_ARC_CENTER_X, OR_MIDDLE_Y);
+  }
+
+symbol(xn3) {
+    canonical_name : "Ixor3";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(nr3,0,0,0);
+    arc(XOR_ARC_START_X, OR_TOP_Y ,XOR_ARC_START_X, OR_BOTTOM_Y,       	      \
+	XOR_ARC_CENTER_X, OR_MIDDLE_Y);
+  }
+
+symbol(xr3) {
+    canonical_name : "xor3";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(or3,0,0,0);
+    arc(XOR_ARC_START_X, OR_TOP_Y ,XOR_ARC_START_X, OR_BOTTOM_Y,       	      \
+	XOR_ARC_CENTER_X, OR_MIDDLE_Y);
+  }
+
+symbol(and_gate) {
+    sub_symbol(nd_out,AND_X_ORIGIN, AND_Y_ORIGIN,0);
+    line(0,0,0,AND_HEIGHT);
+  }
+
+symbol(nand_gate) {
+    sub_symbol(and_gate,0,0,0);
+    circle(AND_WIDTH + BUBBLE_RADIUS, AND_HEIGHT / 2.0, BUBBLE_RADIUS);
+  }
+
+symbol(or_gate) {
+    sub_symbol(nr_out,OR_X_ORIGIN,OR_Y_ORIGIN,0);
+  }
+
+symbol(nor_gate) {
+    sub_symbol(nr_out,OR_X_ORIGIN,OR_Y_ORIGIN,0);
+    circle(OR_WIDTH + BUBBLE_RADIUS, OR_HEIGHT / 2.0, BUBBLE_RADIUS);
+  }
+
+
+  OR_EVEN_LEFT_PIN_X = OR_EVEN_LEFT_PIN_X + OR_X_ORIGIN;
+  OR_ODD_LEFT_PIN_X = OR_ODD_LEFT_PIN_X + OR_X_ORIGIN;
+
+  NOR_WIDTH = OR_WIDTH + BUBBLE_DIAMETER;
+  NAND_WIDTH = AND_WIDTH + BUBBLE_DIAMETER;
+
+
+symbol(aoi21) {
+    canonical_name : "a2.1b2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(and_gate,- AND_WIDTH, 0,0);
+    sub_symbol(nor_gate,0,- 2,0);
+    pin(a,- AND_WIDTH,3,LEFT);
+    pin(b,- AND_WIDTH,1,LEFT);
+    pin(c,OR_EVEN_LEFT_PIN_X,- 1,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(oai21) {
+    canonical_name : "Ia2.0b2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(or_gate,- OR_WIDTH,0,0);
+    sub_symbol(nand_gate,0,- 2,0);
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1,LEFT);
+    pin(c,0,- 1,LEFT);
+    pin(z,NAND_WIDTH,0,RIGHT);
+  }
+
+symbol(ao21) {
+    canonical_name : "Ia2.1b2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(and_gate,- AND_WIDTH, 0,0);
+    sub_symbol(or_gate,0,- 2,0);
+    pin(a,- AND_WIDTH,3,LEFT);
+    pin(b,- AND_WIDTH,1,LEFT);
+    pin(c,OR_EVEN_LEFT_PIN_X,- 1,LEFT);
+    pin(z,OR_WIDTH,0,RIGHT);
+  }
+
+symbol(oa21) {
+    canonical_name : "a2.0b2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(or_gate,- OR_WIDTH,0,0);
+    sub_symbol(and_gate,0,- 2,0);
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1,LEFT);
+    pin(c,0,- 1,LEFT);
+    pin(z,AND_WIDTH,0,RIGHT);
+  }
+
+symbol(aoi22) {
+    canonical_name : "a2.0b2.2b2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(nor_gate,0,- 2,0);
+    sub_symbol(and_gate,- AND_WIDTH, GATE_GAP,0);
+    sub_symbol(and_gate,- AND_WIDTH, - 4 - GATE_GAP,0);
+
+    line(0,2 + GATE_GAP,0,2);
+    line(0,- 2 - GATE_GAP,0,- 2);
+
+    pin(a,- AND_WIDTH,3 + GATE_GAP,LEFT);
+    pin(b,- AND_WIDTH,1 + GATE_GAP,LEFT);
+    pin(c,- AND_WIDTH,- 1 - GATE_GAP,LEFT);
+    pin(d,- AND_WIDTH,- 3 - GATE_GAP,LEFT);
+    pin(z,NOR_WIDTH, 0,RIGHT);
+  }
+
+symbol(oai22) {
+    canonical_name : "Ia2.0b2.0b2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(nand_gate,0,- 2,0);
+    sub_symbol(or_gate,- OR_WIDTH, GATE_GAP,0);
+    sub_symbol(or_gate,- OR_WIDTH, - 4 - GATE_GAP,0);
+
+    line(0,2 + GATE_GAP,0,2);
+    line(0,- 2 - GATE_GAP,0,- 2);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3 + GATE_GAP,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1 + GATE_GAP,LEFT);
+    pin(c,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 1 - GATE_GAP,LEFT);
+    pin(d,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 3 - GATE_GAP,LEFT);
+    pin(z,NAND_WIDTH, 0,RIGHT);
+  }
+
+symbol(ao22) {
+    canonical_name : "Ia2.0b2.2b2.2";
+    canonical_pin_number(a, 2);
+    canonical_pin_number(b, 3);
+    canonical_pin_number(c, 0);
+    canonical_pin_number(d, 1);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(or_gate,0,- 2,0);
+    sub_symbol(and_gate,- AND_WIDTH, GATE_GAP,0);
+    sub_symbol(and_gate,- AND_WIDTH, - 4 - GATE_GAP,0);
+
+    line(0,2 + GATE_GAP,0,2);
+    line(0,- 2 - GATE_GAP,0,- 2);
+
+    pin(a,- AND_WIDTH,3 + GATE_GAP,LEFT);
+    pin(b,- AND_WIDTH,1 + GATE_GAP,LEFT);
+    pin(c,- AND_WIDTH,- 1 - GATE_GAP,LEFT);
+    pin(d,- AND_WIDTH,- 3 - GATE_GAP,LEFT);
+    pin(z,OR_WIDTH, 0,RIGHT);
+  }
+
+symbol(oa22) {
+    canonical_name : "a2.0b2.0b2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(and_gate,0,- 2,0);
+    sub_symbol(or_gate,- OR_WIDTH, GATE_GAP,0);
+    sub_symbol(or_gate,- OR_WIDTH, - 4 - GATE_GAP,0);
+
+    line(0,2 + GATE_GAP,0,2);
+    line(0,- 2 - GATE_GAP,0,- 2);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3 + GATE_GAP,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1 + GATE_GAP,LEFT);
+    pin(c,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 1 - GATE_GAP,LEFT);
+    pin(d,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 3 - GATE_GAP,LEFT);
+    pin(z,AND_WIDTH, 0,RIGHT);
+  }
+
+symbol(aoi221) {
+    sub_symbol(and_gate,- AND_WIDTH, 0,0);
+    sub_symbol(and_gate,- AND_WIDTH, 4 + GATE_GAP,0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,2,0,6 + GATE_GAP);
+
+    pin(a,- AND_WIDTH,7 + GATE_GAP,LEFT);
+    pin(b,- AND_WIDTH,5 + GATE_GAP,LEFT);
+    pin(c,- AND_WIDTH,3,LEFT);
+    pin(d,- AND_WIDTH,1,LEFT);
+    pin(e,OR_EVEN_LEFT_PIN_X,- 1,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(aoi211) {
+    canonical_name : "a3.2b2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(and_gate,- AND_WIDTH, 1,0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,2,0,3);
+    line(0,- 2,0,- 2 - EXTRA_WING_SPAN);
+
+    pin(a,- AND_WIDTH,4,LEFT);
+    pin(b,- AND_WIDTH,2,LEFT);
+    pin(c,OR_ODD_LEFT_PIN_X,0,LEFT);
+    pin(d,0,- 2,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(ao211) {
+    canonical_name : "Ia3.2b2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(and_gate,- AND_WIDTH, 1,0);
+    sub_symbol(or_gate,0,- 2,0);
+
+    line(0,2,0,3);
+    line(0,- 2,0,- 2 - EXTRA_WING_SPAN);
+
+    pin(a,- AND_WIDTH,4,LEFT);
+    pin(b,- AND_WIDTH,2,LEFT);
+    pin(c,OR_ODD_LEFT_PIN_X,0,LEFT);
+    pin(d,0,- 2,LEFT);
+    pin(z,OR_WIDTH,0,RIGHT);
+  }
+
+symbol(oai211) {
+    canonical_name : "Ia3.0b2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(or_gate,- OR_WIDTH, 1,0);
+    sub_symbol(nand_gate,0,- 2,0);
+
+    line(0,2,0,3);
+    line(0,- 2,0,- 2 - EXTRA_WING_SPAN);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,4,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,2,LEFT);
+    pin(c,0,0,LEFT);
+    pin(d,0,- 2,LEFT);
+    pin(z,NAND_WIDTH,0,RIGHT);
+  }
+
+symbol(oa211) {
+    canonical_name : "a3.0b2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(or_gate,- OR_WIDTH, 1,0);
+    sub_symbol(and_gate,0,- 2,0);
+
+    line(0,2,0,3);
+    line(0,- 2,0,- 2 - EXTRA_WING_SPAN);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,4,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,2,LEFT);
+    pin(c,0,0,LEFT);
+    pin(d,0,- 2,LEFT);
+    pin(z,AND_WIDTH,0,RIGHT);
+  }
+
+symbol(and3_gate) {
+    sub_symbol(nd_out,AND_X_ORIGIN, AND_Y_ORIGIN,0);
+    line(0,- EXTRA_WING_SPAN,0,AND_HEIGHT + EXTRA_WING_SPAN);
+  }
+
+symbol(nand3_gate) {
+    sub_symbol(and3_gate,0,0,0);
+    circle(AND_WIDTH + BUBBLE_RADIUS, AND_HEIGHT / 2.0, BUBBLE_RADIUS);
+  }
+
+symbol(or3_gate) {
+    sub_symbol(nr_out,OR_X_ORIGIN,OR_Y_ORIGIN,0);
+
+    line(0,- EXTRA_WING_SPAN,0,0);
+    line(0,OR_HEIGHT,0,OR_HEIGHT + EXTRA_WING_SPAN);
+  }
+
+symbol(nor3_gate) {
+    sub_symbol(nr_out,OR_X_ORIGIN,OR_Y_ORIGIN,0);
+    circle(OR_WIDTH + BUBBLE_RADIUS, OR_HEIGHT / 2.0, BUBBLE_RADIUS);
+
+    line(0,- EXTRA_WING_SPAN,0,0);
+    line(0,OR_HEIGHT,0,OR_HEIGHT + EXTRA_WING_SPAN);
+  }
+
+symbol(aoi31) {
+    canonical_name : "a2.1b3.3";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(and3_gate,- AND_WIDTH,1,0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,2,0,2 + 1);
+
+    pin(a,- AND_WIDTH,5,LEFT);
+    pin(b,- AND_WIDTH,3,LEFT);
+    pin(c,- AND_WIDTH,1,LEFT);
+    pin(d,OR_EVEN_LEFT_PIN_X, - 1,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(aoi222) {
+    canonical_name : "a3.0b2.2b2.2b2.2";
+    canonical_pin_number(a, 2);
+    canonical_pin_number(b, 3);
+    canonical_pin_number(c, 4);
+    canonical_pin_number(d, 5);
+    canonical_pin_number(e, 0);
+    canonical_pin_number(f, 1);
+    canonical_pin_number(z, 6);
+
+    sub_symbol(and_gate,- AND_WIDTH, 2 + GATE_GAP,0);
+    sub_symbol(and_gate,- AND_WIDTH, - 2,0);
+    sub_symbol(and_gate,- AND_WIDTH, - 6 - GATE_GAP,0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,0,OR_ODD_LEFT_PIN_X,0);
+    line(0,4 + GATE_GAP,0,2);
+    line(0,- 4 - GATE_GAP,0,- 2);
+
+    pin(a,- AND_WIDTH, 5 + GATE_GAP,LEFT);
+    pin(b,- AND_WIDTH, 3 + GATE_GAP,LEFT);
+    pin(c,- AND_WIDTH, 1,LEFT);
+    pin(d,- AND_WIDTH, - 1,LEFT);
+    pin(e,- AND_WIDTH, - 3 - GATE_GAP,LEFT);
+    pin(f,- AND_WIDTH, - 5 - GATE_GAP,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(aoi32) {
+    canonical_name : "a2.0b3.3b2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(and3_gate,- AND_WIDTH, 1, 0);
+    sub_symbol(and_gate,- AND_WIDTH, - 5, 0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,3,0,2);
+    line(0,- 3,0,- 2);
+
+    pin(a,- AND_WIDTH, 5,LEFT);
+    pin(b,- AND_WIDTH, 3,LEFT);
+    pin(c,- AND_WIDTH, 1,LEFT);
+    pin(d,- AND_WIDTH, - 2,LEFT);
+    pin(e,- AND_WIDTH, - 4,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(aoi33) {
+    canonical_name : "a2.0b3.3b3.3";
+    canonical_pin_number(a, 3);
+    canonical_pin_number(b, 4);
+    canonical_pin_number(c, 5);
+    canonical_pin_number(d, 0);
+    canonical_pin_number(e, 1);
+    canonical_pin_number(f, 2);
+    canonical_pin_number(z, 6);
+
+    sub_symbol(and3_gate,- AND_WIDTH, 1, 0);
+    sub_symbol(and3_gate,- AND_WIDTH, - 5, 0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,3,0,2);
+    line(0,- 3,0,- 2);
+
+    pin(a,- AND_WIDTH, 5,LEFT);
+    pin(b,- AND_WIDTH, 3,LEFT);
+    pin(c,- AND_WIDTH, 1,LEFT);
+    pin(d,- AND_WIDTH, - 1,LEFT);
+    pin(e,- AND_WIDTH, - 3,LEFT);
+    pin(f,- AND_WIDTH, - 5,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(ao33) {
+    canonical_name : "Ia2.0b3.3b3.3";
+    canonical_pin_number(a, 3);
+    canonical_pin_number(b, 4);
+    canonical_pin_number(c, 5);
+    canonical_pin_number(d, 0);
+    canonical_pin_number(e, 1);
+    canonical_pin_number(f, 2);
+    canonical_pin_number(z, 6);
+
+    sub_symbol(and3_gate,- AND_WIDTH, 1, 0);
+    sub_symbol(and3_gate,- AND_WIDTH, - 5, 0);
+    sub_symbol(or_gate,0,- 2,0);
+
+    line(0,3,0,2);
+    line(0,- 3,0,- 2);
+
+    pin(a,- AND_WIDTH, 5,LEFT);
+    pin(b,- AND_WIDTH, 3,LEFT);
+    pin(c,- AND_WIDTH, 1,LEFT);
+    pin(d,- AND_WIDTH, - 1,LEFT);
+    pin(e,- AND_WIDTH, - 3,LEFT);
+    pin(f,- AND_WIDTH, - 5,LEFT);
+    pin(z,OR_WIDTH,0,RIGHT);
+  }
+
+symbol(aoi333) {
+    canonical_name : "a3.0b3.3b3.3b3.3";
+    canonical_pin_number(a, 6);
+    canonical_pin_number(b, 7);
+    canonical_pin_number(c, 8);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(g, 0);
+    canonical_pin_number(h, 1);
+    canonical_pin_number(i, 2);
+    canonical_pin_number(z, 9);
+
+    sub_symbol(and3_gate,- AND_WIDTH, 4,0);
+    sub_symbol(and3_gate,- AND_WIDTH, - 2,0);
+    sub_symbol(and3_gate,- AND_WIDTH, - 8,0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,6,0,2);
+    line(0,- 6,0,- 2);
+    line(0,0,OR_ODD_LEFT_PIN_X,0);
+
+    pin(a,- AND_WIDTH, 8,LEFT);
+    pin(b,- AND_WIDTH, 6,LEFT);
+    pin(c,- AND_WIDTH, 4,LEFT);
+    pin(d,- AND_WIDTH, 2,LEFT);
+    pin(e,- AND_WIDTH, 0,LEFT);
+    pin(f,- AND_WIDTH, - 2,LEFT);
+    pin(g,- AND_WIDTH, - 4,LEFT);
+    pin(h,- AND_WIDTH, - 6,LEFT);
+    pin(i,- AND_WIDTH, - 8,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(and4_gate) {
+    sub_symbol(nd_out,AND_X_ORIGIN, AND_Y_ORIGIN,0);
+    line(0,- 1 - EXTRA_WING_SPAN,0,1 + AND_HEIGHT + EXTRA_WING_SPAN);
+  }
+
+symbol(aoi444) {
+    canonical_name : "a3.0b4.4b4.4b4.4";
+    canonical_pin_number(a, 8);
+    canonical_pin_number(b, 9);
+    canonical_pin_number(c, 10);
+    canonical_pin_number(d, 11);
+    canonical_pin_number(e, 0);
+    canonical_pin_number(f, 1);
+    canonical_pin_number(g, 2);
+    canonical_pin_number(h, 3);
+    canonical_pin_number(i, 4);
+    canonical_pin_number(j, 5);
+    canonical_pin_number(k, 6);
+    canonical_pin_number(l, 7);
+    canonical_pin_number(z, 12);
+
+    sub_symbol(and4_gate,- AND_WIDTH, 6,0);
+    sub_symbol(and4_gate,- AND_WIDTH, - 2,0);
+    sub_symbol(and4_gate,- AND_WIDTH, - 10,0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,8,0,2);
+    line(0,- 8,0,- 2);
+    line(0,0,OR_ODD_LEFT_PIN_X,0);
+
+    pin(a,- AND_WIDTH, 11,LEFT);
+    pin(b,- AND_WIDTH, 9,LEFT);
+    pin(c,- AND_WIDTH, 7,LEFT);
+    pin(d,- AND_WIDTH, 5,LEFT);
+    pin(e,- AND_WIDTH, 3,LEFT);
+    pin(f,- AND_WIDTH, 1,LEFT);
+    pin(g,- AND_WIDTH, - 1,LEFT);
+    pin(h,- AND_WIDTH, - 3,LEFT);
+    pin(i,- AND_WIDTH, - 5,LEFT);
+    pin(j,- AND_WIDTH, - 7,LEFT);
+    pin(k,- AND_WIDTH, - 9,LEFT);
+    pin(l,- AND_WIDTH, - 11,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+
+symbol(or4_gate) {
+    sub_symbol(nr_out,OR_X_ORIGIN,OR_Y_ORIGIN,0);
+
+    line(0,- 1 - EXTRA_WING_SPAN,0,0);
+    line(0,OR_HEIGHT,0,OR_HEIGHT + EXTRA_WING_SPAN + 1);
+  }
+
+symbol(oai444) {
+    canonical_name : "Ia3.0b4.0b4.0b4.0";
+    canonical_pin_number(a, 4);
+    canonical_pin_number(b, 5);
+    canonical_pin_number(c, 6);
+    canonical_pin_number(d, 7);
+    canonical_pin_number(e, 8);
+    canonical_pin_number(f, 9);
+    canonical_pin_number(g, 10);
+    canonical_pin_number(h, 11);
+    canonical_pin_number(i, 0);
+    canonical_pin_number(j, 1);
+    canonical_pin_number(k, 2);
+    canonical_pin_number(l, 3);
+    canonical_pin_number(z, 12);
+
+    sub_symbol(or4_gate,- OR_WIDTH, 6,0);
+    sub_symbol(or4_gate,- OR_WIDTH, - 2,0);
+    sub_symbol(or4_gate,- OR_WIDTH, - 10,0);
+    sub_symbol(nand_gate,0,- 2,0);
+
+    line(0,8,0,2);
+    line(0,- 8,0,- 2);
+
+    pin(a,- OR_WIDTH, 11,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X, 9,LEFT);
+    pin(c,- OR_WIDTH + OR_EVEN_LEFT_PIN_X, 7,LEFT);
+    pin(d,- OR_WIDTH, 5,LEFT);
+    pin(e,- OR_WIDTH, 3,LEFT);
+    pin(f,- OR_WIDTH + OR_EVEN_LEFT_PIN_X, 1,LEFT);
+    pin(g,- OR_WIDTH + OR_EVEN_LEFT_PIN_X, - 1,LEFT);
+    pin(h,- OR_WIDTH, - 3,LEFT);
+    pin(i,- OR_WIDTH, - 5,LEFT);
+    pin(j,- OR_WIDTH + OR_EVEN_LEFT_PIN_X, - 7,LEFT);
+    pin(k,- OR_WIDTH + OR_EVEN_LEFT_PIN_X, - 9,LEFT);
+    pin(l,- OR_WIDTH, - 11,LEFT);
+    pin(z,NAND_WIDTH,0,RIGHT);
+  }
+
+symbol(aoi42) {
+    canonical_name : "a2.0b4.4b2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(z, 6);
+
+    sub_symbol(and4_gate,- AND_WIDTH,1,0);
+    sub_symbol(and_gate,- AND_WIDTH,- 5 - ceil(EXTRA_WING_SPAN),0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,3,0,2);
+    line(0,- 2,0,- 3 - ceil(EXTRA_WING_SPAN));
+
+    pin(a,- AND_WIDTH, 6, LEFT);
+    pin(b,- AND_WIDTH, 4, LEFT);
+    pin(c,- AND_WIDTH, 2, LEFT);
+    pin(d,- AND_WIDTH, 0, LEFT);
+    pin(e,- AND_WIDTH, - 2 - ceil(EXTRA_WING_SPAN), LEFT);
+    pin(f,- AND_WIDTH, - 4 - ceil(EXTRA_WING_SPAN), LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(oai31) {
+    canonical_name : "Ia2.0b3.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(or3_gate,- OR_WIDTH,1,0);
+    sub_symbol(nand_gate,0,- 2,0);
+
+    line(0,3,0,2);
+
+    pin(a,- OR_WIDTH,5,LEFT);
+    pin(b,- OR_WIDTH + OR_ODD_LEFT_PIN_X,3,LEFT);
+    pin(c,- OR_WIDTH,1,LEFT);
+    pin(d,0,- 1,LEFT);
+    pin(z,NAND_WIDTH,0,RIGHT);
+  }
+
+symbol(aoai211) {
+    canonical_name : "Ia2.0b2.0c2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(and_gate,- AND_WIDTH,0,0);
+    sub_symbol(or_gate,0,- 2,0);
+    sub_symbol(nand_gate,OR_WIDTH,- 4,0);
+
+    pin(a,- AND_WIDTH,3,LEFT);
+    pin(b,- AND_WIDTH,1,LEFT);
+    pin(c,OR_EVEN_LEFT_PIN_X,- 1,LEFT);
+    pin(d,OR_WIDTH,- 3,LEFT);
+    pin(z,OR_WIDTH + NAND_WIDTH,- 2,RIGHT);
+  }
+
+symbol(aoa211) {
+    sub_symbol(and_gate,- AND_WIDTH,0,0);
+    sub_symbol(or_gate,0,- 2,0);
+    sub_symbol(and_gate,OR_WIDTH,- 4,0);
+
+    pin(a,- AND_WIDTH,3,LEFT);
+    pin(b,- AND_WIDTH,1,LEFT);
+    pin(c,OR_EVEN_LEFT_PIN_X,- 1,LEFT);
+    pin(d,OR_WIDTH,- 3,LEFT);
+    pin(z,OR_WIDTH + AND_WIDTH,- 2,RIGHT);
+  }
+
+symbol(oao211) {
+    canonical_name : "Ia2.1b2.1c2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(or_gate,- OR_WIDTH,0,0);
+    sub_symbol(and_gate,0,- 2,0);
+    sub_symbol(or_gate,AND_WIDTH,- 4,0);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1,LEFT);
+    pin(c,0,- 1,LEFT);
+    pin(d,AND_WIDTH + OR_EVEN_LEFT_PIN_X,- 3,LEFT);
+    pin(z,AND_WIDTH + OR_WIDTH,- 2,RIGHT);
+  }
+
+symbol(oai2111) {
+    canonical_name : "Ia4.0b2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(or_gate,- OR_WIDTH,0,0);
+    sub_symbol(nand_gate,0,- 2,0);
+
+    line(0,- 2,0,- 5 - EXTRA_WING_SPAN);
+
+    pin(a,- OR_WiDTH + OR_EVEN_LEFT_PIN_X,3,LEFT);
+    pin(b,- OR_WiDTH + OR_EVEN_LEFT_PIN_X,1,LEFT);
+    pin(c,0,- 1,LEFT);
+    pin(d,0,- 3,LEFT);
+    pin(e,0,- 5,LEFT);
+    pin(z,NAND_WIDTH,0,RIGHT);
+  }
+
+symbol(oaoi211) {
+    canonical_name : "a2.1b2.1c2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    sub_symbol(or_gate,- OR_WIDTH,0,0);
+    sub_symbol(and_gate,0,- 2,0);
+    sub_symbol(nor_gate,AND_WIDTH,- 4,0);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1,LEFT);
+    pin(c,0,- 1,LEFT);
+    pin(d,AND_WIDTH + OR_EVEN_LEFT_PIN_X,- 3,LEFT);
+    pin(z,AND_WIDTH + NOR_WIDTH,- 2,RIGHT);
+  }
+
+symbol(aoi311) {
+    canonical_name : "a3.2b3.3";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(and3_gate,- AND_WIDTH,0,0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,- 2,0,- 4 - EXTRA_WING_SPAN);
+
+    pin(a,- AND_WIDTH,4,LEFT);
+    pin(b,- AND_WIDTH,2,LEFT);
+    pin(c,- AND_WIDTH,0,LEFT);
+    pin(d,0,- 2,LEFT);
+    pin(e,0,- 4,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(qen) {
+    canonical_name : "Ia2.0b2.0b2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    MAX_WIDTH = maximum(NAND_WIDTH, OR_WIDTH);
+
+    sub_symbol(or_gate,- MAX_WIDTH, GATE_GAP, 0);
+    sub_symbol(nand_gate,- MAX_WIDTH, - 4 - GATE_GAP,0);
+    sub_symbol(nand_gate,2,- 2,0);
+
+    line( - MAX_WIDTH + OR_WIDTH,2 + GATE_GAP,1,2 + GATE_GAP);
+    line( - MAX_WIDTH + NAND_WIDTH,- 2 - GATE_GAP,1,- 2 - GATE_GAP);
+    line(1,2 + GATE_GAP, 1,1);
+    line(1,- 2 - GATE_GAP, 1,- 1);
+    line(1,1,2,1);
+    line(1,- 1,2,- 1);
+
+    pin(a,- MAX_WIDTH + OR_EVEN_LEFT_PIN_X,3 + GATE_GAP,LEFT);
+    pin(b,- MAX_WIDTH + OR_EVEN_LEFT_PIN_X,1 + GATE_GAP,LEFT);
+    pin(c,- MAX_WIDTH,- 1 - GATE_GAP,LEFT);
+    pin(d,- MAX_WIDTH,- 3 - GATE_GAP,LEFT);
+    pin(z,NAND_WIDTH + 2, 0, RIGHT);
+  }
+
+symbol(qeo) {
+    canonical_name : "a2.0b2.2b2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(z, 4);
+
+    MAX_WIDTH = maximum(NOR_WIDTH, AND_WIDTH);
+
+    sub_symbol(and_gate,- MAX_WIDTH, GATE_GAP, 0);
+    sub_symbol(nor_gate,- MAX_WIDTH, - 4 - GATE_GAP,0);
+    sub_symbol(nor_gate,2,- 2,0);
+
+    line( - MAX_WIDTH + AND_WIDTH,2 + GATE_GAP,1,2 + GATE_GAP);
+    line( - MAX_WIDTH + NOR_WIDTH,- 2 - GATE_GAP,1,- 2 - GATE_GAP);
+    line(1,2 + GATE_GAP, 1,1);
+    line(1,- 2 - GATE_GAP, 1,- 1);
+    line(1,1,2 + OR_EVEN_LEFT_PIN_X,1);
+    line(1,- 1,2 + OR_EVEN_LEFT_PIN_X,- 1);
+
+    pin(a,- MAX_WIDTH,3 + GATE_GAP,LEFT);
+    pin(b,- MAX_WIDTH,1 + GATE_GAP,LEFT);
+    pin(c,- MAX_WIDTH + OR_EVEN_LEFT_PIN_X,- 1 - GATE_GAP,LEFT);
+    pin(d,- MAX_WIDTH + OR_EVEN_LEFT_PIN_X,- 3 - GATE_GAP,LEFT);
+    pin(z,NOR_WIDTH + 2, 0, RIGHT);
+  }
+
+symbol(buf1x) {
+    canonical_name : "a1.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(z, 1);
+
+    sub_symbol(triangle,0,0,0);
+
+    pin(a,INVERTER_LEFT_X, INVERTER_MIDDLE_Y, LEFT);
+    pin(z,INVERTER_RIGHT_X, INVERTER_MIDDLE_Y, RIGHT);
+  }
+
+symbol(aoai311) {
+    canonical_name : "Ia2.0b2.0c3.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(and3_gate,- AND_WIDTH,1,0);
+    sub_symbol(or_gate,0,- 2,0);
+    sub_symbol(nand_gate,OR_WIDTH,- 4,0);
+
+    line(0,3,0,2);
+
+    pin(a,- AND_WIDTH,5,LEFT);
+    pin(b,- AND_WIDTH,3,LEFT);
+    pin(c,- AND_WIDTH,1,LEFT);
+    pin(d,OR_EVEN_LEFT_PIN_X,- 1,LEFT);
+    pin(e,OR_WIDTH,- 3,LEFT);
+    pin(z,OR_WIDTH + NAND_WIDTH,- 2,RIGHT);
+  }
+
+symbol(aoai221) {
+    canonical_name : "Ia2.0b3.0c2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(and_gate,- AND_WIDTH,0,0);
+    sub_symbol(or_gate,0,- 2,0);
+    sub_symbol(nand_gate,OR_WIDTH,- 6,0);
+
+    line(OR_WIDTH,0,OR_WIDTH,- 2);
+    line(0,- 2,0,- 3 - EXTRA_WING_SPAN);
+
+    pin(a,- AND_WIDTH,3,LEFT);
+    pin(b,- AND_WIDTH,1,LEFT);
+    pin(c,OR_EVEN_LEFT_PIN_X,- 1,LEFT);
+    pin(d,0,- 3,LEFT);
+    pin(e,OR_WIDTH,- 5,LEFT);
+    pin(z,OR_WIDTH + NAND_WIDTH,- 4,RIGHT);
+  }
+
+symbol(aoai212) {
+    canonical_name : "Ia3.0b2.0c2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(and_gate,- AND_WIDTH,0,0);
+    sub_symbol(or_gate,0,- 2,0);
+    sub_symbol(nand_gate,OR_WIDTH,- 4,0);
+
+    line(OR_WIDTH,- 4,OR_WIDTH,- 5 - EXTRA_WING_SPAN);
+
+    pin(a,- AND_WIDTH,3,LEFT);
+    pin(b,- AND_WIDTH,1,LEFT);
+    pin(c,OR_EVEN_LEFT_PIN_X,- 1,LEFT);
+    pin(d,OR_WIDTH,- 3,LEFT);
+    pin(e,OR_WIDTH,- 5,LEFT);
+    pin(z,OR_WIDTH + NAND_WIDTH,- 2,RIGHT);
+  }
+
+symbol(oaoi311) {
+    canonical_name : "a2.1b2.1c3.3";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(or3_gate,- OR_WIDTH,1,0);
+    sub_symbol(and_gate,0,- 2,0);
+    sub_symbol(nor_gate,AND_WIDTH,- 4,0);
+
+    line(0,3,0,2);
+
+    pin(a,- OR_WIDTH,5,LEFT);
+    pin(b,- OR_WIDTH + OR_ODD_LEFT_PIN_X,3,LEFT);
+    pin(c,- OR_WIDTH,1,LEFT);
+    pin(d,0,- 1,LEFT);
+    pin(e,AND_WIDTH + OR_EVEN_LEFT_PIN_X,- 3,LEFT);
+    pin(z,AND_WIDTH + NOR_WIDTH,- 2,RIGHT);
+  }
+
+symbol(oaoi221) {
+    canonical_name : "a2.1b3.2c2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(or_gate,- OR_WIDTH,0,0);
+    sub_symbol(and_gate,0,- 2,0);
+    sub_symbol(nor_gate,AND_WIDTH,- 6,0);
+
+    line(AND_WIDTH,0,AND_WIDTH,- 2);
+    line(0,- 2,0,- 3 - EXTRA_WING_SPAN);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1,LEFT);
+    pin(c,0,- 1,LEFT);
+    pin(d,0,- 3,LEFT);
+    pin(e,AND_WIDTH + OR_EVEN_LEFT_PIN_X,- 5,LEFT);
+    pin(z,AND_WIDTH + NOR_WIDTH,- 4,RIGHT);
+  }
+
+symbol(oaoi212) {
+    canonical_name : "a3.2b2.1c2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(or_gate,- OR_WIDTH,0,0);
+    sub_symbol(and_gate,0,- 2,0);
+    sub_symbol(nor_gate,AND_WIDTH,- 4,0);
+
+    line(AND_WIDTH,- 4,AND_WIDTH,- 5 - EXTRA_WING_SPAN);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1,LEFT);
+    pin(c,0,- 1,LEFT);
+    pin(d,AND_WIDTH + OR_EVEN_LEFT_PIN_X,- 3,LEFT);
+    pin(e,AND_WIDTH,- 5,LEFT);
+    pin(z,AND_WIDTH + NOR_WIDTH,- 2,RIGHT);
+  }
+
+symbol(maji_2of3) {
+    canonical_name : "maj23";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(z, 3);
+
+    sub_symbol(and_gate,- AND_WIDTH, 2 + GATE_GAP,0);
+    sub_symbol(and_gate,- AND_WIDTH, - 2,0);
+    sub_symbol(and_gate,- AND_WIDTH, - 6 - GATE_GAP,0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,0,OR_ODD_LEFT_PIN_X,0);
+    line(0,4 + GATE_GAP,0,2);
+    line(0,- 4 - GATE_GAP,0,- 2);
+
+    line( - AND_WIDTH,5 + GATE_GAP,- AND_WIDTH - 1,5 + GATE_GAP);
+    line( - AND_WIDTH - 1,5 + GATE_GAP,- AND_WIDTH - 1,1);
+    line( - AND_WIDTH - 1,1,- AND_WIDTH,1);
+
+    line( - AND_WIDTH,- 5 - GATE_GAP,- AND_WIDTH - 1,- 5 - GATE_GAP);
+    line( - AND_WIDTH - 1,- 5 - GATE_GAP,- AND_WIDTH - 1,- 1);
+    line( - AND_WIDTH - 1,- 1,- AND_WIDTH,- 1);
+
+    line( - AND_WIDTH,3 + GATE_GAP,- AND_WIDTH - 2,3 + GATE_GAP);
+    line( - AND_WIDTH - 2,3 + GATE_GAP,- AND_WIDTH - 2,- 3 - GATE_GAP);
+    line( - AND_WIDTH,- 3 - GATE_GAP,- AND_WIDTH - 2,- 3 - GATE_GAP);
+
+    pin(a,- AND_WIDTH - 1, 5 + GATE_GAP,LEFT);
+    pin(b,- AND_WIDTH - 2, 0,LEFT);
+    pin(c,- AND_WIDTH - 1, - 5 - GATE_GAP,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(aoi2222) {
+    canonical_name : "a4.0b2.2b2.2b2.2b2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 6);
+    canonical_pin_number(d, 7);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(f, 5);
+    canonical_pin_number(g, 2);
+    canonical_pin_number(h, 3);
+    canonical_pin_number(z, 8);
+
+    sub_symbol(and_gate,- AND_WIDTH,4 + 3 * GATE_GAP,0);
+    sub_symbol(and_gate,- AND_WIDTH,GATE_GAP,0);
+    sub_symbol(and_gate,- AND_WIDTH,- 4 - GATE_GAP,0);
+    sub_symbol(and_gate,- AND_WIDTH,- 8 - 3 * GATE_GAP,0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,- 6 - 3 * GATE_GAP,0,- 2);
+    line(0,6 + 3 * GATE_GAP,0,2);
+
+    pin(a,- AND_WIDTH,7 + 3 * GATE_GAP,LEFT);
+    pin(b,- AND_WIDTH,5 + 3 * GATE_GAP,LEFT);
+    pin(c,- AND_WIDTH,3 + GATE_GAP,LEFT);
+    pin(d,- AND_WIDTH,1 + GATE_GAP,LEFT);
+    pin(e,- AND_WIDTH,- 1 - GATE_GAP,LEFT);
+    pin(f,- AND_WIDTH,- 3 - GATE_GAP,LEFT);
+    pin(g,- AND_WIDTH,- 5 - 3 * GATE_GAP,LEFT);
+    pin(h,- AND_WIDTH,- 7 - 3 * GATE_GAP,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+
+symbol(oa2222) {
+    canonical_name : "a4.0b2.0b2.0b2.0b2.0";
+    canonical_pin_number(a, 6);
+    canonical_pin_number(b, 7);
+    canonical_pin_number(c, 0);
+    canonical_pin_number(d, 1);
+    canonical_pin_number(e, 2);
+    canonical_pin_number(f, 3);
+    canonical_pin_number(g, 4);
+    canonical_pin_number(h, 5);
+    canonical_pin_number(z, 8);
+
+    sub_symbol(or_gate,- OR_WIDTH,4 + 3 * GATE_GAP,0);
+    sub_symbol(or_gate,- OR_WIDTH,GATE_GAP,0);
+    sub_symbol(or_gate,- OR_WIDTH,- 4 - GATE_GAP,0);
+    sub_symbol(or_gate,- OR_WIDTH,- 8 - 3 * GATE_GAP,0);
+    sub_symbol(and_gate,0,- 2,0);
+
+    line(0,- 6 - 3 * GATE_GAP,0,- 2);
+    line(0,6 + 3 * GATE_GAP,0,2);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,7 + 3 * GATE_GAP,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,5 + 3 * GATE_GAP,LEFT);
+    pin(c,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3 + GATE_GAP,LEFT);
+    pin(d,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1 + GATE_GAP,LEFT);
+    pin(e,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 1 - GATE_GAP,LEFT);
+    pin(f,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 3 - GATE_GAP,LEFT);
+    pin(g,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 5 - 3 * GATE_GAP,LEFT);
+    pin(h,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 7 - 3 * GATE_GAP,LEFT);
+    pin(z,AND_WIDTH,0,RIGHT);
+  }
+
+symbol(oai2222) {
+    canonical_name : "Ia4.0b2.0b2.0b2.0b2.0";
+    canonical_pin_number(a, 4);
+    canonical_pin_number(b, 5);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 0);
+    canonical_pin_number(f, 1);
+    canonical_pin_number(g, 6);
+    canonical_pin_number(h, 7);
+    canonical_pin_number(z, 8);
+
+    sub_symbol(or_gate,- OR_WIDTH,4 + 3 * GATE_GAP,0);
+    sub_symbol(or_gate,- OR_WIDTH,GATE_GAP,0);
+    sub_symbol(or_gate,- OR_WIDTH,- 4 - GATE_GAP,0);
+    sub_symbol(or_gate,- OR_WIDTH,- 8 - 3 * GATE_GAP,0);
+    sub_symbol(nand_gate,0,- 2,0);
+
+    line(0,- 6 - 3 * GATE_GAP,0,- 2);
+    line(0,6 + 3 * GATE_GAP,0,2);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,7 + 3 * GATE_GAP,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,5 + 3 * GATE_GAP,LEFT);
+    pin(c,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3 + GATE_GAP,LEFT);
+    pin(d,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1 + GATE_GAP,LEFT);
+    pin(e,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 1 - GATE_GAP,LEFT);
+    pin(f,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 3 - GATE_GAP,LEFT);
+    pin(g,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 5 - 3 * GATE_GAP,LEFT);
+    pin(h,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 7 - 3 * GATE_GAP,LEFT);
+    pin(z,NAND_WIDTH,0,RIGHT);
+  }
+
+symbol(oai222) {
+    canonical_name : "Ia3.0b2.0b2.0b2.0";
+    canonical_pin_number(a, 2);
+    canonical_pin_number(b, 3);
+    canonical_pin_number(c, 4);
+    canonical_pin_number(d, 5);
+    canonical_pin_number(e, 0);
+    canonical_pin_number(f, 1);
+    canonical_pin_number(z, 6);
+
+    sub_symbol(or_gate,- OR_WIDTH,2 + GATE_GAP,0);
+    sub_symbol(or_gate,- OR_WIDTH,- 2,0);
+    sub_symbol(or_gate,- OR_WIDTH,- 6 - GATE_GAP,0);
+    sub_symbol(nand_gate,0,- 2,0);
+
+    line(0,- 4 - GATE_GAP,0,- 2);
+    line(0,4 + GATE_GAP,0,2);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,5 + GATE_GAP,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3 + GATE_GAP,LEFT);
+    pin(c,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1,LEFT);
+    pin(d,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 1,LEFT);
+    pin(e,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 3 - GATE_GAP,LEFT);
+    pin(f,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 5 - GATE_GAP,LEFT);
+    pin(z,NAND_WIDTH,0,RIGHT);
+  }
+
+symbol(oai223) {
+    canonical_name : "Ia3.0b3.0b2.0b2.0";
+    canonical_pin_number(a, 5);
+    canonical_pin_number(b, 6);
+    canonical_pin_number(c, 3);
+    canonical_pin_number(d, 4);
+    canonical_pin_number(e, 0);
+    canonical_pin_number(f, 1);
+    canonical_pin_number(g, 2);
+    canonical_pin_number(z, 7);
+
+    sub_symbol(or_gate,- OR_WIDTH,2 + GATE_GAP,0);
+    sub_symbol(or_gate,- OR_WIDTH,- 2,0);
+    sub_symbol(or3_gate,- OR_WIDTH,- 7 - GATE_GAP,0);
+    sub_symbol(nand_gate,0,- 2,0);
+
+    line(0,- 5 - GATE_GAP,0,- 2);
+    line(0,4 + GATE_GAP,0,2);
+
+    pin(a,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,5 + GATE_GAP,LEFT);
+    pin(b,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,3 + GATE_GAP,LEFT);
+    pin(c,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,1,LEFT);
+    pin(d,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 1,LEFT);
+    pin(e,- OR_WIDTH,- 3 - GATE_GAP,LEFT);
+    pin(f,- OR_WIDTH + OR_ODD_LEFT_PIN_X,- 5 - GATE_GAP,LEFT);
+    pin(g,- OR_WIDTH,- 7 - GATE_GAP,LEFT);
+    pin(z,NAND_WIDTH,0,RIGHT);
+  }
+
+symbol(oai311) {
+    canonical_name : "Ia3.0b3.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(or3_gate,- OR_WIDTH,0,0);
+    sub_symbol(nand_gate,0,- 2,0);
+
+    line(0,- 2,0,- 4 - EXTRA_WING_SPAN);
+
+    pin(a,- OR_WIDTH,4,LEFT);
+    pin(b,- OR_WIDTH + OR_ODD_LEFT_PIN_X,2,LEFT);
+    pin(c,- OR_WIDTH,0,LEFT);
+    pin(d,0,- 2,LEFT);
+    pin(e,0,- 4,LEFT);
+    pin(z,NAND_WIDTH,0,RIGHT);
+  }
+
+symbol(oai32) {
+    canonical_name : "Ia2.0b3.0b2.0";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(or3_gate,- OR_WIDTH,1,0);
+    sub_symbol(or_gate,- OR_WIDTH,- 5,0);
+    sub_symbol(nand_gate,0,- 2,0);
+
+    line(0,3,0,2);
+    line(0,- 3,0,- 2);
+
+    pin(a,- OR_WIDTH,5,LEFT);
+    pin(b,- OR_WIDTH + OR_ODD_LEFT_PIN_X,3,LEFT);
+    pin(c,- OR_WIDTH,1,LEFT);
+    pin(d,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 2,LEFT);
+    pin(e,- OR_WIDTH + OR_EVEN_LEFT_PIN_X,- 4,LEFT);
+    pin(z,NAND_WIDTH, 0, RIGHT);
+  }
+
+symbol(aoi2111) {
+    canonical_name : "a4.3b2.2";
+    canonical_pin_number(a, 0);
+    canonical_pin_number(b, 1);
+    canonical_pin_number(c, 2);
+    canonical_pin_number(d, 3);
+    canonical_pin_number(e, 4);
+    canonical_pin_number(z, 5);
+
+    sub_symbol(and_gate,- AND_WIDTH, 0,0);
+    sub_symbol(nor_gate,0,- 2,0);
+
+    line(0,- 2,0,- 5 - EXTRA_WING_SPAN);
+
+    pin(a,- AND_WIDTH,3,LEFT);
+    pin(b,- AND_WIDTH,1,LEFT);
+    pin(c,OR_EVEN_LEFT_PIN_X,- 1,LEFT);
+    pin(d,0,- 3,LEFT);
+    pin(e,0,- 5,LEFT);
+    pin(z,NOR_WIDTH,0,RIGHT);
+  }
+}

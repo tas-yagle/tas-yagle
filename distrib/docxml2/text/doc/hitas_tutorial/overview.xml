@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Overview</title>
+<p>This tutorial describes the use of &tool; Static Timing Analysis and Signal Integrity Analysis platform. The main purpose of this tutorial is to show the ability of the HiTAS platform to analyze designs at transistor level.</p>
+<p>This tutorial explains how to set-up a complete Timing and SI verification flow for each component of the design, and then for the top-level. The verification flow includes the following steps:</p>
+<list>
+<item>Build a homogeneous database for each component</item>
+<item>Perform a first analysis of timing paths</item>
+<item>Integrate interface constraints</item>
+<item>Perform Timing Constraint checks (setup/hold)</item>
+<item>Perform a SI analysis</item>
+<!-- <item>Generate an abstracted model of the top-level</item> -->
+</list>
+<p>The verification process is detailed in the following diagram:</p>
+<imgsize namehtml="img2.gif" namepdf="img2.gif" wpdf="250pt" hpdf="280pt"/>
+
+</section>
+
+</chapter>
+

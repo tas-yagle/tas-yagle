@@ -1,0 +1,36 @@
+
+void begCreateModel(char *name);
+void begCreatePort(char *name, char direction);
+void begCreateModelFromConnectors(char *name, List *connectors);
+void begCreateModelInterface(char *name);
+void begCreateInterface();
+void begRenameSignalsFromModel();
+void begAddAllInstanceModels(int compact);
+void begAssign_sub(char *name, char *expr, TimeValue delay, TimeValue delayr, TimeValue delayf, char *delayvar, int flags);
+void begAddBusDriver_sub(char *name, char *condition, char *value, TimeValue delay, TimeValue delayr, TimeValue delayf, char *delayvar, int flags);
+void begAddBusElse_sub(char *name, char *condition, char *value, TimeValue delay, TimeValue delayr, TimeValue delayf, char *delayvar, int flags);
+void begAddBusDriverLoop(char *name, char *condition, char *value, char *loopvar, int delay, char *delayvar);
+void begAddBusDriverDoubleLoop(char *name, char *condition, char *value, char *loopvar1, char *loopvar2, int delay, char *delayvar);
+void begAddMemDriver_sub(char *name, char *condition, char *value, TimeValue delay, TimeValue delayr, TimeValue delayf, char *delayvar, int flags);
+void begAddMemDriverLoop(char *name, char *condition, char *value, char *loopvar, int delay, char *delayvar);
+void begAddMemDriverDoubleLoop(char *name, char *condition, char *value, char *loopvar1, char *loopvar2, int delay, char *delayvar);
+void begAddMemElse_sub(char *name, char *condition, char *value, TimeValue delay, TimeValue delayr, TimeValue delayf, char *delayvar, int flags);
+void begSaveModel();
+void begKeepModel();
+void begDestroyModel();
+char *begVectorize(char *radical, int index);
+char *begVarVectorize(char *radical, char *var);
+char *begVectorRange(char *radical, int left, int right);
+void begAddWarningCheck(char *testexpr, char *message);
+void begAddErrorCheck(char *testexpr, char *message);
+void begSort();
+void begCompact();
+void begSetDelay(char *varname, int value);
+void begBuildModel();
+void begBuildCompactModel();
+void begBiterize();
+void begAddSelectDriver(char *name, char *select, char *when ,char *value, int delay, char *delayvar);
+void begExport(char *name);
+void begImport(char *name);
+void begSwitchMode();
+

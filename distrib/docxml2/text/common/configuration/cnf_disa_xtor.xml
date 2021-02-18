@@ -1,0 +1,48 @@
+<glossary>
+<row type="split"><article><index>yagSimpleOrientation</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Activates a simple transistor orientation heuristic. Can sometimes accelerate 
+the disassembly, however, it is more robust to rely exclusively upon the functional analysis. 
+</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagUseNameOrientation</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Exploits the <f>_s</f> naming convention for transistor orientation. 
+</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagBlockBidirectional</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Bidirectional transistors are not allowed.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagCapacitanceCones</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default. Build cones on nodes with only capacitances. Necessary to calculate the out of path capacitance.</def></row>
+<row><article><f>no</f></article><def>Disables construction of cones on only capacitance nodes.</def></row> 
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagTestTransistorDiodes</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default. Any transistor with the gate shorted to a source or a drain is considered as a diode.</def></row>
+<row><article><f>no</f></article><def>Disables diode detection.</def></row> 
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagMutexHelp</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>A file with extension '.mutex' is generated containing help for MUTEX settings on external pins or memory nodes necessary to correctly orient the transistors.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+</glossary>
+

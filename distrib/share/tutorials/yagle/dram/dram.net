@@ -1,0 +1,249 @@
+
+.include ../techno/bsim4_dummy.hsp
+
+.temp 25
+
+.global vdd
+.global vss
+.global vddprch
+
+.param g_l=0.1u
+.param g_w=0.6u
+.param cellcapa=100ff
+.param pi_r=5000
+.param pi_c=0.5pf
+
+
+vvdd vdd 0 1v
+vvss vss 0 0v
+vvddprch vddprch 0 0.6v
+
+.subckt inv i o
++ l=0.1u w=0.6u
+mn vss i o vss tn l=l w=w
+mp vdd i o vdd tp l=l w='w*2'
+.ends
+
+.subckt nand a b o
++ w=1u l=0.08u
+Mn1 o a int vss TN w='w' l=l
+Mn2 int b vss vss TN w='w' l=l
+Mp1 o a vdd vdd TP w='w*2' l=l
+Mp2 o b vdd vdd TP w='w*2' l=l
+.ends
+
+.subckt nor a b o
++ w=1u l=0.08u
+Mp1 o a int vdd TP w='w*2' l=l
+Mp2 int b vdd vdd TP w='w*2' l=l
+Mn1 o a vss vss TN w='w' l=l
+Mn2 o b vss vss TN w='w' l=l
+.ends
+
+.subckt delay a o
++ w=1u l=0.08u
+Mp1 o a int0 vdd TP w='w*2' l=l
+Mp2 int0 a int1 vdd TP w='w*2' l=l
+Mp3 int1 a vdd vdd TP w='w*2' l=l
+Mn1 o a int0s vss TN w='w*2' l=l
+Mn2 int0s a int1s vss TN w='w*2' l=l
+Mn3 int1s a vss vss TN w='w*2' l=l
+.ends
+
+.subckt switch i o cp cn
++ w=1u l=0.08u
+Mp1 o cp i vdd TP w='w*2' l=l
+Mn1 o cn i vss TN w='w' l=l
+.ends
+
+.subckt buff i o
+xb0 i r inv
+xb1 r o inv
+.ends
+
+.subckt prech bl blb prch
++ w=1u l=0.08u
+Mp1 bl prch blb vddprch TP w='w*2' l=l
+Mp2 vddprch prch blb vddprch TP w='w*2' l=l
+Mp3 vddprch prch bl vddprch TP w='w*2' l=l
+.ends
+
+.subckt xor i0 i1 q
++ w=1u l=0.08u
+Mtr_00012 vdd i1 sig6 vdd TP w='w*2' l=l
+Mtr_00011 sig6 sig5 q vdd TP w='w*2' l=l
+Mtr_00010 sig6 i0 vdd vdd TP w='w*2' l=l
+Mtr_00009 q sig9 sig6 vdd TP w='w*2' l=l
+Mtr_00008 vdd i0 sig5 vdd TP w='w*2' l=l
+Mtr_00007 sig9 i1 vdd vdd TP w='w*2' l=l
+Mtr_00006 vss i0 sig2 vss TN w='w' l=l
+Mtr_00005 sig2 i1 q vss TN w='w' l=l
+Mtr_00004 q sig5 sig3 vss TN w='w' l=l
+Mtr_00003 sig3 sig9 vss vss TN w='w' l=l
+Mtr_00002 vss i1 sig9 vss TN w='w' l=l
+Mtr_00001 sig5 i0 vss vss TN w='w' l=l
+.ends
+
+.subckt sensamp bl0 blb0 bl1 blb1 wlen0 wlen1 prech saen bl blb eq0 eq1 blen
+
+Mn1 bl0 wlen0 bl_in vss TN w='g_w' l=g_l
+Mn2 blb0 wlen0 blb_in vss TN w='g_w' l=g_l
+Mn3 bl1 wlen1 bl_in vss TN w='g_w' l=g_l
+Mn4 blb1 wlen1 blb_in vss TN w='g_w' l=g_l
+xprechsa bl_in blb_in prech prech
+
+Mneq0 bl0 eq0 blb0 vss TN w='g_w' l=g_l
+Mneq1 bl1 eq1 blb1 vss TN w='g_w' l=g_l
+
+Mn5 bl_in blb_in tozero vss TN w='g_w' l=g_l
+Mn6 blb_in bl_in tozero vss TN w='g_w' l=g_l
+Mn7 vss saen tozero vss TN w='g_w' l=g_l
+
+Mp8 bl_in blb_in toone vdd TP w='g_w' l=g_l
+Mp9 blb_in bl_in toone vdd TP w='g_w' l=g_l
+Mp10 vdd saenb toone vdd TP w='g_w' l=g_l
+
+xinvsaen saen saenb inv
+
+Mn11 bl blen bl_in vss TN w='g_w' l=g_l
+Mn12 blb blen blb_in vss TN w='g_w' l=g_l
+
+.ends
+
+.subckt pi a b r='pi_r' c='pi_c'
+r1 a b 'r'
+c1 a 0 'c/2'
+c2 b 0 'c/2'
+.ends
+
+.subckt cells bl0_up blb0_up bl1_dn blb1_dn wl0 wl1
+
+Mn1 bl0_up wl0 mem00 vss TN w='g_w' l=g_l
+cmem00 mem00 0 'cellcapa'
+Mn2 blb0_dn wl1 mem01 vss TN w='g_w' l=g_l
+cmem01 mem01 0 'cellcapa'
+Mn3 blb0_up vss vss vss TN w='g_w' l=g_l
+Mn4 bl0_dn vss vss vss TN w='g_w' l=g_l
+
+xpi0 bl0_up bl0_dn pi
+xpi0b blb0_up blb0_dn pi
+
+Mn5 bl1_up wl0 mem10 vss TN w='g_w' l=g_l
+cmem10 mem10 0 'cellcapa'
+Mn6 blb1_dn wl1 mem11 vss TN w='g_w' l=g_l
+cmem11 mem11 0 'cellcapa'
+Mn7 blb1_up vss vss vss TN w='g_w' l=g_l
+Mn8 bl1_dn vss vss vss TN w='g_w' l=g_l
+
+xpi1 bl1_up bl1_dn pi
+xpi1b blb1_up blb1_dn pi
+
+.ends
+
+.subckt writecell i in inb wen
+xinv i ib inv
+xinv i ib0 inv
+xinv ib0 ib0b inv
+xinvw wen wenb inv
+xswitchi ib0b in wenb wen switch
+xswitchib ib inb wenb wen switch
+.ends
+
+.subckt tristate p n o
++ w=1u l=0.08u
+Mp1 o p vdd vdd TP w='w*2' l=l
+Mn1 o n vss vss TN w='w' l=l
+.ends
+
+.subckt latch din dout ck
++ w=1u l=0.08u
+MM00 din  ck   dat vss tn w='w' l=l
+MM01 din  nck   dat vdd tp w='w*2' l=l
+Xi1  dat  dout inv
+MM00 dat0  nck   dat vss tn w='w' l=l
+MM01 dat0  ck   dat vdd tp w='w*2' l=l
+Xi2  dout dat0 inv
+Xi3  ck nck  inv
+.ends
+
+.subckt dram a<0> a<1> din<0> din<1> dout write ck sel 
+
+xmcell bl0 blb0 bl1 blb1 wl0 wl1 cells
+xsensamp bl0 blb0 bl1 blb1 wlen0 wlen1 prech saen so sob prechb prechb blen sensamp
+
+xnandwrite write ck writeb nand
+xinvwrite writeb writebb inv
+xbuffw writebb write_in buff
+
+* inputs 
+
+xlatmaster0 din<0> dinb<0> ckb latch
+xlatslave0 dinb<0> dinbb<0> ck latch
+
+xlatmaster1 din<1> dinb<1> ckb latch
+xlatslave1 dinb<1> dinbb<1> ck latch
+
+xinvdin0 dinbb<0> din0b inv
+xinvdin1 dinbb<1> din1b inv
+xin0 din0b wdin0 wdin0b write_in writecell
+xin1 din1b wdin1 wdin1b write_in writecell
+
+xinvsel sel selb inv
+
+xswitchin0 wdin0b so selb sel switch
+xswitchin0 wdin0 sob selb sel switch
+xswitchin1 wdin1b so sel selb switch
+xswitchin1 wdin1 sob sel selb switch
+
+* output
+xctrlout sob so ctrl xor
+xinvctrl ctrl ctrlb inv
+*xnandout so sob ioutctrl nand
+xinvout so ioutctrl inv
+xswitchctrl ioutctrl iout ctrlb ctrl switch
+xinv iout dout inv
+
+* precharge
+*xibuff ck prech buff
+xdelayprech ck prechi delay w=0.4u
+c3 prechi 0 20ff
+xdelayprech prechi prech delay w=0.4u
+c2 prech 0 20ff
+xinvprech prech prechb inv
+
+* decoding
+xlatmaster2 a<0> ab<0> ckb latch
+xlatslave2 ab<0> abb<0> ck latch
+xlatmaster3 a<1> ab<1> ckb latch
+xlatslave3 ab<1> abb<1> ck latch
+xinvck ck ckb inv
+xinvck ckb ckbb inv
+xa0 abb<0> ab0 inv
+xa1 abb<1> ab1 inv
+xa01 ab0 a0 inv
+xa11 ab1 a1 inv
+xnab0 ab0 ckbb ab0act nand
+xnab1 ab1 ckbb ab1act nand
+xna0 a0 ckbb a0act nand
+xna1 a1 ckbb a1act nand
+
+* wl
+xinvab0 ab0act wl0 inv
+xinva0 a0act wl1 inv
+
+* wlen
+xinvab1 ab1act wlen0 inv
+xinva1 a1act wlen1 inv
+
+* saen
+xnorsa wlen0 wlen1 presaen nor
+xdelay0 presaen saen delay w=0.4u
+c1 saen 0 100ff
+*xdelay1 saenb saen delay w=0.4u
+
+* blen
+xnorsablen wlen0 wlen1 preblen nor
+xinvblen preblen blen inv
+
+.ends
+

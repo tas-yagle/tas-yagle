@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>Library File</title>
+<p>This file is a simple text file containing the list of netlists to be identified. Each line of the file is a single name followed by a space and a character ('A' or 'P') indicating the type of the behavioural description (complete or interface only). If there is no behavioural description then the last character should be 'P'. The character 'A' or 'P' may be followed by a matching priority order. If no order is specified, FCL matches larger patterns first.</p>
+</section>

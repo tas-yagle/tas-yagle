@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>Disassembly Directives</title>
+
+<section niv='4'><title>IGNORE</title>
+<p>If some components must be removed from the original netlist for any reason, 
+it is possible to specify the component type and names in the IGNORE section. Th
+ere are 4 component types: Instances, Transistors, Resistances, Capacitances. Th
+e component names can be given using regular expressions.</p>
+<code type="box">
+<cl>IGNORE</cl>
+<cl>BEGIN</cl>
+<cl>  Instances: *fake, top.instancetoremove;</cl>
+<cl>  Capacitances: toolowcapa*;</cl>
+<cl>  ...</cl>
+<cl>END;</cl>
+</code>
+<p>At the moment, it is possible to remove resistances and capacitances only in 
+the top level figure. To overcome this limitation, an information file can be wr
+itten for the sub-circuits.</p>
+</section>
+
+<section niv='4'><title>CONSTRAINT</title>
+
+<p>To perform analysis in a specific case, the user can apply static logic levels on the input connectors with 
+the CONSTRAINT section. It contains internal or external signals constrained by "one" or "zero". 
+The static logic levels are propagated through the netlist before databse construction.</p>
+<code>
+<cl>CONSTRAINT</cl>
+<cl>BEGIN</cl>
+<cl>    sig1: 0;</cl>
+<cl>    sig2: 1;</cl>
+<cl>    sig3: 0;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</section>
+
+<section niv='4'><title>MUTEX</title>
+
+<p>If some of the input connectors are mutually exclusive, this should be indicated in the MUTEX section using:</p>
+<glossary>
+<row><article><f>muxUP{term1, term2, ...}</f></article><def>to express that one port at most in the list is "one".</def></row>
+<row><article><f>muxDN{term1, term2, ...}</f></article><def>to express that one port at most in the list is "zero".</def></row>
+<row><article><f>cmpUP{term1, term2, ...}</f></article><def>to express that one and only one port in the list is "one".</def></row>
+<row><article><f>cmpDN{term1, term2, ...}</f></article><def>to express that one and only one port in the list is "zero".</def></row>
+</glossary>
+<code>
+<cl>MUTEX</cl>
+<cl>BEGIN</cl>
+<cl>    muxUP{a,...,d};</cl>
+<cl>    muxDN{m,...,p};</cl>
+<cl>    cmpUP{i,...,l};</cl>
+<cl>    cmpDN{x,...,z};</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</section>
+
+
+<section niv='4'><title>INPUTS</title>
+
+<p>User can specify connectors which should be considered as inputs. The disassembling process uses this information to inhibit the construction of cone branches from these connectors. This directive is essentially useful when dealing with RAMs, when the user wants to inhibit the construction of the reading bus.</p>
+<code>
+<cl>INPUTS</cl>
+<cl>BEGIN</cl>
+<cl>    connector0;</cl>
+<cl>    connector1;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</section>
+
+<section niv='4'><title>STOP</title>
+
+<p>User can specify a list of signals which should be considered as stop points for the functional analysis phase of the disassembly. This means that any logic preceding the stop points will not be used in order to analyze the behavior of any gate following the stop point.</p>
+<code>
+<cl>STOP</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2;</cl>
+<cl>    sigs*;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+<p>It is possible to use the wildcard '*' as for signal renaming.</p>
+</section>
+
+<section niv='4'><title>DIROUT</title>
+
+<p>In order to orient transistors, user can specify a list of signals, each one identifying the source or drain of a transistor.
+Transistors are then oriented towards these signals. Orientation of successive transistors is done by associating a level 
+with each signal identifying a source or drain. Transistors are then oriented from higher level signals to lower level signals.</p>
+<p>Transistor orientation is useful to avoid false branches construction, especially when dealing with pass-transistors.</p>
+<code>
+<cl>DIROUT</cl>
+<cl>BEGIN</cl>
+<cl>    sig2: "1";</cl>
+<cl>    sig3: "2";</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+<p>If no DIROUT level is specified, default level is <f>-1</f>.</p>
+<p>It is possible to use the wildcard '*' as for signal renaming. </p>
+<p>The DIROUT directive is equivalent to the NETOUTPUT directive in FCL. If a signal name is preceded by the '~' character then this signal will not be treated as an output, this is to deal with the case of signals whose names end in "_s" and must not be considered as output terminals.</p>
+</section>
+
+<section niv='4'><title>DLATCH</title>
+
+<p>Some internal tri-state nodes have to be considered to be dynamic latches for functional modeling and timing analysis purposes.</p>
+<p>If only a few number of that tri-state nodes have to be taken into account, specify the list of corresponding signals into a DLATCH section. On the contrary, if the variable <f>yagleMarkTristateMemory</f> is set to <f>yes</f> in the configuration file and a few of tri-state nodes must not be taken into account, specify the list of corresponding signals into a DLATCH section, preceding each signal by a '~' character. </p>
+<code>
+<cl>DLATCH</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    ~ sig2;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+<p>It is possible to use the wildcard '*' as for signal renaming. </p>
+</section>
+
+<section niv='4'><title>CKLATCH</title>
+
+<p>By default the latch recognition phase performed during the circuit disassembly does not require that external clocks be specified. Latches are identified either by structure (yagleStandardLatchDetection) or by Boolean analysis of combinatorial loop stability (yagleAutomaticLatchDetection).</p>
+<p>However, it is sometimes necessary to constrain the latch recognition to identify only those latches for which the local clocks lie on a genuine clock path. To do this, specify the list of external connectors (or internal signals) in a CKLATCH section.</p>
+<p>It is also possible to specify that an external connector (or internal signal) is definitely not a clock by preceding the name by a '~' character. In this case, any latch input at the end of a timing path originating from this connector (or signal) is considered to be a data input.</p>
+<code>
+<cl>CKLATCH</cl>
+<cl>BEGIN</cl>
+<cl>    connector1;</cl>
+<cl>    sig1;</cl>
+<cl>    ~ sig2;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+<p>It is possible to use the wildcard '*' as for signal renaming. </p>
+</section>
+<section niv='4'><title>PRECHARGE</title>
+
+<p>Signals whose names end in "_p" are considered to be precharged and therefore dealt with differently by the tool. If any other signals should be considered precharged these can be specified in the PRECHARGE section.</p>
+<code>
+<cl>PRECHARGE</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    ~ sig2;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+<p>If a signal name is preceded by the '~' character then this signal will not be treated as a precharge, this is to deal with the case of non-precharge signals whose names end in "_p".</p>
+</section>
+
+<section niv='4'><title>NOTLATCH</title>
+<p>Disables the detection of latch on given signal.</p>
+<code>
+<cl>NOTLATCH</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+<p>If a signal name is preceded by the '~' character then this signal will not be treated as a precharge, this is to deal with the case of non-precharge signals whose names end in "_p".</p>
+</section>
+
+<section niv='4'><title>MARKSIG</title>
+<p>Allows to set special markings on signals (nets). Especially useful for custom latch recognition. Available markings are:</p>
+
+<glossary>
+<row><article>LATCH</article><def>Signal corresponds to a latch memory-point.</def></row>
+<row><article>FLIPFLOP</article><def>Signal corresponds to a flip-flop memory-point.</def></row>
+<row><article>MASTER</article><def>Signal corresponds to the master memory-point of a flip-flop.</def></row>
+<row><article>SLAVE</article><def>Signal corresponds to the slave memory-point of a flip-flop.</def></row>
+<row><article>MEMSYM</article><def>Signal corresponds to one side of a symmetric memory.</def></row>
+<row><article>RS</article><def>Signal corresponds to one side of an RS bistable.</def></row>
+<row><article>VDD</article><def>Signal corresponds to an alimentation.</def></row>
+<row><article>VSS</article><def>Signal corresponds to ground.</def></row>
+<row><article>BLOCKER</article><def>No branch of a cone can go through the signal.</def></row>
+<row><article>STOP</article><def>Cannot exploit logic beyond this point for functional analysis in the disassembler. </def></row>
+<row><article>SENSITIVE</article><def>Marks the signal as a particularly sensitive signal. If a timed behavioral model of this signal is produced then the most precise (but cumbersome) model will be generated.</def></row>
+</glossary>
+
+<p>Example:</p>
+<code>
+<cl>MARKSIG</cl>
+<cl>BEGIN</cl>
+<cl>    sig1: LATCH+MASTER</cl>
+<cl>    sig2: STOP</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</section>
+
+<section niv='4'><title>MARKTRANS</title>
+<p>Allows to set special markings on transistors. Especially useful for custom latch recognition. Available markings are:</p>
+<glossary>
+<row><article>BLEEDER</article><def>Transistor corresponds to a bleeder.</def></row>
+<row><article>FEEDBACK</article><def>Transistor corresponds to a feedback transistor of a memory-point.</def></row>
+<row><article>COMMAND</article><def>Transistor corresponds to a command transistor of a memory-point, i.e driven by command signal.</def></row>
+<row><article>NOT_FUNCTIONAL</article><def>Transistor should be ignored when calculating gate functionality.</def></row>
+<row><article>BLOCKER</article><def>No branch of a cone  can contain this transistor unless it is the first transistor of the branch.</def></row>
+<row><article>UNUSED</article><def>No branch of a cone can contain this transistor.</def></row>
+<row><article>SHORT</article><def>The transistor is considered short-circuited, the gate signal no longer contributes to the list of inputs.</def></row>
+</glossary>
+<p>Example:</p>
+<code>
+<cl>MARKTARNS</cl>
+<cl>BEGIN</cl>
+<cl>    trans1: FEEDBACK+NOT_FUNCTIONAL</cl>
+<cl>    trans2: COMMAND</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</section>
+
+</section>

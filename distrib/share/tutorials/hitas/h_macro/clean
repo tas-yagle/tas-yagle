@@ -1,0 +1,15 @@
+rm -f top.dtx
+rm -f top.ttx
+rm -f top.stm
+rm -f top.cns
+rm -f top.rcx
+rm -f top.sto
+rm -f top.str
+rm -f top.ctk
+rm -f top.ctx
+rm -f top.lib
+rm -f top.inf
+rm -f *.rep
+rm -f *.log
+
+

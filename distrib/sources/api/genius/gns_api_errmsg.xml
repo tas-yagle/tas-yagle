@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="gns_api">
+
+<err>
+    <lib>GNSAPI-</lib><num>001</num>
+    <msg>no corresponding transistor to %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>002</num>
+    <msg>'%s' has an RC network!\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>003</num>
+    <msg>connectors discrepancy between `%s' and `%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>004</num>
+    <msg>number of connectors differs between `%s' and `%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>005</num>
+    <msg>gns_AddExternalTransistors, wrong parameter\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>006</num>
+    <msg>can't reconnect transistor `%s' (`%s') to signal `%s' (`%s')\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>007</num>
+    <msg>connector `%s' is on the interface in model `%s', but the signal seem to be internal\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>008</num>
+    <msg>no instance `%s': netlist `%s' is flat\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>009</num>
+    <msg>Internal error #%d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>010</num>
+    <msg>%s: no ground signal can be found in netlist\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>011</num>
+    <msg>no connector `%s' in netlist `%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>012</num>
+    <msg>gns_KeepBestInstanceDelayAWE : no model correspondance\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>013</num>
+    <msg>gns_KeepBestInstanceDelayAWE : no instance founded\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>014</num>
+    <msg>gns_KeepWorstInstanceDelayAWE : no model correspondance\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>015</num>
+    <msg>gns_KeepWorstInstanceDelayAWE : no instance founded\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNSAPI-</lib><num>016</num>
+    <msg>connectors %s and %s don't come from the same signal\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

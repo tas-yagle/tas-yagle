@@ -1,0 +1,24 @@
+<glossary>
+<row type='split'><article><index>avtLibraryDirs</index></article><def>	
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>The set of library directories which are scanned for required subcircuits.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtBlackboxFile</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name of the file containing the cells to exclude 
+of analysis.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtCatalogueName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>File containing a list of subcircuits to be
+considered as leaf cells when flattening a design. Each line in this file refers to a single subcircuit, 
+with the format <f>&lt;subcircuit&gt; C</f>. The default value is <f>CATAL</f>.</def></row>
+</glossary>
+</def></row>
+
+</glossary>
+

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Lab9. On-the-fly Sub-Circuit Simulation</title>
+
+<section niv='2'><title>Objective</title>
+<p>The on-the-fly characterization is a little more difficult to set-up, but provides 
+environment-dependant (PVT, input slopes, output loads) characterizations, and therefore greater 
+accuracy.</p>
+<p>The tool is able to integrate the characterizations within either a pre-layout 
+or a post-layout timing analysis.</p>
+<p>This lab illustrates the integration within a post-layout timing analysis. This situation is a little trickier, 
+as the source netlist is the
+most often a flat-transistor netlist (if the extracted netlist is hierarchical, the integration process
+is just the same as in a pre-layout timing analysis). The challenge is here to identify in the top-level 
+netlist the transistors
+that belong to the analog sub-circuits, in order to ignore them and create the "analog holes" and the 
+remaining only-digital netlist. Assuming that the pre-layout netlist of the analog sub-circuit exists,
+the identification in the top-level netlist of the transistors that belong to that sub-circuit is 
+done by pattern matching.</p>
+</section> <!-- Objective -->
+
+<section niv='2'><title>Netlists</title>
+<glossary>
+<row><article><f>bsim3_018.tech</f></article> <def>BSIM3 transistor models</def> </row>
+<row><article><f>./cells/sample.spi</f></article> <def>Schematic netlist (hierarchical) of a digital design 
+containing several latches and 4 non-overlapping clocks generators, to be treated as analog sub-circuits. This
+netlist is used here for pattern-matching purposes</def> </row>
+<row><article><f>sample_RC.spi</f></article><def>Extracted netlist (flat) of the same design.</def> </row>
+</glossary>
+</section> <!-- Netlists -->
+
+
+<section niv='2'><title>On-the-Fly Characterization</title>
+<p>The on-the-fly characterization follows the same principles as the pre-characterization (lab 8):</p>
+<list>
+<item>Link with an analog simulator</item>
+<item>Create a timing database of the analog sub-circuit</item>
+<item>Integrate the database in a hierarchical or flat top-level netlist</item>
+</list>
+<p>The difference is that the steps one and two are performed for each instance of the analog sub-circuit, 
+taking into account instantiation-specific parameters (output load). It then provides greater accuracy 
+but implies a different implementation.</p>
+
+<p>On-the-fly characterization is based upon the GNS pattern-matching engine. The methodology 
+is to associate an "action" with a matching event: each time the tool identifies a pattern in 
+the top-level netlist, it executes the corresponding action. Here the corresponding action 
+will be the steps one and two described above (link with an analog simulator and create a timing 
+database of the analog sub-circuit).</p>
+<p>The difference of implementation lies in the description language used to write the action. 
+As the pre-characterization method uses the Tcl language, the writing of the "action" for 
+on-the-fly characterization uses the C language. By the 
+way, the prototypes of the functions used in both cases are identical.</p>
+
+
+
+<section niv='3'><title>Database Construction</title>
+
+<glossary>
+<row><article><f>cells/</f></article><def>Directory dedicated to pattern matching configuration</def></row>
+<row><article><f>cells/LIBRARY</f></article><def>List of patterns to be matched</def></row>
+<row><article><f>cells/rs_clock_gen.c</f></article><def>Action to be associated with the pattern</def></row>
+</glossary>
+<p>An action is then typically a C file. The association of an "action" with a pattern 
+takes place in the LIBRARY file.  Here, the <f>rs_clock_gen.spi</f> pattern is associated 
+with the <f>rs_clock_gen.c</f> action.</p>
+
+<p>Apart from the syntax, the <f>cells/rs_clock_gen.c</f> C file used for simulator link 
+and database creation is very close to the <f>rs_clock_gen.tcl</f> Tcl script used 
+for pre-characterization.</p>
+
+</section> <!-- Database Construction -->
+
+
+<section niv='3'><title>Flat Netlist Integration (Post-Layout)</title>
+<p>The integration of on-the-fly characterization in a flat netlist only uses the 
+pattern-matching mechanism. Here, the "analog holes" are created by the 
+pattern matching mechanism itself, as in the integration of a pre-characterization in a flat netlist
+approach.</p>
+<p>The files and scripts associated to this section are located in the <f>flat-onthefly/</f> directory.</p>
+<glossary>
+<row><article><f>db.tcl</f></article><def>Database generation script</def></row>
+</glossary>
+<p>The remaining configuration is the same as in the approach of integration of a pre-characterization 
+in a flat netlist.</p>
+<p>The main advantage of on-the-fly characterization is to provide a specific timing database
+for each instance of an analog sub-circuit, depending on instantiation context (e.g. output load). Another 
+advantage of the on-the-fly approach is that the analog simulations are performed on the transistors
+of the sub-circuit matching the pattern provided. Therefore each instance matching the pattern  
+has its own parasitic information.</p>
+</section> <!-- Flat Netlist Integration (Pre-Layout) -->
+</section> <!-- On-the-Fly Characterization -->
+
+</section> <!-- Analog Sub-circuit Characterization -->
+
+
+</chapter>

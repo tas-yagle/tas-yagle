@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>Behavioural Format</title>
+<p>The behavioural description is specified in VHDL format. A behavioural file can be provided for any of the netlists, the description can be either a complete bahavioural description or specify only the external interface. The type of the behavioural description must be indicated in the library file.</p>
+</section>

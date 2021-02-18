@@ -1,0 +1,11 @@
+
+       int fclose(FILE *f);
+
+DDEESSCCRRIIPPTTIIOONN
+       closes a file
+
+AARRGGUUMMEENNTTSS
+       ff             Pointer on the file to be closed
+
+       EEXXAAMMPPLLEE       _f_c_l_o_s_e _$_f_i_l_e
+

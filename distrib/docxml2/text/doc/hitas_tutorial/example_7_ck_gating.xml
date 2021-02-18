@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Clock Gating</title>
+
+<section niv='2'><title>Objective</title>
+<p>This example presents the way to analyze glock gating cells. It takes place in the <f>clock_gating/</f> directory.</p>
+</section> <!-- Objective -->
+
+</section>
+</chapter>

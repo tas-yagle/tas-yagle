@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>The generated RAMs</title>
+<section niv='2'><title>Description</title>
+
+
+<p>A generated Random Acess Memory
+is always made of two banks, constituted of an arbitrary number of bit lines, between which is placed a decoder cell. The 
+interfaces of the RAM are given below (there are two versions of the interface because 
+input and output data can be bidirectional or separated):</p>
+
+<p>bidirectional <f>data</f> bus:</p>
+
+<code>
+<cl>ENTITY rage IS</cl>
+<cl>  PORT (adr: IN BIT_VECTOR (0 TO n);</cl>
+<cl>        data: INOUT BIT_VECTOR (0 TO w);</cl>
+<cl>        ck: IN BIT;</cl>
+<cl>        write: IN BIT;</cl>
+<cl>        en: IN BIT;</cl>
+<cl>        vdd: IN BIT;</cl>
+<cl>        vss: IN BIT);</cl>
+<cl>END rage;</cl>
+</code>
+<p>separate <f>din</f> and <f>dout</f> busses:</p>
+<code>
+<cl>ENTITY rage IS</cl>
+<cl>  PORT (adr: IN BIT_VECTOR (0 TO n);</cl>
+<cl>        din: IN BIT_VECTOR (0 TO w);</cl>
+<cl>        dout: OUT BIT_VECTOR (0 TO w);</cl>
+<cl>        ck: IN BIT;</cl>
+<cl>        write: IN BIT;</cl>
+<cl>        en: IN BIT;</cl>
+<cl>        vdd: IN BIT;</cl>
+<cl>        vss: IN BIT);</cl>
+<cl>END rage;</cl>
+</code>
+
+<p>The signals <f> write </f> and <f> en </f>
+are both active high. The RAM is in precharge mode if <f> ck </f>
+is high for -ckup option RAMs (conversly if <f> ck </f> is low for -ckdown option RAMs), 
+otherwise it is in evaluation mode (read or write). The <f> en </f>
+signal suspends the normal operation 
+of the RAM by disabling it when its value is '0'. In this case the RAM remains in precharge mode. 
+The <f> en </f> signal must change only during the precharge phase.</p>
+
+</section>
+<section niv='2'><title>Parameters</title>
+
+
+<p>The number of bits per word is scalable from 2 to 128, and this number must be even. The number of 
+words is also scalable, possible values are 128, 256, 512, 1024, 2048 and 4096. In this tutorial, we 
+use RAMs with bidirectionnal <f>data</f> bus, one of 128 words of 4 bits, another one of 256 words of 8 bits, 
+and a bigger one of 1096 words of 4 bits.</p>
+
+
+</section>
+<section niv='2'><title>Timing diagrams</title>
+
+<p>The timing diagrams for a ck-high RAM are given below. The following diagram presents the read and 
+write configurations for a RAM with a bidirectional bus <f>data</f>:</p>
+<imgsize namehtml="waveform_bidir.gif" namepdf="waveform_bidir.gif" hpdf="98pt" wpdf="368pt" />
+<p>The following diagram presents the read and write conditions for a RAM with separate <f>din</f> and <f>dout</f> busses:</p>
+<imgsize namehtml="waveform_unidir.gif" namepdf="waveform_unidir.gif" hpdf="124pt" wpdf="368pt" />
+
+</section>
+
+</section></chapter>

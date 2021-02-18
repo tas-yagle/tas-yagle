@@ -1,0 +1,44 @@
+<!DOCTYPE notice SYSTEM "../../common/common_entity.xml" [
+<!ENTITY tool "Yagle">
+<!ENTITY presentation     SYSTEM "presentation.xml">
+<!ENTITY introduction     SYSTEM "introduction.xml">
+<!ENTITY configuration    SYSTEM "configuration.xml">
+<!ENTITY input_files      SYSTEM "input_files.xml">
+<!ENTITY output_files     SYSTEM "output_files.xml">
+<!ENTITY log_files        SYSTEM "log_files.xml">
+<!ENTITY generatedVHDL    SYSTEM "generatedVHDL.xml">
+<!ENTITY generatedVerilog SYSTEM "generatedVerilog.xml">
+<!ENTITY tcl_interface    SYSTEM "tcl_interface.xml">
+<!ENTITY avt              SYSTEM "avt.xml">
+<!ENTITY inf              SYSTEM "inf.xml">
+<!ENTITY yag              SYSTEM "yag.xml">
+<!ENTITY avt_API          SYSTEM "avt_API.xml">
+<!ENTITY inf_API          SYSTEM "inf_API.xml">
+<!ENTITY yagle_API        SYSTEM "yagle_API.xml">
+<!ENTITY mbk_API          SYSTEM "mbk_API_files.xml">
+<!ENTITY avt_API_files    SYSTEM "avt_API_files.xml">      
+<!ENTITY avt_API_system   SYSTEM "avt_API_system.xml">     
+<!ENTITY avt_API_lofig    SYSTEM "avt_API_lofig.xml">   
+<!ENTITY avt_API_config   SYSTEM "avt_API_config.xml">         
+<!ENTITY inf_API_netlist  SYSTEM "inf_API_netlist.xml">
+<!ENTITY inf_API_disa     SYSTEM "inf_API_disa.xml">
+<!ENTITY inf_API_yag      SYSTEM "inf_API_yag.xml">
+<!ENTITY inf_API_general  SYSTEM "inf_API_general.xml">
+<!ENTITY errors           SYSTEM "errors.xml">
+]>
+<notice>
+<presentation>
+&presentation; 
+</presentation>
+<introduction>
+&introduction;
+</introduction>
+<document>
+&input_files;
+&output_files;
+&log_files;
+&configuration;
+&tcl_interface;
+&errors;
+</document>
+</notice>

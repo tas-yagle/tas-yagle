@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Defining Recognition Rules and Actions</title>
+
+<p></p>
+
+
+
+<section niv='2'><title>Description</title>
+
+
+<p>&tool; provides a highly efficient way to identify a hierarchical structure
+within a flat transistor netlist. This process is done by first
+identifying basic blocks made up exclusively of transistors. 
+Those blocks are then merged by hierarchical rules to a higher level of abstraction.
+The process is repeated until all the user specified hierarchical rules have been fully exhausted. 
+Each user-specified rule is a model corresponding to a single hierarchical level.
+Genius will try to find all the instances of each level
+starting from the models describing the transistor level blocks right up to the top-level 
+hierarchical model.
+In addition, the user is given the possibility of specifying actions which are performed whenever instances
+of a model are identified within the circuit. This action consists of a C
+or TCL function which can do practically whatever the user wants.
+The operation of the &tool; hierarchical recognition therefore requires a certain amount of user-supplied information and files.
+To provide this information the user must create a &tool; library file which basically contains the file names of the models and actions.</p>
+
+</section>
+
+
+<section niv='2'><title>The Recognition Models</title>
+
+
+
+
+<section niv='3'><title>The Transistor Level Models</title>
+
+<p>The first step in the hierarchical recognition is to identify the blocks at the lowest
+level. Those blocks are composed exclusively of transistors.
+The user must therefore provide models for each of the basic blocks to
+recognize. The actual recognition of these transistor-level blocks is performed by FCL, however this
+is transparent to the user since the GNS module handles the communication with FCL. 
+The description of the transistor level blocks can be given either as a
+SPICE netlist or in a structural VHDL file.</p>
+<p>The spice netlist is a classical flat transistor netlist but
+the VHDL description is done by instantiating transistors N or P. 
+For this, there are two special components to describe the transistors:</p>
+
+<code>
+<cl>COMPONENT tn</cl>
+<cl>   PORT (</cl>
+<cl>   grid: IN BIT;</cl>
+<cl>   source, drain: INOUT BIT);</cl>
+<cl>END COMPONENT;</cl>
+<cl> </cl>
+<cl>COMPONENT tp</cl>
+<cl>   PORT (</cl>
+<cl>      grid: in bit;</cl>
+<cl>      source, drain: inout bit);</cl>
+<cl>END COMPONENT;</cl>
+</code>
+
+<p>From the &tool; point of view, there is no difference between these
+representations. For instance, an inverter could be described as:</p>
+<p>In VHDL:</p>
+<code>
+<cl>ENTITY inverter IS</cl>
+<cl>   PORT (</cl>
+<cl>   dout: out bit;</cl>
+<cl>   din: in bit;</cl>
+<cl>   vdd, vss: in bit);</cl>
+<cl>END inverter;</cl>
+<cl> </cl>
+<cl>ARCHITECTURE structural OF inverter IS</cl>
+<cl> </cl>
+<cl>   COMPONENT tn</cl>
+<cl>      PORT (grid: IN bit; source, drain: INOUT bit);</cl>
+<cl>   END COMPONENT;</cl>
+<cl> </cl>
+<cl>   COMPONENT tp</cl>
+<cl>      PORT (grid: IN bit; source, drain: INOUT bit);</cl>
+<cl>   END COMPONENT;</cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>   tn_1: tn</cl>
+<cl>      PORT MAP (grid=&gt;din, source=&gt;vss, drain=&gt;dout);</cl>
+<cl>   tp_1: tp</cl>
+<cl>      PORT MAP (grid=&gt;din, source=&gt;vdd, drain=&gt;dout);</cl>
+<cl>END structural;</cl>
+</code>
+<p>Or in SPICE:</p>
+<code>
+<cl>.SUBCKT inverter dout din vdd vss</cl>
+<cl>M1 vdd din dout vdd tp</cl>
+<cl>M2 vss din dout vss tn</cl>
+<cl>.ENDS</cl>
+</code>
+
+<p>The user has the freedom to use whichever format he/she prefers. 
+The library file is used to specify the format to be used for a particular model.</p>
+
+</section>
+
+
+<section niv='3'><title>The Hierarchical Models</title>
+
+<p>
+Once the basic transistor-level blocks have been identified within the circuit, the higher-level hierarchical models can be identified. In order to perform this hierarchical recognition,  the user must specify, for each of the hierarchical levels, how the blocks are interconnected. This is done by providing a standard VHDL structural description of how the lower-level blocks are interconnected.
+</p>
+<p>
+Structural VHDL provides a natural way of describing a hierarchical structure. The ENTITY construct effectively serves as a declaration for the recognition rule, as well as providing the interface of the component abstracted by application of the rule. The ARCHITECTURE block specifies the interconnection of blocks from the lower levels required by the rule. As in VHDL, the required lower-level blocks must be declared using the COMPONENT construct, this allows both implicit (order based) and explicit (name based) component instantiations.
+Anyway, using the format spice_hr rather than VHDL permits the description of a simple hierchical model without all the possibilties of the VHDL model (loops, vectors, ...).
+</p>
+<p>
+For example, the rule required to recognize a bi-stable made up of two NAND gates would be written as follows: 
+</p>
+<code>
+<cl>ENTITY bistable IS</cl>
+<cl>   PORT (</cl>
+<cl>   r: IN BIT;</cl>
+<cl>   s: IN BIT;</cl>
+<cl>   q: OUT BIT;</cl>
+<cl>   qn: OUT BIT;</cl>
+<cl>   vdd, vss: IN BIT);</cl>
+<cl>END bistable;</cl>
+<cl> </cl>
+<cl>ARCHITECTURE nand_based OF bistable IS</cl>
+<cl> </cl>
+<cl>   COMPONENT nand</cl>
+<cl>      PORT (y: OUT BIT; in1, in2: IN BIT; vdd, vss: IN BIT);</cl>
+<cl>   END COMPONENT;</cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>   nand_1: nand</cl>
+<cl>      PORT MAP (q, r, qn, vdd, vss);</cl>
+<cl>   nand_2: nand</cl>
+<cl>      PORT MAP (qn, s, q, vdd, vss);</cl>
+<cl>END nand_based;</cl>
+</code>
+<p>
+However, it is also possible to generate a bi-stable from two NOR gates. The user may therefore require that a single recognition rule consist of alternative internal structures. This is possible by providing multiple ARCHITECTURE blocks for a single ENTITY.
+</p>
+<p>
+To recognize a bistable made up of either NAND or NOR gates, the user would add the following architecture construct to the preceding rule:
+</p>
+<code>
+<cl>ARCHITECTURE nor_based OF bistable IS</cl>
+<cl> </cl>
+<cl>   COMPONENT nor</cl>
+<cl>      PORT (y: OUT BIT; in1, in2: IN BIT; vdd, vss: IN BIT);</cl>
+<cl>   END COMPONENT;</cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>   nor_1: nor</cl>
+<cl>      PORT MAP (q, r, qn, vdd, vss);</cl>
+<cl>   nor_2: nor</cl>
+<cl>      PORT MAP (qn, s, q, vdd, vss);</cl>
+<cl>END nor_based;</cl>
+</code>
+
+
+</section>
+
+
+<section niv='3'><title>Generic Hierarchical Models</title>
+
+<p>
+One of the most powerful features of the &tool; recognition language is the ability to represent interconnections of an arbitrary number of identical structures. Both parallel structures and serial structures can be represented.
+</p>
+<list>
+<item>Parallel structures are those where an arbitrary number of identical blocks share one or more common signal.</item>
+<item>Serial structures are those where an arbitrary number of identical blocks are connected in cascade.</item>
+</list>
+<p>
+This important capability is provided for through the use of VHDL Generics coupled with GENERATE constructs. In standard VHDL a structural model can be made generic in exactly this way; it is the responsibility of the instantiation to specify the actual value of the generic variable. In our semantic, it is the role of the recognition module to identify the value.
+</p>
+<p>
+A typical example of a parallel structure would be a rule to identify a column of an arbitrary number of bit-cells as part of a static RAM: 
+</p>
+<code>
+<cl>ENTITY column IS</cl>
+<cl>   GENERIC (capacity: INTEGER);</cl>
+<cl>   PORT (</cl>
+<cl>   q, nq: INOUT BIT;</cl>
+<cl>   com: IN BIT_VECTOR (1 TO capacity);</cl>
+<cl>   vdd, vss: IN BIT);</cl>
+<cl>END;</cl>
+<cl> </cl>
+<cl>ARCHITECTURE structural OF column IS</cl>
+<cl> </cl>
+<cl>   COMPONENT bitcell</cl>
+<cl>      PORT (q, nq: INOUT BIT; com, vdd, vss: IN BIT);</cl>
+<cl>   END COMPONENT;</cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>   loop: FOR i IN 1 TO capacity GENERATE</cl>
+<cl>      bit_i: bitcell</cl>
+<cl>         PORT MAP (q, nq, com (i), vdd, vss);</cl>
+<cl>   END GENERATE;</cl>
+<cl>END structural;</cl>
+</code>
+<p>
+</p>
+<list>
+<item>The generic variable must be declared in the ENTITY block.</item>
+<item>A GENERATE loop must be defined using the generic variable to define the upper limit.</item>
+<item>One or more signals or external connectors must be vectorized using the value of the generic variable to define the range.</item>
+</list>
+<p>
+Both the loop limits and the vector bounds can be specified as expressions. In this case, the expression for the lower limit must necessarily resolve to a constant and for the upper limit, the generic variable must be the only unknown.
+</p>
+<p>
+In any case, in any one rule, it is not possible to have more than one GENERATE loop for which the limits are specified by a GENERIC whose value is to be identified. However, this is not a real limitation thanks to the unlimited hierarchy of the rules.
+</p>
+<p>
+It is also possible to describe arbitrary numbers of components connected in cascade, for example, a chain of inverters can be represented by the following rule:
+</p>
+<code>
+<cl>ENTITY invchain IS</cl>
+<cl>   GENERIC (length: INTEGER);</cl>
+<cl>   PORT (</cl>
+<cl>   q, nq: INOUT BIT;</cl>
+<cl>   con: IN BIT_VECTOR (0 TO length);</cl>
+<cl>   vdd, vss: IN BIT);</cl>
+<cl>END;</cl>
+<cl> </cl>
+<cl>ARCHITECTURE structural OF invchain IS</cl>
+<cl> </cl>
+<cl>   COMPONENT inverter</cl>
+<cl>      PORT (y: OUT BIT; a, vdd, vss: IN BIT);</cl>
+<cl>   END COMPONENT;</cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>   loop: FOR i IN 1 TO length GENERATE</cl>
+<cl>      inv_i: inverter</cl>
+<cl>         PORT MAP (con (i), con (i-1), vdd, vss);</cl>
+<cl>   END GENERATE;</cl>
+<cl>END structural;</cl>
+</code>
+
+
+</section>
+
+
+<section niv='3'><title>Exploiting Generic Variables</title>
+
+<p>
+At each hierarchical rule level it is possible to exploit the value of generic variables obtained from lower levels of the hierarchy. The mechanism for this is identical to standard VHDL apart from the fact that the direction of transmission is from the lower levels upwards rather than from the upper levels downwards.
+</p>
+<p>
+The transmission of generic values is specified using the GENERIC MAP construct. This construct specifies which generic variable in a rule takes the value of a generic variable defined in rule corresponding to an instantiated model.
+</p>
+<p>
+For example, imagine we need the height of a column of bit cells in order to add an inverter in front each of the command inputs. We could use the following rule:
+</p>
+<code>
+<cl>ENTITY buffered_col IS</cl>
+<cl>   GENERIC (height: INTEGER);</cl>
+<cl>   PORT (</cl>
+<cl>      q, nq: INOUT BIT;</cl>
+<cl>      bufcomb: IN BIT;</cl>
+<cl>      vdd, vss: IN BIT);</cl>
+<cl>END bistable;</cl>
+<cl> </cl>
+<cl>ARCHITECTURE structural OF buffered_col IS</cl>
+<cl> </cl>
+<cl>   COMPONENT column</cl>
+<cl>      GENERIC (capacity: INTEGER);</cl>
+<cl>      PORT (</cl>
+<cl>         q, nq: INOUT BIT;</cl>
+<cl>         com: IN BIT_VECTOR (1 TO capacity);</cl>
+<cl>         vdd, vss: IN BIT);</cl>
+<cl>   END COMPONENT;</cl>
+<cl> </cl>
+<cl>   COMPONENT inverter</cl>
+<cl>      PORT (out: OUT BIT; a: IN BIT; vdd, vss: IN BIT);</cl>
+<cl>   END COMPONENT;</cl>
+<cl> </cl>
+<cl>   SIGNAL bufcom: BIT_VECTOR (1 TO height);</cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>   column_ins: column</cl>
+<cl>      GENERIC MAP (height=&gt;capacity);</cl>
+<cl>      PORT MAP (q, nq, bufcom, vdd, vss);</cl>
+<cl> </cl>
+<cl>   loop: FOR i IN 1 TO height GENERATE</cl>
+<cl>      buf_i: inverter</cl>
+<cl>         PORT MAP (bufcom (i), bufcomb (i), vdd, vss);</cl>
+<cl>   END GENERATE;</cl>
+<cl> </cl>
+<cl>END structural;</cl>
+</code>
+<p>
+As we can see from the above example, in order to exploit a generic variable whose value obtained by a rule at a lower level, is is necessary to:
+</p>
+<list>
+<item>Declare the GENERIC in the COMPONENT corresponding to the lower-level rule.</item>
+<item>Supply the appropriate GENERIC MAP with the instantiation of the model corresponding to the lower-level rule.</item>
+</list>
+<p>
+The GENERIC MAP can be either explicit (as in the above example) or implicit, in which case the association is made based upon the order of the GENERIC declarations in the COMPONENT.
+</p>
+<p>
+Generic variables whose values are obtained through GENERIC MAPs can be used in the same way as generic variables identified in the rule. That is for:
+</p>
+<list>
+<item>Range declarations in signals and/or connectors.</item>
+<item>Loop limits in GENERATE statements.</item>
+</list>
+<p>
+A rule can contain any number of GENERATE statements defined by GENERIC variables obtained in this way, since their limits are precisely defined at the beginning of the validation of the rule.
+</p>
+
+
+</section>
+</section>
+<pagebreak/>
+
+
+<section niv='2'><title>VHDL Recognition Rules Reference</title>
+
+
+<p>
+This section contains the complete grammar of the structural VHDL subset used to represent the &tool; recognition rules. Only entity and structural architecture declarations are required. Before giving the BNF for each of these two parts, we illustrate them with a general example.
+</p>
+<p>
+The legend for the following BNF grammar definitions are:
+</p>
+<glossary>
+<row><article>&lt;name&gt;</article><def>is a syntax construct item</def></row>
+<row><article>name</article><def>is a lexeme</def></row>
+<row><article>[&lt;name&gt;] or [name]</article><def>is an optional item</def></row>
+<row><article>&lt;name&gt;*</article><def>is zero or more items</def></row>
+<row><article>&lt;name&gt;+</article><def>is one or more items</def></row>
+<row><article>&lt;name&gt; -&gt;</article><def>indicate a syntax definition to an item</def></row>
+<row><article> ||</article><def>introduces an other syntax definition for an item</def></row>
+</glossary>
+<p>
+First of all, each rule requires an entity declaration such as:
+</p>
+<code>
+<cl>ENTITY levelA IS</cl>
+<cl>   GENERIC ( VAR, VAR1, ...: integer );</cl>
+<cl>   PORT (</cl>
+<cl>      a INOUT BIT;</cl>
+<cl>      b: IN BIT_VECTOR(1 TO var);</cl>
+<cl>      ...</cl>
+<cl>      vdd, vss: IN BIT);</cl>
+<cl>END;</cl>
+</code>
+<p>
+The entity describes the model "levelA". A model can be instantiated with parameters. All the parameters used later in the architecture part of the model must be present in the model entity. One, and only one, of the generic variables can be the special variable whose value must be determined during execution of the rule.
+</p>
+<p>
+The complete entity grammar allowed is as follows:
+</p>
+<code>
+<cl>&lt;entity&gt; -&gt; ENTITY &lt;name_of_model&gt; IS</cl>
+<cl>            [GENERIC ( &lt;list_of_variables&gt;+ );]</cl>
+<cl>            PORT ( &lt;list_of_ports&gt;+ );</cl>
+<cl>            END [&lt;name_of_model&gt;];</cl>
+<cl> </cl>
+<cl>&lt;list_of_variables&gt; -&gt; &lt;&lt;variable_decl&gt;;&gt;* &lt;variable_decl&gt;</cl>
+<cl> </cl>
+<cl>&lt;variable_decl&gt; -&gt; [VARIABLE] &lt;&lt;identifier_list&gt;: INTEGER</cl>
+<cl> </cl>
+<cl>&lt;identifier_list&gt; -&gt; &lt;&lt;identifier&gt;,&gt;* &lt;identifier&gt;</cl>
+<cl> </cl>
+<cl>&lt;list_of_ports&gt; -&gt; &lt;&lt;port_decl&gt;;&gt;* &lt;port_decl&gt;</cl>
+<cl> </cl>
+<cl>&lt;port_decl&gt; -&gt; &lt;identifier_list&gt;: &lt;port_type&gt;</cl>
+<cl> </cl>
+<cl>&lt;port_type&gt; -&gt; IN &lt;mode&gt;</cl>
+<cl>            || OUT &lt;mode&gt;</cl>
+<cl>            || INOUT &lt;mode&gt;</cl>
+<cl> </cl>
+<cl>&lt;mode&gt; -&gt; BIT</cl>
+<cl>       || BIT_VECTOR &lt;array&gt;</cl>
+<cl> </cl>
+<cl>&lt;array&gt; -&gt; ( &lt;expression&gt; TO &lt;expression&gt; )</cl>
+<cl>        || ( &lt;expression&gt; DOWNTO &lt;expression&gt; )</cl>
+</code>
+<p>
+The expression in the array statement is a standard arithmetic expression which can depend on all the generic variables defined in the entity, even the special generic variable whose value must be identified during execution of the rule.
+</p>
+<p>
+The architecture section of a rule is composed of 2 parts: the component declarations and the model instantiations in the architecture body. The component of a model should have the same interface and the same generic variables found in the entity statement for the same model. The grammar of the architecture body is elementary.
+</p>
+<p>
+A typical example shows loops instantiating multiple instances and single instantiations:
+</p>
+<code>
+<cl>architecture ArchiLevelA of levelA is</cl>
+<cl> </cl>
+<cl>COMPONENT levelB1 </cl>
+<cl>   GENERIC (varB2, ...: integer)</cl>
+<cl>   PORT ( ... </cl>
+<cl>      q: IN BIT_VECTOR(1 TO varB2);</cl>
+<cl>      ...</cl>
+<cl>      vdd,vss: IN BIT);</cl>
+<cl>END COMPONENT;</cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl>   loop0: FOR i IN 1 TO var GENERATE</cl>
+<cl>      instB1_i: levelB1 </cl>
+<cl>         GENERIC MAP (varB2=&gt;var1, ...)</cl>
+<cl>         PORT MAP ( ... );</cl>
+<cl>   END GENERATE;</cl>
+<cl> </cl>
+<cl>   loop1: FOR j IN 1 TO var1*2 GENERATE</cl>
+<cl>      instD1_j: levelD1 </cl>
+<cl>         GENERIC MAP ( ... )</cl>
+<cl>         PORT MAP ( ... );</cl>
+<cl>   END GENERATE;</cl>
+<cl> </cl>
+<cl>   instance_fcl: levelFCL1 GENERIC MAP (...) PORT MAP ( ... );</cl>
+<cl>   instance_l2: levelC PORT MAP ( ... );</cl>
+<cl>END;</cl>
+</code>
+<p>
+The complete architecture grammar allowed is as follows:
+</p>
+<code>
+<cl>&lt;architecture&gt; -&gt;</cl>
+<cl>        ARCHITECTURE &lt;name_of_archi&gt; OF &lt;name_of_model&gt; IS</cl>
+<cl>        &lt;component&gt;*</cl>
+<cl>        &lt;signal_decl&gt;*</cl>
+<cl>        &lt;architecture_body&gt;*</cl>
+<cl> </cl>
+<cl>&lt;signal_decl&gt; -&gt; SIGNAL &lt;identifier_list&gt;: &lt;mode&gt;;</cl>
+<cl> </cl>
+<cl>&lt;component&gt; -&gt; COMPONENT &lt;name_of_model&gt;</cl>
+<cl>               [GENERIC ( &lt;list_of_variables&gt;+ );]</cl>
+<cl>               PORT ( &lt;list_of_ports&gt;+ );</cl>
+<cl>               END COMPONENT;</cl>
+<cl> </cl>
+<cl>&lt;architecture_body&gt; -&gt; BEGIN</cl>
+<cl>                       &lt;architecture_element&gt;*</cl>
+<cl>                       END [&lt;name_of_archi&gt;];</cl>
+<cl> </cl>
+<cl>&lt;architecture_element&gt; -&gt; &lt;simple_instantiation&gt;</cl>
+<cl>                       || &lt;loop_instantiation&gt;</cl>
+<cl> </cl>
+<cl>&lt;loop_instantiation&gt; -&gt;</cl>
+<cl>        &lt;blockname&gt;:</cl>
+<cl>        FOR &lt;identifier&gt; IN &lt;expr&gt; &lt;direction&gt; &lt;expr&gt;</cl>
+<cl>        GENERATE</cl>
+<cl>        &lt;instantiation&gt;+</cl>
+<cl>        END GENERATE;</cl>
+<cl> </cl>
+<cl>&lt;simple_instantiation&gt; -&gt;</cl>
+<cl>        &lt;blockname&gt;: &lt;identifier&gt;</cl>
+<cl>        [GENERIC MAP ( &lt;generic_assignment&gt; )]</cl>
+<cl>        PORT MAP ( &lt;port_assignment&gt; );</cl>
+<cl> </cl>
+<cl>&lt;direction&gt; -&gt; TO</cl>
+<cl>            || DOWNTO</cl>
+<cl> </cl>
+<cl>&lt;instantiation&gt; -&gt; &lt;loop_instantiation&gt;</cl>
+<cl>                || &lt;simple_instantiation&gt;</cl>
+<cl> </cl>
+<cl>&lt;generic_assignment&gt; -&gt; &lt;identifier_list&gt;</cl>
+<cl>                     || &lt;explicit_assignment_list&gt;</cl>
+<cl> </cl>
+<cl>&lt;explicit_assignment_list&gt; -&gt;</cl>
+<cl>        &lt;&lt;explicit_assignment&gt;,&gt;* &lt;explicit_assignment&gt;</cl>
+<cl> </cl>
+<cl>&lt;explicit_assignment&gt; -&gt; &lt;identifier&gt; =&gt; &lt;identifier&gt;</cl>
+<cl> </cl>
+<cl>&lt;port_assignment&gt; -&gt; &lt;signal_list&gt;</cl>
+<cl>                  || &lt;explicit_sig_assign_list&gt;</cl>
+<cl> </cl>
+<cl>&lt;signal_list&gt; -&gt; &lt;&lt;signal&gt;,&gt;* &lt;signal&gt;</cl>
+<cl> </cl>
+<cl>&lt;signal&gt; -&gt; &lt;identifier&gt; [&lt;array&gt;]</cl>
+<cl> </cl>
+<cl>&lt;explicit_sig_assign_list&gt; -&gt;</cl>
+<cl>        &lt;&lt;explicit_sig_assign&gt;,&gt;* &lt;explicit_sig_assign&gt;</cl>
+<cl> </cl>
+<cl>&lt;explicit_sig_assign&gt; -&gt; &lt;identifier&gt; =&gt; &lt;signal&gt;</cl>
+</code>
+<p>
+The instantiation of a model is done by assigning the generic variable of the instance to the local generic variables of the current model and by linking the instance port to the model signals. The &lt;identifier&gt; is the model name and &lt;blockname&gt; the instance name.
+</p>
+<p>
+The user can also use a "for" statement to try to instantiate a set of instances whose number is known. In this case, the expressions defining the bound of the "for" statement have no restriction and can depend on any of the known generic variables.
+</p>
+<p>
+The user may also wish to recognize an unknown number of instances such as cells in parallel or in series. In this case, the left or right expression in the "for" statement contains an unknown generic variable and at least one of the port vector will depend on this variable. The expression with the generic variable has certain restrictions. The only legal operators are '+', '-', '/' and '*'.
+</p>
+<p>
+When trying to find a number of cells in a "for" statement, Genius will always try to match as many instances as possible.
+</p>
+
+</section>
+
+
+<section niv='2'><title>The Actions</title>
+
+<p>
+The user can associate an action to a model. 
+This action can be put directly at the end of the VHDL file if it's a C action
+or in a separate file. If the action is written in TCL it can be defined in the main TCL script.
+The action is a C or TCL function which has
+the same name as the model. This function is given the values
+computed for all the generic variables of the model. Those 
+values are assigned to variables with the same name as the
+generic variables of the model.
+</p>
+<p>
+For any given model, there can be several versions due to the 
+fact that each recognized instance of
+a model can differ from  another depending on the values attributed to the
+generic variables used to match the model. A unique name for
+each version is passed as an argument to the function 
+as a string "char *model".
+</p>
+<p>
+The action is called for each recognized instances 
+remaining after all the recognition rules have been applied. A unique name for
+each instance is passed as an argument to the function 
+"char *instance".
+</p>
+<code>
+<cl>void levelA (char *model, char *instance, int VAR, int VAR1, ...)</cl>
+<cl>{</cl>
+<cl>	...</cl>
+<cl>}</cl>
+</code>
+<p>
+In TCL, generic variables are made available as global TCL variables.
+Be aware that calling TCL script within GNS, affects main TCL script.
+</p>
+<code>
+<cl>proc levelA {} {</cl>
+<cl>  global model instance VAR VAR1 ...</cl>
+<cl>  ...</cl>
+<cl>}</cl>
+</code>
+<p>
+The actions are called at the end of the complete recognition phase
+ for all the instances to keep (see Library File) in the circuit. The
+instances to keep but only used by an higher hierarchical level
+are destroyed. Their actions will therefore not be executed.
+</p>
+<p>
+The C action function is interpreted by &tool;, therefore
+there are certain limitations in what the user can do.
+However, the action functionality can be expanded by the
+use of dynamic libraries. Dynamic libraries, containing user-defined functions
+which can be called from within actions, are easily created with the help of the genapi tool.
+</p>
+
+
+<section niv='3'><title>Types</title>
+
+<p>
+The action interpreter authorizes use of the following base types:
+</p>
+<list>
+<item>char</item>
+<item>int</item>
+<item>double</item>
+<item>FILE *</item>
+</list>
+<p>
+Pointers types or one dimensional arrays types based on the above type ar also recognized.
+</p>
+<p>
+Additionally, any other pointer types can be specified so long as they are only used in user-defined
+function calls (see dynamic library).
+</p>
+<p>
+Static variables are authorized. They are global to all the actions.
+</p>
+
+</section>
+
+<section niv='3'><title>Supported Operators</title>
+
+<p>
+All the basic C arithmetic and logic operations are possible on the authorized interpreter types.
+</p>
+
+</section>
+
+
+<section niv='3'><title>Functions</title>
+
+<p>
+The interpreter can manage the following standard C functions:
+</p>
+<list>
+<item>  printf</item>
+<item>  fprintf</item>
+<item>  sprintf</item>
+<item>  malloc</item>
+<item>  free</item>
+<item>  strcpy</item>
+<item>  strcat</item>
+<item>  fopen</item>
+<item>  fclose</item>
+</list>
+<p>
+The following built-in non standard functions are also implemented:
+</p>
+<glossary>
+<row type="split"><article>FILE *avtfopen(char *name, char *extension, char mode) ....</article>
+   <def>opens a file taking into account the global configuration file for the seek directories and compression filter. Legal values for the mode are: READ_TEXT and WRITE_TEXT</def></row>
+<row type="split"><article>int gnsModelVisited(char *model);</article>
+   <def>Returns 1 if the given model has already been marked as visited, 0 otherwise. Used to avoid duplicating actions.</def></row>
+<row type="split"><article>void gnsMarkModelVisited(char *model);</article>
+   <def>Marks the given model as having been visited, to avoid duplicating the action.</def></row>
+<row type="split"><article>char *char_to_string(int size, char caract);</article>
+   <def>returns a string which length is 'size'. The string is filled with the character 'caract'.</def></row>
+<row type="split"><article>char *onehot_to_bit(int size, int bitnum);</article>
+   <def>returns a string which length is 'size'. The string is filled with the value (1&lt;&lt;bitnum) in binary format.</def></row>
+<row type="split"><article>char *onehot_to_hexa(int size, int bitnum);</article>
+   <def>returns a string which length is 'size'. The string is filled with the value (1&lt;&lt;bitnum)  in hexadecimal format.</def></row>
+<row type="split"><article>char *onehot_to_octa(int size, int bitnum);</article>
+   <def>returns a string which length is 'size'. The string is filled with the value (1&lt;&lt;bitnum) in octal format.</def></row>
+<row type="split"><article>char *onecold_to_bit(int size, int bitnum);</article>
+   <def>returns a string which length is 'size'. The string is filled with the value not(1&lt;&lt;bitnum) in binary format.</def></row>
+<row type="split"><article>char *onecold_to_hexa(int size, int bitnum);</article>
+   <def>returns a string which length is 'size'. The string is filled with the value not(1&lt;&lt;bitnum) in binary hexadecimal format.</def></row>
+<row type="split"><article>char *onecold_to_octa(int size, int bitnum);</article>
+   <def>returns a string which length is 'size'. The string is filled with the value not(1&lt;&lt;bitnum) in octal format.</def></row>
+<row type="split"><article>char *genius_date();</article>
+   <def>returns a string containing the current date and time.</def></row>
+</glossary>
+<p>
+Note that each of the string generation functions always returns a pointer to the same address. If you wish to keep the string over multiple calls of the same function, you will have to copy the result into another string variable.
+</p>
+
+</section>
+
+
+<section niv='3'><title>Loops and conditional statements</title>
+
+<p>
+Genius interpreter handle the following C loop and conditional constructs:
+</p>
+<list>
+<item>for (...; ...; ...) {...}</item>
+<item>do {...} while (...)</item>
+<item>while (...) {...}</item>
+<item>if (...) {...} else {...}</item>
+</list>
+
+<p>
+The reserved words "return" and "break" are also supported as well as the standard function call "exit(&lt;errcommand&gt;)".
+</p>
+
+</section>
+
+
+<section niv='3'><title>Dynamic Libraries</title>
+
+<p>
+The user can create his own dynamic library whose 
+functions can be called from within &tool; actions. 
+To do so, he has to provide a simplified header file 
+containing the function prototypes. Global variables are not
+allowed. The use of the tool genapi will automatically
+generate the dynamic library from the header file and the .c files 
+given by the user. 
+</p>
+
+</section>
+
+</section>
+
+
+<section niv='2'><title>The Library File</title>
+
+<p>
+The library file contains a list of all the rule files and supplementary information required by the recognition module.
+The transistor level models, the hierarchical models and the action
+files are all referenced here.
+The library file can also indicate built-in template recognition rules and actions to use in the recognition process.
+</p>
+<p>
+Each line of the library file can have two format. The first one is for the user defined rules and actions and the second
+one for the template instantiations:
+</p>
+<code>
+<cl> &lt;model_file&gt; [: [priority=&lt;num&gt;]</cl>
+<cl>                  [, keep=&lt;yes|no&gt;]</cl>
+<cl>                  [,format=&lt;spice|vhdl|spice_hr&gt;] ]; </cl>
+</code>
+
+<p>
+The names of a model_file does not have to respect a particular format, except if the file is supposed to be a TCL script.
+In this case the file must be interpreted by TCL the suffix must be ".tcl" else the file is considered to be VHDL or C.
+The format directive specifies whether a transistor-level recognition rule is in SPICE or VHDL format.
+In the case of files containing actions, the format must not be specified. 
+</p>
+<p>
+The priority defines the order of recognition for models. 
+Lower value means higher priority. Independent recognition rules are applied in order of specified priority. This option can be critical 
+if one model is a subset of another model.
+</p>
+<imgHsize namehtml="priority.gif"  namepdf="priority.gif" hpdf="452pt" wpdf="473pt"/>
+<p>
+Finally, the "keep" flag tells genius whether the user is 
+interested in keeping the recognized instances of a model. 
+The user is generally interested by the top level of his hierarchy 
+but he can keep other recognized instances (see also gnsKeepAllCells configuration).
+The &lt;modelname&gt;_yagroot.&lt;vhd|spi&gt; file will contain
+only the instances whose model keep flag have been set.
+</p>
+<p>
+In the case of template instantiations, the syntax follows:
+</p>
+<code>
+<cl> &lt;model_name&gt; &lt;model_instance_name&gt; {</cl>
+<cl>   [ rule=&lt;file_spec&gt; ]</cl>
+<cl>   [ rules={ &lt;file_spec&gt; [, ...] } ]</cl>
+<cl>   [ action=&lt;file_spec&gt; ]</cl>
+<cl>   [ actions={ &lt;file_spec&gt; [, ...] } ]</cl>
+<cl>   [ &lt;model_identifier&gt;=&lt;new_identifier&gt; [, ...] ]</cl>
+<cl> } [: [priority=&lt;num&gt;]</cl>
+<cl>       [, keep=&lt;yes|no&gt;]  ];</cl>
+</code>
+
+<p>
+The model_name is the name of one of the built-in templates available in the distribution or in the paths given by 'gnsTemplateDir' and 'gnsLibraryDir'
+variables. The model name can be overridden by model_instance_name but the model_name can be used if the template is instantiated once.
+</p>
+<p>
+By default, the template rules and actions will be used for the recognition but they can also be overridden by specifying a &lt;file_spec&gt;
+which has exactly the same syntax as the user defined rule except the trailing semicolon.
+Several files can be specified for the rules and the actions, for instance, if different architectures are spread over multiple files.
+</p>
+<p>
+All the identifier &lt;model_identifier&gt; of the template rules can be renamed by &lt;new_identifier&gt; depending on the user wish.
+This is handy to change the instance models, connector names or generic variable names in the rules.
+</p>
+<p>
+Finally, an overall priority and keep flag can be specified for the instantiated model. Their meaning is the same as for the user defined
+rules and actions.
+</p>
+
+
+
+
+</section>
+
+
+<section niv='2'><title>Symmetry and Coupling</title>
+
+<p>
+Due to the nature of bottom up recognition, any symmetry in the identified components can cause recognition difficulties which are not immediately obvious. Cells are identified at a particular hierarchical level without knowing how they will be connected in the higher level. Because of this, &tool; cannot guarantee the precise ordering of any symmetric cell connectors. In the example below representing the memory cell, the connectors q and nq are symmetric. This means that from the perspective of the individual cell there is nothing to distinguish between these two connectors. When performing the recognition of the memory cell, There is nothing to prevent the memory cell being recognized the other way round to that which the user would have expected.
+</p>
+<imgHsize namehtml="coupl_sym.gif"  namepdf="coupl_sym.gif"  hpdf="314pt" wpdf="395pt" />                
+<p>
+The user must pay careful attention to any possible symmetry in the models to recognize. For example, if the user wants to recognize a column of memory cells connected in parallel, he would provide a rule to identify an arbitrary number of memory cells with the q ports connected together and the qn ports connected together. However, if q and qn ports are symmetric then q ports may be connected to qn ports and vice versa but nonetheless corresponding to a column of memory cells.
+</p>
+<p>
+The case of symmetry also occurs often when dealing with vectors. A user may require the identification of two instances connected together by vectored ports. However, the signal connected to bit(0) of one of the ports is not necessarily the signal connected to bit(0) of the other port. The order of the indexing of the vectored ports depend on the order of the recognition algorithm.
+</p>
+<p>
+To cope with this problem of symmetry, &tool; provides for a mechanism of pragma directives included as comments in the model files. Each pragma directive consists of the list of symmetric connectors. The connectors can be single connectors or the radical of a vectored connector. Use of the radical of a vector implies that all the connectors of the vector are symmetric to each other. Each group of symmetric connectors must be declared in a unique pragma.
+</p>
+<p>
+In VHDL rules, the pragma is declared in the model entity after the port declarations as follows:
+</p>
+<code>	-- pragma symmetric [&lt;single_connector&gt;|&lt;connector_radical]+</code>
+<p>
+In SPICE, for symmetric connector in transistor-level cells, the pragma can be placed anywhere as follows:
+</p>
+<code>* pragma symmetric [&lt;single_connector&gt;|&lt;connector_radical]+</code>
+<p>
+With symmetry comes the additional difficulty of coupled symmetry. When &tool; tries to match together recognized instances with symmetric connectors and the initial match fails, it only knows that there are connectors which can be swapped. It will then try to swap around the symmetric connectors until a match is found. In reality, the symmetry handling is more efficient than this, but that's the basic idea.
+</p>
+<p>
+In the above example of a column multiplexer, there are 2 sets of symmetric connectors:
+</p>
+<list>
+<item>i0 is symmetric with i1</item>
+<item>a0 is symmetric with a1</item>
+</list>
+<p>
+In the example i0 depends on a0 and i1 depends on a1. It's obvious that if i0 and i1 are swapped, a0 and a1 must also be swapped. a0 is effectively coupled with i0 and a1 is coupled with i1. If the coupling dependencies are not explicitly stated, &tool; may swap the connectors in one of the symmetric sets but not the other, thus corrupting the connectivity of the recognized instance.
+</p>
+<p>
+The user must therefore also be careful about the coupled symmetric connectors in a model else &tool; will be able be match instances for which the connectivity described by the rule is not respected.
+</p>
+<p>
+In the same way as for standard symmetric connectors, pragma directives must be used to define the couplings:
+</p>
+<p>
+In VHDL rules, the pragma is declared in the model entity after the port declarations as follows:
+</p>
+<code>	-- pragma coupled [&lt;single_connector&gt;|&lt;connector_radical]+</code>
+<p>
+In SPICE, for symmetric connector in transistor-level cells, the pragma can be placed anywhere as follows:
+</p>
+<code>	* pragma coupled [&lt;single_connector&gt;|&lt;connector_radical]+</code>
+<p>
+The entity declaration for the multiplexer would therefore be as follows:
+</p>
+<code>
+<cl>ENTITY mux IS</cl>
+<cl>   PORT (</cl>
+<cl>      i0, i1: INOUT BIT;</cl>
+<cl>      a0, a1: INOUT BIT</cl>
+<cl>   );</cl>
+<cl>-- pragma symmetric i0 i1</cl>
+<cl>-- pragma symmetric a0 a1</cl>
+<cl>-- pragma coupled i0 a0</cl>
+<cl>-- pragma coupled i1 a1</cl>
+<cl>END;</cl>
+</code>
+<p>
+The user should be aware that symmetric connector imposes a restriction on how the rules can be written. If a particular rule contains a loop instantiation (of the special kind which determines the value of a generic) and the instances in the loop are connected together by symmetric connectors, then is not possible, in the same rule, to connect these connectors to anything outside the loop apart from a set of symmetric connectors.
+</p>
+<p>
+This is not actually a restriction on what can be recognized since structures which require this kind of description can always be handled by introducing an additional rule hierarchy.
+</p>
+
+</section>
+
+
+<section niv='2'><title>Other PRAGMAs</title>
+
+<code>	-- pragma without &lt;name0&gt; [&lt;name1]*</code>
+<p>
+Matches the hierarchical recognition rule only in no correspondance is found for the given instances or transistors.
+</p>
+<code>	-- pragma exclude &lt;name0&gt; [&lt;name1]*</code>
+<p>
+After the each recognition of the rule, the given instances are put back in the available instance list so they can be used again in the recognition rules (even the current one). This permits sharing of instances/transistors between rules.
+</p>
+<code>	-- pragma exclude_at_end &lt;name0&gt; [&lt;name1]*</code>
+<p>
+The same as "exclude" but the given instances can not be reused by the current rule. They will be available for the next ones.
+</p>
+<code>	-- pragma forcematch &lt;name0&gt; [&lt;name1]*</code>
+<p>
+The given names apply to transistor, instances and net names. This option, will match the names in the rule if they are in the given list. Name match for instances won't work for GNS recognized instances as their name is automatically generated. Instead blackboxed instances can use this option. If '_' is used in a given name, it can be matched with a hierarchy separator. eg. circuit blackbox instance xlevel.xcells will be matched by xlevel_cells.
+</p>
+<code>	-- pragma unused &lt;name0&gt; [&lt;name1]*</code>
+<p>
+Each connector in the given list is unused meaning there is no real correspondance to them in the netlist.
+</p>
+
+</section>
+
+</section>
+</chapter>

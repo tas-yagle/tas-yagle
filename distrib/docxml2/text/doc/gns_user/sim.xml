@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>SPICE Simulation</title>
+<p>
+The SIM API provides a set of functions to perform and take measures from SPICE simulations of internally generated netlists using any external SPICE simulator. Functions are provided to position input waveforms, set simulation parameters, and take measurements of complex properties such as peak noise and setup/hold constraints.
+</p>
+&sim_API;
+</section>

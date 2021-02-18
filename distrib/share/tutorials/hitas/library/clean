@@ -1,0 +1,1 @@
+rm -f *.dtx *.ttx *.rep *.stm *.lib *.tlf *.rcx *.cns *spicedeck*

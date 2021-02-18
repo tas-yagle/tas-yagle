@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Design Flow Integration </title>
+
+<section niv='2'><title>Transistor-Level Analysis</title>
+<p>For a block up to 1M transistors, &tool; performs a flat transistor-level analysis, and generates a flat timing 
+database of the block, taking into account the interconnect parasitics (RC networks).</p>
+<imgsize namehtml="hitas_transistor.gif" namepdf="hitas_transistor.svg"/>
+</section>
+
+<section niv='2'><title>Full-Chip Analysis</title>
+<p>In the hierarchical analysis mode, &tool; uses existing timing views of instantiated blocks to work out the 
+timing database of the whole circuit, taking into account the interconnects between blocks.</p>
+<imgsize namehtml="hitas_fullchip.gif" namepdf="hitas_fullchip.svg"/>
+</section>
+
+<section niv='2'><title>Input Files</title>
+
+<section niv='3'><title>Netlist</title>
+<glossary>
+<row><article>.spi</article><def>flat transistor extraction from the layout in SPICE format, possibly with interconnect parasitics
+and coupling capacitances</def></row>
+<row><article>.cdl</article><def>hierarchical schematic CDL/SPICE</def></row>
+<row><article>.spi</article><def>hierarchical netlist in SPICE format</def></row>
+<row><article>.vhdl</article><def>hierarchical netlist in structural VHDL format</def></row>
+<row><article>.vlg, .v</article><def>hierarchical netlist in structural Verilog format</def></row>
+</glossary>
+</section>
+
+<section niv='3'><title>Parasitics</title>
+<glossary>
+<row><article>.dspf, .spf</article><def>interconnect parasitics and coupling capacitances back-annotation in DSPF/SPF format</def></row>
+<row><article>.spef</article><def>interconnect parasitics and coupling capacitances back-annotation in SPEF format</def></row>
+</glossary>
+</section>
+
+<section niv='3'><title>Technology</title>
+<glossary>
+<row><article>bsim3</article><def>SPICE format, BSIM3 level</def></row>
+<row><article>bsim4</article><def>SPICE format, BSIM4 level</def></row>
+</glossary>
+</section>
+
+<section niv='3'><title>Timing characterizations</title>
+<glossary>
+<row><article>.lib</article><def>Synopsys Liberty Format</def></row>
+<row><article>.tlf</article><def>Cadence TLF format</def></row>
+<!--<row><article>.sdf</article><def>SDF back-annotation</def></row>-->
+</glossary>
+</section>
+
+<section niv='3'><title>Timing Constraints</title>
+<glossary>
+<row><article>.sdc</article><def>Synopsys Design Constraints</def></row>
+<row><article>.gcf</article><def>Cadence Global Constraints Format</def></row>
+<row><article>.inf</article><def>Avertec Proprietary Constraints Format </def></row>
+</glossary>
+</section>
+
+</section>
+
+<section niv='2'><title>Output Files</title>
+
+<section niv='3'><title>Disassembly</title>
+<glossary>
+<row><article>.rep</article><def>Contains a list of diagnostics (warnings and error messages) attributed to particular signals or transistors </def></row>
+<row><article>.cns</article><def>Contains the cone view of the circuit. Used for debugging</def></row>
+<row><article>.cnv</article><def>Contains the cone view of the circuit. Used for debugging</def></row>
+</glossary>
+</section>
+
+
+<section niv='3'><title>Timing Database Generation</title>
+<p>The standard output of &tool; is the entire timing view of the circuit, called Unified Timing Database (UTD).
+It consists of text files suitable for the static timing analysis (timing constraints check), crosstalk analysis and timing abstraction. The UTD is made of the following files:</p>
+<glossary>
+<row><article>.dtx</article><def>cone and RC timing arcs</def></row>
+<row><article>.stm</article><def>timing models relative to timing arcs (both cone and paths)</def></row>
+<row><article>.rcx</article><def>RC networks relative to RC timing arcs</def></row>
+<row><article>.loop</article><def>combinational loops detected in the circuit</def></row>
+</glossary>
+</section>
+
+<section niv='3'><title>Static Timing Analysis</title>
+<glossary>
+<row><article>.str</article><def>slack report</def></row>
+<row><article>.sto</article><def>switching windows calculated for all reference points</def></row>
+<row><article>.ste</article><def>warnings encountered during static timing analysis (such as latches with no clock)</def></row>
+</glossary>
+</section>
+
+<section niv='3'><title>Crosstalk Analysis</title>
+<glossary>
+<row><article>.ctk</article><def>human readable file containing crosstalk related information, such as noise levels and aggressors contributions</def></row>
+<row><article>.ctx</article><def>file containing all the delays calculated with crosstalk effects of a complete design hierarchy</def></row>
+</glossary>
+</section>
+
+<section niv='3'><title>Abstraction</title>
+
+<glossary>
+<row><article>.lib</article><def>Timing abstraction in Synopsys Liberty format</def></row>
+<row><article>.tlf3</article><def>Timing abstraction in Cadence TLF3 format</def></row>
+<row><article>.tlf4</article><def>Timing abstraction in Cadence TLF4 format</def></row>
+</glossary>
+</section>
+
+</section>
+
+</section></chapter>

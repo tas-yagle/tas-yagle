@@ -1,0 +1,31 @@
+xtas.*.background                           : Grey
+xtas.*.pathMode                             : XmPATH_MODE_RELATIVE
+xtas.*.XalToolName.foreground               : Red
+xtas.*.menuBar*background                   : gray64
+xtas.*.main*XtasInfosBox.background         : Grey
+xtas.*.main*XtasLogoForm*background         : gray64
+xtas.*.main*XtasMainTitles*background       : gray64
+xtas.*.main*XtasMainTitles*foreground       : Maroon
+xtas.*.XalExit.foreground                   : Red
+xtas.*.XalErrorBox.foreground               : Red
+xtas.*.XalWarningBox.foreground             : DarkOliveGreen
+xtas.*.XalOnVersion.foreground              : Blue
+xtas.*.XtasMainState.foreground             : DarkOliveGreen
+xtas.*.XtasStateForm.borderColor            : DarkOliveGreen
+xtas.*.XtasUserField.foreground             : royal blue
+xtas.*.XtasUserField.background             : PeachPuff
+xtas.*.XtasDrawingArea.background           : Black
+xtas.*.XtasHelpField.foreground             : royal blue
+xtas.*.XtasHelpField.background             : PeachPuff
+xtas.*XtasTextualDisplay*background         : PeachPuff
+xtas.*XtasTextualDisplay*foreground         : royal blue
+xtas.*XtasTextualDisplay*listSizePolicy     : XmCONSTANT
+xtas.*.XtasRequesterBox.Text.background        : PeachPuff
+xtas.*.XtasRequesterBox.FilterText.background  : PeachPuff
+xtas.title    : xtas Main Desk Window
+xtas.iconName : xtas
+xtas.*.main.*.fontList: -*-helvetica-bold-r-normal--14-*
+xtas.*fontList: -adobe-helvetica-bold-r-normal--*-120-*-*-*-*-iso8859-*
+xtas.*.XtasTextualDisplay.*.fontList: -*-fixed-medium-r-normal-*-13-*-*-*-*-*-iso8859-*
+xtas.*.main.*.XtasShellSubForm.*.fontList: -*-helvetica-bold-r-normal--12-*
+xtas.*.XalMessageScrolled.*.fontList: -*-fixed-medium-r-normal-*-14-*-*-*-*-*-iso8859-*

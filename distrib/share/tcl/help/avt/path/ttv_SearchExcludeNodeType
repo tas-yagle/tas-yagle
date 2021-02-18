@@ -1,0 +1,12 @@
+
+       void ttv_SearchExcludeNodeType(char *conf);
+
+DDEESSCCRRIIPPTTIIOONN
+       Allows the exclusion of nodes of a given type for path searching
+
+AARRGGUUMMEENNTTSS
+       ccoonnff          List  of  node types separated by spaces. Valid types are
+                     _C_o_m_m_a_n_d, _P_r_e_c_h_a_r_g_e, _L_a_t_c_h, _C_o_n_n_e_c_t_o_r and _B_r_e_a_k_p_o_i_n_t.
+
+       EEXXAAMMPPLLEE       _t_t_v___S_e_a_r_c_h_E_x_c_l_u_d_e_N_o_d_e_T_y_p_e _"_C_o_m_m_a_n_d _P_r_e_c_h_a_r_g_e_"
+

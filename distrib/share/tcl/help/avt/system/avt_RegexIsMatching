@@ -1,0 +1,14 @@
+
+       int avt_RegexIsMatching(char *nametocheck, char *template);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returs 1 if _n_a_m_e_t_o_c_h_e_c_k matches the regular expression _t_e_m_p_l_a_t_e, 0 oth-
+       erwise.
+
+AARRGGUUMMEENNTTSS
+       nnaammeettoocchheecckk   name to check.
+
+       tteemmppllaattee      regular expression to use.
+
+       EEXXAAMMPPLLEE       _s_e_t _m_a_t_c_h _[_a_v_t___R_e_g_e_x_I_s_M_a_t_c_h_i_n_g _t_a_t_o_o_5 _*_t_o_o_*_]
+

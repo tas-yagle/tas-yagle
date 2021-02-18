@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Overview</title>
+
+<section niv='2'><title>Static Timing Analysis</title>
+<p>The advent of semiconductor fabrication technologies now allows high performance in complex 
+integrated circuits.</p> 
+<p>With the increasing complexity of these circuits, static timing analysis (STA) 
+has revealed itself as the only feasible method ensuring that expected performances are 
+actually obtained.</p>
+<p>In addition, signal integrity (SI) issues due to crosstalk play a crucial role in 
+performance and reliability of these systems, and must be taken into account during 
+the timing analysis.</p>
+<p>However, performance achievement not only lies in fabrication technologies, but also 
+in the way circuits are designed. Very high performance designs are obtained with semi or 
+full-custom designs techniques.</p>
+<p>The &tool; platform provides advanced STA and SI solutions at transistor level. It has 
+been built-up in order to allow engineers to ensure complete timing and SI coverage on their digital 
+custom designs, as well as IP-reuse through timing abstraction. </p>
+<p>Furthermore, hierarchy handling through transparent timing views allows full-chip 
+verification, with virtually no limit of capacity in design size.</p>
+</section>
+
+<section niv='2'><title>Signal Integrity Analysis </title>
+<p>&tool; crosstalk engine is coupled with static timing analysis (STA) engine and is based 
+upon a multi-switching windows refinement algorithm.</p>
+<p>Crosstalk effects are then fully handled in timing checks. Precise delay update is done thanks 
+to current source models for gate, and non-linear charge transfer models for effective wire load 
+computation.</p>
+<p>Detailed SI report provides:</p>
+<list>
+<item>Delta-delays in gates and interconnects</item>
+<item>Effective noise contribution of each aggressor</item>
+<item>Overshoot and undershoot peaks, together with sensitivity of the fan-out gates</item>
+<item>Statistical noise classification allowing Engineering Change Orders</item>
+</list>
+<p>The graphical user interface (GUI) allows easy execution of the crosstalk analysis.</p>
+</section>
+
+<section niv='2'><title>Applications</title>
+<p>&tool; can be used on a wide range of ICs, such as Micro-Processors, Micro-Controllers, 
+Memory Controllers, Custom IPs or Standard-Cell Libraries (Arithmetic Units, Data-Paths...). It 
+provides the following benefits:</p>
+<p>Timing sign-off</p>
+<list>
+<item>Digital custom macros STA sign-off</item>
+<item>Full-chip STA sign-off</item>
+</list>
+<p>Signal Integrity sign-off</p>
+<list>
+<item>Digital custom macros crosstalk analysis</item>
+<item>Full-chip crosstalk analysis</item>
+</list>
+<p>Design and debug</p>
+<list>
+<item>Circuit timing analysis during design phase</item>
+<item>Early detection of timing bottlenecks</item>
+</list>
+<p>IP Reuse (.lib files generation)</p>
+<list>
+<item>Digital custom macros characterization</item>
+<item>Standard cells re-characterization</item>
+</list>
+</section>
+
+<section niv='2'><title>Key Features</title>
+<p>&tool; provides the following features:</p>
+<list>
+<item>Vector-free fast simulation engine, accuracy within 5% of SPICE</item>
+<item>Current Source Modeling (CSM) of drivers, AWE modeling of interconnects</item>
+<item>SPICE, VHDL or VERILOG netlist support, SPICE, SPEF or DSPF parasitics support, BSIM3 and BSIM4 support</item>
+<item>Design-style support: latch-based, domino logic, barrel shifters, multipliers</item>
+<item>Advanced timing checks: cycle sharing, cycle stealing, multicycle paths</item>
+<item>Full-Chip analysis through transparent hierarchy</item>
+<item>Cross corner analysis</item>
+<item>STA and SI coupled analysis</item>
+<item>Non-linear noise models</item>
+<item>Statistical noise classification</item>
+<item>GUI and Tcl interface</item>
+<item>Critical path automatic spice deck</item>
+<item>SDC timing constraints</item>
+</list>
+</section>
+
+</section>
+</chapter>
+
+

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Scope of Usage</title>
+
+<section niv='2'><title>Introduction</title>
+<p>The purpose of this chapter is to provide a user of &tool; with guidelines as to the type of circuits on which tool can be used.</p>
+<p>In essence, the &tool; static timing analysis platform is designed for digital custom designs and can handle most techniques used in very high speed or low power designs. &tool; is not, however, designed to cope automatically with analog or structures.</p>
+<p>For many designers and CAD teams using advanced design techniques, the distinction between analog and digital is not always clearly defined. The role of this chapter is to define what is digital and what is analog for &tool;.</p>
+<p>In order to achieve this we first describe the basic assumptions made by &tool;. If these assumptions are not valid for a circuit structure then this is probably analog. In the next section we provide illustrations of a number of different Digital and Custom Digital structures that &tool; is capable of handling. In the final section we present a selection of typical analog structures for which &tool;, in its native mode, is not suited. However, the tool provides means to link with analog simulators, in order to handle those analog structures.</p>
+</section>
+
+
+
+<section niv='2'><title>&tool; Basic Assumptions</title>
+
+<section niv='3'><title>Circuit Partitioning</title>
+<p>The circuit partitioning in &tool; is based on the identification of all current paths which define the state of each transistor gate. In order to obtain these paths, the circuit representation is converted from a transistor net-list to a cone net-list.</p>
+<p>A cone is defined as being, for each circuit node connected to at least one transistor gate, the set of branches, which, from this node, attain a power supply or an external connector on the traversal of transistor source-drain junctions. Each branch consists of links corresponding to the transistors traversed. These branches therefore reveal the signals governing the state of the transistor gate(s) for which the cone is being constructed.</p>
+<!--<p>Figure 1: From transistors to cones</p>-->
+<p>A set of cones is therefore obtained (completely defining the state of all transistor gates and drivable external connectors), each of which contain a set of branches. <!--For the example of figure 1, the two cones E and F are made up of the branches shown in figure 2.--></p>
+<p>This set of branches allows us to express the behaviour of the cone and hence generate a boolean expression for the state of the corresponding transistor gate. This expression is in fact composed of two parts: the function which represents the conditions necessary for Vdd to impose (Sup), and the equivalent for Vss (Sdn).</p>
+<p>In reality these conditions have to be verified globally, this means that Sup and Sdn are expressed in terms of the logic surrounding the cone. The user defines the depth, in terms of logic gates, used for the expansion.</p>
+</section>
+
+<section niv='3'><title>Timing Arcs</title>
+<p>After circuit partitioning, each individual cone is characterized in terms of delay. First of all, a causality graph is obtained for each cone.</p>
+<p>This cone causality graph is deduced directly from the structure of the cone. If an input drives a transistor in a branch to Vdd then the input generates an up transition on the output. If the transistor is NMOS then an up transition on the input creates the up on the output, so the timing arc is uu. A similar logic is applied for inputs driving PMOS transistors and for transistors in Vss branches. Up to four possible timing arcs can exist for each cone input.</p>
+<p>Each timing arc can have a maximum and a minimum value. The aim is to obtain the maximum and minimum delays between all possible transitions of all cone inputs and the possible transitions of the output of the cone. <!--For the cone E, this gives the causality graph shown in Figure 3.--></p>
+<!--<p>Figure 3: Timing arcs for a pass-transistor multiplexor</p>-->
+<p>Each maximum and minimum timing arc is associated with a particular cone branch. This association is made by an initial calculation to obtain the most resistive (or least resistive for minimum) branch giving the timing arc transition.</p>
+<p>The analysis of this branch provides the timing model (delay and slope) for the timing arc.</p>
+</section>
+
+<section niv='3'><title>Current Characterization</title>
+<p>A branch is made up of a number of transistors (PMOS and NMOS) connected in series. The characterization of the timing arc is made by an analysis of the current characteristics of each transistor in the branch. Two special cases, however, should be mentioned:</p>
+<p>a) A cone may contain identical parallel branches. If the branch to characterize is part of a set of parallel branches then the current through all branches of the set is used to characterize the timing arc.</p>
+<p>b) A transistor in a branch may be part of a transfer gate transistor pair. In this case the current characteristic is calculated using both NMOS and PMOS transistors of the transfer gate. &tool; assumes that both these transistors conduct simultaneously.</p>
+</section>
+
+<section niv='3'><title>Algorithm Assumptions</title>
+<p>The basic assumptions made by &tool; are:</p>
+<p>a) A full swing (Vdd to Vss or Vss to Vdd) on the cone output occurs as a result of a full swing on a single cone input.</p>
+<p>b) Separate cone inputs do not switch simultaneously.</p>
+<p>c) For each branch characterization, only one transistor is considered to switch. Transfer gates and series connected transistors with coupled gates are handled as special cases.</p>
+<p>These assumptions are necessary for the partitioning and characterization algorithm to provide a valid result. If these general assumptions hold for a particular circuit structure, then &tool; is applicable. </p>
+<p>In the next section we present a selection of design structures for which these assumptions hold.</p>
+</section>
+
+</section>
+
+<section niv='2'><title>&tool; Digital Structures</title>
+<section niv='3'><title>CMOS Gates</title>
+<p>&tool; is applicable to all basic CMOS gates regardless of the implementation (invertors, buffers, NAND, NOR, etc). All kinds of exclusive or gates, including the implementation shown in the following figure, can be handled directly using &tool;. No special configuration is necessary.</p>
+<imgsize namehtml="scope_4.gif" namepdf="scope_4.svg"/>
+</section>
+
+<section niv='3'><title>Pass-Transistor and Transmission Gate Logic</title>
+<p>&tool; is applicable to custom digital designs using pass-transistor or transmission gate logic. This often occurs in multiplexer implementations such as those shown in the following figure.</p>
+<imgsize namehtml="scope_5.gif" namepdf="scope_5.svg"/>
+<p>These structures are handled automatically by &tool;. However, care must sometimes be taken that the partitioning is performed correctly. &tool; may require information about the correlation between selector inputs if this correlation is not present in the block under analysis.</p>
+</section>
+
+<section niv='3'><title>Clocked CMOS Logic</title>
+<p>&tool; is applicable to high-speed custom techniques such as clocked CMOS logic. In particular &tool; is well suited to the analysis of Domino-Precharge based designs. Figure 6 shows a typical Domino precharge architecture handled by &tool;.</p>
+<imgsize namehtml="scope_6.gif" namepdf="scope_6.svg"/>
+<p>Each precharge stage is sometimes followed by a keeper or level hold structure. These pose no problem for &tool;.</p>
+<p>For full handling of this kind of logic it is necessary to activate the automatic precharge detection for the partitioning phase as well as precharge verification during the static timing analysis phase.</p>
+</section>
+
+<section niv='3'><title>Static Latches and Flip-Flops</title>
+<p>&tool; incorporates, during the partitioning phase, an advanced algorithm to automatically detect any kind of fully static latch designed using an active feedback loop.</p>
+<p>Both conflictual (e.g. inverter feedback) and non-conflictual (e.g. tristate feedback) latches are handled.</p>
+<p>Latches can contain any number of clock inputs as well as asynchronous set and reset inputs. All these input types are identified automatically. Following figure shows a number of different latch types handled by &tool;. </p>
+<imgsize namehtml="scope_7.gif" namepdf="scope_7.svg"/>
+<p>Flip-flops are treated as two separate latches (master and slave). &tool; has an option to automatically detect flip-flops. This option can be used simply to report to the user the nodes recognised as the master nodes and the slave nodes. Alternatively, it is possible, for some flip-flops, to group the master and slave and perform a simplified flip-flop timing verification.</p>
+</section>
+
+<section niv='3'><title>Dynamic Latches</title>
+<p>&tool; can also be used to recognise dynamic latches such as the simple example shown in the following figure.</p>
+<imgsize namehtml="scope_8.gif" namepdf="scope_8.svg"/>
+<p>Recognition of dynamic latches is a configuration option of &tool;. Some care should be taken as there is can be ambiguity with a tristate bus.</p>
+<p>&tool; uses the functional analysis of the partitioning phase to determine whether a node can be a dynamic latch. An internal node for which all drivers can be deactivated is considered to be a dynamic latch unless &tool; is told explicitly otherwise.</p>
+</section>
+
+</section>
+
+<section niv='2'><title>&tool; Analog Structures</title>
+<p>In this section we review a selection of typical analog structures which &tool; cannot handle directly.</p>
+<section niv='3'><title>Sense Amplifier</title>
+<p>Following figure shows a typical sense amplifier building block. This structure, typically found in memories, senses a difference in potential between two inputs and provides an output of 1 or 0 depending which is the greater.</p>
+<imgsize namehtml="scope_9.gif" namepdf="scope_9.svg"/>
+<p>It should be quite clear from the &tool; assumptions that this structure cannot be handled. In effect it requires two input to switch simultaneously and neither of these inputs are full-swing.</p>
+</section>
+
+<section niv='3'><title>Differential Amplifier</title>
+<p>Following figure shows a typical long-tailed pair implementation of a differential amplifier. The operation is very similar to the sense amplifier. This is a basic analog amplifier building block but can also be found in high-speed digital logic styles such as CML.</p>
+<p>Again the basic &tool; assumptions are not respected here since two inputs switch simultaneously even though they may be full-swing (for differential digital logic).</p>
+<imgsize namehtml="scope_10.gif" namepdf="scope_10.svg"/>
+</section>
+
+<section niv='3'><title>Voltage Generator</title>
+<p>&tool; cannot calculate static power supply values produced by internal voltage generator circuits. The values of the voltages must be provided explicitly to &tool; using Vcard directives in the spice netlist.</p>
+<p>For example, following figure shows a simple voltage divider circuit. This may occur in a netlist to provide a secondary lower power supply value to reduce power consumption. Here, the user is required to specify a Vcard at the output of this voltage divider to specify its effect.</p>
+<imgsize namehtml="scope_11.gif" namepdf="scope_11.svg"/>
+</section>
+
+<section niv='3'><title>Typical Analog Devices</title>
+<p>&tool; is not directly applicable to common analog building blocks found in mixed-signal designs. These include:</p>
+
+<list>
+<item>Analog to Digital and Digital to Analog Converters</item>
+<item>Voltage Controlled Oscillators</item>
+<item>Phase Locked Loops</item>
+<item>Charge Pumps</item>
+</list>
+</section>
+
+</section>
+
+</section>
+
+</chapter>
+
+

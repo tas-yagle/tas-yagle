@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="eqt">
+
+<err>
+    <lib>EQT-</lib><num>001</num>
+    <msg>Unknown unit '%s': assuming factor 1\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EQT-</lib><num>002</num>
+    <msg>can't evaluate '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EQT-</lib><num>003</num>
+    <msg>too much user defined functions\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EQT-</lib><num>004</num>
+    <msg>%s can't be done yet on ternary or .func operators\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EQT-</lib><num>005</num>
+    <msg>Internal: empty node can't make ABL\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EQT-</lib><num>006</num>
+    <msg>Internal: integer value in ABL to make\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EQT-</lib><num>007</num>
+    <msg>Internal: node is NULL\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EQT-</lib><num>008</num>
+    <msg>Internal: Error in function %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EQT-</lib><num>009</num>
+    <msg>Mismatching number of parameters for function '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EQT-</lib><num>010</num>
+    <msg>Undefined function '%s'\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

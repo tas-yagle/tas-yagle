@@ -1,0 +1,33 @@
+<glossary>
+<row type='split'><article><index>avtVerboseConeFile</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Generating a <f>.cnv</f> cone file result in a more readable version but which is 
+not suited for GUI vizualisation.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtNormalConeFile</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>A normal <f>.cns</f> cone file is produced.</def></row> 
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtFullConeFile</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def><f>.cnv</f> or <f>.cns</f> cone files are generated with parasitic 
+information.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagGenSignature</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Signatures are generated for each cone which are used to associate icons with 
+the cones.</def></row> 
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+</glossary>

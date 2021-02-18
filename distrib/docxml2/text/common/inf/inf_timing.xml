@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>Timing Directives</title>
+
+<section niv='4'><title>BREAK</title>
+
+<p>For the static timing analysis, verification of setup and hold constraints is only performed at reference points, 
+i.e. external connectors, latch and precharge data input, latch and precharge command.
+However, it may be necessary to perform verifications on other points. 
+These so-called break points are specified in the BREAK section.</p>
+<code>
+<cl>BREAK</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+<p>The break point mechanism can also be used to handle internally generated clocks, since a signal can be declared a break point and then declared a clock in the static timing analysis file.</p>
+</section>
+
+<section niv='4'><title>BYPASS</title>
+
+<p>To eliminate some critical paths, a BYPASS section should be used.</p>
+<code>
+<cl>BYPASS</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2 &lt;;</cl>
+<cl>    sig3 &gt;;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+<p>If a signal appears with no argument, the tool eliminates all paths which cross it. With the '&gt;' argument, all paths which end on the signal will be suppressed and with the '&lt;' argument, all paths beginning on the signal are suppressed. With the '!' argument, all paths passing through an input/output tri-state connector are suppressed.</p>
+</section>
+
+<section niv='4'><title>FALSEPATH</title>
+
+<p>During the static timing analysis, it is possible to specify that certain timing paths are false paths using the FALSEPATH section. Each line in this section describes a path to be ignored by the static timing analysis. A line is made up of the list of signals through which the path passes. The first signal in the list must be the start of a timing path and the last one must be the end of a timing path. It is possible to add the following tokens to the list in order to further constrain the path matching:</p>
+<glossary>
+<row><article><f>&lt;UP&gt;</f></article><def>must match rise transition on net given by preceding name.</def></row>
+<row><article><f>&lt;DOWN&gt;</f></article><def>must match fall transition on net given by preceding name.</def></row>
+<row><article><f>&lt;VOID&gt;</f></article><def>means signal given by preceding name must de directly followed by signal given by succeeding name.</def></row>
+<row><article><f>: &lt;HZ&gt;</f></article><def>at the end of the list means must match a high impedance transition at the end of the path.</def></row>
+<row><article><f>: &lt;NOTHZ&gt;</f></article><def>at the end of the list means must NOT match a high impedance transition at the end of the path.</def></row>
+</glossary>
+<code>
+<cl>FALSEPATH</cl>
+<cl>BEGIN</cl>
+<cl>    sig1 sig2 sig3;</cl>
+<cl>    sig1 sig4 &lt;UP&gt; sig5 &lt;DOWN&gt;;</cl>
+<cl>    sig1 sig2 sig6 &lt;VOID&gt; sig7;</cl>
+<cl>    sig1 sig2 sig6 sig7 : &lt;HZ&gt;;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</section>
+
+<section niv='4'><title>INTER</title>
+
+<p>In order to reduce the number of critical paths identified by the tool, it can sometimes be useful to specify that certain internal signals be considered as though they were reference points. The list of these intermediary points is specified in the INTER section. Correct choice of these points can lead to factorization of the critical paths, and hence a significant reduction in the size of the output file generated.</p>
+<code>
+<cl>INTER</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</section>
+
+<section niv='4'><title>PINSLOPE</title>
+
+<p>The PINSLOPE section describes the slopes to be applied on input connectors. 
+Rise is the rising slope and fall is the falling slope. A single value is the slope
+applied for rising and falling. Slopes are given in Pico-seconds.</p>
+<code>
+<cl>PINSLOPE</cl>
+<cl>BEGIN</cl>
+<cl>    sig1: rise = 100 fall = 200;</cl>
+<cl>    sig2: rise = 150 fall = 180;</cl>
+<cl>    sig3: 200;</cl>
+<cl>    default: rise = 120 fall = 140;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</section>
+
+
+<section niv='4'><title>PATH DELAY MARGIN</title>
+
+<p>It is possible to add an uncertainty margin to the paths, using the PATH DELAY MARGIN section. 
+The modification is done by applying a <f>factor</f> and a <f>delta</f> to the path delay. 
+So the new delay value is old_delay*<f>factor</f>+<f>delta</f>. The path delay won't be affected directly 
+but the path margin will affect the stability analysis results.</p>
+<p>The selection of the paths is done with the name of the signal at the end of the path and the type of the path: 
+"clockpath", "datapath", "min", "max", "rise" and "fall". Mixing those values is possible. If the path type is not 
+specified, all the paths arriving on the signal will be affected. The path ending signal can also be defined by a 
+type: "latch", "prech" (precharge), "break" (breakpoint), "con" (connector) or "any".
+</p>
+<code>
+<cl>PATH DELAY MARGIN</cl>
+<cl>BEGIN</cl>
+<cl>    prech data_P: factor=1   delta=10ps;</cl>
+<cl>    latch *: factor=1.1 delta=0    datapath max;</cl>
+<cl>    any   *sig*: factor=1   delta=-7   clockpath;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+<p>The factor and the delta are needed and must appear in this order.</p>
+</section>
+<section niv='4'><title>NOFALLING - NORISING</title>
+<body>
+<p>In certain cases, it is necessary to prevent the propagation of timing events, for example from glitch generators in which we are only interested in either the up or down event. The list of signals for which to suppress the
+down event is given in the NOFALLING section. The list of signals for which to suppress the up event is given in the NORISING section.</p>
+<code>
+<cl>NOFALLING</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2;</cl>
+<cl>    ...</cl>
+<cl>END</cl>
+<cl> </cl>
+<cl>NORISING</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</body></section>
+
+<section niv='4'><title>CONNECTOR DIRECTIONS</title>
+<body>
+<p>If it is necessary to modify connectors direction in the timing database (DTX and TTX), the CONNECTOR DIRECTIONS section can be 
+used. Connector names can be regular expressions. Supported connector directions are: <f>Input</f>, 
+<f>Output</f>, <f>InOut</f>, <f>Tristate</f>, <f>HZ</f>, <f>Unknown</f>.
+</p>
+<code type="box">
+<cl>CONNECTOR DIRECTIONS</cl>
+<cl>BEGIN</cl>
+<cl>input: sig1, sig2;</cl>
+<cl>hz: sig3;</cl>
+<cl>...</cl>
+<cl>END;</cl>
+</code>
+</body></section>
+
+<section niv='4'><title>RC - NORC</title>
+<body>
+<p>To enable or disable RC delay calculations for individual signals, use the RC and NORC sections.</p>
+<code>
+<cl>RC</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2;</cl>
+<cl>    ...</cl>
+<cl>END</cl>
+<cl> </cl>
+<cl>NORC</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</body></section>
+
+<section niv='4'><title>NOCHECK</title>
+<body>
+<code>
+<cl>NOCHECK</cl>
+<cl>BEGIN</cl>
+<cl>    sig;</cl>
+<cl>    sig ALL;</cl>
+<cl>    sig SETUP;</cl>
+<cl>    sig HOLD;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+<cl> </cl>
+</code>
+</body></section>
+
+<section niv='4'><title>DONOTCROSS</title>
+<body>
+<p>Disables any path crossing specified latch or command.</p>
+<code>
+<cl>DONOTCROSS</cl>
+<cl>BEGIN</cl>
+<cl>    sig1;</cl>
+<cl>    sig2;</cl>
+<cl>    ...</cl>
+<cl>END;</cl>
+</code>
+</body></section>
+
+</section>

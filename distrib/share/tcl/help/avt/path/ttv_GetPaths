@@ -1,0 +1,80 @@
+
+           <TimingPathList *> ttv_GetPaths [<TimingFigue *tf>] [-from <startn-
+       odelist>] [-to <endnodelist>]  [-thru  <accessnodelist>]  [-dir  <dir>]
+       [-nb <nb>] [-critic|-all] [-path|-access] [-max|-min]
+
+           Obsolete but still working:
+           TimingPathList  *ttv_GetPaths(TimingFigure  *tf,  char *clock, char
+       *start, char *end, char *dir, long number, char *all, char *path,  char
+       *minmax); ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Gets a selection of paths/accesss, depending upon configuration.
+           If   _t_f  is  not  specified  then  _s_t_a_r_t_n_o_d_e_l_i_s_t,  _e_n_d_n_o_d_e_l_i_s_t  and
+       _a_c_c_e_s_s_n_o_d_e_l_i_s_t are considered _T_i_m_i_n_g_S_i_g_n_a_l lists. They  are  node  name
+       lists otherwise.
+           The _a_c_c_e_s_s_n_o_d_e_l_i_s_t is used only if _-_a_c_c_e_s_s is specified.
+
+AARRGGUUMMEENNTTSS
+       ttff            Related timing figure to use.
+
+       --ffrroomm {{<<ssttaarrttnnooddeelliisstt>>}}
+                     Path  start node list (clock node if _-_a_c_c_e_s_s is used). If
+                     not specified, all possible start nodes are considered.
+
+       --tthhrruu {{<<aacccceessssnnooddeelliisstt>>}}
+                     Path access node list (latchs, precharges,  breakpoints).
+                     Used  only  with  _-_a_c_c_e_s_s. If not specified, all possible
+                     access nodes are considered.
+
+       --ttoo {{<<eennddnnooddeelliisstt>>}}
+                     Path end node list (latchs, precharges, breakpoints, con-
+                     nectors).  If  not  specified, all possible end nodes are
+                     considered.
+
+       --ddiirr {{<<ddiirr>>}}  Path transitions: _u_u, _d_d, _u_d, _d_u; _u or _d can be  replaced
+                     by  the  wildcard  _?.   _z  or _/ can be added to the usual
+                     direction to respectively retreive only HZ path  or  only
+                     non-HZ path. Default is _?_?.
+
+       --nnbb {{<<nnbb>>}}    Maximum  number of paths that will appear in the returned
+                     list. If _<_n_b_> is negative or zero, no path  number  limit
+                     will be considered. Default is _-_1.
+
+       --ccrriittiicc       Returns only critical paths. This is the default.
+
+       --aallll          Returns critical and parallel paths.
+
+       --ppaatthh         Searches for paths. This is the default.
+
+       --aacccceessss       Searches for accesses.
+
+       --mmaaxx          Uses  maximum delays for the search. This is the default.
+
+       --mmiinn          Uses minimum delays for the search.
+
+       OObbssoolleettee ooppttiioonnss::
+
+       ssttaarrtt         Path starting point (clock signal for an access path)
+
+       eenndd           Path destination point
+
+       ddiirr           Path transitions: _u_u, _d_d, _u_d, _d_u; _u or _d can be  replaced
+                     by  the  wildcard  _?.   _z  or _/ can be added to the usual
+                     direction to respectively retreive only HZ path  or  only
+                     non-HZ path.
+
+       nnuummbbeerr        Number  of  paths/access that will appear in the returned
+                     list. If _n_u_m_b_e_r is negative, no path number limit will be
+                     considered
+
+       aallll           _a_l_l  or  _c_r_i_t_i_c: all paths appear in the returned list or
+                     only critical paths disregarding parallel paths
+
+       ppaatthh          Type of paths to return, either _p_a_t_h or _a_c_c_e_s_s
+
+       mmiinnmmaaxx        Maximum (_m_a_x) or minimum (_m_i_n) paths are returned
+
+       EEXXAAMMPPLLEE       _s_e_t _p___l_i_s_t _[_t_t_v___G_e_t_P_a_t_h_s _$_f_i_g _-_t_o _*_o_u_t_s_i_g_*  _o_u_t  _-_d_i_r  _?_r
+                     _-_n_b _1_0 _-_c_r_i_t_i_c _-_p_a_t_h _-_m_i_n_]
+

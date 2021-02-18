@@ -1,0 +1,149 @@
+<glossary>
+<row type="split"><article><index>yagTasTiming</index></article><def>
+<glossary width='small'>
+<row><article><f>max</f></article><def>delay information is calculated for annotation of the data flow description 
+using timing characterization with worst case timings</def></row>
+<row><article><f>med</f></article><def>delay information is calculated for annotation of the data flow description 
+using timing characterization with average timings</def></row>
+<row><article><f>min</f></article><def>delay information is calculated for annotation of the data flow description 
+using timing characterization with best case timings</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagSplitTimingRatio</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Used if a timed behavioral model is generated. 
+Models for some auxiliary signals will be enhanced to differentiate up and down transitions. This operation is performed 
+if one of the transitions has a delay greater than <f>float</f> times the other. If the value is less than 1 then this
+operation is never performed. Note that this option should not be used if a Verilog behavioral model is to be generated 
+sice verilog timings always contain this differentiation. The default value is 0.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagSensitiveTimingRatio</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Used if a timed behavioral model is generated. 
+Models for some auxiliary signals will be enhanced to differentiate the timing according to the input which actually 
+changes. <f>float</f> corresponds to the minimum ratio between the greatest and the least timing value above which 
+the operation is performed. If the value is less than 1 then this operation is never performed. The default value is 0.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagMaxSplitCmdTiming</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Used if a timed behavioral model is generated. 
+Models for some busses or register signals will be enhanced to differentiate the timing according to each input combination which can 
+change the value. <f>int</f> corresponds to maximum number of combinations under which the differentiation is applied. The default value is 0 (disabled).</def></row>
+</glossary>
+</def></row>
+
+
+<row type="split"><article><index>yagSensitiveTimingDriverLimit</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Used to set an upper limit to the number of expression inputs for 
+which <f>yagSensitiveTimingRatio</f> has an effect. If expression depends on mare variables than this limit the 
+sensitive timing expression is not generated. Used to avoid unwieldy models for complex multiplexor structures.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagOneSupply</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Only one power supply and ground connector is defined in the interface of 
+the behavioral description.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagNoSupply</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Disables dumping of power supplies declaration into generated behavior.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+
+<row type="split"><article><index>yagReorderInterfaceVectors</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>All bussed connectors on the interface of the design being modelled are re-ordered such that they are defined as vectors with most significant bit first.</def></row>
+<row><article><f>no</f></article><def>Default. Interface connectors are left in the order of the original design.</def></row>
+</glossary>
+</def></row>
+
+
+<row type="split"><article><index>yagBleederIsPrecharge</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Bleeders are modeled as nodes which maintain their value.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagTristateIsMemory</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Internal high impedance nodes are modeled as nodes which maintain their value.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagAssumeExpressionPrecedence</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Signals with multiple drivers are modeled using a single cascaded IF statement, 
+hence a precedence is assumed.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagSimplifyExpressions</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Boolean expression simplification is performed on the final model.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagSimplifyProcesses</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Simplifies the expressions of the behavioral data flow processes.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagMinimizeInvertors</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Chains of invertors are reduced in the final model.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagCompactBehavior</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>A compaction algorithm is applied on the generated model capable of 
+generating vectorized and looped assignations in order to reduce the size of the code.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagBusAnalysis</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Uses a functional analysis algorithm to distinguish individual drivers of 
+bussed signals.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagDriveConflictCondition</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Latches and bussed signals for which a conflict condition is detected
+after all analysis are modeled with this conflict condition.</def></row>
+<row><article><f>no</f></article><def>Default. The conflictual condition is ignored.</def></row>
+</glossary>
+
+</def></row>
+<row type="split"><article><index>yagDriveAliases</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Drives a file with the extension .aliases with information
+on the circuit hierarchy. This file is used when using the tool avt_vcd2hvcd.tcl
+that rebuild a hierarchical .vcd from from a flat .vcd file.</def></row>
+<row><article><f>no</f></article><def>Default. No file generated.</def></row>
+</glossary>
+</def></row>
+
+</glossary>

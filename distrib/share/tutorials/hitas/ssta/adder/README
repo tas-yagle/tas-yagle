@@ -1,0 +1,6 @@
+ssta.tcl: run 50 samples of STA, generates slack information
+data_analysis.tcl: use SSTA slack results
+                
+paths.tcl: run 50 samples of path search, generates path information
+path_analysis.tcl: use path results
+

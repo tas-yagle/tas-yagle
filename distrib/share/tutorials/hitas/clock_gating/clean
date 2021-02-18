@@ -1,0 +1,2 @@
+rm -f *~ *.stat *.rcx *.dtx *.stm *.rep *.rcx cmd_* *.log *.gns *.cns *.sto *.str *.cnv *.inf
+

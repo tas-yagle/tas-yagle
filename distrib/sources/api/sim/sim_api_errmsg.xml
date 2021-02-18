@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="sim_api">
+
+<err>
+    <lib>SIMAPI-</lib><num>001</num>
+    <msg>could not find signal '%s' in netlist\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>002</num>
+    <msg>could not find delay of node '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>003</num>
+    <msg>could not find slope of node '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>004</num>
+    <msg>authorized type for delay type are SIM_MAX and SIM_MIN\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>005</num>
+    <msg>sim_ComputeSetup: sens_d must be 'U' or 'D'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>006</num>
+    <msg>sim_ComputeHold: sens_d must be 'U' or 'D'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>007</num>
+    <msg>sim_ComputeAccess: sens_c must be 'U' or 'D'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>008</num>
+    <msg>Connector '%s' could not be found in netlist.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>009</num>
+    <msg>'%s' command file is generated with default wrapper\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>010</num>
+    <msg>sim_SetNoiseAnanlyseType : noise_type must be SIM_MIN or SIM_MAX\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>011</num>
+    <msg>AddStuckLevelVector: bad value 0x%s for node %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>012</num>
+    <msg>AddStuckLevel: bad value '%c' for node %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>013</num>
+    <msg>AddInputSlope param 4: allowed values are SIM_RISE and SIM_FALL\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>014</num>
+    <msg>AddInitLevel param 2: allowed values are 0 and 1\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>SIMAPI-</lib><num>015</num>
+    <msg>Unknown simulator '%s'. Using HSPICE.\n</msg>
+    <doc></doc>
+</err>
+</messages>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+
+<row type='split'><article><index>yagSimpleLatchDetection</index></article><def>
+A simple structure based recognition algorithm which handles the various cases of double inverter loops. This approach is not usually required and is not guaranteed to be formally correct but can sometimes help in cases where the automatic approach is too CPU intensive. The following values can be given for this variable:
+<glossary width='small'>
+<row><article><f>memsym</f></article><def>Double inverter loops are also analyzed to see if they correspond to a simple symmetric bitcell. In this case the the command of the bitcell is the input of the pass transister or transfer gate connected directly to the loop.</def></row> 
+<row><article><f>levelhold</f></article><def>Double inverter loops are considered to be level-hold or buskeeper structures (i.e. not latches).</def></row> 
+<row><article><f>strictlevelhold</f></article><def>Double inverter loops are considered to be level-hold or buskeeper structures (i.e. not latches), but only if only one side of the inverter loop is connected.</def></row> 
+<row><article><f>latch</f></article><def>Double invertor loops are treated as latches without any anlysis, unless a level-hold or memsym option is also activated and these forms match. Commands are guessed without analysis.
+This option helps if double inverter loops are used to latch the output of complex multiplexors.</def></row>
+</glossary>
+The above options can be concatenated by separating the individual options with a '+' character. However the combinations "levelhold+strictlevelhold" and "levelhold+latch" make no sense. The search options are applied in the order specified above. By default all the options are disabled.
+</def></row>
+
+<row type='split'><article><index>yagAutomaticLatchDetection</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Advanced latch detection algorithm based on Boolean loop 
+analysis is activated. Default.</def></row>
+<row><article><f>no</f></article><def>Advanced latch detection is disabled.</def></row> 
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagSetResetDetection</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Only works with <f>yagAutomaticLatchDetection</f> set to <f>yes</f>. Asynchronous latch commands are marked asynchronous instead of being marked commands. False timing arcs (corresponding to the conditioning of data by an asyn or the conditioning of an async by a clock) are disabled.  </def></row>
+<row><article><f>remove</f></article><def>Does the same as the <f>yes</f> mode. In addition marks as non-functional any branches corresponding to an asynchronous write.</def></row> 
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+
+<row type='split'><article><index>yagAutomaticRSDetection</index></article><def>
+<glossary width='small'>
+<row><article><f>mark</f></article><def>Default. Only works with <f>yagAutomaticLatchDetection</f> set to <f>yes</f>. Supplementary 
+RS bistable detection algorithm is applied to automatically detected latches. Only NAND/NOR types are accepted. Any detected RS bistable loops will be marked and reported but not treated as latches.</def></row>
+<row><article><f>no</f></article><def>Automatic RS detection is disabled. Recognition depends upon <f>yagAutomaticLatchDetection</f></def></row> 
+<row><article><f>mark+latch</f></article><def>One of the gates of the loop is considered a latch. The latch is the gate with the largest number of outputs.</def></row> 
+<!--<row><article><f>mark+tolerant</f></article><def>Any loop which has both set and reset drivers but no data is considered an RS. Can be cumulated with <f>latch</f>.</def></row>-->
+<row><article><f>mark+legal</f></article><def>The algorithm assumes that an RS structure always remains in its legal states. Timing arcs are suppressed accordingly. For NOR-based RS, the following timing arcs are suppressed: S(f) to QB(r), R(f) to Q(r), QB(r) to Q(f) and Q(r) to QB(f). For NAND-based RS, the following timing arcs are suppressed: S(r) to QB(f), R(r) to Q(f), QB(f) to Q(r) and Q(f) to QB(r).</def></row> 
+<row><article><f>mark+illegal</f></article><def>The algorithm assumes that an RS structure may enter an illegal state. Less timing arcs are suppressed than when the tool assumes that an RS structure always remains in its legal states. For NOR-based RS, the following timing arcs are suppressed: Q(r) to QB(f) and QB(r) to Q(f). For NAND-based RS, the following timing arcs are suppressed: Q(f) to QB(r) and QB(f) to Q(r).</def></row> 
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagAutomaticMemsymDetection</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Only works with <f>yagAutomaticLatchDetection</f> set to <f>yes</f>. Supplementary symmetric memory detection algorithm is applied to automatically detected latches. Symmetric memories are memorizing elements such as bitcells for which data is written in both or either side of the memorizing loop. Both sides of the loop are marked as latches is order to verify all cases.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagDetectDynamicLatch</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Internal tri-state nodes are considered to be dynamic latches for 
+functional modeling and timing analysis purposes. A special algorithm, similar to that used in 
+the automatic latch detection, is used to identify the latch commands and generate an accurate latch model.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagDetectPrecharge</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>An algorithm designed to detect automatically most kinds of 
+precharge nodes is activated. The algorithm is particularly designed for domino precharge style designs.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+
+<row type='split'><article><index>yagBleederStrictness</index></article><def>
+<p>A level between 0 and 2 defining the strictness of the bleeder detection algorithm. The value determines the kind of gate which can be tolerated in the bleeder loop.</p>
+<glossary width='small'>
+<row><article><f>0</f></article><def>any CMOS gate is acceptable </def></row>
+<row><article><f>1</f></article><def>default, any CMOS dual gate is acceptable </def></row>
+<row><article><f>2</f></article><def>it must be an inverter </def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagStandardLatchDetection</index></article><def>
+Deprecated. This structure based latch recognition technique is activated by default as a catch-all. It will probably be removed in a future version.
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, standard latch detection algorithm is activated.</def></row>
+<row><article><f>no</f></article><def>Standard latch detection algorithm is disabled.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagLatchesRequireClocks</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Any latch which does not have a command which is at the end of 
+a path from a specified clock is not considered to be a latch. If this option is used, 
+then extreme care should be taken to specify the clocks to avoid problems in any subsequent analysis.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagDetectClockGating</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>If clocks are configured before the disassembly phase then reconvergence between clock and data will be detected, appropriate timing check and data filtering directives are automatically generated.</def></row>
+<row><article><f>check</f></article><def>Same as above except only the timing checks are added.</def></row>
+<row><article><f>filter</f></article><def>Same as above except only the data filtering directives are added.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagDetectDelayedRS</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Detect special type of NAND/NOR bistable loop structure containing additional inverters to add delay in the loop. Results in the same handling as the <f>legal</f> setting for RS detection. This type of structure is commonly used to generate non-overlapping clocks.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>
+
+<!--<row type='split'><article><index>yagStrictCkLatch</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Any local latch clocks which do not lie on a clock path 
+(as defined by the CKLATCH section in the INF file) are not considered as latch commands.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+</glossary>
+</def></row>-->
+
+<!--<row type='split'><article><index>yagAutomaticFlipFlopDetection</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Automatic detection of latch couples making-up flip-flops.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row> 
+<row><article><f>mark</f></article><def>Automatic detection of latch couples making-up flip-flops. Reports 
+master and slave points into the <f>.rep</f> file</def></row>
+</glossary>
+</def></row>-->
+
+<!--<row type='split'><article><index>yagAutomaticCeiling</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Allows the user to specify the maximum number of inputs beyond 
+which automatic analysis for latches and busses is disabled. Does not normally need to be configured but 
+can sometimes help in design debug. The default is 15.</def></row>
+</glossary>
+</def></row>-->
+
+<!--<row type='split'><article><index>yagStuckLatch</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Latches which have all data inputs stuck (by set_case_analysis) at the same value are considered stuck, and this is propagated. Default.</def></row>
+<row><article><f>no</f></article><def>Latches are not stuck unless all data and clock inputs are stuck.</def></row> 
+</glossary>
+</def></row>-->
+
+</glossary>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+
+<section niv='3'><title>STA Directives</title>
+
+<p>The eight sections in the information file concerning the stability information are:</p>
+<list>
+<item>General header</item>
+<item>Clock Specifications</item>
+<item>Clock domains</item>
+<item>Equivalent clocks</item>
+<item>Multiple Clock priorities</item>
+<item>Gated clock states</item>
+<item>Input connector stability specifications</item>
+<item>Output connector constraints to verify</item>
+</list>
+<p>A wildcard can be used for any of the specified node names. The character '*' matches any legal character string.</p>
+<p>For example:</p>
+<code>com* matches com1, com2, command, etc.</code>
+
+
+<section niv='4'><title>General Header</title>
+
+<p>The format of the header is as follows:</p>
+<bnf>
+<cl>PERIOD  &lt;value&gt;;</cl>
+<cl>SETUP   &lt;value&gt;;</cl>
+<cl>HOLD    &lt;value&gt;;</cl>
+</bnf>
+<p>The name is the name of the circuit the information are given for. The period is the default clock period for clocks whose period is not specified. SETUP and HOLD are additional constraints on setup and hold slacks verifications.</p>
+<p>It is possible to omit the default period specification so long as each clock has a period associated with its definition or via the domain definition.</p>
+
+</section>
+
+
+<!--<section niv='4'><title>CONDITIONED COMMAND STATES</title>
+
+<p>&tool; detects automatically if any clock gating occurs within the circuit. This is necessary since clock gating implies 
+that setup and hold constraints must be met upon the command of a latch whose clock is gated. By default &tool; 
+assumes that it is the high state of the command which is conditioned. However, this can be modified by 
+stating explicitly which of the command states is conditioned.</p>
+<p>The syntax is as follows:</p>
+<bnf>
+<cl>CONDITIONED COMMAND STATES</cl>
+<cl>BEGIN</cl>
+<cl>    {&lt;command&gt;: up|down|noverif;}</cl>
+<cl>    default: up|down|noverif;</cl>
+<cl>END;</cl>
+</bnf>
+<p>For each conditioned command, it is simply necessary to specify which state (UP or DOWN) is conditioned. If a command does not have to be verified, set the command state to NOVERIF. An optional default can be given at the end of the list.</p>
+
+</section>-->
+
+<section niv='4'><title>CLOCK CONNECTORS</title>
+
+<p>This section is used to define all the external clock signals. The waveforms at each external clock connector must be specified over a single period.</p>
+<p>The syntax is as follows:</p>
+<bnf>
+<cl>CLOCK CONNECTORS</cl>
+<cl>BEGIN</cl>
+<cl>    {[ideal] [virtual] [!] &lt;ck1&gt;:</cl>
+<cl>        down (&lt;min&gt;:&lt;max&gt;)|&lt;value&gt;;</cl>
+<cl>        up   (&lt;min&gt;:&lt;max&gt;)|&lt;value&gt;;</cl>
+<cl>        [latency down (&lt;min&gt;:&lt;max&gt;)|&lt;value&gt;;]</cl>
+<cl>        [latency up   (&lt;min&gt;:&lt;max&gt;)|&lt;value&gt;;]</cl>
+<cl>        [period &lt;value&gt;;]}</cl>
+<cl>END;</cl>
+</bnf>
+<p>For each of the external clock connectors, four parameters must be given: the earliest and latest instant of the falling edge, and the earliest and latest instant of the rising edge. The order is irrelevant. Actual values themselves are used to order the clock phases within the period.</p>
+<p>It is not necessary to specify which of the clock edges corresponds to the reference phase. This is automatically detected by &tool;.</p>
+<p>The period can optionally be specified here individually for all the clocks. If it is not specified here the clock must have a period via either a domain specification or a default period in the header.</p>
+<p>If '!' is added before the clock specification, the values set for the rising and falling slope time of the clock will be swapped.</p>
+<p>If 'virtual' is added before the clock specification, that indicates the clock is not associated to a real circuit connector.</p>
+<p>If 'ideal' is added before the clock specification, that indicates no propagated delay will be considered for this clock. Nevertheless, the user can specify latency for each clock edge.</p>
+<p>A clock can be define from the characteristics of another clock 'refclock', multiplying its period and/or shifting its edges. The syntax is as follow:</p>
+<bnf>
+<cl>CLOCK CONNECTORS</cl>
+<cl>BEGIN</cl>
+<cl>    { &lt;ck2&gt;:</cl>
+<cl>        clock &lt;refclock&gt; [* &lt;mult_factor&gt;] [+|- &lt;delta&gt;];}</cl>
+<cl>END;</cl>
+</bnf>
+
+</section>
+
+<section niv='4'><title>ASYNCHRONOUS CLOCK GROUPS</title>
+
+<p>This section allows the user to assign clock connectors to clock domains. Timing checks are only performed on paths which do not cross domain boundaries. Each domain must be given a name. However the name itself is purely informative.</p>
+<p>The syntax is as follows:</p>
+<bnf>
+<cl>ASYNCHRONOUS CLOCK GROUPS</cl>
+<cl>BEGIN</cl>
+<cl>    {&lt;domain1&gt;: &lt;clock1&gt; [,&lt;clock2&gt;,...,&lt;clockn&gt;];</cl>
+<cl>         [period &lt;value&gt;;]}</cl>
+<cl>END;</cl>
+</bnf>
+<p>Each domain contains the list of clock connectors (defined in the clock specification section) which make up the domain.</p>
+<p>The period of the clocks can be specified here, since clocks in the same domain must have identical periods.</p>
+
+</section>
+
+
+<section niv='4'><title>EQUIVALENT CLOCK GROUPS</title>
+
+<p>This section allows the user to indicate that separate clock connectors should be treated as having identical phases.</p>
+<p>The syntax is as follows:</p>
+<bnf>
+<cl>EQUIVALENT CLOCK GROUPS</cl>
+<cl>BEGIN</cl>
+<cl>    {&lt;group1&gt;: &lt;clock1&gt; [,&lt;clock2&gt;,...,&lt;clockn&gt;];}</cl>
+<cl>END;</cl>
+</bnf>
+<p>Each group contains the list of clock connectors (defined in the clock specification section) which make up the equivalent group.</p>
+
+</section>
+
+
+<section niv='4'><title>MULTIPLE CLOCK PRIORITY</title>
+
+<p>This section allows the user to specify which clock should be considered as having the priority in the case of clocked signals (latches, flip-flops or precharges) which depend on multiple clocks.</p>
+<p>Defining priority clocks is useful in the case of multiple clocks due to multiple operating modes (e.g. test mode or functional mode).</p>
+<p>The syntax is as follows:</p>
+<bnf>
+<cl>MULTIPLE CLOCK PRIORITY</cl>
+<cl>BEGIN</cl>
+<cl>    {&lt;clocked_signal&gt;: &lt;clock_connector&gt;;}</cl>
+<cl>END;</cl>
+</bnf>
+<p>Each line associates a clocked signal with its highest priority clock connector.</p>
+
+</section>
+
+
+
+
+
+<section niv='4'><title>SPECIFY INPUT CONNECTORS</title>
+
+<p>This section is used to specify the stability intervals at the input terminals. If this section is omitted for any of the inputs, then they are assumed to become unstable at the earliest instant of the last phase and stabilized at the latest possible instant of the last phase.</p>
+<p>The syntax is as follows:</p>
+<bnf>
+<cl>SPECIFY INPUT CONNECTORS</cl>
+<cl>BEGIN</cl>
+<cl>    {[&lt;input&gt; [rising|falling] [from &lt;phase&gt;]:</cl>
+<cl>        unstable &lt;value&gt; [after|before &lt;phase&gt;];</cl>
+<cl>        stable   &lt;value&gt; [after|before &lt;phase&gt;];]}</cl>
+<cl>    |</cl>
+<cl>    default [rising|falling] [from &lt;phase&gt;]:</cl>
+<cl>        unstable &lt;value&gt; [after|before &lt;phase&gt;];</cl>
+<cl>        stable   &lt;value&gt; [after|before &lt;phase&gt;];</cl>
+<cl>END;</cl>
+</bnf>
+<p>For each input connector, the instants it becomes unstable and stable must be given. The phase of origin of the data can optionally be specified after the input connector name. A phase identifier has the format:</p>
+<code>&lt;ckname&gt; [rising|falling]</code>
+<p>where ckname refers to a specified external clock. In the case of a clock for which the rising and falling edge refer to different phases, it is necessary to specify the edge, in order to uniquely identify the phase. By default the phase of origin is assumed to be the last phase.</p>
+<p>The 'default' stability is used for all inputs for which the stability has not been explicitly specified.</p>
+<p>The instants of stability and instability are specified in picoseconds. The values can either be absolute or relative to a specified phase. If the values are absolute then they are considered to be the result of the phase of origin. The values are specified relative to a particular phase using the keywords after and before. In general, you use the keyword 'after' to express that the relative time is as a result of the specified clock phase.</p>
+<p>If the keyword 'before' is used, then the relative time is assumed to be for the preceding clock cycle (i.e. 'for' rather than 'as a result of' the specified phase).</p>
+
+</section>
+
+
+<section niv='4'><title>VERIFY OUTPUT CONNECTORS</title>
+
+<p>This section is used to specify arrival times to be verified at output connectors. If this section 
+is omitted for any of the outputs, then setup and hold slacks will not be calculated.</p>
+<p>The syntax is as follows:</p>
+<bnf>
+<cl>VERIFY OUTPUT CONNECTORS</cl>
+<cl>BEGIN</cl>
+<cl>    {[&lt;output&gt; [rising|falling] [for &lt;phase&gt;]:</cl>
+<cl>        unstable &lt;value&gt; [after|before &lt;phase&gt;];</cl>
+<cl>        stable   &lt;value&gt; [after|before &lt;phase&gt;];]}</cl>
+<cl>    |</cl>
+<cl>    default [rising|falling] [for &lt;phase&gt;]:</cl>
+<cl>        unstable &lt;value&gt; [after|before &lt;phase&gt;];</cl>
+<cl>        stable   &lt;value&gt; [after|before &lt;phase&gt;];</cl>
+<cl>END;</cl>
+</bnf>
+<p>The syntax is similar to the input connector stability specifications. However the phase specifications identify the phase for which the data is destined.</p>
+<p>The times can be absolute or relative, as for the input specification. Here, however, since it is a destination phase which is specified, it can often be convenient to use the keyword 'before' to state that a time is 'relative to' and 'for' the specified phase.</p>
+
+</section>
+
+
+<section niv='4'><title>Example of Stability Specification File</title>
+
+<p>Since this file must be provided by the user, an example is shown here for clarification.</p>
+<code>
+<cl>name mycircuit;</cl>
+<cl>version 1.00;</cl>
+<cl>period 180000;</cl>
+<cl>setuptime 100;</cl>
+<cl>holdtime 200;</cl>
+<cl> </cl>
+<cl>CLOCK CONNECTORS</cl>
+<cl>BEGIN</cl>
+<cl>  ck:</cl>
+<cl>    up   (90000:90100);</cl>
+<cl>    down (10000:10100);</cl>
+<cl>END;</cl>
+<cl> </cl>
+<cl>CONDITIONED COMMAND STATES</cl>
+<cl>BEGIN</cl>
+<cl>  com1: up;</cl>
+<cl>END;</cl>
+<cl> </cl>
+<cl>SPECIFY INPUT CONNECTORS</cl>
+<cl>BEGIN</cl>
+<cl>  out1:</cl>
+<cl>    unstable 1000 after ck rising;</cl>
+<cl>    stable   3000 after ck rising;</cl>
+<cl>  default:</cl>
+<cl>    unstable 500 after ck rising;</cl>
+<cl>    stable   4000 after ck rising;</cl>
+<cl>END;</cl>
+<cl> </cl>
+<cl>VERIFY OUTPUT CONNECTORS</cl>
+<cl>BEGIN</cl>
+<cl>  out1:</cl>
+<cl>    unstable 1000 after ck rising;</cl>
+<cl>    stable   3000 after ck rising;</cl>
+<cl>  default:</cl>
+<cl>    unstable 500 after ck rising;</cl>
+<cl>    stable   4000 after ck rising;</cl>
+<cl>END;</cl>
+</code>
+
+
+</section>
+</section>
+

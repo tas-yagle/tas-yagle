@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<glossary>
+<row type='split'><article><index>tasCalcRCDelays</index></article><def>
+<glossary width='small'>
+<row><article><f>no</f></article><def>Only the capacitances will be taken into account to compute the 
+propagation delays</def></row>
+<row><article><f>yes</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasMergeRCAndGateDelays</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Merges the gate and RC delays in the flat analysis mode</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>rcxMinRCSignal</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>If the sum of resistances multiplied by the sum of 
+capacitances on an RC network is less than <f>int</f> (ps), then the RC network is ignored. Default is 1 ps.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>rcxCapaLoadMaxRC</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>If the sum of resistances multiplied by the sum of 
+capacitances on an RC network is less than <f>int</f> (ps), then the load of the driving gate is modeled by an 
+equivalent substrate capacitance. Default is 5 ps.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>rcxMaxDeltaLoad</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def> If the <f>rcxCapaLoadMaxRc</f> test fails and the 
+difference between an equivalent substrate capacitance model and a PI network model is less than <f>int</f> (ps),
+then the equivalent capacitance model is used, otherwise the PI model is used. Default is 1 ps.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasRCDriverCalcMode</index></article><def>
+Controls the choice of which node or nodes of an RC network are driven by a preceding gate.<glossary width='small2'>
+<row><article><f>all</f></article><def>All possible input nodes of the RC are considered driven.</def></row> 
+<row><article><f>all_direction</f></article><def>All nodes of the RC which can be driven by the actual transition are assumed driven.</def></row> 
+<row><article><f>select_direction</f></article><def>One node of the RC which can be driven by the actual transition is assumed driven.</def></row> 
+<row><article><f>all_gates</f></article><def>The first three options apply to RC networks driven by any type of gate.</def></row> 
+<row><article><f>parallel_gates</f></article><def>The first three options apply to RC networks driven by gates containing parallel transistors or current paths.</def></row>
+<row><article><f>none</f></article><def>One node of the RC is considered driven.</def></row> 
+<row><article><f>auto</f></article><def>Automatic mode which differentiates input transition and chooses one or all drivers based on gate type.</def></row> 
+</glossary>
+One of the first three options can be concatenated with one of the next two by separating the individual options with a '+' character. The default setting is "all_direction+parallel_gates".
+</def></row>
+
+<row type='split'><article><index>rcxAweMatrix</index></article><def>
+<glossary width='small'>
+<row><article><f>always</f></article><def>Matrices are always used to compute the moments 
+for RC delay with AWE algorithm</def></row>
+<row><article><f>ifneed</f></article><def>Default, matrix is not used if RC network has one node driver and 
+has a tree topology. In this case, a faster algorithm is used to compute the moments.</def></row>
+<row><article><f>never</f></article><def>No matrix is used. RC networks which can't be handle by 
+the faster algorithm are not computed.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>rcxDelayCacheSize</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;[Kb|Mb|Gb]</f></article><def>Cache size for gate output equivalent load and 
+RC moment in AWE delay evaluation. When one of these values is computed, results are stored in the delay cache. 
+If later re-computation is needed, results can be retreived immediatly. This cache is mainly used within 
+the timing abstration engine. Default unit is the byte. </def></row>
+<row><article><f>0</f></article><def>Disables the cache. Default value is 10Mb.</def></row>
+</glossary>
+</def></row>
+
+</glossary>

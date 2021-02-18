@@ -1,0 +1,6 @@
+
+       void inf_CleanFigure();
+
+DDEESSCCRRIIPPTTIIOONN
+       Removes all INF statements on current figure
+

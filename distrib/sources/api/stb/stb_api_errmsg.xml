@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="stb_api">
+
+<err>
+    <lib>STBAPI-</lib><num>001</num>
+    <msg>unknown direction '%c'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>STBAPI-</lib><num>002</num>
+    <msg>unknown mode '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>STBAPI-</lib><num>003</num>
+    <msg>NULL stbfig used\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>STBAPI-</lib><num>004</num>
+    <msg>unknown or incomplete mode '%s'. Required: 'setup', 'hold' or 'all'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>STBAPI-</lib><num>005</num>
+    <msg>valid values for type is 's' (setup) or 'h' (hold)\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>STBAPI-</lib><num>006</num>
+    <msg>unknown property %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>STBAPI-</lib><num>007</num>
+    <msg>Function '%s' is obsolete, no more maintained  and will be removed soon, please use functions related to StabilitySlack objects\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

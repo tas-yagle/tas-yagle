@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Tcl Interface</title>
+<section niv='2'><title>Objects</title>
+
+<section niv='3'><title>Netlist</title>
+<p>The Netlist object describes the electrical view of a Subcircuit. It may be either flat or
+hierarchical, and contains components of the files it originates from: mosfets, resistances, capacitances
+and instances.</p>
+</section>
+<section niv='3'><title>TimingFigure</title>
+<p>Property codes:</p>
+<glossary>
+<row><article><f>TOP_LEVEL</f></article>
+<def><f>TimingFigure*</f>. Top level TimingFigure the current TimingFigure belongs to.</def></row>
+<row><article><f>STABILITY_FIGURE</f></article>
+<def><f>StabilityFigure*</f>. Stability figure built on the current TimingFigure.</def></row>
+<row><article><f>NAME</f></article>
+<def><f>char*</f>. Name of the timing figure given as parameter.</def></row>
+<row><article><f>TEMP</f></article>
+<def><f>double</f>. Reference temperature the TimingFigure has been built with.</def></row>
+<row><article><f>DEF_SUPPLY</f></article>
+<def><f>double</f>. Reference power supply the TimingFigure has been built with.</def></row>
+<row><article><f>DEF_LOAD</f></article>
+<def><f>double</f>. Default load for output connectors.</def></row>
+<row><article><f>DEF_SLOPE</f></article>
+<def><f>double</f>. Default slope for input connectors.</def></row>
+<row><article><f>TH_LOW</f></article>
+<def><f>double</f>. Low threshold in slope computing</def></row>
+<row><article><f>TH_HIGH</f></article>
+<def><f>double</f>. High threshold in slope computing</def></row>
+<row><article><f>TECH_NAME</f></article>
+<def><f>char*</f>. Technolgy name</def></row>
+<row><article><f>DATE</f></article>
+<def><f>char*</f>. Date of generation</def></row>
+<row><article><f>TIME</f></article>
+<def><f>char*</f>. Time of generation</def></row>
+</glossary>
+</section>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>ttv_GetTimingFigureProperty &lt;timing_figure&gt; &lt;code&gt;</cl>
+</code>
+
+<pagebreak/>
+<section niv='3'><title>TimingSignal</title>
+<p>Property codes:</p>
+<glossary>
+<row><article><f>IS_CLOCK</f></article>
+<def><f>char*</f>. Returns <f>yes</f> if the timing signal is defined as a clock. <f>no</f> otherwise.</def></row>
+<row><article><f>IS_ASYNCHRONOUS</f></article>
+<def><f>char*</f>. Returns <f>yes</f> if the timing signal is defined as an asynchronous pin. <f>no</f> otherwise.</def></row>
+<row><article><f>DIR</f></article>
+<def><f>char</f>.  Direction of connector. Values can be <f>i</f> (input), <f>o</f> (output), <f>b</f> (bidirectional), <f>t</f> (tristate), <f>z</f> (HZ), <f>u</f> (unknown).  </def></row>
+<row><article><f>CAPA</f></article>
+<def><f>double</f>.  Total capacitance on signal (in Farads).  </def></row>
+<row><article><f>LOAD</f></article>
+<def><f>double</f>.   External load if the signal is an output connector (in Farads).  </def></row>
+<row><article><f>LEFT_BOUND</f></article>
+<def><f>int</f>. Left bound of connector range. If signal is not a vector, value is <f>-1</f>.  </def></row>
+<row><article><f>RIGHT_BOUND</f></article>
+<def><f>int</f>. Right bound of connector range. If signal is not a vector, value is <f>-1</f>.  </def></row>
+<row><article><f>TOP_LEVEL</f></article>
+<def><f>TimingFigure*</f>. Top level timing figure the timing signal belongs to.  </def></row>
+<row><article><f>NET_NAME</f></article>
+<def><f>char*</f>. Net name of timing signal.  </def></row>
+<row><article><f>NAME</f></article>
+<def><f>char*</f>. Name of timing signal.  </def></row>
+<row><article><f>TYPE</f></article>
+<def><f>char*</f>. Type of a timing signal.  Possible values are <f>connector</f>, <f>command</f>, <f>latch</f>, <f>flip-flop</f>, <f>precharge</f>, <f>breakpoint</f>, <f>internal</f>, <f>signal</f> or an eventual concatenation of possible configurations.  </def></row>
+<row><article><f>EVENT_UP</f></article>
+<def><f>TimingEvent*</f>. Pointer to the rising TimingEvent related to the TimingSignal.  </def></row>
+<row><article><f>EVENT_DOWN</f></article>
+<def><f>TimingEvent*</f>. Pointer to the falling TimingEvent related to the TimingSignal.  </def></row>
+<row><article><f>RISING_SLOPE</f></article>
+<def><f>double</f>. Input slope set on TimingSignal as an external constraint (only valid for input connectors).</def></row>
+<row><article><f>FALLING_SLOPE</f></article>
+<def><f>double</f>. Input slope set on TimingSignal as an external constraint (only valid for input connectors).</def></row>
+<row><article><f>LEAKAGE_UP_MAX</f></article>
+<def><f>double</f>. Maximum leakage current in the high state (in Amps).</def></row>
+<row><article><f>LEAKAGE_UP_MIN</f></article>
+<def><f>double</f>. Minimum leakage current in the high state (in Amps)e.</def></row>
+<row><article><f>LEAKAGE_DN_MAX</f></article>
+<def><f>double</f>. Maximum leakage current in the low state (in Amps).</def></row>
+<row><article><f>LEAKAGE_DN_MIN</f></article>
+<def><f>double</f>. Minimum leakage current in the low state (in Amps).</def></row>
+<row><article><f>GATE_TYPE</f></article>
+<def><f>char*</f>. Returns the name of the gate type driving the timing signal if it is known.</def></row>
+<row><article><f>VOLTAGE_SWING</f></article>
+<def><f>char*</f>. Returns the voltage difference between the vdd and vss sypply nodes on the signal.</def></row>
+</glossary>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>ttv_GetTimingSignalProperty &lt;sig&gt; &lt;code&gt;</cl>
+</code>
+</section>
+
+<pagebreak/>
+<section niv='3'><title>TimingEvent</title>
+<p>Property codes:</p>
+<glossary>
+<row><article><f>SIGNAL</f></article>
+<def><f>TimingSignal</f>. Signal of the timing event.  </def></row>
+<row><article><f>TRANS</f></article>
+<def><f>char</f>. Transition direction of the timing event. Value can be <f>u</f> (rising) or <f>d</f> (falling). </def></row>
+<row><article><f>STABILITY</f></article>
+<def><f>list of list</f>. The list of instability gaps of the timing event available when STB has been run on the timing figure. A range is a list of 2 values. eg: <f>{{0 10} {20 40}}</f>. </def></row>
+</glossary>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>ttv_GetTimingEventProperty &lt;timing_event&gt; &lt;code&gt;</cl>
+</code>
+</section>
+
+<pagebreak/>
+<section niv='3'><title>TimingPath</title>
+<p>Property codes:</p>
+<glossary>
+<row><article><f>DELAY</f></article>
+<def><f>double</f>. Delay attached to the timing path. If a crosstalk analysis has been run on the timing figure, this delay take into account the crosstalk effect.</def></row>
+<row><article><f>REF_DELAY</f></article>
+<def><f>double</f>. Delay attached to the timing path. Crosstalk effect is not taken into account.</def></row>
+<row><article><f>SIM_DELAY</f></article>
+<def><f>double</f>. Simulated delay attached to the timing path. Returns -1 if simulation had failed.</def></row>
+<row><article><f>DATA_LAG</f></article>
+<def><f>double</f>. Only for clock-to-q access paths: waiting delay for the data to be available on the latch's input, after the latch opening (value is present only after stability analysis).  </def></row>
+<row><article><f>SLOPE</f></article>
+<def><f>double</f>. Output slope attached to the timing path. If a crosstalk analysis has been run on the timing figure, this slope take into account the crosstalk effect.
+</def></row>
+<row><article><f>REF_SLOPE</f></article>
+<def><f>double</f>. Output slope attached to the timing path. Crosstalk effect is not taken into account.</def></row>
+<row><article><f>SIM_SLOPE</f></article>
+<def><f>double</f>. Simulated output slope attached to the timing path. Returns <f>-1</f> if simulation had failed.</def></row>
+<row><article><f>START_TIME</f></article>
+<def><f>double</f>. Start time of the timing path.</def></row>
+<row><article><f>START_SLOPE</f></article>
+<def><f>double</f>. Start slope of the timing path.</def></row>
+<row><article><f>START_SIG</f></article>
+<def><f>TimingSignal*</f>. Starting node of the timing path.</def></row>
+<row><article><f>END_SIG</f></article>
+<def><f>TimingSignal*</f>. Ending node of the timing path.</def></row>
+<row><article><f>START_EVENT</f></article>
+<def><f>TimingEvent*</f>. Starting timing event of the timing path.</def></row>
+<row><article><f>END_EVENT</f></article>
+<def><f>TimingEvent*</f>. Ending timing event of the timing path.</def></row>
+<row><article><f>COMMAND</f></article>
+<def><f>TimingEvent*</f>.  Timing event corresponding to the command of the timing path terminating on a register. In the case of a flip-flop this event is the triggering edge, in the case of a latch it is the event which opens the latch for writing.  </def></row>
+<row><article><f>ACCESS_COMMAND</f></article>
+<def><f>TimingEvent*</f>.  Timing event corresponding to the command of the latch or precharge crossed by the timing path when the path is an access. The result is the event which opens the latch for writing.  </def></row>
+<row><article><f>ACCESS_LATCH</f></article>
+<def><f>TimingEvent*</f>.  Timing event corresponding to the latch or precharge crossed by the timing path when the path is an access. </def></row>
+<row><article><f>START_TRAN</f></article>
+<def><f>char</f>. Transition direction on the starting node of the timing path. The value can be <f>u</f> (rising) or <f>d</f> (falling).  </def></row>
+<row><article><f>END_TRAN</f></article>
+<def><f>char</f>. Transition direction on the ending node of the timing path. The value can be <f>u</f> (rising) or <f>d</f> (falling).</def></row>
+<row><article><f>TYPE</f></article>
+<def><f>char*</f>. Returns either <f>min</f> or <f>max</f>.</def></row>
+<row><article><f>IS_HZ</f></article>
+<def><f>char*</f>. Returns "yes" if the timing path is a HZ path. "no" otherwise.</def></row>
+<row><article><f>PATH_MARGIN_FACTOR</f></article>
+<def><f>double</f>. Path margin factor defined for this timing path.</def></row>
+<row><article><f>PATH_MARGIN_DELTA</f></article>
+<def><f>double</f>. Path margin delta defined for this timing path.</def></row>
+</glossary>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>ttv_GetTimingPathProperty &lt;timing_path&gt; &lt;code&gt;</cl>
+</code>
+</section>
+
+<pagebreak/>
+<section niv='3'><title>TimingLine</title>
+<p>Property codes:</p>
+<glossary>
+<row><article><f>DELAY_MAX</f></article>
+<def><f>double</f>. Max delay attached to the timing line. If a crosstalk analysis has been run on the timing figure, this delay take into account the crosstalk effect.</def></row>
+<row><article><f>REF_DELAY_MAX</f></article>
+<def><f>double</f>. Max reference delay attached to the timing path. Crosstalk effect is not taken into account.</def></row>
+<row><article><f>DELAY_MIN</f></article>
+<def><f>double</f>. Min delay attached to the timing line. If a crosstalk analysis has been run on the timing figure, this delay take into account the crosstalk effect.</def></row>
+<row><article><f>REF_DELAY_MIN</f></article>
+<def><f>double</f>. Min reference delay attached to the timing path. Crosstalk effect is not taken into account.</def></row>
+
+<row><article><f>SLOPE_MAX</f></article>
+<def><f>double</f>. Max slope attached to the timing line. If a crosstalk analysis has been run on the timing figure, this slope take into account the crosstalk effect.</def></row>
+<row><article><f>REF_SLOPE_MAX</f></article>
+<def><f>double</f>. Max reference slope attached to the timing path. Crosstalk effect is not taken into account.</def></row>
+<row><article><f>SLOPE_MIN</f></article>
+<def><f>double</f>. Min slope attached to the timing line. If a crosstalk analysis has been run on the timing figure, this slope take into account the crosstalk effect.</def></row>
+<row><article><f>REF_SLOPE_MIN</f></article>
+<def><f>double</f>. Min reference slope attached to the timing path. Crosstalk effect is not taken into account.</def></row>
+
+<row><article><f>TYPE</f></article>
+<def><f>char</f>. Line type: setup, hold, access, hz, rc, prech, eval or data.  </def></row>
+
+<row><article><f>START_EVENT</f></article>
+<def><f>TimingEvent*</f>. Start event of the timing line.</def></row>
+<row><article><f>END_EVENT</f></article>
+<def><f>TimingEvent*</f>. End event of the timing line.</def></row>
+<row><article><f>COMMAND</f></article>
+<def><f>TimingEvent*</f>. Command event of the timing line. Returns <f>NULL</f> if the line is not commanded.</def></row>
+</glossary>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>ttv_GetTimingLineProperty &lt;timing_line&gt; &lt;code&gt;</cl>
+</code>
+</section>
+<pagebreak/>
+
+<section niv='3'><title>TimingDetail</title>
+<p>Property codes:</p>
+<glossary>
+<row><article><f>HZ</f></article>
+<def><f>int</f>. Indicates if the detail is an HZ state. If true, the signal direction indicates the state of the output before being HZ. 0 if false, 1 if true.  </def></row>
+<row><article><f>EVENT</f></article>
+<def><f>TimingEvent*</f>. Pointer to the related TimingEvent  </def></row>
+<row><article><f>NODE_NAME</f></article>
+<def><f>char*</f>. The name of the node in timing detail </def></row>
+<row><article><f>NET_NAME</f></article>
+<def><f>char*</f>. The name of the net in timing detail </def></row>
+<row><article><f>SIGNAL_TYPE</f></article>
+<def><f>char*</f>. Type of the timing signal.  Possible values are <f>connector</f>, <f>command</f>, <f>latch</f>, <f>flip-flop</f>, <f>precharge</f>, <f>breakpoint</f>, <f>internal</f>, <f>signal</f> or an eventual concatenation of possible configurations.  </def></row>
+<row><article><f>DELAY</f></article>
+<def><f>double</f>. The delay (in seconds) of the path detail. If a crosstalk analysis has been run on the timing figure, this delay take into account the crosstalk effect.</def></row>
+<row><article><f>SLOPE</f></article>
+<def><f>double</f>. The slope (in seconds) of the path detail. If a crosstalk analysis has been run on the timing figure, this delay take into account the crosstalk effect.</def></row>
+<row><article><f>REF_DELAY</f></article>
+<def><f>double</f>. The delay (in seconds) of the path detail </def></row>
+<row><article><f>REF_SLOPE</f></article>
+<def><f>double</f>. The slope (in seconds) of the path detail </def></row>
+<row><article><f>SIM_DELAY</f></article>
+<def><f>double</f>. The simulated delay (in seconds) of the path detail. <f>-1</f> if no simulation has been done or an error occurred.  </def></row>
+<row><article><f>SIM_SLOPE</f></article>
+<def><f>double</f>. The simulated slope (in seconds) of the path detail. <f>-1</f> if no simulation has been done or an error occurred.  </def></row>
+<row><article><f>DATA_LAG</f></article>
+<def><f>double</f>. Only for clock-to-q access paths: waiting delay for the data to be available on the latch's input, after the latch opening (value is present only after stability analysis).  </def></row>
+<row><article><f>TYPE</f></article>
+<def><f>char*</f>. A string identifying whether the path detail is a gate or RC delay.  </def></row>
+<row><article><f>TRANS</f></article>
+<def><f>char</f>. The transition direction of the node. <f>u</f> (rising) or <f>d</f> (falling).  </def></row>
+</glossary>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>ttv_GetTimingDetailProperty &lt;timing_detail&gt; &lt;code&gt;</cl>
+</code>
+</section>
+
+<pagebreak/>
+<section niv='3'><title>StabilityFigure</title>
+<p>The StabilityFigure object is a back-annotation of the TimingFigure object. It contains the switching windows associated to the TimingSignal objects of the TimingFigure object. The switching window information of the StabilityFigure object is obtained by functions accessing directly the TimingSignal objects.</p>
+<p>Property codes:</p>
+<glossary>
+<row><article><f>TIMING_FIGURE</f></article>
+<def><f>TimingFigure*</f>. The TimingFigure the StabilityFigure has be created from.</def></row>
+</glossary>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>stb_GetStabilityFigureProperty &lt;slack_object&gt; &lt;code&gt;</cl>
+</code>
+</section>
+
+<section niv='3'><title>StabilitySlack</title>
+<p>Property codes:</p>
+<glossary>
+<row><article><f>TYPE</f></article>
+<def><f>char*</f>. Slack type: <f>setup</f> or <f>hold</f>.</def></row>
+<row><article><f>VALUE</f></article>
+<def><f>double</f>. Slack value</def></row>
+<row><article><f>DATA_VALID</f></article>
+<def><f>double</f>. Arrival time of the DATA VALID event.</def></row>
+<row><article><f>DATA_REQUIRED</f></article>
+<def><f>double</f>. Arrival time of the DATA REQUIRED event.</def></row>
+<row><article><f>DATA_VALID_PATH</f></article>
+<def><f>TimingPath*</f>. Path related to the DATA VALID event.</def></row>
+<row><article><f>DATA_REQUIRED_PATH</f></article>
+<def><f>TimingPath*</f>. Path related to the DATA REQUIRED event. Can return <f>NULL</f> if the data required time is a user specified one set up with SDC command <f>set_output_delay</f>.</def></row>
+<row><article><f>START_EVENT</f></article>
+<def><f>TimingEvent*</f>. Starting event of the DATA VALID path.</def></row>
+<row><article><f>END_EVENT</f></article>
+<def><f>TimingEvent*</f>. Ending event of the DATA VALID path.</def></row>
+<row><article><f>THRU_EVENT</f></article>
+<def><f>TimingEvent*</f>. In case DATA VALID is an access, the event of the access latch.</def></row>
+<row><article><f>THRU_COMMAND_EVENT</f></article>
+<def><f>TimingEvent*</f>. In case DATA VALID is an access, the command event enabling the data thru the latch.</def></row>
+<row><article><f>IS_HZ</f></article>
+<def><f>char*</f>. Returns "yes" if the DATA VALID path is a HZ path. "no" otherwise.</def></row>
+<row><article><f>DATA_VALID_PATH_MARGIN</f></article>
+<def><f>double</f>. Computed margin to be added to the DATA VALID path delay.</def></row>
+<row><article><f>DATA_REQUIRED_PATH_MARGIN</f></article>
+<def><f>double</f>. Computed margin to be added to the DATA REQUIRED path delay.</def></row>
+<row><article><f>INTRINSIC_CONSTRAINT</f></article>
+<def><f>double</f>. Setup or hold constraint at the DATA VALID node.</def></row>
+<row><article><f>SKEW_COMPENSATION</f></article>
+<def><f>double</f>. Skew compensation value to be added to the DATA REQUIRED path delay. Skew compensation is deduced from common clock tree between DATA REQUIRED and DATA VALID paths.</def></row>
+<row><article><f>UNCERTAINTY</f></article>
+<def><f>double</f>. Clock uncertainty to be added to the DATA REQUIRED path delay. Clock uncertainty is a user given value.</def></row>
+</glossary>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>stb_GetSlackProperty &lt;slack_object&gt; &lt;code&gt;</cl>
+</code>
+</section>
+
+<section niv='3'><title>TimingConstraint</title>
+<p>Property codes:</p>
+<glossary>
+<row><article><f>TYPE</f></article>
+<def><f>char*</f>. Constraint type: <f>setup</f> or <f>hold</f>.</def></row>
+<row><article><f>VALUE</f></article>
+<def><f>double</f>. Constraint value.</def></row>
+<row><article><f>DATA_PATH</f></article>
+<def><f>TimingPath*</f>. Path related to the data of the constraint.<br></br>If the constraint is a directive, the data path can be a clock path if specified in the directive.</def></row>
+<row><article><f>CLOCK_PATH</f></article>
+<def><f>TimingPath*</f>. Path related to the clock of the constraint.<br></br>If the constraint is a directive, the clock path can be a data path if specified in the directive.</def></row>
+<row><article><f>INTRINSIC_MARGIN</f></article>
+<def><f>double</f>. Intrinsic setup or hold margin for a constraint on a latch node or user defined margin in case of a directive.</def></row>
+<row><article><f>INTRINSIC_MARGIN_MODEL</f></article>
+<def><f>char*</f>. Intrinsic setup or hold model name (most likely a .lib table model name). Can return <f>NULL</f> if not no model is associated with the intrisic margin.</def></row>
+<row><article><f>DATA_PATH_MARGIN</f></article>
+<def><f>double</f>. Computed margin to be added to the DATA_PATH delay.</def></row>
+<row><article><f>CLOCK_PATH_MARGIN</f></article>
+<def><f>double</f>. Computed margin to be added to the CLOCK_PATH delay.</def></row>
+<row><article><f>MASTER_CLOCK</f></article>
+<def><f>TimingEvent*</f>. TimingEvent of the clock at the interface of the netlist if the <f>CLOCK_PATH</f> comes from a generated clock. If it is not the case, the <f>MASTER_CLOCK</f> is the starting event of the <f>CLOCK_PATH</f>.</def></row>
+<row><article><f>MASTER_CLOCK_LATENCY</f></article>
+<def><f>double</f>. Value of the delay from the master clock to the generated clock.</def></row>
+</glossary>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>ttv_GetTimingConstraintProperty &lt;constraint_object&gt; &lt;code&gt;</cl>
+</code>
+</section>
+
+<section niv='3'><title>BehavioralFigure</title>
+<p>The BehavioralFigure structure describes the functionality of a circuit.</p>
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Node Crosstalk Statistics</title>
+<p>Properties:</p>
+<glossary>
+<row><article><f>SCORE_NOISE</f></article><def>The noise score.</def></row>
+<row><article><f>SCORE_ACTIVITY</f></article><def>The activity score.</def></row>
+<row><article><f>SCORE_CTK</f></article><def>The crosstalk score.</def></row>
+<row><article><f>SCORE_INTERVAL</f></article><def>The interval score.</def></row>
+<row><article><f>SCORE</f></article><def>The total score.</def></row>
+<row><article><f>VOLTAGE_THRESHOLD</f></article><def>The worst gate threshold among all of the fanout gates.</def></row>
+<row><article><f>NOISE_RISE_MAX</f></article><def>The maximum rise peak, considering active all aggressors</def></row>
+<row><article><f>NOISE_FALL_MAX</f></article><def>The maximum fall peak, considering active all aggressors</def></row>
+<row><article><f>NOISE_RISE_REAL</f></article><def>The real rise peak, considering active overlapping aggressors only</def></row>
+<row><article><f>NOISE_FALL_REAL</f></article><def>The real fall peak, considering active overlapping aggressors only</def></row>
+<row><article><f>CAPA_GROUND</f></article><def>The ground interconnect capacitance.</def></row>
+<row><article><f>CAPA_CTK</f></article><def>The crosstalk interconnect capacitance.</def></row>
+<row><article><f>CAPA_CGATE</f></article><def>The load of all gate input driver.</def></row>
+</glossary>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>ctk_GetStatNodeProperty &lt;stability_figure&gt; &lt;index&gt; &lt;property&gt;</cl>
+</code>
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Delay Crosstalk Statistics</title>
+<p>Properties.</p>
+<glossary>
+<row><article><f>START_NODE</f></article><def>The starting event of delay.</def></row>
+<row><article><f>END_NODE</f></article><def>The ending event of delay.</def></row>
+<row><article><f>DELAY_MIN_STA</f></article><def>The minimum delay without crosstalk.</def></row>
+<row><article><f>DELAY_MAX_STA</f></article><def>The maximum delay without crosstalk.</def></row>
+<row><article><f>SLOPE_MIN_STA</f></article><def>The minimum slope without crosstalk.</def></row>
+<row><article><f>SLOPE_MAX_STA</f></article><def>The maximum slope without crosstalk.</def></row>
+<row><article><f>DELAY_MIN_CTK</f></article><def>The minimum delay with crosstalk.</def></row>
+<row><article><f>DELAY_MAX_CTK</f></article><def>The maximum delay with crosstalk.</def></row>
+<row><article><f>SLOPE_MIN_CTK</f></article><def>The minimum slope with crosstalk.</def></row>
+<row><article><f>SLOPE_MAX_CTK</f></article><def>The maximum slope with crosstalk.</def></row>
+</glossary>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>ctk_GetStatLineProperty &lt;stability_figure&gt; &lt;index&gt; &lt;property&gt;</cl>
+</code>
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Crosstalk Aggressor</title>
+<p>Properties.</p>
+<glossary>
+<row><article><f>SIGNAL</f></article><def>The timing signal (optionnal).</def></row>
+<row><article><f>NETNAME</f></article><def>The netname.</def></row>
+<row><article><f>CAPA_CTK</f></article><def>The coupling capacitance.</def></row>
+<row><article><f>DELAYBESTAGR</f></article><def>Return "no", "yes" or "excluded" if this aggressor is quiet, active or if it has not been taken into account due to switching mutual exclusion.</def></row>
+<row><article><f>DELAYWORSTAGR</f></article><def>idem.</def></row>
+<row><article><f>NOISERISE</f></article><def>idem.</def></row>
+<row><article><f>NOISEFALL</f></article><def>idem.</def></row>
+</glossary>
+<p>Properties described above are available through function:</p>
+<code>
+<cl>ctk_GetAggressorProperty &lt;stability_figure&gt; &lt;property&gt;</cl>
+</code>
+</section>
+</section>
+
+<pagebreak/>
+<section niv='2'><title>Units</title>
+<section niv='3'><title>Input Values</title>
+<p>All values given as inputs to Tcl functions of the &tool; platform need to be specified in the International Units System.</p>
+<p>Values given as inputs to SDC functions are not given within the International Units System. Units are controlled by the variable
+<f>sdcUnits</f></p>
+</section>
+<section niv='3'><title>Returned Values</title>
+<p>All values returned by Tcl functions are given in the in the International Units System, 
+except for timing reports, which are controlled by the <f>ttv_SetupReport</f> function.</p>
+</section>
+</section>
+
+&avt;
+&inf;
+&sdc;
+&tas;
+&ttv;
+&stb;
+&montecarlo;
+&tma;
+&ctk;
+&cpe;
+</section></chapter>

@@ -1,0 +1,13 @@
+
+       Property *ttv_GetTimingFigureProperty(TimingFigure *fig, char *code);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns  a  property  of  a  timing figure. A Property is a polymorphic
+       type, the returned type depends on the property code.
+
+AARRGGUUMMEENNTTSS
+       ffiigg           Pointer on the timing figure
+
+       ccooddee          Property code; for available property codes, see the _T_i_m_-
+                     _i_n_g_F_i_g_u_r_e object section
+

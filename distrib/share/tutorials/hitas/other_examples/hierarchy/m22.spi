@@ -1,0 +1,41 @@
+* m22 model 
+
+.include inv.spi 
+
+.include nand.spi 
+
+* rc model
+
+.subckt sigf f_1 f 
+r1 f_1 f 100
+c1 f_1 vss 3f
+c2 f vss 4f
+.ends sigf
+
+.subckt sigg g_1 g
+r1 g_1 g 300
+c1 g_1 vss 6f
+c2 g vss 8f
+.ends sigg
+
+.subckt sigh h_1 h
+r1 h_1 h 80
+c1 h_1 vss 5f
+c2 h vss 3f
+.ends sigh
+
+.subckt sigs s_1 s_2
+r1 s_1 s_2 250
+c1 s_1 vss 2f
+c2 s_2 vss 5f
+.ends sigs
+
+.subckt m22 f g h vdd vss
+xnand1 f_1 g_1 s_1 vdd vss nand
+xinv1 s_2 h_1 vdd vss inv
+xsigf f_1 f sigf
+xsigg g_1 g sigg
+xsigh h_1 h sigh
+xsigs s_1 s_2 sigs
+.ends m22
+

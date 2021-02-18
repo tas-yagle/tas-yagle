@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+<row type='split'><article><index>avtLicenseServer</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def> Hostname of the machine running 
+the license server</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtLicenseProject</index></article><def> 
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Project name. Used in license logging.</def></row>
+</glossary>
+</def></row>
+
+</glossary>
+

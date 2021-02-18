@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>Usage</title>
+<p>The disassembler calls the FCL module if the '-fcl' option is specified. The transistor netlists (in extended spice format), and the behavioural descriptions (in VHDL format) should be placed in a dedicated directory, whose access path is specified by an environment variable. The list of netlists to be identified is specified in a special library file located in the same directory, whose name is specified in an additional environment variable.</p>
+</section>
+

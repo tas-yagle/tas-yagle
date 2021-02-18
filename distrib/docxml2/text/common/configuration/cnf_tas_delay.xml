@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<glossary>
+<row type='split'><article><index>avtNewSwitchModel</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>&tool; will use an enhanced switch delay calculation model which accurately takes into account  contributions from both transistor of the switch and also handles the difference between the opening times of the two transistors.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+<row type='split'><article><index>tasDelayPropagation</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, &tool; will propagate through a gate the slope of 
+this gate's input having the latest arrival time.</def></row>
+<row><article><f>no</f></article><def>&tool; will propagate through a gate the largest (or smallest) slope. Adds additional pessimism.</def></row>
+</glossary>
+</def></row>
+<row type='split'><article><index>tasRefineDelays</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>&tool; will will perform an additional delay calculation phase after DTX generation using the slope propagation algorithm specified in <f>tasDelayPropagation</f>. This allows perfect delay value correlation with the result of delay recalculation after a slope or lod change.</def></row>
+<row><article><f>no</f></article><def>Default.</def></row>
+</glossary>
+</def></row>
+<!--<row type='split'><article><index>tasDelaySwitch</index></article><def>
+<p>This variable tunes the behavior of &tool; when dealing with latches having their input data going
+through transmission-gates. This variable only affects setup/hold/access paths construction.</p>
+<glossary width='small'>
+<row><article><f>no</f></article><def>For a rising transition of the input data, the 
+transmission-gate opens when the N-channel transistor opens. For a falling transition of the input data, the 
+transmission-gate opens when the P-channel transistor opens.  </def></row>
+<row><article><f>yes</f></article><def>The transmission-gate opens when any of its transistor
+opens. It leads to differentiation of the access paths going through N-channel and P-channel transistors. </def></row>
+<row><article><f>propagate</f></article><def>Default, depending on the arrival times of the
+signals on the gates of the N-channel and P-channel transistors, the transmission gate opens when the first
+of the P-channel or N-channel transistor opens, and this for any transition of the input data (rising or falling).</def></row>
+</glossary>
+</def></row>-->
+
+<row type='split'><article><index>tasSwitchCapacitanceFactor</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Percentage of the 'out-of-path' capacitances associated 
+with an input connector taken into account during a flat analysis. Default is 100. Affects only TTX and DTX file 
+generation and does not change the delay computation.</def></row>
+</glossary>
+</def></row>
+
+<!--<row type='split'><article><index>tasOutputCharge</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Capacitance (in Pico-farads) added to all output 
+connectors.</def></row>
+</glossary>
+</def></row>-->
+
+<row type='split'><article><index>tasPathCapacitanceFactor</index></article><def> 
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Percentage of the out-of-path capacitances taken 
+into account. Default is 100.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasPathCapacitanceDepth</index></article><def> 
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>To be used together with <f>tasPathCapacitanceFactor</f>.
+Controls across how many transistor the out-of-path capacitance should be counted. Default is 1.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasStrictPathCapacitance</index></article><def> 
+To be used together with <f>tasPathCapacitanceFactor</f>.
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Any out-of-path capacitance on internal nodes of any gate is ignored.</def></row>
+<row><article><f>no</f></article><def>Any out-of-path capacitance on internal nodes of a gate is considered on the gate output.</def></row>
+<row><article><f>latch</f></article><def>Default. Any out-of-path capacitance on internal nodes of a latch is ignored.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasMaxPathCapacitanceFanout</index></article><def> 
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>To be used together with <f>tasPathCapacitanceFactor</f>.
+If the number of gates contributing to an out-of-path capacitance for a given cone exceeds this value then 
+only the largest contribution is taken into account. Effectively a mutual exclusion is assumed. 
+Default is 15.</def></row>
+</glossary>
+</def></row>
+
+
+</glossary>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="beg_api">
+
+<err>
+    <lib>BEGAPI-</lib><num>001</num>
+    <msg>name '%s' does not exist in figure '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>BEGAPI-</lib><num>002</num>
+    <msg>could not find correspondance for instance '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>BEGAPI-</lib><num>003</num>
+    <msg>delay variable '%s' does not exist\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>BEGAPI-</lib><num>004</num>
+    <msg>could not export behaviour '%s'. Current instance behaviour is not created yet\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>BEGAPI-</lib><num>005</num>
+    <msg>behaviour '%s' already exists\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>BEGAPI-</lib><num>006</num>
+    <msg>could not import behaviour '%s'. It does not exist\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

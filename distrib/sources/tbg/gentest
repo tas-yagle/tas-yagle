@@ -1,0 +1,47 @@
+#!/bin/csh -f  
+
+set cl = ""
+
+if ("$1" == "" || "$1" == '-h' || "$1" == '-help') then
+    echo; echo 'usage: gentest [generic0=val0 generic1=val1 ...] <file.c>'; echo
+    exit
+endif
+
+foreach arg ($argv) 
+    if (${arg:e} != 'c') then
+        set cl = ($cl " " $arg)
+    else
+        set name = $arg
+        set bname = ${arg:r}
+    endif
+end
+
+set makefile = "Makefile.$$"
+
+cat << EOF  > $makefile
+include \$(AVERTEC_TOP)/etc/\$(AVERTEC_OS).mk
+include \$(AVERTEC_TOP)/etc/libraries.mk
+include \$(AVERTEC_TOP)/etc/Avertec.mk
+
+LIBRARY  = -L\$(TARGET_LIB) -lTbg100 \$(MUT_L) \$(AVT_L) -lm
+
+INCLUDE = -I\$(TARGET_INCLUDE) -DTBG_H='"tbg100.h"' 
+
+$bname : $name
+	\$(CC) -g -o $bname $name \$(INCLUDE) \$(LIBRARY)
+EOF
+
+make -f $makefile >& $name.grr
+
+./$bname $cl
+
+set RES = $?
+
+rm -f $makefile >& /dev/null
+
+if ($RES != 0 || "$2" == '-q') then
+exit 2
+endif
+rm -f $bname
+rm -f $name.o $name.grr >& /dev/null 
+exit 0

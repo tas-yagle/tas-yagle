@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Command-line Options</title>
+
+
+<section niv='2'><title>hitas - Generating the Timing Database</title>
+<p>Options may appear in any order before or after the input filename. Options of a single letter can be concatenated (e.g. -bei).</p>
+<section niv='3'><title>Characterization Options</title>
+
+<glossary>
+<row><article>-carac=scm_int</article>
+<def>This option allows &tool; to compute scm models for 
+interface delays.
+This is the default option.</def></row>
+<row><article>-carac=scm_cpl</article>
+<def>This option allows &tool; to compute scm models for 
+all delays. Specially for crosstalk analysis</def></row>
+<row><article>-carac=lut_int</article>
+<def>This option allows &tool; to compute lookup tables for 
+interface delays. 
+If characterization slopes and capacitances are specified in
+the inf file, the lookup tables take the specified sizes.
+If no characterization slopes and capacitances are specified,
+ the default size is 5.</def></row>
+<row><article>-carac=lut_cpl</article>
+<def>This option allows &tool; to compute lookup tables for 
+all delays. 
+If characterization slopes and capacitances are specified in
+the inf file, the lookup tables take the specified sizes.
+If no characterization slopes and capacitances are specified,
+ the default size is 5.</def></row>
+<row><article>-carac=no_model</article>
+<def>This options allows &tool; to save a linear model instead of 
+look up tables or scm models.</def></row>
+</glossary>
+<p>-carac option is corresponding to the variable "tasmodelsfordelays" in the configuration file</p>
+
+</section>
+
+<section niv='3'><title>Critical Path Calculation and Reporting</title>
+
+<glossary>
+<row><article>-max</article><def>&tool; calculates and reports in the 'perfmodule files' only the longest paths. By default &tool; gives both the longest paths and shortest paths between two signals. This corresponds to the "tasminimumpathanalysis"  configuration variable.</def></row>
+<row><article>-pch</article><def>To be used only in the flattened analysis mode (default option). Without this option, reference points are terminals, registers or register commands. With this option, precharged signals are also considered as reference points (input and output of path). A signal is considered as precharged if its name is suffixed by _p or if it is declared in the INF file. This corresponds to the "tastreatprecharge" configuration variable.</def></row>
+<row><article>-f</article><def>In order to decrease the number of paths of the 'general perfmodule', &tool; can keep paths starting or stopping at some special signals that are not reference points ('factorization points') when this option is used. This corresponds to the "taspathfactorisation" configuration variable.
+<p>These points are automatically detected by &tool;, but they can also be chosen by the user through the INF file (see -i option). If used in the hierarchical mode, it should have been used in the leaf cells analysis and all along the hierarchical levels.</p>
+</def></row>
+<row><article>-a</article><def>To be used always together with -n or -nvx options. &tool; reports all the paths in the TTV file. With this option, beware that a large circuit can generate a very large TTV file.
+<p>When this option is used with the -xout="&lt;ref_out&gt;" option, &tool; gives only those paths associated with 'ref_out' (see -xout option) in the TTV 'general perfmodule' file.</p>
+<p>When this option is used with the -xin="&lt;ref_in&gt;" option, &tool; gives only those paths associated with 'ref_in' (see -xin option) in the TTV 'general perfmodule' file.</p>
+</def></row>
+<row><article>-q</article><def>Then &tool; flattens the timing views of all the models given in the catalogue file specified by <f>avtCatalogueName</f>. This is equivalent to the <f>tasFlatCells</f> variable.</def></row>
+<row><article>-str</article><def>This is equivalent to the <f>tasWithStability</f> variable.</def></row>
+<row><article>-u</article><def>&tool; reads a hierarchical net-list in which some of the instances are considered to be black boxes (i.e. their internal structure is unavailable). The list of these instances is given by the user in a file whose name is given by <f>avtBlackBoxFile</f>. &tool; creates a new intermediate netlist containing only the non-black box instances, and modifies the original net-list to instantiate this new figure and the black box instances. The modified original netlist is saved to disk, and the timing analysis is performed on the intermediate figure. The timing analysis is performed on this hybrid netlist. This is equivalent to the <f>tasTreatBlackBoxHierarchically</f> variable.</def></row>
+<row><article>-y</article><def>&tool; reads a hierarchical netlist in which some of the instances are considered to be black boxes. The name of these instances is given in a file whose name is given by <f>avtBlackBoxFile</f>. The hierarchical netlist is then flattened to the transistor level apart from the black box instances to generate a hybrid transistor and instance netlist. The timing analysis is performed on this hybrid netlist. This is equivalent to the <f>tasIgnoreBlackbox</f> variable.</def></row>
+<row type="split"><article>-x[=&lt;val_min&gt;]|[=:&lt;val_max&gt;]|[=&lt;val_min&gt;:&lt;val_max&gt;]</article>
+<def>To be used with the -n or the -nvx options. If the -x option is used without argument, the 'general perfmodule' (TTV format) will contain details of all critical paths. Beware that this file can be very large.
+<p>With '=&lt;val_min&gt;', where 'val_min' is a delay in picoseconds (integer), only paths of delay greater than 'val_min' will be detailed.</p>
+<p>With '=:&lt;val_max&gt;', where 'val_max' is a delay in picoseconds (integer), only paths of delay less than 'val_max' will be detailed.</p>
+<p>With '=&lt;val_min&gt;:&lt;val_max&gt;', only paths of delay between 'val_min' and 'val_max' will be detailed.</p>
+</def></row>
+<row><article>-xin=&lt;"ref_in"&gt;</article>
+<def>
+<p>To be used with the -n or the -nvx options. Very useful for large circuits and clock checking.</p>
+<p>When this option is set &tool; reports in the 'general perfmodule' (TTV), only the critical path associated to the 'ref_in' signal. The 'ref_in' signal can either be :</p>
+<list>
+<item>a register</item>
+<item>an input terminal</item>
+<item>a bidirectional terminal</item>
+</list>
+<p>When this option is used with the -a option, &tool; reports all the functional paths associated with the 'ref_in' signal in the TTV file.</p>
+<p>To find the proper name of the signal you want to analyze, you should look in the DTV file.</p>
+<p>Note that vectorized signals have to be given as signal_name[number]. It is possible to specify more than one signal by using several -xin options. </p>
+<p>You can use '*' as a wildcard, as many times as you like. </p>
+<code>e.g. -xin="sig*a*"</code>
+<p>You can ask for a part of a vectorized signal</p>
+<code>e.g. -xin="vector[2-5]"</code>
+<p>You can also do path selection using the INF file.</p>
+</def></row>
+<row><article>-xout=&lt;"ref_out"&gt;</article>
+<def>To be used with the -n or the -nvx options. Very useful for large circuits. When this option is set, &tool; reports only the critical paths associated with the ref_out signal. The ref_out signal can either be :
+<list>
+<item>a register</item>
+<item>a register command</item>
+<item>an output terminal</item>
+<item>a bidirectional terminal</item>
+</list>
+<p>When this option is used with the -a option, &tool; reports all the functional paths associated with the 'ref_out' signal in the TTV file.</p>
+<p>The naming conventions are the same as for the -xin option.</p>
+</def></row></glossary>
+
+</section>
+
+<section niv='3'><title>Delay Calculation</title>
+<glossary>
+<row><article>-cout=&lt;capa&gt;</article>
+<def>A given capacitance is added to all output terminals. The value 'capa' of this capacitance is given in picofarads (floating point). This corresponds to the "tasoutputcharge" configuration variable.</def>
+</row><row><article>-ctc=&lt;fact&gt;</article>
+<def>With this option all crosstalk capacitances are multiplied by the factor 'fact'. This factor should be between 0 and 2.</def>
+</row><row><article>-opc=&lt;fact&gt;</article>
+<def>To be used only in the flat analysis mode (default option). This option takes into account 'out-of-path' capacitances. This corresponds to the "taspathcapacitancefactor" configuration variable.
+<imgsize namehtml="tasoptions2.gif" namepdf="tasoptions2.gif" wpdf="287pt" hpdf="164pt" />
+<p>In this example, the delay of the path A-&gt;B depends upon the C1 capacitance through transistor T1.</p>
+<p>In some case, only a part of these 'out-of-path' capacitances must be taken into account. The -opc option indicates a factor to reduce this effect. It is expressed as a percentage (default is 100%).</p></def>
+</row><row><article>-slope=&lt;n&gt;</article>
+<def>When this option is set, &tool; uses the slope of value 'n' (picoseconds) as the input signal driving every external input terminals. The default value is 200. This corresponds to the "tasConnectorsInputSlope" configuration variable.</def>
+</row><row><article>-swc=&lt;n&gt;</article>
+<def>To be used only in the flattened analysis mode (default mode). &tool; reports terminal capacitances in the 'general perfmodule' (TTV file). Without this option 100% 'out-of-path' capacitances associated to an input terminal are taken into account. Use this option to reduce this percentage. The delay computation is unchanged. It affects only the TTV or TTX or DTV or DTX files. This corresponds to the "tasswitchcapacitancefactor" configuration variable.</def>
+</row></glossary>
+</section>
+
+<section niv='3'><title>Functional analysis</title>
+
+<glossary>
+<row><article>-p=&lt;n&gt;</article><def>This option sets the depth for the functional analysis. This is the number of gates that will be taken into account for the functional analysis, so that &tool; can detect re-convergence in the circuit. The default value is 7. When depth=0, the functional analysis process is disabled.</def></row>
+<row><article>-z</article><def>When this option is set, the functional analysis phase exploits high impedance nodes. This allows, for instance, the resolution of false conflicts in circuits which use precharged logic.</def></row>
+</glossary>
+
+</section>
+
+<section niv='3'><title>General Options</title>
+
+<glossary>
+<row><article>-h</article><def>The help option. It gives a summary of all &tool; options.</def></row>
+<row><article>-uk</article><def>With this option, &tool; reports errors and warnings in English, it is the default option.</def></row>
+<row><article>-fr</article><def>&tool; reports errors and warnings in French.</def></row>
+<row><article>-s</article><def>Silent mode, in order to run &tool; in batch mode. With this option, only error or warning messages will be reported.</def></row>
+</glossary>
+
+</section>
+
+<section niv='3'><title>Hierarchical Analysis</title>
+
+<glossary>
+<row><article>-hr</article>
+<def>The hierarchical analysis mode option. It assumes that the circuit under study is hierarchical (as many levels of hierarchy as needed). The timing analysis performed on the whole circuit uses the existing hierarchy defined by the circuit designer. &tool; assumes that the timing views of the leaf blocks already exist (TTX and possibly DTX view of the blocks) and models the propagation times resulting from block interconnecting , possibly taking into account the resistances of interconnecting wires between blocks. The calculation of propagation delays due to the interconnecting wires at any level of the hierarchy uses the AWE model. When the -nr option is used the timing information ignores the interconnecting resistances (see -nr option). The analysis of some interconnecting signals can be requested in the INF file, this allows a special analysis of the clock signal for example. This corresponds to the "tashierarchicalmode" configuration variable.
+</def></row>
+<row><article>-lm=x</article>
+<def>To be used with the hierarchical mode (-hr option). This option enables the user to indicate the maximum size of the cache memory to be used by &tool; (Megabytes). During the analysis &tool; tries to use less than lm megabytes, if it does not succeed &tool; uses more and issues a warning.
+</def></row>
+</glossary><glossary><row><article>-lv</article>
+<def>With this option, &tool; assumes that the analyzed circuit will not be used as instance on a higher level of hierarchy. Consider the following example where A, B and C are the terminals of a circuit which contains two inverters: 
+<imgsize namehtml="tasoptions1.gif" namepdf="tasoptions1.gif" wpdf="212pt" hpdf="127pt" />
+<p>with the -lv option, &tool; gives A-&gt;B and A-&gt;C paths.</p>
+<p>But if this block is used as an instance, the delay of the last path (A-&gt;C) depends strongly upon the capacitances introduced on the B terminal. By default, &tool; cuts paths if necessary for taking into account hierarchical capacitances. In this example, it gives A-&gt;B and B-&gt;C paths.</p>
+</def></row>
+</glossary>
+
+</section>
+
+<section niv='3'><title>Input Files</title>
+
+<glossary>
+<row><article>-in=x</article><def>Should be used to force the input netlist format (prevailing over the environment variables and the configuration file)</def></row>
+</glossary>
+<list>
+<article>&tool; can read the following formats:</article>
+<item>Spice netlist : spi</item>
+<item>Verilog netlist : vlg</item>
+<item>VHDL netlist : vhd</item>
+</list>
+<list>
+<article>&tool; can read the following parasitics formats:</article>
+<item>SPEF netlist : spef</item>
+<item>DSPF netlist : dspf</item>
+</list>
+<list>
+<article>&tool; can read the following transistor spice level format:</article>
+<item>BSIM3</item>
+<item>BSIM4</item>
+</list>
+<code>-tec=&lt;filename&gt;</code>
+<p>Indicates which technology file should be used (prevailing over the environment variable). Default is a one micron technology file located in $AVT_TOOLS_DIR/etc/prol10.elp.</p>
+
+</section>
+
+<section niv='3'><title>Interconnection Resistances</title>
+
+<glossary>
+<row><article>-mg</article><def>Merge the gate delays and the interconnection RC delays in the flatten analysis mode. By default the gate delays and the interconnection RC delays are separated. This corresponds to the "tasmergercandgatedelays" configuration variable.</def></row>
+<row><article>-nr</article><def>Only the capacitances and not the resistances of the interconnecting wires are taken into account to compute the propagation times. This is the variable "tascalcrcdelays" in configuration file.</def></row>
+</glossary>
+
+</section>
+
+<section niv='3'><title>Latch Detection</title>
+
+<glossary>
+<row><article>-la</article><def>Then an advanced latch detection algorithm based on boolean loop analysis is activated. This equivalent to the <f>yagleAutomaticLatchDetection</f> variable.</def></row>
+<row><article>-ls</article><def>To be used with the -fl option. It chooses the slave latch as the memory point of the flip-flop.</def></row>
+<row><article>-nl</article><def>To be used with the -fcl option. Disables the detection of latches and memory points using the built-in latch library. This option is useful if all memory points are to be recognized by the use of a user-defined library with the -fcl option.</def></row>
+<row><article>-cl</article><def>To be used with the -fl option. It enables to share the same control signal between several master-slave flip-flops.</def></row>
+<row><article>-fl</article><def>Enables the automatic detection of master-slave flip-flops based on a special latch "with conflict" when possible. By default, the master latch is chosen to be the memory point, this can be changed using the -ls option.</def></row>
+<row><article>-d</article><def>When this option is set &tool; has a special behavior on differential latches. The transistor close to the memory point is known to be the data connector, the second transistor is known to be the clock connector. Without this option, the opposite convention is assumed.</def></row>
+</glossary>
+
+</section>
+
+<section niv='3'><title>Output Files</title>
+
+<code>-out=&lt;filename&gt;</code>
+<p>When this option is used, the user can choose the root name of the output files.</p>
+<glossary>
+<row><article>-n</article><def>This option must be used to generate the 'not new' format output files. The result files are in the TTV format for the 'general perfmodule file' and in the DTV format for the 'detailed perfmodule file'. When this option is set, the options -a -xin -xout can be used.</def></row>
+<row><article>-t[$]</article><def>With this option &tool; generates the 'detailed perfmodule' (DTX or DTV extension) which contains the gate delays. This is the variable "tasgeneratedetailtimingfile" in configuration file. If the $ option is used, &tool; stops after DTX or DTV generation. This corresponds to the "tasexitafterdetailtimingfile" configuration variable.</def></row>
+<row><article>-nv</article><def>When this option is set, the interface and the internal signal of the TTX or TTV and of the DTX or DTV description of the circuit are not vectorized.</def></row>
+<row><article>-nvx</article><def>With this option, &tool; generates both TTX and TTV formats for the 'general perfmodule' file and both DTX and DTV formats for the 'detailed perfmodule' file (-t option). When this option is set, the options -a -xin -xout can be used for the DTV or TTV formats.</def></row>
+<row><article>-c</article><def>To be used only in the flattened analysis mode (default option). Generate a file which contains the cone view. It is called output_file with the cns extension. This file is mainly used for debugging. This corresponds to the "tasgenerateconefile" configuration variable.</def></row>
+<row><article>-e</article><def>Generate a file which contains the signal slopes which are computed by &tool; for each input of a cone. It is called output_file with the slo extension. This corresponds to the "tasslopefile" configuration variable.</def></row>
+<row><article>-pwl[$]</article><def>When this option is set, &tool; generates 2 files called PwlFall and PwlRise which give, at the SPICE format, the input terminal slopes used by &tool; to compute the gate delays (respectively falling and rising slopes). If the $ option is used, &tool; exits after generating the two files.</def></row>
+</glossary>
+
+</section>
+
+<section niv='3'><title>User-defined Pattern Recognition</title>
+
+<glossary>
+<row><article>-fcl</article><def>This option makes the disassembler tool use library-based transistor netlist recognition. This allows the user to specify a number of netlists to be identified within the circuit to be disassembled. These netlists are specified in the Spice format and can contain a number of special directives for the marking of the identified signals and transistors in the circuit. This option can also be used to detect certain types of latches or flip-flops. See the FCL pattern-matching chapter for details.</def></row>
+<row><article>-xfcl</article><def>Same as -fcl. In addition, it makes the disassembler tool stop after the recognition process.</def></row>
+<row><article>-gns</article><def>Extends the simple pattern recognition of FCL to allow the recognition of hierarchically defined structures of generic size. Each recognised structure can be associated with a corresponding action written in a dedicated subset of 'C' which can be used to perform SPICE simulutions and create timing arcs for the recognised structures. The structures are described in structural VHDL. See the GNS User Guide for more details.</def></row>
+</glossary>
+<p>The original net-list is modified by replacing the recognised transistors by instances. The remainder of the circuit is then handled automatically in the usual way.</p>
+<glossary>
+<row><article>-xg</article><def>Stops the execution after the hierarchical pattern recognition phase and drives a transistor netlist containing the remaining transistors and a structural hierarchy instantiating this and the recognised instances.</def></row>
+</glossary>
+
+</section>
+
+<section niv='3'><title>Transistor orientation</title>
+
+<glossary>
+<row><article>-o</article><def>Activate transistor orientation taking into account the _s convention on signal's names. This method is sometimes used instead of external constraints (INF file) if there exists correlation between external connectors.</def></row>
+<row><article>-b</article><def>Activate a simple transistor orientation heuristic. Can sometimes accelerate the disassembly, however, it is more robust to rely exclusively upon the functional analysis.</def></row>
+<row><article>-rpt</article><def>Replaces transistors connected in parallel with an equivalent transistor.</def></row>
+</glossary>
+
+</section>
+
+<section niv='3'><title>User Information</title>
+
+<glossary>
+<row><article>-i</article><def>This option makes &tool; read the INF file. This file has the same name as the root_file with the '.inf' extension. It may contain mutual exclusion conditions on ports of the circuit for the functional analysis process as well as information about signal renaming, path elimination, case analysis, precharged signals, intermediary points, path selection, factorizing points and interconnect analysis (hierarchical mode) (see -f option). This corresponds to the "tasReadInfoFile" configuration variable.</def></row>
+</glossary>
+
+</section>
+</section>
+
+
+<section niv='2'><title>stb - Static Timing Analysis</title>
+
+
+        <p>Options may appear in any order before or after the input filename. If <f>stb</f> is executed without parameters a brief usage is displayed.</p>
+
+<section niv='3'><title>General Options</title>
+        
+        <glossary>
+        <row>
+        <article>-dg</article>
+        <def>With this option, <f>stb</f> uses the timing database in DTX format (gate graph). In this case, stability intervals for auxiliary nodes are also calculated. To be used generally with the -da option for crosstalk analysis.</def>
+        </row>
+        
+        <row>
+        <article>-da</article>
+        <def>With this option, all stability intervals are maintained, instead of merging them into a single interval for setup/hold verification. Essential for crosstalk analysis.</def>
+        </row>
+        
+        <row>
+        <article>-w</article>
+        <def>With this option, <f>stb</f> performs a worst case analysis. Any latches are initialized assuming zero exploitation of the transparency, and the system is relaxed to identify stable operation with minimum transparency. The default is to initialize the latches assuming maximum transparency.</def>
+        </row>
+        
+        <row>
+        <article>-ff</article>
+        <def>With this option, latches clocked on the same phase as the origin of their data input are assumed to be flip-flops.</def>
+        </row>
+        
+        <row>
+        <article>-lt</article>
+        <def>With this option, latches clocked on the same phase as the origin of their data input are assumed to be transparent.</def>
+        </row>
+        
+        <row>
+        <article>-er</article>
+        <def>With this option, latches clocked on the same phase as the origin of their data input are assumed to be errors.</def>
+        </row>
+        
+        <row>
+        <article>-setup</article>
+        <def>With this option, only setup times are calculated.</def>
+        </row>
+        
+        <row>
+        <article>-hold</article>
+        <def>With this option, only hold times are calculated.</def>
+        </row>
+        
+        <row>
+        <article>-tl</article>
+        <def>With this option, only top level paths are taken into account for stability analysis.</def>
+        </row>
+        
+        <row>
+        <article>-fe</article>
+        <def>With this option, all error are redirected to a separate error file (suffix .ste).</def>
+        </row>
+        
+        <row>
+        <article>-s</article>
+        <def>With this option, the execution is in silent mode. No errors or warnings are reported unless they are fatal.</def>
+        
+        </row>
+        
+        </glossary>
+        
+</section>
+
+</section>
+
+
+<section niv='2'><title>stb - Crosstalk Analysis</title>
+
+        <p>Options may appear in any order before or after the input filename. If <f>stb</f> is executed without parameters a brief usage is displayed.</p>
+
+<section niv='3'><title>General Options</title>
+        
+<p>The following stability analysis options have an effect on the crosstalk analysis:</p>
+        <glossary>        
+        
+        <row>
+        <article>-w</article>
+        <def>With this option, <f>stb</f> performs a worst case analysis. Any latches are initialized assuming zero exploitation of the transparency(i.e. output is stable at moment of latch closing), and the system is relaxed to identify stable operation with minimum transparency. The default is to initialize the latches assuming maximum transparency.</def>
+        </row>
+        
+        <row>
+        <article>-ff</article>
+        <def>With this option, latches clocked on the same phase as the origin of their data input are assumed to be flip-flops.</def>
+        </row>
+        
+        <row>
+        <article>-lt</article>
+        <def>With this option, latches clocked on the same phase as the origin of their data input are assumed to be transparent.</def>
+        </row>
+        
+        <row>
+        <article>-er</article>
+        <def>With this option, latches clocked on the same phase as the origin of their data input are assumed to be errors.</def>
+        </row>
+        
+        <row>
+        <article>-setup</article>
+        <def>With this option, only setup times are calculated.</def>
+        </row>
+        
+        <row>
+        <article>-hold</article>
+        <def>With this option, only hold times are calculated.</def>
+        </row>
+        
+        <row>
+        <article>-tl</article>
+        <def>With this option, only top level paths are taken into account for stability analysis.</def>
+        </row>
+        
+        <row>
+        <article>-fe</article>
+        <def>With this option, all error are redirected to a separate error file (suffix .ste).</def>
+        </row>
+        
+        <row>
+        <article>-s</article>
+        <def>With this option, the execution is in silent mode. No errors or warnings are reported unless they are fatal.</def>
+        
+        </row>
+        
+        </glossary>
+        
+</section>
+
+
+<section niv='3'><title>Crosstalk Related Options</title>
+        
+        <glossary>
+        <row>
+        <article>-dg</article>
+        <def>With this option, <f>stb</f> uses the timing database in DTX format (gate graph). In this case, stability intervals for auxiliary nodes are also calculated. This option is mandatory for crosstalk analysis.</def>
+        </row>
+        
+        <row>
+        <article>-c</article>
+        <def>Performs a best case timing analysis with crosstalk. No aggression is assumed initially. Any aggression is detected and added.</def>
+        </row>
+        
+        <row>
+        <article>-cw</article>
+        <def>Equivalent to set to "yes" the <f>stbCtkWorstBeginCondition</f> configuration variable.</def>
+        </row>
+        
+        <row>
+        <article>-cobs</article>
+        <def>Equivalent to set to "yes" the <f>stbCtkObservableMode</f> configuration variable.</def>
+        </row>
+        
+        <row>
+        <article>-cl</article>
+        <def>Equivalent to set to "yes" the <f>stbCtkLineMode</f> configuration variable.</def>
+        </row>
+
+        <row>
+        <article>-cninf</article>
+        <def>Equivalent to set to "no" the <f>stbCtkReportFile</f> configuration variable.</def>
+        </row>
+
+        </glossary>
+        
+</section>
+
+</section>
+
+
+
+<section niv='2'><title>tma - Timing Abstraction</title>
+
+<glossary>
+<row><article>-ttx</article><def>Makes TMA take a '.ttx' file as input. This corresponds to the "tmaTtxInput" configuration variable.</def></row>
+<row><article>-dtx</article><def>Makes TMA take a '.dtx' file as input. This corresponds to the "tmaDtxInput" configuration variable.</def></row>
+</glossary>
+<p>If any of the following options are used, TMA launches &tool; and so any of the &tool; options can be used.</p>
+<glossary>
+<row><article>-nla</article><def>This option disables the -la &tool; option activated by default in TMA.</def></row>
+<row><article>-nnl</article><def>This option disables the -nl &tool; option activated by default in TMA.</def></row>
+<row><article>-out=ttx</article><def>Generates an output file in TTX timing database format. This corresponds to the "tmaOutputFile" configuration variable.</def></row>
+<row><article>-format=lib</article><def>Generates an output file in Synopsys LIB format (default option). This corresponds to the "tmaOutputFile" configuration variable.</def></row>
+<row><article>-format=tlf3</article><def>Generates an output file in Cadence TLF 3.0 format. This corresponds to the "tmaOutputFile" configuration variable.</def></row>
+<row><article>-format=tlf4</article><def>Generates an output file in Cadence TLF 4.0 format. This corresponds to the "tmaOutputFile" configuration variable.</def></row>
+<row><article>-lib=&lt;name&gt;</article><def>This option allows the user to specify a name for the generated library file(default name is "library"). This corresponds to the "tmaLibraryName" configuration variable.</def></row>
+<row><article>-sfx=&lt;suffix&gt;</article><def>This option allows the user to specify a basename suffix for '.ttx' output file if the input is a '.ttx' file. Default value is "blackbox". This corresponds to the "tmaNameSuffix" configuration variable.</def></row>
+<row><article>-nac</article><def>This option disables the automatic clock detection. This corresponds to the "tmaDetectClock" configuration variable.</def></row>
+<row><article>-mod=w</article><def>This option enables generation of cell functionality. This corresponds to the "tmaFunctionalityMode" configuration variable.</def></row>
+<row><article>-mod=r</article><def>This option enables the reading of cell functionality from a behavioral file (VHDL for example). This corresponds to the "tmaFunctionalityMode"configuration variable.</def></row>
+<row><article>-mod=t</article><def>This option disables generation of cell functionality(default option). This corresponds to the "tmaFunctionalityMode" configuration variable.</def></row>
+<row><article>-i</article><def>This option enables reading of the '.inf' information file. This corresponds to the "tmaReadInfoFile" configuration variable.</def></row>
+<row><article>-v</article><def>This option enables verbose mode. This corresponds to the "tmaVerboseMode" configuration variable.</def></row>
+<row><article>-mrg=&lt;margin&gt;</article><def>This option allows the user to specify additional margins in setup and hold constraint calculations. This corresponds to the "tmaConstraintMargin" configuration variable.</def></row>
+<row><article>-fin=&lt;file&gt;</article><def>Allows the user to specify a file containing a list of cells to characterize. This corresponds to the "tmaInputFile" configuration variable.</def></row>
+</glossary>
+<p>An example cell list file could be:</p>
+<code>
+<cl>inv W</cl>
+<cl>nand W</cl>
+<cl>nor W</cl>
+</code>
+<p>In this example the 'W' enables the generation of cell functionality. The character 'R' means read the functionality and 'T' means disable the functionality</p>
+<glossary>
+<row><article>-read_area=&lt;file&gt;</article><def>Allows the user to specify a file containing cell areas. This file is in LIB or TLF format. These area values are rewritten into the new characterization file. This corresponds to the "tmalibraryfile" configuration variable.</def></row>
+<row><article>-t_unit=&lt;ns|ps&gt;</article><def>Allows the user to specify the time unit. Legal values are ns and ps for nanoseconds and picoseconds respectively. Default is ps. This corresponds to the "tmaTimeUnit" configuration variable.</def></row>
+<row><article>-c_unit=&lt;pf|ff&gt;</article><def>Allows the user to specify the capacitance unit. Legal values are pf and ff for picofarads and femtofarads respectively. Default is ff. This corresponds to the "tmaCapacitanceUnit" configuration variable.</def></row>
+</glossary>
+</section>
+
+
+<section niv='2'><title>x2v - Timing Database Converter</title>
+
+
+<section niv='3'><title>Description</title>
+<p>The x2v tool allows the user to convert a timing database file into 
+Avertec timing database format.</p>
+
+<p>The default output file format of x2v is Avertec's .ttx format.</p>
+
+</section>
+
+<section niv='3'><title>Available Options</title>
+<p>The common usage of x2v is:</p>
+<code>x2v -t -d -a -i -f -z -x=&lt;min&gt;lt;max&gt; -lm=&lt;size&gt; -tlf3 -tlf4 -lib -sdf 
+-cout=&lt;value (pF)&gt; -flat -flt -gcf -xin=&lt;"name"&gt; -xout=&lt;"name"&gt; filename</code>
+
+<p>The x2v specific options are:</p>
+
+<glossary width="small">
+<row><article>-a</article><def>dtx and ttx formats are driven.</def></row>
+<row><article>-d</article><def>dtx format is used as input format.</def></row>
+<row><article>-flat</article><def>the driven file will not be used as instance on a higher level of hierarchy</def></row>
+<row><article>-flt</article><def>flattens the input netlist.</def></row>
+<row><article>-gcf</article><def>converts a GCF constraint file into an Avertec STM constraint file.</def></row>
+<row><article>-lib</article><def>uses lib input file format</def></row>
+<row><article>-t</article><def>only dtx format is driven.</def></row>
+<row><article>-tlf3</article><def>uses tlf3 input file format.</def></row>
+<row><article>-tlf4</article><def>uses tlf4 input file format.</def></row>
+<row><article>-z</article><def>takes dtx input file format and drives ttx format.</def></row>
+</glossary>
+
+</section>
+
+</section>
+
+</section></chapter>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>Behavior Generation</title>
+
+<p>
+The BEG API provides a set of functions to allow easy generation of behavioral models. These internally compiled models can be automatically compressed using loops and vectors and then used to generate either VHDL or Verilog descriptions.
+</p>
+&beg_API;
+
+</section>

@@ -1,0 +1,4 @@
+rm -f addaccu.* 
+rm -f distrib.*
+rm -rf store store_paths
+rm -rf paths.ssta slacks.ssta slack_report.log path_report.log

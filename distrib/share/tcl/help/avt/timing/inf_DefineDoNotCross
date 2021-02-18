@@ -1,0 +1,12 @@
+
+       void inf_DefineDoNotCross(char *name);
+
+DDEESSCCRRIIPPTTIIOONN
+       Disables  the transparency of a latch or precharge, so that no path can
+       traverse it.
+           Effective only when static timing analysis has been run  (_s_t_b).  To
+       be used together with _a_v_t_M_a_x_P_a_t_h_P_e_r_i_o_d_D_e_p_t_h.
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Signal's name
+

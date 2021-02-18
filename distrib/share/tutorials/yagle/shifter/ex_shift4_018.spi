@@ -1,0 +1,545 @@
+
+.subckt ex_shift4 ext in_d_0 in_d_1 in_d_2 in_d_3 in_s_0 in_s_1 left out_d_0 
++ out_d_1 out_d_2 out_d_3 rot vdd vss 
+Mtr_00270 bsrmux_0_shr bshmat_0_nshr vdd vdd TP L=0.18U W=9.72U AS=3.4992P 
++ AD=3.4992P PS=20.16U PD=20.16U 
+Mtr_00269 vdd n4 n3 vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00268 n3 bshsel_0_nright vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00267 n11 n3 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00266 vdd n9 bshlmx_0_nasr vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00265 n9 n11 vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00264 vdd in_d_3 n9 vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00263 n9 ext vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00262 n4 rot vdd vdd TP L=0.18U W=2.16U AS=0.7776P AD=0.7776P PS=5.04U 
++ PD=5.04U 
+Mtr_00261 n7 bshlmx_0_nnleft vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00260 vdd n4 n7 vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00259 bshmat_0_nshr n7 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00258 bshlmx_0_asr bshlmx_0_nasr vdd vdd TP L=0.18U W=9.72U AS=3.4992P 
++ AD=3.4992P PS=20.16U PD=20.16U 
+Mtr_00257 vdd n11 bshlmx_0_lsl vdd TP L=0.18U W=9.72U AS=3.4992P AD=3.4992P 
++ PS=20.16U PD=20.16U 
+Mtr_00256 bshmatr_0_comr0 bssnbl_1_zero vdd vdd TP L=0.18U W=9.72U AS=3.4992P 
++ AD=3.4992P PS=20.16U PD=20.16U 
+Mtr_00255 vdd bshsel_0_nright n91 vdd TP L=0.18U W=9.72U AS=3.4992P AD=3.4992P 
++ PS=20.16U PD=20.16U 
+Mtr_00254 n92 bshlmx_0_nnleft vdd vdd TP L=0.18U W=9.72U AS=3.4992P AD=3.4992P 
++ PS=20.16U PD=20.16U 
+Mtr_00253 bshsel_0_nright left vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00252 vdd bshsel_0_nright bshlmx_0_nnleft vdd TP L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00251 vdd bsm_0_1_out_2_s out_d_2 vdd TP L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00250 vdd bsoout_1_out_1_s out_d_3 vdd TP L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00249 vdd out_d_3 bsoout_1_out_1_s vdd TP L=0.18U W=0.54U AS=0.1944P 
++ AD=0.1944P PS=1.8U PD=1.8U 
+Mtr_00248 vdd out_d_2 bsm_0_1_out_2_s vdd TP L=0.18U W=0.54U AS=0.1944P 
++ AD=0.1944P PS=1.8U PD=1.8U 
+Mtr_00247 vdd bsm_0_0_out_2_s out_d_0 vdd TP L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00246 vdd bsoout_0_out_1_s out_d_1 vdd TP L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00245 vdd out_d_1 bsoout_0_out_1_s vdd TP L=0.18U W=0.54U AS=0.1944P 
++ AD=0.1944P PS=1.8U PD=1.8U 
+Mtr_00244 vdd out_d_0 bsm_0_0_out_2_s vdd TP L=0.18U W=0.54U AS=0.1944P 
++ AD=0.1944P PS=1.8U PD=1.8U 
+Mtr_00243 vdd n35 n77 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00242 n77 n35 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00241 vdd n25 bsrmux_1_f1 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00240 bsrmux_1_f1 n25 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00239 vdd n35 n77 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00238 vdd n34 n35 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00237 n34 in_d_2 vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00236 vdd bsrmux_0_shr n34 vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00235 vdd n25 bsrmux_1_f1 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00234 vdd n24 n25 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00233 n24 in_d_3 vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00232 vdd bsrmux_0_shr n24 vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00231 vdd n72 n76 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00230 n76 n72 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00229 vdd n59 bsrmux_0_f1 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00228 bsrmux_0_f1 n59 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00227 vdd n72 n76 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00226 vdd n71 n72 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00225 n71 in_d_0 vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00224 vdd bsrmux_0_shr n71 vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00223 vdd n59 bsrmux_0_f1 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00222 vdd n57 n59 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00221 n57 in_d_1 vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00220 vdd bsrmux_0_shr n57 vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00219 bslmux_1_out_2 n39 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00218 vdd n39 bslmux_1_out_2 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00217 bslmux_1_out_2 n39 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00216 vdd n40 n39 vdd TP L=0.18U W=2.16U AS=0.7776P AD=0.7776P PS=5.04U 
++ PD=5.04U 
+Mtr_00215 n39 bshlmx_0_asr vdd vdd TP L=0.18U W=2.16U AS=0.7776P AD=0.7776P 
++ PS=5.04U PD=5.04U 
+Mtr_00214 vdd bshlmx_0_lsl n40 vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00213 n40 in_d_2 vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00212 bslmux_1_out_1 n26 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00211 vdd n26 bslmux_1_out_1 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00210 bslmux_1_out_1 n26 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00209 vdd n28 n26 vdd TP L=0.18U W=2.16U AS=0.7776P AD=0.7776P PS=5.04U 
++ PD=5.04U 
+Mtr_00208 n26 bshlmx_0_asr vdd vdd TP L=0.18U W=2.16U AS=0.7776P AD=0.7776P 
++ PS=5.04U PD=5.04U 
+Mtr_00207 vdd bshlmx_0_lsl n28 vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00206 n28 in_d_3 vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00205 bslmux_0_out_2 n85 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00204 vdd n85 bslmux_0_out_2 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00203 bslmux_0_out_2 n85 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00202 vdd n87 n85 vdd TP L=0.18U W=2.16U AS=0.7776P AD=0.7776P PS=5.04U 
++ PD=5.04U 
+Mtr_00201 n85 bshlmx_0_asr vdd vdd TP L=0.18U W=2.16U AS=0.7776P AD=0.7776P 
++ PS=5.04U PD=5.04U 
+Mtr_00200 vdd bshlmx_0_lsl n87 vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00199 n87 in_d_0 vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00198 bslmux_0_out_1 n60 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00197 vdd n60 bslmux_0_out_1 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00196 bslmux_0_out_1 n60 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00195 vdd n63 n60 vdd TP L=0.18U W=2.16U AS=0.7776P AD=0.7776P PS=5.04U 
++ PD=5.04U 
+Mtr_00194 n60 bshlmx_0_asr vdd vdd TP L=0.18U W=2.16U AS=0.7776P AD=0.7776P 
++ PS=5.04U PD=5.04U 
+Mtr_00193 vdd bshlmx_0_lsl n63 vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00192 n63 in_d_1 vdd vdd TP L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00191 vdd bsdand_1_out_2 n42 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00190 bssnbl_1_out_1 bssnbl_1_in_2 vdd vdd TP L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00189 vdd bssnbl_1_in_2 bssnbl_1_out_1 vdd TP L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00188 bssnbl_1_out_1 bssnbl_1_in_2 vdd vdd TP L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00187 bslmux_1_com_2 n42 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00186 vdd n42 bslmux_1_com_2 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00185 bslmux_1_com_2 n42 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00184 vdd bsssel_0_out_2_s n90 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00183 vdd bsssel_0_out_1_s n64 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00182 bssnbl_0_out_1 n64 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00181 vdd n64 bssnbl_0_out_1 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00180 bssnbl_0_out_1 n64 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00179 bssnbl_0_out_2 n90 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00178 vdd n90 bssnbl_0_out_2 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00177 bssnbl_0_out_2 n90 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00176 vdd bsdand_1_out_1 bssnbl_1_in_2 vdd TP L=0.18U W=3.06U AS=1.1016P 
++ AD=1.1016P PS=6.84U PD=6.84U 
+Mtr_00175 bssnbl_1_in_2 n91 vdd vdd TP L=0.18U W=3.06U AS=1.1016P AD=1.1016P 
++ PS=6.84U PD=6.84U 
+Mtr_00174 vdd n92 bssnbl_1_zero vdd TP L=0.18U W=3.06U AS=1.1016P AD=1.1016P 
++ PS=6.84U PD=6.84U 
+Mtr_00173 bssnbl_1_zero bsdand_1_out_1 vdd vdd TP L=0.18U W=3.06U AS=1.1016P 
++ AD=1.1016P PS=6.84U PD=6.84U 
+Mtr_00172 vdd n64 bsssel_0_out_1_s vdd TP L=0.36U W=0.54U AS=0.1944P 
++ AD=0.1944P PS=1.8U PD=1.8U 
+Mtr_00171 bsssel_0_out_2_s n90 vdd vdd TP L=0.36U W=0.54U AS=0.1944P 
++ AD=0.1944P PS=1.8U PD=1.8U 
+Mtr_00170 n47 bsdand_0_na0 vdd vdd TP L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00169 vdd bsdand_0_a1 n47 vdd TP L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00168 n30 bsdand_0_na0 vdd vdd TP L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00167 vdd bsdand_0_v_1_2 n30 vdd TP L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00166 bsdand_1_out_1 n30 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00165 bsdand_1_out_2 n47 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00164 n99 bsdand_0_a0 vdd vdd TP L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00163 vdd bsdand_0_v_1_2 n99 vdd TP L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00162 n66 bsdand_0_a0 vdd vdd TP L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00161 vdd bsdand_0_a1 n66 vdd TP L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00160 bsdand_0_out_1 n66 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00159 bsdand_0_out_2 n99 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00158 bsdand_0_v_1_2 bsdand_0_a1 vdd vdd TP L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00157 vdd bsdand_0_a1 bsdand_0_v_1_2 vdd TP L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00156 bsdand_0_v_1_2 bsdand_0_a1 vdd vdd TP L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00155 bsdand_0_a1 n51 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00154 vdd n51 bsdand_0_a1 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00153 bsdand_0_a1 n51 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00152 vdd in_s_1 n51 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00151 bsdand_0_na0 bsdand_0_a0 vdd vdd TP L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00150 vdd bsdand_0_a0 bsdand_0_na0 vdd TP L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00149 bsdand_0_na0 bsdand_0_a0 vdd vdd TP L=0.18U W=3.6U AS=1.296P 
++ AD=1.296P PS=7.92U PD=7.92U 
+Mtr_00148 bsdand_0_a0 n103 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00147 vdd n103 bsdand_0_a0 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00146 bsdand_0_a0 n103 vdd vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00145 vdd in_s_0 n103 vdd TP L=0.18U W=3.6U AS=1.296P AD=1.296P PS=7.92U 
++ PD=7.92U 
+Mtr_00144 bsrmux_0_shr bshmat_0_nshr vss vss TN L=0.18U W=4.86U AS=1.7496P 
++ AD=1.7496P PS=10.44U PD=10.44U 
+Mtr_00143 n4 rot vss vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00142 vss n4 n2 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00141 n2 bshsel_0_nright n3 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00140 n11 n3 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00139 vss n9 bshlmx_0_nasr vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00138 n8 n11 vss vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00137 n10 in_d_3 n8 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00136 n9 ext n10 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00135 n6 bshlmx_0_nnleft n7 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00134 vss n4 n6 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00133 bshmat_0_nshr n7 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00132 vss n11 bshlmx_0_lsl vss TN L=0.18U W=4.86U AS=1.7496P AD=1.7496P 
++ PS=10.44U PD=10.44U 
+Mtr_00131 bshlmx_0_asr bshlmx_0_nasr vss vss TN L=0.18U W=4.86U AS=1.7496P 
++ AD=1.7496P PS=10.44U PD=10.44U 
+Mtr_00130 bshmatr_0_comr0 bssnbl_1_zero vss vss TN L=0.18U W=4.86U AS=1.7496P 
++ AD=1.7496P PS=10.44U PD=10.44U 
+Mtr_00129 n92 bshlmx_0_nnleft vss vss TN L=0.18U W=4.86U AS=1.7496P AD=1.7496P 
++ PS=10.44U PD=10.44U 
+Mtr_00128 vss bshsel_0_nright n91 vss TN L=0.18U W=4.86U AS=1.7496P AD=1.7496P 
++ PS=10.44U PD=10.44U 
+Mtr_00127 vss bshsel_0_nright bshlmx_0_nnleft vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00126 bshsel_0_nright left vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00125 vss bsm_0_1_out_2_s out_d_2 vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00124 vss bsoout_1_out_1_s out_d_3 vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00123 vss bsm_0_0_out_2_s out_d_0 vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00122 vss bsoout_0_out_1_s out_d_1 vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00121 vss n35 n77 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00120 n77 n35 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00119 vss n25 bsrmux_1_f1 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00118 bsrmux_1_f1 n25 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00117 vss n35 n77 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00116 vss n34 n35 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00115 n33 in_d_2 vss vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00114 n34 bsrmux_0_shr n33 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00113 vss n25 bsrmux_1_f1 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00112 vss n24 n25 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00111 n24 bsrmux_0_shr n16 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00110 n16 in_d_3 vss vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00109 vss n72 n76 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00108 n76 n72 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00107 vss n59 bsrmux_0_f1 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00106 bsrmux_0_f1 n59 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00105 vss n72 n76 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00104 vss n71 n72 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00103 n70 in_d_0 vss vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00102 n71 bsrmux_0_shr n70 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00101 vss n59 bsrmux_0_f1 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00100 vss n57 n59 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00099 n57 bsrmux_0_shr n52 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00098 n52 in_d_1 vss vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00097 n77 bshmatr_0_comr0 bsm_0_1_out_2_s vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00096 bsrmux_1_f1 bshmatr_0_comr0 bsoout_1_out_1_s vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00095 n76 bshmatr_0_comr0 bsm_0_0_out_2_s vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00094 bsrmux_0_f1 bshmatr_0_comr0 bsoout_0_out_1_s vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00093 bsoout_1_out_1_s bslmux_1_com_2 bslmux_0_out_1 vss TN L=0.18U 
++ W=1.26U AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00092 bslmux_0_out_2 bssnbl_0_out_1 bsoout_1_out_1_s vss TN L=0.18U 
++ W=1.26U AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00091 bsm_0_1_out_2_s bslmux_1_com_2 bslmux_0_out_2 vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00090 bsrmux_1_f1 bssnbl_0_out_1 bsm_0_1_out_2_s vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00089 bsoout_0_out_1_s bslmux_1_com_2 bsrmux_1_f1 vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00088 n77 bssnbl_0_out_1 bsoout_0_out_1_s vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00087 bsm_0_0_out_2_s bslmux_1_com_2 n77 vss TN L=0.18U W=1.26U AS=0.4536P 
++ AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00086 bsrmux_0_f1 bssnbl_0_out_1 bsm_0_0_out_2_s vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00085 bsoout_1_out_1_s bssnbl_1_out_1 bslmux_1_out_1 vss TN L=0.18U 
++ W=1.26U AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00084 bslmux_1_out_2 bssnbl_0_out_2 bsoout_1_out_1_s vss TN L=0.18U 
++ W=1.26U AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00083 bsm_0_1_out_2_s bssnbl_1_out_1 bslmux_1_out_2 vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00082 bslmux_0_out_1 bssnbl_0_out_2 bsm_0_1_out_2_s vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00081 bsoout_0_out_1_s bssnbl_1_out_1 bslmux_0_out_1 vss TN L=0.18U 
++ W=1.26U AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00080 bslmux_0_out_2 bssnbl_0_out_2 bsoout_0_out_1_s vss TN L=0.18U 
++ W=1.26U AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00079 bsm_0_0_out_2_s bssnbl_1_out_1 bslmux_0_out_2 vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00078 bsrmux_1_f1 bssnbl_0_out_2 bsm_0_0_out_2_s vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00077 n19 in_d_3 n28 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00076 bslmux_1_out_2 n39 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00075 vss n39 bslmux_1_out_2 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00074 bslmux_1_out_2 n39 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00073 vss n40 n38 vss TN L=0.18U W=2.16U AS=0.7776P AD=0.7776P PS=5.04U 
++ PD=5.04U 
+Mtr_00072 n38 bshlmx_0_asr n39 vss TN L=0.18U W=2.16U AS=0.7776P AD=0.7776P 
++ PS=5.04U PD=5.04U 
+Mtr_00071 vss bshlmx_0_lsl n41 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00070 n41 in_d_2 n40 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00069 bslmux_1_out_1 n26 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00068 vss n26 bslmux_1_out_1 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00067 bslmux_1_out_1 n26 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00066 vss n28 n18 vss TN L=0.18U W=2.16U AS=0.7776P AD=0.7776P PS=5.04U 
++ PD=5.04U 
+Mtr_00065 n18 bshlmx_0_asr n26 vss TN L=0.18U W=2.16U AS=0.7776P AD=0.7776P 
++ PS=5.04U PD=5.04U 
+Mtr_00064 vss bshlmx_0_lsl n19 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00063 n54 in_d_1 n63 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00062 bslmux_0_out_2 n85 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00061 vss n85 bslmux_0_out_2 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00060 bslmux_0_out_2 n85 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00059 vss n87 n84 vss TN L=0.18U W=2.16U AS=0.7776P AD=0.7776P PS=5.04U 
++ PD=5.04U 
+Mtr_00058 n84 bshlmx_0_asr n85 vss TN L=0.18U W=2.16U AS=0.7776P AD=0.7776P 
++ PS=5.04U PD=5.04U 
+Mtr_00057 vss bshlmx_0_lsl n88 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00056 n88 in_d_0 n87 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P PS=2.88U 
++ PD=2.88U 
+Mtr_00055 bslmux_0_out_1 n60 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00054 vss n60 bslmux_0_out_1 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00053 bslmux_0_out_1 n60 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00052 vss n63 n53 vss TN L=0.18U W=2.16U AS=0.7776P AD=0.7776P PS=5.04U 
++ PD=5.04U 
+Mtr_00051 n53 bshlmx_0_asr n60 vss TN L=0.18U W=2.16U AS=0.7776P AD=0.7776P 
++ PS=5.04U PD=5.04U 
+Mtr_00050 vss bshlmx_0_lsl n54 vss TN L=0.18U W=1.08U AS=0.3888P AD=0.3888P 
++ PS=2.88U PD=2.88U 
+Mtr_00049 vss bsdand_1_out_2 n42 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00048 vss bssnbl_1_in_2 bssnbl_1_out_1 vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00047 bssnbl_1_out_1 bssnbl_1_in_2 vss vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00046 bssnbl_1_out_1 bssnbl_1_in_2 vss vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00045 bslmux_1_com_2 n42 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00044 vss n42 bslmux_1_com_2 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00043 bslmux_1_com_2 n42 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00042 vss bsssel_0_out_2_s n90 vss TN L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00041 vss bsssel_0_out_1_s n64 vss TN L=0.18U W=3.6U AS=1.296P AD=1.296P 
++ PS=7.92U PD=7.92U 
+Mtr_00040 vss n64 bssnbl_0_out_1 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00039 bssnbl_0_out_1 n64 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00038 bssnbl_0_out_1 n64 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00037 bssnbl_0_out_2 n90 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00036 vss n90 bssnbl_0_out_2 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00035 bssnbl_0_out_2 n90 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00034 bssnbl_1_zero n92 n20 vss TN L=0.18U W=3.06U AS=1.1016P AD=1.1016P 
++ PS=6.84U PD=6.84U 
+Mtr_00033 n20 bsdand_1_out_1 vss vss TN L=0.18U W=3.06U AS=1.1016P AD=1.1016P 
++ PS=6.84U PD=6.84U 
+Mtr_00032 bssnbl_1_in_2 bsdand_1_out_1 n45 vss TN L=0.18U W=3.06U AS=1.1016P 
++ AD=1.1016P PS=6.84U PD=6.84U 
+Mtr_00031 n45 n91 vss vss TN L=0.18U W=3.06U AS=1.1016P AD=1.1016P PS=6.84U 
++ PD=6.84U 
+Mtr_00030 bsdand_0_out_2 n92 bsssel_0_out_1_s vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00029 bsssel_0_out_1_s n91 bsdand_0_out_1 vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00028 bsssel_0_out_2_s n92 bsdand_0_out_1 vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00027 bsdand_0_out_2 n91 bsssel_0_out_2_s vss TN L=0.18U W=1.26U 
++ AS=0.4536P AD=0.4536P PS=3.24U PD=3.24U 
+Mtr_00026 n48 bsdand_0_na0 n47 vss TN L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00025 vss bsdand_0_a1 n48 vss TN L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00024 n21 bsdand_0_na0 n30 vss TN L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00023 vss bsdand_0_v_1_2 n21 vss TN L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00022 bsdand_1_out_1 n30 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00021 bsdand_1_out_2 n47 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00020 n100 bsdand_0_a0 n99 vss TN L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00019 vss bsdand_0_v_1_2 n100 vss TN L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00018 n55 bsdand_0_a0 n66 vss TN L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00017 vss bsdand_0_a1 n55 vss TN L=0.18U W=2.7U AS=0.972P AD=0.972P 
++ PS=6.12U PD=6.12U 
+Mtr_00016 bsdand_0_out_1 n66 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00015 bsdand_0_out_2 n99 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00014 bsdand_0_v_1_2 bsdand_0_a1 vss vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00013 vss bsdand_0_a1 bsdand_0_v_1_2 vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00012 bsdand_0_a1 n51 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00011 vss n51 bsdand_0_a1 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00010 bsdand_0_a1 n51 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00009 bsdand_0_v_1_2 bsdand_0_a1 vss vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00008 vss in_s_1 n51 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+Mtr_00007 bsdand_0_na0 bsdand_0_a0 vss vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00006 vss bsdand_0_a0 bsdand_0_na0 vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00005 bsdand_0_a0 n103 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00004 vss n103 bsdand_0_a0 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00003 bsdand_0_a0 n103 vss vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P 
++ PS=4.32U PD=4.32U 
+Mtr_00002 bsdand_0_na0 bsdand_0_a0 vss vss TN L=0.18U W=1.8U AS=0.648P 
++ AD=0.648P PS=4.32U PD=4.32U 
+Mtr_00001 vss in_s_0 n103 vss TN L=0.18U W=1.8U AS=0.648P AD=0.648P PS=4.32U 
++ PD=4.32U 
+.ends ex_shift4
+

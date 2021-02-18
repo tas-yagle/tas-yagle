@@ -1,0 +1,89 @@
+<glossary>
+
+<row type='split'><article><index>yagAnalysisDepth</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Allows the user to set the depth for the functional analysis. This is 
+the number of gates that will be taken into account for the functional analysis, so that &tool; can detect 
+re-convergence in the circuit. Default is 7.</def></row>
+<row><article><f>0</f></article><def>Functional analysis process is disabled</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagHzAnalysis</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Allows functional analysis through high impedance nodes.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagMaxBranchLinks</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Maximum number of links in a cone branch.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagRelaxationMaxBranchLinks</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Used to limit the maximum number of links for the difficult gates for 
+which functional dependencies could not be resolved.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagBddCeiling</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Limits the maximum number of BDD nodes which are allowed to be created 
+for the resolution of any Boolean expression. If this limit is exceeded the operation is abandoned. 
+Default is 10 000.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagElectricalThreshold</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def> Used in electrical resolution of conflicts to determine the zones 
+corresponding to the high, low and conflictual states. Default is 4, implying that the high and low states are 
+represented by zones 1/4 of the zone Vss-Vdd.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagUseStmSolver</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Precise current calculations using technology files are used in electrical conflict 
+resolution.</def></row>
+<row><article><f>no</f></article><def>Default, basic transistor dimensions are used in electrical conflict resolution.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagRelaxationAnalysis</index></article><def>
+During the gate construction phase, &tool; attempts to resolve all functional 
+dependencies before building a particular gate. However, in particular cases of looped dependencies, this may 
+not be possible for all gates. 
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Functional dependencies are ignored to resolve these gates.</def></row> 
+<row><article><f>no</f></article><def>Default, &tool; tries to use as much information as possible.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagDetectGlitchers</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>A branch containing two transistor with mutually exclusive gate drivers 
+and which cannot be part of another gate are assumed to exist dynamically. They are therefore not 
+removed by the functional analysis. This is the default.</def></row>
+<row><article><f>no</f></article><def></def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagKeepRedundantBranches</index></article><def>
+For any CMOS dual cones extracted, if supplementary branches are added at a later stage of the disassembly and the 
+gate remains non-conflictual, then these branches are considered to be functionally redundant. 
+<glossary width='small'>
+<row><article><f>yes</f></article><def>The branches are kept.</def></row> 
+<row><article><f>no</f></article><def>Default, the branches are removed.</def></row> 
+</glossary>
+</def></row>
+
+<row type='split'><article><index>yagPullupRatio</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Used in the detection of pull-up or pull-down resistance transistors. Default is 10, implying that a transistor is a pull-up if an estimation of its resistance is greater than 10 times the resistance of the most resistive current path to ground. Similarly for pull-pown resistances.</def></row>
+</glossary>
+</def></row>
+
+</glossary>

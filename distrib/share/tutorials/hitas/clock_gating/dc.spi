@@ -1,0 +1,7 @@
+
+.global vss vdd
+
+vVSS vss 0 dc 0v
+vVDD vdd 0 dc 1.2v
+
+

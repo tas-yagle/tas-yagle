@@ -1,0 +1,565 @@
+#!/bin/sh -f
+AVT_HOME="/users10/chaos1/avertec"
+SAVEPATH="/users10/chaos1/avertec/backup/license"
+MAIN_HOME="`pwd`"
+licname="avtlicense"
+
+usage()
+{
+  echo "`basename $script` [-h] customer version [ -lic=avt|flex|both -os=linux -log=machine -genkey=avtgenkey]"
+  exit
+}
+
+packages_def()
+{
+  PACK_1000="AVT SP_HITAS AV1000"
+  PACK_1010="AVT SP_XTAS AV1010"
+  PACK_1200="AV1200"
+  PACK_1300="AV1300"
+  PACK_1400="AV1400"
+  PACK_1600="AV1600"
+  PACK_2000="AVT SP_YAGLE AV2000"
+  PACK_2010="AVT SP_XYAGLE AV2010"
+  PACK_2300="AV2300"
+  PACK_2600="AV2600"
+  PACK_7200="AVT SP_GENAPI AV7200"
+  PACK_7500="AVT SP_ATS AV7500"
+}
+
+customer_info()
+{
+    N_AV1000="0"
+    N_AV1010="0"
+    N_AV1200="0"
+    N_AV1300="0"
+    N_AV1400="0"
+    N_AV1600="0"
+    N_AV2000="0"
+    N_AV2010="0"
+    N_AV2300="0"
+    N_AV2600="0"
+    N_AV7200="0"
+    N_AV7500="0"
+
+##########################################################################
+#LIP6
+##########################################################################
+  if [ "$1" = "asim" ] ; then
+    MACHINE="house-00163e000300"
+    DATE="31 12 2019"
+    TYPE=FLOAT
+    LICMODEL="flex"
+    N_AV1000="25"
+    N_AV1010="25"
+    N_AV1200="25"
+    N_AV1300="25"
+    N_AV1400="25"
+    N_AV1600="25"
+    N_AV2000="25"
+    N_AV2010="25"
+    N_AV2300="25"
+    N_AV2600="25"
+    N_AV7500="25"
+  
+  elif [ "$1" = "asimegypt" ] ; then
+    MACHINE="this_host-003005e6eac5"
+    DATE="30 11 2007"
+    TYPE=FLOAT
+    LICMODEL="flex"
+    N_AV1000="5"
+    N_AV1010="5"
+    N_AV1200="5"
+    N_AV1300="5"
+    N_AV1400="5"
+    N_AV1600="5"
+    N_AV2000="5"
+    N_AV2010="5"
+    N_AV2300="5"
+    N_AV2600="5"
+    N_AV7500="5"
+  
+##########################################################################
+#Avertec server villebon
+##########################################################################
+  elif [ "$1" = "mexico" ] ; then
+    MACHINE="this_host-00e081475b06"
+    DATE="31 12 2010"
+    TYPE="FLOAT"
+    LICMODEL="both"
+    N_AV1000="80"
+    N_AV1010="80"
+    N_AV1200="80"
+    N_AV1300="80"
+    N_AV1400="80"
+    N_AV1600="80"
+    N_AV2000="80"
+    N_AV2010="80"
+    N_AV2300="80"
+    N_AV2600="80"
+    N_AV7200="80"
+    N_AV7500="80"
+    
+  elif [ "$1" = "statrio" ] ; then
+    MACHINE="rio-000101d47d04"
+    DATE="31 12 2008"
+    TYPE="FLOAT"
+    LICMODEL="flex"
+    N_AV1000="20"
+    N_AV1010="1"
+    N_AV1200="1"
+    N_AV1300="1"
+    N_AV1400="1"
+    N_AV1600="1"
+    N_AV2000="1"
+    N_AV2010="1"
+    N_AV2300="1"
+    N_AV2600="1"
+    N_AV7200="1"
+    N_AV7500="1"
+     
+##########################################################################
+#DEFAULT 
+##########################################################################
+  else
+    MACHINE="notvalid-dummy000"
+    DATE="`date --date '-1 day' '+%d %m %Y'`"
+    START="`date --date '-1 day' '+%d %m %Y'`"
+    TYPE="LOCAL"
+    LICMODEL="neither"
+    N_AV1000="1"
+    N_AV1010="1"
+    N_AV1200="1"
+    N_AV1300="1"
+    N_AV1400="1"
+    N_AV1600="1"
+    N_AV2000="1"
+    N_AV2010="1"
+    N_AV2300="1"
+    N_AV2600="1"
+    N_AV7200="1"
+    N_AV7500="1"
+  fi
+}
+
+packages_info()
+{
+  target="$1"
+  if [ -f "$target" ] ; then
+    rm $target
+  fi
+  echo "# PRODUCT REF : TOOLS AND MODULES AVAILABLE" >>$target
+  if [ "$N_AV1000" != "0" ] ; then
+    echo "#   AV1000    : hitas stb timing_api" >>$target
+  fi
+  if [ "$N_AV1010" != "0" ] ; then
+    echo "#   AV1010    : xtas" >>$target
+  fi
+  if [ "$N_AV1200" != "0" ] ; then
+    echo "#   AV1200    : ctk ctk_api" >>$target
+  fi
+  if [ "$N_AV1300" != "0" ] ; then
+    echo "#   AV1300    : tma" >>$target
+  fi
+  if [ "$N_AV1400" != "0" ] ; then
+    echo "#   AV1400    : cpe spi_api" >>$target
+  fi
+  if [ "$N_AV1600" != "0" ] ; then
+    echo "#   AV1600    : gns bbox" >>$target
+  fi
+  if [ "$N_AV2000" != "0" ] ; then
+    echo "#   AV2000    : yagle" >>$target
+  fi
+  if [ "$N_AV2010" != "0" ] ; then
+    echo "#   AV2010    : xyagle" >>$target
+  fi
+  if [ "$N_AV2300" != "0" ] ; then
+    echo "#   AV2300    : yagtime" >>$target
+  fi
+  if [ "$N_AV2600" != "0" ] ; then
+    echo "#   AV2600    : gns bbox func_api" >>$target
+  fi
+  if [ "$N_AV7200" != "0" ] ; then
+    echo "#   AV7200    : genapi" >>$target
+  fi
+  if [ "$N_AV7500" != "0" ] ; then
+    echo "#   AV7500    : avt_shell basic_api" >>$target
+  fi
+  echo "#   none      : ttvdiff ttvren" >>$target
+  echo "#" >>$target
+}
+
+utility_path()
+{
+  if [ "$main_genkey" != "" ] ; then
+    AVTGENKEY="$main_genkey"
+  elif [ -x "$AVT_HOME/distrib_ref/tools/$linux/bin/avtgenkey" ] ; then
+    AVTGENKEY="$AVT_HOME/distrib_ref/tools/$linux/bin/avtgenkey"
+  else
+    AVTGENKEY="$AVT_HOME/sbin/avtgenkey"
+  fi
+  if [ -x "$AVT_HOME/flexnet/flexlm/$linux/lmcrypt" ] ; then
+    LMCRYPT="$AVT_HOME/flexnet/flexlm/$linux/lmcrypt"
+  else
+    LMCRYPT="$AVT_HOME/sbin/lmcrypt"
+  fi
+  featuresfile="$AVT_HOME/tmp_features_list_file.`basename $script`"
+  if [ -f "$featuresfile" ] ; then
+    rm $featuresfile
+  fi
+}
+
+echonl()
+{
+ if [ `echo "x\c"` = "x" ] ; then
+     echo "$1\c"
+   else
+     echo -n "$1"
+ fi
+}
+
+readanswer()
+{
+ message="$1"
+ defaultvalue="$2"
+ echonl "$message"
+ echonl " "
+ read answer
+ echo " "
+ if [ ! "$answer" ] ; then
+    answer="$defaultvalue"
+ fi
+}
+
+command_line()
+{
+  nbargs="$#"
+  script="$0"
+  
+  customer="dummy"
+  defaultversion="`grep AVT_VERSION $AVT_HOME/distrib/share/etc/Versions.mk | awk -F= '{print $2}' | sed 's/\"//g' | sed 's/ //g'`"
+  version=""
+  linux="Linux_2.4"
+  hostlog="mexico"
+  main_licmodel=""
+  main_genkey=""
+  
+  for arg in $* ; do
+    if   [ "$arg" = "-h" ] ; then
+      usage
+    else
+      arg1="`echo $arg | awk -F= '{print $1}'`"
+      arg2="`echo $arg | awk -F= '{print $2}'`"
+      if   [ "$arg" = "$arg1" ] ; then
+        if [ "`echo $arg | grep '\.'`" != "" ] ; then
+          version="$arg"
+        else
+          customer="$arg"
+        fi
+      elif [ "$arg1" = "-lic" ] && [ "$arg2" != "" ] ; then
+        main_licmodel="$arg2"
+      elif [ "$arg1" = "-os" ] && [ "$arg2" != "" ] ; then
+        linux="$arg2"
+      elif [ "$arg1" = "-log" ] && [ "$arg2" != "" ] ; then
+        hostlog="$arg2"
+      elif [ "$arg1" = "-genkey" ] && [ "$arg2" != "" ] ; then
+        main_genkey="$arg2"
+      elif  [ "$arg1" != "-lic" ] && [ "$arg1" != "-os" ] && [ "$arg1" != "-log" ] && [ "$arg1" != "-genkey" ] ; then
+        echo "---WARNING: unknown option '$arg'"
+        usage
+      fi
+    fi
+  done
+  
+  if [ "$version" = "" ] ; then
+    readanswer "Enter the license version limit [${defaultversion}] : " "$defaultversion"
+    version="$answer"
+  fi
+  if [ "`echo $version | grep '\.'`" != "" ] ; then
+    flex_version="`echo $version | sed 's/[a-zA-Z_][a-zA-Z_.0-9]*//g'`"
+  else
+    echo "----WARNING: Bad version '$version'"
+    usage
+  fi
+ 
+  echo ""
+  echo "----Status (on `hostname`)"
+  echo "    Customer : $customer"
+  echo "    Version  : $version ($flex_version)"
+  echo "    Linux    : $linux"
+  echo "    Machine  : $hostlog"
+  echo "    Files in : $MAIN_HOME"
+
+  if [ "$hostlog" != "`hostname`" ] ; then
+    echo "----Remote command"
+    echo "    rsh to $hostlog..."
+    rsh $hostlog "cd $MAIN_HOME ; $script $customer $version -lic=$main_licmodel -os=$linux -log=$hostlog -genkey=$main_genkey"
+    exit
+  fi
+}
+
+get_verbose_date()
+{
+  day="`echo $1 | awk '{print $1}'`"
+  month="`echo $1 | awk '{print $2}'`"
+  year="`echo $1 | awk '{print $3}'`"
+  if   [ "$month" = "01" ] ; then
+    flex_month="jan"
+  elif [ "$month" = "02" ] ; then
+    flex_month="feb"
+  elif [ "$month" = "03" ] ; then
+    flex_month="mar"
+  elif [ "$month" = "04" ] ; then
+    flex_month="apr"
+  elif [ "$month" = "05" ] ; then
+    flex_month="may"
+  elif [ "$month" = "06" ] ; then
+    flex_month="jun"
+  elif [ "$month" = "07" ] ; then
+    flex_month="jul"
+  elif [ "$month" = "08" ] ; then
+    flex_month="aug"
+  elif [ "$month" = "09" ] ; then
+    flex_month="sep"
+  elif [ "$month" = "10" ] ; then
+    flex_month="oct"
+  elif [ "$month" = "11" ] ; then
+    flex_month="nov"
+  elif [ "$month" = "12" ] ; then
+    flex_month="dec"
+  fi
+  verbose_date="$day-$flex_month-$year"
+}
+
+fill_file()
+{
+  count="$1"
+  feat="$2"
+  while [ "$count" != "0" ] ; do
+    echo "$feat" >> $featuresfile
+    count=`expr $count - 1`
+  done 
+}
+
+packages_manager()
+{
+  tokens=""
+  packages_def
+  if [ "$N_AV1000" != "" ] && [ "$N_AV1000" != "0" ] ; then
+    fill_file "$N_AV1000" "$PACK_1000"
+    tokens="$tokens $PACK_1000"
+  fi
+  if [ "$N_AV1200" != "" ] && [ "$N_AV1200" != "0" ] ; then
+    fill_file "$N_AV1200" "$PACK_1200"
+    tokens="$tokens $PACK_1200"
+  fi
+  if [ "$N_AV1300" != "" ] && [ "$N_AV1300" != "0" ] ; then
+    fill_file "$N_AV1300" "$PACK_1300"
+    tokens="$tokens $PACK_1300"
+  fi
+  if [ "$N_AV1400" != "" ] && [ "$N_AV1400" != "0" ] ; then
+    fill_file "$N_AV1400" "$PACK_1400"
+    tokens="$tokens $PACK_1400"
+  fi
+  if [ "$N_AV1600" != "" ] && [ "$N_AV1600" != "0" ] ; then
+    fill_file "$N_AV1600" "$PACK_1600"
+    tokens="$tokens $PACK_1600"
+  fi
+  if [ "$N_AV1010" != "" ] && [ "$N_AV1010" != "0" ] ; then
+    fill_file "$N_AV1010" "$PACK_1010"
+    tokens="$tokens $PACK_1010"
+  fi
+  if [ "$N_AV2000" != "" ] && [ "$N_AV2000" != "0" ] ; then
+    fill_file "$N_AV2000" "$PACK_2000"
+    tokens="$tokens $PACK_2000"
+  fi
+  if [ "$N_AV2300" != "" ] && [ "$N_AV2300" != "0" ] ; then
+    fill_file "$N_AV2300" "$PACK_2300"
+    tokens="$tokens $PACK_2300"
+  fi
+  if [ "$N_AV2600" != "" ] && [ "$N_AV2600" != "0" ] ; then
+    fill_file "$N_AV2600" "$PACK_2600"
+    tokens="$tokens $PACK_2600"
+  fi
+  if [ "$N_AV2010" != "" ] && [ "$N_AV2010" != "0" ] ; then
+    fill_file "$N_AV2010" "$PACK_2010"
+    tokens="$tokens $PACK_2010"
+  fi
+  if [ "$N_AV7200" != "" ] && [ "$N_AV7200" != "0" ] ; then
+    fill_file "$N_AV7200" "$PACK_7200"
+    tokens="$tokens $PACK_7200"
+  fi
+  if [ "$N_AV7500" != "" ] && [ "$N_AV7500" != "0" ] ; then
+    fill_file "$N_AV7500" "$PACK_7500"
+    tokens="$tokens $PACK_7500"
+  fi
+
+  FEATURES=""
+  for token in $tokens ; do
+    new="y"
+    for feat in $FEATURES ; do
+      if [ "$token" = "$feat" ] ; then
+        new="n"
+        break
+      fi
+    done
+    if [ "$new" = "y" ] ; then
+      FEATURES="$FEATURES $token"
+    fi
+  done
+  FEATURES=`echo $FEATURES | sort`
+}
+
+count_tool_in_FILE()
+{
+  LICENSE="0"
+  for testone in `grep $tool $FILE` ; do
+    if [ "$testone" = "$tool" ] ; then
+      LICENSE="`expr $LICENSE + 1`"
+    fi
+  done
+}
+
+gen_avt_line()
+{
+  firstmachine="1"
+  for machine in $avt_server ; do
+    avt_name="`echo $machine | awk -F- '{print $1}'`"
+    avt_id="`echo $machine | awk -F- '{print $2}'`"
+    if [ "$firstmachine" = "1" ] ; then    
+      ext=""
+    else
+      ext=".$avt_name"
+    fi
+    if [ "$firstline" = "1" ] ; then
+      packages_info ${avt_license}${ext}
+      genkey_option="-v"
+    else
+      genkey_option=""
+    fi
+    $AVTGENKEY $genkey_option $tool Avertec $avt_name $avt_id $avt_date $LICENSE $TYPE >> ${avt_license}${ext}
+    firstmachine="0"
+  done
+}
+
+gen_flex_line()
+{
+  if [ "$firstline" = "1" ] ; then
+    packages_info $flex_license
+    for machine in $flex_server ; do
+      flex_name="`echo $machine | awk -F- '{print $1}'`"
+      flex_id="`echo $machine | awk -F- '{print $2}'`"
+      echo "SERVER $flex_name $flex_id" >> $flex_license
+    done
+    echo "VENDOR avtlicd" >> $flex_license
+  fi
+  if [ "$TYPE" = "LOCAL" ] ; then
+    flex_local="HOSTID=$flex_id"
+  else
+    flex_local=""
+  fi
+  echo "FEATURE $tool avtlicd $flex_version $flex_date $LICENSE $flex_local ISSUED=$flex_issue START=$flex_start SIGN=" >> $flex_license
+}
+
+set_models_args()
+{
+  dummy_date="01 01 1970"
+  dummy_name="dummy"
+  dummy_id="00000000"
+  dummy_version="0.1"
+  today_date="`date '+%d %m %Y'`"
+  get_verbose_date "$today_date"
+  issue_date="$verbose_date"
+
+  if   [ "$LICMODEL" = "avt" ] ; then
+    avt_server="$MACHINE"
+    avt_date="$DATE"
+    flex_server="$dummy_name-$dummy_id"
+    get_verbose_date "$dummy_date"
+    flex_date="$verbose_date"
+    flex_issue="$issue_date"
+    flex_version="$dummy_version"
+  elif [ "$LICMODEL" = "flex" ] ; then
+    avt_server="$dummy_name-$dummy_id"
+    avt_date="$dummy_date"
+    flex_server="$MACHINE"
+    get_verbose_date "$DATE"
+    flex_date="$verbose_date"
+    flex_issue="$issue_date"
+    flex_version="$flex_version"
+  elif [ "$LICMODEL" = "both" ] ; then
+    avt_server="$MACHINE"
+    avt_date="$DATE"
+    flex_server="$MACHINE"
+    get_verbose_date "$DATE"
+    flex_date="$verbose_date"
+    flex_issue="$issue_date"
+    flex_version="$flex_version"
+  else
+    avt_server="$dummy_name-$dummy_id"
+    avt_date="$dummy_date"
+    flex_server="$dummy_name-$dummy_id"
+    get_verbose_date "$dummy_date"
+    flex_date="$verbose_date"
+    flex_issue="$issue_date"
+    flex_version="$dummy_version"
+  fi
+  if [ "$START" = "" ] ; then
+    flex_start="$issue_date"
+  else
+    get_verbose_date "$START"
+    flex_start="$verbose_date"
+  fi
+}
+
+gen_license_files()
+{
+  echo "----Generate license files (.dat and .lic)"
+  TOOLS="$1"
+  FILE="$2"
+  if [ "$main_licmodel" != "" ] ; then
+    LICMODEL="$main_licmodel"
+  fi
+  avt_license="$MAIN_HOME/$licname.dat"
+  flex_license="$MAIN_HOME/$licname.lic"
+  set_models_args
+  firstline="1"
+  for tool in $TOOLS ; do
+    count_tool_in_FILE
+    gen_avt_line
+    gen_flex_line
+    firstline="0"
+  done
+  if [ "$LICMODEL" = "flex" ] || [ "$LICMODEL" = "both" ] ; then
+    $LMCRYPT $flex_license
+  else
+    cat $flex_license | sed 's/SIGN=/SIGN=DUMMY-SIGNATURE-000/g' > tmp.genlic
+    mv tmp.genlic $flex_license
+    if [ "$LICMODEL" = "neither" ] ; then
+      cat $avt_license | sed 's/[FL][LO][OC]A[TL] [a-zA-Z0-9]*/LOCAL DUMMY000keys000/g' > tmp.genlic
+      mv tmp.genlic $avt_license
+    fi
+  fi
+}
+
+lic_backup()
+{
+  lic_backup_file="$SAVEPATH/$customer.$version.$LICMODEL"
+  if   [ "$LICMODEL" = "avt" ] ; then
+    cp $avt_license $lic_backup_file
+  elif [ "$LICMODEL" = "flex" ] ; then
+    cp $flex_license $lic_backup_file
+  fi
+}
+
+command_line $*
+if [ "$hostlog" = "`hostname`" ] ; then
+  utility_path
+  customer_info "$customer"
+  licname="$customer"
+  packages_manager
+  gen_license_files "$FEATURES" "$featuresfile"
+  rm $featuresfile
+  lic_backup
+fi
+
+exit

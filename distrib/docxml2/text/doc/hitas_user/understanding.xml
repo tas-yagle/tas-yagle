@@ -1,0 +1,172 @@
+
+<chapter>
+<section niv='1'><title>Theory Understanding</title>
+
+<section niv='2'><title>Principles</title>
+<p>The way &tool; performs timing analysis of integrated circuits can be described in two main steps. The 
+first step is the generation of a Unified Timing Database (UTD) from the design entry (left-hand side of the
+following diagram). The second step is the exploitation of the database, in order to perform Static 
+Timing Analysis, Signal Integrity Analysis, and Timing abstraction (right-hand side of the
+following diagram).</p>
+<imgsize namehtml="hitas_flow.gif" namepdf="hitas_flow.svg"/>
+<p>The timing database represents the intrinsic timing characteristics of the design, 
+for a given corner, or multi-corner configuration (processes, voltages and temperatures). 
+Those characteristics are such as gate timing arcs, gate and interconnect delay models, timing paths.</p>
+</section>
+
+<section niv='2'><title>Timing Database Generation</title>
+
+<section niv='3'><title>MOS Characterization</title>
+<p>At transistor-level, &tool; works either on a flat transistor netlist obtained by a standard extractor, or on a hierarchical netlist,
+together with the transistor description of the leaf cells. In the last case, &tool; flattens the netlist to 
+the transistor level.</p>
+
+<p>The first phase of the database generation consists in the electrical characterization of the 
+MOS transistors building up the design. The process of characterization is the reduction and 
+optimization of the generic BSIM equations for each instance of a transistor, with regard to local 
+and global parameters.</p>
+<p>The local parameters are the instance-specific parameters, such as length (L), 
+width (W), geometry (NF), stress effect (SA, SB, SD), well proximity effect (MULU0, DELVT0),
+local drain/source resistances (NRD, NRS) or local power supply voltage value.</p> 
+<p>The global parameters are the Process, Voltage (nominal) and Temperature conditions. </p>
+<p>For given PVT conditions, each transistor is then associated with an instance-specific electrical model, 
+which in turn contains instance-specific optimized equations:</p>
+<list>
+<item>Ids = f (Vgs, Vds)</item>
+<item>Qd = f (Vgs, Vds)</item>
+</list>
+<p>The model is only valid for the transistor referring to it. However, in order to save memory, a 
+sharing mechanism allows transistors that have identical (or close) instance-specific 
+parameters to refer to the same electrical model. Note that a transistor may be characterized for several 
+PVT conditions, and then may be associated to several models.</p>
+</section>
+
+<section niv='3'><title>Netlist Disassembly</title>
+<p>The second phase of the database generation consists in partitioning the transistor netlist. This phase 
+uses a procedure called circuit disassembly in order to automatically extract an oriented gate netlist from 
+the transistor netlist, using a strict minimum of a priori knowledge of the circuit structures. </p>
+
+<p>The starting point of the partitioning strategy is the identification of the nodes on which to build 
+a sub-network. The innovation of &tool; disassembly is to build sub-networks between which there is no 
+charge transfer. Therefore, the frontier of a sub-network is the set of nodes that control
+the gates (insulating polysilicon) of its transistors. A sub-network 
+is then extracted for all the nodes in the netlist that control at less one transistor gate,
+by following source-drain connections.</p>
+
+<p>The extracted sub-networks are called cones. The construction of a cone on a node N consists in 
+identifying all the current paths between the node N and a voltage source (Vdd or Vss), as illustrated 
+in the following diagram.</p>
+
+<imgsize namehtml="partitioning.gif" namepdf="partitioning.svg"/>
+
+<p>Each cone has a unique output and a certain number of inputs: the nodes controlling the gates of 
+the cone's transistors.</p>
+
+<p>The tool also automatically identifies the memory elements such as memory-cells, latches, pre-charged nodes.</p>
+</section>
+
+<section niv='3'><title>Timing Arcs</title>
+<p>The third phase consists of mapping a timing graph on the cone netlist obtained through the disassembly 
+phase (partitioning phase). Timing graph also includes RC networks. The timing graph is defined as follow: 
+edges are rising or falling events (logic transitions) on an input or output of a cone. Arcs are possible 
+causality relations between events. Causality relations are also called timing arcs.</p>
+
+<imgsize namehtml="timing_arcs.gif" namepdf="timing_arcs.svg"/>
+</section>
+
+<section niv='3'><title>Timing Models</title>
+<p>The fourth phase consists of the valuation of the timing arcs. A major innovation in &tool; methodology 
+is the valuation of the timing arcs by delay models.</p>
+<p>When a timing arc refers to a cone, it is associated with analytical current source models (CSM), which enable to compute the effective delay for any input slope or output load
+(CSM present the significant advantage to be independent from input slope and output load). 
+It ensures high precision in slope propagation and crosstalk analysis (where effective load 
+can change during analysis).</p>
+<p>The current source models are based on analytical equations, and take into account the following factors:</p>
+<list>
+<item>The input slope, modeled as a non-linear curve</item>
+<item>The output load, modeled as a pi-network</item>
+<item>The transient short circuit current during the commutation of a gate</item>
+</list>
+<p>When a timing arc refers to an RC network, it is associated with the RC network. Effective delay is computed with the AWE algorithm for any input slope or output load.</p>  
+
+</section>
+
+<section niv='3'><title>Timing Paths</title>
+<p>The last phase consists of the creation of all the timing paths: the successive timing arcs 
+between connectors and memory elements are merged to create timing paths. All
+the possible timing paths in the design are saved into the database.</p>
+</section>
+
+
+
+</section>
+
+<section niv='2'><title>Timing Database Analysis</title>
+
+<section niv='3'><title>Database Analysis Flow</title>
+<p>The diagram below presents the set of functionalities of the &tool; platform, for complete timing and
+SI analysis, allowing to performing frequency optimization and violations repairs.</p>
+<imgsize namehtml="UTD_analysis.gif" namepdf="UTD_analysis.svg"/>
+<glossary>
+<row><article>Timing Constraints</article> <def>Input connectors arrival times, output connectors departure times, clocks specifications</def></row>
+<row><article>STA and SI</article> <def>STA is optionally coupled with the SI analysis</def></row>
+<row><article>Path Analysis</article> <def>ECO to repair violations or optimize frequencies</def></row>
+</glossary>
+</section>
+
+<section niv='3'><title>Static Timing Analysis </title>
+<p>The static timing analyzer engine of &tool; calculates setup and hold slacks for all reference points in a circuit 
+(output connectors, latch data inputs, latch commands, and precharged nodes). The algorithm is based upon the propagation 
+of switching windows throughout the design. The engine needs the specification 
+of the external clocks and the arrival times of the input connectors (which define  
+switching windows). Together with the timing database,
+the tool propagates the switching windows and the clocks throughout the circuit, 
+in order to obtain switching windows for the points which require verification (the reference points).</p>
+<p>The tool calculates setup and hold slacks for each of the reference points by comparing the switching 
+windows obtained at the point with the propagated clocks according to specific timing checks. 
+Any violation of the timing checks translates into a negative value calculated for the setup or hold slacks.</p>
+</section>
+
+
+<section niv='3'><title>Crosstalk Analysis</title>
+<p>Coupling capacitances influence depends on the relative activity on nets. The crosstalk analysis 
+engine should be used to calculate the timing information based upon relative net activity using the 
+current-source models from the timing database.</p>
+
+<p>From the switching windows obtained through the static timing analysis, it is possible to determine whether two capacitance-coupled nets
+may present simultaneous switching. If this occurs, the mutual influence between the nets is modeled by altering 
+the effective value of the coupling capacitance in accordance with the relative slope values of the signals propagated on the two nets. 
+When the effective value of a capacitance on a net is changed, the associated propagation delay of its driver must be reevaluated. 
+Even the altering of a single propagation delay leads to switching window changes on all subsequent nets. As a result, 
+a new static timing analysis must be performed on the circuit, potentially leading to the detection of new aggression. 
+This loop is then repeated until no new simultaneous switching is detected.</p>
+
+<p>The crosstalk analysis engine calculates all propagation delays for all the instances of a subcircuit, according to their context. 
+When all of these delays are computed, setup and hold margins for each of the reference points are calculated 
+and verified, as for the static timing analysis. In addition, the crosstalk analysis engine generates a report file 
+for the circuit containing: details of aggression, the modification of delays according to the detailed 
+behavior of aggressors, together with an evaluation of peak noise voltage.</p>
+</section>
+
+<section niv='3'><title>Path Searching</title>
+<p>Path searching is done between reference points, i.e. input and output connectors, latch data inputs, latch commands, and precharged nodes. The 
+information from the static timing analysis are taken into account in order to determine if paths can go through
+the latches that may have a transparent behavior.</p> 
+<p>Together with the propagated clocks, the switching windows define the state of the latches and precharged nodes
+at the arrival of the input data. If the latch or precharged node is in a transparent state, then the path goes 
+through it.</p>
+</section>
+
+<section niv='3'><title>Timing Abstraction</title>
+<p>The timing abstraction engine generates timing models of macro-cells and IP-cores, 
+consisting of lookup tables for all timing paths.  
+In a timing model, timing arcs are given as constraints with respect to interface connectors of the block to be abstracted. </p>
+
+<p>Each instantiation context of a timing model, in terms of input slope and output load, will be different. 
+Lookup tables are therefore necessary for each situation to be handled. A lookup table is generated for each of timing 
+paths and timing constraints. Timing models are given in Cadence TLF3/4 format or in Synopsys Liberty format.</p>
+</section>
+
+</section>
+
+</section></chapter>

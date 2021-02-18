@@ -1,0 +1,13 @@
+
+       Property *ttv_GetTimingLineProperty(TimingLine *tl, char *code);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns  a property of a timing line. A Property is a polymorphic type,
+       the returned type depends on the property code.
+
+AARRGGUUMMEENNTTSS
+       ttll            Pointer on the timing line
+
+       ccooddee          Property code; for  available  property  codes,  see  the
+                     _T_i_m_i_n_g_L_i_n_e object section
+

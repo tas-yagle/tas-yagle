@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Using Tcl Interface</title>
+
+<section niv='2'><title>Script Launch</title>
+<p>All functionalities of the &tool; platform can be accessed with the <f>avt_shell</f> Tcl scripting interface.
+<f>avt_shell</f> can be used the same way as any <f>.tcl</f> script. It is statically linked with all &tool; libraries, and thus contains all &tool; functions.</p>
+<p><f>avt_shell</f> can be used in interactive mode or in script mode. In interactive mode, it is invoked as follow:</p>  
+<code>
+<cl>&gt; avt_shell</cl>
+</code>
+<p>In script mode, the first line of the script file should look like:</p>
+<code>
+<cl>#!/usr/bin/env avt_shell</cl>
+</code>
+
+</section>
+
+<section niv='2'><title>Tools Configuration</title>
+<p>The configuration of all the timing tools of the &tool; platform is done in the same way, by the mean
+of configuration variables. The value given to the variable determines the specific behavior of the
+tool. When using the Tcl interface, the setting of the values for the configuration variables can be done
+in two ways:</p>
+<list>
+<item>In the special file <f>avttools.conf</f> in the working directory, with the syntax <f>variable = value</f></item>
+<item>In the <f>avt_shell</f> script, through the <f>avt_config</f> function, taking the variable
+for first parameter and its affected value for second parameter (<f>avt_config variable value).</f></item>
+</list>
+<p>There is a precedence of the values set in the <f>avt_shell script</f> file on the values set in the 
+<f>avttools.conf</f>.</p>
+</section>
+
+<section niv='2'><title>Error Policy</title>
+<p>&tool; distinguishes three levels of error:</p>
+
+<glossary>
+<row><article><f>level 0</f></article><def>WARNING, unrecognized or redundant configuration</def></row>
+<row><article><f>level 1</f></article><def>ERROR, inconsistencies in the inputs possibly workaround by defaulted values. Results are not guaranteed to be valid</def></row>
+<row><article><f>level 2</f></article><def>FATAL ERROR, inconsistencies in the inputs with no possible workaround. Results will not be valid.</def></row>
+</glossary>
+
+<p>Errors of level 0 and 2 lead to a predefined behavior of the tool, which cannot be tuned.</p>
+
+<p>When encountering an error of level 0, the tool always print a <f>[Warning]</f> message. The tool does not abort. Example:</p> 
+
+<p><f>[Warning AVT-044] Multiple settings for variable 'simSlope'</f></p>
+
+<p>When encountering an error of level 2, the tool always print an <f>[Error]</f> message, and aborts. Example:</p> 
+
+<p><f>[Error SPI-009] Can't open file ./inv.spi</f></p>
+
+<p>The user can tune the strictness the tool treats errors of level 1 with. This is done through the configuration
+variable <f>avtErrorPolicy</f>, which can take values <f>strict</f> or <f>lenient</f>. When set to <f>lenient</f> (default setting), errors
+of level 1 are treated as errors of level 0, and the tool issues a <f>[Warning]</f> message, for example:</p>
+
+<p><f>[Warning SPI-070] Conflicting power supply on node 'gnd' keeping 1.62v</f></p>
+
+<p>When <f>avtErrorPolicy</f> is set to <f>strict</f>, errors of level 1 are treated as errors of level 2. The tool issues an
+<f>[Error]</f> message and aborts, for example:</p>
+
+<p><f>[Error SPI-070] Conflicting power supply on node 'gnd' keeping 1.62v</f></p>
+
+
+
+</section>
+<section niv='2'><title>Objects</title>
+<p>&tool; platform functionalities, such as database construction, static timing analysis, path
+searching..., can be accessed through Tcl functions. Those functions may either display results on standard output, 
+create files, or return pointers on objects. Returned pointers on objects can in turn become arguments of other Tcl functions.</p>
+
+
+
+<p>Here is a list of the objects returned by the Tcl functions. For more information about objects, see &tool; Reference Guide.</p>
+
+<glossary>
+<row><article>Netlist</article><def>Electrical view of a Subcircuit, which may be either flat or hierarchical, and contain components of the files it originates from: mosfets, resistances capacitances and instances.</def></row>
+<row><article>TimingFigure</article><def>Unified Timing Database</def></row>
+<row><article>TimingSignal</article><def>Node of the subcircuit on which one a timing event can occur. Timing Signals are built on outputs of cones (partitions), on outputs of RC networks, and on input connectors. They can be typed as latches, precharges, latch or precharge commands, connectors, user-defined breakpoints or simple signals.</def></row>
+<row><article>TimingEvent</article><def>Rising or Falling transition on a timing signal</def></row>
+<row><article>TimingPath</article><def>Concatenation of propagation delays through cones and RC networks, between reference points (latches, precharges, latch or precharge commands, connectors, user-defined breakpoints)</def></row>
+<row><article>TimingDetail</article><def>Detail about a propagation delay within a timing path</def></row>
+<row><article>StabilityFigure</article><def>Back-annotation of a TimingFigure. Contains the switching windows associated to the TimingSignal objects of the TimingFigure.</def></row>
+<row><article>StabilityPath</article><def>Object associated with each TimingSignal requiring setup/hold verification (latch, latch command, precharge, output connector). Contains timing information about the input logical cone (do not mismatch with cone as a partition) of the TimingSignal object.</def></row>
+</glossary>
+
+
+</section>
+
+<section niv='2'><title>Functions</title>
+<p>Here is a list of the families of Tcl functions that can be found within the <f>avt_shell</f> interface. 
+For more information, see &tool; Reference Guide.</p>
+
+<glossary>
+<row><article>General</article><def>Global configuration, file loading, netlist manipulation, statistics</def></row>
+<row><article>INF Configuration</article><def>Configuration though the INF functions</def></row>
+<row><article>SDC Support</article><def>SDC functions supported for STA configuration</def></row>
+<row><article>DB Construction</article><def>Automatic or manual generation of the timing database</def></row>
+<row><article>DB Browsing</article><def>Functions for retrieving timing paths, propagation delays, signal properties...</def></row>
+<row><article>STA</article><def>STA launch and results analysis</def></row>
+<row><article>Timing Abstraction</article><def>Functions for generating .lib files from the timing database</def></row>
+</glossary>
+</section>
+
+</section>
+
+<section niv='2'><title>INF Configuration and SDC Support</title>
+<p>For tool configuration needing more than the specification of a simple value (as it is done through the
+<f>avt_config</f> function), &tool; uses the INF mechanism, which is a set of Tcl configuration functions.
+INF functions are available for all the phases of the timing analysis process (disassembly, timing database construction,
+static timing analysis, crosstalk analysis and timing abstraction).</p>
+<p>SDC commands are grouped together with the INF functions and share the same mechanisms.</p>
+<p>All INF functions begin with the <f>inf_</f> prefix, except of the SDC commands, which respect their standard naming.</p> 
+
+<p>Within a Tcl script, the target sub-circuit must be defined before using INF or SDC commands. Following example is 
+given for a sub-circuit named <f>my_design</f>.</p> 
+<code>
+<cl>inf_SetFigureName my_design</cl>
+<cl> </cl>
+<cl>set_case_analysis 1 reset</cl>
+<cl>inf_DefineMutex muxup {i0 i1 i2}</cl>
+<cl>create_clock -name ck -period 1000 [get_ports {ck}]</cl>
+</code>
+
+<p>Outside of a Tcl script (in the Xtas GUI), the INF and SDC functions are used through the <f>.inf</f> file.
+Adding the line:</p>
+<code>
+<cl>inf_Drive my_design</cl>
+</code>
+<p>at the end of the previous Tcl script generates the <f>my_design.inf</f> file. Each INF and SDC function has 
+a corresponding section in this file (see &tool; Reference Guide).</p>
+
+
+</section></chapter>

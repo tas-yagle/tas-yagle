@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="trc">
+
+<err>
+    <lib>TRC-</lib><num>000</num>
+    <msg>[AWE:%d] Internal error :\nnet %s\ndriver %s\nreceiver %s\n</msg>
+    <doc>The internal data representation for parasitic element is not consistent. Please contact Avertec Support.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>001</num>
+    <msg>[AWE] Negative delay computed on net %s\n</msg>
+    <doc>Parasitics on the net present some particularities, leading to an error when computing delays with AWE algorithm.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>002</num>
+    <msg>[AWE] All order fail when computing delay on net %s\n</msg>
+    <doc>Parasitics on the net present some particularities, leading to an error when computing delays with AWE algorithm.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>003</num>
+    <msg>Can't open file %s for direct access. Cache is not used.\n</msg>
+    <doc>The .rcx file is compressed, so it can't be opened for direct access. The cache is not used, the file is entirely loaded in memory, leading to more memory consumption.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>004</num>
+    <msg>avtElpCapaLevel mismatch #%d.\n</msg>
+    <doc>The value of the avtElpCapaLevel variable is not consistent with previous setting.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>005</num>
+    <msg>Internal error #%d on net %s.\n</msg>
+    <doc>This is an internal error. Please contact Avertec Support</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>006</num>
+    <msg>Internal error #%d.\n</msg>
+    <doc>This is an internal error. Please contact Avertec Support</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>007</num>
+    <msg>Negative ground capacitance found on signal %s. code=%d\n</msg>
+    <doc>The total capacitance on a net is negative. If it's a power supply net, 
+    it should be identified, and no operation on this signal would occur. Check configuration file.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>008</num>
+    <msg>Can't determine equivalent load on signal %s.\n</msg>
+    <doc>The equivalent gate output load can't be computed. The gate output is probably not connected to anything.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>009</num>
+    <msg>The pi load for the equivalent gate load on signal %s can't be determined.\n</msg>
+    <doc>The equivalent gate output load can't be computed. The gate output is probably not connected to anything, or parasitics on the net present some others particularities.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>010</num>
+    <msg>The equivalent gate output load gives a negative capacitance for signal %s. 0 value is retained\n</msg>
+    <doc>This problem occurs when there is a very strong coupling between nets.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>011</num>
+    <msg>Can't open file %s.%s for writting.\n</msg>
+    <doc>Check usual Unix specification for file access: permission mode on file or on directory, disk space,...</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>012</num>
+    <msg>An error occurs when writting in file %s.\n</msg>
+    <doc>Check usual Unix specification for file access: permission mode on file or on directory, disk space,...</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>013</num>
+    <msg>Try to load an RCX file version #%d. Only 4th version is supported.\n</msg>
+    <doc>The RCX file is too old to be supported. It must be created with newer version of the tool.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>014</num>
+    <msg>File parse error : Line too long.\n</msg>
+    <doc>The length of a line in the RCX file is too long. This case occurs if there are very long signal or instance names, too many nodes on a connector, or if the file is corrupted. The last line of an RCX file is the word END.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>015</num>
+    <msg>File parse error line %d in file %s.%s.\n</msg>
+    <doc>An element is not recognized in the RCX file. The file may be corrupted. The last line of an RCX file is the word END. If this is not the case, there has been a problem during the creation of the RCX file.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>016</num>
+    <msg>Error while getting environment variable : %s. It is %s\n</msg>
+    <doc>Check the Avertec Documentation to set proper values.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>017</num>
+    <msg>could not modify connector '%s' origin group\n</msg>
+    <doc>This is an internal error in rc delay calculation with GNS.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>018</num>
+    <msg>rcx timing function does not exist\n</msg>
+    <doc>This is an internal error in rc delay calculation with GNS.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>019</num>
+    <msg>could not get connector '%s' origin group\n</msg>
+    <doc>This is an internal error in rc delay calculation with GNS.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>020</num>
+    <msg>origin index of connector '%s' is out of range\n</msg>
+    <doc>This is an internal error in rc delay calculation with GNS.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>021</num>
+    <msg>could not get connector '%s' destination group\n</msg>
+    <doc>This is an internal error in rc delay calculation with GNS.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>022</num>
+    <msg>destination index of connector '%s' is out of range\n</msg>
+    <doc>This is an internal error in rc delay calculation with GNS.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>023</num>
+    <msg>rcx timing function does not exist\n</msg>
+    <doc>This is an internal error in rc delay calculation with GNS.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>024</num>
+    <msg>rcx timing function already exist\n</msg>
+    <doc>This is an internal error in rc delay calculation with GNS.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>025</num>
+    <msg>missing rcx timing origin or destination group\n</msg>
+    <doc>This is an internal error in rc delay calculation with GNS.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>026</num>
+    <msg>could not find timings \"%c%c\" between connectors '%s' and '%s' for signal '%s'\n</msg>
+    <doc>This is an internal error in rc delay calculation with GNS.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>027</num>
+    <msg>could not find timings \"%c%c\" for an input slope of %gps between connectors '%s' and '%s' for signal '%s'\n</msg>
+    <doc>This is an internal error in rc delay calculation with GNS.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>028</num>
+    <msg>can't compute awe delay because a connector is missing : start='%s' end='%s'\n</msg>
+    <doc>This is an internal error in rc delay calculation.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>029</num>
+    <msg>can't compute awe delay because input slope is negative : start='%s' end='%s'\n</msg>
+    <doc>The input slope for rc delay calculation is negative. There is a problem with the gate model. Check technological parameters and power supply.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>030</num>
+    <msg>can't compute awe delay because power supply is less than vt : start='%s' end='%s'\n</msg>
+    <doc>Check power supply and technological parameter of the driver.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>031</num>
+    <msg>can't compute awe delay because threshold is greater than power supply : start='%s' end='%s'\n</msg>
+    <doc>The voltage on the rc net can't reach the threshold delay measure.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>032</num>
+    <msg>can't compute awe delay because because there is no rcx view or rcx view is typed RCXERROR : start='%s' end='%s'\n</msg>
+    <doc>This is an internal error in rc delay calculation.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>033</num>
+    <msg>can't compute effective load on signal %s because there is not a valid rcx view.\n</msg>
+    <doc>This is an internal error in rc delay calculation.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>034</num>
+    <msg>can't get the file position : %s\n</msg>
+    <doc>When using rc cache, can't get the file offset. Try to disable file compression if needed, or remove rc cache. Check unix file so.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>035</num>
+    <msg>can't set the file position : %s\n</msg>
+    <doc>When using rc cache, can't change the position in file. Try to disable file compression if needed, or remove rc cache. Check unix file access so.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>036</num>
+    <msg>an error occured when reading file : %s\n</msg>
+    <doc>This rcx file may be corrupted or truncated. The last line of the rcx file is EOF. Check disk space.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>037</num>
+    <msg>an inconsistant line has been read : %s\n</msg>
+    <doc>The rcx file is corrupted or truncated. The last line of the rcx file is EOF. Check disk space.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>038</num>
+    <msg>No aggressor %s found : %s\n</msg>
+    <doc>The rcx file is corrupted or truncated. The last line of the rcx file is EOF. Check disk space.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>039</num>
+    <msg>Signal %s is defined more than one time : %s\n</msg>
+    <doc>The rcx file is corrupted.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>040</num>
+    <msg>Signal %s is not defined : %s\n</msg>
+    <doc>The rcx file is corrupted.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>041</num>
+    <msg>Problem in cache mechanism : the signal %s can't be released\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>042</num>
+    <msg>[AWE] can't compute the switching instant of the input for rc net %s\n</msg>
+    <doc>There is a problem when computing the rc input slope on a net. In this case, the rc delay is equal to the switching instant of the rc output.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>043</num>
+    <msg>[AWE] can't compute the switching instant of the output for rc net %s\n</msg>
+    <doc>There is a problem when computing the rc output slope on a net. In this case, the rc delay is equal to 0 and output rc slope is equal to input rc slope.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>044</num>
+    <msg>[AWE] can't determine the shape of the input for rc net %s\n</msg>
+    <doc>The representation for the rc driver can't be determined. In this case, the rc delay is equal to 0 and output rc slope is equal to input rc slope.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>045</num>
+    <msg>internal problem in rcdelay cache : signal %s is yet in cache\n</msg>
+    <doc>There is a proble in rcdelay cache mechanism. Desactivate rcdelay cache.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>046</num>
+    <msg>internal problem in rcdelay cache : no signal\n</msg>
+    <doc>There is a proble in rcdelay cache mechanism. Desactivate rcdelay cache.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>047</num>
+    <msg>internal problem in rcdelay cache : signal %s is not in cache\n</msg>
+    <doc>There is a proble in rcdelay cache mechanism. Desactivate rcdelay cache.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>048</num>
+    <msg>internal problem in rcdelay cache : unknown data structure in cache for signal %s\n</msg>
+    <doc>There is a proble in rcdelay cache mechanism. Desactivate rcdelay cache.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>049</num>
+    <msg>internal problem in rcdelay cache : no awe data for signal %s\n</msg>
+    <doc>There is a problem in rcdelay cache mechanism. Desactivate rcdelay cache.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>050</num>
+    <msg>Net %s is not connex\n</msg>
+    <doc>The rc description of a net doesn't connect all connectors\n</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>051</num>
+    <msg>Disabling compression for %s.rcx file as RC cache is active.\n</msg>
+    <doc>There is a request to write an .rcx file with the simultaneous uses of output filter and rc cache functionality activated. Since this last functionality requiers direct access on file, the output filter is not used for this file.</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>051</num>
+    <msg>Net %s is not connex\n</msg>
+    <doc>The rc description of a net doesn't connect all connectors\n</doc>
+</err>
+
+<err>
+    <lib>TRC-</lib><num>052</num>
+    <msg>Can't solve the LU hybrid matrix on net %s from locon %s\n</msg>
+    <doc>There is a problem in awe computation with matrix.\n</doc>
+</err>
+<err>
+    <lib>TRC-</lib><num>053</num>
+    <msg>Can't handle UTD for circuit '%s' generated with avtEnableMultipleConnectorsOnNet=yes in hierarchical mode\n</msg>
+    <doc>avtEnableMultipleConnectorsOnNet=yes is supported only for transistor level netlists.\n</doc>
+</err>
+
+</messages>

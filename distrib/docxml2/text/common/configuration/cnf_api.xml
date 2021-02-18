@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+<!--<row type="split"><article><index>apiDynamicLibrariesPath</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Access path to the dynamic (.so) libraries.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>apiDynamicLibraries</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Dynamic libraries to open when using GNS actions. 
+The names are separated by <f>:</f>. The GNS built-in dynamic library is always opened.</def></row>
+</glossary>
+</def></row>-->
+
+<row type="split"><article><index>apiFlags</index></article><def>
+Controls the behavior of the GNS API. The values (flags) are added separated with commas. Available flags are:
+<glossary width='small2'>
+<row><article><f>ttvUseInstanceMode</f></article><def>Sets the TTV functions to generate/use one timing view 
+per instance of the same matched subcircuit.</def></row> 
+<row><article><f>ttvDriveDTX</f></article><def>Enables the drive of the <f>.dtx</f> and <f>.stm</f> files for 
+timing views created with the TTV functions</def></row>
+</glossary>
+</def></row>
+</glossary>

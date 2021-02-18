@@ -1,0 +1,38 @@
+
+           inf_DefineDirective <{mode}> [{type1}] <{signal1}> [{dir1}] <{oper-
+       ation}> [{type2}] <{signal2}> [{dir2}] [{margin}] ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Adds a custom timing check between any two  nodes.  This  timing  check
+       will be taken into account in STA and slack reports.
+
+AARRGGUUMMEENNTTSS
+       mmooddee          Type of operation: _c_h_e_c_k or _f_i_l_t_e_r.
+
+       ttyyppee11         Type of propagated information on _s_i_g_n_a_l_1 to check: _c_l_o_c_k
+                     or _d_a_t_a. Default is _d_a_t_a.
+
+       ssiiggnnaall11       Net name of the first signal.
+
+       ddiirr11          Edge or value of _s_i_g_n_a_l_1 to consider: _r_i_s_i_n_g or  _f_a_l_l_i_n_g.
+                     Default is both.
+
+       ooppeerraattiioonn     _b_e_f_o_r_e, _a_f_t_e_r or _w_i_t_h. Operation _w_i_t_h checks that _s_i_g_n_a_l_1
+                     is stable when _s_i_g_n_a_l_2's state is up or down. _w_i_t_h cannot
+                     be used with _s_i_g_n_a_l_1 as a clock or _s_i_g_n_a_l_2 as a data, and
+                     _d_i_r_2 as falling or rising. Operations  _b_e_f_o_r_e  and  _a_f_t_e_r
+                     compare  arrival times between clock/data and clock/data.
+                     _d_i_r_1 and _d_i_r_2 can be _r_i_s_i_n_g or _f_a_l_l_i_n_g only.
+
+       ttyyppee22         Type of propagated information on _s_i_g_n_a_l_2 to check: _c_l_o_c_k
+                     or _d_a_t_a. Default is _d_a_t_a.
+
+       ssiiggnnaall22       Net name of the second signal.
+
+       ddiirr22          Edge or value of _s_i_g_n_a_l_2 to consider: _r_i_s_i_n_g, _f_a_l_l_i_n_g, _u_p
+                     or _d_o_w_n. Default is rising and falling.
+
+       mmaarrggiinn        Margin to add when computing slack or constraint.
+
+       EEXXAAMMPPLLEE       _i_n_f___D_e_f_i_n_e_D_i_r_e_c_t_i_v_e _c_h_e_c_k _"_d_a_t_a_" _w_i_t_h _c_l_o_c_k _"_d_a_t_a_" _u_p.
+

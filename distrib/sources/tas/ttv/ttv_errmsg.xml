@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="ttv">
+
+<err>
+    <lib>TTV-</lib><num>010</num>
+    <msg>parse %s\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>011</num>
+    <msg>file %s does not exist\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>020</num>
+    <msg>can not open the file %s\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>021</num>
+    <msg>can not close the file %s\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>022</num>
+    <msg>can not drive the file %s the figure is not fully in memory\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>030</num>
+    <msg>monolatch chain in figure %s\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>031</num>
+    <msg>figure %s is not ready to built paths\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>040</num>
+    <msg>the figure load before and the file %s do not come from the same timing analyser run\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>041</num>
+    <msg>%s the dates of files must correspond\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>042</num>
+    <msg>%s do not generate with the same technology\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>043</num>
+    <msg>%s do not generate with the same version of technology\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>044</num>
+    <msg>%s do not generate with the same tool\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>045</num>
+    <msg>%s do not generate with the same version of tool\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>046</num>
+    <msg>%s level\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>050</num>
+    <msg>not enough memory to allocate %s\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>051</num>
+    <msg>loop detected: see the %s.loop file for more informations\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>052</num>
+    <msg>character %c in name %s replaced by _\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>053</num>
+    <msg>can not read %s.rcx file\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>054</num>
+    <msg>Infinite loop crossing latches found when searching path %s\n</msg>
+    <doc>Increase your period or set 'avtMaxPathPeriodDepth' to 0</doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>055</num>
+    <msg>Internal error: %s\n</msg>
+    <doc></doc>
+</err>
+
+<err>
+    <lib>TTV-</lib><num>056</num>
+    <msg>Could not find any path to a clock for precharge or latch '%s'\n</msg>
+    <doc>This message indicates that there is no path from a defined clock to the actual command. This generaly means that a clock declaration is missing for the circuit. Often, missing clocks are clocks that are generated from the interface clock into a latch node. This latch node might be the one to also set as a clock.</doc>
+</err>
+<err>
+    <lib>TTV-</lib><num>057</num>
+    <msg>Node '%s' activates writing in '%s' but is not typed command\n</msg>
+    <doc>TTV does not support latch as direct command of other latchs. This can also come from a setup error</doc>
+</err>
+<err>
+    <lib>TTV-</lib><num>058</num>
+    <msg>Could not match false path %s node '%s' in UTD.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTV-</lib><num>059</num>
+    <msg>Value %gff in capacitance range is lower than connector '%s' capacitance (%gff).\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTV-</lib><num>060</num>
+    <msg>Could not match directive node '%s' in UTD.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTV-</lib><num>061</num>
+    <msg>Error reading SSTA headers in file '%s': %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTV-</lib><num>062</num>
+    <msg>Error reading SSTA store values in file '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TTV-</lib><num>063</num>
+    <msg>No stored file found for run %d (global seed=%u, main seed=%u)\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

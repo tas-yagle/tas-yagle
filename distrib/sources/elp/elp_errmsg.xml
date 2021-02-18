@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="elp">
+
+
+<err>
+   <lib>ELP-</lib><num>000</num>
+   <msg>can not open the file %s\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>ELP-</lib><num>001</num>
+   <msg>syntax error on %s at line %d\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>ELP-</lib><num>002</num>
+   <msg>loading error: %s\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>ELP-</lib><num>003</num>
+   <msg>can not close the file %s\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>ELP-</lib><num>004</num>
+   <msg>incomplete technology file %s, Inf or NaN values found\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>ELP-</lib><num>005</num>
+   <msg>no %s capacitance parameters\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>ELP-</lib><num>006</num>
+   <msg>bad transistor model name in %s\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>ELP-</lib><num>007</num>
+   <msg>no model for transistor %s (%s)\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>ELP-</lib><num>008</num>
+   <msg>no model for transistor %s use %s\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>ELP-</lib><num>009</num>
+   <msg>can't get model for transistor %s\n</msg>
+   <doc></doc>
+</err>
+<err>
+   <lib>ELP-</lib><num>010</num>
+   <msg>incomplete technology file %s:%s : parameter %s = %f\n</msg>
+   <doc></doc>
+</err>
+
+</messages>

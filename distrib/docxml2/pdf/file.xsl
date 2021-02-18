@@ -1,0 +1,9 @@
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns="http://www.w3.org/TR/REC-html401-19991224" 
+                xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                version='1.0'>
+<xsl:param name="fichier">gns_user</xsl:param>
+<xsl:param name="link">http://www.avertec.com/products/products.html</xsl:param>
+<xsl:param name="release_num">3.4p5</xsl:param>
+<xsl:param name="date">June 7th, 2010</xsl:param>
+<xsl:param name="pictpdf">/dsk/l1/tasyag/tasyag/distrib/share/../docxml2/imgs_pdf</xsl:param></xsl:stylesheet>

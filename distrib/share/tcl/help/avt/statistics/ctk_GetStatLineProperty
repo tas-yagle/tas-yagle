@@ -1,0 +1,17 @@
+
+       Property  *ctk_GetStatLineProperty(StabilityFigure  *stbfig, int index,
+       char *property);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns a property of a crosstalk delay line. A Property is a  polymor-
+       phic type, the returned type depends on the property code.
+
+AARRGGUUMMEENNTTSS
+       ssttbbffiigg        Pointer on a stability figure
+
+       iinnddeexx         Number  between  1  and the value returned by _c_t_k___G_e_t_N_u_m_-
+                     _b_e_r_O_f_C_t_k_S_t_a_t_L_i_n_e
+
+       pprrooppeerrttyy      Property code; for  available  property  codes,  see  the
+                     _S_t_a_t_L_i_n_e object section
+

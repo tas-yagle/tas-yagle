@@ -1,0 +1,11 @@
+
+       void inf_SetFigureName(char *name);
+
+DDEESSCCRRIIPPTTIIOONN
+       Sets the target figure on which to apply the INF functions
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Name of the target figure
+
+       EEXXAAMMPPLLEE       _i_n_f___S_e_t_F_i_g_u_r_e_N_a_m_e _c_p_u
+

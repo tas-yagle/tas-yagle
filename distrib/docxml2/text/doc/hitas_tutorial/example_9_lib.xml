@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Cell Library</title>
+
+<section niv='2'><title>Objective</title>
+<p>This example presents the complete .lib characterization of a standard cells library. It takes place in the <f>library/</f> directory.</p>
+</section> <!-- Objective -->
+
+</section>
+</chapter>

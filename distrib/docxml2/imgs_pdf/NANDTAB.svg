@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 9.0, SVG Export Plug-In  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20000303 Stylable//EN"   "http://www.w3.org/TR/2000/03/WD-SVG-20000303/DTD/svg-20000303-stylable.dtd" [
+	<!ENTITY st0 "font-size:6.9535;">
+	<!ENTITY st1 "font-size:10.8165;">
+	<!ENTITY st2 "font-family:'Helvetica';font-weight:bold;">
+	<!ENTITY st3 "fill-rule:evenodd;clip-rule:evenodd;">
+	<!ENTITY st4 "font-size:13.907;">
+	<!ENTITY st5 "fill:none;stroke:#FFFFFF;stroke-width:0;stroke-miterlimit:10;">
+	<!ENTITY st6 "fill:none;">
+	<!ENTITY st7 "fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;">
+	<!ENTITY st8 "font-family:'Helvetica';">
+	<!ENTITY st9 "fill-rule:nonzero;clip-rule:nonzero;stroke:#000000;stroke-miterlimit:4;">
+	<!ENTITY st10 "stroke:none;">
+	<!ENTITY st11 "clip-path:url(#aiclp1);">
+]>
+<svg  width="429.957pt" height="114.732pt" viewBox="0 0 429.957 114.732" xml:space="preserve">
+	<g id="Calque_x0020_1" style="&st9; &st2; &st1;">
+		<g style="&st10;">
+			<g>
+				<clipPath id="aiclp1" style="&st6;">
+					<path d="M0,114.732V0h429.957v114.732H0z"/>
+				</clipPath>
+				<g style="&st11;">
+					<path style="&st3;" d="M113.38,23.372v1.158h34.96v17.19L31.194,64.417l-0.097,0.096l-0.193,0.097l-0.097,0.193l-0.096,0.193l-0.097,16.418l0.097,0.289l0.096,0.194l0.193,0.096h0.193h46.549v-1.159h-45.97l0.097-15.355l117.147-22.695h0.193l0.192-0.097
+						l0.097-0.192v-0.291V23.951v-0.193l-0.097-0.193l-0.192-0.097l-0.291-0.096h-35.54"/>
+					<path style="&st3;" d="M112.705,92.326v1.16h35.54h0.29l0.193-0.098l0.096-0.192v-0.29V74.653v-0.192l-0.096-0.194l-0.193-0.096l-0.193-0.097L31.194,51.379l-0.097-15.355h45.97v-1.159h-46.55l-0.193,0.097l-0.193,0.097l-0.097,0.192l-0.096,0.193l0.096,16.419
+						l0.097,0.289l0.097,0.192l0.193,0.098h0.097l117.146,22.695v17.189h-34.96"/>
+					<path style="&st3;" d="M76.681,12.651v-1.159h-52.73v1.159h52.73"/>
+					<path style="&st3;" d="M76.778,104.109v-1.159h-52.73v1.159h52.73"/>
+					<text transform="matrix(1 0 0 1 6.9536 16.707)"><tspan x="0" y="0" style="&st4;">S</tspan></text>
+					<text transform="matrix(1 0 0 1 6.1812 108.165)"><tspan x="0" y="0" style="&st4;">R</tspan></text>
+					<text transform="matrix(1 0 0 1 154.7153 28.6826)"><tspan x="0" y="0" style="&st4;">Q</tspan></text>
+					<text transform="matrix(1 0 0 1 154.7153 97.542)"><tspan x="0" y="0" style="&st4;">QB</tspan></text>
+					<path style="&st7;" d="M109.469,89.43c1.529,0,2.752,1.438,2.752,3.234c0,1.799-1.224,3.235-2.752,3.235c-1.529,0-2.752-1.437-2.752-3.235c0-1.797,1.223-3.234,2.752-3.234z"/>
+					<path style="&st3;" d="M109.469,88.271c2.173,0,3.911,1.952,3.911,4.394c0,2.442-1.738,4.396-3.911,4.396c-2.173,0-3.912-1.953-3.912-4.396c0-2.441,1.738-4.394,3.912-4.394z M109.469,89.43c-1.529,0-2.752,1.438-2.752,3.234c0,1.799,1.223,3.235,2.752,3.235
+						c1.529,0,2.752-1.437,2.752-3.235c0-1.797-1.224-3.234-2.752-3.234z"/>
+					<path style="&st5;" d="M76.585,75.909"/>
+					<path style="&st5;" d="M106.234,109.035"/>
+					<path style="&st3;" d="M92.81,77.164l1.256,0.193l1.255,0.386l1.352,0.58l1.062,0.579l1.159,0.773l1.062,0.965l1.062,0.967l0.869,1.158l0.869,1.256l0.58,1.062l0.579,1.448l0.483,1.449l0.29,1.352l0.29,1.448v1.642v1.643l-0.29,1.545l-0.29,1.353l-0.483,1.448
+						l-0.579,1.352l-0.58,1.159l-0.869,1.256l-0.869,1.062l-1.062,1.062l-1.062,0.966l-1.159,0.773l-1.062,0.579l-1.352,0.483l-1.255,0.386l-1.256,0.193l-1.448,0.097H77.744V77.068h13.618l1.448,0.096z M91.361,75.909H77.164h-0.579v0.579v31.87v0.579h0.579h14.197
+						l1.448-0.097l1.449-0.192l0.193-0.097l1.352-0.387l1.353-0.482l1.255-0.676l0.193-0.098l1.159-0.771l1.062-0.966l1.062-1.062l0.869-1.062l0.87-1.256l0.096-0.192l0.676-1.353l0.579-1.353l0.483-1.448l0.387-1.546V95.61l0.29-1.545v-1.643v-1.642l-0.29-1.545
+						v-0.193l-0.387-1.545l-0.483-1.448l-0.579-1.449l-0.676-1.256l-0.096-0.192l-0.87-1.255l-0.869-1.16l-1.062-0.966l-1.062-0.966l-1.159-0.771l-0.193-0.097l-1.255-0.677l-1.353-0.579l-1.352-0.387h-0.193l-1.449-0.289l-1.448-0.097z"/>
+					<path style="&st5;" d="M92.81,77.164"/>
+					<path style="&st7;" d="M109.469,20.957c1.529,0,2.752,1.438,2.752,3.235s-1.224,3.235-2.752,3.235c-1.529,0-2.752-1.438-2.752-3.235s1.223-3.235,2.752-3.235z"/>
+					<path style="&st3;" d="M109.469,19.799c2.173,0,3.911,1.951,3.911,4.394c0,2.441-1.738,4.395-3.911,4.395c-2.173,0-3.912-1.953-3.912-4.395c0-2.442,1.738-4.394,3.912-4.394z M109.469,20.957c-1.529,0-2.752,1.438-2.752,3.235s1.223,3.235,2.752,3.235
+						c1.529,0,2.752-1.438,2.752-3.235s-1.224-3.235-2.752-3.235z"/>
+					<path style="&st5;" d="M76.585,7.437"/>
+					<path style="&st5;" d="M106.234,40.562"/>
+					<path style="&st3;" d="M92.81,8.691l1.256,0.194l1.255,0.386l1.352,0.58l1.062,0.579l1.159,0.771l1.062,0.966l1.062,0.966l0.869,1.16l0.869,1.255l0.58,1.062l0.579,1.448l0.483,1.449l0.29,1.352l0.29,1.449v1.642v1.642l-0.29,1.545l-0.29,1.353l-0.483,1.448
+						l-0.579,1.352l-0.58,1.16l-0.869,1.255l-0.869,1.062l-1.062,1.063l-1.062,0.965l-1.159,0.773l-1.062,0.579l-1.352,0.483l-1.255,0.386L92.81,39.21l-1.448,0.096H77.744V8.595h13.618l1.448,0.097z M91.361,7.437H77.164h-0.579v0.579v31.871v0.579h0.579h14.197
+						l1.448-0.097l1.449-0.193l0.193-0.097l1.352-0.387l1.353-0.482l1.255-0.676l0.193-0.097l1.159-0.773l1.062-0.966l1.062-1.062l0.869-1.062l0.87-1.255l0.096-0.193l0.676-1.353l0.579-1.352l0.483-1.449l0.387-1.545v-0.29l0.29-1.545v-1.642V22.31l-0.29-1.546
+						V20.57l-0.387-1.545l-0.483-1.448l-0.579-1.449l-0.676-1.255l-0.096-0.193l-0.87-1.256l-0.869-1.158l-1.062-0.966l-1.062-0.966l-1.159-0.773l-0.193-0.096l-1.255-0.676l-1.353-0.58l-1.352-0.386h-0.193l-1.449-0.29l-1.448-0.097z"/>
+					<path style="&st5;" d="M92.81,8.691"/>
+					<text transform="matrix(1 0 0 1 361.6777 43.8457)"><tspan x="0" y="0" style="&st8;">not allowed</tspan></text>
+					<text transform="matrix(1 0 0 1 326.6201 43.8457)"><tspan x="0" y="0" style="&st8;">1</tspan></text>
+					<text transform="matrix(1 0 0 1 287.6035 43.8457)"><tspan x="0" y="0" style="&st8;">1</tspan></text>
+					<text transform="matrix(1 0 0 1 256.4102 43.8457)"><tspan x="0" y="0">0</tspan></text>
+					<text transform="matrix(1 0 0 1 230.2373 43.8457)"><tspan x="0" y="0">0</tspan></text>
+					<text transform="matrix(1 0 0 1 378.7715 99.1836)"><tspan x="0" y="0" style="&st8;">hold</tspan></text>
+					<text transform="matrix(1 0 0 1 319.8594 99.1836)"><tspan x="0" y="0" style="&st8;">QB</tspan></text>
+					<text transform="matrix(1 0 0 1 335.5059 102.2744)"><tspan x="0" y="0" style="&st8; &st0;">n</tspan></text>
+					<text transform="matrix(1 0 0 1 284.5137 99.1836)"><tspan x="0" y="0" style="&st8;">Q</tspan></text>
+					<text transform="matrix(1 0 0 1 292.916 102.2744)"><tspan x="0" y="0" style="&st8; &st0;">n</tspan></text>
+					<text transform="matrix(1 0 0 1 256.4102 99.1836)"><tspan x="0" y="0">1</tspan></text>
+					<text transform="matrix(1 0 0 1 230.2373 99.1836)"><tspan x="0" y="0">1</tspan></text>
+					<text transform="matrix(1 0 0 1 377.0332 80.7373)"><tspan x="0" y="0" style="&st8;">reset</tspan></text>
+					<text transform="matrix(1 0 0 1 326.6201 80.7373)"><tspan x="0" y="0" style="&st8;">1</tspan></text>
+					<text transform="matrix(1 0 0 1 287.6035 80.7373)"><tspan x="0" y="0" style="&st8;">0</tspan></text>
+					<text transform="matrix(1 0 0 1 256.4102 80.7373)"><tspan x="0" y="0">0</tspan></text>
+					<text transform="matrix(1 0 0 1 230.2373 80.7373)"><tspan x="0" y="0">1</tspan></text>
+					<text transform="matrix(1 0 0 1 381.7656 62.291)"><tspan x="0" y="0" style="&st8;">set</tspan></text>
+					<text transform="matrix(1 0 0 1 326.6201 62.291)"><tspan x="0" y="0" style="&st8;">0</tspan></text>
+					<text transform="matrix(1 0 0 1 287.6035 62.291)"><tspan x="0" y="0" style="&st8;">1</tspan></text>
+					<text transform="matrix(1 0 0 1 256.4102 62.291)"><tspan x="0" y="0">1</tspan></text>
+					<text transform="matrix(1 0 0 1 230.2373 62.291)"><tspan x="0" y="0">0</tspan></text>
+					<text transform="matrix(1 0 0 1 363.5127 22.9854)"><tspan x="0" y="0">Operation</tspan></text>
+					<text transform="matrix(1 0 0 1 315.418 22.9854)"><tspan x="0" y="0">QB</tspan></text>
+					<text transform="matrix(1 0 0 1 331.6426 26.0752)"><tspan x="0" y="0" style="&st0;">n+1</tspan></text>
+					<text transform="matrix(1 0 0 1 280.3613 22.9854)"><tspan x="0" y="0">Q</tspan></text>
+					<text transform="matrix(1 0 0 1 288.7627 26.0752)"><tspan x="0" y="0" style="&st0;">n+1</tspan></text>
+					<text transform="matrix(1 0 0 1 255.4443 22.9854)"><tspan x="0" y="0">R</tspan></text>
+					<text transform="matrix(1 0 0 1 229.561 22.9854)"><tspan x="0" y="0">S</tspan></text>
+					<path style="&st3;" d="M219.808,9.368v0.772h208.121V9.368H219.808"/>
+					<path style="&st3;" d="M220.193,30.229v0.772h207.349v-0.772H220.193"/>
+					<path style="&st3;" d="M220.193,67.12v0.773h207.349V67.12H220.193"/>
+					<path style="&st3;" d="M220.193,85.566v0.772h207.349v-0.772H220.193"/>
+					<path style="&st3;" d="M219.808,104.013v0.772h208.121v-0.772H219.808"/>
+					<path style="&st3;" d="M220.58,9.368h-0.772v95.417h0.772V9.368"/>
+					<path style="&st3;" d="M427.929,9.368h-0.772v95.417h0.772V9.368"/>
+					<path style="&st3;" d="M220.193,48.674v0.773h207.349v-0.773H220.193"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

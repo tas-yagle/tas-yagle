@@ -1,0 +1,14 @@
+
+       StabilityFigure *stb(TimingFigure *tf);
+
+DDEESSCCRRIIPPTTIIOONN
+       Launches  the  static  timing  analysis,  based  upon  SDC and INF con-
+       straints.
+           The analysis can be  tuned  with  configuration  variables  through
+       _a_v_t___C_o_n_f_i_g _(_).
+           The function returns a stability figure, which is a mapping of sta-
+       bilty information (switching windows) on the timing figure.
+
+AARRGGUUMMEENNTTSS
+       ttff            Pointer on the timing figure the analysis is to be run on
+

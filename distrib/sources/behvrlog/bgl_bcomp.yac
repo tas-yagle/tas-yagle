@@ -1,0 +1,2639 @@
+/****************************************************************************/
+/*                                                                          */
+/*                      Chaine de CAO & VLSI   AVERTEC                      */
+/*                                                                          */
+/*    Produit : Structural Verilog Compiler                                 */
+/*    Fichier : bgl_bcomp.yac                                               */
+/*                                                                          */
+/*    (c) copyright 2000 AVERTEC                                            */
+/*    Tous droits reserves                                                  */
+/*                                                                          */
+/*    Auteur(s) : Anthony LESTER, Fabrice ILPONSE                           */
+/*                                                                          */
+/*                                                                          */
+/****************************************************************************/
+
+%{
+
+#define YYDEBUG 1
+#define YYPARSE_PARAM parm
+#define YYLEX_PARAM parm
+
+#define BGL_CONTEXT(x) ((bgl_getcontext(parm))->x)
+
+#undef yyerror
+#define yyerror(x) bgl_bcomperror(x, (bgl_getcontext(parm)))
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include MUT_H
+#include BEH_H
+#include LOG_H
+#include BGL_H
+#include AVT_H
+
+#include "bgl_type.h"
+#include "bgl_parse.h"
+#include "bgl_util.h"
+#include "bgl_error.h"
+#include "bgl_action.h"
+
+#undef __GNUC__ /* to get round a bug in bison.simple */
+
+extern int yylex(void *lvalp, void *parm);
+
+/*****************************************************************************
+* function declarations                                                      *
+*****************************************************************************/
+
+int bgl_bcomperror(char *str, bgl_bcompcontext *context);
+
+chain_list *CUSTOM_GATES=NULL;
+chain_list *CONTEXT_LIST=NULL;
+
+%}
+
+%pure_parser
+
+%union {
+    double      decimal;
+    struct {
+        int value;
+        int size;
+    }           integer;
+    int         base;
+    char       *text;
+    char        car;
+    bgl_name    name;
+    bgl_expr    expr;
+    biabl_list *biabl;
+    chain_list *list;
+    doe delay_or_event;
+    custom_gate_instance *gateinstance;
+    zero_un_if z_u_i;
+    zero_un_if *ptz_u_i;
+};
+
+%expect 1
+
+%token T_ALWAYS
+%token T_AND
+%token T_ASSIGN
+%token T_ATTRIBUTE
+
+%token T_BEGIN
+%token T_BUF
+%token T_BUFIF0
+%token T_BUFIF1
+
+%token T_CASE
+%token T_CASEX
+%token T_CASEZ
+%token T_CMOS
+
+%token T_DEASSIGN
+%token T_DEFAULT
+%token T_DEFPARAM
+%token T_DISABLE
+
+%token T_EDGE
+%token T_ELSE
+%token T_END
+%token T_ENDATTRIBUTE
+%token T_ENDCASE
+%token T_ENDFUNCTION
+%token T_ENDMODULE
+%token T_ENDPRIMITIVE
+%token T_ENDSPECIFY
+%token T_ENDTABLE
+%token T_ENDTASK
+%token T_EVENT
+
+%token T_FOR
+%token T_FORCE
+%token T_FOREVER
+%token T_FORK
+%token T_FUNCTION
+
+%token T_HIGHZ0
+%token T_HIGHZ1
+
+%token T_IF
+%token T_IFNONE
+%token T_INITIAL
+%token T_INOUT
+%token T_INPUT
+%token T_INTEGER
+
+%token T_JOIN
+
+%token T_LARGE
+
+%token T_MEDIUM
+%token T_MODULE
+%token T_MACROMODULE
+
+%token T_NAND
+%token T_NEGEDGE
+%token T_NMOS
+%token T_NOR
+%token T_NOT
+%token T_NOTIF0
+%token T_NOTIF1
+
+%token T_OR
+%token T_OUTPUT
+
+%token T_PARAMETER
+%token T_PMOS
+%token T_POSEDGE
+%token T_PRIMITIVE
+%token T_PULL0
+%token T_PULL1
+%token T_PULLDOWN
+%token T_PULLUP
+
+%token T_RCMOS
+%token T_REAL
+%token T_REALTIME
+%token T_REG
+%token T_RELEASE
+%token T_REPEAT
+%token T_RNMOS
+%token T_RPMOS
+%token T_RTRAN
+%token T_RTRANIF0
+%token T_RTRANIF1
+
+%token T_SCALARED
+%token T_SIGNED
+%token T_SMALL
+%token T_SPECIFY
+%token T_SPECPARAM
+%token T_STRENGTH
+%token T_STRONG0
+%token T_STRONG1
+%token T_SUPPLY0
+%token T_SUPPLY1
+
+%token T_TABLE
+%token T_TASK
+%token T_TIME
+%token T_TRAN
+%token T_TRANIF0
+%token T_TRANIF1
+%token T_TRI
+%token T_TRI0
+%token T_TRI1
+%token T_TRIAND
+%token T_TRIOR
+%token T_TRIREG
+
+%token T_UNSIGNED
+
+%token T_VECTORED
+
+%token T_WAIT
+%token T_WAND
+%token T_WEAK0
+%token T_WEAK1
+%token T_WHILE
+%token T_WIRE
+%token T_WOR
+
+%token T_XNOR
+%token T_XOR
+
+%token T_LOGICAL_NOT
+%token T_LOGICAL_AND
+%token T_LOGICAL_OR
+%token T_BITWISE_NOT
+%token T_BITWISE_AND
+%token T_BITWISE_NAND
+%token T_BITWISE_OR
+%token T_BITWISE_NOR
+%token T_BITWISE_EXOR
+%token T_BITWISE_EXNOR
+%token T_MINUS
+%token T_PLUS
+%token T_MULTIPLY
+%token T_DIVIDE
+%token T_MODULO
+%token T_EQUALS
+%token T_DOES_NOT_EQUAL
+%token T_LESS_THAN
+%token T_LESS_THAN_OR_EQUAL_TO
+%token T_GREATER_THAN
+%token T_GREATER_THAN_OR_EQUAL_TO
+%token T_IDENTICAL
+%token T_NOT_IDENTICAL
+%token T_SHIFT_LEFT
+%token T_SHIFT_RIGHT
+
+%token T_LEADTO
+%token T_ALLPATH
+%token T_CONDITIONAL
+
+%token SYS_SETUP
+%token SYS_HOLD
+%token SYS_SETUPHOLD
+%token SYS_SKEW
+%token SYS_RECOVERY
+%token SYS_PERIOD
+%token SYS_WIDTH
+
+%token <text>    Identifier SystemIdentifier
+%token <decimal> RealLit
+%token <integer> IntegerLit
+%token <text>    StringLit
+%token <text>    MinTypMaxLit
+
+%right '?' ':'
+%left T_LOGICAL_OR
+%left T_LOGICAL_AND
+%left T_BITWISE_OR
+%left T_BITWISE_AND T_BITWISE_EXOR T_BITWISE_EXNOR
+%left T_EQUALS T_DOES_NOT_EQUAL T_IDENTICAL T_NOT_IDENTICAL
+%left T_LESS_THAN T_LESS_THAN_OR_EQUAL_TO T_GREATER_THAN T_GREATER_THAN_OR_EQUAL_TO 
+%left T_SHIFT_LEFT T_SHIFT_RIGHT
+%left T_PLUS T_MINUS
+%left T_MULTIPLY T_DIVIDE T_MODULO
+%right T_BITWISE_NOT T_LOGICAL_NOT T_UNARY_OPERATOR
+
+%type <text>     name_of_module name_of_module_instance identifier_hopt register_variable
+%type <list>     lvalue gate_instance gate_instance_list
+%type <z_u_i> sequential_entry sequential_entry_eclr
+%type <ptz_u_i> table_entries table_definition 
+%type <list>  combinational_entry combinational_entry_eclr
+%type <list>     module_instance_list
+%type <base>     gatetype
+%type <name>     range range_option expandrange expandrange_option
+%type <expr>     primary expression concatenation event_expression or_event_expression
+%type <delay_or_event> delay_or_event_control delay_control event_control
+%type <car> edge_symbol level_symbol output_symbol next_state state edge level_symbol_or_edge
+%type <gateinstance> module_instance
+%start verilog_file
+
+%%
+
+verilog_file        : 
+{
+        CUSTOM_GATES=NULL;
+        CONTEXT_LIST=NULL;
+}
+description_list
+{
+        AddPrimitiveToBEFIG(CUSTOM_GATES,CONTEXT_LIST);
+}
+;
+
+description_list    : /* empty */
+                    | description_list description
+                    ;
+
+description         : module
+                    {                   
+
+                        if (BGL_CASE_SENSITIVE) {
+                            BGL_CONTEXT(BEFIG)->USER = addptype(BGL_CONTEXT(BEFIG)->USER, BGL_CASEHT_PTYPE, BGL_CASEHT);
+                            BGL_CASEHT = NULL;
+                        }
+                    }
+                    | primitive
+                    {
+                    }
+                    ;
+
+module              : T_MODULE Identifier
+                    {
+                        BGL_CONTEXT(HSHTAB) = beh_initab();
+                        BGL_CONTEXT(ALLSIGNALS) = NULL;
+                        BGL_CONTEXT(FIGNAME) = namealloc($2);
+                        BGL_CONTEXT(NM1LST) = NULL;
+                        BGL_CONTEXT(NM2LST) = NULL;
+                        BGL_CONTEXT(NM3LST) = NULL;
+                        BGL_CONTEXT(PILE_CONDITION) = NULL;
+                        BGL_CONTEXT(WHERE_ARE_WE) = NULL;
+                        BGL_CONTEXT(CURRENT_EDGE_ABL) = NULL;
+                        BGL_CONTEXT(CUSTOM_GATE_INSTANCES) = NULL;
+                        BGL_CONTEXT(FLAGS) = 0;
+                        BGL_CONTEXT(CURRENT_DELAY)=0;
+                        BGL_CONTEXT(ERRFLG)=0;
+
+
+                        beh_addtab(BGL_CONTEXT(HSHTAB), BGL_CONTEXT(FIGNAME), BGL_CONTEXT(FIGNAME), BGL_MODDFN, BGL_FIGDFN);
+                        BGL_CONTEXT(BEFIG)=beh_addbefig(BGL_CONTEXT(BEFIG), BGL_CONTEXT(FIGNAME));
+
+/*                        if (strcasecmp(BGL_CONTEXT(FILENAME),BGL_CONTEXT(FIGNAME))==0)*/
+                        BGL_CONTEXT(TOPFIG)=BGL_CONTEXT(BEFIG);
+
+                    }
+                    list_of_ports {freechain(BGL_CONTEXT(NM3LST));BGL_CONTEXT(NM3LST)=NULL;} ';' module_item_list T_ENDMODULE
+                {
+			bgl_bcompcontext *savedparm;
+#ifdef BGL_DEBUG
+                        bgldecl_list *h;
+                        biabl_list *bl;
+                        printf("- Liste des signaux MODULE %s\n",namealloc($2));
+                        for (h=BGL_CONTEXT(ALLSIGNALS);h!=NULL;h=h->NEXT)
+                        {
+                                printf("---------- '%s' /%c/ %x ----------\n",h->NAME,h->DIRECTION,h->OBJTYPE);
+                                for (bl=h->BIABL;bl!=NULL;bl=bl->NEXT)
+                                {
+                                        printf("\t<= ");
+                                        displayExpr(bl->VALABL);        
+                                        if (bl->CNDABL!=NULL) 
+                                        {
+                                                printf("\t\tsi ");
+                                                displayExpr(bl->CNDABL);        
+                                        }
+                                }
+                        }
+#endif          
+			savedparm=(bgl_bcompcontext *)mbkalloc(sizeof(bgl_bcompcontext));
+			memcpy(savedparm,bgl_getcontext(parm),sizeof(bgl_bcompcontext));
+                        CONTEXT_LIST=addchain(CONTEXT_LIST,savedparm);
+                }
+                    ;
+
+list_of_ports       : /* empty */
+                    | '(' port_list ')'
+                    {
+                    }
+                    ;
+
+port_list           : port
+                    | port_list ',' port
+                    ;
+
+port                : port_expression_option
+                    {
+                    }
+                    | '.' Identifier '(' port_expression_option ')'
+                    {
+                    }
+                    ;
+
+port_expression_option : /*empty */
+                    | port_expression
+                    {
+                    }
+                    ;
+
+port_expression     : port_reference
+                    {
+                    }
+                    | '{' port_reference_list '}'
+                    {
+                    }
+                    ;
+
+port_reference_list : port_reference
+                    {
+                    }
+                    | port_reference_list ',' port_reference
+                    {
+                        
+                    }
+                    ;
+
+port_reference      : Identifier
+                    {
+                            BGL_CONTEXT(NM3LST) = addchain(BGL_CONTEXT(NM3LST), $1); 
+                    }
+                    | Identifier '[' expression ']'
+                    {
+                    }
+                    | Identifier range
+                    {
+                    }
+                    ;
+
+module_item_list    : /* empty */
+                    | module_item_list module_item
+                    ;
+
+module_item         : parameter_decl
+                    | input_decl
+                    | output_decl
+                    | inout_decl
+                    | net_decl
+                    | reg_decl
+                    | integer_decl
+                    | gate_instantiation
+                    | module_instantiation
+                    | parameter_override
+                    | continuous_assign
+                    | specify_block
+                    | always_statement
+                    | initial_statement
+                    | task
+                    | function
+                    ;
+
+primitive           : T_PRIMITIVE Identifier
+                    {
+                        
+//                      BGL_CONTEXT(PILE_CONDITION)=NULL; // ca doit etre deja le cas
+                        BGL_CONTEXT(PILE_CONDITION)=addchain(BGL_CONTEXT(PILE_CONDITION),BGL_CONTEXT(HSHTAB));
+                        BGL_CONTEXT(PILE_CONDITION)=addchain(BGL_CONTEXT(PILE_CONDITION),BGL_CONTEXT(ALLSIGNALS));
+
+                        BGL_CONTEXT(HSHTAB) = beh_initab();
+                        BGL_CONTEXT(ALLSIGNALS) = NULL;
+                        beh_addtab(BGL_CONTEXT(HSHTAB), BGL_CONTEXT(FIGNAME), BGL_CONTEXT(FIGNAME), BGL_MODDFN, BGL_FIGDFN);
+                    }
+                      list_of_ports ';' primitive_decl_list table_definition T_ENDPRIMITIVE
+                        {
+                                bgldecl_list *sig,*sig1;
+                                custom_gate *cgate=(custom_gate *)mbkalloc(sizeof(custom_gate));
+                                cgate->name=$2;
+                                cgate->zui=$7;
+                                CUSTOM_GATES=addchain(CUSTOM_GATES,cgate);
+
+                                beh_fretab(BGL_CONTEXT(HSHTAB));
+
+                                for (sig=BGL_CONTEXT(ALLSIGNALS);sig!=NULL;sig=sig1)
+                                {
+                                        sig1=sig->NEXT;
+                                        mbkfree(sig);
+                                }
+                                BGL_CONTEXT(ALLSIGNALS)=(bgldecl_list *)BGL_CONTEXT(PILE_CONDITION)->DATA;
+                                BGL_CONTEXT(HSHTAB)=(struct beden **)BGL_CONTEXT(PILE_CONDITION)->NEXT->DATA;
+
+                                freechain(BGL_CONTEXT(PILE_CONDITION));
+                                BGL_CONTEXT(PILE_CONDITION)=NULL;
+                        }
+                    ;
+
+primitive_decl_list : /* empty */
+                    | primitive_decl_list primitive_decl
+                    ;
+
+primitive_decl      : input_decl
+                    | output_decl
+                    | reg_decl
+                    ;
+
+table_definition    : T_TABLE table_entries T_ENDTABLE
+                        {
+                                $$=$2;
+                        }
+                        ;
+
+table_entries       : combinational_entry_eclr
+                        {
+#ifdef BGL_DEBUG
+                                printf("PURE COMB:");
+                                displayExpr($1);
+#endif
+                                $$=(zero_un_if *)mbkalloc(sizeof(zero_un_if));
+                                $$->cond_sig=-1;
+                                $$->abl1=$1;
+                        }
+                        | sequential_entry_eclr
+                        {
+#ifdef BGL_DEBUG
+                                printf("0 IF:");
+                                displayExpr($1.abl0);
+                                printf("1 IF:");
+                                displayExpr($1.abl1);
+                                if ($1.cond_sig!=-1)
+                                {
+                                        printf("IF EDGE %d '%c':",$1.cond_sig,$1.xedge);
+                                        displayExpr($1.abl_cond);
+                                }
+#endif
+                                if ($1.cond_sig==-1) $1.cond_sig=-2;
+                                $$=(zero_un_if *)mbkalloc(sizeof(zero_un_if));
+                                memcpy($$,&$1,sizeof(zero_un_if));
+                        }
+                        ;
+
+combinational_entry_eclr : combinational_entry
+                        {
+                                $$ = $1;
+                        }
+                        | combinational_entry_eclr combinational_entry
+                        {
+                                if ($2!=NULL && $1!=NULL) $$=createBinExpr(OR,$1,$2);
+                                else if ($2!=NULL) $$=$2;
+                                else $$=$1;
+                        }
+                        ;
+
+combinational_entry : input_list ':' output_symbol ';'
+                        {
+                                chain_list *input,*abl=NULL;
+                                char name[5];
+                                int count;
+                                if ($3=='1')
+                                {
+                                // creation d'une expression type 0 and 1 and !2
+                                // les numéros sont des terminaux à expanser
+                                for (input=BGL_CONTEXT(NM2LST),count=0;input!=NULL;input=input->NEXT,count++)
+                                {
+                                        sprintf(name,"%d",count);
+                                        switch((int)((long)input->DATA))
+                                        {
+                                                case '0':
+                                                        if (abl==NULL) abl=notExpr(createAtom(name));
+                                                        else abl=createBinExpr(AND,notExpr(createAtom(name)),abl);
+                                                        break;
+                                                case '1':
+                                                        if (abl==NULL) abl=createAtom(name);
+                                                        else abl=createBinExpr(AND,createAtom(name),abl);
+                                                        break;
+                                                case '-': break;
+                                                case 'u':
+                                                case 'd':
+                                                          avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"250");
+                                                          // EXIT(15);
+                                        }
+                                }
+                                }
+                                freechain(BGL_CONTEXT(NM2LST));
+                                BGL_CONTEXT(NM2LST)=NULL;
+                                $$=abl;
+                        }
+                        ;
+
+sequential_entry_eclr : sequential_entry
+                        {
+                                memcpy(&$$,&$1,sizeof(zero_un_if));
+                        }
+                        | sequential_entry_eclr sequential_entry
+                        {
+                                memcpy(&$$,&$1,sizeof(zero_un_if));
+                                
+                                if ($2.abl0!=NULL && $1.abl0!=NULL) $$.abl0=createBinExpr(OR,$1.abl0,$2.abl0);
+                                else if ($2.abl0!=NULL) $$.abl0=$2.abl0;
+                                else $$.abl0=$1.abl0;
+
+                                if ($2.abl1!=NULL && $1.abl1!=NULL) $$.abl1=createBinExpr(OR,$1.abl1,$2.abl1);
+                                else if ($2.abl1!=NULL) $$.abl1=$2.abl1;
+                                else $$.abl1=$1.abl1;
+
+                                if ($1.cond_sig!=-1 && $2.cond_sig!=-1)
+                                {
+                                        if ($1.cond_sig!=$2.cond_sig || $1.xedge!=$2.xedge) 
+                                        { //      EXIT(42);
+                                          avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"251");
+                                        }
+                                }
+                                if ($2.abl_cond!=NULL && $1.abl_cond!=NULL) $$.abl_cond=createBinExpr(OR,$1.abl_cond,$2.abl_cond);
+                                else if ($2.abl_cond!=NULL) {$$.abl_cond=$2.abl_cond;$$.cond_sig=$2.cond_sig;$$.xedge=$2.xedge;}
+                                else $$.abl_cond=$1.abl_cond;
+                        }
+                        ;
+
+sequential_entry    : input_list ':' state ':' next_state ';'
+                        {
+                                chain_list *input,*abl=NULL;
+                                char name[5];
+                                int count,abort=0;
+                                $$.cond_sig=-1;
+                                $$.abl0=$$.abl1=$$.abl_cond=NULL;
+
+//                              BGL_CONTEXT(NM2LST)=addchain(BGL_CONTEXT(NM2LST),(void *)(long)$3);
+                                BGL_CONTEXT(NM2LST)=append(BGL_CONTEXT(NM2LST),addchain(NULL,(void *)(long)$3));
+                                if ($5=='1' || $5=='0')
+                                {
+                                // creation d'une expression type 0 and 1 and !2
+                                // les numéros sont des terminaux à expanser
+                                for (input=BGL_CONTEXT(NM2LST),count=0;input!=NULL;input=input->NEXT,count++)
+                                {
+                                        sprintf(name,"%d",count);
+                                        switch((int)((long)input->DATA))
+                                        {
+                                                case '0':
+                                                        if (abl==NULL) abl=notExpr(createAtom(name));
+                                                        else abl=createBinExpr(AND,notExpr(createAtom(name)),abl);
+                                                        break;
+                                                case '1':
+                                                        if (abl==NULL) abl=createAtom(name);
+                                                        else abl=createBinExpr(AND,createAtom(name),abl);
+                                                        break;
+                                                case '-': break;
+                                                case 'x': abort=1; break;
+                                                case 'u':
+                                                case 'd':
+                                                        $$.cond_sig=count; $$.xedge=(long)input->DATA;
+                                                        break;
+                                        }
+                                }
+                                if (abl!=NULL)
+                                {
+                                if (abort)
+                                        freeExpr(abl);
+                                else
+                                if ($5=='0')
+                                { 
+                                        if ($$.cond_sig!=-1)
+                                                freeExpr(abl);
+                                        else $$.abl0=abl;
+                                }
+                                else if ($5=='1' && $$.cond_sig!=-1)
+                                        $$.abl_cond=abl;
+                                else 
+                                        $$.abl1=abl;
+                                }
+                                }
+                                freechain(BGL_CONTEXT(NM2LST));
+                                BGL_CONTEXT(NM2LST)=NULL;
+                        }
+                        ;
+
+input_list          : level_symbol_or_edge_eclr
+                        ;
+
+level_symbol_or_edge_eclr : level_symbol_or_edge
+                        {
+                                BGL_CONTEXT(NM2LST)=addchain(BGL_CONTEXT(NM2LST), (void *)(long)$1);
+                        }
+                    | level_symbol_or_edge_eclr level_symbol_or_edge
+                        {
+                                BGL_CONTEXT(NM2LST)=addchain(BGL_CONTEXT(NM2LST), (void *)(long)$2);
+                        }
+                    ;
+
+level_symbol_or_edge : level_symbol { $$ = $1; }
+                    | edge { $$ = $1; }
+                    ;
+
+edge                : '(' level_symbol level_symbol ')' 
+                        {
+                                if (($2=='1' && $3=='0') || ($2=='-' && $3=='0')) $$='d';
+                                else if (($2=='0' && $3=='1') || ($2=='-' && $3=='1')) $$='u';
+                                else $$='x';
+                        }
+                        | edge_symbol {$$=$1;}
+                        ;
+
+state               : level_symbol {$$=$1;}
+                        ;
+
+next_state          : output_symbol {$$=$1;}
+                        | '-' {$$='-';}
+                        ;
+
+output_symbol       : '0' {$$='0';}
+                    | '1' {$$='1';}
+                    | 'x' {$$='0';}
+                    | 'X' {$$='0';}
+                    ;
+
+level_symbol        : '0' {$$='0';}
+                    | '1' {$$='1';}
+                    | 'x' {$$='-';}
+                    | 'X' {$$='-';}
+                    | '?' {$$='-';}
+                    | 'b' {$$='-';}
+                    | 'B' {$$='-';}
+                    ;
+
+edge_symbol         : 'r' {$$='u';}
+                    | 'R' {$$='u';}
+                    | 'f' {$$='d';}
+                    | 'F' {$$='d';}
+                    | 'p' {$$='u';}
+                    | 'P' {$$='u';}
+                    | 'n' {$$='n';}
+                    | 'N' {$$='n';}
+                    | '*' {$$='-';}
+                    ;
+
+task                : T_TASK Identifier ';' 
+                    {
+                        BGL_CONTEXT(FLAGS)|=DONTCARE;
+                    }
+                    tf_declaration_list statement_or_null T_ENDTASK
+                    {
+                        BGL_CONTEXT(FLAGS)&=~DONTCARE;
+                    }
+                    ;
+
+tf_declaration_list : /* empty */
+                    | tf_declaration_list tf_declaration
+                    ;
+
+tf_declaration      : parameter_decl
+                    | input_decl
+                    | output_decl
+                    | inout_decl
+                    | reg_decl
+                    | integer_decl
+                    ;
+
+
+function            : T_FUNCTION range_option Identifier ';'
+                    {
+                        BGL_CONTEXT(FLAGS)|=DONTCARE;
+                    }
+                    function_decl_list statement_or_null T_ENDFUNCTION
+                    {
+                        BGL_CONTEXT(FLAGS)&=~DONTCARE;
+                    }
+                    ;
+
+function_decl_list  : /* empty */
+                    | function_decl_list function_decl
+                    ;
+
+function_decl       : parameter_decl
+                    | input_decl
+                    | reg_decl
+                    | integer_decl
+                    ;
+
+initial_statement   : T_INITIAL {BGL_CONTEXT(FLAGS)|=DONTCARE;} statement {BGL_CONTEXT(FLAGS)&=~DONTCARE;}
+                    {
+                    }
+                    ;
+
+always_statement    : T_ALWAYS statement
+                    {
+                    }
+                    ;
+
+delay_or_event_control : 
+                      delay_control { memcpy(&$$,&$1,sizeof(doe)); }
+                    | event_control { memcpy(&$$,&$1,sizeof(doe)); }
+                    ;
+
+delay_control       : '#' IntegerLit {$$.type=0;}
+                    | '#' RealLit {$$.type=0;}
+                    | '#' Identifier {$$.type=0;}
+                    | '#' '(' expression ')' {$$.type=0;}
+                    ;
+
+event_control       : '@' Identifier {$$.type=5;}
+                    | '@' '(' event_expression ')'
+                        {
+                                $$.type=1;
+                                memcpy(&$$.u.expr,&$3,sizeof(bgl_expr));
+                        }
+                    | '@' '(' or_event_expression ')'
+                        {
+                                $$.type=1;
+                                memcpy(&$$.u.expr,&$3,sizeof(bgl_expr));
+                        }
+                    ;
+
+or_event_expression : event_expression T_OR event_expression
+                        {
+                                if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                {
+                                        bgl_NewOperation(&$$, OR, &$1, &$3);
+                                }
+                        }
+                    | or_event_expression T_OR event_expression
+                        {
+                                if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                {
+                                        bgl_NewOperation(&$$, OR, &$1, &$3);
+                                }
+                        }
+                    ;
+
+event_expression    : expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                         if ($1.WIDTH!=1) 
+                                { bgl_error(38, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                         memcpy(&$$,&$1,sizeof(bgl_expr));
+                        }
+                    }
+                    | T_POSEDGE expression
+                    {
+                        struct chain *ch1;
+                        struct chain *ch2;
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($2.WIDTH!=1)
+                                { bgl_error(38, "", bgl_getcontext(parm));/* EXIT (1);*/ }
+                        $$.TYPE = 0;
+
+                        ch2 = (struct chain *)mbkalloc(sizeof(struct chain));
+                        ch1 = createExpr(STABLE);
+                        ch1->NEXT = ch2;
+                        ch2->DATA = $2.LIST_ABL->DATA;
+                        ch2->NEXT = NULL;
+
+                        BGL_CONTEXT(BEFIG)->TYPE|=BEH_STABLE;
+
+                        $$.LIST_ABL = addchain(NULL,createBinExpr(AND,notExpr(ch1),copyExpr($2.LIST_ABL->DATA)));
+                        $$.IDENT=NULL;
+                        $$.WIDTH=$2.WIDTH;      
+
+                        freechain($2.LIST_ABL);  if ($2.IDENT!=NULL) freechain($2.IDENT);
+                        }
+                    }
+                    | T_NEGEDGE expression
+                    {
+                        struct chain *ch1;
+                        struct chain *ch2;
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($2.WIDTH!=1)
+                                { bgl_error(38, "", bgl_getcontext(parm));/* EXIT(1);*/ }
+
+                        $$.TYPE = 0;
+
+                        ch2 = (struct chain *)mbkalloc(sizeof(struct chain));
+                        ch1 = createExpr(STABLE);
+                        ch1->NEXT = ch2;
+                        ch2->DATA = $2.LIST_ABL->DATA;
+                        ch2->NEXT = NULL;
+
+                        BGL_CONTEXT(BEFIG)->TYPE|=BEH_STABLE;
+
+                        $$.LIST_ABL = addchain(NULL,createBinExpr(AND,notExpr(ch1),notExpr(copyExpr($2.LIST_ABL->DATA))));
+                        $$.IDENT=NULL;
+                        $$.WIDTH=$2.WIDTH;
+
+                        freechain($2.LIST_ABL); if ($2.IDENT!=NULL) freechain($2.IDENT);
+                        }
+                    }
+                    | T_EDGE expression
+                    {
+                    }
+                    ;
+
+parameter_override  : T_DEFPARAM assignment_list ';'
+                    ;
+
+parameter_decl      : T_PARAMETER {BGL_CONTEXT(FLAGS)|=DONTCARE;} range_option assignment_list ';' {BGL_CONTEXT(FLAGS)&=~DONTCARE;}
+                    ;
+
+input_decl          : T_INPUT range_option variable_list ';'
+                    {
+                        chain_list *ptchain;
+
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        BGL_CONTEXT(NM1LST) = reverse(BGL_CONTEXT(NM1LST));
+                        for (ptchain = BGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) 
+                        {
+                                AddaNewSignalorSignals(bgl_getcontext(parm), (char *)ptchain->DATA, $2.LEFT, $2.RIGHT, 'I');    
+                        }
+                        freechain(BGL_CONTEXT(NM1LST));
+                        BGL_CONTEXT(NM1LST) = NULL;
+                        }
+                    }
+                    ;
+
+output_decl         : T_OUTPUT range_option variable_list ';'
+                    {
+                        chain_list *ptchain;
+
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        BGL_CONTEXT(NM1LST) = reverse(BGL_CONTEXT(NM1LST));
+                        for (ptchain = BGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) 
+                        {
+                                AddaNewSignalorSignals(bgl_getcontext(parm), (char *)ptchain->DATA, $2.LEFT, $2.RIGHT, 'O');    
+                        }
+                        freechain(BGL_CONTEXT(NM1LST));
+                        BGL_CONTEXT(NM1LST) = NULL;
+                        }
+                    }
+                    ;
+
+inout_decl          : T_INOUT range_option variable_list ';'
+                    {
+                        chain_list *ptchain;
+
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        BGL_CONTEXT(NM1LST) = reverse(BGL_CONTEXT(NM1LST));
+                        for (ptchain = BGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) 
+                        {
+                                AddaNewSignalorSignals(bgl_getcontext(parm), (char *)ptchain->DATA, $2.LEFT, $2.RIGHT, 'B');
+                        }
+                        freechain(BGL_CONTEXT(NM1LST));
+                        BGL_CONTEXT(NM1LST) = NULL;
+                        }
+                    }
+                    ;
+
+net_decl            : nettype charge_strength expandrange_option delay_option variable_list ';'
+                    {
+                        chain_list *ptchain;
+
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        BGL_CONTEXT(NM1LST) = reverse(BGL_CONTEXT(NM1LST));
+                        for (ptchain = BGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) 
+                        {
+                                AddaNewSignalorSignals(bgl_getcontext(parm), (char *)ptchain->DATA, $3.LEFT, $3.RIGHT, ' ');
+                        }
+                        freechain(BGL_CONTEXT(NM1LST));
+                        BGL_CONTEXT(NM1LST) = NULL;
+                        }
+                    }
+                    | nettype expandrange_option delay_option variable_list ';'
+                    {
+                        chain_list *ptchain;
+
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        BGL_CONTEXT(NM1LST) = reverse(BGL_CONTEXT(NM1LST));
+                        for (ptchain = BGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) 
+                        {
+                                AddaNewSignalorSignals(bgl_getcontext(parm), (char *)ptchain->DATA, $2.LEFT, $2.RIGHT, ' ');
+                        }
+                        freechain(BGL_CONTEXT(NM1LST));
+                        BGL_CONTEXT(NM1LST) = NULL;
+                        BGL_CONTEXT(CURRENT_DELAY)=0;
+                        }
+                    }
+                    | nettype drive_strength expandrange_option delay_option assignment_list ';'
+                    {
+                        bgl_error(91, "Can't handle mix of declaration et assignment", bgl_getcontext(parm)); /*EXIT (1)*/;
+                    }
+                    | nettype expandrange_option delay_option assignment_list ';'
+                    {
+                        bgl_error(91, "Can't handle mix of declaration et assignment", bgl_getcontext(parm));/* EXIT (1)*/;
+                    }
+                    ;
+
+nettype             : T_WIRE
+                    | T_WOR
+                    | T_WAND
+                    | T_TRI
+                    | T_TRIOR
+                    | T_TRIAND
+                    | T_TRI0
+                    | T_TRI1
+                    | T_SUPPLY0
+                    | T_SUPPLY1
+                    | T_TRIREG
+                    ;
+
+expandrange_option  : /* empty */
+                    {
+                        $$.NAME = NULL;
+                        $$.LEFT = -1;
+                        $$.RIGHT = -1;
+                        $$.ERR_FLAG = 0;
+                    }
+                    | expandrange
+                    {
+                        $$ = $1;
+                    }
+                    ;
+
+expandrange         : range
+                    {
+                        $$ = $1;
+                    }
+                    | T_SCALARED range
+                    {
+                        $$ = $2;
+                    }
+                    | T_VECTORED range
+                    {
+                        $$ = $2;
+                    }
+                    ;
+
+reg_decl            : T_REG range_option register_list ';'
+                    {
+                        chain_list *ptchain;
+
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        BGL_CONTEXT(NM1LST) = reverse(BGL_CONTEXT(NM1LST));
+                        for (ptchain = BGL_CONTEXT(NM1LST); ptchain; ptchain = ptchain->NEXT) {
+                                AddaNewSignalorSignals(bgl_getcontext(parm), (char *)ptchain->DATA, $2.LEFT, $2.RIGHT, ' ');
+                        }
+                        freechain(BGL_CONTEXT(NM1LST));
+                        BGL_CONTEXT(NM1LST) = NULL;
+                        }
+                    }
+                    | T_TIME range_option register_list ';'
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        freechain(BGL_CONTEXT(NM1LST));
+                        BGL_CONTEXT(NM1LST) = NULL;
+                        }
+                    }                  
+                    ;
+
+register_list       : register_variable
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        BGL_CONTEXT(NM1LST) = addchain(NULL, $1);
+                        }
+                    }
+                    | register_list ',' register_variable
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        BGL_CONTEXT(NM1LST) = addchain(BGL_CONTEXT(NM1LST), $3);
+                        }
+                    }
+                    ;
+
+register_variable   : Identifier range_option
+                    {
+                        $$ = namealloc($1);
+                    }
+                    ;
+
+integer_decl        : T_INTEGER variable_list ';'
+                    ;
+
+continuous_assign   : T_ASSIGN 
+                        drive_strength_option delay_option assignment_list
+                        {
+                                BGL_CONTEXT(CURRENT_DELAY)=0;
+                        }
+                        ';'
+                    ;
+
+variable_list       : Identifier
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        BGL_CONTEXT(NM1LST) = addchain(NULL, namealloc($1));
+                        }
+                    }
+                    | variable_list ',' Identifier
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        BGL_CONTEXT(NM1LST) = addchain(BGL_CONTEXT(NM1LST), namealloc($3));
+                        }
+                    }
+                    ;
+
+charge_strength     : '(' T_SMALL ')'
+                    | '(' T_MEDIUM ')'
+                    | '(' T_LARGE ')'
+                    ;
+
+drive_strength_option : /* empty */
+                    | drive_strength
+                    ;
+
+drive_strength      : '(' strength0 ',' strength1 ')'
+                    | '(' strength1 ',' strength0 ')'
+                    | '(' strength0 ')'
+                    | '(' strength1 ')'
+                    ;
+
+strength0           : T_SUPPLY0
+                    | T_STRONG0
+                    | T_PULL0
+                    | T_WEAK0
+                    | T_HIGHZ0
+                    ;
+
+strength1           : T_SUPPLY1
+                    | T_STRONG1
+                    | T_PULL1
+                    | T_WEAK1
+                    | T_HIGHZ1
+                    ;
+
+range_option        : /* empty */
+                    {
+                        $$.LEFT = -1;
+                        $$.RIGHT = -1;
+                        $$.ERR_FLAG = 0;
+                    }
+                    | range
+                    {
+                        $$ = $1;
+                    }
+                    ;
+
+range               : '[' expression ':' expression ']'
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+
+                        if ($2.TYPE == BGL_RESULT && $4.TYPE == BGL_RESULT) {
+                            $$.LEFT = $2.RESULT;
+                            $$.RIGHT = $4.RESULT;
+                            $$.ERR_FLAG = 0;
+                        }
+                        else {
+                            $$.LEFT = -1;
+                            $$.RIGHT = -1;
+                            $$.ERR_FLAG = 1;
+                            bgl_error(33, NULL, bgl_getcontext(parm)); /*EXIT(1)*/;
+                        }
+                        }
+                    }
+                    ;
+
+assignment_list     : assignment
+                    | assignment_list ',' assignment
+                    ;
+
+gate_instantiation  : gatetype drive_delay_clr gate_instance_list ';' 
+                        { 
+                        chain_list *allinstances,*instanceterms,*cl,*id,*cl0;
+                        bgl_expr out,tmp;
+                        bgldecl_list *sig;
+                        for (allinstances=$3;allinstances!=NULL;allinstances=allinstances->NEXT)
+                        {
+                                instanceterms=(chain_list *)allinstances->DATA;
+
+                                if ($1==NOT || $1==-1) // NOT or BUF
+                                {
+                                        if (countchain(instanceterms)!=2)
+                                         { bgl_error(91, "Bad number of arguments in primitive", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                                        if (CheckSize(instanceterms,0))
+                                        { bgl_error(38, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+
+                                        bgl_NewSimpleOperation(&out,$1,(bgl_expr *)instanceterms->DATA);
+                                }
+                                else 
+                                if ($1==-2 || $1==-3 || $1==-4 || $1==-5)
+                                {
+                                        int reop;
+                                        if (countchain(instanceterms)!=3)
+                                         { bgl_error(91, "Bad number of arguments in primitive", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                                        if (CheckSize(instanceterms,1))
+                                        { bgl_error(38, "", bgl_getcontext(parm)); /*EXIT (1); */}
+
+                                        if (((bgl_expr *)(instanceterms->DATA))->WIDTH!=1)
+                                        { bgl_error(38, "", bgl_getcontext(parm)); /*EXIT(1);*/ }
+
+                                        if ($1==-2 || $1==-3) reop=-1; // buf
+                                        else reop=NOT;
+
+                                        bgl_NewSimpleOperation(&out,reop,(bgl_expr *)(instanceterms->NEXT)->DATA);
+                                
+                                        if ($1==-2 || $1==-4) // if 0
+                                        {
+                                        ((bgl_expr *)(instanceterms->DATA))->LIST_ABL->DATA=notExpr(((bgl_expr *)(instanceterms->DATA))->LIST_ABL->DATA);
+                                        }
+                                }
+                                else 
+                                if ($1==-6 || $1==-7) // PULLUP PULLDOWN
+                                {
+                                        if (countchain(instanceterms)!=1)
+                                         { bgl_error(91, "Bad number of arguments in primitive", bgl_getcontext(parm));/* EXIT (1);*/ }
+                                }
+                                else 
+                                if ($1==AND || $1==OR ||$1==NOR ||$1==NAND ||$1==XOR ||$1==NXOR)
+                                {
+                                        int count;
+                                        if ((count=countchain(instanceterms))<3)
+                                         { bgl_error(91, "Not enough arguments in primitive", bgl_getcontext(parm)); /*EXIT (1); */}
+                                        if (CheckSize(instanceterms,0))
+                                        { bgl_error(38, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+
+                                        bgl_NewOperation(&out, $1, (bgl_expr *)instanceterms->DATA, (bgl_expr *)(((chain_list *)instanceterms->NEXT)->DATA));
+                                        for (cl0=(chain_list *)((chain_list *)instanceterms->NEXT)->NEXT;cl0!=NULL && cl0->NEXT!=NULL;cl0=cl0->NEXT)
+                                                {
+                                                        memcpy(&tmp,&out,sizeof(bgl_expr));
+                                                        bgl_NewOperation(&out, $1, &tmp, (bgl_expr *)cl0->DATA);
+                                                }
+                                }
+                                else
+                                  avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"252");
+                                // EXIT(89); // ne doit jamais arriver
+                                
+                                for (cl=instanceterms; cl != NULL && cl->NEXT!=NULL; cl=cl->NEXT) ;
+                                // cl = lvalue
+                                ((bgl_expr *)cl->DATA)->IDENT=reverse(((bgl_expr *)cl->DATA)->IDENT);
+                                if ($1!=-6 && $1!=-7) cl0=out.LIST_ABL;
+                                for (id=((bgl_expr *)cl->DATA)->IDENT;id!=NULL;id=id->NEXT)
+                                {
+                                        sig=(bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), (char *)id->DATA, BGL_CONTEXT(FIGNAME), BGL_PNTDFN);
+#ifdef BGL_DEBUG
+                                printf("to %s\n",sig->NAME);
+#endif
+                                        if (sig==0)
+                                          avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"253");
+                                        // EXIT(88);
+                                if ($1!=-6 && $1!=-7)
+                                {
+                                sig->BIABL=
+                                        beh_addbiabl(   sig->BIABL,
+                                                        sig->NAME,
+                                                        NULL,
+                                                        cl0->DATA
+                                                    );
+                                }
+                                else
+                                {
+                                sig->BIABL=
+                                        beh_addbiabl(   sig->BIABL,
+                                                        sig->NAME,
+                                                        NULL,
+                                                        $1==-6?createAtom("'1'"):createAtom("'0'")
+                                                    );
+                                }
+
+                                sig->BIABL->FLAG |= BEH_CND_NOPRECEDE;
+                                sig->BIABL->TIME=0; // ???
+
+                                if ($1==-2 || $1==-3 || $1==-4 || $1==-5)
+                                {
+                                sig->BIABL->USER=(ptype_list *)((bgl_expr *)(instanceterms->DATA))->LIST_ABL->DATA;
+                                sig->BINODE=beh_addbinode(sig->BINODE,NULL,NULL);
+
+                                sig->OBJTYPE|=SIG_IS_BUS;
+                                }
+                                if ($1!=-6 && $1!=-7) cl0=cl0->NEXT;
+                                }
+                        }
+                        }
+                    ;
+
+drive_delay_clr     : /* empty */
+                    | drive_delay_clr drive_delay
+                    ;
+
+drive_delay         : drive_strength
+                    | delay
+                    ;
+
+gatetype            : T_AND { $$ = AND ;}
+                    | T_NAND { $$ = NAND ;}
+                    | T_OR { $$ = OR ;}
+                    | T_NOR { $$ = NOR ;}
+                    | T_XOR { $$ = XOR ;}
+                    | T_XNOR { $$ = NXOR ;}
+                    | T_BUF { $$ = -1 ;}
+                    | T_NOT { $$ = NOT ;}
+                    | T_BUFIF0 { $$ = -2;}
+                    | T_BUFIF1 { $$ = -3;}
+                    | T_NOTIF0{ $$ = -4;}
+                    | T_NOTIF1{ $$ = -5;}
+                    | T_PULLUP{ $$ = -6;}
+                    | T_PULLDOWN{ $$ = -7;}
+                    ;
+
+gate_instance_list  : gate_instance { $$ = $1 ;}
+                    | gate_instance_list ',' gate_instance { $$=append($1,$3) ;}
+                    ;
+
+gate_instance       : name_of_gate_instance {BGL_CONTEXT(FLAGS)|=IN_PRIMITIVE;} range_option '(' terminal_list ')'
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        $$=addchain(NULL,BGL_CONTEXT(NM1LST));
+                        BGL_CONTEXT(NM1LST)=NULL;
+			BGL_CONTEXT(FLAGS)&=~IN_PRIMITIVE;
+                        }
+                    }
+                    | '(' {BGL_CONTEXT(FLAGS)|=IN_PRIMITIVE;} terminal_list ')'
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        $$=addchain(NULL,BGL_CONTEXT(NM1LST));
+                        BGL_CONTEXT(NM1LST)=NULL;
+                        }
+			BGL_CONTEXT(FLAGS)&=~IN_PRIMITIVE;
+                    }
+                    ;
+
+name_of_gate_instance : Identifier
+                    {
+                    }
+                    ;
+
+terminal_list       : terminal
+                    | terminal_list ',' terminal
+                    ;
+
+terminal            : expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($1.TYPE == BGL_IDENT || $1.TYPE == BGL_EXPR) {
+                            bgl_expr *tmp=(bgl_expr *)mbkalloc(sizeof(bgl_expr));
+                            memcpy(tmp,&$1,sizeof(bgl_expr));
+                            BGL_CONTEXT(NM1LST) = addchain(BGL_CONTEXT(NM1LST), tmp);
+                        }
+                        }
+                    }
+                    ;
+
+module_instantiation : name_of_module
+                    {
+                    }
+                    parameter_assign_option module_instance_list ';'
+                    {
+                        chain_list *inst;
+                        for (inst=$4;inst!=NULL;inst=inst->NEXT)
+                                {
+                                        ((custom_gate_instance *)inst->DATA)->gate_name=$1;
+                                        ((custom_gate_instance *)inst->DATA)->befig=BGL_CONTEXT(BEFIG);
+                                }
+
+                        BGL_CONTEXT(CUSTOM_GATE_INSTANCES)=append(BGL_CONTEXT(CUSTOM_GATE_INSTANCES),$4);
+                    }
+                    ;
+
+name_of_module      : Identifier
+                    {
+                        $$ = $1;
+                    }
+                    ;
+
+parameter_assign_option : /* empty */
+                    | parameter_assign
+                    ;
+
+parameter_assign    : '#' '(' expression_list ')'
+                    ;
+
+expression_list     : expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($1.TYPE == BGL_IDENT || $1.TYPE == BGL_EXPR) {
+                            bgl_expr *tmp=(bgl_expr *)mbkalloc(sizeof(bgl_expr));
+                            memcpy(tmp,&$1,sizeof(bgl_expr));
+                            BGL_CONTEXT(NM3LST) = addchain(BGL_CONTEXT(NM3LST), tmp);
+                        }
+                        }
+                    }
+                    | expression_list ',' expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($3.TYPE == BGL_IDENT || $3.TYPE == BGL_EXPR) {
+                            bgl_expr *tmp=(bgl_expr *)mbkalloc(sizeof(bgl_expr));
+                            memcpy(tmp,&$3,sizeof(bgl_expr));
+                            BGL_CONTEXT(NM3LST) = addchain(BGL_CONTEXT(NM3LST), tmp);
+                        }
+                        }
+                    }
+                    ;
+
+module_instance_list : module_instance
+                        {
+                                $$=addchain(NULL,$1);
+                        }
+                    | module_instance_list ',' module_instance
+                        {
+                                $$=addchain($1,$3);
+                        }
+                    ;
+
+module_instance     : name_of_module_instance {BGL_CONTEXT(FLAGS)|=IN_PRIMITIVE;} range_option '(' list_of_module_terminals ')'
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                                custom_gate_instance *ngate=(custom_gate_instance *)mbkalloc(sizeof(custom_gate_instance));
+                                ngate->terminals=BGL_CONTEXT(NM1LST);
+                                $$=ngate;
+
+                        BGL_CONTEXT(NM1LST) = NULL;
+                        freechain(BGL_CONTEXT(NM2LST));
+                        BGL_CONTEXT(NM2LST) = NULL;
+			BGL_CONTEXT(FLAGS)&=~IN_PRIMITIVE;
+                        }
+                    }
+                    | '(' {BGL_CONTEXT(FLAGS)|=IN_PRIMITIVE;} list_of_module_terminals ')'
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                                custom_gate_instance *ngate=(custom_gate_instance *)mbkalloc(sizeof(custom_gate_instance));
+                                ngate->terminals=BGL_CONTEXT(NM1LST);
+                                $$=ngate;
+
+                        BGL_CONTEXT(NM1LST) = NULL;
+                        freechain(BGL_CONTEXT(NM2LST));
+                        BGL_CONTEXT(NM2LST) = NULL;
+			BGL_CONTEXT(FLAGS)&=~IN_PRIMITIVE;
+                        }
+                    }
+                    ;
+
+name_of_module_instance : Identifier
+                    {
+                        $$ = $1;
+                    }
+                    ;
+
+list_of_module_terminals : /* empty */
+                    | terminal_list
+                    | named_port_connection_list
+                    ;
+
+named_port_connection_list : named_port_connection
+                    | named_port_connection_list ',' named_port_connection
+                    ;
+
+named_port_connection : '.' Identifier '(' expression ')'
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($4.TYPE == BGL_IDENT) {
+                            BGL_CONTEXT(NM1LST) = addchain(BGL_CONTEXT(NM1LST), $4.IDENT);
+                            BGL_CONTEXT(NM2LST) = addchain(BGL_CONTEXT(NM2LST), $2);
+                        }
+                        else if ($4.TYPE == BGL_CONCAT) {
+                            chain_list *ptchain;
+                            int         i = 0;
+
+                            for (ptchain = $4.CONCAT; ptchain; ptchain = ptchain->NEXT) i++;
+                            for (ptchain = $4.CONCAT; ptchain; ptchain = ptchain->NEXT) {
+                                BGL_CONTEXT(NM1LST) = addchain(BGL_CONTEXT(NM1LST), ptchain->DATA);
+                                BGL_CONTEXT(NM2LST) = addchain(BGL_CONTEXT(NM2LST), vectorize($2, --i));
+                            }
+                        }
+                        }
+                    }
+                    ;
+
+possible_else:
+                      T_ELSE
+                        {
+                                if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                {
+                                freeExpr(BGL_CONTEXT(PILE_CONDITION)->DATA);
+                                BGL_CONTEXT(PILE_CONDITION)->DATA=createAtom("'1'");
+                                (*(long*)&BGL_CONTEXT(WHERE_ARE_WE)->DATA)&=~WE_ARE_IN_A_CONDITION_STATEMENT;
+                                (*(long*)&BGL_CONTEXT(WHERE_ARE_WE)->DATA)|=WE_ARE_IN_A_CONDITION_ELSE_STATEMENT;
+                                }
+                        }
+                        statement_or_null
+                        |
+                ;
+
+statement           : assignment ';'
+                    | T_IF
+                        '(' expression ')' 
+                        {
+                                int where;
+                                if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                {
+                                if ($3.WIDTH!=1)
+                                      { bgl_error(38, "", bgl_getcontext(parm)); /*EXIT(1);*/}
+
+                                BGL_CONTEXT(PILE_CONDITION)=addchain(BGL_CONTEXT(PILE_CONDITION), $3.LIST_ABL->DATA);
+                                freechain($3.LIST_ABL); if ($3.IDENT!=NULL) freechain($3.IDENT);
+                                where=BGL_CONTEXT(WHERE_ARE_WE)==NULL?0:(int)((long)BGL_CONTEXT(WHERE_ARE_WE)->DATA);
+                                BGL_CONTEXT(WHERE_ARE_WE)=addchain(BGL_CONTEXT(WHERE_ARE_WE),(void *)(long)(where | WE_ARE_IN_A_CONDITION_STATEMENT));
+                                }
+                        }
+                        statement_or_null
+                        possible_else
+                        {
+                                if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                {
+                                  freeExpr(BGL_CONTEXT(PILE_CONDITION)->DATA);
+                                  BGL_CONTEXT(PILE_CONDITION)=delchain(BGL_CONTEXT(PILE_CONDITION),BGL_CONTEXT(PILE_CONDITION));
+                                  BGL_CONTEXT(WHERE_ARE_WE)=delchain(BGL_CONTEXT(WHERE_ARE_WE),BGL_CONTEXT(WHERE_ARE_WE));
+                                }
+                        }
+                    | T_CASE '(' expression ')' case_item_list T_ENDCASE
+                    | T_CASEZ '(' expression ')' case_item_list T_ENDCASE
+                    | T_FOR '(' assignment ';' expression ';' assignment ')' statement
+                    | T_DISABLE Identifier ';'
+                    | T_FOREVER statement
+                    | T_REPEAT '(' expression ')' statement
+                    | T_WHILE '(' expression ')' statement
+                    | delay_or_event_control 
+                        {
+                                int where,val;
+                                chain_list *stable_part;
+                                if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                {
+                                if ($1.type==0)
+                                  avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"254");
+                                // EXIT(26);
+
+                                if (BGL_CONTEXT(CURRENT_EDGE_ABL)!=NULL)
+                                  avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"255");
+                                // EXIT(67);
+
+                                // recherche not stable
+                                where=0;
+                                bgl_search_stable((chain_list *)$1.u.expr.LIST_ABL->DATA,&stable_part,&where);
+                                
+                                if (where>1)
+                                  avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"256");
+                                  // EXIT(68);
+                                else if (where==1)
+                                        {
+                                        BGL_CONTEXT(CURRENT_EDGE_ABL)=stable_part;
+#ifdef BGL_DEBUG
+                                        printf("STABLE:");displayExpr(stable_part);
+#endif
+                                        }
+                                val=BGL_CONTEXT(WHERE_ARE_WE)==NULL?0:(int)((long)BGL_CONTEXT(WHERE_ARE_WE)->DATA);
+                                if (where==1)
+                                        BGL_CONTEXT(WHERE_ARE_WE)=addchain(BGL_CONTEXT(WHERE_ARE_WE),(void *)(long)(val | WE_ARE_IN_A_REGISTER_BLOCK));
+                                else
+                                        BGL_CONTEXT(WHERE_ARE_WE)=addchain(BGL_CONTEXT(WHERE_ARE_WE),(void *)((long)(val)));    
+                                }
+                        }
+                        statement_or_null 
+                        {
+                                if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                {
+                                BGL_CONTEXT(WHERE_ARE_WE)=delchain(BGL_CONTEXT(WHERE_ARE_WE),BGL_CONTEXT(WHERE_ARE_WE));
+                                freeExpr($1.u.expr.LIST_ABL->DATA);
+                                freechain($1.u.expr.LIST_ABL); if ($1.u.expr.IDENT!=NULL) freechain($1.u.expr.IDENT);
+                                BGL_CONTEXT(CURRENT_EDGE_ABL)=NULL;
+                                }
+                        }
+                    | statement_group
+                    | task_enable ';'
+                    | system_task_enable ';'
+                    | T_ASSIGN assignment ';'
+                    | T_DEASSIGN lvalue ';'
+                    ;
+
+statement_or_null   : statement
+                    | ';'
+                    ;
+
+assignment          : lvalue '=' expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                                if ($3.TYPE==BGL_IF)
+                                {
+                                        DirectIFAffect($1, (bgl_expr *)$3.LIST_ABL->DATA, (bgl_expr *)$3.LIST_ABL->NEXT->DATA, (bgl_expr *)$3.LIST_ABL->NEXT->NEXT->DATA, BGL_CONTEXT(CURRENT_DELAY), parm);
+                                        mbkfree($3.LIST_ABL->DATA); mbkfree($3.LIST_ABL->NEXT->DATA); mbkfree($3.LIST_ABL->NEXT->NEXT->DATA);
+                                }
+                                else
+                                {
+                                 if ($3.TYPE==BGL_RESULT)
+                                        {
+                                                if ($3.RESULT!=0 && $3.RESULT!=1)
+                                                        { bgl_error(91, "Unhandled value", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                                                $3.TYPE=BGL_EXPR;
+                                                $3.LIST_ABL=addchain(NULL,$3.RESULT==0?createAtom("'0'"):createAtom("'1'"));
+                                                $3.IDENT=NULL;
+                                                $3.WIDTH=1;
+                                        }
+                                        SimpleAffect($1,&$3, BGL_CONTEXT(CURRENT_DELAY),parm);
+                                }
+                        }
+                    }
+                    | lvalue '=' delay_or_event_control expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                                if ($3.type!=0)
+                                        { bgl_error(200, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+
+                                if ($4.TYPE==BGL_IF)
+                                {
+                                        DirectIFAffect($1, (bgl_expr *)$4.LIST_ABL->DATA, (bgl_expr *)$4.LIST_ABL->NEXT->DATA, (bgl_expr *)$4.LIST_ABL->NEXT->NEXT->DATA,BGL_CONTEXT(CURRENT_DELAY), parm);
+                                        mbkfree($4.LIST_ABL->DATA); mbkfree($4.LIST_ABL->NEXT->DATA); mbkfree($4.LIST_ABL->NEXT->NEXT->DATA);
+                                }
+                                else
+                                {
+                                 if ($4.TYPE==BGL_RESULT)
+                                        {
+                                                if ($4.RESULT!=0 && $4.RESULT!=1)
+                                                        { bgl_error(91, "Unhandled value", bgl_getcontext(parm)); /*EXIT (1); */}
+                                                $4.TYPE=BGL_EXPR;
+                                                $4.LIST_ABL=addchain(NULL,$4.RESULT==0?createAtom("'0'"):createAtom("'1'"));
+                                                $4.IDENT=NULL;
+                                                $4.WIDTH=1;
+                                        }
+                                        SimpleAffect($1,&$4,BGL_CONTEXT(CURRENT_DELAY),parm);
+                                }
+                        }
+                    }
+                    | lvalue T_LESS_THAN_OR_EQUAL_TO expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                                if ($3.TYPE==BGL_IF)
+                                {
+                                        DirectIFAffect($1, (bgl_expr *)$3.LIST_ABL->DATA, (bgl_expr *)$3.LIST_ABL->NEXT->DATA, (bgl_expr *)$3.LIST_ABL->NEXT->NEXT->DATA, BGL_CONTEXT(CURRENT_DELAY), parm);
+                                        mbkfree($3.LIST_ABL->DATA); mbkfree($3.LIST_ABL->NEXT->DATA); mbkfree($3.LIST_ABL->NEXT->NEXT->DATA);
+                                }
+                                else
+                                {
+                                 if ($3.TYPE==BGL_RESULT)
+                                        {
+                                                if ($3.RESULT!=0 && $3.RESULT!=1)
+                                                        { bgl_error(91, "Unhandled value", bgl_getcontext(parm)); /*EXIT (1); */}
+                                                $3.TYPE=BGL_EXPR;
+                                                $3.LIST_ABL=addchain(NULL,$3.RESULT==0?createAtom("'0'"):createAtom("'1'"));
+                                                $3.IDENT=NULL;
+                                                $3.WIDTH=1;
+                                        }
+                                        SimpleAffect($1,&$3, BGL_CONTEXT(CURRENT_DELAY),parm);
+                                }
+                        }
+                    }
+                    | lvalue T_LESS_THAN_OR_EQUAL_TO delay_or_event_control expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                                if ($3.type!=0)
+                                        { bgl_error(200, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+
+                                if ($4.TYPE==BGL_IF)
+                                {
+                                        DirectIFAffect($1, (bgl_expr *)$4.LIST_ABL->DATA, (bgl_expr *)$4.LIST_ABL->NEXT->DATA, (bgl_expr *)$4.LIST_ABL->NEXT->NEXT->DATA,BGL_CONTEXT(CURRENT_DELAY), parm);
+                                        mbkfree($4.LIST_ABL->DATA); mbkfree($4.LIST_ABL->NEXT->DATA); mbkfree($4.LIST_ABL->NEXT->NEXT->DATA);
+                                }
+                                else
+                                {
+                                 if ($4.TYPE==BGL_RESULT)
+                                        {
+                                                if ($4.RESULT!=0 && $4.RESULT!=1)
+                                                        { bgl_error(91, "Unhandled value", bgl_getcontext(parm)); /*EXIT (1); */}
+                                                $4.TYPE=BGL_EXPR;
+                                                $4.LIST_ABL=addchain(NULL,$4.RESULT==0?createAtom("'0'"):createAtom("'1'"));
+                                                $4.IDENT=NULL;
+                                                $4.WIDTH=1;
+                                        }
+                                        SimpleAffect($1,&$4,BGL_CONTEXT(CURRENT_DELAY),parm);
+                                }
+                        }
+                    }
+                    ;
+
+case_item_list      : case_item
+                    | case_item_list case_item
+                    ;
+
+case_item           : expression_list ':' statement_or_null
+                    | T_DEFAULT ':' statement_or_null
+                    | T_DEFAULT statement_or_null
+                    ;
+                    
+statement_group     : T_BEGIN statement_list T_END
+                    | T_BEGIN ':' Identifier block_decl_list statement_list T_END
+                    ;
+
+statement_list      : /* empty */
+                    | statement_list statement
+                    ;
+
+block_decl_list     : /* empty */
+                    | block_decl_list block_decl
+                    ;
+
+block_decl          : parameter_decl
+                    | reg_decl
+                    | integer_decl
+                    ;
+
+lvalue              : identifier_hopt
+                    {
+                        int left,right;
+                        bgldecl_list *whoiam;
+                        int i,inc=1;
+                        char extname[200];
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ((whoiam=(bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), $1, BGL_CONTEXT(FIGNAME), BGL_PNTDFN)) == 0) {
+                                bgl_error(17, $1, bgl_getcontext(parm)); /* EXIT (1);*/
+                            }
+
+                        if (whoiam==(bgldecl_list *)1)
+                        { // a devectoriser
+                                left=beh_chktab(BGL_CONTEXT(HSHTAB), $1, BGL_CONTEXT(FIGNAME), BGL_LFTDFN);
+                                right=beh_chktab(BGL_CONTEXT(HSHTAB), $1, BGL_CONTEXT(FIGNAME), BGL_RGTDFN);
+
+                                $$=NULL;
+                                if (left >= right)
+                                        inc = -1;
+
+                                for (i = left; i != (right + inc); i += inc)
+                                {
+                                        sprintf(extname, "%s %d", $1, i);
+#ifdef BGL_DEBUG
+                                        printf("- lval = [] %s\n",extname);
+#endif
+                                        $$=addchain($$,
+                                                (bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), namealloc(extname), BGL_CONTEXT(FIGNAME), BGL_PNTDFN));
+                                }
+                        }
+                        else
+                        {
+                                $$=addchain(NULL,
+                                                (bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), $1, BGL_CONTEXT(FIGNAME), BGL_PNTDFN));
+#ifdef BGL_DEBUG
+                                printf("- lval = %s\n",$1);
+#endif
+                        }
+                        }
+                    }
+                    | identifier_hopt '[' expression ']'
+                    {
+                        bgldecl_list *whoiam;
+                        char extname[200];
+                        
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($3.TYPE == BGL_RESULT && $1 != NULL) {
+                                sprintf(extname, "%s %d", $1, $3.RESULT);
+
+                                if ((whoiam=(bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), namealloc(extname), BGL_CONTEXT(FIGNAME), BGL_PNTDFN)) == 0) 
+                                {
+                                        bgl_error(17, extname, bgl_getcontext(parm));/* EXIT (1);*/
+                                }
+#ifdef BGL_DEBUG
+                                printf("- lval = %s\n",extname);
+#endif
+                                $$=addchain(NULL,
+                                        (bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), namealloc(extname), BGL_CONTEXT(FIGNAME), BGL_PNTDFN));
+                        }
+                        else {
+                                        bgl_error(18, "", bgl_getcontext(parm)); /*EXIT (1);*/
+                        }
+                        }
+                    }
+                    | concatenation
+                    {
+                        chain_list *cl,*cl0;
+                        bgl_expr *b;
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($1.TYPE!=BGL_CONCAT)
+                                        { bgl_error(18, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+
+                        for (cl=$1.CONCAT;cl!=NULL;cl=cl->NEXT)
+                        {
+                                b=(bgl_expr *)cl->DATA;
+                                if (b->TYPE!=BGL_IDENT)
+                                {
+                                        bgl_error(31, "", bgl_getcontext(parm)); /*EXIT (1);*/
+                                }
+                        }
+                        cl=NULL;
+                        for (cl0=$1.CONCAT;cl0!=NULL;cl0=cl0->NEXT)
+                        {
+                                cl=append(cl, ((bgl_expr *)(cl0->DATA))->IDENT);
+                        }
+                        cl=reverse(cl);
+                        $$=NULL;
+
+                        for (cl0=cl;cl0!=NULL;cl0=cl0->NEXT) 
+                        {
+                                $$=addchain($$, (bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), (char *)cl0->DATA, BGL_CONTEXT(FIGNAME), BGL_PNTDFN));
+#ifdef BGL_DEBUG
+                                printf("- lval = [c] %s\n",(char *)cl0->DATA);
+#endif
+                        }
+
+                        for (cl=$1.CONCAT;cl!=NULL;cl=cl->NEXT) mbkfree(cl->DATA);
+                        freechain($1.CONCAT);
+                        }
+                    }
+                    ;
+
+expression          : primary
+                    {
+                        memcpy(&$$,&$1,sizeof(bgl_expr));
+                    }
+                    | T_MINUS primary %prec T_UNARY_OPERATOR
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($2.TYPE == BGL_RESULT) {
+                                $$.RESULT = -$2.RESULT;
+                                $$.TYPE = BGL_RESULT;
+                        }
+                        }
+                    }
+                    | T_LOGICAL_NOT primary %prec T_UNARY_OPERATOR
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$2,parm);
+                        if ($2.WIDTH!=1)
+                                { bgl_error(38, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+
+                        $$.TYPE = BGL_EXPR;
+                        $$.IDENT=NULL;
+                        $$.LIST_ABL = addchain(NULL, notExpr($2.LIST_ABL->DATA));
+                        $$.WIDTH=1;
+                        freechain($2.LIST_ABL); if ($2.IDENT!=NULL) freechain($2.IDENT);
+                        }
+                    }
+                    | T_BITWISE_NOT primary %prec T_UNARY_OPERATOR
+                    {
+                        int i;
+                        chain_list *cl;
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$2,parm);
+                        $$.TYPE = BGL_EXPR;
+                        for (i=0,$$.LIST_ABL=NULL,cl=$2.LIST_ABL;i<$2.WIDTH;i++,cl=cl->NEXT)
+                        {
+                                $$.LIST_ABL = addchain($$.LIST_ABL, notExpr(cl->DATA));
+                        }
+                        $$.WIDTH=$2.WIDTH;      
+                        $$.IDENT=NULL;
+                        freechain($2.LIST_ABL); if ($2.IDENT!=NULL) freechain($2.IDENT);
+                        }
+                    }
+                    | T_BITWISE_AND primary %prec T_UNARY_OPERATOR
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$2,parm);
+                        $$.TYPE = BGL_EXPR;
+                        UnaryBitwise(AND, &$$, &$2);
+                        $$.IDENT=NULL;
+                        }
+                    }
+                    | T_BITWISE_OR primary %prec T_UNARY_OPERATOR
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$2,parm);
+                        $$.TYPE = BGL_EXPR;
+                        UnaryBitwise(OR, &$$, &$2);
+                        $$.IDENT=NULL;
+                        }
+                    }
+                    | T_BITWISE_NAND primary %prec T_UNARY_OPERATOR
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$2,parm);
+                        $$.TYPE = BGL_EXPR;
+                        UnaryBitwise(NAND, &$$, &$2);
+                        $$.IDENT=NULL;
+                        }
+                    }
+                    | T_BITWISE_NOR primary %prec T_UNARY_OPERATOR
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$2,parm);
+                        $$.TYPE = BGL_EXPR;
+                        UnaryBitwise(NOR, &$$, &$2);
+                        $$.IDENT=NULL;
+                        }
+                    }
+                    | T_BITWISE_EXOR primary %prec T_UNARY_OPERATOR
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$2,parm);
+                        $$.TYPE = BGL_EXPR;
+                        UnaryBitwise(XOR, &$$, &$2);
+                        $$.IDENT=NULL;
+                        }
+                    }
+                    | T_BITWISE_EXNOR primary %prec T_UNARY_OPERATOR
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$2,parm);
+                        $$.TYPE = BGL_EXPR;
+                        UnaryBitwise(NXOR, &$$, &$2);
+                        $$.IDENT=NULL;
+                        }
+                    }
+                    | expression T_PLUS expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+
+                        if ($1.TYPE == BGL_RESULT && $3.TYPE == BGL_RESULT) {
+                                $$.RESULT = $1.RESULT+$3.RESULT;
+                                $$.TYPE = BGL_RESULT;
+                        }
+                        else
+                                $$.TYPE = 0;
+                        }
+                    }
+                    | expression T_MINUS expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($1.TYPE == BGL_RESULT && $3.TYPE == BGL_RESULT) {
+                                $$.RESULT = $1.RESULT-$3.RESULT;
+                                $$.TYPE = BGL_RESULT;
+                        }
+                        else
+                                $$.TYPE = 0;
+                        }
+                    }
+                    | expression T_MULTIPLY expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($1.TYPE == BGL_RESULT && $3.TYPE == BGL_RESULT) {
+                                $$.RESULT = $1.RESULT*$3.RESULT;
+                                $$.TYPE = BGL_RESULT;
+                        }
+                        else
+                                $$.TYPE = 0;
+                        }
+                    }
+                    | expression T_DIVIDE expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($1.TYPE == BGL_RESULT && $3.TYPE == BGL_RESULT) {
+                                $$.RESULT = $1.RESULT/$3.RESULT;
+                                $$.TYPE = BGL_RESULT;
+                        }
+                        else
+                                $$.TYPE = 0;
+                        }
+                    }
+                    | expression T_MODULO expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($1.TYPE == BGL_RESULT && $3.TYPE == BGL_RESULT) {
+                                $$.RESULT = $1.RESULT % $3.RESULT;
+                                $$.TYPE = BGL_RESULT;
+                        }
+                        else
+                                $$.TYPE = 0;
+                        }
+                    }
+                    | expression T_EQUALS expression
+                    {
+                        int code;
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$1,parm);
+                        bgl_CheckType(&$3,parm);
+                        code=bgl_compare(0, &$$, &$1, &$3);
+                        freechain($1.LIST_ABL); if ($1.IDENT!=NULL) freechain($1.IDENT);
+                        freechain($3.LIST_ABL); if ($3.IDENT!=NULL) freechain($3.IDENT);
+                        $$.IDENT=NULL;
+                        switch(code)
+                        {
+                         case -1:
+                                bgl_error(90,"",bgl_getcontext(parm)); /*EXIT(1);*/
+                         case -2:
+                                bgl_error(91,"Condition is always false",bgl_getcontext(parm)); /*EXIT(1)*/;
+                         case -3: 
+                                bgl_error(91,"Condition is always true",bgl_getcontext(parm)); /*EXIT(1)*/;
+                         case 0:
+                                $$.TYPE = BGL_EXPR;
+                        }
+                        }
+                    }
+                    | expression T_DOES_NOT_EQUAL expression
+                    {
+                        int code;
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$1,parm);
+                        bgl_CheckType(&$3,parm);
+                        code=bgl_compare(1, &$$, &$1, &$3);
+                        $$.IDENT=NULL;
+                        freechain($1.LIST_ABL); if ($1.IDENT!=NULL) freechain($1.IDENT);
+                        freechain($3.LIST_ABL); if ($3.IDENT!=NULL) freechain($3.IDENT);
+                        switch(code)
+                        {
+                         case -1:
+                                bgl_error(90,"",bgl_getcontext(parm)); /*EXIT(1);*/
+                         case -2:
+                                bgl_error(91,"Condition is always false",bgl_getcontext(parm)); /*EXIT(1)*/;
+                         case -3: 
+                                bgl_error(91,"Condition is always true",bgl_getcontext(parm));/* EXIT(1);*/
+                         case 0:
+                                $$.TYPE = BGL_EXPR;
+                        }
+                        }       
+                    }
+                    | expression T_IDENTICAL expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    | expression T_NOT_IDENTICAL expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    | expression T_LOGICAL_AND expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$1,parm);
+                        bgl_CheckType(&$3,parm);
+                        if ($1.WIDTH!=1) 
+                                { bgl_error(38, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+
+                        bgl_NewOperation(&$$, AND, &$3, &$1);
+                        $$.IDENT=NULL;
+                        $$.TYPE=BGL_EXPR;
+                        }
+                    }
+                    | expression T_LOGICAL_OR expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$1,parm);
+                        bgl_CheckType(&$3,parm);
+                        if ($1.WIDTH!=1) 
+                                { bgl_error(38, "", bgl_getcontext(parm)); /*EXIT (1); */}
+
+                        bgl_NewOperation(&$$, OR, &$3, &$1);
+                        $$.IDENT=NULL;
+                        $$.TYPE=BGL_EXPR;
+                        }
+                    }
+                    | expression T_LESS_THAN expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    | expression T_LESS_THAN_OR_EQUAL_TO expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    | expression T_GREATER_THAN expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    | expression T_GREATER_THAN_OR_EQUAL_TO expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    | expression T_BITWISE_AND expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$1,parm);
+                        bgl_CheckType(&$3,parm);
+                        bgl_NewOperation(&$$, AND, &$3, &$1);
+                        $$.IDENT=NULL;
+                        $$.TYPE=BGL_EXPR;
+                        }
+                    }
+                    | expression T_BITWISE_OR expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$1,parm);
+                        bgl_CheckType(&$3,parm);
+                        bgl_NewOperation(&$$, OR, &$3, &$1);
+                        $$.IDENT=NULL;
+                        $$.TYPE=BGL_EXPR;
+                        }
+                    }
+                    | expression T_BITWISE_EXOR expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$1,parm);
+                        bgl_CheckType(&$3,parm);
+                        bgl_NewOperation(&$$, XOR, &$3, &$1);
+                        $$.IDENT=NULL;
+                        $$.TYPE=BGL_EXPR;
+                        }
+                    }
+                    | expression T_BITWISE_EXNOR expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        bgl_CheckType(&$1,parm);
+                        bgl_CheckType(&$3,parm);
+                        bgl_NewOperation(&$$, NXOR, &$3, &$1);
+                        $$.IDENT=NULL;
+                        $$.TYPE=BGL_EXPR;
+                        }
+                    }
+                    | expression T_SHIFT_LEFT expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($1.TYPE == BGL_RESULT && $3.TYPE == BGL_RESULT) {
+                                $$.RESULT = $1.RESULT<<$3.RESULT;
+                                $$.TYPE = BGL_RESULT;
+                        }
+                        else
+                                $$.TYPE = 0;
+                        }
+                    }
+                    | expression T_SHIFT_RIGHT expression
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($1.TYPE == BGL_RESULT && $3.TYPE == BGL_RESULT) {
+                                $$.RESULT = $1.RESULT>>$3.RESULT;
+                                $$.TYPE = BGL_RESULT;
+                        }
+                        else
+                                $$.TYPE = 0;
+                        }
+                    }
+                    | expression '?' expression ':' expression
+                    {
+                        bgl_expr *tmp;
+                        $$.TYPE = BGL_IF;
+                        tmp=(bgl_expr *)mbkalloc(sizeof(bgl_expr)); memcpy(tmp,&$5,sizeof(bgl_expr));
+                        $$.LIST_ABL=addchain(NULL,tmp);
+                        tmp=(bgl_expr *)mbkalloc(sizeof(bgl_expr)); memcpy(tmp,&$3,sizeof(bgl_expr));
+                        $$.LIST_ABL=addchain($$.LIST_ABL,tmp);
+                        tmp=(bgl_expr *)mbkalloc(sizeof(bgl_expr)); memcpy(tmp,&$1,sizeof(bgl_expr));
+                        $$.LIST_ABL=addchain($$.LIST_ABL,tmp);
+                    }
+                    | StringLit
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    ;
+
+primary             : IntegerLit
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($1.size==0)
+                        {
+                                $$.TYPE = BGL_RESULT;
+                                $$.RESULT = $1.value;
+                        }
+                        else
+                        {
+                                char cons[200],tcons[4];
+                                int i,tmp;
+                                cons[$1.size]='\0';
+                                tmp=$1.value;
+                                if (tmp==-1234567890)
+                                        for (i=$1.size-1;i>=0;i--) cons[i]='z';
+                                else
+                                        for (i=$1.size-1;i>=0;i--,tmp>>=1) cons[i]='0'+(tmp & 1);
+
+                                $$.LIST_ABL=NULL;
+                                $$.TYPE = BGL_EXPR;
+                                $$.IDENT=NULL;
+                                $$.WIDTH=$1.size;
+
+                                strcpy(tcons,"'?'");
+
+                                for (i = 0; i <$1.size; i++)
+                                {
+#ifdef BGL_DEBUG
+                                        printf("- [] '%c'\n",cons[i]);
+#endif
+                                        tcons[1]=cons[i];
+                                        $$.LIST_ABL=addchain($$.LIST_ABL,createAtom(tcons));
+                                }                       
+                        }
+                        }
+                    }
+                    | identifier_hopt
+                    {
+                        int left,right;
+                        bgldecl_list *whoiam;
+                        int i,inc=1;
+                        char extname[200];
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ((whoiam=(bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), $1, BGL_CONTEXT(FIGNAME), BGL_PNTDFN)) == 0) {
+				if (BGL_CONTEXT(FLAGS) & IN_PRIMITIVE)
+				{
+					AddaNewSignalorSignals(bgl_getcontext(parm), $1, -1, -1, ' ');    
+					/* looking for a bug? => should never happen */
+					if ((whoiam=(bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), $1, BGL_CONTEXT(FIGNAME), BGL_PNTDFN)) == 0) 
+                      avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"257");
+					//EXIT(1);
+
+}
+				else
+                                	{ bgl_error(17, $1, bgl_getcontext(parm));
+                                      avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"258");
+                                    /*EXIT(1); */}
+                            }
+
+                        if (whoiam==(bgldecl_list *)1)
+                        { // a devectoriser
+                                left=beh_chktab(BGL_CONTEXT(HSHTAB), $1, BGL_CONTEXT(FIGNAME), BGL_LFTDFN);
+                                right=beh_chktab(BGL_CONTEXT(HSHTAB), $1, BGL_CONTEXT(FIGNAME), BGL_RGTDFN);
+
+                                $$.TYPE = BGL_IDENT;
+                                $$.LIST_ABL=NULL;
+                                $$.WIDTH=0;
+                                $$.IDENT=NULL;
+                                if (left >= right)
+                                        inc = -1;
+
+                                for (i = left; i != (right + inc); i += inc)
+                                {
+                                        sprintf(extname, "%s %d", $1, i);
+#ifdef BGL_DEBUG
+                                        printf("- [] %s\n",extname);
+#endif
+                                        $$.IDENT=addchain($$.IDENT,namealloc(extname));
+                                        $$.LIST_ABL=addchain($$.LIST_ABL,createAtom(extname));
+                                        $$.WIDTH++;
+                                        whoiam=(bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), namealloc(extname), BGL_CONTEXT(FIGNAME), BGL_PNTDFN);
+//                                      whoiam->OBJTYPE|=SIG_IS_IN;
+                                }
+                        }
+                        else
+                        {
+                                $$.TYPE = BGL_IDENT;
+                                $$.IDENT=addchain(NULL,namealloc($1));
+                                $$.LIST_ABL=addchain(NULL,createAtom($1));
+                                $$.WIDTH=1;
+#ifdef BGL_DEBUG
+                                printf("- %s\n",$1);
+#endif
+//                              whoiam->OBJTYPE|=SIG_IS_IN;
+                        }
+                        }
+                    }
+                    | identifier_hopt '[' expression ']'
+                    {
+                        bgldecl_list *whoiam;
+                        char extname[200];
+
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {                       
+                        if ($3.TYPE == BGL_RESULT && $1 != NULL) {
+                                sprintf(extname, "%s %d", $1, $3.RESULT);
+
+                                if ((whoiam=(bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), namealloc(extname), BGL_CONTEXT(FIGNAME), BGL_PNTDFN)) == 0) 
+                                {
+				 if (BGL_CONTEXT(FLAGS) & IN_PRIMITIVE)
+				 {
+					AddaNewSignalorSignals(bgl_getcontext(parm), namealloc(extname), -1, -1, ' ');    
+					/* looking for a bug? => should never happen */
+					if ((whoiam=(bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), namealloc(extname), BGL_CONTEXT(FIGNAME), BGL_PNTDFN)) == 0) 
+                      avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"259");
+					//EXIT(1);
+				 }
+				 else
+                                        { bgl_error(17, extname, bgl_getcontext(parm)); /*EXIT(1);*/ }
+                                }
+
+                                $$.TYPE = BGL_IDENT;
+#ifdef BGL_DEBUG
+                                printf("- %s\n",extname);
+#endif
+                                $$.IDENT=addchain(NULL,namealloc(extname));
+                                $$.LIST_ABL=addchain(NULL,createAtom(extname));
+                                $$.WIDTH=1;
+//                              whoiam->OBJTYPE|=SIG_IS_IN;
+                        }
+                        else {
+                                bgl_error(18, "", bgl_getcontext(parm)); /*EXIT(1);*/
+                        }
+                        }
+                    }
+                    | identifier_hopt '[' expression ':' expression ']'
+                    {
+                        int left,right,i,inc=1;
+                        bgldecl_list *whoiam;
+                        char extname[200];
+                        // bornes inf
+
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if ($3.TYPE!= BGL_RESULT || $5.TYPE!= BGL_RESULT)
+                                { bgl_error(18, "", bgl_getcontext(parm)); /*EXIT(1);*/ }
+
+                        if ((whoiam=(bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), $1, BGL_CONTEXT(FIGNAME), BGL_PNTDFN)) == 0) 
+                        {
+				if (BGL_CONTEXT(FLAGS) & IN_PRIMITIVE)
+				{
+					AddaNewSignalorSignals(bgl_getcontext(parm), $1,$3.RESULT , $5.RESULT, ' ');    
+					/* looking for a bug? => should never happen */
+					if ((whoiam=(bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), $1, BGL_CONTEXT(FIGNAME), BGL_PNTDFN)) == 0) 
+                      avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"260");
+					//EXIT(1);
+				}
+				else
+                                	{ bgl_error(17, $1, bgl_getcontext(parm));/* EXIT(1);*/ }
+                        }
+                        if (whoiam!=(bgldecl_list *)1) 
+                        {
+                                bgl_error(10, $1, bgl_getcontext(parm)); /*EXIT (1);*/
+                        }
+
+                        left=$3.RESULT;
+                        right=$5.RESULT;
+                        $$.TYPE = BGL_IDENT;
+                        $$.LIST_ABL=NULL;
+                        $$.WIDTH=0;
+                        $$.IDENT=NULL;
+
+                        if (left >= right)
+                                inc = -1;
+
+                        for (i = left; i != (right + inc); i += inc)
+                        {
+                                sprintf(extname, "%s %d", $1, i);
+
+                                if ((whoiam=(bgldecl_list *)beh_chktab(BGL_CONTEXT(HSHTAB), namealloc(extname), BGL_CONTEXT(FIGNAME), BGL_PNTDFN)) == 0) 
+                                {
+                                        bgl_error(17, extname, bgl_getcontext(parm)); /*EXIT (1);*/
+                                }
+#ifdef BGL_DEBUG
+                                printf("- [] %s\n",extname);
+#endif
+                                $$.IDENT=addchain($$.IDENT,namealloc(extname));
+                                $$.LIST_ABL=addchain($$.LIST_ABL,createAtom(extname));
+                                $$.WIDTH++;
+//                              whoiam->OBJTYPE|=SIG_IS_IN;
+                        }
+                        }
+                    }
+                    | concatenation
+                    {   
+                        chain_list *cl;
+                        bgl_expr *b;
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                         if ($1.TYPE!=BGL_CONCAT)
+                                { bgl_error(18, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+
+                        for (cl=$1.CONCAT;cl!=NULL;cl=cl->NEXT)
+                        {
+                                b=(bgl_expr *)cl->DATA;
+                                if (b->TYPE!=BGL_EXPR && b->TYPE!=BGL_IDENT)
+                                  avt_errmsg(BGL_ERRMSG,"000",AVT_FATAL,"261");
+                                        /*EXIT(69);*/
+                        }
+                        $$.TYPE=BGL_EXPR;
+                        $$.WIDTH=0;
+                        $$.LIST_ABL=NULL;
+                        $$.IDENT=NULL;
+                        for (cl=$1.CONCAT;cl!=NULL;cl=cl->NEXT)
+                        {
+                                $$.LIST_ABL=append($$.LIST_ABL, ((bgl_expr *)(cl->DATA))->LIST_ABL);
+                                if (((bgl_expr *)(cl->DATA))->IDENT!=NULL)
+                                        freechain(((bgl_expr *)(cl->DATA))->IDENT);
+                        }
+                        for (cl=$$.LIST_ABL,$$.WIDTH=0;cl!=NULL;cl=cl->NEXT,$$.WIDTH++) ;
+                        for (cl=$1.CONCAT;cl!=NULL;cl=cl->NEXT) mbkfree(cl->DATA);
+                        freechain($1.CONCAT);
+                        }
+                    }
+                    | multiple_concatenation
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    | function_call
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    | '(' expression ')'
+                    {
+                        memcpy(&$$,&$2,sizeof(bgl_expr));
+                    }
+                    | MinTypMaxLit
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    | system_call
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    | RealLit
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    ;
+
+identifier_hopt     : Identifier
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                $$ = namealloc($1);
+                    }
+                    | identifier_hopt '.' Identifier
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                    }
+                    ;
+
+concatenation       : '{' expression_list '}'
+                    {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                        {
+                        if (BGL_CONTEXT(NM3LST) != NULL) {
+                            $$.TYPE = BGL_CONCAT;
+                            $$.CONCAT = BGL_CONTEXT(NM3LST);
+                            BGL_CONTEXT(NM3LST) = NULL;
+                        }
+                        else { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                        }
+                    }
+                    ;
+
+multiple_concatenation : '{' expression '{' expression_list '}' '}'
+                    ;
+
+function_call       : Identifier '(' expression_list ')'
+                    {
+                    }
+                    ;
+
+system_call         : SystemIdentifier '(' expression_list ')'
+                    {
+                    }
+                    | SystemIdentifier
+                    {
+                    }
+                    ;
+
+task_enable         : Identifier '(' expression_list ')'
+                    {
+                    }
+                    | Identifier
+                    {
+                    }
+                    ;
+
+system_task_enable  : SystemIdentifier '(' expression_list ')'
+                    {
+                    }
+                    | SystemIdentifier
+                    {
+                    }
+                    ;
+
+delay_option        : /* empty */
+                    | delay
+                    ;
+
+delay               : '#' IntegerLit
+                        {
+                                BGL_CONTEXT(CURRENT_DELAY)=$2.value;
+                        }
+                    | '#' RealLit
+                        {
+                                BGL_CONTEXT(CURRENT_DELAY)=(int)$2;
+                        }
+                    | '#' Identifier
+                        {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                        }
+                    | '#' '(' expression_list ')'
+                        {
+                        if (!(BGL_CONTEXT(FLAGS) & DONTCARE))
+                                { bgl_error(90, "", bgl_getcontext(parm)); /*EXIT (1);*/ }
+                        }
+                    ;
+
+specify_block       : T_SPECIFY {BGL_CONTEXT(FLAGS)|=DONTCARE;} specify_item_list {BGL_CONTEXT(FLAGS)&=~DONTCARE;} T_ENDSPECIFY
+                    ;
+
+specify_item_list   : /* empty */
+                    | specify_item_list specify_item
+                    ;
+
+specify_item        : specparam_declaration
+                    | path_declaration
+                    | system_timing_check
+                    ;
+
+specparam_declaration : T_SPECPARAM assignment_list ';'
+                    ;
+
+path_declaration    : simple_path_declaration ';'
+                    | edge_sensitive_path_declaration ';'
+                    | state_dependent_path_declaration ';'
+                    ;
+
+list_of_path_inputs : specify_input_terminal_descriptor
+                    | list_of_path_inputs ',' specify_input_terminal_descriptor
+                    ;
+
+specify_input_terminal_descriptor : Identifier
+                    {
+                    }
+                    | Identifier '[' expression ']'
+                    {
+                    }
+                    | Identifier '[' expression ':' expression ']'
+                    {
+                    }
+                    ;
+
+list_of_path_outputs : specify_output_terminal_descriptor
+                    | list_of_path_outputs ',' specify_output_terminal_descriptor
+                    ;
+
+specify_output_terminal_descriptor : Identifier
+                    {
+                    }
+                    | Identifier '[' expression ']'
+                    {
+                    }
+                    | Identifier '[' expression ':' expression ']'
+                    {
+                    }
+                    ;
+
+path_delay_value    : path_delay_expression
+                    | '(' path_delay_expression ',' path_delay_expression ')'
+                    | '(' path_delay_expression ',' path_delay_expression ',' path_delay_expression ')'
+                    | '(' path_delay_expression ',' path_delay_expression ',' path_delay_expression ',' path_delay_expression ',' path_delay_expression ',' path_delay_expression ')'
+                    ;
+
+path_delay_expression : expression
+                    {
+                    }
+                    ;
+
+polarity_operator   : /* empty */
+                    | T_PLUS
+                    | T_MINUS
+                    ;
+
+simple_path_declaration :
+                      parallel_path_description '=' path_delay_value
+                    | full_path_description '=' path_delay_value
+                    ;
+
+parallel_path_description :
+                      '(' path_start T_LEADTO list_of_path_outputs ')'
+                    ;
+
+full_path_description :
+                      '(' path_start T_ALLPATH list_of_path_outputs ')'
+                    ;
+
+path_start          : edge_identifier list_of_path_inputs polarity_operator
+                    ;
+
+edge_sensitive_path_declaration :
+                      parallel_edge_sensitive_path_description '=' path_delay_value
+                    | full_edge_sensitive_path_description '=' path_delay_value
+                    ;
+
+parallel_edge_sensitive_path_description :
+                      '(' path_start T_LEADTO '(' list_of_path_outputs polarity_operator ':' expression ')' ')'
+                    ;
+
+full_edge_sensitive_path_description :
+                      '(' path_start T_ALLPATH '(' list_of_path_outputs polarity_operator ':' expression ')' ')'
+                    ;
+
+edge_identifier     : /* empty */
+                    | T_POSEDGE
+                    | T_NEGEDGE
+                    ;
+
+state_dependent_path_declaration :
+                      T_IF '(' expression ')' simple_path_declaration
+                    | T_IF '(' expression ')' edge_sensitive_path_declaration
+                    | T_IFNONE simple_path_declaration
+                    ;
+
+system_timing_check : SYS_SETUP
+                    | SYS_HOLD
+                    | SYS_SETUPHOLD
+                    | SYS_SKEW
+                    | SYS_RECOVERY
+                    | SYS_PERIOD
+                    | SYS_WIDTH
+                    ;
+%%
+
+/* ###--------------------------------------------------------------### */
+/*  function : yyerror                                                  */
+/* ###--------------------------------------------------------------### */
+
+int
+bgl_bcomperror(char *str, bgl_bcompcontext *context)
+{
+    context->ERRFLG++;
+    
+    avt_errmsg(BGL_ERRMSG,"037",AVT_ERROR,context->FILENAME,context->LINENUM,str);
+//    fprintf(stderr, "`%s` Error line %d : %s\n", context->FILENAME, context->LINENUM, str);
+    return 1;
+}
+
+/* ###--------------------------------------------------------------### */
+/*  function : yyclean                                                  */
+/* ###--------------------------------------------------------------### */
+
+void
+bgl_bcompclean(bgl_bcompcontext *context)
+{
+    if (context->HSHTAB != NULL) {
+        beh_fretab(context->HSHTAB);
+        context->HSHTAB = NULL;
+    }
+    if (BGL_CASE_SENSITIVE && BGL_CASEHT != NULL) {
+        bgl_delcaseht(BGL_CASEHT);
+        BGL_CASEHT = NULL;
+    }
+}
+

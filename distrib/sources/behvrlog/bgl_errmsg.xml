@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="bgl">
+
+<err>
+    <lib>BGL-</lib><num>000</num>
+    <msg>Internal error %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>001</num>
+	<msg>`%s` line %d :`%s` is incompatible with the entity name\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>002</num>
+	<msg>`%s` line %d :bad entity declaration\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>003</num>
+	<msg>`%s` line %d :bad port clause declaration\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>004</num>
+	<msg>`%s` line %d :port `%s` already declared\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>005</num>
+	<msg>`%s` line %d :illegal port declaration `%s` (mode, type, guard mark)\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>006</num>
+	<msg>`%s` line %d :bad port declaration\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>007</num>
+	<msg>`%s` line %d :`%s` is incompatible with the architecture name\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>008</num>
+	<msg>`%s` line %d :bad architecture declaration\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>009</num>
+	<msg>`%s` line %d :illegal declaration\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>010</num>
+	<msg>`%s` line %d :signal `%s` already declared\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>011</num>
+	<msg>`%s` line %d :illegal signal declaration `%s` (type, guard mark)\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>012</num>
+	<msg>`%s` line %d :component `%s` already declared\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>013</num>
+	<msg>`%s` line %d :instance `%s` already declared\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>014</num>
+	<msg>`%s` line %d :`%s` unknown component\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>015</num>
+	<msg>`%s` line %d :illegal usage of implicit port map description\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>016</num>
+	<msg>`%s` line %d :`%s` unknown local port\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>017</num>
+	<msg>`%s` line %d :`%s` unknown port or signal\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>018</num>
+	<msg>`%s` line %d :illegal concurrent statement\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>019</num>
+	<msg>`%s` line %d :bad signal association\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>020</num>
+	<msg>`%s` line %d :null array not supported\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>021</num>
+	<msg>`%s` line %d :illegal constraint in declaration of type\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>022</num>
+	<msg>`%s` line %d :signal `%s` used out of declared range\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>023</num>
+	<msg>`%s` line %d :width or/and type mismatch\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>024</num>
+	<msg>`%s` line %d :port `%s` connected to more than one signal\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>025</num>
+	<msg>`%s` line %d :can only assign to/from an external connector\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>026</num>
+	<msg>`%s` line %d :instance %s mismatch with the model\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>027</num>
+	<msg>`%s` line %d :Unhandled feature\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>028</num>
+	<msg>`%s` line %d :%s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>029</num>
+	<msg>Cannot open result file\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>030</num>
+	<msg>Cannot continue further more.\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>031</num>
+	<msg>`%s` line %d :Syntax error\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>032</num>
+	<msg>Too many errors. Cannot continue further more\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>033</num>
+	<msg>File does not exist : %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>034</num>
+	<msg>Abnormal parsing for : %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>035</num>
+	<msg>Connection missing on port `%s`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>036</num>
+	<msg>Consistency checks will be disabled\n</msg>
+	<doc></doc>
+</err>
+<err>
+    <lib>BGL-</lib><num>038</num>
+    <msg>Internal error %s while executing %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+	<lib>BGL-</lib><num>037</num>
+	<msg>`%s` line %d :%s\n</msg>
+	<doc></doc>
+</err>
+    
+</messages>

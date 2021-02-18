@@ -1,0 +1,52 @@
+
+           <StabilitySlackList   *>  stb_GetSlacks  <StabilityFigure  *stbfig>
+       [-from  <nodename>]  [-to  <nodename>]  [-thru_node  <nodename>]  [-dir
+       <dir>]    [-nbslacks    <nb>]   [-margin   <marginval>]   [-noprechlag]
+       [-setuponly] [-holdonly]
+
+           Obsolete but still working:
+           StabilitySlackList  *stb_GetSlacks(StabilityFigure  *stbfig,   char
+       *start, char *end, char *dir, int number, char *mode, TimeValue margin)
+       ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns a list of stability slack objects.
+
+AARRGGUUMMEENNTTSS
+       ssttbbffiigg        Stability figure.
+
+       --ffrroomm {{<<nnooddeennaammee>>}}
+                     DATA VALID start point (clock or input pin).
+
+       --ttoo {{<<nnooddeennaammee>>}}
+                     DATA VALID end point (latch, precharge, output or  direc-
+                     tive node).
+
+       --tthhrruu__nnooddee {{nnooddeennaammee}}
+                     DATA  VALID  access  node when the DATA VALID is an acces
+                     path.
+
+       --ddiirr {{<<ddiirr>>}}  Start and end points transitions, _u, _d, _?. _z or _/ can  be
+                     added to the usual direction to respectively display only
+                     HZ slacks or only non-HZ slacks. Default is _?_?.
+
+       --nnbbssllaacckkss {{<<nnbb>>}}
+                     Maximum  number  of  retreived  setup  and  hold  slacks.
+                     Default is unlimited (_<_n_b_><=0).
+
+       --mmaarrggiinn {{<<mmaarrggiinnvvaall>>}}
+                     Value  below  which  a  setup/hold slack is reported as a
+                     violation. For example, if the margin is  100ps  (100e-12
+                     second),  a  signal  with  a  setup or a hold slack below
+                     100ps will be reported as a violation. Default is _0.
+
+       --nnoopprreecchhllaagg   Removes slacks whose DATA VALID passes  thru  transparent
+                     precharges when DATA VALID is an access.
+
+       --sseettuuppoonnllyy    Retreives only setup slacks.
+
+       --hhoollddoonnllyy     Retreives only hold slacks.
+
+       EEXXAAMMPPLLEE       _s_e_t  _s_l  _[_s_t_b___G_e_t_S_l_a_c_k_s  _$_s_f _-_f_r_o_m _c_k _-_t_o _e_n_d_* _-_s_e_t_u_p_o_n_l_y
+                     _-_n_b_s_l_a_c_k_s _1_0_]
+

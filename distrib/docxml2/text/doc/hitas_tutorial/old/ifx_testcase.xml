@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Lab5. Infineon Test Case</title>
+<p>This lab present the STA of an test-case provided by Infineon MP. It shows how
+to integrate the technology files, generate the database, and perform the STA with multicycle
+paths.</p>
+<section niv='2'><title>Design Description</title>
+<p>See schematic.</p>
+</section>
+<section niv='2'><title>Global Configuration</title>
+<p>The global configuration is similar to the ones showed until now:</p>
+<code>
+<cl>avt_config simPowerSupply 1.9</cl>
+<cl>avt_config tasExitAfterDetailTimingFile yes</cl>
+<cl>avt_config tasGenerateDetailTimingFile yes</cl>
+<cl>avt_config tasGenerateConeFile yes</cl>
+<cl>avt_config simVthHigh 0.8</cl>
+<cl>avt_config simVthLow 0.2</cl>
+<cl>avt_config simSlope 60e-12</cl>
+</code>
+
+</section>
+
+<section niv='2'><title>Technology Integration</title>
+<p>In the present example, the <f>simple_circuit</f> includes all the technology files:</p>
+<code>avt_LoadFile simple_circuit.inc</code>
+</section>
+
+<section niv='2'><title>Database Generation</title>
+<p>The generation launch is done through the command <f>hitas</f>:</p>
+<code>
+<cl>inf_SetFigureName simple_circuit</cl>
+<cl>set_case_analysis 1 bRES</cl>
+<cl>set fig [hitas simple_circuit] </cl>
+</code>
+</section>
+
+<section niv='2'><title>Exercises</title>
+<list>
+<item>Ex 1. With a Tcl script containing SDC statements, generate the INF file corresponding to the 
+<f>vCLK</f> and <f>vIN</f> statements in the <f>simple_circuit.inp</f> file.</item>
+<item>Ex 2. Perform the stability analysis with the GUI and understand the results</item>
+<item>Ex 3. Add <f>set_multicycle_path</f> statements in the script and the in the INF file to suppress violations</item>
+</list>
+</section>
+
+</section>
+
+</chapter>
+

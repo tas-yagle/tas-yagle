@@ -1,0 +1,14 @@
+
+       double stb_GetHoldSlack(StabilityFigure *fig, char *signame, char dir);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns the hold slack value of a given signal. If  there  is  no  hold
+       slack value, -1 is returned.
+
+AARRGGUUMMEENNTTSS
+       ffiigg           Pointer on a stability figure
+
+       ssiiggnnaammee       Name of the signal to consider
+
+       ddiirr           _u, _d or _?; reports slack value for a given transition
+

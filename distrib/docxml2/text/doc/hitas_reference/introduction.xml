@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<intro_title>About this Document</intro_title>
+        <intro>This document explains:<list>
+        <item>The input formats supported</item>
+        <item>How to perform the timing analysis</item>
+        <item>How to browse the timing database</item>
+        <item>The timing database formats</item>
+        <item>User constraints</item>
+        </list></intro>

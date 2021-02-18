@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+<row type='split'><article><index>stbDetailedAnalysis</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Enables multi-switching-windows analysis with the STA engine. 
+The STA engine will use more memory and cpu.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbDetailedGraph</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>The STA engine uses the <f>.dtx</f> file and computes
+switching windows for each point of the timing graph. It is required for crosstalk analysis.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbTraceMode</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>The STA engine displays all intermediary values of the 
+switching windows calculations on th standard output. Useful to see how the relaxation progresses.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbReportFile</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, the STA engine generates a <f>.str</f> timing report file 
+containing details of all setup and hold slacks for reference points.</def></row>
+<row><article><f>no</f></article><def>the STA engine does not generate the <f>.str</f> timing 
+report file</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbOutFile</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>The STA engine generates a <f>.sto</f> switching windows file 
+containing details of the switching windows of reference points.</def></row>
+<row><article><f>no</f></article><def>the STA engine does not generate the <f>.sto</f> switching
+windows file</def></row>
+</glossary>
+</def></row>
+
+<!--<row type='split'><article><index>stbForeignTimeUnit</index></article><def>
+Sets the time unit used in the Synopsys Design Constraint (SDC) files. Corresponds to the Synopsys Liberty 
+time unit. Available values are:
+<glossary width='small'>
+<row><article><f>1ps</f></article><def>Default</def></row>
+<row><article><f>10ps</f></article><def></def></row>
+<row><article><f>100ps</f></article><def></def></row>
+<row><article><f>1ns</f></article><def></def></row>
+</glossary>
+</def></row>-->
+
+<!--<row type='split'><article><index>stbFileFormat</index></article><def>
+Allows the user to specify the input constraint file format for the STA engine. Can be set to <f>stb</f> for the Avertec STB format or to <f>sdc</f> for the Synopsys Design Constraint format.</def></row> 
+
+<row type='split'><article><index>stbForeignConstraintFile</index></article><def>
+Allows the user to specify the name of the input constraint file when this is not in Avertec STB format.</def></row>-->
+
+<row type='split'><article><index>stbSetupOnly</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Only errors due to setup time violations are reported.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbHoldOnly</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Only errors due to hold time violations are reported.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbEnableCommandCheck</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Commands will be checked for violations.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbMonoPhase</index></article><def>
+<glossary width='small'>
+<row><article><f>flip_flop</f></article><def>a latch clocked on the same phase than the latch 
+generating its input data is assumed to be a flip-flop. </def></row>
+<row><article><f>transparent</f></article><def>a latch clocked on the same phase than the latch 
+generating its input data is always transparent. </def></row>
+<row><article><f>errors</f></article><def>a latch clocked on the same phase than the latch 
+generating is input data is not allowed, and an error is reported.</def></row>
+</glossary>
+
+</def></row>
+
+<!--<row type='split'><article><index>stbMultipleMemoryCommand</index></article><def>If set to <f>yes</f>, the command of the latches is used as the corresponding data. Default value is <f>yes</f>.</def></row>-->
+
+<row type='split'><article><index>stbSaveErrors</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Errors are redirected to a separate <f>.ste</f> error file.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbSilentMode</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>The STA engine displays neither errors nor warning on the 
+standard output.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbTopLevelPath</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Violations are computed using only the paths at the 
+top level (i.e. the interconnections at the top level).</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbWorstCaseAnalysis</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Worst case analysis is performed by assuming that in 
+the initial conditions, there is no latch transparency.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbCorrelatedSkewAnalysisDepth</index></article><def>
+<glossary width='small'>
+<row><article><f>number</f></article><def>Specifies the maximum search depth allowed to find common clock
+path when computing setup and hold values at each node. The value 'full' means unlimited.
+</def></row>
+<row><article><f>full</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbStabilityCorrection</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>The false paths and false slacks are taken into account to correct
+the global stability time computed by STB. This corrects false data lags hence too pessimistic setup and
+hold computations.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>StbSuppressLag</index></article><def>
+<glossary width='small'>
+<row><article><f>latch</f></article><def>Transparency (data lag) will be ignored for latches.</def></row>
+<row><article><f>precharge</f></article><def>Transparency (data lag) will be ignored for precharges.</def></row>
+<row><article><f>yes</f></article><def>Transparency will be ignored for any of the above.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stbHelpForSetup</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Gives additional information to help setting the stability configuration.
+The information is driven in the log file.
+</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+
+</glossary>
+

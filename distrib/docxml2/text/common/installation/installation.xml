@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Software Installation</title>
+
+<section niv='2'><title>System Requirements</title>
+
+<p>The complete installation requires approximately 650Mb disk space. If you wish to execute all the examples, you will need 700Mb of free disk space.</p>
+<p>The following platforms are supported:</p>
+<glossary>
+<row><article>Solaris</article><def>8, 9, 10 (32bit and 64bit for each)</def></row>
+<row><article>Linux</article><def>RedHat Enterprise Linux 3.0 (32bit and 64bit)</def></row>
+</glossary>
+</section>
+
+
+<section niv='2'><title>What the Distribution Provides</title>
+
+<p>The distribution provides all the relevant files required to install and operate the Avertec tools. This includes:</p>
+<list>
+<item>Installation script</item>
+<item>End-user license agreement</item>
+<item>Binary executables</item>
+<item>License server data</item>
+<item>Manual pages</item>
+<item>Documentation in PDF and HTML format</item>
+<item>Tutorials</item>
+<item>Environment configuration files</item>
+</list>
+</section>
+
+
+
+<section niv='2'><title>Scope of the Installation</title>
+
+<p>The distribution can be installed onto any part of a file system so long as the person performing the 
+installation has write access privileges. You may, for example, choose to install all the tools in a user's 
+home directory. Alternatively, you may install the tools on  an NFS file server for multi-user access. In
+both cases, the installation process is the same, apart from the location on the file system. The only 
+requirements for the execution of the binaries are appropriate access privileges together with a network connection to the machine chosen to act as the license server.</p>
+</section>
+
+
+<section niv='2'><title>Performing the Installation</title>
+
+
+
+<p>If starting from a CD-ROM, you must first perform the necessary commands to mount it. </p>
+
+<p>You should then open a terminal and change directory to the place on the file system you want 
+the tools to be installed. Launch the installation script as follow.</p>
+<code>
+<cl>&gt; /cdrom/AvtTools/Install (Solaris)</cl>
+<cl>&gt; /mnt/cdrom/Install (Linux)</cl>
+</code>
+
+<p>If starting from a TAR archive file, you must first untar it, and change directory to 
+the place on you want the tools to be installed</p>
+<code>
+<cl>&gt; cd /users/me/tar/</cl>
+<cl>&gt; tar -xvf AvtTools_2.8.tar</cl>
+<cl>&gt; cd /users/me/work/</cl>
+<cl>&gt; /users/me/tar/AvtTools_2.8/Install</cl>
+</code>
+
+
+<p>The installation script present you with the installation choices detailed in the subsequent sections. 
+For each choice you will be given a default reply (in square brackets) which you can accept by simply 
+pressing the <f>&lt;RETURN&gt;</f> or <f>&lt;ENTER&gt;</f> key. Unless the choice requires a file 
+or a directory path 
+in response, you will also be given the list of possible replies. An invalid response will result in an 
+error message and will take you straight back to the original question.</p>
+
+
+<code>
+<cl>  </cl> 
+</code>
+<p><f>Enter the source directory [/users/me/tar/AvtTools_2.8]:</f></p>
+
+<p>Root directory the distribution is installed from. If installation is done from a CD-ROM,
+default is the root directory of the CD-ROM. If installation is done from an archive,
+default is the root directory of the archive.</p>
+
+
+
+
+<code>
+<cl>  </cl> 
+</code>
+<p><f>You must accept the following license agreement before installation</f></p>
+<p><f>Press return to continue</f></p>
+ 
+<p>Text of a license agreement. Press <f>&lt;SPACE&gt;</f> to advance one screen at a time, or 
+<f>&lt;ENTER&gt;</f> to advance one line at a time. Please read carefully all the terms of this agreement.</p>
+
+<code>
+<cl>  </cl> 
+</code>
+<p><f>Do you accept the terms and conditions? [accept]:</f></p>
+
+
+<p>You must accept the terms of this license agreement before being able to continue with the installation.</p>
+
+
+<code>
+<cl>  </cl>
+</code>
+<p><f>Enter the destination directory [/users/me/work/AvtTools]: </f></p>
+
+<p>Full path of the directory you wish to install the software in. By default this is a subdirectory 
+named <f>AvtTools</f> of the current directory.</p>
+
+<code>
+<cl>  </cl> 
+</code>
+<p><f>Directory /users/me/work/AvtTools does not exist...</f></p>
+<p><f>Do you want to create it now y/n? [y]: </f></p>
+<p><f>Creating installation directory...</f></p>
+
+
+<p>If specifying a destination directory that does not exist, you will be asked to confirm its creation. 
+If you type <f>n</f> then you will be asked to specify an alternative directory.</p>
+
+<code>
+<cl>  </cl> 
+</code>
+<p><f>Enter the OS to install </f></p>
+<code>
+<cl>   S2.6       : Solaris 2.6</cl>
+<cl>   S2.8       : Solaris 2.8</cl>
+<cl>   S2.8_64    : Solaris 2.8 64bits</cl>
+<cl>   S2.9       : Solaris 2.9</cl>
+<cl>   S2.9_64    : Solaris 2.9 64bits</cl>
+<cl>   RHEL3.0    : Red Hat Enterprise Linux 3.0</cl>
+<cl>   RHEL3.0_64 : Red Hat Enterprise Linux 3.0 64bits</cl>
+<cl>   RHL8.0     : Red Hat Linux 8.0</cl>
+</code>
+<p><f>OS [S2.6 S2.8 S2.8_64 S2.9 S2.9_64 RHEL3.0 RHL8.0]:  </f></p>
+
+<p>By default executables for all supported platforms are installed. However, you may wish to install only those which you require.</p>
+<p>Hit <f>&lt;ENTER&gt;</f> to accept the default, or type the name of the platform for you wish to install.</p>
+
+<code>
+<cl>  </cl> 
+</code>
+<p><f>Enter the license server name [cardiff]: </f></p>
+
+<p>Name of the machine you intend to run the license server on. By default, it 
+is the name of the current machine.</p>
+
+
+</section>
+
+<section niv='2'><title>Setting-up the Environment</title>
+<p>The installation process creates a CSH environment file setting environment variables 
+for tool access:</p>
+<code>source $AVT_TOOLS_DIR/etc/avt_env.csh</code>
+<p>On 64bit systems, one can choose to use either 32bit or 64bit software version. To
+use 64bit-software version, add the following argument:</p>
+<code>source $AVT_TOOLS_DIR/etc/avt_env.csh 64</code>
+<p>Where <f>$AVT_TOOLS_DIR</f> is the destination directory of the installation.</p>
+<p>You can either source this file or set explicitly the appopriate environment variables 
+in a startup script such as the .cshrc.</p>
+<p>The variables to set are:</p>
+<glossary>
+<row><article><f>AVT_TOOLS_DIR</f></article><def>Full path of the Avertec tools root 
+directory.</def></row>
+<row><article><f>PATH</f></article><def>Access paths for the appropriate 
+binaries, e.g. <f>$AVT_TOOLS_DIR/tools/Solaris_2.8/bin</f></def></row>
+<row><article><f>LD_LIBRARY_PATH</f></article><def>Access paths for the appropriate shared 
+object (<f>.so</f>) libraries.<f> e.g. $AVT_TOOLS_DIR/tools/Solaris_2.8/api_lib</f></def></row>
+<row><article><f>MANPATH</f> </article><def>Access paths for the Avertec man pages, e.g. 
+<f>$AVT_TOOLS_DIR/man</f></def></row>
+<row><article><f>AVT_LICENSE_SERVER</f> </article><def>Name of the machine 
+hosting the licence server.</def></row>
+<row><article><f>AVT_LICENSE_FILE</f> </article><def>Full path of the licence file.</def></row>
+</glossary>
+</section>
+
+
+<section niv='2'><title>The FLEXLM Licence Server</title>
+
+<p>&tool; license control is done through the standard FLEXLM license server.
+Avertec's license server daemon is <f>avtlicd</f>.</p>
+<p>The command:</p>
+<code>
+<cl>&gt; lmgrd -c &lt;avertec_license_key_file&gt;</cl>
+</code>
+<p>sets <f>AVTLICD_LICENSE_FILE</f> to <f>avertec_license_key_file</f></p>
+<p>starts <f>avtlicd</f> (provided it is in <f>$PATH</f>)</p>
+<p>creates <f>~/.flexlmrc</f></p>
+
+</section>
+
+
+
+<!--<section niv='2'><title>The AVT License Server</title>
+
+
+
+<section niv='3'><title>Specifications</title>
+
+<p>Before being able to run the tools you will need to start the license server software. This is a 
+proprietary floating-token style license server based on RPC. Any machine which will be used to 
+execute the tools must therefore have a network connection to the machine hosting the license server 
+software. This is the only requirement imposed by the license server. For each licensed tool, you will 
+have been given a number of tokens according to the number of licenses purchased for the tool. Each 
+time a tool is executed, it takes up one of its tokens. At the end of its execution, the token is 
+given back to the license server.</p>
+</section>
+
+<section niv='3'><title>Starting the License Server</title>
+
+<p>Before starting the license server, you will need to have positioned the environment variables given in 
+the preceding section. This is in order to be able to locate the license server executable. If you 
+have not already modified the environment to take these into account, then you should do so now.</p>
+<code>cd AvtTools/etc</code>
+<code>source avt_env.csh</code>
+<code>rehash</code>
+<p>If the user needs to use Solaris 2.8, or 2.9, 64bit platforms, type <f>source avt_env.csh 64</f> rather than <f>source avt_env.csh</f>.</p>
+<p>In the same directory as the default environment file, the license server data file will also have been installed. This is the file avtlicense.dat. To start the license server, you should be logged onto the machine on which you intend to host the license server. You must have a terminal window open for which the current directory is that containing the avtlicense.dat file or set the path to this file in AVT_LICENSE_FILE.</p>
+<p>Type the code:</p>
+<code>avtld start | stop | restart</code>
+<p>You will now be able to use all the tools for which you are licensed.</p>
+</section>
+
+<pagebreak/>
+
+<section niv='3'><title>License Server Utilities</title>
+
+<p>At any time you can obtain information about the number of tokens allocated, as well as the number of free tokens, for any of the tools using the avtinfo code:</p>
+<code>avtinfo &lt;toolname&gt;</code>
+<p>In addition, it is also possible to manually delete a token which has not been correctly returned. This may occur in the event of some kind of system failure. Under normal usage this is not necessary since the license server can deal correctly with most situations. However, if need be, a token for a particular tool can be deleted using the avtdeltoken code:-avtdeltoken &lt;toolname&gt;</p>
+</section>
+</section>-->
+
+</section>
+</chapter>

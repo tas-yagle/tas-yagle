@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Crosstalk Analysis</title>
+
+
+
+<section niv='2'><title>Requirements</title>
+<p>Crosstalk Analysis is done after the UTD construction performed with the <f>hitas</f> 
+function. Only the detailed timing information file of the database is needed (DTX file), 
+together with the interconnect information (RCX file) and the delay models (STM file).</p>
+<p>The Crosstalk Analysis is coupled with the Static Timing Analysis, and is therefore performed
+with the same function <f>stb</f>. The inputs needed for crosstalk analysis are the same as the input 
+needed for STA.</p>
+</section>
+
+
+
+<section niv='2'><title>Understanding Crosstalk in STA</title>
+
+
+<section niv='3'><title>The Issues Involved</title>
+
+
+
+<p>A coupling capacitance is a capacitance between two nets. 
+Let us consider a signal carried by a net, which we shall call the victim. All other signals carried by nets linked to the victim via 
+a coupling capacitance are called aggressors. A signal is considered to be 'quiet' when no transitions 
+occur on it, and 'active' whenever transitions occur. We define 'quiet' or 'active' to be the 
+state of the aggressor.</p>
+
+
+
+<p>The influence of a coupling capacitance depends upon the state of victim and the state of the 
+aggressor. From the point of view of the victim four cases exist:</p>
+
+<list>
+<item>Victim and aggressor are both quiet. No coupling effect.</item>
+<item>Victim is active and aggressor is quiet. The coupling capacitance acts like a substrate capacitance.</item>
+<item>Victim is quiet and aggressor is active. Noise is generated on the victim.</item>
+<item>Victim and aggressor are both active. Propagation delay of the driver of the victim signal, and interconnect delay 
+of the victim signal are affected by the aggressor.</item>
+</list>
+
+<p>In the last case, there are two different effects depending on victim and aggressor transitions:</p>
+<list>
+<item>The signals switch in same direction. Driver delay and interconnect delay are reduced.</item>
+<item>The signals switch in opposite direction. Driver and interconnect delay are increased.</item>
+</list>
+
+</section>
+
+<section niv='3'><title>Algorithm</title>
+
+<p>In order to compute the effect of a coupling capacitance, we need to know whether two signals 
+can switch at the same time, and if they switch in same or opposite direction. 
+The detailed Static Timing Analysis gives switching windows for all the edges (reference points and others) of a timing graph. 
+Given a victim and its set of aggressors, it is therefore 
+possible to determine switching window overlaps, and to detect aggressions inducing noise and delta-delays on the victim.</p>
+
+<p>This approach requires that initial detailed switching windows propagation is performed from initial delay 
+values without any knowledge of aggressor behavior. Two options are possible: </p>
+<list>
+<item>The first is to consider an initial state with no aggression (default mode, can be enhanced with the 
+<f>stbCtkObservableMode</f> variable)</item>
+<item>The second is to consider an initial state with all possible aggressions 
+(the <f>stbCtkWorstBeginCondition</f> variable)</item>
+</list>
+
+<p>It is then possible to compute initial values for driver delays and interconnect delays, 
+and perform an initial switching windows propagation. 
+For each victim, the algorithm creates its effective list of aggressors, by analyzing the overlap 
+of the switching windows of its aggressors.</p> 
+<p>Depending on the chosen initial state, the list of aggressors will either increase or decrease. In both
+cases, the effective coupling capacitance seen by the victim will change, inducing a re-evaluation 
+of the driver delay and interconnect delay of each victim.
+Another STA (switching window propagation) is performed with these updated delays. If this second propagation
+induces no change in the aggressor lists, the algorithm finishes. If this is not the case, further 
+iterations are performed until the algorithm converges.</p>
+
+<p>To render crosstalk analysis less pessimistic, it is possible to refine the modeling of the 
+effect of an aggression.
+In many cases, an aggression only changes the driver delay of the victim over a 
+short time, switching windows not being significantly affected (victim's earliest and latest 
+switches not being affected). This kind of aggression can then be considered as a non-observable 
+aggression.</p>
+<imgsize namehtml="ctk_obs.gif" namepdf="ctk_obs.gif" hpdf="200pt"/>
+<p>Ignoring non-observable aggression results in less pessimistic results, in regard of the setup and hold 
+violations, only affected by the earliest and latest switches. The user can choose to enable analysis with 
+only observable aggression with the <f>stbCtkObservab1leMode</f>variable.</p>
+<pagebreak/>
+<p>On the other hand, it might be usefull to consider very close - but non overlapping - switching windows as 
+overlapping, as shown in the following example:</p> 
+
+<imgsize namehtml="ctk_margin.gif" namepdf="ctk_margin.gif" hpdf="100pt"/>
+<p>The <f>M</f> value is controlled by the variable <f>stbCtkMargin</f>.</p>
+</section>
+
+<section niv='3'><title>Delay Calculation</title>
+<p>The main factor in computing crosstalk-aware delays is the proper modeling of the effective capacitance. In &tool;,
+the effective capacitance is computed by an enhanced Miller model, taking into account the relative strengthes of the 
+drivers (actually the slopes at their outputs). The tool computes a crosstalk-aware delay by feeding this updated 
+capacitance to the timing model of a driver.</p>
+<imgsize namehtml="ctk_delay.gif" namepdf="ctk_delay.gif" hpdf="250pt"/>
+<p>In order to reduce computational time, &tool; makes the following assumptions:</p>
+<list>
+<item>Resistances are not taken into account in the coupled network</item>
+<item>The coupling capacitance used in the Miller calculus is the sum of the distributed coupling capacitances on the net</item>
+<item>The Miller calculus uses the slope at the output of the driver for the aggressor, 
+and the slope at the end of the RC network for the victim (maximizing the Miller effect)</item>
+</list>
+<p>The figure below illustrates those assumptions:</p>
+<imgsize namehtml="ctk_delay_hyp.gif" namepdf="ctk_delay_hyp.gif" hpdf="100pt"/>
+
+<p>The most accurate delay calculation is done with the following configuration:</p>
+<code>
+<cl>avt_config rcxCtkSlopeDelay SLOPE_DELAY_ENHANCED</cl>
+</code>
+</section>
+
+<section niv='3'><title>Noise Calculation</title>
+<p>The figure below illustrates those assumptions:</p>
+<p>&tool; computes voltage peaks on each net, by modeling the coupled network as illustrated in the figure below:</p>
+<imgsize namehtml="ctk_noise_hyp.gif" namepdf="ctk_noise_hyp.gif" hpdf="100pt"/>
+<p>The assumptions made are:</p>
+<list>
+<item>Resistances are not taken into account in the coupled network</item>
+<item>The coupling capacitance used is the sum of the distributed coupling capacitances on the net</item>
+<item>The slope used is the one at the output of the driver for the aggressor (this maximizes the noise)</item>
+<item>Multiple aggressors are handled by linear superposition of the noises they independantly produce</item>
+<item>The driver of the victim is modeled as a resistance, as shown in the figure below</item>
+</list>
+<imgsize namehtml="ctk_scr_cc.gif" namepdf="ctk_scr_cc.gif" hpdf="200pt"/>
+<p>The most accurate noise analysis is done with the following configuration:</p>
+<code>
+<cl>avt_config rcxCtkSlopeNoise SLOPE_REAL</cl>
+</code>
+
+</section>
+
+</section>
+
+
+<section niv='2'><title>Running the Crosstalk Analysis</title>
+
+<p>Relevant configuration:</p>
+<glossary>
+<row><article><f>stbCrosstalkMode</f></article><def>Activates the crosstalk analyzer within the STA engine. Aggressions are detected 
+according the switching windows intersections. Multiple iterations are automatically performed until no more aggression is detected. 
+This variable should be set to <f>yes</f>.</def></row>
+<row><article><f>stbDetailedGraph</f></article><def>Aggressor detection has a meaning only on a detailed graph, (and not on a path 
+graph). This variable should be set to <f>yes</f>.</def></row>
+<row><article><f>stbDetailedAnalysis</f></article><def>Tunes the building of switching windows either to single or multiple windows per period. Less pessimistic results are obtained with multiple switching windows. It is better to set this variable to <f>yes</f>, but it 
+requires more memory.</def></row>
+<row><article><f>stbCtkNoInfoActif</f></article><def>If the aggressor is not a timing signal (eg: internal signal in a gate), there is no timing information for it. If this variable is set to <f>yes</f>, then this aggressor is considered to be always active, else it is considered to be always quiet. It is better to set this variable to <f>yes</f> (default).</def></row>
+<row><article><f>stbCtkReportFile</f></article><def>Activates the generation of the report file (<f>.ctk</f>). Since Tcl functions 
+provide an efficient way to browse crosstalk results, and considering the size of this file, this variable is better set 
+to <f>no</f> (default).</def></row>
+</glossary>
+
+<p>The crosstalk analysis is done with the <f>stb</f> Tcl command, based on a previously generated timing DB. The timing DB
+may come from the <f>hitas</f> Tcl command:</p>
+<code>
+<cl>set fig [hitas my_design]</cl>
+<cl> </cl>
+<cl>avt_config stbCrosstalkMode yes</cl>
+<cl>avt_config stbDetailedGraph yes</cl>
+<cl>avt_config stbDetailedAnalysis yes</cl>
+<cl> </cl>
+<cl>stb $fig</cl>
+</code>
+
+<p>The timing DB may also come from disk, loaded with the <f>ttv_LoadSpecifiedTimingFigure</f> command:</p>
+<code>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure my_design]</cl>
+<cl> </cl>
+<cl>avt_config stbCrosstalkMode yes</cl>
+<cl>avt_config stbDetailedGraph yes</cl>
+<cl>avt_config stbDetailedAnalysis yes</cl>
+<cl> </cl>
+<cl>stb $fig</cl>
+</code>
+
+
+</section>
+
+<section niv='2'><title>Output Files</title>
+
+<p>Since &tool; crosstalk engine is coupled with the STA engine, it generates the same output files
+(STO and STR files). In addition, the crosstalk engine creates two or three extra files. The first one contains details of all crosstalk 
+
+adjusted delays throughout the design hierarchy. This file <f>.ctx</f> is intended to be browsed using Xtas or the functions of the Tcl interface. The second file (<f>.agr</f>) contains the list of all nodes with the states of their aggressor. This file is intended to realize the report of crosstalk analysis with the Tcl interface. The third file is a human readable file (<f>.ctk</f> file) which contains all crosstalk related information. This file is drived if the <f>stbCtkReportFile</f> is set</p>
+
+<p>The CTX file is an ASCII text file containing all the delays calculated with crosstalk effects of a complete 
+design hierarchy. This file is associated with all of the original files describing the hierarchy (DTX, STM and RCX). 
+It is intended to be viewed using the timing browser Xtas. This file contains top level delays and instance delays.</p>
+</section>
+
+
+
+
+<section niv='2'><title>Browsing Crosstalk Analysis Results</title>
+<section niv='3'><title>Crosstalk Impact on Delays</title>
+<p>After the run of the <f>stb</f> Tcl command, the timing DB contains nominal propagation delays and crosstalk-aware
+propagation delays. Therefore, when based upon a crosstalk-annotated timing DB, browsing commands such as <f>ttv_GetPaths</f> 
+show crosstalk impact on propagation delays:</p>
+<code>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure my_design]</cl>
+<cl>avt_config stbCrosstalkMode yes</cl>
+<cl>stb $fig</cl>
+<cl>set clist [ttv_GetPaths $fig * * uu 5 critic path max]</cl>
+</code>
+
+<p>This <f>stb</f> command (the crosstalk analysis) generates the <f>.ctx</f> file for crosstalk impact on delay, 
+suitable for further browsing, 
+in order to dissociate crosstalk analysis and browsing. As crosstalk analysis may be cpu consuming, this
+will save time. It is then possible to browse crosstalk-annotated timing DBs generated 
+from previous crosstalk analysis runs:</p>
+<code>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure my_design]</cl>
+<cl>ttv_LoadCrosstalkFile $fig</cl>
+<cl>set clist [ttv_GetPaths $fig * * uu 5 critic path max]</cl>
+</code>
+
+</section>
+<section niv='3'><title>Crosstalk Noise</title>
+<p>&tool; provides a set of Tcl functions for crosstalk noise analysis. Those functions work on the
+crosstalk database generated with the <f>stb</f> function. If the <f>stb</f> function has been launched
+in the current Tcl script, the crosstalk database is available in memory, and the Tcl noise analysis 
+functions can be used directly:</p>
+<code>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure my_design]</cl>
+<cl>avt_config stbCrosstalkMode yes</cl>
+<cl>set stbfig [stb $fig]</cl>
+<cl>ctk_DriveStatCtk $stbfig </cl>
+</code>
+
+<p>If the <f>stb</f> function has been launched in a separate script, then the crosstalk database (<f>.ctx</f>, 
+<f>.sto</f> and <f>.agr</f> files) must be loaded from disk before using noise analysis functions:</p>
+<code>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure my_design]</cl>
+<cl>ttv_LoadCrosstalkFile $fig</cl>
+<cl>set stbfig [stb_LoadSwitchingWindows $fig my_design.sto]</cl>
+<cl>ctk_LoadAggressionFile $stbfig</cl>
+<cl> </cl>
+<cl>ctk_BuildCtkStat $stbfig </cl>
+<cl>ctk_DriveStatCtk $stbfig </cl>
+</code>
+
+
+<p>The <f>ctk_BuildCtkStat</f> function is used to re-built consistent information from the crosstalk database 
+files, according to the scoring configuration variables (see later in this chapter).</p> 
+
+</section>
+<section niv='3'><title>Browsing Information on Event</title>
+<p>For noise and score, the Timing Event stores informations corresponding to the initial state of this transition : the <f>up</f> event correspond to the <f>low</f> logical level, and the <f>down</f> event correspond to the <f>high</f> logical level.</p>
+<p>Crosstalk information on nodes are stored in an internaly table. This table can be sorted with the command <f>ctk_SortCtkStatNode</f>. Information are available through the command <f>ctk_GetStatNodeProperty</f>. The <f>index</f> parameter is the position in the internal table, from <f>1</f> to the value returned by the command <f>ctk_GetNumberOfCtkStatNode</f>. To get the position of a particular event, uses command <f>ctk_GetCtkStatNodeFromEvent</f>.</p>
+</section>
+<section niv='3'><title>Browsing Local Crosstalk Impact on Delay</title>
+<p>This information allow to know the elementary delays the most modified by crosstalk effect due to two net switching simultaneously. This information is stored in an internale table. This table can be sorted with the tcl command <f>ctk_SortCtkStatLine</f>. Information on delays are available with the tcl command <f>ctk_GetStatLineProperty</f>. The <f>index</f> parameter is a number from <f>1</f> to the value returned by the command <f>ctk_GetNumberOfCtkStatLine</f>.</p>
+</section>
+<section niv='3'><title>Browsing Aggressor</title>
+<p>The aggressor list of a Timing Event is available through the tcl command <f>ctk_GetAggressorList</f>. Property for an aggressor in this list are available with the tcl command <f>ctk_GetAggressorProperty</f>. This list must be freed with the tcl command <f>ctk_FreeAggressorList</f>.</p>
+<p>The property <f>SIGNAL</f> return the Timing Signal corresponding to the aggressor. If the aggressor is an internal net of a gate, there is no Timing Signal built on it, then the property <f>SIGNAL</f> return <f>NULL</f>.</p>
+</section>
+</section>
+<section niv='2'><title>Score-Based Result Analysis</title>
+<p>Signals presenting a risk of noise violation are sorted by a score based method. 
+Four scores, ranging from 0 to 10, are reported. Scores assess both the crosstalk impact and the aggression occurrence probability. Scores are reported in the output files, and in the slack and path reports, under the following tags:</p>
+
+<glossary>
+<row><article><f>C</f></article><def>Number of significant aggressors; the closer to 10 is 
+the score, the more significant part of crosstalk is due to a few number of aggressors.</def></row>
+<row><article><f>N</f></article><def>Noise peak value;  0 means that the noise peak reaches or 
+exceeds the logical threshold of at least one gate in the fanout.</def></row>
+<row><article><f>I</f></article><def>Switching windows criteria; based upon number 
+of aggressors simultaneously active</def></row>
+<row><article><f>A</f></article><def>Activity of the aggressor; 10 means that aggressors belong 
+to a clock path, or belong to another clock domain (and assumed to be always active); 0 means that nothing can be
+gathered about activity, it doesn't mean that aggressors are not active.</def></row>
+</glossary>
+
+<p>A total weighted score is also reported, under the T tag, combining the individual scores. The individual weighting of the C, N, I and A scores can be tuned with the variables <f>stbCtkCoefCtk</f>, <f>stbCtkCoefNoise</f>, <f>stbCtkCoefInterval</f> and <f>stbCtkCoefActivity</f>, respectively.</p>
+
+
+
+
+<p>If a signal obtains a mark lower than the value specified in <f>stbCtkMinNoise</f>, 
+<f>stbCtkMinInterval</f>, <f>stbCtkMinCtk</f> or <f>stbCtkMinActivity</f>, 
+it is not displayed in the report file.</p>
+</section>
+</section>
+</chapter>

@@ -1,0 +1,26 @@
+
+           ttv_SimulatePath <TimingFigure *tvf> <TimingPath *ta> [-force] [-mc
+       <number>] [-plot] ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Constructs and saves on disk the spice netlist and stimuli required for
+       simulation, relative to the given path. This requires all configuration
+       variables related to simulation to be set correctly.  Returns 0 on suc-
+       cess, 1 on error.
+
+AARRGGUUMMEENNTTSS
+       ttvvff           Pointer on a timing figure
+
+       ppaatthh          Pointer  on  the  timing  path  the  spice  deck is to be
+                     extracted from
+
+       --ffoorrccee        The path will be simulated even if it has already been
+
+       --mmcc {{<<nnuummbbeerr>>}}
+                     The number of monte-carlo simulations to be performed
+
+       --pplloott         Generated a waveform file for  viewing  with  gnuplot  or
+                     gwave. Note that _s_i_m_U_s_e_P_r_i_n_t must be set.
+
+       NNoo ddeessccrriippttiioonn
+

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+<row type='split'><article><index>fclLibraryName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name of the file containing the list of cells in 
+the user-defined cell library used. The default is <f>LIBRARY</f>.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>fclLibraryDir</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Access path to the directory containing the user-defined cell 
+library used. Default is a directory <f>/cells</f> in <f>avtWorkDir</f>.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>fclGenericNMOS</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>A colon separated list of transistor model names which 
+the FCL pattern-matching engine considers will match to any N-type transistor. If a pattern netlist contains non-generic 
+N-channel transistors then these transistors will only match to transistors with an identical model. 
+Default is <f>tn:TN</f>.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>fclGenericPMOS</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def> A colon separated list of transistor model names which 
+the FCL pattern-matching engine considers will match to any PMOS transistor. If a pattern netlist contains non-generic 
+P-channel transistors then these transistors will only match to transistors with an identical model. 
+Default is <f>tp:TP</f>.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>fclWriteReport</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>A correspondence file is created if the -fcl option is used. 
+This file details all the recognized instances.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>fclAllowSharing</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Matched cells are allowed to share transistors.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>fclCutMatchedTransistors</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Matched transistors are eliminated from the transistor netlist. 
+Results in a strict partitioning of the cones and the matched cells.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>fclMatchSizeTolerance</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Percentage tolerance for matching transistor sizes.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>fclTraceLevel</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Number greater than 0. Trace information is displayed during 
+the pattern-matching phase.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>fclDebugMode</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;</f></article><def>Number greater than 0. Additional debugging information is 
+displayed during the pattern-matching phase.</def></row>
+</glossary>
+</def></row>
+
+</glossary>
+

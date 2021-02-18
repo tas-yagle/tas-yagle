@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<section niv='2'><title>TTX - The General Perfmodule Format</title>
+
+<section niv='3'><title>Description</title>
+
+<p>The TTX format is used to report all critical paths between two reference points. The file has the extension .ttx. This format is also known as the 'general perfmodule'. This is a highly compact text format suitable for flat and hierarchical analysis. The content is best visualized with the Tcl interface, or with the Xtas GUI.</p>
+
+<p>The TTX file is the entire timing view of the circuit. It contains the propagation times between reference points. Reference points are:</p>
+<list>
+<item>Interface Pins</item>
+<item>Memory Elements (Latches and Flip-Flops)</item>
+<item>Memory Elements Commands</item>
+<item>Precharged Nodes</item>
+</list>
+<p>The 'general perfmodule' can be generated with all critical paths. Between any pair of reference points, A and B, up to four delays can be associated: TPHH, TPLL, TPHL and TPLH. TPxy is the maximum propagation delay from A to B, when A goes to the 'x' level and B to the 'y' level.</p>
+
+</section>
+
+<section niv='3'><title>Units</title>
+
+<p>Unless otherwise stated, all capacitances are given in Femto-farads, all times are given in picoseconds, and all resistances are given in ohms.</p>
+
+</section>
+
+<section niv='3'><title>Comments</title>
+
+<p>Any line starting with the '#' character is considered to be a comment.</p>
+</section>
+
+
+<section niv='3'><title>Articles</title>
+
+<p>The 'general perfmodule' contains several articles and is terminated by the 'G' article.</p>
+
+
+<section niv='4'><title>Break</title>
+
+<p>Breaks are given in B articles:</p>
+<code>B &lt;type&gt; &lt;index&gt; &lt;name&gt; &lt;netname&gt; &lt;capa&gt;;</code>
+<p>The 'type' can be one of:</p>
+<glossary>
+<row><article>C</article><def>for an external connector precharge (also an external connector)</def></row>
+<row><article>N</article><def>for an internal connector precharge (also an internal connector)</def></row>
+<row><article>E</article><def>for an external precharge</def></row>
+<row><article>I</article><def>for an internal precharge</def></row>
+</glossary>
+</section>
+
+
+<section niv='4'><title>Register or Precharge Commands</title>
+
+<p>Commands of registers and precharges are given in 'Q' articles:</p>
+<code>Q &lt;type&gt; &lt;index&gt; &lt;name&gt; &lt;netname&gt; &lt;capa&gt; (&lt;cmd1&gt; &lt;cmd2&gt; ... );</code>
+<p>The 'type' can be one of the following:</p>
+<glossary>
+<row><article>C</article><def>for an external connector command (also an external connector)</def></row>
+<row><article>N</article><def>for an internal connector command (also an internal connector)</def></row>
+<row><article>E</article><def>for an external command (extremity of an external path)</def></row>
+<row><article>I</article><def>for an internal command (not the extremity of an external path)</def></row>
+</glossary>
+<p>The list of command names in brackets is the list of commands lower down in the hierarchy which are internal or external commands and which have been replaced by this command at the current hierarchical level. Thus the command attribute of an arc can be defined at each level in the hierarchy.</p>
+
+</section>
+
+<section niv='4'><title>External Connectors</title>
+
+<p>External connectors are given in 'C' articles:</p>
+<code>C &lt;type&gt; &lt;index&gt; &lt;name&gt;  &lt;netname&gt; &lt;capa&gt;;</code>
+<p>The 'type' defines the connector direction and whether it is the command of a register or a precharge. It can be one of:</p>
+<glossary>
+<row><article>I</article><def>for an input connector</def></row>
+<row><article>O</article><def>for an output connector</def></row>
+<row><article>B</article><def>for a bidirectional connector</def></row>
+<row><article>T</article><def>for a transceiver connector</def></row>
+<row><article>Z</article><def>for a high-impedance connector</def></row>
+<row><article>X</article><def>for an unconnected connector</def></row>
+<row><article>IQ</article><def>input connector used as command for register or precharge</def></row>
+<row><article>BQ</article><def>output connector reused as input to command register or precharge</def></row>
+</glossary>
+<p>The electrical parameter given for each connector is:</p>
+<glossary>
+<row><article>capa</article><def>capacitance attached to connector</def></row>
+</glossary>
+
+</section>
+
+<section niv='4'><title>Information Header</title>
+
+<p>General information is given in a single 'H' article at the beginning of the file:</p>
+<code>H &lt;tool&gt; &lt;vers&gt; &lt;name&gt; &lt;techno&gt; &lt;techno_vers&gt; &lt;inslope&gt; &lt;outcapa&gt; &lt;hierarchy_level&gt; (&lt;day&gt; &lt;month&gt; &lt;year&gt; &lt;hour&gt; &lt;minute&gt; &lt;second&gt;);</code>
+</section>
+
+<section niv='4'><title>Instances</title>
+
+<p>Instances in a hierarchical figure are given in 'X' articles:</p>
+<code>X &lt;figure_name&gt; &lt;instance_name&gt;;</code>
+</section>
+
+
+<section niv='4'><title>Internal Connectors</title>
+
+<p>Internal connectors are given in 'N' articles:</p>
+<code>N &lt;type&gt; &lt;index&gt; &lt;name&gt; &lt;netname&gt; &lt;capa&gt;;</code>
+<p>The 'type' defines whether it is the command of a register or a precharge. It can be one of:</p>
+<glossary>
+<row><article>I</article><def>not used as command for register or precharge</def></row>
+<row><article>Q</article><def>used as command for register or precharge</def></row>
+</glossary>
+<p>The electrical parameter is the same as those for external connectors.</p>
+
+</section>
+
+<section niv='4'><title>Paths</title>
+
+<p>Paths are represented by one of three 'path_type' articles. These are:</p>
+<glossary>
+<row><article>P</article><def>for an internal path from latch to latch.</def></row>
+<row><article>J</article><def>for an internal path from command to latch.</def></row>
+<row><article>T</article><def>for an external path (connector for extremity).</def></row>
+</glossary>
+<p>The general syntax of these articles is:</p>
+<code>
+<cl>&lt;path_type&gt; &lt;starttype&gt; &lt;start&gt; &lt;endtype&gt; &lt;end&gt; (</cl>
+<cl>(&lt;cmd&gt; &lt;cmdtype&gt; (&lt;trs&gt; &lt;type&gt; &lt;delay&gt; &lt;slope&gt; &lt;model(s)&gt;))</cl>
+<cl>( . . (. . . . .))</cl>
+<cl>);</cl>
+</code>
+<p>where the parameters represent:</p>
+<glossary>
+<row><article>starttype</article><def>type of the signal at the start of the path (C, N, Q, L, R, I, S).</def></row>
+<row><article>start</article><def>index of the start signal.</def></row>
+<row><article>endtype</article><def>type of the signal at the end of the path (C, N, Q, L, R, I, S, Z, O).</def></row>
+<row><article>end</article><def>index of the end signal.</def></row>
+<row><article>cmd</article><def>index of command if end is register or precharge</def></row>
+<row><article>cmdtype</article><def>type of event which activates command (U or D).</def></row>
+<row><article>trs</article><def>transition type (UU, DD, UD, DU).</def></row>
+<row><article>type</article><def>delay type (SMAX, SMIN, HMAX, HMIN, AMAX, AMIN, IMAX, IMIN, MAX or MIN).
+With SMAX and SMIN for set-up, HMAX and HMIN for hold, IMAX and IMIN for interconnect delay, AMAX and AMIN for Access and MAX and MIN for delay</def></row>
+<row><article>delay</article><def>propagation delay.</def></row>
+<row><article>slope</article><def>slope at end.</def></row>
+<row><article>model(s)</article><def>one delay model (and one slope model).</def></row>
+</glossary></section>
+
+
+<section niv='4'><title>Factorization Points</title>
+
+<p>Factorization points are given in 'I' articles:</p>
+<code>I &lt;type&gt; &lt;index&gt; &lt;name&gt; &lt;netname&gt; &lt;capa&gt;;</code>
+<p>The 'type' can be one of:</p>
+<glossary>
+<row><article>E</article><def>for an external factorization signal</def></row>
+<row><article>I</article><def>for an internal factorization signal</def></row>
+</glossary></section>
+
+<section niv='4'><title>Registers</title>
+
+<p>Registers are given in 'L' articles:</p>
+<code>L &lt;type&gt; &lt;index&gt; &lt;name&gt; &lt;netname&gt; &lt;capa&gt; (&lt;cmd_index1&gt; &lt;cmd_type1&gt; &lt;cmd_index2&gt; &lt;cmd_type2&gt; ... );</code>
+<p>The 'type'is XY where x can be L, F, R or S and Y can be C, N, E, I:</p>
+<glossary>
+<row><article>L</article><def>stand for latch</def></row>
+<row><article>F</article><def>stand for flip-flop</def></row>
+<row><article>R</article><def>stand for nand set reset latch</def></row>
+<row><article>S</article><def>stand for nor set reset latch</def></row>
+<row><article>C</article><def>an external connector register (also an external connector)</def></row>
+<row><article>N</article><def>an internal connector register (also an internal connector)</def></row>
+<row><article>E</article><def>an external register (extremity of an external path)</def></row>
+<row><article>I</article><def>an internal register (not the extremity of an external path)</def></row></glossary>
+<p>The list in brackets is the list of command events which allow the opening of a level-triggered register or the writing into an edge-triggered register. The 'index' represents the index of the command signal. The type can be one of:</p>
+<glossary>
+<row><article>U</article><def>for a rising-edge event</def></row>
+<row><article>D</article><def>for a falling-edge event</def></row>
+</glossary>
+
+</section>
+
+
+<section niv='4'><title>Precharged Signals</title>
+
+<p>Precharged signals are given in 'R' articles:</p>
+<code>R &lt;type&gt; &lt;index&gt; &lt;name&gt; &lt;netname&gt; &lt;capa&gt; (&lt;cmd_index1&gt; &lt;cmd_type1&gt; &lt;cmd_index2&gt; &lt;cmd_type2&gt; ... );</code>
+<p>The 'type' can be one of:</p>
+<glossary>
+<row><article>C</article><def>for an external connector precharge (also an external connector)</def></row>
+<row><article>N</article><def>for an internal connector precharge (also an internal connector)</def></row>
+<row><article>E</article><def>for an external precharge</def></row>
+<row><article>I</article><def>for an internal precharge</def></row>
+</glossary>
+</section>
+
+</section>
+</section>

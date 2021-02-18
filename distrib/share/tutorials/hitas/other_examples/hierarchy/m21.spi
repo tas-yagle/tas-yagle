@@ -1,0 +1,60 @@
+* m21 model 
+
+* empty model of m11 and m12
+
+*.subckt m11 a b ck vdd vss
+*.ends m11
+
+*.subckt m12 c d e ck vdd vss
+*.ends m12
+
+* rc model
+
+.subckt sigi i_1 i 
+r1 i_1 i 200
+c1 i_1 vss 7f
+c2 i vss 2f
+.ends sigi
+
+.subckt sigj j_1 j_2 j
+r1 j_3 j 200
+r2 j_1 j_3 300
+r3 j_3 j_2 300
+c1 j_1 vss 6f
+c2 j_2 vss 3f
+c3 j_3 vss 7f
+c4 j vss 8f
+.ends sigj
+
+.subckt sigk k_1 k
+r1 k_1 k 30
+c1 k_1 vss 8f
+c2 k vss 7f
+.ends sigk
+
+.subckt sigl l_1 l_2
+r1 l_1 l_2 230
+c1 l_1 vss 4f
+c2 l_2 vss 7f
+.ends sigl
+
+.subckt sigm21ck ck_1 ck_2 ck
+r1 ck_3 ck 150
+r2 ck_1 ck_3 250
+r3 ck_3 ck_2 100
+c1 ck_1 vss 2f
+c2 ck_2 vss 6f
+c3 ck_3 vss 4f
+c4 ck vss 8f
+.ends sigm21ck
+
+.subckt m21 i j k l ck vdd vss
+xi11 i_1 j_1 ck_1 vdd vss m11
+xi12 j_2 k_1 l_1 ck_2 vdd vss m12
+xsigi i_1 i sigi
+xsigj j_1 j_2 j sigj
+xsigk k_1 k sigk
+xsigl l_1 l sigl
+xsigck ck_1 ck_2 ck sigm21ck
+.ends m21
+

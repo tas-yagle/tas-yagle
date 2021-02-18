@@ -1,0 +1,15 @@
+
+       void inf_DefineConnectorSwing(char *name, double lowlevel, double high-
+       level);
+
+DDEESSCCRRIIPPTTIIOONN
+       Sets the switching voltage magnitude for a connector. This  is  usefull
+       for multivoltage analysis.
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Connector's name
+
+       lloowwlleevveell      Lower-bound voltage level, in Volts
+
+       hhiigghhlleevveell     Upper-bound voltage level, in Volts
+

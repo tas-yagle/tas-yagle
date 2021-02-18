@@ -1,0 +1,15 @@
+
+       TimingEventList   *ttv_GetLatchEventCommands(TimingSignal   *tvs,  char
+       dir);
+
+DDEESSCCRRIIPPTTIIOONN
+       Returns the list of commands enabling writing of a specific  transition
+       in a given latch
+
+AARRGGUUMMEENNTTSS
+       ttvvss           Pointer on the timing signal to consider
+
+       ddiirr           _u or _d; transition to be written
+
+       EEXXAAMMPPLLEE       _s_e_t _c_o_m___l_i_s_t _[_t_t_v___G_e_t_L_a_t_c_h_C_o_m_m_a_n_d_s _$_l_t_1 _u_]
+

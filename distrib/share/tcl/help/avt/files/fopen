@@ -1,0 +1,14 @@
+
+       FILE *fopen(char *name, char *mode);
+
+DDEESSCCRRIIPPTTIIOONN
+       Opens a file in the specified mode and returns a pointer
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Name of the file to be opened
+
+       mmooddee          Available  modes  are  _r for reading, _w for writing and _a
+                     for appending
+
+       EEXXAAMMPPLLEE       _s_e_t _f_i_l_e _[_f_o_p_e_n _"_d_e_s_i_g_n_._s_t_a_t_" _w_]
+

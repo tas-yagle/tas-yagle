@@ -1,0 +1,3 @@
+#!/bin/csh -f
+
+rm -f *.dtx *.stm *.rcx cmd_* *.rep *.agr *.gns *.cnv *.cns *.loop *.ttx *.sto *.str *.ste *~ *.inf *.log

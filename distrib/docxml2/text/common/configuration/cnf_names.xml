@@ -1,0 +1,76 @@
+<glossary>
+<row type='split'><article><index>avtVddName</index></article><def>	
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>
+Name of any signal or connector which is to be considered as power supply (a <f>*</f> in the name matches any string). Several names, separated by <f>:</f>, may be specified.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtVssName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>
+Name of any signal or connector which is to be considered as ground (a <f>*</f> in the name matches any string). Several names, separated by <f>:</f>, may be specified.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtGlobalVddName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>
+Name of an internal signal to be considered as power supply (a <f>*</f> in the name matches any string). Signals in different subcircuits of a hierarchical netlist with a name given here will be considered as equipotential and this name will be used in the flattened netlist. This is identical to the use of the .GLOBAL directive in a spice netlist. Several names, separated by <f>:</f>, may be specified.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtGlobalVssName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>
+Name of an internal signal to be considered as ground (a <f>*</f> in the name matches any string). Signals in different subcircuits of a hierarchical netlist with a name given here will be considered as equipotential and this name will be used in the flattened netlist. This is identical to the use of the .GLOBAL directive in a spice netlist. Several names, separated by <f>:</f>, may be specified.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtCaseSensitive</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Upper and lower case characters are distinct</def></row>
+<row><article><f>no</f></article><def>Upper and lower case characters are seen as identical</def></row>
+<row><article><f>preserve</f></article><def>Default, upper and lower case characters are seen as 
+identical but the original case is preserved</def></row>
+</glossary>
+</def></row>     
+
+<row type='split'><article><index>avtInstanceSeparator</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;char&gt;</f></article><def>
+Character used to separate instance names in a hierarchical description. Default value is <f>.</f></def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtFlattenKeepsAllSignalNames</index></article><def> 
+<glossary width='small'>
+<row><article><f>yes</f></article><def>When flattening a netlist, each signal keeps all its 
+names through the hierarchy.</def></row> 
+<row><article><f>no</f></article><def>Default, only one name (the shortest) is kept per signal.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtVectorize</index></article><def>	
+Controls the internal representation of vector-signals.
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, vector-signals are represented internally as vectors, 
+as far as the vector indexation is one of [], &lt;&gt;, _. For example, if both <f>foo[1]</f>, 
+<f>foo&lt;1&gt;</f> and <f>foo_1</f> appear in the source file, they will all be  represented internally
+as <f>foo 1</f></def></row> 
+<row><article><f>no</f></article><def>Vector signals are represented internally as they appear in the
+source file.</def></row>
+<row><article><f>&lt;string&gt;</f></article><def>Explicits the vector-signals indexations that will
+be interpreted as vectors, and the represented internally as vectors. <f>string</f> is a 
+comma-separated list of single or paired delimiters.  For example, if <f>string</f> is set to <f>"[],_"</f>, 
+only <f>foo[1]</f> and <f>foo_1</f> will be represented internally as <f>foo 1</f>.</def></row>
+</glossary>
+<p>Special attention should be paid to the Verilog case. Verilog only accepts <f>[]</f> as legal 
+vector indexation. Legal verilog vectors are represented internally as vectors if <f>avtVectorize</f> is 
+different to <f>no</f>.</p>
+<p>Illegal Verilog vectors are supported and controlled by <f>avtVectorize</f> as far as they are escaped
+and <f>avtStructuralVerilogVectors</f> is set to <f>yes</f>. For example, <f>\foo&lt;1&gt;</f> is represented 
+internally as a vector if <f>avtStructuralVerilogVectors</f> is set to <f>yes</f> and <f>avtVectorize</f> is
+set to <f>&lt;&gt;</f>.</p>
+</def></row>
+</glossary>

@@ -1,0 +1,2729 @@
+/* ###--------------------------------------------------------------### */
+/*                                                                       */
+/* file     : bvl_bcomp.yac                                             */
+/* date     : Oct  4 1993                                               */
+/* version  : v108                                                      */
+/* author   : P. BAZARGAN, L.A. TABUSSE, VUONG H.N.                     */
+/* content  : yacc rules for behavioural BVLL                           */
+/*                                                                       */
+/* ###--------------------------------------------------------------### */
+
+%{
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include MUT_H
+#include LOG_H
+#include BEH_H
+#include AVT_H
+
+
+#include "bvl_utype.h"
+#include "bvl_util.h"
+#include "bvl_byacc.h"
+#include "bvl_bedef.h"
+#include "bvl_bspec.h"
+
+/* Global variables */
+
+chain_list *VHD_INTLST = NULL;
+begen_list *VHD_GENPNT = NULL;
+
+/* Private variables */
+
+static bvldecl_list *BVL_DECL = NULL;
+static pNode         BVL_BDDPNT;        /* BDD pointer          */
+static char         *BVL_MODNAM;        /* current model name      */
+static bvlexpr       BVL_SLCEXP;        /* structure filled with the    */
+static bvlexpr       BVL_EMPSTR;        /* empty structure used with NOT*/
+static char         *BVL_LBLNAM = NULL; /* label            */
+static struct chain *BVL_NM1LST = NULL; /* 1-st name liste      */
+static struct chain *BVL_GRDLST = NULL; /* list of guard's ABL      */
+static struct chain *BVL_CNDLST = NULL; /* list of conditions (ABL) */
+static struct chain *BVL_VALLST = NULL; /* list of waveforms (ABL)  */
+static struct befig *BVL_BEFPNT = NULL; /* current BEFIG pointer    */
+
+static struct beden **dic = NULL;   /* dictionary           */
+   
+int  mode;
+int  type;
+char flag;
+int  kind;
+char constraint;
+int *conf;
+
+/* Static function declarations */
+
+int           makeSignal (int, int, char);
+bvldecl_list *addgen (char *);
+bvldecl_list *vhd_addstrgen (char *, short, int, int);
+void          beGeneration (void);
+int           vhd_chkdcl (char, int, int, char, int, char, int *);
+bepor_list   *beReverse (bepor_list *); 
+bvlcond      *addCndVal (bvlcond *, char *, int, chain_list *, chain_list *, unsigned int);
+chain_list   *makeCnd (bvlcond *);
+chain_list   *makeVal (bvlcond *); 
+int  		  yylex(void);
+
+%}
+
+%union {
+    long      valu;
+    char     *text;
+    bvlexpr   list;
+    bvlname   name;
+    gtype     dble;
+    bvlcond  *cond;
+};
+
+%token         VHD_AND
+%token         _BEGIN
+%token         _END
+%token         _EQSym
+%token         _EXIT
+%token         _FILE
+%token         _GESym
+%token         _GTSym
+%token         _IN
+%token         _INOUT
+%token         _LABEL
+%token         _LESym
+%token         _LINKAGE
+%token         _LTSym
+%token         _NAND
+%token         _NESym
+%token         _NEXT
+%token         _NOR
+%token         _NOT
+%token         VHD_NULL
+%token         _OR
+%token         _OUT
+%token         _XOR
+%token         ABS
+%token         ACCESS
+%token         AFTER
+%token         ALIAS
+%token         ALL
+%token         ARCHITECTURE
+%token         ARRAY
+%token         ASSERT
+%token         ATTRIBUTE
+%token  <text> AbstractLit
+%token         Ampersand
+%token         Apostrophe
+%token         Arrow
+%token         BIT
+%token         BIT_VECTOR
+%token         BLOCK
+%token         BODY
+%token         BUFFER
+%token         BUS
+%token         Bar
+%token         BasedInt
+%token         BasedReal
+%token  <text> BitStringLit
+%token         Box
+%token         CASE
+%token         COMPONENT
+%token         CONFIGURATION
+%token         CONSTANT
+%token  <text> CharacterLit
+%token         Colon
+%token         Comma
+%token         DISCONNECT
+%token         DOWNTO
+%token         DecimalInt
+%token         DecimalReal
+%token         Dot
+%token         DoubleStar
+%token         ELSE
+%token         ELSIF
+%token         ENTITY
+%token         ERROR
+%token         EVENT
+%token         FOR
+%token         FUNCTION
+%token         GENERATE
+%token         GENERIC
+%token         GUARDED
+%token         HZ
+%token         IF
+%token         IS
+%token  <text> Identifier
+%token         LIBRARY
+%token         T_LOOP
+%token         LeftParen
+%token         MAP
+%token         MOD
+%token         MS
+%token         MUX_BIT
+%token         MUX_VECTOR
+%token         Minus
+%token         NATURAL
+%token         NATURAL_VECTOR
+%token         NEW
+%token         NS
+%token         OF
+%token         ON
+%token         OPEN
+%token         OTHERS
+%token         PACKAGE
+%token         Pointed_name
+%token         PORT
+%token         PROCEDURE
+%token         PROCESS
+%token         PS
+%token         Plus
+%token         RANGE
+%token         RECORD
+%token         REG_BIT
+%token         REG_VECTOR
+%token         REGISTER
+%token         REM
+%token         REPORT
+%token         RETURN
+%token         RightParen
+%token         SELECT
+%token         SEVERITY
+%token         SIGNAL
+%token         _STABLE
+%token         STD_LOGIC
+%token         STD_LOGIC_VECTOR 
+%token         SUBTYPE
+%token         Semicolon
+%token         Slash
+%token         Star
+%token  <text> StringLit
+%token         THEN
+%token         TO
+%token         TRANSPORT
+%token         _TYPE
+%token         UNITS
+%token         UNTIL
+%token         US
+%token         USE
+%token         VARIABLE
+%token         VarAsgn
+%token         WAIT
+%token         WARNING
+%token         WHEN
+%token         WHILE
+%token         WITH
+%token         WOR_BIT
+%token         WOR_VECTOR
+
+%left         VHD_AND _OR _NAND _NOR _XOR
+%left         _EQSym _NESym
+%left         _NOT
+
+%type <text>    choice
+%type <text>   .simple_name.
+%type <text>    simple_name
+%type <text>    a_label
+%type <text>   .label.
+%type <text>    label
+%type <valu>    severity__message
+%type <text>    report__message
+%type <valu>   .SEVERITY__expression.
+%type <text>   .REPORT__expression.
+%type <list>    affectation
+%type <cond>    if_then
+%type <cond>    .elsif_then.
+%type <cond>    if_then_else
+%type <list>    condition
+%type <list>    edge
+
+
+%type <list> ...waveform__WHEN__choices..
+%type <list>    waveform__WHEN__choices
+%type <list>    waveform_element
+%type <list>    waveform
+%type <list>    expression
+%type <valu>   .GUARDED.
+%type <list>    relation..AND__relation..
+%type <list>    relation..OR__relation..
+%type <list>    relation.NAND_NOR__relation.
+%type <list>    relation..XOR__relation..
+%type <list>    relation
+%type <list>    simple_expression
+%type <list>   .sign.term..add_op__term..
+%type <list>    term
+%type <list>    factor
+%type <list>    primary
+%type <valu>    relational_operator
+%type <text>    literal
+%type <list>    aggregate
+
+%type <valu>   .mode.
+%type <dble>    type_mark
+%type <name>   .constraint.
+%type <name>    constraint
+%type <name>    range
+%type <valu>    direction
+%type <valu>    abstractlit
+%type <name>    name
+%type <name>    slice_name
+%type <name>    indexed_name
+%type <name>    target
+%type <name>    attribute_name
+%type <valu>    generic_element_association
+%type <text>    constant_VarAsgn__expression
+%type <valu>   .time_unit.
+%type <valu>    delay_expression
+%type <valu>   .AFTER__delay_expression.
+
+%start design_file
+
+%%
+design_file
+    : /*empty*/
+        {
+        /* ###----------------------------------------------### */
+        /*    Initializations                   */
+        /*      - erroneous description presumed !      */
+        /* ###----------------------------------------------### */
+
+        BVL_DECL = NULL;
+
+        BVL_NM1LST = NULL;
+        BVL_GRDLST = NULL;
+        BVL_CNDLST = NULL;
+        BVL_VALLST = NULL;
+        BVL_ERRFLG = 0;
+
+        dic                = beh_initab ();
+        BVL_BEFPNT         = beh_addbefig (BVL_HEDFIG, NULL);
+        BVL_BEFPNT->ERRFLG = 1;
+        BVL_HEDFIG         = BVL_BEFPNT;
+        }
+      LIBRARY simple_name Semicolon
+          USE Pointed_name Semicolon
+      entity_declaration
+      architecture_body
+        {
+        beGeneration ();
+
+        if (BVL_ERRFLG == 0)
+          BVL_BEFPNT->ERRFLG = 0;
+        else 
+          BVL_BEFPNT->ERRFLG = 1;
+
+        beh_fretab (dic);
+        }
+    ;
+
+entity_declaration
+    : ENTITY
+      simple_name
+      IS
+        {
+        BVL_BEFPNT->NAME = $2;
+        BVL_MODNAM       = $2;
+        }
+      .generic_clause.
+      .port_clause.
+      END_ERR
+      .simple_name.
+      Semicolon_ERR
+        {
+        if (($8 != NULL) && ($8 != $2))
+          bvl_error (1, $8);
+        }
+    | ENTITY
+      error
+        {
+        bvl_error (2, NULL);
+        }
+    ;
+
+.generic_clause.
+    : /*empty*/
+    | generic_clause
+        {
+        BVL_BEFPNT->BEGEN = VHD_GENPNT;
+        VHD_GENPNT        = NULL      ;
+        }
+    ;
+
+generic_clause
+    : GENERIC
+      LeftParen
+      formal_generic_list
+      RightParen_ERR
+      Semicolon_ERR
+    | GENERIC
+      error
+      Semicolon_ERR
+        { bvl_error (74, NULL); }
+    ;
+
+formal_generic_list
+    : formal_generic_element
+      ...formal_generic_element..
+    ;
+
+...formal_generic_element..
+    : /*empty*/
+    | ...formal_generic_element..
+      Semicolon_ERR
+      formal_generic_element
+    ;
+
+formal_generic_element
+    : CONSTANT
+      identifier_list
+      Colon
+      type_mark
+      .constraint.
+      generic_VarAsgn__expression
+        {
+        char *type;
+
+        if ($5.FLAG == $4.FLAG)
+          {
+          BVL_NM1LST = reverse (BVL_NM1LST);
+          type = namealloc ("natural");
+          VHD_GENPNT = bvl_addgen (VHD_GENPNT, VHD_INTLST, BVL_NM1LST,
+                                   type, $5.LEFT, $5.RIGHT);
+          }
+        else
+          bvl_error (33, NULL);
+        freechain (BVL_NM1LST);
+        freechain (VHD_INTLST);
+        BVL_NM1LST = NULL;
+        VHD_INTLST = NULL;
+        }
+    | error
+        {
+        /* ###----------------------------------------------### */
+        /*   The following 3 lines reject tokens until the  */
+        /* sync. token 'Semicolon' is found         */
+        /* ###----------------------------------------------### */
+
+        do
+          yychar = yylex ();
+        while ((yychar != Semicolon) && (yychar != 0));
+        yyerrok;
+        bvl_error (75, NULL);
+        }
+    ;
+
+generic_VarAsgn__expression
+    : VarAsgn
+      generic_expression
+    ;
+
+generic_expression
+    : abstractlit
+        {
+        long *ptlong;
+
+        ptlong = (long *) mbkalloc (sizeof(long));
+        *ptlong = $1;
+        VHD_INTLST = addchain (VHD_INTLST, (void *)ptlong);
+        }
+    | generic_aggregate
+    ;
+
+generic_aggregate
+    : LeftParen
+      generic_element_association
+        {
+        long *ptlong;
+
+        ptlong = (long *) mbkalloc (sizeof(long));
+        *ptlong = $2;
+        VHD_INTLST = addchain (VHD_INTLST, (void *)ptlong);
+        }
+      ...generic_element_association..
+      RightParen_ERR
+    ;
+
+...generic_element_association..
+    : /* empty */
+    | ...generic_element_association..
+      Comma
+      generic_element_association
+        {
+        long *ptlong;
+
+        ptlong = (long *) mbkalloc (sizeof(long));
+        *ptlong = $3;
+        VHD_INTLST = addchain (VHD_INTLST, (void *)ptlong);
+        }
+    ;
+
+generic_element_association
+    : abstractlit
+        {$$ = $1;}
+    ;
+
+.constraint.
+    : /*empty*/
+        {
+        $$.FLAG  = 'S';
+        $$.LEFT  = -1;
+        $$.RIGHT = -1;
+        }
+    | constraint
+        { $$ = $1; }
+    ;
+
+constraint
+    : LeftParen
+      range
+      RightParen_ERR
+        { $$ = $2; }
+    ;
+
+range
+    : abstractlit
+      direction
+      abstractlit
+        {
+        $$.FLAG  = 'A';
+        $$.LEFT  = $1;
+        $$.RIGHT = $3;
+
+        if ((($1 > $3) && ($2 == BVL_UPTDFN)) ||
+            (($1 < $3) && ($2 == BVL_DWTDFN)) ||
+            (($1 < 0 ) || ($2 < 0 )))
+          {
+          bvl_error (32, NULL);
+          }
+        }
+    ;
+
+direction
+    : TO
+        { $$ = BVL_UPTDFN; }
+    | DOWNTO
+        { $$ = BVL_DWTDFN; }
+    ;
+
+.port_clause.
+    : /*empty*/
+    | port_clause
+    ;
+
+port_clause
+    : PORT
+      LeftParen
+      formal_port_list
+      RightParen_ERR
+      Semicolon_ERR
+    | PORT
+      error
+      Semicolon_ERR
+        { bvl_error (3, NULL); }
+    ;
+
+formal_port_list
+    : formal_port_element
+      ...formal_port_element..
+    ;
+
+...formal_port_element..
+    : /*empty*/
+    | ...formal_port_element..
+      Semicolon_ERR
+      formal_port_element
+    ;
+
+formal_port_element
+    : .SIGNAL.
+      identifier_list
+      Colon
+      .mode.
+      type_mark
+      .constraint.
+        {
+        char    *signame;
+        int      sigconf;
+        bvldecl_list *pnt;
+
+        BVL_NM1LST = reverse (BVL_NM1LST);
+        while (BVL_NM1LST != NULL)
+          {
+          signame = (char *)BVL_NM1LST->DATA;
+          if (beh_chktab (dic, signame, BVL_MODNAM, BVL_SIGDFN) != 0)
+            bvl_error (4, signame);
+
+          pnt = vhd_addstrgen(signame,$5.FLAG,$6.LEFT,$6.RIGHT);
+          sigconf = makeSignal($5.VALU,$4,'P');
+
+          beh_addtab (dic, signame, BVL_MODNAM, BVL_SIGDFN, sigconf);
+          beh_addtab (dic, signame, BVL_MODNAM, BVL_WMNDFN, $6.LEFT);
+          beh_addtab (dic, signame, BVL_MODNAM, BVL_WMXDFN, $6.RIGHT);
+          beh_addtab (dic, signame, BVL_MODNAM, BVL_PNTDFN, (long)pnt);        
+
+          BVL_NM1LST = delchain (BVL_NM1LST, BVL_NM1LST);
+          }     
+        }
+    | error
+        {
+        // ###-----------------------------------------------### 
+        //   The following 3 lines reject tokens until the        
+        // sync. token 'Semicolon' is found                     
+        // ###-----------------------------------------------### 
+
+        do
+          yychar = yylex ();
+        while ((yychar != Semicolon) && (yychar != 0));
+        yyerrok;
+
+        bvl_error (6, NULL);
+        }
+    ;
+
+.SIGNAL.
+    : /*empty*/
+    | SIGNAL
+    ;
+
+.mode.
+    : /*empty*/
+        { $$ = _IN; }
+    | _IN
+        { $$ = _IN; }
+    | _OUT
+        { $$ = _OUT; }
+    | _INOUT
+        { $$ = _INOUT; }
+    ;
+
+architecture_body
+    : ARCHITECTURE
+      Identifier
+      OF
+      simple_name
+      IS
+        {
+        if ($4 != BVL_MODNAM)
+          bvl_error (1, $4);
+        }
+      architecture_declarative_part
+      _BEGIN
+      architecture_statement_part
+      END_ERR
+      .simple_name.
+      Semicolon_ERR
+        {
+        if (($11 != NULL) && ($11 != $2))
+          bvl_error (7, $11);
+        }
+    | ARCHITECTURE
+      error
+        { bvl_error (8, NULL); }
+    ;
+
+architecture_declarative_part
+    : ..block_declarative_item..
+    ;
+
+..block_declarative_item..
+    : /*empty*/
+    | ..block_declarative_item..
+      block_declarative_item
+    ;
+
+block_declarative_item
+    : signal_declaration
+    | constant_declaration
+    | error
+      Semicolon_ERR
+        { bvl_error (9, NULL); }
+    ;
+
+constant_declaration
+    : CONSTANT
+      Identifier
+      Colon
+      type_mark
+      .constraint.
+      constant_VarAsgn__expression
+      Semicolon_ERR
+        {
+        int sigconf;
+        
+        if (vhd_chkdcl ('C', 0, $4.VALU, $4.FLAG, 0, $5.FLAG, &sigconf)==0)
+          {
+          beh_addtab (dic, $2, BVL_MODNAM, BVL_WMNDFN, $5.LEFT);
+          beh_addtab (dic, $2, BVL_MODNAM, BVL_WMXDFN, $5.RIGHT);
+          beh_addtab (dic, $2, BVL_MODNAM, BVL_SIGDFN, sigconf);
+          beh_addtab (dic, $2, NULL, BVL_PNTDFN, (long)$6);
+          }
+        }
+    ;
+
+constant_VarAsgn__expression
+    : VarAsgn
+      literal
+        { $$ = $2; }
+    ;
+
+signal_declaration
+    : SIGNAL
+      identifier_list
+      Colon
+      type_mark
+      .constraint.
+      Semicolon_ERR
+        {
+        char    *signame;
+        int      sigconf;
+        bvldecl_list *pnt;
+
+        BVL_NM1LST = reverse (BVL_NM1LST);
+        while (BVL_NM1LST != NULL)
+          {
+          signame = (char *)BVL_NM1LST->DATA;
+          if (beh_chktab (dic, signame, BVL_MODNAM, BVL_SIGDFN) != 0)
+            bvl_error (4, signame);
+
+          pnt = vhd_addstrgen(signame,$4.FLAG,$5.LEFT,$5.RIGHT);
+          sigconf = makeSignal($4.VALU,_INOUT,'S');
+
+          beh_addtab (dic, signame, BVL_MODNAM, BVL_SIGDFN, sigconf);
+          beh_addtab (dic, signame, BVL_MODNAM, BVL_WMNDFN, $5.LEFT);
+          beh_addtab (dic, signame, BVL_MODNAM, BVL_WMXDFN, $5.RIGHT);
+          beh_addtab (dic, signame, BVL_MODNAM, BVL_PNTDFN, (long)pnt);        
+
+          BVL_NM1LST = delchain (BVL_NM1LST, BVL_NM1LST);
+          }     
+        }
+    ;
+
+architecture_statement_part
+    : ..concurrent_statement..
+    ;
+
+..concurrent_statement..
+    : /*empty*/
+    | ..concurrent_statement..
+      concurrent_statement
+    ;
+
+concurrent_statement
+    : process_statement
+    | concurrent_assertion_statement
+    | concurrent_signal_assignment_statement
+    | error
+      Semicolon_ERR
+        { bvl_error (18, NULL); }
+    ;
+
+edge
+    : LeftParen
+      attribute_name
+      VHD_AND
+      condition
+      RightParen
+        {
+        struct chain *  ch1;
+        struct chain *  ch2;
+
+        ch2 = (struct chain *) mbkalloc(sizeof(struct chain));
+        ch1 = createExpr(STABLE);
+        ch1->NEXT = ch2;
+        ch2->DATA = createAtom($2.NAME);
+        ch2->NEXT = NULL;
+
+        $$.LIST_ABL = createBinExpr(AND,notExpr(ch1),$4.LIST_ABL);
+        }
+    | LeftParen
+      condition
+      VHD_AND
+      attribute_name
+      RightParen
+        {
+        struct chain *ch1;
+        struct chain *ch2;
+        
+        ch2 = (struct chain *)mbkalloc(sizeof(struct chain));
+        ch1 = createExpr(STABLE);
+        ch1->NEXT = ch2;
+        ch2->DATA = createAtom($4.NAME);
+        ch2->NEXT = NULL;
+        
+        
+        $$.LIST_ABL = createBinExpr(AND,notExpr(ch1),$2.LIST_ABL);
+        }
+    | condition { $$ = $1;}
+    ;
+
+condition
+    : target
+      _EQSym
+      CharacterLit
+        {
+        int     sig_conf;
+        char    indexed_name[100] = "";
+
+        /* verifier si $1 est declare */
+        sig_conf = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_SIGDFN);
+
+        switch (sig_conf) {
+            case (BVL_OCNDFN + BVL_STDDFN + BVL_PORDFN) : 
+                bvl_error (26, $1.NAME);
+                break;
+            case (0) : bvl_error (17, $1.NAME);
+        }
+    
+        if ($1.LEFT != -1)
+          sprintf(indexed_name,"%s %d",$1.NAME,$1.LEFT);
+        else
+          strcpy(indexed_name,$1.NAME);
+
+        /* array not supported */
+        if ($1.FLAG == 'A')
+          bvl_error(38,indexed_name);
+
+        if ($3[1]=='1')
+          $$.LIST_ABL = createAtom(namealloc(indexed_name));
+        else if ($3[1]=='0')
+          $$.LIST_ABL = notExpr(createAtom(namealloc(indexed_name)));
+        else
+          bvl_error(41,indexed_name);
+        }
+    |
+      condition
+      VHD_AND
+      condition
+        {
+        $$.LIST_ABL = createBinExpr(AND, $1.LIST_ABL, $3.LIST_ABL);
+        }
+    |
+      LeftParen
+      condition
+      RightParen
+        {
+        $$.LIST_ABL = $2.LIST_ABL;
+        }
+    |
+      condition
+      _OR
+      condition
+        {
+        $$.LIST_ABL = createBinExpr (OR, $1.LIST_ABL, $3.LIST_ABL);
+        }
+    ;
+
+process_statement
+    : a_label
+        {
+        if (beh_chktab (dic, $1, BVL_MODNAM, BVL_LBLDFN) != 0)
+          bvl_error (19, $1);
+        beh_addtab (dic, $1, BVL_MODNAM, BVL_LBLDFN, 1);
+        }
+      PROCESS
+      LeftParen
+      name_list
+      RightParen
+      _BEGIN
+      ..sequential_statement..
+      END_ERR
+      PROCESS
+      .label.
+        {
+        if (($11 != NULL) && ($1 != $11)) bvl_error (20,$11);
+        }
+      Semicolon_ERR
+    ;
+
+..sequential_statement..
+    : /*empty*/
+    | ..sequential_statement..
+      sequential_statement
+    ;
+
+sequential_statement
+    : if_then
+        {
+        bvldecl_list   *gen_pnt;
+        biabl_list     *ptbiabl = NULL;
+        binode_list    *ptbinode = NULL;
+        biabl_list     *pttraverse;
+        binode_list    *pttravbinode;
+        bvlcond        *ptcndval;
+        int             sig_conf;
+        int             left_bound;
+        int             right_bound;
+        int             i;
+
+        left_bound = beh_chktab (dic, $1->IDENT, BVL_MODNAM, BVL_WMNDFN);
+        right_bound = beh_chktab (dic, $1->IDENT, BVL_MODNAM, BVL_WMXDFN);
+      
+        sig_conf  = beh_chktab(dic, $1->IDENT, BVL_MODNAM, BVL_SIGDFN);
+        gen_pnt = (bvldecl_list *)beh_chktab(dic,$1->IDENT,BVL_MODNAM,BVL_PNTDFN);
+
+        switch (sig_conf)
+          {
+          case (BVL_PORDFN + BVL_STDDFN + BVL_ICNDFN):
+          case (BVL_PORDFN + BVL_VECDFN + BVL_ICNDFN): ;
+          /*case (BVL_PORDFN + BVL_STDDFN + BVL_BCNDFN):
+          case (BVL_PORDFN + BVL_VECDFN + BVL_BCNDFN):
+          case (BVL_PORDFN + BVL_STDDFN + BVL_OCNDFN):
+          case (BVL_PORDFN + BVL_VECDFN + BVL_OCNDFN):
+            bvl_error(21, $1->IDENT);*/
+          }
+
+        if ($1->NUM >= 0)
+          { 
+          if (left_bound >= right_bound)
+            for (i=right_bound; i!=$1->NUM;i++) gen_pnt=gen_pnt->NEXT;
+          else
+            for (i=right_bound; i!=$1->NUM;i--) gen_pnt=gen_pnt->NEXT;
+          }
+
+        for (ptcndval = $1; ptcndval; ptcndval = ptcndval->NEXT)
+          {
+          ptbiabl = beh_addbiabl(ptbiabl, BVL_LBLNAM, ptcndval->CND, ptcndval->VAL);
+          ptbiabl->TIME = ptcndval->TIME;
+          ptbinode = beh_addbinode (ptbinode, NULL, NULL);
+          ptbinode->TIME = ptcndval->TIME;
+          }
+        ptbiabl = (biabl_list *)reverse((chain_list *)ptbiabl);
+        ptbiabl->FLAG |= BEH_CND_NOPRECEDE;
+        if (ptbiabl->NEXT != NULL)
+          {
+          for (pttraverse = ptbiabl->NEXT; pttraverse; pttraverse = pttraverse->NEXT)
+            pttraverse->FLAG |= BEH_CND_PRECEDE;
+          }
+        ptbinode = (binode_list *)reverse((chain_list *)ptbinode);
+        if (gen_pnt->OBJTYPE != 'R') {
+            gen_pnt->BIABL = ptbiabl;
+            gen_pnt->BINODE = ptbinode;
+        }
+        else
+          {
+          for (pttraverse = gen_pnt->BIABL; pttraverse->NEXT; pttraverse = pttraverse->NEXT);
+          pttraverse->NEXT = ptbiabl;
+          for (pttravbinode = gen_pnt->BINODE; pttravbinode->NEXT; pttravbinode = pttravbinode->NEXT);
+          pttravbinode->NEXT = ptbinode;
+          }
+
+        gen_pnt->OBJTYPE = 'R';
+        }
+    | if_then_else
+        {
+        bvldecl_list   *gen_pnt;
+        biabl_list     *ptbiabl = NULL;
+        binode_list    *ptbinode = NULL;
+        biabl_list     *pttraverse;
+        binode_list    *pttravbinode;
+        bvlcond        *ptcndval;
+        int             sig_conf;
+        int             left_bound;
+        int             right_bound;
+        int             i;
+
+        left_bound  = beh_chktab (dic, $1->IDENT, BVL_MODNAM, BVL_WMNDFN);
+        right_bound = beh_chktab (dic, $1->IDENT, BVL_MODNAM, BVL_WMXDFN);
+
+        sig_conf  = beh_chktab (dic, $1->IDENT, BVL_MODNAM, BVL_SIGDFN);
+        gen_pnt = (bvldecl_list *) beh_chktab (dic,$1->IDENT,BVL_MODNAM,BVL_PNTDFN);
+
+        switch (sig_conf)
+          {
+          case (BVL_ICNDFN + BVL_STDDFN + BVL_PORDFN):
+          case (BVL_ICNDFN + BVL_VECDFN + BVL_PORDFN):
+            bvl_error (21, $1->IDENT);
+          }
+
+        if ($1->NUM >= 0) 
+          {
+          if (left_bound >= right_bound)
+            for (i=right_bound; i!=$1->NUM;i++) gen_pnt=gen_pnt->NEXT;
+          else
+            for (i=right_bound; i!=$1->NUM;i--) gen_pnt=gen_pnt->NEXT;
+          }
+
+        for (ptcndval = $1; ptcndval; ptcndval = ptcndval->NEXT)
+          {
+          ptbiabl = beh_addbiabl(ptbiabl, BVL_LBLNAM, ptcndval->CND, ptcndval->VAL);
+          ptbiabl->TIME = ptcndval->TIME;
+          ptbinode = beh_addbinode (ptbinode, NULL, NULL);
+          ptbinode->TIME = ptcndval->TIME;
+          }
+        ptbiabl = (biabl_list *)reverse((chain_list *)ptbiabl);
+        ptbiabl->FLAG |= BEH_CND_NOPRECEDE;
+        if (ptbiabl->NEXT != NULL)
+          {
+          for (pttraverse = ptbiabl->NEXT; pttraverse; pttraverse = pttraverse->NEXT)
+            pttraverse->FLAG |= BEH_CND_PRECEDE;
+          }
+        ptbinode = (binode_list *)reverse((chain_list *)ptbinode);
+        if (gen_pnt->OBJTYPE != 'B')
+          {
+          gen_pnt->BIABL = ptbiabl;
+          gen_pnt->BINODE = ptbinode;
+          }
+        else
+          {
+          for (pttraverse = gen_pnt->BIABL; pttraverse->NEXT; pttraverse = pttraverse->NEXT);
+          pttraverse->NEXT = ptbiabl;
+          for (pttravbinode = gen_pnt->BINODE; pttravbinode->NEXT; pttravbinode = pttravbinode->NEXT);
+          pttravbinode->NEXT = ptbinode;
+          }
+
+        gen_pnt->OBJTYPE = 'B';
+        }
+    ;
+
+affectation
+    : target
+      _LESym
+      ..waveform__WHEN__condition__ELSE..
+      waveform
+      Semicolon_ERR
+        {
+        bvldecl_list   *gen_pnt;
+        struct chain   *abl_pnt;
+        unsigned long   delay  ;
+        int             i;
+        bvlexpr         expr0;
+        bvlexpr         expr1;
+        bvlexpr         expr2;
+        bvlexpr         expr3;
+        bvlexpr         expr4;
+        bvlexpr         expr5;
+        bvlexpr         expr6;
+        int             rev_flg = 0;
+        int             left_bnd;
+        int             right_bnd;
+        int             left;
+        int             right;
+        int             in_bound;
+        int             out_bound;
+        int             sig_width;
+        int             sig_conf;
+
+        delay = $4.TIME;
+        expr4 = $4;
+
+        while (BVL_CNDLST != NULL)
+          {
+          expr5 = *((bvlexpr *) BVL_CNDLST->DATA);
+          expr6 = *((bvlexpr *) BVL_VALLST->DATA);
+
+          expr0 = bvl_cpyablstr (expr5);
+          expr1 = bvl_crtabl (NOT , expr5, BVL_EMPSTR, -1, -1);
+          expr5 = expr0;
+          expr2 = bvl_crtabl (ANDM, expr4, expr1, -1, -1);
+          expr3 = bvl_crtabl (ANDM, expr6, expr5, -1, -1);
+          expr4 = bvl_crtabl (OR , expr2, expr3, -1, -1);
+
+          BVL_CNDLST = delchain (BVL_CNDLST, BVL_CNDLST);
+          BVL_VALLST = delchain (BVL_VALLST, BVL_VALLST);
+          }
+
+        left_bnd  = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_WMNDFN);
+        right_bnd = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_WMXDFN);
+        sig_conf  = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_SIGDFN);
+
+        left  = $1.LEFT;
+        right = $1.RIGHT;
+
+        if (left_bnd <= right_bnd)
+          {
+          sig_width = right_bnd - left_bnd + 1;
+          if (left <= right)
+            {
+            rev_flg   = 0;
+            in_bound  = right_bnd - right;
+            out_bound = right_bnd - left;
+            if ((left < left_bnd) || (right > right_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          else
+            {
+            rev_flg   = 1;
+            in_bound  = right_bnd - left;
+            out_bound = right_bnd - right;
+            if ((left > right_bnd) || (right < left_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          }
+        else
+          {
+          sig_width = left_bnd - right_bnd + 1;
+          if (left <= right)
+            {
+            rev_flg   = 1;
+            in_bound  = left  - right_bnd;
+            out_bound = right - right_bnd;
+            if ((left < right_bnd) || (right > left_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          else
+            {
+            rev_flg   = 0;
+            in_bound  = right - right_bnd;
+            out_bound = left  - right_bnd;
+            if ((left > left_bnd) || (right < right_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          }
+
+        if ((out_bound - in_bound + 1) != expr4.WIDTH)
+          bvl_error (35, $1.NAME);
+
+        if (rev_flg == 1)
+          expr4.LIST_ABL = reverse (expr4.LIST_ABL);
+
+        abl_pnt = expr4.LIST_ABL;
+
+        gen_pnt = (bvldecl_list *) beh_chktab (dic,$1.NAME,BVL_MODNAM,BVL_PNTDFN);
+        if (gen_pnt == NULL)
+          bvl_error (17,$1.NAME);
+
+        if (abs(right - left) != 0)
+          bvl_error (43,$1.NAME); 
+
+        switch (sig_conf)
+          {
+          case (BVL_ICNDFN + BVL_STDDFN + BVL_PORDFN): bvl_error (21, $1.NAME);
+          }
+
+        if (BVL_ERRFLG == 0)
+          {
+          for (i=0 ; i<sig_width ; i++)
+            {
+            if (i >= in_bound)
+              {
+              if (gen_pnt->ABL != NULL)
+                bvl_error (39, gen_pnt->NAME);
+              else
+                $$.LIST_ABL = (struct chain*)copyExpr(abl_pnt->DATA);
+              $$.IDENT    = namealloc($1.NAME);
+              $$.WIDTH    = left; /* warning WIDTH = IDENT composant's number */
+              $$.TIME     = delay;
+              abl_pnt = abl_pnt->NEXT;
+              }
+            if (i >= out_bound)
+              break;
+            gen_pnt = gen_pnt->NEXT;
+            }
+          }
+        else EXIT(1);
+        }
+    ;
+
+if_then
+    : IF
+      edge
+      THEN
+      if_then
+      _END
+      IF
+      Semicolon_ERR
+        {
+        $$ = addCndVal(NULL, $4->IDENT, $4->NUM, createBinExpr(AND, $2.LIST_ABL, $4->CND), $4->VAL, $4->TIME);
+        }
+    | IF
+      edge
+      THEN
+      affectation
+      .elsif_then.
+      _END
+      IF
+      Semicolon_ERR
+        {
+        /*if ($5 == NULL)
+          {
+          $$ = addCndVal($5, $4.IDENT, $4.WIDTH, $2.LIST_ABL, $4.LIST_ABL, $4.TIME);
+          }
+        else
+          {
+          bvlcond *cndval = NULL;
+  
+          cndval = addCndVal($5, $4.IDENT, $4.WIDTH, $2.LIST_ABL, $4.LIST_ABL, $4.TIME);
+          $$ = addCndVal(NULL, $4.IDENT, $4.WIDTH, simplif10Expr(makeCnd(cndval)), simplif10Expr(makeVal(cndval)), $4.TIME);
+          }*/
+        $$ = addCndVal($5, $4.IDENT, $4.WIDTH, $2.LIST_ABL, $4.LIST_ABL, $4.TIME);
+        }
+    ;
+
+if_then_else
+    : IF
+      edge
+      THEN
+      affectation
+      .elsif_then.
+      ELSE
+      affectation
+      _END
+      IF
+      Semicolon_ERR
+        {
+        bvlcond *ptcndval;
+
+        $$ = addCndVal($5, $4.IDENT, $4.WIDTH, $2.LIST_ABL, $4.LIST_ABL, $4.TIME);
+        /* add the else affectation if not HZ */
+        if (!ATOM($7.LIST_ABL) || strcasecmp($7.LIST_ABL->DATA, "'z'") != 0)
+          {
+          for (ptcndval = $$; ptcndval->NEXT != NULL; ptcndval = ptcndval->NEXT);
+          ptcndval->NEXT = addCndVal(NULL, $7.IDENT, $7.WIDTH, createAtom("'1'"), $7.LIST_ABL, $7.TIME);
+          }
+        }
+    ;
+
+.elsif_then.
+    : /* empty */
+        { 
+        $$ =NULL;
+        }
+    | ELSIF
+      edge
+      THEN 
+      affectation
+      .elsif_then.
+        {
+        $$ = addCndVal ($5, $4.IDENT, $4.WIDTH, $2.LIST_ABL, $4.LIST_ABL, $4.TIME);       
+        }
+    | ELSIF 
+      edge 
+      THEN
+      IF
+      edge
+      THEN
+      affectation
+      _END
+      IF
+      Semicolon_ERR
+        {
+        $$ = addCndVal(NULL, $7.IDENT, $7.WIDTH, createBinExpr(AND, $2.LIST_ABL, $5.LIST_ABL), $7.LIST_ABL, $7.TIME);
+        }
+    ;
+    
+concurrent_assertion_statement
+    : a_label
+      unlabeled_concurrent_assertion_statement
+        {
+        if (beh_chktab (dic, $1, BVL_MODNAM, BVL_LBLDFN) != 0)
+          bvl_error (19, $1);
+
+        beh_addtab (dic, $1, BVL_MODNAM, BVL_LBLDFN, 1);
+        if (BVL_ERRFLG == 0)
+          BVL_BEFPNT->BEMSG->LABEL = $1;
+        }
+    | unlabeled_concurrent_assertion_statement
+    ;
+
+concurrent_signal_assignment_statement
+    : a_label
+      unlabeled_conditional_signal_assignment
+        {
+        if (beh_chktab (dic, $1, BVL_MODNAM, BVL_LBLDFN) != 0)
+          bvl_error (19, $1);
+        beh_addtab (dic, $1, BVL_MODNAM, BVL_LBLDFN, 1);
+        }
+    | unlabeled_conditional_signal_assignment
+    | a_label
+      unlabeled_selected_signal_assignment
+        {
+        if (beh_chktab (dic, $1, BVL_MODNAM, BVL_LBLDFN) != 0)
+          bvl_error (19, $1);
+        beh_addtab (dic, $1, BVL_MODNAM, BVL_LBLDFN, 1);
+        }
+    | unlabeled_selected_signal_assignment
+    ;
+
+unlabeled_concurrent_assertion_statement
+    : assertion_statement
+    ;
+
+assertion_statement
+    : ASSERT
+      expression
+      .REPORT__expression.
+      .SEVERITY__expression.
+      Semicolon_ERR
+        {
+        if (BVL_ERRFLG == 0)
+          {
+          BVL_BEFPNT->BEMSG = beh_addbemsg(BVL_BEFPNT->BEMSG, NULL, $4,
+                                           $3, $2.LIST_ABL->DATA, NULL);
+          }
+        }
+    ;
+
+unlabeled_conditional_signal_assignment
+    : target
+      _LESym
+      .GUARDED.
+      ..waveform__WHEN__condition__ELSE..
+      waveform
+      Semicolon_ERR
+        {
+        bvldecl_list   *gen_pnt;
+        int             i;
+
+        struct chain   *abl_pnt;
+        unsigned long   delay  ;
+        bvlexpr         expr0;
+        bvlexpr         expr1;
+        bvlexpr         expr2;
+        bvlexpr         expr3;
+        bvlexpr         expr4;
+        bvlexpr         expr5;
+        bvlexpr         expr6;
+        int             rev_flg = 0;
+        int             left_bnd;
+        int             right_bnd;
+        int             left;
+        int             right;
+        int             in_bound;
+        int             out_bound;
+        int             sig_width;
+        int             sig_conf;
+
+        delay = $5.TIME;
+        expr4 = $5;
+
+        while (BVL_CNDLST != NULL)
+          {
+          expr5 = *((bvlexpr *) BVL_CNDLST->DATA);
+          expr6 = *((bvlexpr *) BVL_VALLST->DATA);
+
+          expr0 = bvl_cpyablstr (expr5);
+          expr1 = bvl_crtabl (NOT , expr5, BVL_EMPSTR, -1, -1);
+          expr5 = expr0;
+          expr2 = bvl_crtabl (ANDM, expr4, expr1     , -1, -1);
+          expr3 = bvl_crtabl (ANDM, expr6, expr5     , -1, -1);
+          expr4 = bvl_crtabl (OR  , expr2, expr3     , -1, -1);
+
+          BVL_CNDLST = delchain (BVL_CNDLST, BVL_CNDLST);
+          BVL_VALLST = delchain (BVL_VALLST, BVL_VALLST);
+          }
+
+        left_bnd  = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_WMNDFN);
+        right_bnd = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_WMXDFN);
+        sig_conf  = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_SIGDFN);
+
+        left  = $1.LEFT;
+        right = $1.RIGHT;
+
+        if (left_bnd <= right_bnd)
+          {
+          sig_width = right_bnd - left_bnd + 1;
+          if (left <= right)
+            {
+            rev_flg   = 0;
+            in_bound  = right_bnd - right;
+            out_bound = right_bnd - left;
+            if ((left < left_bnd) || (right > right_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          else
+            {
+            rev_flg   = 1;
+            in_bound  = right_bnd - left;
+            out_bound = right_bnd - right;
+            if ((left > right_bnd) || (right < left_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          }
+        else
+          {
+          sig_width = left_bnd - right_bnd + 1;
+          if (left <= right)
+            {
+            rev_flg   = 1;
+            in_bound  = left  - right_bnd;
+            out_bound = right - right_bnd;
+            if ((left < right_bnd) || (right > left_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          else
+            {
+            rev_flg   = 0;
+            in_bound  = right - right_bnd;
+            out_bound = left  - right_bnd;
+            if ((left > left_bnd) || (right < right_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          }
+
+        if ((out_bound - in_bound + 1) != expr4.WIDTH)
+          bvl_error (35, $1.NAME);
+
+        if (rev_flg == 1)
+          expr4.LIST_ABL = reverse (expr4.LIST_ABL);
+
+        abl_pnt = expr4.LIST_ABL;
+
+        gen_pnt = (bvldecl_list *) beh_chktab (dic,$1.NAME,BVL_MODNAM,BVL_PNTDFN);
+        if (gen_pnt == NULL)
+          bvl_error(17, $1.NAME);
+
+        switch (sig_conf) {
+        case (BVL_ICNDFN + BVL_STDDFN + BVL_PORDFN): bvl_error (21, $1.NAME);
+        }
+
+    
+        if (BVL_ERRFLG == 0)
+          {
+          for (i=0 ; i<sig_width ; i++)
+            {
+            if (i >= in_bound)
+              {
+              if (gen_pnt->ABL != NULL)
+                bvl_error (39, gen_pnt->NAME);
+              else
+                {
+                gen_pnt->ABL = (struct chain *)abl_pnt->DATA;
+                gen_pnt->TIME = delay;
+                gen_pnt->OBJTYPE = 'A';
+                }
+              abl_pnt = abl_pnt->NEXT;
+              }
+              if (i >= out_bound)
+                break;
+              gen_pnt = gen_pnt->NEXT;
+            }
+          }
+          else EXIT(1);
+        }
+    ;
+
+..waveform__WHEN__condition__ELSE..
+    : /*empty*/
+    | ..waveform__WHEN__condition__ELSE..
+      waveform
+      WHEN
+      expression
+      ELSE
+        {
+        bvlexpr *expr_pnt;
+
+        expr_pnt           = (bvlexpr *)mbkalloc(sizeof(bvlexpr));
+        expr_pnt->WIDTH    = $4.WIDTH;
+        expr_pnt->LIST_ABL = $4.LIST_ABL;
+        BVL_CNDLST         = addchain (BVL_CNDLST, (char *) expr_pnt);
+
+        expr_pnt           = (bvlexpr *)mbkalloc(sizeof(bvlexpr));
+        expr_pnt->WIDTH    = $2.WIDTH;
+        expr_pnt->LIST_ABL = $2.LIST_ABL;
+        BVL_VALLST         = addchain (BVL_VALLST, (char *) expr_pnt);
+        }
+    ;
+
+unlabeled_selected_signal_assignment
+    : WITH
+      expression
+        {
+        BVL_SLCEXP = $2;
+        BVL_BDDPNT = NULL;
+        }
+      SELECT
+      target
+      _LESym
+      .GUARDED.
+      waveform__WHEN__choices
+      ...waveform__WHEN__choices..
+      Semicolon_ERR
+        {
+        int             i;
+
+        bvldecl_list   *gen_pnt;
+
+        struct chain   *abl_pnt  ;
+        unsigned long   delay    ;
+        bvlexpr         expr1    ;
+        int             rev_flg  = 0;
+        int             left_bnd;
+        int             right_bnd;
+        int             left;
+        int             right;
+        int             in_bound;
+        int             out_bound;
+        int             sig_width;
+        int             sig_conf;
+        char           *name;
+
+        name = $5.NAME;
+
+        if ($8.TIME != $9.TIME)
+          bvl_error (80, NULL);
+
+        expr1      = bvl_crtabl (OR , $8 , $9, -1, -1);
+        expr1.TIME = $8.TIME;
+
+        if (BVL_BDDPNT != BDD_one)
+          bvl_error (25, NULL);
+        left_bnd  = beh_chktab (dic, $5.NAME, BVL_MODNAM, BVL_WMNDFN);
+        right_bnd = beh_chktab (dic, $5.NAME, BVL_MODNAM, BVL_WMXDFN);
+        sig_conf  = beh_chktab (dic, $5.NAME, BVL_MODNAM, BVL_SIGDFN);
+
+        left  = $5.LEFT;
+        right = $5.RIGHT;
+        if (left_bnd <= right_bnd)
+          {
+          sig_width = right_bnd - left_bnd + 1;
+          if (left <= right)
+            {
+            rev_flg   = 0;
+            in_bound  = right_bnd - right;
+            out_bound = right_bnd - left;
+            if ((left < left_bnd) || (right > right_bnd))
+              bvl_error (36, $5.NAME);
+            }
+          else
+            {
+            rev_flg   = 1;
+            in_bound  = right_bnd - left;
+            out_bound = right_bnd - right;
+            if ((left > right_bnd) || (right < left_bnd))
+              bvl_error (36, $5.NAME);
+            }
+          }
+        else
+          {
+          sig_width = left_bnd - right_bnd + 1;
+          if (left <= right)
+            {
+            rev_flg   = 1;
+            in_bound  = left  - right_bnd;
+            out_bound = right - right_bnd;
+            if ((left < right_bnd) || (right > left_bnd))
+              bvl_error (36, $5.NAME);
+            }
+          else
+            {
+            rev_flg   = 0;
+            in_bound  = right - right_bnd;
+            out_bound = left  - right_bnd;
+            if ((left > left_bnd) || (right < right_bnd))
+              bvl_error (36, $5.NAME);
+            }
+          }
+
+        if ((out_bound - in_bound + 1) != expr1.WIDTH)
+          bvl_error (35, $5.NAME);
+
+        if (rev_flg == 1)
+          expr1.LIST_ABL = reverse (expr1.LIST_ABL);
+
+        abl_pnt = expr1.LIST_ABL;
+        delay   = expr1.TIME    ;
+
+        gen_pnt = (bvldecl_list *)
+                         beh_chktab (dic,$5.NAME,BVL_MODNAM,BVL_PNTDFN);
+
+        switch (sig_conf) {
+        case (BVL_ICNDFN + BVL_STDDFN + BVL_PORDFN): bvl_error (21, $5.NAME);
+        }
+
+        if (BVL_ERRFLG == 0) {
+          for (i=0 ; i<sig_width ; i++) {
+            if (i >= in_bound) {
+              if (gen_pnt->ABL != NULL)
+                bvl_error (39, gen_pnt->NAME);
+              else {
+                gen_pnt->ABL = (struct chain *)abl_pnt->DATA;
+              gen_pnt->TIME = delay;
+                 gen_pnt->OBJTYPE = 'A';
+              }
+              abl_pnt = abl_pnt->NEXT;
+            }
+            if (i >= out_bound)
+              break;
+            gen_pnt = gen_pnt->NEXT;
+          }
+        }
+        else
+          avt_errmsg(BVL_ERRMSG,"000",AVT_ERROR,"003");
+        //printf("Erreur select assign\n");  
+
+        }
+    ;
+
+...waveform__WHEN__choices..
+    : /*empty*/
+        { $$ = BVL_EMPSTR; }
+    | ...waveform__WHEN__choices..
+      Comma
+      waveform__WHEN__choices
+        {
+        if ($1.TIME != $3.TIME)
+          bvl_error (80, NULL);
+
+        $$ = bvl_crtabl (OR, $1, $3, -1, -1);
+        $$.TIME = $1.TIME;
+        }
+    ;
+
+waveform__WHEN__choices
+    : waveform
+      WHEN
+      choices
+        {
+        bvlexpr expr1;
+
+        bvl_select (&expr1, BVL_NM1LST, &BVL_BDDPNT, BVL_SLCEXP);
+        freechain  (BVL_NM1LST);
+        BVL_NM1LST = NULL;
+
+        $$      = bvl_crtabl (ANDM, $1, expr1, -1, -1);
+        $$.TIME = $1.TIME;
+        }
+    ;
+
+waveform
+    : waveform_element
+        { $$ = $1; }
+    ;
+
+waveform_element
+    : expression
+      .AFTER__delay_expression.
+        {
+        $$      = $1;
+        $$.TIME = $2;
+        }
+    ;
+
+.AFTER__delay_expression.
+    : /*empty*/
+        { $$ = 0; }
+    | AFTER
+      delay_expression
+        { $$ = $2;}
+    ;
+
+delay_expression
+    : abstractlit
+     .time_unit.
+        { $$ = $1 * $2; }
+    ;
+
+.time_unit.
+    : /*empty*/
+        { $$ = 1          ; }
+    | PS
+        { $$ = 1          ; }
+    | NS
+        { $$ = 1000       ; }
+    | US
+        { $$ = 1000000    ; }
+    | MS
+        { $$ = 1000000000 ; }
+    ;
+
+choices
+    : choice
+        { BVL_NM1LST = addchain (NULL, $1); }
+      ..Bar__choice..
+        { yyerrok; }
+    ;
+
+..Bar__choice..
+    : /*empty*/
+    | ..Bar__choice..
+      Bar
+      choice
+        {
+        if ($3 == "others")
+          bvl_error (30, NULL);
+        BVL_NM1LST = addchain (BVL_NM1LST, $3);
+        }
+    ;
+
+choice
+    : literal
+        { $$ = $1; }
+    | OTHERS
+        { $$ = "others"; }
+    | name
+        {
+        char           *val;
+        char            val2[256];
+        int             left;
+        int             right;
+        int             in_bound;
+        int             out_bound;
+        int             left_bnd;
+        int             right_bnd;
+        int             sig_conf;
+
+        strcpy (val2, "B\"");
+        sig_conf = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_SIGDFN);
+        val      = (char *) beh_chktab (dic, $1.NAME, NULL, BVL_PNTDFN);
+        if (sig_conf == 0)
+          bvl_error (17, $1.NAME);
+        else
+          {
+          if (sig_conf != BVL_CSTDFN)
+            bvl_error (76, $1.NAME);
+          }
+
+        left_bnd  = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_WMNDFN);
+        right_bnd = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_WMXDFN);
+
+        left  = $1.LEFT;
+        right = $1.RIGHT;
+
+        if (left_bnd <= right_bnd)
+          {
+          if (left <= right)
+            {
+            in_bound = left - left_bnd;
+            out_bound = right - left_bnd;
+            if ((left < left_bnd) || (right > right_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          else
+            {
+            in_bound = left - right_bnd;
+            out_bound = right - right_bnd;
+            if ((left > right_bnd) || (right < left_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          }
+        else
+          {
+          if (left <= right)
+            {
+            in_bound = right - left_bnd;
+            out_bound = left - left_bnd;
+            if ((left < right_bnd) || (right > left_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          else
+            {
+            in_bound = right - right_bnd;
+            out_bound = left - right_bnd;
+            if ((left > left_bnd) || (right < right_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          }
+
+        bvl_tobin (&val2[2], val, in_bound, out_bound);
+        strcat (val2, "\"");
+        $$ = namealloc (val2);
+        }
+    ;
+
+.REPORT__expression.
+    : /*empty*/
+        { $$ = NULL; }
+    | REPORT
+      report__message
+        { $$ = $2; }
+    ;
+
+.SEVERITY__expression.
+    : /*empty*/
+        { $$ = 'E'; }
+    | SEVERITY
+      severity__message
+        { $$ = $2; }
+    ;
+
+report__message
+    : StringLit
+        { $$ = $1; }
+    ;
+
+severity__message
+    : ERROR
+        { $$ = 'E'; }
+    | WARNING
+        { $$ = 'W'; }
+    ;
+
+expression
+    : relation..AND__relation..
+        { $$ = $1; }
+    | relation..OR__relation..
+        { $$ = $1; }
+    | relation.NAND_NOR__relation.
+        { $$ = $1; }
+    | relation..XOR__relation..
+        { $$ = $1; }
+    ;
+
+relation..AND__relation..
+    : relation
+      VHD_AND
+      relation
+        { $$ = bvl_crtabl (AND , $1 , $3 , -1, -1); }
+    | relation..AND__relation..
+      VHD_AND
+      relation
+        { $$ = bvl_crtabl (AND , $1 , $3 , -1, -1); }
+    ;
+
+relation..OR__relation..
+    : relation
+      _OR
+      relation
+        { $$ = bvl_crtabl (OR , $1 , $3 , -1, -1); }
+    | relation..OR__relation..
+      _OR
+      relation
+        { $$ = bvl_crtabl (OR , $1 , $3 , -1, -1); }
+    ;
+
+relation.NAND_NOR__relation.
+    : relation
+        { $$ = $1; }
+    | relation
+      _NAND
+      relation
+        { $$ = bvl_crtabl (NAND , $1 , $3 , -1, -1); }
+    | relation
+      _NOR
+      relation
+        { $$ = bvl_crtabl (NOR , $1 , $3 , -1, -1); }
+    ;
+
+
+relation..XOR__relation..
+    : relation
+      _XOR
+      relation
+        { $$ = bvl_crtabl (XOR , $1 , $3 , -1, -1); }
+    | relation..XOR__relation..
+      _XOR
+      relation
+        { $$ = bvl_crtabl (XOR , $1 , $3 , -1, -1); }
+    ;
+
+relation
+    : simple_expression
+        { $$ = $1; }
+    | simple_expression
+      relational_operator
+      simple_expression
+        { $$ = bvl_crtabl ($2 , $1 , $3 , -1, -1); }
+    ;
+
+simple_expression
+    : .sign.term..add_op__term..
+        { $$ = $1; }
+    ;
+
+.sign.term..add_op__term..
+    : term
+        { $$ = $1; }
+    | .sign.term..add_op__term..
+      Ampersand
+      term
+        { $$ = bvl_crtabl (CONC, $1, $3, -1, -1); }
+
+    ;
+
+term
+    : factor
+        { $$ = $1; }
+    ;
+
+factor
+    : primary
+        { $$ = $1; }
+    | _NOT
+      primary
+        { $$ = bvl_crtabl (NOT, $2, BVL_EMPSTR, -1, -1); }
+    ;
+
+primary
+    : literal
+        {
+        bvlexpr expr1;
+        expr1.IDENT = $1;
+        $$ = bvl_crtabl (NOPS, expr1, BVL_EMPSTR, -1, -1);
+        }
+    | aggregate
+        { $$ = $1; }
+    | name
+        {
+        bvlexpr         expr1;
+        int             left;
+        int             right;
+        int             left_bnd;
+        int             right_bnd;
+        int             in_bound;
+        int             out_bound;
+        int             sig_conf;
+
+
+        sig_conf = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_SIGDFN);
+
+        switch (sig_conf) {
+            case (BVL_OCNDFN + BVL_STDDFN + BVL_PORDFN) : 
+                bvl_error (26, $1.NAME);
+                break;
+            case (0) : bvl_error (17, $1.NAME);
+        }
+
+
+        left_bnd  = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_WMNDFN);
+        right_bnd = beh_chktab (dic, $1.NAME, BVL_MODNAM, BVL_WMXDFN);
+
+        left  = $1.LEFT;
+        right = $1.RIGHT;
+
+        if (left_bnd <= right_bnd)
+          {
+          if (left <= right)
+            {
+            in_bound  = left  - left_bnd;
+            out_bound = right - left_bnd;
+            if ((left < left_bnd) || (right > right_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          else
+            {
+            in_bound  = right - left_bnd;
+            out_bound = left  - left_bnd;
+            if ((left > right_bnd) || (right < left_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          }
+        else
+          {
+          if (left <= right)
+            {
+            in_bound  = left  - right_bnd;
+            out_bound = right - right_bnd;
+            if ((left < right_bnd) || (right > left_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          else
+            {
+            in_bound  = right - right_bnd;
+            out_bound = left  - right_bnd;
+            if ((left > left_bnd) || (right < right_bnd))
+              bvl_error (36, $1.NAME);
+            }
+          }
+
+        if (sig_conf != BVL_CSTDFN)
+          {
+          expr1.IDENT = $1.NAME;
+          if($1.FLAG == 'X')
+            {
+            expr1 = bvl_crtabl (NOPI,expr1,BVL_EMPSTR,left,right);
+            $$ = bvl_crtabl (STABLE,expr1,BVL_EMPSTR,left,right);
+            }
+          else 
+            $$ = bvl_crtabl (NOPI,expr1,BVL_EMPSTR,left,right);
+          }
+        else
+          {
+          expr1.IDENT = (char *)beh_chktab(dic,$1.NAME,NULL,BVL_PNTDFN);
+          $$ = bvl_crtabl (NOPS,expr1,BVL_EMPSTR,in_bound,out_bound);
+          }
+        }
+    ;
+
+relational_operator
+    : _EQSym
+        { $$ = EQ; }
+    | _NESym
+        { $$ = NE; }
+    ;
+
+literal
+    : CharacterLit
+        { $$ = $1; }
+    | StringLit
+        { $$ = $1; }
+    | BitStringLit
+        { $$ = $1; }
+    ;
+
+aggregate
+    : LeftParen
+      expression
+      RightParen
+        { $$ = $2; }
+    ;
+
+name
+    : simple_name
+        {
+        $$.NAME  = $1;
+        $$.LEFT  = beh_chktab (dic, $1, BVL_MODNAM, BVL_WMNDFN);
+        $$.RIGHT = beh_chktab (dic, $1, BVL_MODNAM, BVL_WMXDFN);
+        }
+    | indexed_name
+        { $$ = $1; }
+    | slice_name
+        { $$ = $1; }
+    | attribute_name
+        { $$ = $1; }
+    ;
+
+indexed_name
+    : simple_name
+      LeftParen
+      abstractlit
+      RightParen_ERR
+        {
+        $$.NAME  = $1;
+        $$.LEFT  = $3;
+        $$.RIGHT = $3;
+        }
+    ;
+
+slice_name
+    : simple_name
+      LeftParen
+      abstractlit
+      direction
+      abstractlit
+      RightParen_ERR
+        {
+        if ((($5 > $3) && ($4 != BVL_UPTDFN)) ||
+            (($5 < $3) && ($4 != BVL_DWTDFN)))
+          bvl_error (32, $1);
+
+        $$.NAME  = $1;
+        $$.LEFT  = $3;
+        $$.RIGHT = $5;
+        }
+    ;
+
+attribute_name
+    : simple_name
+      Apostrophe
+      attribute_designator
+        {
+        char             extname[100];
+        char            *lclname;
+        int              sig_conf;
+        bvlexpr          expr1;
+        bvlexpr          expr2;
+        struct chain    *ptabl;
+
+      
+        sig_conf = beh_chktab (dic, $1, BVL_MODNAM, BVL_SIGDFN);
+        switch (sig_conf) {
+          case (BVL_PORDFN + BVL_STDDFN + BVL_ICNDFN):
+          case (BVL_PORDFN + BVL_VECDFN + BVL_ICNDFN): 
+          case (BVL_PORDFN + BVL_STDDFN + BVL_BCNDFN): 
+          case (BVL_PORDFN + BVL_VECDFN + BVL_BCNDFN): 
+            break;
+          case (BVL_PORDFN + BVL_STDDFN + BVL_OCNDFN): 
+          case (BVL_PORDFN + BVL_VECDFN + BVL_OCNDFN): 
+            bvl_error (79, $1);
+        }
+        
+        if (beh_chktab (dic, $1, BVL_MODNAM, BVL_WMNDFN) != -1)
+          bvl_error (79, $1);
+        
+        sprintf (extname, "%s'delayed", $1);
+        lclname = namealloc (extname);
+      
+        if (BVL_ERRFLG == 0)
+          {
+          if (beh_chktab (dic, $1, BVL_MODNAM, BVL_STBDFN) == 0)
+            {
+            expr1.IDENT = $1;
+            expr1.WIDTH  = 1;
+            expr2 = bvl_crtabl (NOPI, expr1, BVL_EMPSTR, -1, -1);
+            ptabl = expr2.LIST_ABL->DATA;
+
+            if (BVL_AUXMOD == 1)
+              BVL_BEFPNT->BERIN=beh_addberin(BVL_BEFPNT->BERIN,lclname);
+
+            BVL_BEFPNT->BEDLY = beh_addbeaux(BVL_BEFPNT->BEDLY,lclname,
+                                             ptabl, NULL, 0);
+            beh_addtab (dic, $1, BVL_MODNAM, BVL_STBDFN, 1);
+            beh_addtab (dic, lclname, BVL_MODNAM, BVL_WMNDFN, -1);
+            beh_addtab (dic, lclname, BVL_MODNAM, BVL_WMXDFN, -1);
+            beh_addtab (dic, lclname, BVL_MODNAM, BVL_SIGDFN,
+                        (BVL_ICNDFN + BVL_BITDFN + BVL_NORDFN));
+            }
+          }
+
+        BVL_BEFPNT->TYPE |= BEH_STABLE;
+        $$.NAME = $1;
+        $$.LEFT = -1;
+        $$.RIGHT = -1;
+        $$.FLAG  = 'X';
+        }
+    ;
+
+attribute_designator
+    : EVENT /*_STABLE*/
+    ;
+
+type_mark
+    : STD_LOGIC 
+        {
+        $$.VALU = STD_LOGIC; 
+        $$.FLAG = 'S';
+        }
+    | STD_LOGIC_VECTOR
+        {
+        $$.VALU = STD_LOGIC_VECTOR; 
+        $$.FLAG = 'A';
+        }
+    | NATURAL
+        {
+        $$.VALU = NATURAL;
+        $$.FLAG = 'S';
+        }
+    ;
+
+identifier_list
+    : Identifier
+        { BVL_NM1LST = addchain (BVL_NM1LST, $1); }
+      ...identifier..
+    ;
+
+...identifier..
+    : /*empty*/
+    | ...identifier..
+      Comma
+      Identifier
+        { BVL_NM1LST = addchain (BVL_NM1LST, $3); }
+    ;
+
+name_list
+    : name
+        { BVL_NM1LST = addchain (BVL_NM1LST, $1.NAME); }
+      ...name..
+    ;
+
+...name..
+    : /*empty*/
+    | ...name..
+      Comma
+      name
+        { BVL_NM1LST = addchain (BVL_NM1LST, $3.NAME); }
+    ;
+
+.label.
+    : /*empty*/
+        { $$ = NULL; }
+    | label
+        { $$ = $1; }
+    ;
+
+.GUARDED.
+    : /*empty*/
+        { $$ = BVL_UNGDFN ; }
+    | GUARDED
+        { $$ = BVL_GRDDFN; }
+    ;
+
+.simple_name.
+    : /*empty*/
+        { $$ = NULL; }
+    | simple_name
+        { $$ = $1; }
+    ;
+
+simple_name
+    : Identifier
+        { $$ = $1; }
+    ;
+
+target
+    : name
+        { $$ = $1; }
+    ;
+
+a_label
+    : label
+      Colon
+        {
+        BVL_LBLNAM = $1;
+        $$ = $1;
+        }
+    ;
+
+label
+    : Identifier
+        { $$ = $1; }
+    ;
+
+abstractlit
+    : AbstractLit
+        { $$ = atoi ($1); }
+    ;
+
+RightParen_ERR
+    : RightParen
+        { yyerrok; }
+    ;
+
+Semicolon_ERR
+    : Semicolon
+        { yyerrok; }
+    ;
+
+END_ERR
+    : _END
+        { yyerrok; }
+    ;
+%%
+
+/* ###--------------------------------------------------------------### */
+/*  function : vhd_chkdcl                                               */
+/* ###--------------------------------------------------------------### */
+
+int vhd_chkdcl (char object, int mode, int type, char flag, int kind, char constraint, int  *conf)
+
+  {
+  int errflg = 0;
+  int lclcnf = 0;
+
+  if (flag != constraint)
+    {
+    errflg = 1;
+    bvl_error (33, NULL);
+    }
+  else
+    {
+    switch (object)
+      {
+      case 'P':
+    /* ###------------------------------------------------------### */
+    /*    If object is a port :                 */
+    /*       - if type is bit, no guard indication can be used  */
+    /*       - if type is wor_bit or mux_bit, bus kind must be used */
+    /*       - other types are illegal              */
+    /* ###------------------------------------------------------### */
+
+        switch (type)
+          {
+          case BIT:
+
+            lclcnf += BVL_BITDFN + BVL_NORDFN;
+            switch (mode)
+              {
+              case _IN :
+                lclcnf += BVL_ICNDFN; break;
+              case _OUT:
+                lclcnf += BVL_OCNDFN; break;
+              case _INOUT :
+                lclcnf += BVL_BCNDFN; break;
+              case _LINKAGE :
+              case 0 :
+                errflg = 1; break;
+              }
+            if (kind != 0)
+              errflg = 1;
+            break;
+
+          case MUX_BIT:
+
+            lclcnf += BVL_MUXDFN + BVL_BUSDFN;
+            switch (mode)
+              {
+              case _OUT :
+                lclcnf += BVL_OCNDFN; break;
+              case _INOUT :
+                lclcnf += BVL_BCNDFN; break;
+              case _IN :
+              case _LINKAGE :
+              case 0 :
+                errflg = 1; break;
+              }
+            if (kind != BUS)
+              errflg = 1;
+            break;
+
+          case WOR_BIT:
+
+            lclcnf += BVL_WORDFN + BVL_BUSDFN;
+            switch (mode)
+              {
+              case _OUT :
+                lclcnf += BVL_OCNDFN; break;
+              case _INOUT :
+                lclcnf += BVL_BCNDFN; break;
+              case _IN :
+              case _LINKAGE :
+              case 0 :
+                errflg = 1; break;
+              }
+            if (kind != BUS)
+              errflg = 1;
+            break;
+
+          case REG_BIT:
+          case NATURAL:
+
+            errflg = 1;
+            break;
+          }
+        if (errflg == 1)
+          bvl_error (5, NULL);
+        break;
+
+      case 'G':
+    /* ###------------------------------------------------------### */
+    /*    If object is a generic :                  */
+    /*       - only natural type is allowed             */
+    /* ###------------------------------------------------------### */
+
+        if ((type != NATURAL) || (mode != 0) || (kind != 0))
+          {
+          errflg = 1;
+          bvl_error (77, NULL);
+          }
+        break;
+
+      case 'S':
+    /* ###------------------------------------------------------### */
+    /*    If object is a signal :                   */
+    /*       - no mode can be specified             */
+    /*       - if type is bit no guard indication can be used   */
+    /*       - if type is wor_bit or mux_bit, bus kind must be used */
+    /*       - if type is reg_bit, register kind must be used   */
+    /*       - other types are illegal              */
+    /* ###------------------------------------------------------### */
+
+        switch (type)
+          {
+          case BIT:
+            lclcnf += BVL_BITDFN + BVL_NORDFN;
+            if ((mode != 0) || (kind != 0))
+              errflg = 1;
+            break;
+          case MUX_BIT:
+            lclcnf += BVL_MUXDFN + BVL_BUSDFN;
+            if ((mode != 0) || (kind != BUS))
+              errflg = 1;
+            break;
+          case WOR_BIT:
+            lclcnf += BVL_WORDFN + BVL_BUSDFN;
+            if ((mode != 0) || (kind != BUS))
+              errflg = 1;
+            break;
+          case REG_BIT:
+            lclcnf += BVL_RBIDFN + BVL_REGDFN;
+            if ((mode != 0) || (kind != REGISTER))
+              errflg = 1;
+            break;
+          case NATURAL:
+            errflg = 1; break;
+          }
+
+        if (mode != 0)
+          errflg = 1;
+
+        if (errflg == 1)
+          bvl_error (11, NULL);
+        break;
+
+      case 'C':
+    /* ###------------------------------------------------------### */
+    /*    If object is a constant :                 */
+    /*       - only bit type without any other indication is legal  */
+    /* ###------------------------------------------------------### */
+
+        lclcnf += BVL_CSTDFN;
+        if ((type != BIT) || (mode != 0) || (kind != 0))
+          {
+          errflg = 1;
+          bvl_error (78, NULL);
+          }
+        break;
+      }
+    }
+
+  *conf = lclcnf ;
+  return (errflg);
+  }
+
+/* ###--------------------------------------------------------------### */
+/*  function : addgen                                                   */
+/* ###--------------------------------------------------------------### */
+
+bvldecl_list *
+addgen(char *name)
+{
+    bvldecl_list   *l_pgen;
+
+    l_pgen = (bvldecl_list *) mbkalloc(sizeof(struct bvldecl));
+
+    if (!l_pgen) {
+    avt_errmsg(BVL_ERRMSG,"000",AVT_FATAL,"000");
+        // fprintf(stderr, "not enough memory.\n");
+        // EXIT(1);
+    }
+
+    l_pgen->NAME = namealloc(name);
+    l_pgen->NEXT = BVL_DECL;
+    l_pgen->BIABL = NULL;
+    l_pgen->BINODE = NULL;
+    l_pgen->ABL = NULL;
+    l_pgen->NODE = NULL;
+    l_pgen->DIRECTION = 0;
+    l_pgen->TYPE = 0;
+    l_pgen->TIME = 0;
+    l_pgen->OBJTYPE = '\0';
+    return l_pgen;
+}
+
+/* ###--------------------------------------------------------------### */
+/*  function : vhd_addstrgen                                            */
+/* ###--------------------------------------------------------------### */
+
+bvldecl_list *
+vhd_addstrgen(char *name, short flag, int left, int right)
+{
+    bvldecl_list   *l_pgen = NULL;
+    short           inc = 1;
+    int             i;
+    char            extname[100];
+
+    switch (flag) {
+    case 'A':
+        if (left >= right)
+            inc = -1;
+
+        for (i = left; i != (right + inc); i += inc) {
+            sprintf(extname, "%s %d", name, i);
+            l_pgen = addgen(extname);
+            BVL_DECL = l_pgen;
+        }
+        break;
+    case 'S':
+        l_pgen = addgen(name);
+        BVL_DECL = l_pgen;
+        break;
+    default:
+        avt_errmsg(BVL_ERRMSG,"000",AVT_ERROR,"001");
+       // printf("Erreur vhd_addstrgen\n");
+    }
+    return l_pgen;
+}
+
+/* ###--------------------------------------------------------------### */
+/*  function : makeSignal                                               */
+/* ###--------------------------------------------------------------### */
+
+int
+makeSignal(int type, int io, char decl)
+{
+    int             sig = 0;
+
+    switch (io) {
+    case _IN:
+        sig += BVL_ICNDFN;
+        break;
+    case _OUT:
+        sig += BVL_OCNDFN;
+        break;
+    case _INOUT:
+        sig += BVL_BCNDFN;
+    }
+
+    switch (type) {
+    case STD_LOGIC:
+        sig += BVL_STDDFN;
+        break;
+    case STD_LOGIC_VECTOR:
+        sig += BVL_VECDFN;
+    }
+
+    switch (decl) {
+    case 'P':
+        sig += BVL_PORDFN;
+        break;
+    case 'S':
+        sig += BVL_SGNDFN;
+    }
+
+    return sig;
+}
+
+/* ###--------------------------------------------------------------### */
+/*  function : beGeneration                                             */
+/* ###--------------------------------------------------------------### */
+
+void
+beGeneration()
+{
+    bvldecl_list   *l_pGEN;
+    int             sig_conf;
+    char           *short_name;
+    char           *space;
+    char           *s_name;
+
+    for (l_pGEN = BVL_DECL; l_pGEN; l_pGEN = l_pGEN->NEXT) {
+        // attention il faut prendre le nom sans l'index pour un vecteur
+        short_name = strdup(l_pGEN->NAME);
+        space = strchr(short_name, ' ');
+        if (space) {
+            *space = '\0';
+        }
+        s_name = namealloc(short_name);
+        mbkfree(short_name); // cleaner
+        sig_conf = beh_chktab(dic, s_name, BVL_MODNAM, BVL_SIGDFN);
+
+        // BEPOR 
+        switch (sig_conf) {
+        case (BVL_PORDFN + BVL_STDDFN + BVL_ICNDFN):
+        case (BVL_PORDFN + BVL_VECDFN + BVL_ICNDFN):
+            switch (l_pGEN->OBJTYPE) {
+            case '\0':
+                BVL_BEFPNT->BEPOR =
+                    beh_addbepor(BVL_BEFPNT->BEPOR, l_pGEN->NAME, 'I', 'B');
+                break;
+            default:
+                bvl_error(21, l_pGEN->NAME);
+            }
+            break;
+        case (BVL_PORDFN + BVL_STDDFN + BVL_OCNDFN):
+        case (BVL_PORDFN + BVL_VECDFN + BVL_OCNDFN):
+            switch (l_pGEN->OBJTYPE) {
+            case 'A':
+                BVL_BEFPNT->BEPOR =
+                    beh_addbepor(BVL_BEFPNT->BEPOR, l_pGEN->NAME, 'O', 'B');
+                break;
+            case 'B':
+                BVL_BEFPNT->BEPOR =
+                    beh_addbepor(BVL_BEFPNT->BEPOR, l_pGEN->NAME, 'Z', 'M');
+                break;
+            case 'R':
+                BVL_BEFPNT->BEPOR =
+                    beh_addbepor(BVL_BEFPNT->BEPOR, l_pGEN->NAME, 'Z', 'M');
+                break;
+            default:
+                BVL_BEFPNT->BEPOR =
+                    beh_addbepor(BVL_BEFPNT->BEPOR, l_pGEN->NAME, 'O', 'B');
+                if (BVL_CHECK) bvl_error(40, l_pGEN->NAME);
+            }
+            break;
+        case (BVL_PORDFN + BVL_STDDFN + BVL_BCNDFN):
+        case (BVL_PORDFN + BVL_VECDFN + BVL_BCNDFN):
+            switch (l_pGEN->OBJTYPE) {
+            case 'A':
+                BVL_BEFPNT->BEPOR =
+                    beh_addbepor(BVL_BEFPNT->BEPOR, l_pGEN->NAME, 'B', 'B');
+                break;
+            case 'B':
+                BVL_BEFPNT->BEPOR =
+                    beh_addbepor(BVL_BEFPNT->BEPOR, l_pGEN->NAME, 'T', 'M');
+                break;
+            case 'R':
+                BVL_BEFPNT->BEPOR =
+                    beh_addbepor(BVL_BEFPNT->BEPOR, l_pGEN->NAME, 'Z', 'M');
+                break;
+            default:
+                BVL_BEFPNT->BEPOR =
+                    beh_addbepor(BVL_BEFPNT->BEPOR, l_pGEN->NAME, 'B', 'B');
+                if (BVL_CHECK) bvl_error(40, l_pGEN->NAME);
+            }
+            break;
+        }
+
+        /* BERIN, BEOUT, BEBUS */
+        switch (sig_conf) {
+        case (BVL_PORDFN + BVL_STDDFN + BVL_ICNDFN):
+        case (BVL_PORDFN + BVL_VECDFN + BVL_ICNDFN):
+            switch (l_pGEN->OBJTYPE) {
+            case '\0':
+                BVL_BEFPNT->BERIN =
+                    beh_addberin(BVL_BEFPNT->BERIN, l_pGEN->NAME);
+                break;
+            default:
+                bvl_error(21, l_pGEN->NAME);
+            }
+            break;
+        case (BVL_PORDFN + BVL_STDDFN + BVL_BCNDFN):
+        case (BVL_PORDFN + BVL_VECDFN + BVL_BCNDFN):
+            switch (l_pGEN->OBJTYPE) {
+            case 'A':
+                BVL_BEFPNT->BERIN =
+                    beh_addberin(BVL_BEFPNT->BERIN, l_pGEN->NAME);
+                BVL_BEFPNT->BEOUT =
+                    beh_addbeout(BVL_BEFPNT->BEOUT, l_pGEN->NAME, l_pGEN->ABL,
+                                 l_pGEN->NODE,0);
+                BVL_BEFPNT->BEOUT->TIME = l_pGEN->TIME;
+                break;
+            case 'B':
+                BVL_BEFPNT->BERIN =
+                    beh_addberin(BVL_BEFPNT->BERIN, l_pGEN->NAME);
+                BVL_BEFPNT->BEBUS =
+                    beh_addbebus(BVL_BEFPNT->BEBUS, l_pGEN->NAME,
+                                 l_pGEN->BIABL, l_pGEN->BINODE, 'M',0);
+                break;
+            case 'R':
+                BVL_BEFPNT->BERIN =
+                    beh_addberin(BVL_BEFPNT->BERIN, l_pGEN->NAME);
+                BVL_BEFPNT->BEREG =
+                    beh_addbereg(BVL_BEFPNT->BEREG, l_pGEN->NAME,
+                                 l_pGEN->BIABL, l_pGEN->BINODE,0);
+                break;
+            default:
+                if (BVL_CHECK) bvl_error(40, l_pGEN->NAME);
+            }
+            break;
+        case (BVL_PORDFN + BVL_STDDFN + BVL_OCNDFN):
+        case (BVL_PORDFN + BVL_VECDFN + BVL_OCNDFN):
+            switch (l_pGEN->OBJTYPE) {
+            case 'A':
+                BVL_BEFPNT->BEOUT =
+                    beh_addbeout(BVL_BEFPNT->BEOUT, l_pGEN->NAME, l_pGEN->ABL,
+                                 l_pGEN->NODE,0);
+                BVL_BEFPNT->BEOUT->TIME = l_pGEN->TIME;
+                break;
+            case 'B':
+                BVL_BEFPNT->BEBUS = beh_addbebus
+                    (BVL_BEFPNT->BEBUS, l_pGEN->NAME, l_pGEN->BIABL,
+                     l_pGEN->BINODE, 'M',0);
+                break;
+            case 'R':
+                BVL_BEFPNT->BEREG =
+                    beh_addbereg(BVL_BEFPNT->BEREG, l_pGEN->NAME,
+                                 l_pGEN->BIABL, l_pGEN->BINODE,0);
+                break;
+            default:
+                if (BVL_CHECK) bvl_error(40, l_pGEN->NAME);
+            }
+            break;
+        }
+
+        /* BEAUX BEBUX BEREG */
+        switch (sig_conf) {
+        case (BVL_SGNDFN + BVL_STDDFN + BVL_BCNDFN):
+        case (BVL_SGNDFN + BVL_VECDFN + BVL_BCNDFN):
+            switch (l_pGEN->OBJTYPE) {
+            case 'A':
+                if (BVL_AUXMOD) {
+                    BVL_BEFPNT->BERIN =
+                        beh_addberin(BVL_BEFPNT->BERIN, l_pGEN->NAME);
+                }
+                BVL_BEFPNT->BEAUX =
+                    beh_addbeaux(BVL_BEFPNT->BEAUX, l_pGEN->NAME, l_pGEN->ABL,
+                                 l_pGEN->NODE,0);
+                BVL_BEFPNT->BEAUX->TIME = l_pGEN->TIME;
+                break;
+            case 'B':
+                BVL_BEFPNT->BERIN =
+                    beh_addberin(BVL_BEFPNT->BERIN, l_pGEN->NAME);
+                BVL_BEFPNT->BEBUX =
+                    beh_addbebux(BVL_BEFPNT->BEBUX, l_pGEN->NAME,
+                                 l_pGEN->BIABL, l_pGEN->BINODE, 'M',0);
+                break;
+            case 'R':
+                BVL_BEFPNT->BERIN =
+                    beh_addberin(BVL_BEFPNT->BERIN, l_pGEN->NAME);
+                BVL_BEFPNT->BEREG =
+                    beh_addbereg(BVL_BEFPNT->BEREG, l_pGEN->NAME,
+                                 l_pGEN->BIABL, l_pGEN->BINODE,0);
+                break;
+            default:
+                if (BVL_CHECK) bvl_error(40, l_pGEN->NAME);
+            }
+            break;
+        }
+    }
+
+    BVL_BEFPNT->BEPOR =
+        (struct bepor *) reverse((chain_list *) BVL_BEFPNT->BEPOR);
+    BVL_BEFPNT->BERIN =
+        (struct berin *) reverse((chain_list *) BVL_BEFPNT->BERIN);
+    BVL_BEFPNT->BEOUT =
+        (struct beout *) reverse((chain_list *) BVL_BEFPNT->BEOUT);
+    BVL_BEFPNT->BEAUX =
+        (struct beaux *) reverse((chain_list *) BVL_BEFPNT->BEAUX);
+    BVL_BEFPNT->BEBUS =
+        (struct bebus *) reverse((chain_list *) BVL_BEFPNT->BEBUS);
+    BVL_BEFPNT->BEBUX =
+        (struct bebux *) reverse((chain_list *) BVL_BEFPNT->BEBUX);
+    BVL_BEFPNT->BEREG =
+        (struct bereg *) reverse((chain_list *) BVL_BEFPNT->BEREG);
+}
+
+/* ###--------------------------------------------------------------### */
+/*  function : addCndVal                                                */
+/* ###--------------------------------------------------------------### */
+
+bvlcond *
+addCndVal(bvlcond *cndval, char *ident, int num, struct chain *cnd, struct chain *val, unsigned int delay)
+{
+    bvlcond *CNDVAL;
+
+    CNDVAL = (bvlcond *)mbkalloc(sizeof(bvlcond));
+
+    if (CNDVAL == NULL) {
+      avt_errmsg(BVL_ERRMSG,"000",AVT_FATAL,"002");
+      //  fprintf(stderr, "BVL vhd_parse : Error addCndVal");
+      //  EXIT(1);
+    }
+    CNDVAL->NEXT = cndval;
+    CNDVAL->CND = cnd;
+    CNDVAL->VAL = val;
+    CNDVAL->IDENT = namealloc(ident);
+    CNDVAL->NUM = num;
+    CNDVAL->TIME = delay;
+    return CNDVAL;
+}
+
+/* ###--------------------------------------------------------------### */
+/*  function : makeCnd                                                  */
+/* ###--------------------------------------------------------------### */
+
+struct chain   *
+makeCnd(bvlcond *i_cndval)
+{
+
+    if (i_cndval == NULL)
+        return NULL;
+    if (i_cndval->NEXT != NULL)
+        return createBinExpr(OR, i_cndval->CND, makeCnd(i_cndval->NEXT));
+    else
+        return i_cndval->CND;
+}
+
+/* ###--------------------------------------------------------------### */
+/*  function : makeVal                                                  */
+/* ###--------------------------------------------------------------### */
+
+struct chain *
+makeVal(bvlcond *i_cndval)
+{
+    bvlcond        *l_bvlcnd;
+    struct chain   *l_cndOR;
+    struct chain   *l_cndAND;
+    int             i, j;
+    int             n = 0;
+    bvlcond        *tab[10];
+
+    if (i_cndval == NULL)
+        return NULL;
+
+    for (l_bvlcnd = i_cndval; l_bvlcnd; l_bvlcnd = l_bvlcnd->NEXT) {
+        tab[n] = l_bvlcnd;
+        n++;
+    }
+
+    if (n == 1)
+        return createBinExpr(AND, i_cndval->CND, i_cndval->VAL);
+
+    l_cndAND = copyExpr(tab[0]->CND);
+
+    for (j = 1; j < n; j++) {
+        l_cndAND = createBinExpr(AND, l_cndAND, notExpr(copyExpr(tab[j]->CND)));
+    }
+    l_cndAND = createBinExpr(AND, l_cndAND, copyExpr(tab[0]->VAL));
+    l_cndOR = l_cndAND;
+
+    for (i = 1; i < n; i++) {
+        l_cndAND = notExpr(copyExpr(tab[0]->CND));
+
+        for (j = 1; j < n; j++) {
+            if (j == i)
+                l_cndAND = createBinExpr(AND, l_cndAND, copyExpr(tab[j]->CND));
+            else
+                l_cndAND = createBinExpr(AND, l_cndAND, notExpr(copyExpr(tab[j]->CND)));
+        }
+        l_cndAND = createBinExpr(AND, l_cndAND, copyExpr(tab[i]->VAL));
+        l_cndOR = createBinExpr(OR, l_cndOR, l_cndAND);
+    }
+
+    return l_cndOR;
+}

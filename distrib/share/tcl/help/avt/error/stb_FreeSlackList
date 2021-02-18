@@ -1,0 +1,9 @@
+
+       void stb_FreeSlackList(StabilitySlackList *cl);
+
+DDEESSCCRRIIPPTTIIOONN
+       Frees a list of stability slack objects.
+
+AARRGGUUMMEENNTTSS
+       ccll            slack object list
+

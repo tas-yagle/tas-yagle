@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<pagebreak/>
+<section niv='2'><title>Crosstalk DB Browsing</title>
+<section niv='3'><title>Building statistics</title>
+&ctk_API_build;
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Browsing statistics</title>
+&ctk_API_statistics;
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Sorting statistics</title>
+&ctk_API_sort;
+</section>
+
+<pagebreak/>
+<section niv='3'><title>Getting aggressors</title>
+&ctk_API_aggressor;
+</section>
+</section>

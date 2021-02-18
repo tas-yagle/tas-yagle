@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Using Tcl Interface</title>
+
+<section niv='2'><title>Script Launch</title>
+<p>All functionalities of the &tool; platform can be accessed with the <f>avt_shell</f> Tcl scripting interface.
+<f>avt_shell</f> can be used the same way as any <f>.tcl</f> script. </p>
+<p><f>avt_shell</f> can be used in interactive mode or in script mode. In interactive mode, it is invoked as follow:</p>  
+<code>
+<cl>&gt; avt_shell</cl>
+</code>
+<p>In script mode, the first line of the script file should look like:</p>
+<code>
+<cl>#!/usr/bin/env avt_shell</cl>
+</code>
+</section>
+
+<section niv='2'><title>Tools Configuration</title>
+<p>The configuration of all the timing tools of the &tool; platform is done in the same way, by the mean
+of configuration variables. The value given to the variable determines the specific behavior of the
+tool. When using the Tcl interface, the setting of the values for the configuration variables can be done
+in two ways:</p>
+<list>
+<item>In the special file <f>avttools.conf</f> in the working directory, with the syntax <f>variable = value</f>. Old way, 
+not recommended. Only kept for backward compatibilty.</item>
+<item>In the <f>avt_shell</f> script, through the <f>avt_config</f> function, taking the variable
+for first parameter and its affected value for second parameter (<f>avt_config variable value).</f></item>
+</list>
+<p>There is a precedence of the values set in the <f>avttools.conf</f> file on the values set in the 
+<f>avt_shell script</f>.</p>
+</section>
+
+
+<section niv='2'><title>Functions</title>
+<p>Here is a list of the families of Tcl functions that can be found within the <f>avt_shell</f> interface. 
+For more information, see &tool; Reference Guide.</p>
+
+<glossary>
+<row><article>General</article><def>Global configuration, file loading, netlist manipulation, statistics</def></row>
+<row><article>INF Configuration</article><def>Configuration though the INF functions</def></row>
+<row><article>HDL Construction</article><def>Automatic or manual generation of the VHDL/Verilog</def></row>
+</glossary>
+</section>
+
+
+<section niv='2'><title>INF and SDC Configuration</title>
+<p>For tool configuration needing more than the specification of a simple value (as it is done through the
+<f>avt_config</f> function), &tool; uses the INF mechanism, which is a set of Tcl configuration functions.</p>
+<p>SDC commands are grouped together with the INF functions and share the same mechanisms.</p>
+<p>All INF functions begin with the <f>inf_</f> prefix, except of the SDC commands, which respect their standard naming.</p> 
+
+<p>Within a Tcl script, the target sub-circuit must be defined before using INF or SDC commands. Following example is 
+given for a sub-circuit named <f>my_design</f>.</p> 
+<code>
+<cl>inf_SetFigureName my_design</cl>
+<cl> </cl>
+<cl>set_case_analysis 1 reset</cl>
+<cl>inf_DefineMutex muxup {i0 i1 i2}</cl>
+</code>
+
+<p>It is possible to check the INF and SDC functions by driving a <f>.inf</f> file.
+Adding the line:</p>
+<code>
+<cl>inf_Drive my_design</cl>
+</code>
+<p>at the end of the previous Tcl script generates the <f>my_design.inf</f> file. Each INF and SDC function has 
+a corresponding section in this file (see &tool; Reference Guide).</p>
+</section>
+
+</section></chapter>

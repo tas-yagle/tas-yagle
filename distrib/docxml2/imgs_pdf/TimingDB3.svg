@@ -1,0 +1,1344 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 9.0, SVG Export Plug-In  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20000303 Stylable//EN"   "http://www.w3.org/TR/2000/03/WD-SVG-20000303/DTD/svg-20000303-stylable.dtd" [
+	<!ENTITY st0 "clip-path:url(#aiclp100);">
+	<!ENTITY st1 "clip-path:url(#aiclp101);">
+	<!ENTITY st2 "clip-path:url(#aiclp102);">
+	<!ENTITY st3 "clip-path:url(#aiclp103);">
+	<!ENTITY st4 "clip-path:url(#aiclp104);">
+	<!ENTITY st5 "clip-path:url(#aiclp105);">
+	<!ENTITY st6 "clip-path:url(#aiclp106);">
+	<!ENTITY st7 "clip-path:url(#aiclp107);">
+	<!ENTITY st8 "clip-path:url(#aiclp108);">
+	<!ENTITY st9 "clip-path:url(#aiclp109);">
+	<!ENTITY st10 "clip-path:url(#aiclp110);">
+	<!ENTITY st11 "fill:#1BA2C8;">
+	<!ENTITY st12 "fill:#EF0C7E;">
+	<!ENTITY st13 "font-size:7.1234;">
+	<!ENTITY st14 "font-size:7.3426;">
+	<!ENTITY st15 "font-size:7.9379;">
+	<!ENTITY st16 "font-family:'Helvetica';font-weight:bold;">
+	<!ENTITY st17 "fill:#C0C0C0;">
+	<!ENTITY st18 "fill:#FBF218;">
+	<!ENTITY st19 "fill:#99C81E;">
+	<!ENTITY st20 "fill:#2FAFBF;">
+	<!ENTITY st21 "fill:none;">
+	<!ENTITY st22 "font-family:'Courier';font-weight:normal;">
+	<!ENTITY st23 "font-family:'ZapfDingbats';font-weight:normal;">
+	<!ENTITY st24 "clip-path:url(#aiclp10);">
+	<!ENTITY st25 "clip-path:url(#aiclp11);">
+	<!ENTITY st26 "clip-path:url(#aiclp12);">
+	<!ENTITY st27 "clip-path:url(#aiclp13);">
+	<!ENTITY st28 "clip-path:url(#aiclp14);">
+	<!ENTITY st29 "clip-path:url(#aiclp15);">
+	<!ENTITY st30 "clip-path:url(#aiclp16);">
+	<!ENTITY st31 "clip-path:url(#aiclp17);">
+	<!ENTITY st32 "clip-path:url(#aiclp18);">
+	<!ENTITY st33 "clip-path:url(#aiclp19);">
+	<!ENTITY st34 "clip-path:url(#aiclp20);">
+	<!ENTITY st35 "clip-path:url(#aiclp21);">
+	<!ENTITY st36 "clip-path:url(#aiclp22);">
+	<!ENTITY st37 "clip-path:url(#aiclp23);">
+	<!ENTITY st38 "clip-path:url(#aiclp24);">
+	<!ENTITY st39 "clip-path:url(#aiclp25);">
+	<!ENTITY st40 "clip-path:url(#aiclp26);">
+	<!ENTITY st41 "clip-path:url(#aiclp27);">
+	<!ENTITY st42 "clip-path:url(#aiclp28);">
+	<!ENTITY st43 "clip-path:url(#aiclp29);">
+	<!ENTITY st44 "clip-path:url(#aiclp30);">
+	<!ENTITY st45 "clip-path:url(#aiclp31);">
+	<!ENTITY st46 "clip-path:url(#aiclp32);">
+	<!ENTITY st47 "clip-path:url(#aiclp33);">
+	<!ENTITY st48 "clip-path:url(#aiclp34);">
+	<!ENTITY st49 "clip-path:url(#aiclp35);">
+	<!ENTITY st50 "clip-path:url(#aiclp36);">
+	<!ENTITY st51 "clip-path:url(#aiclp37);">
+	<!ENTITY st52 "clip-path:url(#aiclp38);">
+	<!ENTITY st53 "clip-path:url(#aiclp39);">
+	<!ENTITY st54 "clip-path:url(#aiclp40);">
+	<!ENTITY st55 "clip-path:url(#aiclp41);">
+	<!ENTITY st56 "clip-path:url(#aiclp42);">
+	<!ENTITY st57 "clip-path:url(#aiclp43);">
+	<!ENTITY st58 "clip-path:url(#aiclp44);">
+	<!ENTITY st59 "clip-path:url(#aiclp45);">
+	<!ENTITY st60 "clip-path:url(#aiclp46);">
+	<!ENTITY st61 "clip-path:url(#aiclp47);">
+	<!ENTITY st62 "clip-path:url(#aiclp48);">
+	<!ENTITY st63 "clip-path:url(#aiclp49);">
+	<!ENTITY st64 "clip-path:url(#aiclp50);">
+	<!ENTITY st65 "clip-path:url(#aiclp51);">
+	<!ENTITY st66 "clip-path:url(#aiclp52);">
+	<!ENTITY st67 "clip-path:url(#aiclp53);">
+	<!ENTITY st68 "clip-path:url(#aiclp54);">
+	<!ENTITY st69 "clip-path:url(#aiclp55);">
+	<!ENTITY st70 "clip-path:url(#aiclp56);">
+	<!ENTITY st71 "clip-path:url(#aiclp57);">
+	<!ENTITY st72 "clip-path:url(#aiclp58);">
+	<!ENTITY st73 "clip-path:url(#aiclp59);">
+	<!ENTITY st74 "clip-path:url(#aiclp60);">
+	<!ENTITY st75 "clip-path:url(#aiclp61);">
+	<!ENTITY st76 "clip-path:url(#aiclp62);">
+	<!ENTITY st77 "clip-path:url(#aiclp63);">
+	<!ENTITY st78 "clip-path:url(#aiclp64);">
+	<!ENTITY st79 "clip-path:url(#aiclp65);">
+	<!ENTITY st80 "clip-path:url(#aiclp66);">
+	<!ENTITY st81 "clip-path:url(#aiclp67);">
+	<!ENTITY st82 "clip-path:url(#aiclp68);">
+	<!ENTITY st83 "clip-path:url(#aiclp69);">
+	<!ENTITY st84 "clip-path:url(#aiclp70);">
+	<!ENTITY st85 "clip-path:url(#aiclp71);">
+	<!ENTITY st86 "clip-path:url(#aiclp72);">
+	<!ENTITY st87 "clip-path:url(#aiclp73);">
+	<!ENTITY st88 "clip-path:url(#aiclp74);">
+	<!ENTITY st89 "clip-path:url(#aiclp75);">
+	<!ENTITY st90 "clip-path:url(#aiclp76);">
+	<!ENTITY st91 "clip-path:url(#aiclp77);">
+	<!ENTITY st92 "clip-path:url(#aiclp78);">
+	<!ENTITY st93 "clip-path:url(#aiclp79);">
+	<!ENTITY st94 "clip-path:url(#aiclp80);">
+	<!ENTITY st95 "clip-path:url(#aiclp81);">
+	<!ENTITY st96 "clip-path:url(#aiclp82);">
+	<!ENTITY st97 "clip-path:url(#aiclp83);">
+	<!ENTITY st98 "clip-path:url(#aiclp84);">
+	<!ENTITY st99 "clip-path:url(#aiclp85);">
+	<!ENTITY st100 "clip-path:url(#aiclp86);">
+	<!ENTITY st101 "clip-path:url(#aiclp87);">
+	<!ENTITY st102 "clip-path:url(#aiclp88);">
+	<!ENTITY st103 "clip-path:url(#aiclp89);">
+	<!ENTITY st104 "clip-path:url(#aiclp90);">
+	<!ENTITY st105 "clip-path:url(#aiclp91);">
+	<!ENTITY st106 "clip-path:url(#aiclp92);">
+	<!ENTITY st107 "clip-path:url(#aiclp93);">
+	<!ENTITY st108 "clip-path:url(#aiclp94);">
+	<!ENTITY st109 "clip-path:url(#aiclp95);">
+	<!ENTITY st110 "clip-path:url(#aiclp96);">
+	<!ENTITY st111 "clip-path:url(#aiclp97);">
+	<!ENTITY st112 "clip-path:url(#aiclp98);">
+	<!ENTITY st113 "clip-path:url(#aiclp99);">
+	<!ENTITY st114 "font-family:'Helvetica';">
+	<!ENTITY st115 "fill-rule:nonzero;clip-rule:nonzero;stroke:#000000;stroke-miterlimit:4;">
+	<!ENTITY st116 "stroke:none;">
+	<!ENTITY st117 "clip-path:url(#aiclp1);">
+	<!ENTITY st118 "clip-path:url(#aiclp2);">
+	<!ENTITY st119 "clip-path:url(#aiclp3);">
+	<!ENTITY st120 "clip-path:url(#aiclp4);">
+	<!ENTITY st121 "clip-path:url(#aiclp5);">
+	<!ENTITY st122 "clip-path:url(#aiclp6);">
+	<!ENTITY st123 "clip-path:url(#aiclp7);">
+	<!ENTITY st124 "clip-path:url(#aiclp8);">
+	<!ENTITY st125 "clip-path:url(#aiclp9);">
+]>
+<svg  width="410.908pt" height="399.917pt" viewBox="0 0 410.908 399.917" xml:space="preserve">
+<defs >
+<font horiz-adv-x="2884" ><font-face
+    font-family="ZapfDingbats"
+    units-per-em="4096"
+    panose-1="2 11 114 0 0 0 0 0 0 0"
+    ascent="3359"
+    descent="-606"
+    alphabetic="0" />
+<missing-glyph horiz-adv-x="3072" d="M512 0V2560H2560V0H512ZM2494 66V2494H578V66H2494Z" />
+<glyph unicode="&#xd4;" glyph-name="a160" horiz-adv-x="3662" d="M1626 2597H2359L3523 1417L2359 238H1626L2511 1139H143V1696H2511L1626 2597Z" />
+</font>
+</defs>
+	<g id="Calque_x0020_1" style="&st115; &st23; &st13;">
+		<g style="&st116;">
+			<path style="&st11;" d="M0.407,0.407h59.835v64.719H0.407V0.407z"/>
+			<path style="&st12;" d="M344.966,11.194H410.5V21.98h-65.533V11.194z"/>
+			<path style="&st19;" d="M344.966,54.34H410.5v10.786h-65.533V54.34z"/>
+			<path style="&st18;" d="M0.407,65.126h59.835v248.091H0.407V65.126z"/>
+			<path style="&st12;" d="M344.966,65.126H410.5V86.7h-65.533V65.126z"/>
+			<path style="&st20;" d="M344.966,216.137H410.5v53.935h-65.533v-53.935z"/>
+			<path style="&st19;" d="M0.407,313.217h59.835v86.496H0.407v-86.496z"/>
+			<path style="&st12;" d="M344.966,313.217H410.5v10.787h-65.533v-10.787z"/>
+			<g>
+				<clipPath id="aiclp1" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st117;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 8.3442)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp2" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st118;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 19.1309)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp3" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st119;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 19.1309)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g style="&st16;">
+				<clipPath id="aiclp4" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st120;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 18.52)"><tspan x="0" y="0">{T</tspan></text>
+					</g>
+					<g>
+						<text transform="matrix(1 0 0 1 353.2651 18.52)"><tspan x="0" y="0">i</tspan></text>
+					</g>
+					<g>
+						<text transform="matrix(1 0 0 1 355.2437 18.52)"><tspan x="0" y="0">mingSignal}</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp5" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st121;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 29.917)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp6" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st122;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 40.7041)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp7" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st123;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 51.4907)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp8" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st124;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 62.2769)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp9" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st125;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 62.2769)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp10" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st24;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 61.6665)"><tspan x="0" y="0" style="&st16;">{Aggressor}</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp11" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st25;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 72.2495)"><tspan x="0" y="0" style="&st22;">SOURCE_SIG</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp12" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st26;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 73.0635)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g style="&st16;">
+				<clipPath id="aiclp13" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st27;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 72.4526)"><tspan x="0" y="0">T</tspan></text>
+					</g>
+					<g>
+						<text transform="matrix(1 0 0 1 350.4917 72.4526)"><tspan x="0" y="0">i</tspan></text>
+					</g>
+					<g>
+						<text transform="matrix(1 0 0 1 352.4712 72.4526)"><tspan x="0" y="0">mingSignal</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp14" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st28;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 83.0361)"><tspan x="0" y="0" style="&st22;">ERROR_SIG</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp15" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st29;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 83.8501)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g style="&st16;">
+				<clipPath id="aiclp16" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st30;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 83.2397)"><tspan x="0" y="0">T</tspan></text>
+					</g>
+					<g>
+						<text transform="matrix(1 0 0 1 350.4917 83.2397)"><tspan x="0" y="0">i</tspan></text>
+					</g>
+					<g>
+						<text transform="matrix(1 0 0 1 352.4712 83.2397)"><tspan x="0" y="0">mingSignal</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp17" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st31;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 93.8223)"><tspan x="0" y="0" style="&st22;">CK_NAME</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp18" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st32;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 94.6362)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp19" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st33;">
+					<g>
+						<text transform="matrix(0.9702 0 -0.2425 0.9702 346.3911 94.0259)"><tspan x="0" y="0" style="&st114; &st14;">string</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp20" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st34;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 104.6094)"><tspan x="0" y="0" style="&st22;">CK_PERIOD</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp21" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st35;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 105.4233)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp22" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st36;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 104.8125)"><tspan x="0" y="0" style="&st114;">numerical</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp23" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st37;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 115.396)"><tspan x="0" y="0" style="&st22;">SETUP</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp24" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st38;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 116.21)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp25" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st39;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 115.5996)"><tspan x="0" y="0" style="&st114;">numerical</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp26" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st40;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 126.1821)"><tspan x="0" y="0" style="&st22;">HOLD</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp27" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st41;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 126.9961)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp28" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st42;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 126.3857)"><tspan x="0" y="0" style="&st114;">numerical</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp29" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st43;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 136.9683)"><tspan x="0" y="0" style="&st22;">SETUP_MARGIN</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp30" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st44;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 137.7827)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp31" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st45;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 137.1724)"><tspan x="0" y="0" style="&st114;">numerical</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp32" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st46;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 147.7554)"><tspan x="0" y="0" style="&st22;">HOLD_MARGIN</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp33" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st47;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 148.5698)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp34" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st48;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 147.9585)"><tspan x="0" y="0" style="&st114;">numerical</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp35" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st49;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 158.542)"><tspan x="0" y="0" style="&st22;">CMD_NAME</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp36" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st50;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 159.356)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp37" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st51;">
+					<g>
+						<text transform="matrix(0.9702 0 -0.2425 0.9702 346.3911 158.7456)"><tspan x="0" y="0" style="&st114; &st14;">string</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp38" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st52;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 170.1421)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp39" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st53;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 170.1421)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp40" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st54;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 169.5317)"><tspan x="0" y="0" style="&st114;">numerical</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp41" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st55;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 180.9297)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp42" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st56;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 180.9297)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp43" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st57;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 180.3184)"><tspan x="0" y="0" style="&st114;">numerical</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp44" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st58;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 191.7158)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp45" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st59;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 202.5015)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp46" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st60;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 213.2896)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp47" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st61;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 224.0767)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp48" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st62;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 224.0767)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp49" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st63;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 223.4653)"><tspan x="0" y="0" style="&st16;">{StabilityRange}</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp50" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st64;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 234.8618)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp51" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st65;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 234.8618)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp52" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st66;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 234.2524)"><tspan x="0" y="0" style="&st16;">{StabilityRange}</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp53" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st67;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 245.6489)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp54" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st68;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 245.6489)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp55" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st69;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 245.0376)"><tspan x="0" y="0" style="&st16;">{StabilityRange}</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp56" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st70;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 256.436)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp57" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st71;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 256.436)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp58" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st72;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 255.8247)"><tspan x="0" y="0" style="&st16;">{StabilityRange}</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp59" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st73;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 267.2212)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp60" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st74;">
+					<g>
+						<text transform="matrix(1 0 0 1 331.3315 267.2212)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp61" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st75;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 266.6118)"><tspan x="0" y="0" style="&st16;">{StabilityRange}</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp62" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st76;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 278.0083)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp63" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st77;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 288.7935)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp64" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st78;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 299.5806)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp65" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st79;">
+					<g>
+						<text transform="matrix(1 0 0 1 6.3091 309.7573)"><tspan x="0" y="0" style="&st16;">{StabilityPath}</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp66" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st80;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 310.3677)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp67" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st81;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 320.3403)"><tspan x="0" y="0" style="&st22;">SIGNAL</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g style="&st16;">
+				<clipPath id="aiclp68" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st82;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 320.5444)"><tspan x="0" y="0">T</tspan></text>
+					</g>
+					<g>
+						<text transform="matrix(1 0 0 1 350.4917 320.5444)"><tspan x="0" y="0">i</tspan></text>
+					</g>
+					<g>
+						<text transform="matrix(1 0 0 1 352.4712 320.5444)"><tspan x="0" y="0">mingSignal</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp69" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st83;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 331.1255)"><tspan x="0" y="0" style="&st22;">NETNAME</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp70" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st84;">
+					<g>
+						<text transform="matrix(0.9702 0 -0.2425 0.9702 346.3911 331.3296)"><tspan x="0" y="0" style="&st114; &st14;">string</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp71" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st85;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 341.9126)"><tspan x="0" y="0" style="&st22;">CAPA_CTK</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp72" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st86;">
+					<g>
+						<text transform="matrix(1 0 0 1 346.3911 342.1177)"><tspan x="0" y="0" style="&st114;">numerical</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp73" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st87;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 353.5142)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp74" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st88;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 352.6997)"><tspan x="0" y="0" style="&st22;">DELAYBESTAGR</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp75" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st89;">
+					<g>
+						<text transform="matrix(0.9702 0 -0.2425 0.9702 346.3911 352.9048)"><tspan x="0" y="0" style="&st114; &st14;">string</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp76" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st90;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 363.4858)"><tspan x="0" y="0" style="&st22;">DELAYWORSTAGR</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp77" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st91;">
+					<g>
+						<text transform="matrix(0.9702 0 -0.2425 0.9702 346.3911 363.6899)"><tspan x="0" y="0" style="&st114; &st14;">string</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp78" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st92;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 374.2729)"><tspan x="0" y="0" style="&st22;">NOISERISE</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp79" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st93;">
+					<g>
+						<text transform="matrix(0.9702 0 -0.2425 0.9702 346.3911 374.4771)"><tspan x="0" y="0" style="&st114; &st14;">string</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp80" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st94;">
+					<g>
+						<text transform="matrix(1 0 0 1 238.5249 385.0601)"><tspan x="0" y="0" style="&st22;">NOISEFALL</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp81" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st95;">
+					<g>
+						<text transform="matrix(0.9702 0 -0.2425 0.9702 346.3911 385.2642)"><tspan x="0" y="0" style="&st114; &st14;">string</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp82" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st96;">
+					<g>
+						<text transform="matrix(1 0 0 1 9.9727 396.0493)"><tspan x="0" y="0" style="&st16;">{Aggressor}</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp83" style="&st21;">
+					<path d="M0,399.917h410.908V0H0v399.917z"/>
+				</clipPath>
+				<g style="&st97;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 396.6606)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp84" style="&st21;">
+					<path d="M60.649,161.798h15.06V65.534h-15.06v96.265z"/>
+				</clipPath>
+				<g style="&st98;">
+					<g>
+						<text transform="matrix(1 0 0 1 62.481 116.21)"><tspan x="0" y="0">&#xD4;</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp85" style="&st21;">
+					<path d="M76.524,21.573h252.16v-9.972H76.524v9.972z"/>
+				</clipPath>
+				<g style="&st99;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 19.1309)"><tspan x="0" y="0" style="&st22; &st15;">stb_GetErrorList</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp86" style="&st21;">
+					<path d="M76.524,10.787h252.16V0.814H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st100;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 8.3442)"><tspan x="0" y="0" style="&st22; &st15;">stb_FreeStabilityFigure</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp87" style="&st21;">
+					<path d="M0.814,302.024h59.021V65.534H0.814v236.49z"/>
+				</clipPath>
+				<g style="&st101;">
+					<g>
+						<text transform="matrix(1 0 0 1 8.9551 185.6099)"><tspan x="0" y="0" style="&st16;">StabilityPath</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp88" style="&st21;">
+					<path d="M76.524,161.798h159.967V65.534H76.524v96.265z"/>
+				</clipPath>
+				<g style="&st102;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 116.21)"><tspan x="0" y="0" style="&st22; &st15;">stb_GetStabilityPathProperty</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp89" style="&st21;">
+					<path d="M76.524,172.584h252.16v-9.972H76.524v9.972z"/>
+				</clipPath>
+				<g style="&st103;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 170.1421)"><tspan x="0" y="0" style="&st22; &st15;">stb_GetClockTime</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp90" style="&st21;">
+					<path d="M76.524,183.372h252.16v-9.972H76.524v9.972z"/>
+				</clipPath>
+				<g style="&st104;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 180.9297)"><tspan x="0" y="0" style="&st22; &st15;">stb_GetClockDelta</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp91" style="&st21;">
+					<path d="M76.524,194.158h252.16v-9.972H76.524v9.972z"/>
+				</clipPath>
+				<g style="&st105;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 191.7158)"><tspan x="0" y="0" style="&st22; &st15;">stb_DisplayClock</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp92" style="&st21;">
+					<path d="M76.524,204.945h252.16v-9.973H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st106;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 202.5015)"><tspan x="0" y="0" style="&st22; &st15;">stb_DisplayInfos</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp93" style="&st21;">
+					<path d="M76.524,215.732h252.16v-9.974H76.524v9.974z"/>
+				</clipPath>
+				<g style="&st107;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 213.2896)"><tspan x="0" y="0" style="&st22; &st15;">stb_DisplayInputInfos</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp94" style="&st21;">
+					<path d="M76.524,226.517h252.16v-9.972H76.524v9.972z"/>
+				</clipPath>
+				<g style="&st108;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 224.0767)"><tspan x="0" y="0" style="&st22; &st15;">stb_GetInputInstabilityRanges</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp95" style="&st21;">
+					<path d="M76.524,237.305h252.16v-9.973H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st109;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 234.8618)"><tspan x="0" y="0" style="&st22; &st15;">stb_GetOutputInstabilityRanges</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp96" style="&st21;">
+					<path d="M76.524,248.09h252.16v-9.973H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st110;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 245.6489)"><tspan x="0" y="0" style="&st22; &st15;">stb_GetOutputSpecificationRanges</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp97" style="&st21;">
+					<path d="M76.524,258.877h252.16v-9.973H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st111;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 256.436)"><tspan x="0" y="0" style="&st22; &st15;">stb_GetInstabilityRangeStart</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp98" style="&st21;">
+					<path d="M76.524,269.665h252.16v-9.973H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st112;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 267.2212)"><tspan x="0" y="0" style="&st22; &st15;">stb_GetInstabilityRangeEnd</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp99" style="&st21;">
+					<path d="M76.524,280.45h252.16v-9.973H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st113;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 278.0083)"><tspan x="0" y="0" style="&st22; &st15;">stb_DisplayInputInstabilityRanges</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp100" style="&st21;">
+					<path d="M76.524,291.237h252.16v-9.973H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st0;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 288.7935)"><tspan x="0" y="0" style="&st22; &st15;">stb_DisplayOutputInstabilityRanges</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp101" style="&st21;">
+					<path d="M76.524,399.102h252.16v-9.973H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st1;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 396.6606)"><tspan x="0" y="0" style="&st22; &st15;">ctk_FreeAggressorList</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp102" style="&st21;">
+					<path d="M76.524,388.317h159.967v-74.692H76.524v74.692z"/>
+				</clipPath>
+				<g style="&st2;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 353.5142)"><tspan x="0" y="0" style="&st22; &st15;">ctk_GetAggressorProperty</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp103" style="&st21;">
+					<path d="M0.814,388.317h59.021v-74.692H0.814v74.692z"/>
+				</clipPath>
+				<g style="&st3;">
+					<g>
+						<text transform="matrix(1 0 0 1 12.8223 352.9048)"><tspan x="0" y="0" style="&st16;">Aggressor</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp104" style="&st21;">
+					<path d="M0.814,64.719h59.021V0.814H0.814v63.905z"/>
+				</clipPath>
+				<g style="&st4;">
+					<g>
+						<text transform="matrix(1 0 0 1 5.9023 34.5981)"><tspan x="0" y="0" style="&st16;">StabilityFigure</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp105" style="&st21;">
+					<path d="M76.524,64.719h252.16v-9.973H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st5;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 62.2769)"><tspan x="0" y="0" style="&st22; &st15;">ctk_GetAggressorList</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp106" style="&st21;">
+					<path d="M76.524,302.024h252.16v-9.973H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st6;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 299.5806)"><tspan x="0" y="0" style="&st22; &st15;">stb_DisplayOutputSpecificationRanges</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp107" style="&st21;">
+					<path d="M76.524,312.809h252.16v-9.972H76.524v9.972z"/>
+				</clipPath>
+				<g style="&st7;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 310.3677)"><tspan x="0" y="0" style="&st22; &st15;">stb_FreeStabilityPathList</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp108" style="&st21;">
+					<path d="M76.524,32.36h252.16v-9.973H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st8;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 29.917)"><tspan x="0" y="0" style="&st22; &st15;">ctk_DriveStatCtk</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp109" style="&st21;">
+					<path d="M76.524,43.146h252.16v-9.972H76.524v9.972z"/>
+				</clipPath>
+				<g style="&st9;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 40.7041)"><tspan x="0" y="0" style="&st22; &st15;">ctk_BuildCtkStat</tspan></text>
+					</g>
+				</g>
+			</g>
+			<g>
+				<clipPath id="aiclp110" style="&st21;">
+					<path d="M76.524,53.933h252.16V43.96H76.524v9.973z"/>
+				</clipPath>
+				<g style="&st10;">
+					<g>
+						<text transform="matrix(1 0 0 1 77.7451 51.4907)"><tspan x="0" y="0" style="&st22; &st15;">ctk_LoadAggressionFile</tspan></text>
+					</g>
+				</g>
+			</g>
+			<path style="&st17;" d="M75.913,0.814h0.407v63.905h-0.407V0.814z"/>
+			<path style="&st17;" d="M328.888,0.814h0.407v63.905h-0.407V0.814z"/>
+			<path style="&st17;" d="M344.763,0.814h0.407v63.905h-0.407V0.814z"/>
+			<path style="&st17;" d="M75.913,65.534h0.407v236.49h-0.407V65.534z"/>
+			<path style="&st17;" d="M328.888,65.534h0.407v236.49h-0.407V65.534z"/>
+			<path style="&st17;" d="M344.763,65.534h0.407v236.49h-0.407V65.534z"/>
+			<path style="&st17;" d="M75.913,302.837h0.407v9.972h-0.407v-9.972z"/>
+			<path style="&st17;" d="M236.695,65.534h0.406v96.875h-0.406V65.534z"/>
+			<path style="&st17;" d="M328.888,302.837h0.407v9.972h-0.407v-9.972z"/>
+			<path style="&st17;" d="M344.763,302.837h0.407v9.972h-0.407v-9.972z"/>
+			<path style="&st17;" d="M60.649,323.8H76.32v0.407H60.649V323.8z"/>
+			<path style="&st17;" d="M60.649,334.586H76.32v0.407H60.649v-0.407z"/>
+			<path style="&st17;" d="M60.649,345.374H76.32v0.407H60.649v-0.407z"/>
+			<path style="&st17;" d="M60.649,356.161H76.32v0.407H60.649v-0.407z"/>
+			<path style="&st17;" d="M60.649,366.946H76.32v0.407H60.649v-0.407z"/>
+			<path style="&st17;" d="M60.649,377.733H76.32v0.408H60.649v-0.408z"/>
+			<path style="&st17;" d="M75.913,313.625h0.407v74.692h-0.407v-74.692z"/>
+			<path style="&st17;" d="M328.888,313.625h0.407v74.692h-0.407v-74.692z"/>
+			<path style="&st17;" d="M344.763,313.625h0.407v74.692h-0.407v-74.692z"/>
+			<path d="M0.204,0.204h0.407v399.51H0.204V0.204z"/>
+			<path d="M60.039,0.814h0.407v398.899h-0.407V0.814z"/>
+			<path style="&st17;" d="M75.913,389.129h0.407v9.973h-0.407v-9.973z"/>
+			<path style="&st17;" d="M328.888,389.129h0.407v9.973h-0.407v-9.973z"/>
+			<path style="&st17;" d="M344.763,389.129h0.407v9.973h-0.407v-9.973z"/>
+			<path d="M410.296,0.814h0.407v398.899h-0.407V0.814z"/>
+			<path style="&st17;" d="M236.695,313.625h0.406v74.692h-0.406v-74.692z"/>
+			<path d="M0.814,0.204h409.889V0.61H0.814V0.204z"/>
+			<path style="&st17;" d="M60.649,10.99h349.443v0.407H60.649V10.99z"/>
+			<path style="&st17;" d="M60.649,21.777h349.443v0.407H60.649v-0.407z"/>
+			<path style="&st17;" d="M60.649,32.563h349.443v0.407H60.649v-0.407z"/>
+			<path style="&st17;" d="M60.649,43.35h349.443v0.407H60.649V43.35z"/>
+			<path style="&st17;" d="M60.649,54.136h349.443v0.407H60.649v-0.407z"/>
+			<path d="M0.814,64.923h409.889v0.407H0.814v-0.407z"/>
+			<path style="&st17;" d="M237.304,75.709h172.788v0.407H237.304v-0.407z"/>
+			<path style="&st17;" d="M237.304,86.496h172.788v0.407H237.304v-0.407z"/>
+			<path style="&st17;" d="M237.304,97.282h172.788v0.407H237.304v-0.407z"/>
+			<path style="&st17;" d="M237.304,108.069h172.788v0.407H237.304v-0.407z"/>
+			<path style="&st17;" d="M237.304,118.855h172.788v0.407H237.304v-0.407z"/>
+			<path style="&st17;" d="M237.304,129.642h172.788v0.407H237.304v-0.407z"/>
+			<path style="&st17;" d="M237.304,140.428h172.788v0.408H237.304v-0.408z"/>
+			<path style="&st17;" d="M237.304,151.215h172.788v0.407H237.304v-0.407z"/>
+			<path style="&st17;" d="M60.649,162.002h349.443v0.406H60.649v-0.406z"/>
+			<path style="&st17;" d="M60.649,172.788h349.443v0.408H60.649v-0.408z"/>
+			<path style="&st17;" d="M60.649,183.575h349.443v0.407H60.649v-0.407z"/>
+			<path style="&st17;" d="M60.649,194.362h349.443v0.406H60.649v-0.406z"/>
+			<path style="&st17;" d="M60.649,205.149h349.443v0.406H60.649v-0.406z"/>
+			<path style="&st17;" d="M60.649,215.934h349.443v0.407H60.649v-0.407z"/>
+			<path style="&st17;" d="M60.649,226.721h349.443v0.407H60.649v-0.407z"/>
+			<path style="&st17;" d="M60.649,237.508h349.443v0.406H60.649v-0.406z"/>
+			<path style="&st17;" d="M60.649,248.293h349.443v0.408H60.649v-0.408z"/>
+			<path style="&st17;" d="M60.649,259.081h349.443v0.408H60.649v-0.408z"/>
+			<path style="&st17;" d="M60.649,269.868h349.443v0.406H60.649v-0.406z"/>
+			<path style="&st17;" d="M60.649,280.653h349.443v0.408H60.649v-0.408z"/>
+			<path style="&st17;" d="M60.649,291.44h349.443v0.408H60.649v-0.408z"/>
+			<path d="M0.814,302.228h409.889v0.405H0.814v-0.405z"/>
+			<path d="M0.814,313.013h409.889v0.407H0.814v-0.407z"/>
+			<path style="&st17;" d="M237.304,323.8h172.788v0.407H237.304V323.8z"/>
+			<path style="&st17;" d="M237.304,334.586h172.788v0.407H237.304v-0.407z"/>
+			<path style="&st17;" d="M237.304,345.374h172.788v0.407H237.304v-0.407z"/>
+			<path style="&st17;" d="M237.304,356.161h172.788v0.407H237.304v-0.407z"/>
+			<path style="&st17;" d="M237.304,366.946h172.788v0.407H237.304v-0.407z"/>
+			<path style="&st17;" d="M237.304,377.733h172.788v0.408H237.304v-0.408z"/>
+			<path d="M0.814,388.52h409.889v0.406H0.814v-0.406z"/>
+			<path d="M0.814,399.305h409.889v0.408H0.814v-0.408z"/>
+		</g>
+	</g>
+</svg>

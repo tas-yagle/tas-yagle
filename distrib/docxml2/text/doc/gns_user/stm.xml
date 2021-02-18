@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>The Timing Look-Up Table API Functions</title>
+<p>
+The STM API provides a set up functions to create timing models in lookup table format. These can be used to programmatically create LIB or TLF models from a series of SPICE simulations.
+</p>
+&stm_API;
+</section>
+</chapter>

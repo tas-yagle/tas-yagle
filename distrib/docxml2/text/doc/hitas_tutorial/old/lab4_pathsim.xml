@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Lab4. Path Simulation</title>
+<p>This lab shows explains the hypothesis and limitations inherent to Static Timing Analysis. It 
+also illustrates the timing modeling of &tool;. It gives guidelines for the use of the
+Critical Path Extraction (CPE) feature of &tool;, which allows to make pertinent comparisons
+between &tool; STA results and a dynamic simulation.</p>
+<p>This lab is based upon the adder design studied in the previous lab.</p>
+
+<section niv='2'><title>Accuracy </title>
+
+<section niv='3'><title>Static Timing Analysis Hypothesis</title>
+
+<p>The propagation time of a given timing path is dependant on the electrical states of signals 
+within the surrounding logic. We will give examples of such behavior in the subsequent sections.</p>
+
+<p>Dynamic simulation allows to know exactly the electrical state of the surrounding logic, and can then
+compute a very accurate propagation time. The drawback of dynamic simulation is that: first it requires input stimuli.
+Second, due to the considerable possible combinations of
+surrounding logic electrical states, dynamic simulation can only give accurate results for a small
+number of paths.</p>
+
+<p>The base idea of Static Timing Analysis is to construct all possible timing paths
+between given points, and then ensure complete coverage. A related requirement of static timing analysis 
+is that no input stimuli are needed. Therefore, static timing analysis has no a-priori knowing of the 
+electrical state of the surrounding logic. It implies that a timing path must be characterized 
+by a set a values depending on the possible states taken by the surrounding
+logic.</p>
+<p>As we said, the considerable number of possible states prevents to get them all. Typically, timing paths
+are characterized by minimum and maximum values. This implies
+that a certain number of hypothesis are made regarding the electrical state of the surrounding logic.</p>
+
+<section niv='4'><title>Propagation Times</title>
+<p>Propagation times are computed between an event (rising or falling transition) on one input 
+and the propagated event on the output. Other inputs are supposed to be stable, in a state that 
+allow event propagation.</p>
+
+<p>Multiple input configurations may exist, resulting in MIN and MAX propagation times, 
+collisions (multiple inputs switching together) are not handled</p>
+<imgsize namehtml="min_max_times.gif" namepdf="min_max_times.gif"/>
+
+</section>
+<section niv='4'><title>Internal Nodes Initialization</title>
+<p>Internal nodes are always initialized at the same levels. History can not be taken into account as in a dynamic simulation.</p>
+</section>
+<section niv='4'><title>Out-of-path Capacitances</title>
+<p>Out-of-path capacitances through transmission-gates may influence the timing.
+Depending on the state of the transmission-gate commands, the effective capacitance may greatly vary, 
+implying MIN and MAX propagation times.</p>
+<imgsize namehtml="opc.gif" namepdf="opc.gif" wpdf="220pt"/>
+
+</section>
+</section>
+
+<section niv='3'><title>&tool; Modeling Hypothesis</title>
+<section niv='4'><title>Slope Modeling</title>
+<p>In order to operate rapidly, the slopes are not modeled as PWL, just like in standard electrical simulators, 
+because this would lead to a large number of computations. In &tool;, the slope is modeled as a mathematical 
+function (hyperbolic tangent curve), that can be analytically integrated for delay calculation. 
+The shape of the hyperbolic tangent curve is mapped to the actual shape of the slope (PWL). 
+This shape is such that, if you integrate it over time, you retrieve the same charge transfer as with the original PWL. 
+Furthermore, the curve maps as exactly as possible the regions of the PWL that directly affects the switching of the 
+following gate (the beginning of the transition for instance).</p> 
+
+<imgsize namehtml="slope_modeling.gif" namepdf="slope_modeling.gif"/>
+</section>
+<section niv='4'><title>Error Accumulation</title>
+<p>A side effect is that Vdd/2 is not so much important to this regard (the output of the gate has switched long before its input reaches Vdd/2). The mapped curve used as input may deviate from the PWL on that point without impact on the output switching. This can lead to deviations in the delay measurement (see diagram below), but not in the global accuracy.</p>  
+<imgsize namehtml="accumulation.gif" namepdf="accumulation.gif"/>
+</section>
+</section>
+<section niv='2'><title>Database Generation</title>
+<p>The database generation is done in the same way as in the previous lab:</p>
+<code>
+<cl>avt_LoadFile bsim3_018.tech spice</cl>
+<cl>avt_LoadFile adder.spi spice</cl>
+<cl> </cl>
+<cl>set fig [hitas adder]</cl>
+</code>
+</section>
+
+<section niv='2'><title>Path Simulation</title>
+<p>The CPE engine is dedicated to validate the timing results given by &tool;, with regard
+to the hypothesis made for static timing analysis. Indeed, the electrical state of the surrounding
+logic is explicitely set by CPE: the input patterns are set in the SPICE deck in order
+to propagate the transitions in the same way &tool; does. The CPE feature is ideal to validate
+&tool; modeling and make pertinent comparisons (it also set input waveforms as hyperbolic tangents,
+in the same way &tool; interprets them.)</p>
+<p>The <f>simu.tcl</f> script performs the following steps:</p>
+<list>
+<item>Loading of the timing database previously generated</item>
+<item>Searching for max critical path in the design</item>
+<item>Generating the SPICE deck for the path</item>
+<item>Optionally simulating the SPICE deck and retrieving results</item>
+</list>
+<p>As no electrical simulator is available in the training labs, we provide
+simulations results from the ELDO simulator. The <f>cmd_adder_ext.chi</f> file gives
+simulation results of the critical path of the design. Instead of calling ELDO, the script
+calls the <f>echo</f> command:</p>
+<code>
+<cl>avt_config avtSpiceString "echo $"</cl>
+</code>
+</section>
+
+<section niv='2'><title>Exercises</title>
+<list>
+<item>Ex 4.1. Launch the <f>simu.tcl</f> script and observe the generated files</item>
+<item>Ex 4.2. Activate the simulation and re-launch the script. Observe the generated files</item>
+<item>Ex 4.3. Set <f>simOutLoad</f> to <f>dynamic</f>. What is changing?</item>
+<item>Ex 4.4. Uncomment the <f>ttv_GetPathDetail</f> and <f>ttv_DriveSpiceDeck</f>. What is changing?</item>
+</list>
+
+</section>
+</section>
+</section>
+
+</chapter>
+

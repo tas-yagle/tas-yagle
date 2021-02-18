@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>TLF</title>
+<p>&tool; supports the Cadence Timing Library Format versions 3 and 4, for integrating external timing characterization.</p>
+<p>Supported TLF statements are:</p>
+<list>
+<item><f>cell</f> <f>celltype</f></item>
+<item><f>seq</f> <f>comb</f></item>
+<item><f>ignore</f></item>
+<item><f>incell</f> <f>outcell</f></item>
+<item><f>model</f></item>
+<item><f>spline</f> <f>const</f> <f>data</f></item>
+<item><f>input</f> <f>output</f> <f>bidir</f></item>
+<item><f>clock</f></item>
+<item><f>clock_slew_axis</f> <f>input_slew_axis</f></item>
+<item><f>slew_axis</f> <f>load_axis</f> <f>axis</f></item>
+<item><f>path</f> <f>path_extension</f></item>
+<item><f>fast</f> <f>slow</f></item>
+<item><f>delay</f> <f>slew</f></item>
+<item><f>t01</f> <f>t10</f> <f>t0z</f> <f>t1z</f> <f>tz0</f> <f>tz1</f> <f>negedge</f> <f>posedge</f></item>
+<item><f>setup</f></item>
+<item><f>hold</f></item>
+<item><f>pin</f> <f>pintype</f> <f>ground</f> <f>pindir</f> <f>pin_cap</f></item>
+<item><f>timing_props</f></item>
+<item><f>for_bits</f></item>
+<item><f>vendor</f></item>
+<item><f>environment</f></item>
+<item><f>version</f> <f>tlf_version</f></item>
+<item><f>header</f> <f>date</f> <f>library</f> <f>technology</f></item>
+<item><f>control</f></item>
+<item><f>tristate</f></item>
+<item><f>asynch</f></item>
+<item><f>low</f> <f>high</f></item>
+<item><f>linear</f></item>
+<item><f>value</f></item>
+<item><f>table_input_threshold</f> <f>table_output_threshold</f></item>
+<item><f>table_transition_start</f> <f>table_transition_end</f></item>
+<item><f>net_cap</f> <f>net_res</f></item>
+<item><f>temperature</f></item>
+<item><f>voltage</f></item>
+<item><f>function</f></item>
+<item><f>enable</f></item>
+<item><f>register</f> <f>latch</f></item>
+<item><f>clear</f> <f>set</f></item>
+<item><f>clock</f> <f>slave_clock</f></item>
+<item><f>inverted_output</f></item>
+</list>
+
+</section>

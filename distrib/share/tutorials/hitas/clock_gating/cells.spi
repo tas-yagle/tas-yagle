@@ -1,0 +1,54 @@
+
+.subckt inv a b vdd vss
++        w=0.72u l=0.18u 
+Mn1 b a vss vss TN w=w l=l 
+Mp1 b a vdd vdd TP w='w*2' l=l 
+.ends
+
+.subckt nand a b o vdd vss 
++        w=0.72u l=0.18u 
+Mn2 m b vss vss TN w='w/2' l=l 
+Mn1 o a m vss TN w='w/2' l=l 
+Mp2 o a vdd vdd TP w='w*2' l=l 
+Mp1 o b vdd vdd TP w='w*2' l=l 
+.ends
+
+.subckt nand3 a b c o vdd vss 
++        w=0.72u l=0.18u 
+Mn2 m2 b vss vss TN w='w/2' l=l 
+Mn1 m1 c m2 vss TN w='w/2' l=l 
+Mn3 o a m1 vss TN w='w/2' l=l 
+Mp2 o a vdd vdd TP w='w*2' l=l 
+Mp1 o b vdd vdd TP w='w*2' l=l 
+Mp1 o c vdd vdd TP w='w*2' l=l 
+.ends
+
+.subckt nor a b o vdd vss 
++        w=0.72u l=0.18u
+Mn2 o b vss vss TN w='w/2' l=l
+Mn1 o a vss vss TN w='w/2' l=l
+Mp2 o a m vdd TP w='w*2' l=l
+Mp1 m b vdd vdd TP w='w*2' l=l
+.ends
+
+
+.subckt latch i o ck nck vdd vss 
++        w=0.72u l=0.18u
+Mn1 i ck li vss TN w=w l=l 
+Mp1 i nck li vdd TP w='w*2' l=l 
+XinvP li o  vdd vss inv 
+XinvL o li vdd vss inv w='w/4' l=l
+.ends
+
+.subckt rs a b o p vdd vss
+xna1 a p o vdd vss nand
+xna2 b o p vdd vss nand
+.ends
+
+.subckt flipflop input slave_out ck vdd vss
+xmaster input master_out ck nck vdd vss latch
+xims master_out slave_in vdd vss inv 
+xslave slave_in slave_out nck ck vdd vss latch
+xif ck nck vdd vss inv
+.ends
+

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<section niv='2'><title>Timing Checks</title>
+<p>The next sections explain how timing checks are performed. They describe the more common situations one can be faced to,
+i.e.:</p>
+<list>
+<item>Input to latch</item>
+<item>Latch to latch</item>
+<item>Latch to output</item>
+</list>
+
+<p>For each situation, an example of slack report is shown, and we explain the details of the timing checks calculation.</p>
+
+<section niv='3'><title>Input to Latch</title>
+
+<section niv='4'><title>Inputs Specifications</title>
+<p>Regarding input specifications, the STA engine of &tool; makes the assumption that input
+data is coming from a latch clocked on the opposite phase of the one the data arrives on.
+In our flip-flop example, <f>dff_m</f> is opened on the high state of <f>ck</f>, so <f>di</f>
+is supposed to come from a latch opened on the low state of <f>ck</f>.</p>
+<imgsize namehtml="input_spec.gif" namepdf="input_spec.gif" hpdf="100pt" wpdf="220pt"/>
+<p>As a result, <f>di</f> should be specified as coming from <f>ck</f> falling, i.e. when the
+latch <f>src</f> opens. The corresponding SDC commands should look like:</p>
+<code>
+<cl>create_clock -period 1000 -waveform {500 0} ck</cl>
+<cl>set_input_delay -clock -ck -clock_fall -min 200 di</cl>
+<cl>set_input_delay -clock -ck -clock_fall -max 300 di</cl>
+</code>
+
+</section>
+
+<section niv='4'><title>Timing Checks Description</title>
+<p>Diagram below illustrates the way <f>set_input_delay</f> directives are propagated throughout the design, and
+where timing checks are performed.</p>
+<imgsize namehtml="gen_inp_slack.gif" namepdf="gen_inp_slack.gif" wpdf="400pt"/>
+</section>
+
+<section niv='4'><title>Setup Slack</title>
+<p>Input to latch setup slack report is described in the <f>slack.rep</f> file </p>
+<smallcode>
+<cl>Path (4) :  Slack of 0.762 </cl>
+<cl>     DATA VALID: </cl>
+<cl>        Delay                                                                           </cl>
+<cl>      Acc    Delta    R/F     Cap[pf]   Type   Node_Name          Net_Name      Line    </cl>
+<cl>   ____________________________________________________________________________________ </cl>
+<cl>     0.300   0.000 0.200 R      0.034          di                 di                    </cl>
+<cl>     0.498   0.198 0.310 F      0.028    (L)   dff_m              dff_m       master    </cl>
+<cl>   ____________________________________________________________________________________ </cl>
+<cl>     0.498   0.198            (total)                                                   </cl>
+<cl> </cl>
+<cl>     DATA REQUIRED: </cl>
+<cl>        Delay                                                                         </cl>
+<cl>      Acc    Delta    R/F     Cap[pf]   Type   Node_Name          Net_Name    Line    </cl>
+<cl>   __________________________________________________________________________________ </cl>
+<cl>     0.000   0.000 0.200 F      0.016    (C)   ck                 ck                  </cl>
+<cl>     0.239   0.239 0.258 R      0.046   (CK)   ckn                ckn          inv    </cl>
+<cl>     0.340   0.101 0.140 F      0.036   (CK)   ckp                ckp          inv    </cl>
+<cl>     0.260  -0.081                             [INTRINSIC SETUP]                      </cl>
+<cl>     1.260  +1.000                             [NEXT PERIOD]                          </cl>
+<cl>   __________________________________________________________________________________ </cl>
+<cl>     1.260   0.260            (total)                                                 </cl>
+<cl> </cl>
+</smallcode>
+<p>The value of the setup slack is given by clock_path - data_path = 1260ps - 498ps = 762ps. The intrinsic setup corresponds to an
+additional delay which models the amount of time required for secure memorization of the data.</p> 
+</section>
+
+<section niv='4'><title>Hold Slack</title>
+<p>Input to latch hold slack report is described in the <f>slack.rep</f> file </p>
+<smallcode>
+<cl>Path (2) :  Slack of 0.005 </cl>
+<cl>     DATA VALID: </cl>
+<cl>        Delay                                                                           </cl>
+<cl>      Acc    Delta    R/F     Cap[pf]   Type   Node_Name          Net_Name      Line    </cl>
+<cl>   ____________________________________________________________________________________ </cl>
+<cl>     0.200   0.000 0.200 F      0.034          di                 di                    </cl>
+<cl>     0.542   0.342 0.508 R      0.028    (L)   dff_m              dff_m       master    </cl>
+<cl>   ____________________________________________________________________________________ </cl>
+<cl>     0.542   0.342            (total)                                                   </cl>
+<cl> </cl>
+<cl>     DATA REQUIRED: </cl>
+<cl>        Delay                                                                         </cl>
+<cl>      Acc    Delta    R/F     Cap[pf]   Type   Node_Name          Net_Name    Line    </cl>
+<cl>   __________________________________________________________________________________ </cl>
+<cl>     0.000   0.000 0.200 F      0.016    (C)   ck                 ck                  </cl>
+<cl>     0.239   0.239 0.258 R      0.046   (CK)   ckn                ckn          inv    </cl>
+<cl>     0.537  +0.298                             [INTRINSIC HOLD]                       </cl>
+<cl>   __________________________________________________________________________________ </cl>
+<cl>     0.537   0.537            (total)                                                 </cl>
+<cl> </cl>
+</smallcode>
+
+<p>The value of the hold slack is given by data_path - clock_path = 542ps - 537ps = 5ps. The intrinsic hold corresponds to an
+additional delay which models the amount of time required for ensuring that the next cycle's data is not memorized in the current cycle.</p> 
+</section>
+
+
+</section>
+
+<section niv='3'><title>Latch to Latch</title>
+<section niv='4'><title>Timing Checks Description</title>
+<p>Latch to latch timing checks require no additional configuration, as they are based upon 
+the signals already propagated from inputs, and upon the clock specification. The
+propagation of the s.w., and corresponding timing checks are described in the following 
+timing diagram:</p>
+<imgsize namehtml="gen_ms_slck.gif" namepdf="gen_ms_slck.gif" hpdf="280pt" wpdf="370pt"/>
+</section>
+<section niv='4'><title>Setup Slack</title>
+<p>Latch to latch setup slack report is described in the <f>slack.rep</f> file  </p>
+<smallcode>
+<cl>Path (3) :  Slack of 0.284 </cl>
+<cl>     DATA VALID: </cl>
+<cl>        Delay                                                                            </cl>
+<cl>      Acc    Delta    R/F     Cap[pf]   Type   Node_Name            Net_Name     Line    </cl>
+<cl>   _____________________________________________________________________________________ </cl>
+<cl>    -0.500   0.000 0.200 R      0.016    (C)   ck                   ck                   </cl>
+<cl>    -0.399   0.101 0.128 F      0.046   (CK)   ckn                  ckn           inv    </cl>
+<cl>    -0.236   0.164 0.169 R      0.036   (CK)   ckp                  ckp           inv    </cl>
+<cl>    -0.152   0.083 0.139 F      0.028    (L)   dff_m                dff_m      master    </cl>
+<cl>     0.090   0.242 0.189 R      0.040          n11                  n11           inv    </cl>
+<cl>     0.321   0.231 0.305 F      0.089    (L)   dff_s                dff_s       slave    </cl>
+<cl>   _____________________________________________________________________________________ </cl>
+<cl>     0.321   0.821            (total)                                                    </cl>
+<cl> </cl>
+<cl>     DATA REQUIRED: </cl>
+<cl>        Delay                                                                          </cl>
+<cl>      Acc    Delta    R/F     Cap[pf]   Type   Node_Name            Net_Name   Line    </cl>
+<cl>   ___________________________________________________________________________________ </cl>
+<cl>     0.500   0.000 0.200 R      0.016    (C)   ck                   ck                 </cl>
+<cl>     0.601   0.101 0.128 F      0.046   (CK)   ckn                  ckn         inv    </cl>
+<cl>     0.605  +0.005                             [INTRINSIC SETUP]                       </cl>
+<cl>   ___________________________________________________________________________________ </cl>
+<cl>     0.605   0.105            (total)                                                  </cl>
+</smallcode>
+</section>
+
+<section niv='4'><title>Hold Slack</title>
+<p>Latch to latch hold slack report is described in the <f>slack.rep</f> file  </p>
+<smallcode>
+<cl>Path (3) :  Slack of 0.146 </cl>
+<cl>     DATA VALID: </cl>
+<cl>        Delay                                                                           </cl>
+<cl>      Acc    Delta    R/F     Cap[pf]   Type   Node_Name           Net_Name     Line    </cl>
+<cl>   ____________________________________________________________________________________ </cl>
+<cl>    -0.500   0.000 0.200 R      0.016    (C)   ck                  ck                   </cl>
+<cl>    -0.399   0.101 0.128 F      0.046   (CK)   ckn                 ckn           inv    </cl>
+<cl>    -0.281   0.119 0.177 R      0.028    (L)   dff_m               dff_m      master    </cl>
+<cl>    -0.223   0.057 0.088 F      0.040          n11                 n11           inv    </cl>
+<cl>     0.106   0.329 0.447 R      0.089    (L)   dff_s               dff_s       slave    </cl>
+<cl>   ____________________________________________________________________________________ </cl>
+<cl>     0.106   0.606            (total)                                                   </cl>
+<cl> </cl>
+<cl>     DATA REQUIRED: </cl>
+<cl>        Delay                                                                         </cl>
+<cl>      Acc    Delta    R/F     Cap[pf]   Type   Node_Name           Net_Name   Line    </cl>
+<cl>   __________________________________________________________________________________ </cl>
+<cl>     0.500   0.000 0.200 R      0.016    (C)   ck                  ck                 </cl>
+<cl>     0.601   0.101 0.128 F      0.046   (CK)   ckn                 ckn         inv    </cl>
+<cl>     0.764   0.164 0.169 R      0.036   (CK)   ckp                 ckp         inv    </cl>
+<cl>     0.960  +0.196                             [INTRINSIC HOLD]                       </cl>
+<cl>    -0.040  -1.000                             [PREVIOUS PERIOD]                      </cl>
+<cl>   __________________________________________________________________________________ </cl>
+<cl>    -0.040   0.460            (total)                                                 </cl>
+</smallcode>
+
+</section>
+
+</section>
+
+<section niv='3'><title>Latch to Output</title>
+
+<section niv='4'><title>Output Constraints</title>
+<p>Still based on the flip-flop design described above, the timing propagation on output <f>t</f> is done as follow:</p>
+
+<imgsize namehtml="ms_output.gif" namepdf="ms_output.gif" wpdf="400pt"/>
+<p>In order to get setup and hold slacks on the output, one must define timing
+constraints on <f>t</f>. These timing constraints are defined with the 
+<f>set_output_delay</f> SDC function. The <f>set_output_delay</f> specifies propagation 
+delays from output connector to the next memory element latching the data. As a result,
+min and max delays are defined as shown in the diagram below.</p>
+
+<imgsize namehtml="output_spec.gif" namepdf="output_spec.gif" hpdf="100pt" wpdf="220pt"/>
+
+<p>One must also define the edge the data will be latched by. Here, <f>dff_s</f> is closed
+on the high state of <f>ck</f>. The data launched by <f>t</f> is supposed to be latched by
+a memory element clocked on the opposite phase, i.e. closed on low state of <f>ck</f>. Therefore,
+constraints on <f>t</f> should be specified relative to falling edge of <f>ck</f> (when <f>dst</f>
+latch closes). The <f>set_output_delay</f> functions should be used as follow:</p>
+<code>
+<cl>set_output_delay -clock ck -clock_fall -min 200 t</cl>
+<cl>set_output_delay -clock ck -clock_fall -max 400 t</cl>
+</code>
+
+</section>
+
+<section niv='4'><title>Setup Slack</title>
+<p>Latch to output setup slack report is described in the <f>slack.rep</f> file  </p>
+<smallcode>
+<cl>Path (1) :  Slack of 0.030 </cl>
+<cl>     DATA VALID: </cl>
+<cl>        Delay                                                                     </cl>
+<cl>      Acc    Delta    R/F     Cap[pf]   Type   Node_Name    Net_Name      Line    </cl>
+<cl>   ______________________________________________________________________________ </cl>
+<cl>     0.000   0.000 0.200 F      0.016    (C)   ck           ck                    </cl>
+<cl>     0.239   0.239 0.258 R      0.046   (CK)   ckn          ckn            inv    </cl>
+<cl>     0.340   0.101 0.140 F      0.036   (CK)   ckp          ckp            inv    </cl>
+<cl>     0.568   0.227 0.327 R      0.089    (L)   dff_s        dff_s        slave    </cl>
+<cl>     0.570   0.003 0.118 F      0.011    (S)   t            t              inv    </cl>
+<cl>   ______________________________________________________________________________ </cl>
+<cl>     0.570   0.570            (total)                                             </cl>
+<cl> </cl>
+<cl>    -> Specification: Must be stable after 0.600 </cl>
+<cl> </cl>
+</smallcode>
+<p>The setup time is calculated with the maximum set_output_delay value - maximum data path - which is 400ps. As the period is 1000ps,
+data must arrive before time 1000 - 400 = 600ps. The setup slack is given by 600 - 570 = 30ps.</p> 
+</section>
+
+<section niv='4'><title>Hold Slack</title>
+<p>Latch to output hold slack report is described in the <f>slack.rep</f> file  </p>
+<smallcode>
+<cl>Path (5) :  Slack of 0.635 </cl>
+<cl>     DATA VALID: </cl>
+<cl>        Delay                                                        </cl>
+<cl>      Acc    Delta    R/F     Cap[pf]   Type   Node_Name    Net_Name     Line    </cl>
+<cl>   _____________________________________________________________________________ </cl>
+<cl>     0.000   0.000 0.200 F      0.016    (C)   ck           ck                   </cl>
+<cl>     0.239   0.239 0.258 R      0.046   (CK)   ckn          ckn           inv    </cl>
+<cl>     0.385   0.146 0.235 F      0.089    (L)   dff_s        dff_s       slave    </cl>
+<cl>     0.435   0.050 0.082 R      0.011    (S)   t            t             inv    </cl>
+<cl>   _____________________________________________________________________________ </cl>
+<cl>     0.435   0.435            (total)                                            </cl>
+<cl> </cl>
+<cl>    -> Specification: Must be stable before -0.200 </cl>
+<cl> </cl>
+</smallcode>
+
+<p>The hold time is calculated with the minimum set_output_delay value - minimum data path - which is 200ps. The hold slack 
+is given by data path - clock path = 435 + 200 - 0 (the clock is ideal in the set_output_delay definition) = 635ps.</p> 
+
+</section>
+</section>
+</section>

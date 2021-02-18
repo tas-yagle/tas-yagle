@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="fcl_api">
+
+<err>
+    <lib>FCLAPI-</lib><num>001</num>
+    <msg>fclMarkSignal: Illegal marking '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>FCLAPI-</lib><num>002</num>
+    <msg>fclMarkTransistor: transistor '%s' does not exist\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>FCLAPI-</lib><num>003</num>
+    <msg>fclOrientSignal: multiple orientation on '%s', resolved to %u\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

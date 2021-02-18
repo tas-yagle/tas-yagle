@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="stm_api">
+
+<err>
+    <lib>STMAPI-</lib><num>001</num>
+    <msg>stm model '%s' does not exist\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>STMAPI-</lib><num>002</num>
+    <msg>stm model '%s' is not a function\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

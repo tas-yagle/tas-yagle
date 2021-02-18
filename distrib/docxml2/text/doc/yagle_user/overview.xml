@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Overview</title>
+
+<section niv='2'><title>Functional Abstraction with &tool;</title>
+
+<p>&tool; performs the automatic generation of HDL descriptions, in Verilog or VHDL, from transistor-level netlists, by partitioning and analyzing the network of transistors. Tri-state nodes of the circuit are expressed as VHDL Bus. Latches and registers are expressed as conditioned statements within separate VHDL processes. The process is totally free of user intervention and does not require any pre-defined library. Nevertheless, a user-defined gate library can be provided in order to handle complex latches or analog circuitry.</p>
+
+<p>The generated HDL descriptions can be used by common verification tools. &tool; allows functional modeling and verification of full and semi-custom designs, by logical simulation or equivalence checking.</p>
+<p>&tool;'s HDL descriptions are also compliant with synthesis tools requirements, and allow easy technology migration.</p>
+<p>&tool;'s unique ability to provide timing back-annotated HDL descriptions, close to physical implementation, enables the setup of solutions based on signal activity, such as power consumption or IR-drop analysis.</p>
+<p>A hierarchical pattern-matching engine allows genuine treatment of analog cells. Its memory-array recognition capability enables &tool; to abstract Mbytes SRAMs in a matter of minutes.</p>
+<p>The following diagram illustrates &tool;'s integration in the design flow.</p>
+<imgsize namehtml="yagle_flow.gif" namepdf="yagle_flow.gif" hpdf="250pt"/>
+<p>The most important features of &tool; are:</p>
+<list>
+<item>Handles complex CMOS and NMOS circuitry including pass-transistors, precharge logic, and domino logic.</item>
+<item>Works on complex blocks such as microprocessor cores, PCI components, routing components and multimedia systems.</item>
+<item>Automatically detects and models latches and registers</item>
+<item>Mixed Analog/Digital components handled by an optional user-defined device library.</item>
+<item>Pattern-matching engine for memory array recognition, built-in analog library</item>
+<item>Flat or hierarchical SPICE/CDL input transistor netlist.</item>
+<item>DSPF, SPEF parasitics support</item>
+<item>Industry-standard VHDL or Verilog behavioral output, compatible with commercial simulation and synthesis tools.</item>
+<item>Structural VHDL or Verilog output suitable for automatic test pattern generators.</item>
+<item>SPICE accurate timing annotation, with BSIM3 and BSIM4 transistor models support</item>
+<item>GUI and Tcl interface</item>
+</list>
+
+<p>&tool; is able two generate HDL behavioral descriptions at different levels of abstraction.</p>
+<p>Closest to physical implementation is a low-level HDL. Associated with this description, &tool; generates a correspondence table, that link electrical and logical names.</p>
+<p>A high-level HDL is obtained by expression simplification and intermediary signals suppression.</p>
+<p>A compact HDL can also be obtained by vectorization. The pattern-matching engine identifies the repetitive structures, such SRAM arrays, and vectorizes the HDL descriptions according to them.</p>
+
+</section>
+
+
+<section niv='2'><title>Applications</title>
+
+<p>The main applications of &tool; are:</p>
+<list>
+<item>Functional verification of digital custom designs through simulation or equivalence checking</item>
+<item>ROM content verification</item>
+<item>RAM / CAM formal verification </item>
+<item>IP-reuse and technology migration</item>
+<item>Accurate signal activity obtaining, thanks to timing-annotated low-level HDL descriptions, enabling power consumption computation or IR-drop analysis</item>
+<item>BIST routines validation. The correspondence table between logical and electrical names enables easy identification of the physical nodes activated by the BIST routines.</item>
+</list>
+</section>
+
+
+<section niv='2'><title>Description</title>
+
+
+<section niv='3'><title>Functional Abstraction</title>
+
+<p>The &tool; tool offers designers a revolutionary new strategy for the functional verification of their digital custom circuits, known as Functional Abstraction. Previous strategies for functional verification at the lowest level relied upon SPICE-like electrical simulations and were therefore limited to small circuit blocks. Functional Abstraction takes the task of behavioral verification to a higher level by directly extracting a simulatable RTL description from the transistor netlist by disassembly of the circuit.</p>
+
+</section>
+
+
+<section niv='3'><title>Automatic Gate Model</title>
+
+<p>The &tool; approach to circuit disassembly for functional abstraction can be defined as a partitioning of the transistor net-list, according to a limited number of generic rules. Each partition represents an extracted gate for which a behavioral description can be deduced. The result is a totally generic approach with a minimum of user intervention.</p>
+<p>In the first phase, &tool; extracts the dual CMOS circuitry. In the second phase, &tool; builds the gate net-list for the remaining circuitry whilst performing functional analysis in parallel, in order to prevent the fabrication of false branches within a gate and to verify the behavior of the gate. This procedure allows &tool; to take into account the functional correlation in the surrounding circuitry. The depth of surrounding circuitry taken into account is adapted automatically within a maximum bound which can be specified by the user.</p>
+</section>
+</section>
+</section></chapter>

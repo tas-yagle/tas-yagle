@@ -1,0 +1,11 @@
+
+       TimingFigure *ttv_LoadTimingFigure(char *name);
+
+DDEESSCCRRIIPPTTIIOONN
+       Reads  a  list  of  DTX timing figures from disk. The given _n_a_m_e is the
+       radical of the files. To use the timing computing functions,  the  fig-
+       ures  on disk should look like _r_a_d_i_c_a_l___v_o_l_t_a_g_e _v_a_l_u_e___t_e_m_p_e_r_a_t_u_r_e _v_a_l_u_e.
+       eg.  for  files  like  'circuit_2.4_70',  _t_t_v___L_o_a_d_T_i_m_i_n_g_F_i_g_u_r_e  _c_i_r_c_u_i_t
+       should be called. The last loaded timing figure is returned.
+         Returns NULL on failure.
+

@@ -1,0 +1,38 @@
+
+<section niv='3'><title>Defining Power Supplies</title>
+<p>Special attention should be paid to the definition of power supply and ground nodes 
+(<f>avtVddName</f>, <f>avtVssName</f> and <f>simPowerSupply</f> variables).
+Indeed, the disassembly process is heavily dependant on the naming of those nodes, as the algorithm is looking 
+for current paths towards power supply and ground. Bad specification of these nodes can lead to the construction of
+an exponential number of wrong current paths. Power supply and ground definition is the first thing to check if the 
+disassembly process seems to loop infinitely.</p>
+<p>&tool; also supports V cards for the definition of power supply and ground nodes. One can distinguish between two
+cases:</p>
+<p>The power supply and ground node appear on the interface of the <f>.SUBCKT</f>, and the subcircuit is instanciated.
+The V cards should refer to the names used in the instanciation:</p>
+<code>
+<cl>Vsupply vdd gnd DC 1.2V</cl>
+<cl>Vground gnd 0   DC 0V</cl>
+<cl>   </cl>
+<cl>.SUBCKT my_design a b c vdd_int gnd_int</cl>
+<cl>...   </cl>
+<cl>.ENDS my_design   </cl>
+<cl>   </cl>
+<cl>X0 a b c vdd gnd my_design</cl>
+</code>
+
+
+<p>The power supply and ground node does not appear on the interface of the <f>.SUBCKT</f>, or the subcircuit is not 
+instanciated. The V cards should refer to the names used within the subcircuit, or appearing on the interface of 
+the <f>.SUBCKT</f>, together with <f>.GLOBAL</f> statements:</p>
+<code>
+<cl>.GLOBAL vdd gnd</cl>
+<cl>   </cl>
+<cl>Vsupply vdd gnd DC 1.2V</cl>
+<cl>Vground gnd 0   DC 0V</cl>
+<cl>   </cl>
+<cl>.SUBCKT my_design a b c vdd gnd</cl>
+<cl>...   </cl>
+<cl>.ENDS my_design   </cl>
+</code>
+</section>

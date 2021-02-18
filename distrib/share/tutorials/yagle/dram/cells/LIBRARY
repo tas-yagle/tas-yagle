@@ -1,0 +1,10 @@
+
+sa.model : format=spice, keep=yes;
+cells.model : format=spice, keep=yes;
+cell_plus_sa.vhd;
+sa_plus_mux.vhd : keep=yes;
+
+cells.tcl;
+sa.tcl;
+cell_plus_sa.tcl;
+sa_plus_mux.tcl;

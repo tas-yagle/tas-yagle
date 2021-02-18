@@ -1,0 +1,10 @@
+<glossary>
+<row type="split"><article><index>avtReadInformationFile</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article> <def>Specifies the information files to read when working on a netlist. 
+The files are separated with comma and can be made of regular expressions except for character '$' which will be replaced 
+by the netlist name. The first file has less priority and the last one more priority. </def></row>
+<row><article><f>no</f></article> <def>Default, information files will be ignored.</def></row>
+</glossary>
+</def></row>
+</glossary>

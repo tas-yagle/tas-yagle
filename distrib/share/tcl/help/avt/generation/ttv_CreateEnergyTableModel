@@ -1,0 +1,26 @@
+
+       void  ttv_CreateEnergyTableModel(TimingFigure  *tvf,  char  *name, Dou-
+       bleListTimeValue *axis1, DoubleListCapaValue *axis2, DoubleTable  *val-
+       ues, char *type);
+
+DDEESSCCRRIIPPTTIIOONN
+       Associate  an energy table model using the given axis and table values.
+         For GNS usage, set _t_v_f to NULL
+
+AARRGGUUMMEENNTTSS
+       ttvvff           Timing figure where table model will be created
+
+       nnaammee          Name of the table model
+
+       aaxxiiss11         Y-axis values of the table
+
+       aaxxiiss22         X-axis values of the table
+
+       vvaalluueess        Values to set into the table. It's a 2D array.
+
+       ttyyppee          defines  the  type  of  the  table  axis:  "slope-slope",
+                     "slope-capa" or "slope-ckslope".
+
+       EEXXAAMMPPLLEE       _t_t_v___C_r_e_a_t_e_T_i_m_i_n_g_T_a_b_l_e_M_o_d_e_l  _$_f_i_g  _m_y_m_o_d_e_l  _{_1_e_-_1_2  _3_e_-_1_2_}
+                     _{_1_e_-_1_5 _2_e_-_1_5_} _{_{_1_e_-_1_2 _2_e_-_1_2_}_{_3_e_-_1_2 _4_e_-_1_2_}_} _"_s_l_o_p_e_-_c_a_p_a_"
+

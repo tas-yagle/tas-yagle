@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#include MUT_H
+#include MLO_H
+#include MLU_H
+#include RCN_H
+#include MSL_H
+#include INF_H
+#include ELP_H
+#include BEH_H
+#include LOG_H
+#include CNS_H
+#include CBH_H
+#include GSP_H
+#include SIM_H
+#include EFG_H
+
+#include "efg_util.h"
+#include "efg_spisig.h"
+#include "efg_ext_fig.h"
+#include "efg_flatten.h"

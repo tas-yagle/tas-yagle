@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="tma_api">
+
+<err>
+    <lib>TMAAPI-</lib><num>001</num>
+    <msg>Unable to get behavioral figure for '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TMAAPI-</lib><num>002</num>
+    <msg>Name '%s' matched no connector in blackbox\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>TMAAPI-</lib><num>003</num>
+    <msg>Invalid direction '%c'\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

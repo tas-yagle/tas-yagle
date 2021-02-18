@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>SDC - INF Input Constraints Equivalence</title>
+<section niv='4'><title>Introduction</title>
+<p>We would like to specify stability constraints on an input connector, with the conditions defined in the following picture.</p>
+<imgsize namehtml="set_input_delay.gif" namepdf="set_input_delay.gif" wpdf="200pt" />
+<p>Where:
+<list>
+<item>I is the input connector of a circuit.</item>
+<item>f is the output of the register of another circuit.</item>
+<item>C1 is the combinational path with the shortest propagation tpmin delay between f and I.</item>
+<item>C2 is the combinational path with the longest propagation tpmax delay between f and I.</item>
+</list>
+</p>
+</section>
+<section niv='4'><title>Syntax</title>
+<p>With INF APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>inf_DefineInputSpec I</cl>
+<cl>inf_DefineStability {unstable U after clk falling}</cl>
+<cl>inf_DefineStability {stable S after clk falling}</cl>
+</code>
+<p>Where <f>U</f> is the starting time of the instability of the signal on the connector I and <f>S</f> is the ending time of the instability of this signal. The interval between <f>U</f> and <f>S</f> is also defined as a switching window.</p>
+<p>With SDC APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>set_input_delay -clock clk -clock_fall -min dmin I</cl>
+<cl>set_input_delay -clock clk -clock_fall -max dmax I</cl>
+</code>
+<p>Where <f>dmin</f> is the shortest delay from the clock node of the register to I and <f>dmax</f> is the longest one.</p>
+</section>
+<section niv='4'><title>Interpretation</title>
+<imgsize namehtml="set_input_delay_chrono2.gif" namepdf="set_input_delay_chrono2.gif" wpdf="400pt" />
+<p>Where:
+<list>
+<item>tamin is the shortest access time of the register.</item>
+<item>tamax is the longest access time of the register.</item>
+<item>T is the period duration of the clock clk.</item>
+</list>
+</p>
+<p>From the timing diagram, some relations can be deduced.</p>
+<p>For the starting time of the instability:
+<list>
+<item>tamin + tpmin = hold</item>
+<item>but hold = U, then: tamin + tpmin = U</item>
+<item>according to the definition of dmin in the SDC API command (see previous section): tamin + tpmin = dmin, so:</item>
+<item> dmin = U </item>
+</list>
+</p>
+<p>For the ending time of the instability:
+<list>
+<item>tamax + tpmax + setup = T </item>
+<item>tamax + tpmax = T - setup </item>
+<item>but T - setup = S, then: tamax + tpmax = S </item>
+<item>according to the definition of dmax in the SDC API command (see previous section): tamax + tpmax = dmax, so:</item>
+<item>dmax = S</item>
+</list>
+</p>
+<p>With combinational circuit, the delays given are relative to zero time. The same relations are used.</p> 
+</section>
+<section niv='4'><title>Example: INF to SDC (sequential)</title>
+<p>With INF APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>inf_DefineInputSpec {I rising}</cl>
+<cl>inf_DefineStability {unstable 200 after clk rising}</cl>
+<cl>inf_DefineStability {stable 3000 after clk falling}</cl>
+</code>
+<p>With SDC APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>set_input_delay -rise -clock clk -min 200 I</cl>
+<cl>set_input_delay -rise -clock clk -clock_fall -max 3000 I</cl>
+</code>
+</section>
+<section niv='4'><title>Example: INF to SDC (combinational)</title>
+<p>With INF APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>inf_DefineInputSpec {I falling}</cl>
+<cl>inf_DefineStability {unstable 200}</cl>
+<cl>inf_DefineStability {stable 3000}</cl>
+</code>
+<p>With SDC APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>set_input_delay -fall -min 200 I</cl>
+<cl>set_input_delay -fall -max 3000 I</cl>
+</code>
+</section>
+<section niv='4'><title>Example: SDC to INF</title>
+<p>With SDC APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>set_input_delay -clock clk -min 200 I</cl>
+<cl>set_input_delay -clock clk -clock_fall -max 3000 I</cl>
+</code>
+<p>With INF APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>inf_DefineInputSpec I</cl>
+<cl>inf_DefineStability {unstable 200 after clk rising}</cl>
+<cl>inf_DefineStability {stable 3000 after clk falling}</cl>
+</code>
+</section>
+</section>
+<section niv='3'><title>SDC - INF Output Constraints Equivalence</title>
+<section niv='4'><title>Introduction</title>
+<p>We would like to specify stability constraints on an output connector, with the conditions defined in the following picture.</p>
+<imgsize namehtml="set_output_delay.gif" namepdf="set_output_delay.gif" wpdf="200pt" />
+<p>Where:
+<list>
+<item>O is the output connector of a circuit.</item>
+<item>f is the output of the register of this circuit.</item>
+<item>i is the input of a register in another circuit.</item>
+<item>C1 is the combinational path with the shortest propagation tpmin delay between O and i.</item>
+<item>C2 is the combinational path with the longest propagation tpmax delay between O and i.</item>
+</list>
+</p>
+</section>
+<section niv='4'><title>Syntax</title>
+<p>With INF APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>inf_DefineOutputSpec O</cl>
+<cl>inf_DefineStability {unstable U after clk falling}</cl>
+<cl>inf_DefineStability {stable S after clk falling}</cl>
+</code>
+<p>Where <f>U</f> is the starting time of the instability of the signal on the connector O and <f>S</f> is the ending time of the instability of this signal. The interval between <f>U</f> and <f>S</f> is also defined as a switching window.</p>
+<p>With SDC APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>set_output_delay -clock clk -clock_fall -min dmin O</cl>
+<cl>set_output_delay -clock clk -clock_fall -max dmax O</cl>
+</code>
+<p>Where <f>dmin</f> is the shortest delay from O to i and <f>dmax</f> is the longest one.</p>
+</section>
+<section niv='4'><title>Interpretation</title>
+<imgsize namehtml="set_output_delay_chrono2.gif" namepdf="set_output_delay_chrono2.gif" wpdf="400pt" />
+<p>Where:
+<list>
+<item>tamin is the shortest access time of the register.</item>
+<item>tamax is the longest access time of the register.</item>
+<item>tpfmin is the minimum propagation delay from f to O.</item>
+<item>tpfmax is the maximum propagation delay from f to O.</item>
+<item>T is the period duration of the clock clk.</item>
+</list>
+</p>
+<p>From the timing diagram, some relations can be deduced.</p>
+<p>For the starting time of the instability:
+<list>
+<item>U + tpmin = hold</item>
+<item>then: tpmin - hold = -U</item>
+<item>according to the definition of dmin in the SDC API command (see previous section): tpmin - hold = dmin, so:</item>
+<item>dmin = -U   or   U = -dmin</item>
+</list>
+</p>
+<p>For the ending time of the instability:
+<list>
+<item>S + tpmax + setup = T </item>
+<item>according to the definition of dmax in the SDC API command (see previous section): tpmax + setup = dmax</item>
+<item>so: S + dmax = T </item>
+<item>then: S = T - dmax   or   dmax =  T - S </item>
+</list>
+</p>
+<p>With combinational circuit, the delays given are relative to zero time. But according to SDC definition, the delay is relative to the clock edge of the input register. These relations are not valid. So, the following relation must be applied:</p>
+dmin = U    or    dmax = S 
+</section>
+<section niv='4'><title>Example: INF to SDC (sequential)</title>
+<p>With INF APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>...</cl>
+<cl>inf_SetPeriod 10000</cl>
+<cl>...</cl>
+<cl>inf_DefineOutputSpec {O rising}</cl>
+<cl>inf_DefineStability {unstable 200 after clk rising}</cl>
+<cl>inf_DefineStability {stable 3000 after clk falling}</cl>
+</code>
+<p>With SDC APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>set_output_delay -rise -clock clk -min -200 O</cl>
+<cl>set_output_delay -rise -clock clk -clock_fall -max 7000* O</cl>
+<cl> </cl>
+<cl>*dmax = T - S that is to say: 10000 - 3000</cl> 
+</code>
+</section>
+<section niv='4'><title>Example: INF to SDC for (combinational)</title>
+<p>With INF APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>inf_DefineOutputSpec {O falling}</cl>
+<cl>inf_DefineStability {unstable 200}</cl>
+<cl>inf_DefineStability {stable 3000}</cl>
+</code>
+<p>With SDC APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>set_output_delay -fall -min 200 O</cl>
+<cl>set_output_delay -fall -max 3000 O</cl>
+</code>
+</section>
+<section niv='4'><title>Example: SDC to INF</title>
+<p>With SDC APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>...</cl>
+<cl>create_clock -period 10000 clk</cl>
+<cl>...</cl>
+<cl>set_output_delay -clock clk -min 200 O</cl>
+<cl>set_output_delay -clock clk -clock_fall -max 3000 O</cl>
+</code>
+<p>With INF APIs, the stability constraints are declared as follow:</p>
+<code>
+<cl>inf_DefineOutputSpec O</cl>
+<cl>inf_DefineStability {unstable -200 after clk rising}</cl>
+<cl>inf_DefineStability {stable 7000(*1) after clk falling}</cl>
+<cl>or</cl>
+<cl>inf_DefineStability {stable 3000(*2) before clk falling}</cl>
+<cl> </cl>
+<cl>*1: S = T - dmax, that is to say 10000 - 3000.</cl>
+<cl>*2: S = T - dmax or S = dmax before the clock edge.</cl>
+</code>
+</section>
+</section>
+<section niv='3'><title>SDC - INF Command Equivalence</title>
+<glossary>
+<row type="half"><article><f>CLOCK CONNECTORS</f></article><def>create_clock | create_generated_clock [+ set_clock_latency]</def></row>
+<row type="half"><article><f>ASYNCHRONOUS CLOCK GROUPS</f></article><def>create_clock | create_generated_clock <f>clock_list</f> or clock defined with a same period value </def></row>
+<row type="half"><article><f>EQUIVALENT CLOCK GROUPS</f></article><def> N/A </def></row>
+<row type="half"><article><f>NOFALLING</f></article><def><f>set_case_analaysis -rising</f></def></row>
+<row type="half"><article><f>NORISING</f></article><def><f>set_case_analaysis -falling</f></def></row>
+<row type="half"><article><f>SPECIFY INPUT CONNECTORS</f></article><def>set_input_delay</def></row>
+<row type="half"><article><f>VERIFY OUTPUT CONNECTORS</f></article><def>set_output_delay</def></row>
+<row type="half"><article><f>CONSTRAINT</f></article><def>set_case_analysis</def></row>
+<row type="half"><article><f>BYPASS</f></article><def>set_disable_timing</def></row>
+<row type="half"><article><f>FALSEPATH, BYPASS, NORISING, NOFALLING</f></article><def>set_false_path</def></row>
+</glossary>
+</section>

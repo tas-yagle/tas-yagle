@@ -1,0 +1,10 @@
+
+       void inf_DefineInputs(char *name);
+
+DDEESSCCRRIIPPTTIIOONN
+       Sets a signal as a circuit input, in order to help the disassembly pro-
+       cess.
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Signal's name
+

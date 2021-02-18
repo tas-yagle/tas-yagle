@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<glossary>
+<row type='split'><article><index>stmCacheSize</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;int&gt;[K|M]</f></article><def>Size of the memory cache for all applications reading 
+the STM file. The default unit is the Octet. If the value is followed by either <f>K</f> or <f>M</f> the unit is the 
+kilo-Octet or the Mega-Octet. </def></row>
+<row><article><f>0</f></article><def>Default, the cache utilization is disabled and all the 
+timing model information are loaded. <f>stmCacheSize</f> cannot be used together with compressed files.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>stmShareModel</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def> Identical cones will share the same timing model. 
+There is a 1% tolerance in the matching of identical cones, regarding capacitance related parameters 
+of the model. Extractors, especially when used in crosstalk mode, may show slight variations in 
+the values of extracted capacitances for different instances of a same cell.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasShortNamesForModels</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>&tool; will use model numbers instead of the model names</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<!--<row type='split'><article><index>tasModelsForDelays</index></article><def>
+<p>Allows the user to specify the model &tool; will use for delay calculation.</p>
+<glossary width='small'>
+<row><article><f>scm_int</f></article><def>Electrical models only for timing arcs connected to 
+the interface, constant delay value for remaining timing arcs</def></row>
+<row><article><f>scm_cpl</f></article><def>Default, electrical models for all timing arcs, must be enabled for 
+crosstalk analysis. </def></row>
+<row><article><f>lut_int</f></article><def>Lookup table models only for timing arcs connected to 
+the interface, constant delay value for remaining timing arcs</def></row>
+<row><article><f>lut_cpl</f></article><def>Lookup table models for all timing arcs</def></row>
+</glossary>
+</def></row>-->
+</glossary>

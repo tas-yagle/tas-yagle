@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>STM - The Models Format</title>
+
+<section niv='3'><title>Description</title>
+
+<p>The STM format is used by the timing analyzer &tool; to report delay and slope models. The file has the extension .stm.</p>
+
+</section>
+
+<section niv='3'><title>Articles</title>
+
+<p>The STM file contains a header and a list of models. These models are delay and slope models. 
+Models refer to timing arcs and timing paths.</p>
+<list>
+<article>A model may be:</article>
+<item>a 1 or 2 dimension lookup table</item>
+<item>a Current Source Model (SCM) containing parameters enabling delay and slope computation</item>
+</list>
+<p>lookup table model:</p>
+<code>
+<cl>model (</cl>
+<cl>   name (modelname)</cl>
+<cl>   vth (value) #measure threshold</cl>
+<cl>   vdd (value) #power supply</cl>
+<cl>   vt (value)  #vt transistor</cl>
+<cl>   vf (value)  #final voltage</cl>
+<cl>   spline (                             # 2D table</cl>
+<cl>      input_slope_axis (value value value)</cl>
+<cl>      load_axis (value value value)</cl>
+<cl>      data (                      #        load</cl>
+<cl>         (value value value)      #      ---------&gt;</cl>
+<cl>         (value value value)      # slope|</cl>
+<cl>         (value value value)      #      |</cl>
+<cl>      )                           #      V</cl>
+<cl>   )</cl>
+<cl>)</cl>
+</code>
+<p>"SCM" model:</p>
+<code>
+<cl>model (</cl>
+<cl>   name (modelname)</cl>
+<cl>   vth (value) #measure threshold</cl>
+<cl>   vdd (value) #power supply</cl>
+<cl>   vt (value)  #vt transistor</cl>
+<cl>   vf (value)  #final voltage</cl>
+<cl>   scm_dual (</cl>
+<cl>      dual (</cl>
+<cl>         (&lt;list_of_parameter_names&gt;)</cl>
+<cl>         (&lt;list_of_parameter_values&gt;)</cl>
+<cl>      )</cl>
+<cl>   )</cl>
+<cl>   noise_scr(val) #noise parameter</cl>
+<cl>)</cl>
+</code>
+<glossary>
+<row><article>pconf0, pconf1:</article><def>conflict capacitance parameters</def></row>
+<row><article>capai:</article><def>intrinsic capacitance</def></row>
+<row><article>irap:</article><def>currant ratio</def></row>
+<row><article>vddin:</article><def>input voltage</def></row>
+<row><article>vt:</article><def>vt transistor</def></row>
+<row><article>threshold:</article><def>measure threshold</def></row>
+<row><article>imax:</article><def>max currant</def></row>
+<row><article>an, bn:</article><def>specifical parameters</def></row>
+<row><article>vddmax:</article><def>power supply</def></row>
+<row><article>rsat:</article><def>saturation resistance</def></row>
+<row><article>rlin:</article><def>linear resistance</def></row>
+<row><article>drc:</article><def>intrinsic RC delay</def></row>
+</glossary>
+<list>
+<article>Four kinds of SCM models exist:</article>
+<item>scm_dual</item>
+<item>scm_good</item>
+<item>scm_false</item>
+<item>scm_path</item>
+</list>
+<p>scm_good model example:</p>
+<code>
+<cl>scm_good (</cl>
+<cl>   link_out (</cl>
+<cl>      (ci cf k3 k4 k5)</cl>
+<cl>      (val val val val val)</cl>
+<cl>   )</cl>
+<cl>   link_dual (</cl>
+<cl>      (ci cf acti bcti)</cl>
+<cl>      (val val val val)</cl>
+<cl>   )</cl>
+<cl>   dual (</cl>
+<cl>      (&lt;list_of_parameter_names&gt;)</cl>
+<cl>      (&lt;list_of_parameter_values&gt;)</cl>
+<cl>   )</cl>
+<cl>)</cl>
+</code>
+<p>scm_false model example:</p>
+<code>
+<cl>scm_false (</cl>
+<cl>   link_out (</cl>
+<cl>      (ci cf k3 k4 k5)</cl>
+<cl>      (val val val val val)</cl>
+<cl>   )</cl>
+<cl>   false (</cl>
+<cl>      (pconf0 pconf1 rtot kf vddmax)</cl>
+<cl>      (val val val val val)</cl>
+<cl>   )</cl>
+<cl>)</cl>
+</code>
+<p>scm_path model example:</p>
+<code>
+<cl>scm_path (</cl>
+<cl>   link_out (</cl>
+<cl>      (ci cf k3 k4 k5)</cl>
+<cl>      (val val val val val)</cl>
+<cl>   )</cl>
+<cl>   path (</cl>
+<cl>      (pconf0 vddmax)</cl>
+<cl>      (val val)</cl>
+<cl>   )</cl>
+<cl>)</cl>
+</code>
+
+</section>
+
+<section niv='3'><title>Units</title>
+
+<p>Unless otherwise stated, all capacitances are given in Femto-farads and all times are given in picoseconds.</p>
+
+</section>
+</section>

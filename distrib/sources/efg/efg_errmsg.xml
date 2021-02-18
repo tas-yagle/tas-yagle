@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="efg">
+
+<err>
+    <lib>EFG-</lib><num>001</num>
+    <msg>Internal error: could not find node '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EFG-</lib><num>002</num>
+    <msg>could not find a VDD node in generated spicedeck\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EFG-</lib><num>003</num>
+    <msg>could not find a GROUND node in generated spicedeck\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EFG-</lib><num>004</num>
+    <msg>Fatal error #%d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EFG-</lib><num>005</num>
+    <msg>Internal: spisig is NULL\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EFG-</lib><num>006</num>
+    <msg>Internal: signal %s is not in figure %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EFG-</lib><num>007</num>
+    <msg>signal %s appear with different slopes\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>EFG-</lib><num>008</num>
+    <msg>Internal: can't add global alim for sig %s\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding='ISO-8859-1' standalone='no' ?>
+<?xml-stylesheet type="text/xsl" href="regles_pdf.xsl"?>
+<!DOCTYPE notice [
+<!ENTITY avt SYSTEM "../avt/avt_errmsg.xml">
+<!ENTITY log SYSTEM "../bdd/log_errmsg.xml">
+<!ENTITY bef SYSTEM "../beh/bef/bef_errmsg.xml">
+<!ENTITY beg SYSTEM "../beh/beg/beg_errmsg.xml">
+<!ENTITY beh SYSTEM "../beh/beh/beh_errmsg.xml">
+<!ENTITY bhl SYSTEM "../beh/bhl/bhl_errmsg.xml">
+<!ENTITY bgl SYSTEM "../behvrlog/bgl_errmsg.xml">
+<!ENTITY bvl SYSTEM "../behvhdl/bvl_errmsg.xml">
+<!ENTITY cns SYSTEM "../cns/cns_errmsg.xml">
+<!ENTITY rcn SYSTEM "../mbk/rcn_errmsg.xml">
+<!ENTITY mbk SYSTEM "../mbk/mbk_errmsg.xml">
+<!ENTITY sim SYSTEM "../tas/sim/sim_errmsg.xml">
+<!ENTITY slib SYSTEM "../yagle/slib/slib_errmsg.xml">
+<!ENTITY sdc SYSTEM "../api/inf/sdc_errmsg.xml">
+<!ENTITY stb SYSTEM "../tas/stb/stb_errmsg.xml">
+<!ENTITY stm SYSTEM "../tas/stm/stm_errmsg.xml">
+<!ENTITY tas SYSTEM "../tas/tas/tas_errmsg.xml">
+<!ENTITY trc SYSTEM "../tas/trc/trc_errmsg.xml">
+<!ENTITY ttv SYSTEM "../tas/ttv/ttv_errmsg.xml">
+<!ENTITY val SYSTEM "../tas/val/val_errmsg.xml">
+<!ENTITY x2v SYSTEM "../tas/x2v/x2v_errmsg.xml">
+<!ENTITY yag SYSTEM "../yagle/yagle/yag_errmsg.xml">
+<!ENTITY zen SYSTEM "../tas/zen/zen_errmsg.xml">
+<!ENTITY inf SYSTEM "../inf/inf_errmsg.xml">
+<!ENTITY cgv SYSTEM "../yagle/cgv/cgv_errmsg.xml">
+<!ENTITY api SYSTEM "../api/api/api_errmsg.xml">
+<!ENTITY gns SYSTEM "../yagle/genius/gns_errmsg.xml">
+<!ENTITY cbh SYSTEM "../cbh/cbh_errmsg.xml">
+<!ENTITY spf SYSTEM "../mbkspf/spf_errmsg.xml">
+<!ENTITY spe SYSTEM "../mbkspef/spe_errmsg.xml">
+<!ENTITY mgl SYSTEM "../mbkvrlog/mgl_errmsg.xml">
+<!ENTITY mcc SYSTEM "../tas/mcc/mcc_errmsg.xml">
+<!ENTITY spi SYSTEM "../mbkspice/spi_errmsg.xml">
+<!ENTITY efg SYSTEM "../efg/efg_errmsg.xml">
+<!ENTITY gsp SYSTEM "../gsp/gsp_errmsg.xml">
+<!ENTITY eqt SYSTEM "../eqt/eqt_errmsg.xml">
+<!ENTITY elp SYSTEM "../elp/elp_errmsg.xml">
+<!ENTITY inf_api SYSTEM "../api/inf/inf_api_errmsg.xml">
+<!ENTITY ttv_api SYSTEM "../api/ttv/ttv_api_errmsg.xml">
+<!ENTITY stb_api SYSTEM "../api/stb/stb_api_errmsg.xml">
+<!ENTITY gns_api SYSTEM "../api/genius/gns_api_errmsg.xml">
+<!ENTITY sim_api SYSTEM "../api/sim/sim_api_errmsg.xml">
+<!ENTITY beg_api SYSTEM "../api/beg/beg_api_errmsg.xml">
+<!ENTITY cns_api SYSTEM "../api/cns/cns_api_errmsg.xml">
+<!ENTITY fcl_api SYSTEM "../api/fcl/fcl_api_errmsg.xml">
+<!ENTITY avt_api SYSTEM "../api/tcl/avt_api_errmsg.xml">
+<!ENTITY tma_api SYSTEM "../api/tma/tma_api_errmsg.xml">
+<!ENTITY ctk_api SYSTEM "../api/ctk/ctk_api_errmsg.xml">
+]>
+
+<notice>
+<!--
+  <presentation>
+    &presentation; 
+  </presentation>
+  <introduction>
+    &introduction;
+  </introduction>
+-->
+  <document>
+    <chapitre><section niv='1'><title>AVT error messages</title>&avt;</section></chapitre>
+    <chapitre><section niv='1'><title>BDD error messages</title>&log;</section></chapitre>
+    <chapitre><section niv='1'><title>BEF error messages</title>&bef;</section></chapitre>
+    <chapitre><section niv='1'><title>BEG error messages</title>&beg;</section></chapitre>
+    <chapitre><section niv='1'><title>BEH error messages</title>&beh;</section></chapitre>
+    <chapitre><section niv='1'><title>BHL error messages</title>&bhl;</section></chapitre>
+    <chapitre><section niv='1'><title>BGL error messages</title>&bgl;</section></chapitre>
+    <chapitre><section niv='1'><title>BVL error messages</title>&bvl;</section></chapitre>
+    <chapitre><section niv='1'><title>MGL error messages</title>&mgl;</section></chapitre>
+    <chapitre><section niv='1'><title>CNS error messages</title>&cns;</section></chapitre>
+    <chapitre><section niv='1'><title>RCN error messages</title>&rcn;</section></chapitre>
+    <chapitre><section niv='1'><title>MBK error messages</title>&mbk;</section></chapitre>
+    <chapitre><section niv='1'><title>SIM error messages</title>&sim;</section></chapitre>
+    <chapitre><section niv='1'><title>SLIB error messages</title>&slib;</section></chapitre>
+    <chapitre><section niv='1'><title>SDC error messages</title>&sdc;</section></chapitre>
+    <chapitre><section niv='1'><title>STB error messages</title>&stb;</section></chapitre>
+    <chapitre><section niv='1'><title>STM error messages</title>&stm;</section></chapitre>
+    <chapitre><section niv='1'><title>MCC error messages</title>&mcc;</section></chapitre>
+    <chapitre><section niv='1'><title>TAS error messages</title>&tas;</section></chapitre>
+    <chapitre><section niv='1'><title>TRC error messages</title>&trc;</section></chapitre>
+    <chapitre><section niv='1'><title>TTV error messages</title>&ttv;</section></chapitre>
+    <chapitre><section niv='1'><title>VAL error messages</title>&val;</section></chapitre>
+    <chapitre><section niv='1'><title>X2V error messages</title>&x2v;</section></chapitre>
+    <chapitre><section niv='1'><title>YAG error messages</title>&yag;</section></chapitre>
+    <chapitre><section niv='1'><title>ZEN error messages</title>&zen;</section></chapitre>
+    <chapitre><section niv='1'><title>INF error messages</title>&inf;</section></chapitre>
+    <chapitre><section niv='1'><title>CGV error messages</title>&cgv;</section></chapitre>
+    <chapitre><section niv='1'><title>API error messages</title>&api;</section></chapitre>
+    <chapitre><section niv='1'><title>GNS error messages</title>&gns;</section></chapitre>
+    <chapitre><section niv='1'><title>CBH error messages</title>&cbh;</section></chapitre>
+    <chapitre><section niv='1'><title>SPF error messages</title>&spf;</section></chapitre>
+    <chapitre><section niv='1'><title>SPEF error messages</title>&spe;</section></chapitre>
+    <chapitre><section niv='1'><title>SPICE error messages</title>&spi;</section></chapitre>
+    <chapitre><section niv='1'><title>EFG error messages</title>&efg;</section></chapitre>
+    <chapitre><section niv='1'><title>GSP error messages</title>&gsp;</section></chapitre>
+    <chapitre><section niv='1'><title>EQT error messages</title>&eqt;</section></chapitre>
+    <chapitre><section niv='1'><title>ELP error messages</title>&elp;</section></chapitre>
+    <chapitre><section niv='1'><title>INF API error messages</title>&inf_api;</section></chapitre>
+    <chapitre><section niv='1'><title>TTV API error messages</title>&ttv_api;</section></chapitre>
+    <chapitre><section niv='1'><title>STB API error messages</title>&stb_api;</section></chapitre>
+    <chapitre><section niv='1'><title>GNS API error messages</title>&gns_api;</section></chapitre>
+    <chapitre><section niv='1'><title>SIM API error messages</title>&sim_api;</section></chapitre>
+    <chapitre><section niv='1'><title>BEG API error messages</title>&beg_api;</section></chapitre>
+    <chapitre><section niv='1'><title>CNS API error messages</title>&cns_api;</section></chapitre>
+    <chapitre><section niv='1'><title>FCL API error messages</title>&fcl_api;</section></chapitre>
+    <chapitre><section niv='1'><title>AVT API error messages</title>&avt_api;</section></chapitre>
+    <chapitre><section niv='1'><title>TMA API error messages</title>&tma_api;</section></chapitre>
+    <chapitre><section niv='1'><title>CTK API error messages</title>&ctk_api;</section></chapitre>
+  </document>
+</notice>

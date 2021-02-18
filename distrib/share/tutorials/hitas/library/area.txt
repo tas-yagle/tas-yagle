@@ -1,0 +1,28 @@
+inv
+Area 11.52
+
+ff2
+Area 97.92
+
+mux2
+Area 46.08
+
+na2
+Area 17.28
+
+no3
+Area 23.04
+
+ts
+Area 14.02
+
+xor2
+Area 51.84
+
+ao2o22
+Area 34.56
+
+nand2x1
+Area 19.48
+
+

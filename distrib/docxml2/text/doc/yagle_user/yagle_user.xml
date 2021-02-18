@@ -1,0 +1,25 @@
+<!DOCTYPE notice SYSTEM "../../common/common_entity.xml" [
+<!ENTITY tool "Yagle">
+<!ENTITY presentation SYSTEM "presentation.xml">
+<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY overview SYSTEM "overview.xml">
+<!ENTITY performingAbs SYSTEM "performingAbs.xml">
+<!ENTITY usingGUI SYSTEM "usingGUI.xml">
+<!ENTITY using_tcl SYSTEM "using_tcl.xml">
+<!ENTITY introduction SYSTEM "introduction.xml">
+]>
+<notice>
+    <presentation>
+       &presentation; 
+    </presentation>
+    <introduction>
+        &introduction;
+    </introduction>
+    <document>
+        &installation;
+        &overview;
+        &using_tcl;
+        &performingAbs;
+        &usingGUI;
+    </document>
+</notice>

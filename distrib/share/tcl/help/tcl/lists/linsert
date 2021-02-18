@@ -1,0 +1,33 @@
+NAME
+       linsert - Insert elements into a list
+
+SYNOPSIS
+       linsert list index element ?element element ...?
+
+
+DESCRIPTION
+       This command produces a new list from list by inserting all of the ele-
+       ment arguments just before the index'th element of list.  Each  element
+       argument  will  become a separate element of the new list.  If index is
+       less than or equal to zero, then the new elements are inserted  at  the
+       beginning of the list.  If index has the value end, or if it is greater
+       than or equal to the number of elements in the list, then the new  ele-
+       ments are appended to the list.  end-integer refers to the last element
+       in the list minus the specified integer offset.
+
+EXAMPLE
+       Putting some values into a list, first indexing from the start and then
+       indexing from the end, and then chaining them together:
+              set oldList {the fox jumps over the dog}
+              set midList [linsert $oldList 1 quick]
+              set newList [linsert $midList end-1 lazy]
+              # The old lists still exist though...
+              set newerList [linsert [linsert $oldList end-1 quick] 1 lazy]
+
+
+SEE ALSO
+       list(n),   lappend(n),   lindex(n),  llength(n),  lsearch(n),  lset(n),
+       lsort(n), lrange(n), lreplace(n)
+
+
+KEYWORDS

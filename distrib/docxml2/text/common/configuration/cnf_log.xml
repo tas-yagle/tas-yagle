@@ -1,0 +1,52 @@
+<glossary>
+<row type='split'><article><index>avtErrorPolicy</index></article><def>
+<glossary width='small'>
+<row><article><f>lenient</f></article><def>Default, the tool does not abort when encountering an error of level 1 (level 0 is WARNING, level 1 is ERROR, level 2 is FATAL ERROR).</def></row>
+<row><article><f>strict</f></article><def>the tool aborts when encountering an error of level 2.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtLogFile</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name of the log file. If this variable 
+is not set, no log file will be created (default behavior).</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtLogEnable</index></article><def>Enables the logging of the different steps of the 
+timing analysis process. The syntax is as follow: 
+<p><f>avtLogEnable "step:level"</f></p>
+<p>the <f>step</f> parameter can take one or more of the following values:</p>
+
+<glossary width='small'>
+<row><article><f>files</f></article><def>info related to file access: <f>FAC</f> and <f>MCH</f> sections</def></row>
+<row><article><f>spice</f></article><def>info related to spice netlist and technology file parser: <f>SPI</f> section</def></row>
+<row><article><f>mos_charac</f></article><def>info related to MOSFET characterization: <f>MCC</f> section </def></row>
+<row><article><f>rc</f></article><def>info related to RC networs processing: <f>RCN</f> and <f>TRC</f> sections</def></row>
+<row><article><f>disassembly</f></article><def>info related to transistor netlist partitioning: <f>YAG</f> section </def></row>
+<row><article><f>delay_calc</f></article><def>info related to delay calculation: <f>TAS</f> and <f>STM</f> sections </def></row>
+<row><article><f>spicedeck</f></article><def>info related to spice deck generation: <f>EFG</f> and <f>GSP</f> sections</def></row>
+<row><article><f>timing_abs</f></article><def>info related to timing abstraction: <f>LIB</f> and <f>TLF</f> sections</def></row>
+<row><article><f>error</f></article><def>redirection of errors in the log file: <f>ERR</f> section</def></row>
+<row><article><f>stat</f></article><def>info related to netlist parse: <f>PRS</f> section</def></row>
+<row><article><f>config</f></article><def>info related to configuration <f>avttools.conf</f> and <f>information files</f></def></row>
+<row><article><f>stability</f></article><def>info related to stability: <f>STABILITY</f> section </def></row>
+</glossary>
+
+<p>The <f>level</f> value ranges from 0 to 9. Level 0 is stdout redirection, level 1 is customer info, levels 2 to 9 are
+debugging levels.</p>
+<p>Example:</p>
+<p><f>avtLogEnable "files:1 mos_charac:1</f></p>
+
+</def></row>
+
+<row type='split'><article><index>avtWarningFilter</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Allows the filtering of warning messages on stdout and in the log file. Specify a list of error message identifiers for the messges to be filtered
+<p>Example:</p>
+<p><f>avtWarningFilter "SPF-003 SPF-015"</f></p>
+</def></row>
+</glossary>
+</def></row>
+
+</glossary>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Functional validation</title>
+<section niv='2'><title>Methodology</title>
+
+<p>In the previous sections, we have seen how to recognize a complex component - the matrix - in a
+transistor netlist, by the mean of hierarchical recognition rules. Then, we have created
+a hierarchical structural netlist - the root -, instantiating two components: firstly the matrix, secondly 
+a component containing
+the remaining transistors - let's call it the core. These two components are structural descriptions,
+we now want to replace them by behavioral descriptions.</p>
+
+<p>To create the behavioral description of the core, we are going to use the functional abstraction
+engine of &tool;, which is able to automatically generate a behavioral description from a transistor netlist.
+This engine will create a file suffixed <f>_yagcore.vhd</f>.</p>
+
+<p>To create the behavioral description of the matrix, we are going to write an action, which will be associated
+with the rule 'matrix'. This action will generates the file <f>matrix_x_y_z.vhd</f>, where <f>x</f>, <f>y</f> and
+<f>z</f> refer to the computed values of the generics of the rule 'matrix'.</p>
+
+<p>&tool; will finally create the root file suffixed <f>_yagroot.vhd</f>, instantiating the two previous behavioral 
+descriptions.</p>
+
+<p>With an appropriate test bench, it will then be possible to simulate the design.</p> 
+</section>
+<section niv='2'><title>Generating the VHDL of the matrix</title>
+<section niv='3'><title>The action execution process</title>
+
+<p>An action is a C function associated with a rule. When the rule is recognized, the action is
+executed.</p>
+
+<p>As it is associated with a rule, an action can access to all information the rule computes, especially the
+values of the generics. Those values are transmitted to the action by the parameters of the function. The name
+of a parameter is the same as the name of its corresponding generic.</p>
+
+<p>As it is a C function, an action can use a large number of C primitives, such as <f>fprintf</f>, 
+<f>fopen</f>, etc.</p>
+
+<p>Writing the behavioral description associated with a rule, consists in opening a file, and writing
+VHDL processes into it, via <f>fprintf</f> calls. The range of a signal in the VHDL is deduced
+from the value of its associated generic. For example, the following code fragment of an action:</p>
+
+<p><f>fprintf (f, "signal s: std_logic_vector (0 to %d);\n", size);</f></p>
+
+<p>will generate the following VHDL:</p>
+
+<p><f>signal s: std_logic_vector (0 to 127);</f></p>
+
+<p>where <f>size = 127</f>.</p>
+
+</section>
+<section niv='3'><title>Writing the action</title>
+<p>The following C function is the action associated with the 'matrix' rule. The parameters <f>size</f>, 
+<f>nbcolumn</f> and <f>nbcolumn</f> refer to the generics computed by the 'matrix' rule.</p>
+<code>
+<cl>void matrix (int size, int capacity, int nbcolumn, char *model)</cl>
+<cl>{</cl>
+<cl>int i;</cl>
+<cl>FILE *f;</cl>
+<cl> </cl>
+<cl>f = avtfopen (model, "vhd", WRITE_TEXT);</cl>
+<cl> </cl>
+<cl>/* ENTITY */</cl>
+<cl>  </cl>
+<cl>fprintf (f, "-- VHDL data flow generated from `%s`\n",</cl>
+<cl>         model);</cl>
+<cl>fprintf (f, "LIBRARY IEEE;\n");</cl>
+<cl>fprintf (f, "USE IEEE.STD_LOGIC_1164.ALL;\n\n");</cl>
+<cl>fprintf (f, "-- Entity Declaration\n\n");</cl>
+<cl>fprintf (f, "ENTITY %s IS\n", model);</cl>
+<cl>fprintf (f, "  PORT (\n");</cl>
+<cl>fprintf (f, "    din: IN STD_LOGIC_VECTOR (%d DOWNTO 0);\n",</cl>
+<cl>         2 * size - 1);</cl>
+<cl>fprintf (f, "    dout: OUT STD_LOGIC_VECTOR (%d DOWNTO 0);\n",</cl>
+<cl>         2 * size - 1);</cl>
+<cl>fprintf (f, "    ncom: IN STD_LOGIC_VECTOR (0 TO %d);\n",</cl>
+<cl>         capacity - 1);</cl>
+<cl>fprintf (f, "    sel: IN STD_LOGIC_VECTOR (0 TO %d);\n",</cl>
+<cl>         nbcolumn - 1);</cl>
+<cl>fprintf (f, "    write, ck, en: IN STD_LOGIC;\n");</cl>
+<cl>fprintf (f, "    cken: INOUT STD_LOGIC;\n");</cl>
+<cl>fprintf (f, "    wen: INOUT STD_LOGIC_VECTOR (0 TO 1);\n");</cl>
+<cl>fprintf (f, "    cke: INOUT STD_LOGIC_VECTOR (0 TO 1);\n");</cl>
+<cl>fprintf (f, "    vdd, vss: IN STD_LOGIC\n");</cl>
+<cl>fprintf (f, "  );\n");</cl>
+<cl>fprintf (f, "END %s;\n\n", model);</cl>
+<cl> </cl>
+<cl>/* ARCHITECTURE */</cl>
+<cl> </cl>
+<cl>fprintf (f, "-- Architecture Declaration\n\n");</cl>
+<cl>fprintf (f, "ARCHITECTURE rtl OF %s IS \n\n", model);</cl>
+<cl> </cl>
+<cl>/* declarative part */</cl>
+<cl>fprintf (f, "  SUBTYPE word IS STD_LOGIC_VECTOR");</cl>
+<cl>fprintf (f, " (%d DOWNTO 0);\n", 2 * size - 1);</cl>
+<cl>fprintf (f, "  SUBTYPE row IS INTEGER RANGE 0 TO %d;\n",</cl>
+<cl>         capacity - 1);</cl>
+<cl>fprintf (f, "  SUBTYPE col IS INTEGER RANGE 0 TO %d;\n",</cl>
+<cl>         nbcolumn - 1);</cl>
+<cl>fprintf (f, "  TYPE memory IS ARRAY (row, col) OF word;\n");</cl>
+<cl>fprintf (f, "  SIGNAL mem: memory;\n");</cl>
+<cl> </cl>
+<cl>fprintf (f, "  FUNCTION GetHotOne (v: STD_LOGIC_VECTOR)\n");</cl>
+<cl>fprintf (f, "  RETURN INTEGER IS\n");</cl>
+<cl>fprintf (f, "  BEGIN\n");</cl>
+<cl>fprintf (f, "    hot: FOR i IN v'RANGE LOOP\n");</cl>
+<cl>fprintf (f, "      IF (v (i) = '1') THEN\n");</cl>
+<cl>fprintf (f, "        RETURN i;\n");</cl>
+<cl>fprintf (f, "      END IF;\n");</cl>
+<cl>fprintf (f, "    END LOOP;\n");</cl>
+<cl>fprintf (f, "    RETURN -1;\n");</cl>
+<cl>fprintf (f, "  END;\n\n");</cl>
+<cl> </cl>
+<cl>/* body */</cl>
+<cl>fprintf (f, "BEGIN\n\n");</cl>
+<cl> </cl>
+<cl>/* memory write */</cl>
+<cl>fprintf (f, "  cken &lt;= ck AND en;\n");</cl>
+<cl>fprintf (f, "  wen (0) &lt;= write AND cken;\n");</cl>
+<cl>fprintf (f, "  wen (1) &lt;= write AND cken;\n");</cl>
+<cl>fprintf (f, "  cke &lt;= NOT wen;\n\n");</cl>
+<cl>fprintf (f, "  write_mem: PROCESS (write, cken, ncom, sel,</cl>
+<cl>fprintf (f, "                      din)\n");</cl>
+<cl>fprintf (f, "    variable r, c: INTEGER;\n");</cl>
+<cl>fprintf (f, "    variable com: STD_LOGIC_VECTOR (0 TO %d);\n",</cl>
+<cl>         capacity - 1);</cl>
+<cl>fprintf (f, "  BEGIN\n");</cl>
+<cl>fprintf (f, "    IF (write = '1' AND cken = '1') THEN\n");</cl>
+<cl>fprintf (f, "      com := NOT ncom;\n");</cl>
+<cl>fprintf (f, "      r := GetHotOne (com);\n");</cl>
+<cl>fprintf (f, "      c := GetHotOne (sel);\n");</cl>
+<cl>fprintf (f, "      IF (r /= -1 AND c /= -1) THEN\n");</cl>
+<cl>fprintf (f, "        mem (r, c) &lt;= din;\n");</cl>
+<cl>fprintf (f, "      END IF;\n");</cl>
+<cl>fprintf (f, "    END IF;\n");</cl>
+<cl>fprintf (f, "  END PROCESS;\n\n");</cl>
+<cl> </cl>
+<cl>/* memory read */</cl>
+<cl>fprintf (f, "  read_mem: PROCESS (write, cken, ncom,</cl>
+<cl>fprintf (f, "                     sel)\n");</cl>
+<cl>fprintf (f, "    variable r, c: INTEGER;\n");</cl>
+<cl>fprintf (f, "    variable com: STD_LOGIC_VECTOR (0 TO %d);\n",</cl>
+<cl>         capacity - 1);</cl>
+<cl>fprintf (f, "  BEGIN\n");</cl>
+<cl>fprintf (f, "    IF (write = '0' OR cken = '0' ) THEN\n");</cl>
+<cl>fprintf (f, "      com := NOT ncom;\n");</cl>
+<cl>fprintf (f, "      r := GetHotOne (com);\n");</cl>
+<cl>fprintf (f, "      c := GetHotOne (sel);\n");</cl>
+<cl>fprintf (f, "      IF (r /= -1 and c /= -1) THEN\n");</cl>
+<cl>fprintf (f, "        dout &lt;= mem (r, c);\n");</cl>
+<cl>fprintf (f, "      END IF;\n");</cl>
+<cl>fprintf (f, "    ELSE\n");</cl>
+<cl>fprintf (f, "      dout &lt;= \""); </cl>
+<cl>for (i = 0; i &lt; size * 2; i++)   </cl>
+<cl>  fprintf (f, "0");</cl>
+<cl>fprintf (f, "\";\n");</cl>
+<cl>fprintf (f, "    END IF;\n");</cl>
+<cl>fprintf (f, "  END PROCESS;\n\n");</cl>
+<cl>fprintf (f, "END;\n");</cl>
+<cl> </cl>
+<cl>fclose (f);</cl>
+<cl>}</cl>
+</code>
+
+<p>For a 4 x 128 RAM, the following VHDL file is generated when the 'matrix' rule is recognized:</p>
+
+<code>
+<cl>-- VHDL data flow generated from `matrix_2_64_2`</cl>
+<cl> </cl>
+<cl>LIBRARY IEEE;</cl>
+<cl>USE IEEE.STD_LOGIC_1164.ALL;</cl>
+<cl> </cl>
+<cl>-- Entity Declaration</cl>
+<cl> </cl>
+<cl>ENTITY matrix_2_64_2 IS</cl>
+<cl>  PORT (</cl>
+<cl>    din: IN STD_LOGIC_VECTOR (3 DOWNTO 0);</cl>
+<cl>    dout: OUT STD_LOGIC_VECTOR (3 DOWNTO 0);</cl>
+<cl>    ncom: IN STD_LOGIC_VECTOR (0 TO 63);</cl>
+<cl>    sel: IN STD_LOGIC_VECTOR (0 TO 1);</cl>
+<cl>    write, ck, en: IN STD_LOGIC;</cl>
+<cl>    cken: INOUT STD_LOGIC;</cl>
+<cl>    wen: INOUT STD_LOGIC_VECTOR (0 TO 1);</cl>
+<cl>    cke: INOUT STD_LOGIC_VECTOR (0 TO 1);</cl>
+<cl>    vdd, vss: IN STD_LOGIC</cl>
+<cl>  );</cl>
+<cl>END matrix_2_64_2;</cl>
+<cl> </cl>
+<cl>-- Architecture Declaration</cl>
+<cl> </cl>
+<cl>ARCHITECTURE rtl OF matrix_2_64_2 IS </cl>
+<cl> </cl>
+<cl>  SUBTYPE word IS STD_LOGIC_VECTOR (3 DOWNTO 0);</cl>
+<cl>  SUBTYPE row IS INTEGER RANGE 0 TO 63;</cl>
+<cl>  SUBTYPE column IS INTEGER RANGE 0 TO 1;</cl>
+<cl>  TYPE memory IS ARRAY (row, column) OF word;</cl>
+<cl> </cl>
+<cl>  SIGNAL mem: memory;</cl>
+<cl>  FUNCTION GetHotOne (v: STD_LOGIC_VECTOR)</cl>
+<cl>  RETURN INTEGER IS</cl>
+<cl>  BEGIN</cl>
+<cl>    hot: FOR i IN v'RANGE LOOP</cl>
+<cl>      IF (v (i) = '1') THEN</cl>
+<cl>        RETURN i;</cl>
+<cl>      END IF;</cl>
+<cl>    END LOOP;</cl>
+<cl>    RETURN -1;</cl>
+<cl>  END;</cl>
+<cl> </cl>
+<cl>BEGIN</cl>
+<cl> </cl>
+<cl>  cken &lt;= ck AND en;</cl>
+<cl>  wen (0) &lt;= write AND cken;</cl>
+<cl>  wen (1) &lt;= write AND cken;</cl>
+<cl>  cke &lt;= NOT wen;</cl>
+<cl> </cl>
+<cl>  write_mem: PROCESS (write, cken, ncom, sel, din)</cl>
+<cl>    variable r, c: INTEGER;</cl>
+<cl>    variable com: STD_LOGIC_VECTOR (0 TO 63);</cl>
+<cl>  BEGIN</cl>
+<cl>    IF (write = '1' AND cken = '1') THEN</cl>
+<cl>      com := NOT ncom;</cl>
+<cl>      r := GetHotOne (com);</cl>
+<cl>      c := GetHotOne (sel);</cl>
+<cl>      IF (r /= -1 and c /= -1) THEN</cl>
+<cl>        mem (r, c) &lt;= din;</cl>
+<cl>      END IF;</cl>
+<cl>    END IF;</cl>
+<cl>  END PROCESS;</cl>
+<cl> </cl>
+<cl>  read_mem: PROCESS (write, cken, ncom, sel)</cl>
+<cl>    variable r, c: INTEGER;</cl>
+<cl>    variable com: STD_LOGIC_VECTOR (0 TO 63);</cl>
+<cl>  BEGIN</cl>
+<cl>    IF (write = '0' OR cken = '0' ) THEN</cl>
+<cl>      com := NOT ncom;</cl>
+<cl>      r := GetHotOne (com);</cl>
+<cl>      c := GetHotOne (sel);</cl>
+<cl>      IF (r /= -1 and c /= -1) THEN</cl>
+<cl>        dout &lt;= mem (r, c);</cl>
+<cl>      END IF;</cl>
+<cl>    ELSE</cl>
+<cl>      dout &lt;= "0000";</cl>
+<cl>    END IF;</cl>
+<cl>  END PROCESS;</cl>
+<cl> </cl>
+<cl>END;</cl>
+</code>
+</section>
+</section>
+<section niv='2'><title>Generation of the RAM behavioral VHDL</title>
+
+<p>To generate the  RAM behavioral VHDL, edit the <f>LIBRARY</f> file, and uncomment the
+line:</p>
+
+<p><f>matrix.c</f></p>
+
+<p>This file must be the only C file uncommented in the <f>LIBRARY</f> file.</p>
+
+<p>Type the command line <f>yagle -gns -rp ram4x128</f></p>
+
+<p>As the <f>-xg</f> option makes &tool; stop after rules recognition, the <f>-gns</f> option allows &tool; to
+extract the behavioral description from the remaining transistors (the core). This operation is performed by
+the functional abstraction engine of &tool;.</p>
+
+<p>Three files are generated: the root file <f>ram4x128_yagroot.vhd</f>, the core file <f>ram4x128_yagcore.vhd</f> and
+the file <f>matrix_2_64_2.vhd</f> generated by the 'matrix' rule.</p>
+
+<p>Those files can be simulated using the <f>tb_ram4x128.vhd</f> and <f>ram4x128.pat</f> files.</p>
+
+
+</section>
+</section></chapter>

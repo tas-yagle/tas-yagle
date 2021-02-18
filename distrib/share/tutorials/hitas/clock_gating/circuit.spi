@@ -1,0 +1,27 @@
+
+.temp 60
+
+.include "dc.spi"
+.include "cells.spi"
+
+.subckt circuit D1 D2 EN1 EN2 EN3 CK OUT vdd vss
+xclk1i CK ck_1 vdd vss inv
+xclk2i ck_1 ck_2 vdd vss inv
+xi3 EN1 sig1 vdd vss inv
+xi4 EN2 sig2 vdd vss inv
+xi5 EN3 sig3 vdd vss inv
+xnand3 sig1 sig2 ck_2 nand3out vdd vss nand3
+xnor1 sig3 nand3out nor2out vdd vss nor
+xi7 nand3out sig6 vdd vss inv
+
+xi8 D2 ff1_input vdd vss inv
+xff1 ff1_input ff1_out sig6 vdd vss flipflop
+xnor2 ff1_out D1 sig7 vdd vss nor
+xi9 sig7 sig7_1 vdd vss inv
+xi10 sig7_1 sig7_2 vdd vss inv
+xi11 sig7_2 ff2_input vdd vss inv w=1u
+
+xff2 ff2_input ff2_out nor2out vdd vss flipflop
+
+xi12 ff2_out OUT vdd vss inv
+.ends

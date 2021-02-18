@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+
+<row type="split"><article><index>avtElpCapaLevel</index></article><def>
+<p>Allows the user to compute differents kind of input capacitance.</p>
+<glossary width='small'>
+<row><article><f>0</f></article><def>Input capacitance is the average between up and 
+down capacitance</def></row>
+<row><article><f>1</f></article><def>Default, nominal up and nominal down capa are used to compute timing </def></row>
+<row><article><f>2</f></article><def>Same behavior as if set to 1 but also minimal and 
+maximal capacitances are computed for both transitions (6 capacitances at all).</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtTechnoModelSeparator</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;char&gt;</f></article><def>Character that will be used as a 
+separator between the model name and the model index. Default value is <f>.</f></def></row>
+</glossary>
+</def></row>
+
+
+<row type="split"><article><index>avtElpDriveFile</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>A ELP file specified by <f>avtElpGenTechnoName</f> 
+will be printed after transistor electrical characterization. </def></row>
+<row><article><f>no</f></article><def>default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtElpGenTechnoName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name of the generated ELP file. 
+Default is <f>techno.elp</f>.</def></row>
+</glossary>
+</def></row>
+
+<!--<row type="split"><article><index>avtCharacBestTemp</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Temperature used to compute min delays.
+Default is <f>simTemperature</f>.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtCharacBestVdd</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Power supply voltage value used to 
+compute min delays. Default is <f>simPowerSupply</f>.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtTechnoBestCornerName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name of the best corner technology file.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtCharacWorstTemp</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Temperature used to compute max delays. 
+Default is <f>simTemperature</f>.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtCharacWorstVdd</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Voltage used to compute max delays. 
+Default is <f>simPowerSupply</f>.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>avtTechnoWorstCornerName</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>Name of the worst corner technology file.</def></row>
+</glossary>
+</def></row>-->
+</glossary>
+

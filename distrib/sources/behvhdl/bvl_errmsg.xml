@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="bvl">
+
+<err>
+    <lib>BVL-</lib><num>000</num>
+    <msg>Internal error %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>001</num>
+	<msg>`%s` line %d `%s` is incompatible with the entity name\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>002</num>
+	<msg>`%s` line %d Bad entity declaration\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>003</num>
+	<msg>`%s` line %d Bad port clause declaration\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>004</num>
+	<msg>`%s` line %d Port `%s` already declared\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>005</num>
+	<msg>`%s` line %d Illegal port declaration (mode, type, kind)\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>006</num>
+	<msg>`%s` line %d Bad port declaration\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>007</num>
+	<msg>`%s` line %d `%s` is incompatible with the architecture name\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>008</num>
+	<msg>`%s` line %d Bad architecture declaration\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>009</num>
+	<msg>`%s` line %d Illegal declaration\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>010</num>
+	<msg>`%s` line %d Signal `%s` already declared\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>011</num>
+	<msg>`%s` line %d Illegal signal declaration (type, kind)\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>012</num>
+	<msg>`%s` line %d `%s` unknown port or signal\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>013</num>
+	<msg>`%s` line %d Illegal concurrent statement\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>014</num>
+	<msg>`%s` line %d Label `%s` already declared\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>015</num>
+	<msg>`%s` line %d `%s` is incompatible with the block's label\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>016</num>
+	<msg>`%s` line %d Input port `%s` cannot be assigned\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>017</num>
+	<msg>`%s` line %d Illegal unguarded signal assignment for `%s`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>018</num>
+	<msg>`%s` line %d Illegal guarded signal assignment `%s`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>019</num>
+	<msg>`%s` line %d Some choices missing in the selected signal assignment\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>020</num>
+	<msg>`%s` line %d Output port `%s` cannot be read\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>021</num>
+	<msg>`%s` line %d Duplicate choice in selected signal assignment\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>022</num>
+	<msg>`%s` line %d Illegal use of OTHERS in selected signal assignment\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>023</num>
+	<msg>`%s` line %d Null array not supported\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>024</num>
+	<msg>`%s` line %d Incompatible constraint and type\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>025</num>
+	<msg>`%s` line %d Illegal assignment of `%s` (widths mismatch)\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>026</num>
+	<msg>`%s` line %d Signal `%s` used out of declared range\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>027</num>
+	<msg>`%s` line %d Width or/and type mismatch\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>028</num>
+	<msg>`%s` line %d Signal `%s` assigned more than once\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>029</num>
+	<msg>`%s` line %d Signal `%s` never assigned\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>030</num>
+	<msg>`%s` line %d Illegal condition on signal `%s`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>031</num>
+	<msg>`%s` line %d BEPOR type is unknown\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>032</num>
+	<msg>`%s` line %d `%s` is not a bit string litteral\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>033</num>
+	<msg>`%s` line %d Bad generic declaration\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>034</num>
+	<msg>`%s` line %d Bad generic element\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>035</num>
+	<msg>`%s` line %d `%s`: when expression must be a constant\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>036</num>
+	<msg>`%s` line %d Illegal generic declaration (type, kind)\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>037</num>
+	<msg>`%s` line %d Illegal constant declaration (type, kind)\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>038</num>
+	<msg>`%s` line %d Illegal use of attribute STABLE on `%s`\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>039</num>
+	<msg>`%s` line %d Different delays not supported on waveforms\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>040</num>
+	<msg>`%s` line %d Syntax error\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>041</num>
+	<msg>Too many errors. Cannot continue further more\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BVL-</lib><num>042</num>
+	<msg>`%s` Error line %d : %s\n</msg>
+	<doc></doc>
+</err>
+
+</messages>

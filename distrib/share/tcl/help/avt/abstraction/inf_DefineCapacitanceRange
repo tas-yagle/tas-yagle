@@ -1,0 +1,22 @@
+
+       void inf_DefineCapacitanceRange(char *name, List *argv, char *type);
+
+DDEESSCCRRIIPPTTIIOONN
+       Sets a range for ouput capacitances in lookup tables construction (.lib
+       file purpose), values in Fahrads. This function must be  called  before
+       database  construction  (_h_i_t_a_s  function)  for  ranges to be taken into
+       account.
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Connector the defined range will be applied  on,  _d_e_f_a_u_l_t
+                     is for all connectors.
+
+       ttyyppee          _c_u_s_t_o_m or _l_i_n_e_a_r.
+
+       aarrggvv          If  _t_y_p_e  is  _c_u_s_t_o_m, list of values defining the capaci-
+                     tance range.  If  _t_y_p_e  is  _l_i_n_e_a_r,  3-uple  _(_f_i_r_s_t___c_a_p_a_,
+                     _l_a_s_t___c_a_p_a_, _s_t_e_p_).
+
+       EEXXAAMMPPLLEE       _i_n_f___D_e_f_i_n_e_C_a_p_a_c_i_t_a_n_c_e_R_a_n_g_e  _d_e_f_a_u_l_t _[_l_i_s_t _1_0_0_e_-_1_5 _2_0_0_e_-_1_5
+                     _3_0_0_e_-_1_5_] _c_u_s_t_o_m
+

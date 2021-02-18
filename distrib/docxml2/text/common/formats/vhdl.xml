@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>VHDL</title>
+<p>&tool; supports the structural subset of the VHDL Hardware Description Language. For more information
+see the IEEE P1076 standard.</p>
+</section>

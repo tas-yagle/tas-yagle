@@ -1,0 +1,11 @@
+rm -f msdp2_y.dtx
+rm -f msdp2_y.cnv
+rm -f msdp2_y.cns
+rm -f msdp2_y.inf
+rm -f msdp2_y.rcx
+rm -f msdp2_y.rep
+rm -f msdp2_y.stm
+rm -f msdp2_y.sto
+rm -f msdp2_y.str
+rm -f msdp2_y.lib
+rm -f slack.rep

@@ -1,0 +1,9 @@
+xyagle.schematicCursor: HotPink
+xyagle.schematicBackground: black
+xyagle.schematicForeground: white
+xyagle.schematicAccept: yellow
+xyagle.schematicGates: cyan
+xyagle.schematicOutputs: green
+xyagle.schematicSignals: orange
+xyagle.schematicDebug: red
+

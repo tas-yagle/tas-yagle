@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>CNS - Cone Netlist Structure</title>
+
+<p>In this section, we provide details of the main underlying data structure manipulated by &tool;. The heart of the disassembly procedure is, in fact the transformation of a transistor netlist into the disassembled gates represented by this so-called CNS data structure. It is this data structure which is functionally characterized in order to automatically generate the VHDL from a transistor net-list.</p>
+<p>These details are provided to help the reader understand the task performed by &tool; and to aid in the comprehension of the information provided in the CNS output file.</p>
+
+<section niv='3'><title>Reason for CNS</title>
+
+<p>The CNS (acronym for Cone Net-list Structure) data structure is designed to represent extracted gate net-lists. It has evolved out of the need for a common data structure for CAD-VLSI verification tools such as: formal verification, timing and power analysis, and logico-temporal simulation.</p>
+<p>These tools require efficient data structures which can directly support fast algorithms, since the volume of data to be treated is generally very high. Yet they also require enough structural and electrical details of the circuit for the verification results to accurately reflect the final circuit. An extracted transistor net-list effectively contains all the electrical characteristics required, however, the lack of orientation of the net-list renders unfeasible the verification of circuits of any reasonable size.</p>
+<p>The CNS data structure attempts to combine the precision advantage of a transistor net-list with the speed advantage of a logical gate net-list. This is achieved by representing the circuit as a directed acyclic graph representing signal-flow within the circuit. Each node of this graph is a type of pseudo logical gate known as a cone. A graph representation of the circuit allows the direct implementation of rapid traversal algorithms useful in simulation and timing analysis.</p>
+<p>The fundamental element of this data structure is the Cone. The Cone represents a means of cutting-up the transistor net-list such that the influences on every transistor gate are well-defined. In effect, a cone contains the set of current paths to the power supplies or external connectors for the gate of every transistor. Since transistor gates represent the cone to cone boundaries, and the gate current of MOS transistors is negligible, there is no current transfer between cones. This characteristic makes the cone conceptually ideal for the analysis of any kind of circuit behavior which depends on charge transfer, for example timing and power consumption.</p>
+</section>
+<section niv='3'><title>CNS in Circuit Disassembly</title>
+
+<p>Since the most common means of obtaining a CNS representation of a circuit is through the disassembly of a transistor net-list, an understanding of the principles of disassembly is useful in the comprehension of the CNS data structure. This section, therefore, briefly explains the basics of the disassembly process.</p>
+<p>The disassembly of a circuit is based on the principle of obtaining the equations which define the state of each transistor gate. In order to obtain these equations, the circuit representation is converted from a transistor net-list to a cone net-list (see figure 9.1), it is this representation which is stored in the CNS data structure.</p>
+<imgsize namehtml="yagcones.gif" namepdf="yagcones.gif" hpdf="161pt" wpdf="444pt" />
+<p>A cone is defined as being, for each circuit node which is connected to at least one transistor gate, the set of branches which, from this node, attain a power supply or an external connector on the traversal of transistor source-drain junctions. Each branch consists of links which correspond to the transistors traversed. These branches therefore reveal the signals which govern the state of the transistor gate(s) for which the cone is being constructed.</p>
+<p>A set of cones is therefore obtained (completely defining the state of all transistor gates and drivable external connectors), each of which contain a set of branches. For the example of figure 9.1, the two cones E and F are made up of the branches shown in figure 9.2.</p>
+<imgsize namehtml="yagbranches.gif" namepdf="yagbranches.gif" hpdf="145pt" wpdf="205pt" />
+<p>This set of branches allows us to express the behavior of the cone and hence generate a Boolean expression for the state of the corresponding transistor gate. This expression is in fact composed of two parts: the function which represents the conditions necessary for Vdd to  impose (Sup), and the equivalent for Vss (Sdn).</p>
+<p>In reality these conditions have to verified globally, this means that Sup and Sdn are expressed in terms of the logic surrounding the cone. The depth, in terms of logic gates, used for the expansion is defined by the user.</p>
+</section>
+<section niv='3'><title>CNS Terminology</title>
+<section niv='4'><title>The Global CNS Figure</title>
+
+<p>The top-level data structure of CNS is called the CNS figure and is declared in 'C' as a cnsfig_list. This, in common with all the other CNS objects, is a linked-list structure, the first element of the structure being a pointer to the next element in the list. This is provided mainly for memory management purposes, since it allows block allocation of cnsfig_list structures.</p>
+<p>The CNS figure is the global description of the entire disassembled circuit. In common with the MBK lofig_list logical net-list representation, it contains the list of external connectors, and the list of transistors. However, the internal structure of the circuit is represented by the list of cones as opposed to a list of instances.</p>
+<p>In addition to the above, the CNS figure also contains a number of optional fields. The first of these is a list of cells, each cell corresponding to a grouping of cones. The next two fields are filled in by the circuit disassembler if requested, but are currently not supported by the parser of the CNS figure. These are: a pointer to a global behavioral figure for the circuit, and a logical net-list for the circuit. The logical net-list is hierarchical since each instance of the logical figure corresponds to a cone, and cones of similar physical structure are grouped into identical models for which the disassembler generates separate behavioral descriptions. The final field is the USER field, which allows the addition of user-defined information to the structure.</p>
+</section>
+<section niv='4'><title>A Cone and its Elements</title>
+
+<p>The fundamental object of CNS is the cone, this is the disassembled equivalent of a logical gate. It is made up (as described in §9.3.2) of branches, a branch corresponding to a path from the node on which the cone is built to an external port across transistor source-drain junctions.
+</p>
+<p>Each cone contains up to four sets of branches but at least one. These sets correspond to the type of external port on which the branch ends. The four types are: VDD, VSS, EXT and GND, corresponding to branches terminating on Vdd or Vss power supplies, external connectors, or ground (for GaAs compatibility) respectively. Note that for external connector branches, the final link of the branch points to the corresponding connector.</p>
+<p>The connectivity between cones is represented by edges. Each cone contains two lists of edges: one for the inputs, and one for the outputs. An edge contains a pointer to an object to which the cone is connected (cone or external connector) and a type indicating the type of object and certain characteristics of the connection.</p>
+
+</section>
+<section niv='4'><title>Grouping of Cones</title>
+
+<p>CNS contains a mechanism for the grouping of cones, this is useful in the detection of complex gates by pattern recognition. This mechanism is accommodated by means of the list of cells in the CNS figure. Each cell contains the list of cones contained within the cell, a type indicating what the grouping correspond to, and an optional behavioral figure.</p>
+</section>
+<section niv='4'><title>The CNS Figure Hierarchy</title>
+
+<p>The CNS data structure is an inhomogeneous, hierarchical data structure, that is each level of the hierarchy contains specific types of objects, which are different to the types found on other levels. The complete hierarchy is shown in figure 9.3. </p>
+<p>The most notable feature revealed in figure 3 is the looped nature of the hierarchy. It is this characteristic which gives CNS its flexibility in traversal, hence allowing implementation of efficient algorithms.</p>
+<imgsize namehtml="yagcns.gif" namepdf="yagcns.gif" hpdf="211pt" wpdf="479pt"/>
+</section>
+</section>
+</section>
+
+
+<section niv='2'><title>CNS - Data Structures</title>
+<section niv='3'><title>The CNS Figure</title>
+
+<p>A detailed explanation of the various parts of the CNS figure is given in §9.4.1. The figure is defined as a cnsfig_list structure which is summarized in table 9.1.</p>
+<glossary>
+<row><article>Field Name</article><def>Description</def></row>
+<row><article>NEXT</article><def>link to next CNS figure in list</def></row>
+<row><article>NAME</article><def>name of the figure</def></row>
+<row><article>LOCON</article><def>list of external connectors</def></row>
+<row><article>LOTRS</article><def>list of transistors</def></row>
+<row><article>CONE</article><def>list of cones</def></row>
+<row><article>CELL</article><def>list of cells (cone groups)</def></row>
+<row><article>LOFIG</article><def>hierarchical logical net-list</def></row>
+<row><article>BEFIG</article><def>global behavioral figure</def></row>
+<row><article>USER</article><def>user-defined</def></row>
+</glossary>
+<p>Table 9.1: Summary of the CNS figure</p>
+<p>This, in common with all the other CNS objects is a linked-list data structure, for reasons of memory management. The last four fields can be NULL.</p>
+</section>
+<section niv='3'><title>The Link List</title>
+<section niv='4'><title>Link Structure Fields</title>
+
+<p>The link object, of type link_list, is made up of the following fields:</p>
+<glossary>
+<row><article>struct link *NEXT</article><def>Pointer to the following link in the branch's list of links.</def></row>
+<row><article>long TYPE</article><def>The logical sum of masks indicating the type and nature of the link.</def></row>
+<row><article>union ulink ULINK</article><def>Pointer to the object to which the link refers, LOTRS, LOCON or PTR.</def></row>
+<row><article>float CAPA</article><def>The capacitance of the node at which the link is built.</def></row>
+<row><article>struct ptype *USER</article><def>User defined information.</def></row>
+</glossary>
+<p>Note that the ULINK field is a union since it can point to a transistor (field LOTRS of type lotrs_list*) or a connector (field LOCON of type locon_list*). In addition the union contains a field for a generic pointer (PTR of type void*) to facilitate pointer comparison.</p>
+
+</section>
+<section niv='4'><title>Standard Link Types</title>
+
+<glossary>
+<row><article>CNS_IN</article><def>An external connector link corresponding to an input only connector.</def></row>
+<row><article>CNS_INOUT</article><def>An external connector link corresponding to a bidirectional connector.</def></row>
+<row><article>CNS_2EQUIP</article><def>A generic type corresponding to devices with only two equipotentials, e.g. diode or resistance links.</def></row>
+<row><article>CNS_3EQUIP</article><def>A generic type corresponding to devices with three equipotentials, e.g. MOS transistors.</def></row>
+<row><article>CNS_SWITCH</article><def>A link corresponding to part of a CMOS transmission gate.</def></row>
+<row><article>CNS_COMMAND</article><def>A link corresponding to a transistor, within a latch cone, whose gate is driven by the command signal of the latch.</def></row>
+<row><article>CNS_ACTIVE</article><def>A generic type corresponding to any active device.</def></row>
+<row><article>CNS_PASSIVE</article><def>A generic type corresponding to any passive device.</def></row>
+<row><article>CNS_DOWN CNS_UP</article><def>Generic types indicating the orientation of non-symmetric devices links, e.g. diodes. UP corresponding to towards the power supply, and DOWN corresponding to away from the power supply.</def></row>
+<row><article>CNS_SW</article><def>A generic type indicating any active switching device, usually a transistor.</def></row>
+<row><article>CNS_PULL</article><def>A link corresponding to a passive pull up or pull down resistance.</def></row>
+<row><article>CNS_DRIV_PULL</article><def>A link corresponding to an active pull-up or pull-down resistance.</def></row>
+<row><article>CNS_DIODE_UP CNS_DIODE_DOWN</article><def>A link corresponding to a diode oriented according to the generic orientation masks.</def></row>
+<row><article>CNS_RESIST</article><def>A link corresponding to a passive resistance, e.g. an MOS transistor whose gate is connected to a power supply.</def></row>
+<row><article>CNS_CAPA</article><def>A link corresponding to a capacitance, e.g. an MOS transistor whose source and drain are connected to the same equipotential.</def></row>
+<row><article>CNS_DIPOLE</article><def>A link corresponding to a dipole.</def></row>
+</glossary>
+<p>A large number of the above masks are generic types, they are rarely used in the affectation of a type to a link since the are included in the non-generic types. For example the type CNS_RESIST includes the masks CNS_PASSIVE and CNS_2EQUIP.</p>
+<p>The generic types are included to facilitate the testing of links, since they allow certain type groups of links to be tested for using a comparison with a single mask.</p>
+
+</section>
+</section>
+<section niv='3'><title>The Branch List</title>
+<section niv='4'><title>Branch Structure Fields</title>
+
+<p>The branch object, of type branch_list, is made up of the following fields:</p>
+<glossary>
+<row><article>struct branch *NEXT</article><def>Pointer to the following branch in the cone's list of branches.</def></row>
+<row><article>long TYPE</article><def>The logical sum of masks indicating the type and nature of the branch.</def></row>
+<row><article>struct link *LINK</article><def>The list of links which make up the branch.</def></row>
+<row><article>struct ptype *USER</article><def>User defined information.</def></row>
+</glossary>
+
+</section>
+<section niv='4'><title>Standard Branch Types</title>
+
+<glossary>
+<row type='split'><article>CNS_VSS CNS_VDD</article><def>A branch corresponding to a path from the cone output node to the Vdd(Vss) power supply.</def></row>
+<row type='split'><article>CNS_VDD</article><def>A branch corresponding to a path from the cone output node to the Vdd(Vss) power supply.</def></row>
+<row type='split'><article>CNS_GND</article><def>A branch corresponding to a path from the cone output node to ground (exists only in GaAs).</def></row>
+<row type='split'><article>CNS_EXT</article><def>An external connector branch, i.e. a path from the cone output node to an external connector. Note that the final link of the branch is the external connector.</def></row>
+<row type="split"><article>CNS_NOT_FUNCTIONAL</article><def>A branch which does not contribute to the functionality of the cone, for example: a pull-up resistance or a bleeder.</def></row>
+<row type='split'><article>CNS_BLEEDER</article><def>A branch corresponding to one of the forms of figure 5a.</def></row>
+<row type='split'><article>CNS_DEGRADED</article><def>A branch which degrades the output level of the cone, i.e. a Vdd branch containing an N-type transistor or a Vss branch containing a P-type transistor.</def></row>
+<row type='split'><article>CNS_PARALLEL</article><def>A branch for which there exists one or more parallel branches within the cone. See §9.3.2 for the definition of parallel branches</def></row>
+<row type='split'><article>CNS_PARALLEL_INS</article><def>For any given set of parallel branches, all but one are marked with the type PARALLEL_INS. This allows algorithms which traverse the list of branches to consider only one of the set of parallel branches by ignoring those of type PARALLEL_INS.</def></row>
+<row type='split'><article>CNS_FEEDBACK</article><def>A branch which corresponds to part of the feedback loop in a latch cone.</def></row>
+</glossary>
+
+</section>
+</section>
+<section niv='3'><title>The Link List</title>
+<section niv='4'><title>Link Structure Fields</title>
+
+<p>The link object, of type link_list, is made up of the following fields:</p>
+<glossary>
+<row><article>struct link *NEXT</article><def>Pointer to the following link in the branch's list of links.</def></row>
+<row><article>long TYPE</article><def>The logical sum of masks indicating the type and nature of the link.</def></row>
+<row><article>union ulink ULINK</article><def>Pointer to the object to which the link refers, LOTRS, LOCON or PTR.</def></row>
+<row><article>float CAPA</article><def>The capacitance of the node at which the link is built.</def></row>
+<row><article>struct ptype *USER</article><def>User defined information.</def></row>
+</glossary>
+<p>Note that the ULINK field is a union since it can point to a transistor (field LOTRS of type lotrs_list*) or a connector (field LOCON of type locon_list*). In addition the union contains a field for a generic pointer (PTR of type void*) to facilitate pointer comparison.</p>
+
+</section>
+<section niv='4'><title>Standard Link Types</title>
+
+<glossary>
+<row><article>CNS_IN</article><def>An external connector link corresponding to an input only connector.</def></row>
+<row><article>CNS_INOUT</article><def>An external connector link corresponding to a bidirectional connector.</def></row>
+<row><article>CNS_2EQUIP</article><def>A generic type corresponding to devices with only two equipotentials, e.g. diode or resistance links.</def></row>
+<row><article>CNS_3EQUIP</article><def>A generic type corresponding to devices with three equipotentials, e.g. MOS transistors.</def></row>
+<row><article>CNS_SWITCH</article><def>A link corresponding to part of a CMOS transmission gate.</def></row>
+<row><article>CNS_COMMAND</article><def>A link corresponding to a transistor, within a latch cone, whose gate is driven by the command signal of the latch.</def></row>
+<row><article>CNS_ACTIVE</article><def>A generic type corresponding to any active device.</def></row>
+<row><article>CNS_PASSIVE</article><def>A generic type corresponding to any passive device.</def></row>
+<row><article>CNS_DOWN CNS_UP</article><def>Generic types indicating the orientation of non-symmetric devices links, e.g. diodes. UP corresponding to towards the power supply, and DOWN corresponding to away from the power supply.</def></row>
+<row><article>CNS_SW</article><def>A generic type indicating any actice switching device, usually a transistor.</def></row>
+<row><article>CNS_PULL</article><def>A link corresponding to a passive pull up or pull down resistance.</def></row>
+<row><article>CNS_DRIV_PULL</article><def>A link corresponding to an active pull-up or pull-down resistance.</def></row>
+<row><article>CNS_DIODE_UP CNS_DIODE_DOWN</article><def>A link corresponding to a diode oriented according to the generic orientation masks.</def></row>
+<row><article>CNS_RESIST</article><def>A link corresponding to a passive resistance, e.g. an MOS transistor whose gate is connected to a power supply.</def></row>
+<row><article>CNS_CAPA</article><def>A link corresponding to a capacitance, e.g. an MOS transistor whose source and drain are connected to the same equipotential.</def></row>
+<row><article>CNS_DIPOLE</article><def>A link corresponding to a dipole.</def></row>
+</glossary>
+<p>A large number of the above masks are generic types, they are rarely used in the affectation of a type to a link since the are included in the non-generic types. For example the type CNS_RESIST includes the masks CNS_PASSIVE and CNS_2EQUIP.</p>
+<p>The generic types are included to facilitate the testing of links, since they allow certain type groups of links to be tested for using a comparison with a single mask.</p>
+
+</section>
+</section>
+<section niv='3'><title>The Edge List</title>
+<section niv='4'><title>Edge Structure Fields</title>
+
+<p>The edge object, of type edge_list, is made up of the following fields:</p>
+<glossary>
+<row><article>struct link *NEXT</article><def>Pointer to the following edge in the cone's list of edges.</def></row>
+<row><article>long TYPE</article><def>The logical sum of masks indicating the type and nature of the edge.</def></row>
+<row><article>union uedge UEDGE</article><def>Pointer to the object to which the edge refers, CONE, LOCON or PTR.</def></row>
+<row><article>struct ptype *USER</article><def>User defined information.</def></row>
+</glossary>
+<p>Note that the UEDGE field is a union since it can point to a transistor (field CONE of type cone_list*) or a connector (field LOCON type locon_list).</p>
+
+</section>
+<section niv='4'><title>Standard Branch Types</title>
+
+<glossary>
+<row><article>CNS_VSS CNS_VDD</article><def>An edge corresponding to a cone built on a Vdd(Vss) power supply node.</def></row>
+<row><article>CNS_GND</article><def>An edge corresponding to a cone built on a ground node (exists only in GaAs).</def></row>
+<row><article>CNS_EXT</article><def>Indicates that the edge is an external connector and hence that the pointer in the UEDGE union is of type locon_list*.</def></row>
+<row><article>CNS_CONE</article><def>Indicates that the edge is a cone and hence that the pointer in the UEDGE union is of type cone_list*.</def></row>
+<row><article>CNS_BLEEDER</article><def>Indicates that the edge corresponds to the input, or corresponding output of a bleeder loop (see figure 5a).</def></row>
+<row><article>CNS_COMMAND</article><def>Indicates that the edge corresponds to a command input of a latch cone.</def></row>
+<row><article>CNS_LOOP</article><def>Indicates that the edge forms part of a two cone loop.</def></row>
+<row><article>CNS_FEEDBACK</article><def>Indicates that the edge corresponds to the input, or corresponding output of a latch feedback loop</def></row>
+</glossary>
+
+</section>
+</section>
+<section niv='3'><title>The Transistor List</title>
+
+<p>The CNS transistor object uses the same data structure as MBK, the lotrs_list structure, hence the reader is referred to the MBK documentation for details. CNS does however define its own TYPE masks as well as additional USER types for the transistors.</p>
+<p>The TYPE masks are:</p>
+<glossary>
+<row><article>CNS_TN</article><def>defined as TRANSN</def></row>
+<row><article>CNS_TP</article><def>defined as TRANSP</def></row>
+</glossary>
+<p>The additional USER types are:</p>
+<glossary>
+<row type='split'><article>CNS_INDEX</article><def>A unique number for the transistor wihin the circuit, used by the parser/driver in order to refer to individual transistors.</def></row>
+<row type='split'><article>CNS_LINKTYPE</article><def>Contains the TYPE affected to any links referring to the transisitor.</def></row>
+<row type='split'><article>CNS_DRIVINGCONE</article><def>Contains a pointer to the cone built on the equipotential to which the transistor gate is connected.</def></row>
+<row type='split'><article>CNS_CONE</article><def>Contains a chain_list of the cones containing links referring to the transistor. This field is rarely created due to reasons of memory efficiency.</def></row>
+</glossary>
+
+</section>
+<section niv='3'><title>The Connector List</title>
+
+<p>The CNS connector object uses the same data structure as MBK, the locon_list structure, hence the reader is referred to the MBK documentation for details. CNS does, however, define additional USER types for the connectors.</p>
+<p>The additional USER types are:</p>
+<glossary>
+<row><article>CNS_INDEX</article><def>A unique number for the connector within the circuit, used by the parser/driver in order to refer to individual connectors.</def></row>
+<row><article>CNS_EXT</article><def>Contains a pointer to the cone built on the equipotential connected to the external connector.</def></row>
+<row><article>CNS_CONE</article><def>Contains a chain_list of the cones containing links referring to the external connector. This field is rarely created due to reasons of memory efficiency.</def></row>
+</glossary>
+
+</section>
+<section niv='3'><title>The Cell List</title>
+<section niv='4'><title>Cell Structure Fields</title>
+
+<p>The cell object, of type cell_list, is made up of the following fields:</p>
+<glossary>
+<row><article>struct link *NEXT</article><def>Pointer to the following cell in the figure's list of cells.</def></row>
+<row><article>long TYPE</article><def>The logical sum of masks indicating the type of the cell.</def></row>
+<row><article>chain_list *CONES</article><def>The list of cones contained within the cell.</def></row>
+<row><article>struct befig *BEFIG</article><def>The behavioral description of the cell.</def></row>
+<row><article>struct ptype *USER</article><def>User defined information.</def></row>
+</glossary>
+
+</section>
+<section niv='4'><title>Standard Cell Types</title>
+
+<p>A number of standard cell types have been defined in the CNS header to deal with the recognition of GaAs cone configurations, it is possible that this list will be extended to include certain standard CMOS forms.</p>
+<p>The convention for adding a user defined cell type so that it is recognized as such by the CNS driver is to sum a desired type reference number with the constant CNS_UNKNOWN. This allows the driver to identify that the cell is not defined within CNS but is nonetheless a legal type, hence the cell is identified within the CNS file by the index and not by a name as is the case for the predefined types.</p>
+
+</section>
+</section>
+</section>

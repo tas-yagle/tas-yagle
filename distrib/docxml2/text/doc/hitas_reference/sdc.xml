@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<pagebreak/>
+<section niv='2'><title>SDC Support</title>
+<p>
+Timing constraints can also be defined with SDC commands. Use the <f>sdcUnits</f> configuration variable to define the time unit for all commands. Only the commands that follow are supported as API functions.
+</p>
+
+<section niv='3'><title>Object Access Commands </title>
+<glossary>
+<row><article><f>all_clocks</f></article><def>Applies a command to all clocks.</def></row>
+<row><article><f>all_inputs</f></article><def>Applies a command to all inputs. No options are supported.</def></row>
+<row><article><f>all_outputs</f></article><def>Applies a command to all outputs. No options are supported.</def></row>
+<row><article><f>get_clocks</f></article><def>Returns only the patterns given in argument. The name is verified to be a clock name by the calling command.</def></row>
+<row><article><f>get_pins</f></article><def>Returns only the patterns given in argument.</def></row>
+<row><article><f>get_ports</f></article><def>Returns only the patterns given in argument.</def></row>
+</glossary>
+</section>
+
+<section niv='3'><title>set_case_analysis</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_case_analysis 0 | zero | 1 | one</cl>
+<cl>                  | rise | rising | fall | falling</cl>
+<cl>                  signal_list</cl>
+</code>
+<p><b>ARGUMENTS</b></p>
+<glossary>
+<row><article><f>0 | zero</f></article><def>Sets logical constraint 0 on specified signals (connectors or 
+internal signals)</def></row>
+<row><article><f>1 | one</f></article><def>Sets logical constraint 1 on specified signals (connectors or 
+internal signals)</def></row>
+<row><article><f>rise | rising</f></article><def>Only rising transitions are propagated on specified signals
+(connectors or internal signals)</def></row>
+<row><article><f>fall | falling</f></article><def>Only falling transitions are propagated on specified signals
+(connectors or internal signals)</def></row>
+</glossary>
+<p><b>INF EQUIVALENT</b></p>
+<p><f>set_case_analysis 0 | 1</f> translates to the <f>CONSTRAINT</f> section</p>
+<p><f>set_case_analysis rise | fall</f> translates to the <f>NORISING</f> and <f>NOFALLING</f> sections</p>
+
+</section>       
+
+<section niv='3'><title>set_disable_timing</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_disable_timing signal_list</cl>
+</code>
+<p><b>INF EQUIVALENT</b></p>
+<p><f>set_disable_timing</f> translates to the <f>BYPASS</f> section</p>
+</section>       
+
+<section niv='3'><title>set_false_path</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_false_path [-setup | -hold] [-rise] [-fall]</cl>
+<cl>               [-from fr_list]</cl>
+<cl>               [-through through_list]</cl>
+<cl>               [-to to_list]</cl>
+</code>
+<p><b>ARGUMENTS</b></p>
+
+<glossary>
+<row><article><f>-rise</f></article><def>Restricts false paths to those ending on a rising edge</def></row>
+<row><article><f>-fall</f></article><def>Restricts false paths to those ending on a falling edge</def></row>
+<row><article><f>-from</f></article><def>Specifies a list of false paths starting points</def></row>
+<row><article><f>-through</f></article><def>Specifies a list of intermediary points the false paths 
+must go through.  Multiple groups of intermediary points can be specified using multiple 
+<f>-through</f> options</def></row>
+<row><article><f>-to</f></article><def>Specifies a list of false paths ending points</def></row>
+<row><article><f>-setup</f></article><def>Disables setup verifications on signals specified in the
+<f>to_list</f>. The <f>-setup</f> option is ignored if <f>to_list</f> is not present. <f>-rise</f> and <f>-fall</f>
+options do not apply on setup verification disabling. <f>from_list</f> and <f>through_list</f> are 
+not taken into account.</def></row>
+<row><article><f>-hold</f></article><def>Disables hold verifications on signals specified in the
+<f>to_list</f>. The <f>-hold</f> option is ignored if <f>to_list</f> is not present. <f>-rise</f> and <f>-fall</f>
+options do not apply on hold verification disabling. <f>from_list</f> and <f>through_list</f> are
+not taken into account.</def></row>
+</glossary>
+<p><b>INF EQUIVALENT</b></p>
+<p><f>set_false_path -from | -through | -to</f> translates to the <f>BYPASS</f> section</p>
+<p><f>set_false_path -from -through -to</f> translates to the <f>FALSEPATH</f> section</p>
+<p><f>set_false_path -rise | -fall</f> translates to the <f>NORISING</f> and <f>NOFALLING</f> sections</p>
+<p><f>set_false_path -setup | -hold</f> translates to the <f>NOCHECK</f> section</p>
+
+</section>       
+
+<section niv='3'><title>create_clock</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>create_clock [-name clock_name] -period period_value </cl>
+<cl>             [-waveform edge_list] connector_list</cl>
+</code>
+<p><b>ARGUMENTS</b></p>
+<glossary>
+<row><article><f>-name</f></article><def>Specifies the name of the clock to be created.</def></row>
+<row><article><f>-period</f></article><def>Sets the clock period.</def></row>
+<row><article><f>-waveform </f></article><def>Sets the rising and falling edge times of the clock waveform. </def></row>
+<row><article><f>connector_list</f></article><def>Connectors to apply the waveform on. If no connector is specified, the clock is assumed to be virtual</def></row>
+</glossary>
+<p><b>INF EQUIVALENT</b></p>
+<p><f>create_clock</f> translates to the <f>CLOCK CONNECTORS</f> and <f>ASYNCHRONOUS CLOCK GROUPS</f> section</p>
+</section>
+
+<section niv='3'><title>create_generated_clock</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>create_generated_clock [-name clock_name] -source source_connector</cl>
+<cl>                       [-divide_by factor | -multiply_by factor]</cl>
+<cl>                       [-duty_cycle duty_cycle_value]</cl>
+<cl>                       [-invert]</cl>
+<cl>                       [-edges edge_list]</cl>
+<cl>                       [-edge_shift shift_list] connector_list</cl>
+</code>
+<p><b>ARGUMENTS</b> </p>
+<glossary>
+<row><article><f>-name</f></article><def>Name of the clock to be created.</def></row>
+<row><article><f>-source</f></article><def>Clock source from which the clock is generated.</def></row>
+<row><article><f>-divide_by</f></article><def>Divides the clock source frequency by <f>factor</f>. <f>factor</f> must be a power of 2.</def></row>
+<row><article><f>-multiply_by</f></article><def>Multiplicates the clock source frequency by <f>factor</f>. <f>factor</f> must be a power of 2.</def></row>
+<row><article><f>-duty_cycle</f></article><def>Sets the duty cycle in percents.</def></row>
+<row><article><f>-invert</f></article><def>Inverts the waveform of the generated clock.</def></row>
+<row><article><f>-edges</f></article><def>Specifies the number of clock source edges to form the edges of the generated clock.</def></row>
+<row><article><f>-edge_shift</f></article><def>For each edge specified in the <f>edge_list</f>, sets the shift value to be applied to.</def></row>
+</glossary>
+<p><b>INF EQUIVALENT</b></p>
+<p><f>create_generated_clock</f> translates to the <f>CLOCK CONNECTORS</f> and <f>ASYNCHRONOUS CLOCK GROUPS</f> section</p>
+</section>
+
+<section niv='3'><title>set_clock_latency</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_clock_latency [-source] [-rise] [-fall]</cl>
+<cl>                  [-late] [-early]</cl>
+<cl>                  delay_value clock_list</cl>
+</code>
+<p><b>ARGUMENTS</b></p>
+<glossary>
+<row><article><f>-source</f></article><def>Specifies clock source latency. If not set, ideal clock latency is assumed.</def></row>
+<row><article><f>-rise</f></article><def>Sets the delay for the clock's rising edge.</def></row>
+<row><article><f>-fall</f></article><def>Sets the delay for the clock's falling edge.</def></row>
+<row><article><f>-late</f></article><def>The delay affects only the max time of the clock's corresponding edge. Only for source latency.</def></row>
+<row><article><f>-early</f></article><def>The delay affects only the min time of the clock's corresponding edge. Only for source latency.</def></row>
+<row><article><f>-max</f></article><def>The delay affects only the max time of the clock's corresponding edge. Only for ideal clock latency.</def></row>
+<row><article><f>-min</f></article><def>The delay affects only the min time of the clock's corresponding edge. Only for ideal clock latency.</def></row>
+</glossary>
+<p><b>INF EQUIVALENT</b></p>
+<p><f>set_clock_latency</f> translates to the <f>CLOCK CONNECTORS</f> and <f>ASYNCHRONOUS CLOCK GROUPS</f> section</p>
+</section>
+
+<section niv='3'><title>set_clock_uncertainty</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_clock_uncertainty [-from from_clock] [-to to_clock]</cl>
+<cl>                      [-rise_from rise_from_clock]</cl>
+<cl>                      [-fall_from fall_from_clock]</cl>
+<cl>                      [-rise_to rise_to_clock]</cl>
+<cl>                      [-fall_to fall_to_clock]</cl>
+<cl>                      [-rise] [-fall]</cl>
+<cl>                      [clock_pin_list]</cl>
+<cl>                      [-setup] [-hold] uncertainty</cl>
+</code>
+<p><b>DESCRIPTION</b></p>
+<p>Specifies the clock uncertainty (skew characteristics) of specified clock networks. 
+This command can specify either interclock uncertainty or simple uncertainty.</p>
+<p><b>ARGUMENTS</b></p>
+<glossary>
+<row><article><f>-from</f></article><def>Specifies the source clock pins for interclock uncertainty.</def></row>
+<row><article><f>-to</f></article><def>Specifies the destination clock pins for interclock uncertainty.</def></row>
+<row><article><f>-rise_from</f></article><def>Same as -from, but uncertainty only applies to rising edge of source clock.</def></row>
+<row><article><f>-fall_from</f></article><def>Same as -from, but uncertainty only applies to falling edge of source clock.</def></row>
+<row><article><f>-rise_to</f></article><def>Same as -to, but uncertainty only applies to rising edge of destination clock.</def></row>
+<row><article><f>-fall_to</f></article><def>Same as -to, but uncertainty only applies to falling edge of destination clock.</def></row>
+<row><article><f>-rise</f></article><def>Deprecated option. Same as -rise_to.</def></row>
+<row><article><f>-fall</f></article><def>Deprecated option. Same as -fall_to.</def></row>
+<row><article><f>clock_pin_list</f></article><def>Specifies the destination clock pins for simple uncertainty.</def></row>
+<row><article><f>-setup</f></article><def>Indicates that the uncertainty only applies to setup checks.</def></row>
+<row><article><f>-hold</f></article><def>Indicates that the uncertainty only applies to hold checks.</def></row>
+<row><article><f>uncertainty</f></article><def>A floating-point number (usually positive) that specifies the uncertainty value.</def></row>
+</glossary>
+<p><b>EXAMPLE</b></p>
+<code>
+<cl>set_clock_uncertainty CLK1 100</cl>
+<cl>set_clock_uncertainty -from CLK1 -to CLK2 200</cl>
+</code>
+</section>
+
+<section niv='3'><title>set_input_transition</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_input_transition [-rise] [-fall]</cl>
+<cl>                [-max] [-min] transition port_list</cl>
+</code>
+<p><b>ARGUMENTS</b></p>
+<glossary>
+<row><article><f>-rise</f></article><def>Sets rising transition only</def></row>
+<row><article><f>-fall</f></article><def>Sets falling transition only</def></row>
+<row><article><f>-min</f></article><def>Not supported</def></row>
+<row><article><f>-max</f></article><def>Not supported</def></row>
+<row><article><f>transition</f></article><def>Transition value</def></row>
+<row><article><f>port_list</f></article><def>List of input pins</def></row>
+</glossary>
+
+<p><b>EXAMPLE</b></p>
+<code>
+<cl>set_input_transition -rise 100 di</cl>
+<cl>set_input_transition -fall 120 di</cl>
+</code>
+
+<p><b>INF EQUIVALENT</b></p>
+<p><f>set_input_delay</f> translates to the PINSLEW section</p>
+</section>
+
+<section niv='3'><title>set_load</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_load [-min] [-max] [-substract_pin_load] </cl>
+<cl>                [-pin_load] [-wire_load] value objects</cl>
+</code>
+<p><b>DESCRIPTION</b></p>
+<p>Sets the capacitance to a specified value on specified ports and nets. This function
+should be called before database construction or database loading. In order to operate 
+correctly, this function should be used together with the configuration variable <f>avtPrecisionLevel</f>
+set to <f>1</f>.</p>
+<p><b>ARGUMENTS</b></p>
+<glossary>
+<row><article><f>-min</f></article><def>Not supported</def></row>
+<row><article><f>-max</f></article><def>Not supported</def></row>
+<row><article><f>-substract_pin_load</f></article><def>Not supported</def></row>
+<row><article><f>-pin_load</f></article><def>Not supported</def></row>
+<row><article><f>-wire_load</f></article><def>Not supported</def></row>
+<row><article><f>value</f></article><def>Capacitance value</def></row>
+<row><article><f>objects</f></article><def>List of output pins</def></row>
+</glossary>
+
+<p><b>EXAMPLE</b></p>
+<code>
+<cl>avt_config avtPrecisionLevel 1</cl>
+<cl>inf_SetFigureName my_design</cl>
+<cl>set_load 0.31 [get_ports [all_outputs]]</cl>
+<cl> </cl>
+<cl>set fig [ttv_LoadSpecifiedTimingFigure my_design]</cl>
+<cl>set clist [ttv_GetPaths $fig * * uu 5 critic path max]</cl>
+</code>
+
+<p><b>INF EQUIVALENT</b></p>
+<p><f>set_load</f> translates to the OUTPUT CAPACITANCE section</p>
+</section>
+
+<section niv='3'><title>set_input_delay</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_input_delay [-clock clock_name] [-clock_fall]</cl>
+<cl>                [-rise] [-fall] [-max] [-min]</cl>
+<cl>                delay_value connector_list</cl>
+</code>
+<p><b>ARGUMENTS</b></p>
+<glossary>
+<row><article><f>-clock</f></article><def>Relative clock.</def></row>
+<row><article><f>-clock_fall</f></article><def>Reference edge is the falling edge of a clock. Affects the 
+<f>From</f> and <f>After</f> statements. If not specified reference edge is rising edge.</def></row>
+<row><article><f>-rise</f></article><def>Delay for input rising edge only.</def></row>
+<row><article><f>-fall</f></article><def>Delay for input falling edge only.</def></row>
+<row><article><f>-min</f></article><def>Minimum arrival time on input. Corresponds to the <f>Unstable</f> 
+subsection in the <f>.inf</f> file.</def></row>
+<row><article><f>-max</f></article><def>Maximum arrival time on input. Corresponds to the <f>Stable</f> 
+subsection in the <f>.inf</f> file.</def></row>
+</glossary>
+
+<p><b>EXAMPLE</b></p>
+<code>
+<cl>set_input_delay -clock ck -clock_fall -rise -min 200 di</cl>
+<cl>set_input_delay -clock ck -clock_fall -rise -max 300 di</cl>
+</code>
+
+<p><b>INF EQUIVALENT</b></p>
+<p><f>set_input_delay</f> translates to</p>
+<code>
+<cl>SPECIFY INPUT CONNECTORS</cl>
+<cl>BEGIN</cl>
+<cl>    "di" Rising From "ck"  Falling:</cl>
+<cl>      Unstable 200 After "ck"  Falling;</cl>
+<cl>      Stable 300 After "ck"  Falling;</cl>
+<cl>END;</cl>
+</code>
+
+
+
+
+</section>
+
+<section niv='3'><title>set_output_delay</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_output_delay [-clock clock_name] [-clock_fall]</cl>
+<cl>                 [-rise] [-fall] [-max] [-min]</cl>
+<cl>                 delay_value connector_list</cl>
+</code>
+<p><b>ARGUMENTS</b></p>
+<glossary>
+<row><article><f>-clock</f></article><def>Relative clock.</def></row>
+<row><article><f>-clock_fall</f></article><def>Reference edge is the falling edge of a clock. Affects the 
+<f>For</f> and <f>After</f> statements. If not specified reference edge is rising edge.</def></row>
+<row><article><f>-rise</f></article><def>Delay for output rising edge only.</def></row>
+<row><article><f>-fall</f></article><def>Delay for output falling edge only.</def></row>
+<row><article><f>-min</f></article><def>Minimum departure time on output. Corresponds to the <f>Unstable</f> 
+subsection in the <f>.inf</f> file.</def></row>
+<row><article><f>-max</f></article><def>Maximum departure time on output. Corresponds to the <f>Stable</f> 
+subsection in the <f>.inf</f> file.</def></row>
+</glossary>
+<p><b>INF EQUIVALENT</b></p>
+<p><f>set_input_delay</f> translates to <f>VERIFY OUTPUT CONNECTORS</f> section.</p>
+</section>
+
+<section niv='3'><title>set_multicycle_path</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_multicycle_path [-setup] [-hold]</cl>
+<cl>                    [-rise] [-fall] [-start] [-end]</cl>
+<cl>                    [-from from_list] [-to to_list] path_multiplier</cl>
+</code>
+<p><b>ARGUMENTS</b> </p>
+<glossary>
+<row><article><f>-setup</f></article><def>Uses <f>path_multiplier</f> for setup calculation only.</def></row>
+<row><article><f>-hold</f></article><def>Uses <f>path_multiplier</f> for hold calculation only.</def></row>
+<row><article><f>-rise</f></article><def>Affects rising path delays only.</def></row>
+<row><article><f>-fall</f></article><def>Affects falling path delays only.</def></row>
+<row><article><f>-start</f></article><def>Calculation is relative to the clock's period at path startpoint.</def></row>
+<row><article><f>-end</f></article><def>Calculation is relative to the clock's period at path endpoint.</def></row>
+<row><article><f>-from</f></article><def>Specify a list of timing path startpoints. Valid startpoints are latches, input pins, or inout pins.</def></row>
+<row><article><f>-to</f></article><def>Specify a list of timing path endpoints. Valid endpoints are latches, output pins, or inout pins.</def></row>
+</glossary>
+<p><b>INF EQUIVALENT</b></p>
+<p><f>set_multicycle_path</f> translates to <f>MULTICYCLE PATH</f> section.</p>
+</section>
+
+<section niv='3'><title>set_max_delay</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_max_delay [-rise] [-fall]</cl>
+<cl>              [-from from_list]</cl>
+<cl>              [-rise_from from_list] [-fall_from from_list]</cl>
+<cl>              [-to to_list]</cl>
+<cl>              [-rise_to to_list] [-fall_to to_list]</cl>
+<cl>              delay_value</cl>
+</code>
+<p><b>DESCRIPTION</b></p>
+<p>Specifies a required maximum delay for the specified timing paths. Appears as a setup check in slack reports.</p>
+<p><b>ARGUMENTS</b></p>
+<glossary>
+<row><article><f>-rise</f></article><def>Only rising paths are constrained.</def></row>
+<row><article><f>-fall</f></article><def>Only falling paths are constrained.</def></row>
+<row><article><f>-from</f></article><def>Specifies the timing path source.</def></row>
+<row><article><f>-rise_from</f></article><def>Same as -from, but constraint only applies to rising edge of source.</def></row>
+<row><article><f>-fall_from</f></article><def>Same as -from, but constraint only applies to falling edge of source.</def></row>
+<row><article><f>-to</f></article><def>Specifies the timing path destination.</def></row>
+<row><article><f>-rise_to</f></article><def>Same as -to, but constraint only applies to rising edge of destination.</def></row>
+<row><article><f>-fall_to</f></article><def>Same as -to, but constraint only applies to falling edge of destination.</def></row>
+<row><article><f>delay_value</f></article><def>A floating-point number (usually positive) that specifies the delay value.</def></row>
+</glossary>
+<p><b>EXAMPLE</b></p>
+<code>
+<cl>set_max_delay -from CLK1  -to LATCH1 500</cl>
+</code>
+</section>
+
+<section niv='3'><title>set_min_delay</title>
+<p><b>SYNTAX</b></p>
+<code>
+<cl>set_min_delay [-rise] [-fall]</cl>
+<cl>              [-from from_list]</cl>
+<cl>              [-rise_from from_list] [-fall_from from_list]</cl>
+<cl>              [-to to_list]</cl>
+<cl>              [-rise_to to_list] [-fall_to to_list]</cl>
+<cl>              delay_value</cl>
+</code>
+<p><b>DESCRIPTION</b></p>
+<p>Specifies a required minimum delay for the specified timing paths. Appears as a hold check in slack reports.</p>
+<p><b>ARGUMENTS</b></p>
+<glossary>
+<row><article><f>-rise</f></article><def>Only rising paths are constrained.</def></row>
+<row><article><f>-fall</f></article><def>Only falling paths are constrained.</def></row>
+<row><article><f>-from</f></article><def>Specifies the timing path source.</def></row>
+<row><article><f>-rise_from</f></article><def>Same as -from, but constraint only applies to rising edge of source.</def></row>
+<row><article><f>-fall_from</f></article><def>Same as -from, but constraint only applies to falling edge of source.</def></row>
+<row><article><f>-to</f></article><def>Specifies the timing path destination.</def></row>
+<row><article><f>-rise_to</f></article><def>Same as -to, but constraint only applies to rising edge of destination.</def></row>
+<row><article><f>-fall_to</f></article><def>Same as -to, but constraint only applies to falling edge of destination.</def></row>
+<row><article><f>delay_value</f></article><def>A floating-point number that specifies the delay value.</def></row>
+</glossary>
+<p><b>EXAMPLE</b></p>
+<code>
+<cl>set_max_delay -from CLK1  -to LATCH1 500</cl>
+</code>
+</section>
+
+</section>
+

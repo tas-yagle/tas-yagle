@@ -1,0 +1,49 @@
+
+           TimingPathList   *ttv_ProbeDelay   <TimingFigure  *tf>  <StringList
+       *nodenamelist> [flags]
+           Obsolete but still working:
+           TimingPathList *ttv_ProbeDelay(TimingFigure *tf, double inputslope,
+       StringList *nodenamelist, char *dir, int nbpaths, char *path_or_access,
+       char *minmax) ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Retreives the paths by specifying a list of nodes on the paths  without
+       the  need  for  intermediate  nodes  to  be  forcibly  path  stop nodes
+       (latches, precharges, connectors, ...).
+           The type of the crossed nodes can be specified as wildcards can  be
+       used to indicate a set of nodes.
+
+AARRGGUUMMEENNTTSS
+       ttff            Timing figure
+
+       nnooddeennaammeelliisstt  Nodes  that the path must cross. Must be present at least
+                     the start node, all memory/intermediate nodes on the path
+                     in the right order and the end node.
+
+       ffllaaggss::
+
+       --ddiirr {{<<ddiirr>>}}  Requested  start-to-end  transition.  Default  is _?_? (all
+                     transitions).
+
+       --ssllooppee {{<<iinnppuuttssllooppee>>}}
+                     Value of the input slope to propagate through  the  path.
+                     If  negative, the slope computed during database creation
+                     will be propagated.
+
+       --nnbb {{<<mmaaxxppaatthh>>}}
+                     If positive maximum number of paths returned. Default, is
+                     _-_1 (unlimited).
+
+       --mmiinn          Search for minimum-delay paths
+
+       --mmaaxx          Search for maximum-delay paths. This is the default.
+
+       --nnoossyynncc       Disable  synchornization to the latch opening when cross-
+                     ing latches if stb has been run on the timing figure.
+
+       --nnoopprroopp       Disable slope propagation  thru  the  found  path  gates.
+                     _<_i_n_p_u_t_s_l_o_p_e_> is ignored.
+
+       EEXXAAMMPPLLEE       To  probe a delay from node "net23" to node "net045" thru
+                     node "lt1":
+

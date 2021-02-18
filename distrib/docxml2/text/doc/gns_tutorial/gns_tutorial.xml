@@ -1,0 +1,65 @@
+<!DOCTYPE notice SYSTEM "../../common/common_entity.xml" [
+<!ENTITY tool "Yagle GNS">
+<!ENTITY MAJ "YAGLE-GNS">
+<!ENTITY MIN "yagle-gns">
+<!ENTITY param SYSTEM "param.xml">
+<!ENTITY presentation SYSTEM "presentation.xml">
+<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY overview SYSTEM "overview.xml">
+<!ENTITY overview_flow SYSTEM "overview_flow.xml">
+<!ENTITY overview_organisation SYSTEM "overview_organisation.xml">
+<!ENTITY overview_files SYSTEM "overview_files.xml">
+<!ENTITY overview_files_loc SYSTEM "overview_files_loc.xml">
+<!ENTITY overview_files_gns SYSTEM "overview_files_gns.xml">
+<!ENTITY overview_files_dir SYSTEM "overview_files_dir.xml">
+<!ENTITY genRAM SYSTEM "genRAM.xml">
+<!ENTITY genRAM_description SYSTEM "genRAM_description.xml">
+<!ENTITY genRAM_parameters SYSTEM "genRAM_parameters.xml">
+<!ENTITY genRAM_diagrams SYSTEM "genRAM_diagrams.xml">
+<!ENTITY validation SYSTEM "validation.xml">
+<!ENTITY validation_struct SYSTEM "validation_struct.xml">
+<!ENTITY validation_func SYSTEM "validation_func.xml">
+<!ENTITY validation_strat SYSTEM "validation_strat.xml">
+<!ENTITY structval SYSTEM "structval.xml">
+<!ENTITY structval_writing SYSTEM "structval_writing.xml">
+<!ENTITY structval_rules SYSTEM "structval_rules.xml">
+<!ENTITY structval_rules_transistor SYSTEM "structval_rules_transistor.xml">
+<!ENTITY structval_rules_trans_cell SYSTEM "structval_rules_trans_cell.xml">
+<!ENTITY structval_rules_trans_amp SYSTEM "structval_rules_trans_amp.xml">
+<!ENTITY structval_rules_trans_pre SYSTEM "structval_rules_trans_pre.xml">
+<!ENTITY structval_rules_trans_wen SYSTEM "structval_rules_trans_wen.xml">
+<!ENTITY structval_rules_trans_reco SYSTEM "structval_rules_trans_reco.xml">
+<!ENTITY structval_rules_memcol SYSTEM "structval_rules_memcol.xml">
+<!ENTITY structval_rules_pre SYSTEM "structval_rules_pre.xml">
+<!ENTITY structval_rules_bitline SYSTEM "structval_rules_bitline.xml">
+<!ENTITY structval_bank SYSTEM "structval_bank.xml">
+<!ENTITY structval_matrix SYSTEM "structval_matrix.xml">
+<!ENTITY structval_matrix_buffers SYSTEM "structval_matrix_buffers.xml">
+<!ENTITY structval_matrix_buff_inv SYSTEM "structval_matrix_buff_inv.xml">
+<!ENTITY structval_matrix_buff_nand SYSTEM "structval_matrix_buff_nand.xml">
+<!ENTITY structval_matrix_buff_tree SYSTEM "structval_matrix_buff_tree.xml">
+<!ENTITY structval_matrix_buff_other SYSTEM "structval_matrix_buff_other.xml">
+<!ENTITY structval_matrix_commands SYSTEM "structval_matrix_commands.xml">
+<!ENTITY structval_matrix_matrix SYSTEM "structval_matrix_matrix.xml">
+<!ENTITY funcval SYSTEM "funcval.xml">
+<!ENTITY funcval_methodology SYSTEM "funcval_methodology.xml">
+<!ENTITY funcval_matrix SYSTEM "funcval_matrix.xml">
+<!ENTITY funcval_matrix_process SYSTEM "funcval_matrix_process.xml">
+<!ENTITY funcval_matrix_action SYSTEM "funcval_matrix_action.xml">
+<!ENTITY funcval_beh SYSTEM "funcval_beh.xml">
+]>
+<notice>
+    <presentation>
+       &presentation; 
+    </presentation>
+    <introduction>
+        &introduction;
+    </introduction>
+    <document>
+        &overview;
+        &genRAM;
+        &validation;
+        &structval;
+        &funcval;
+    </document>
+</notice>

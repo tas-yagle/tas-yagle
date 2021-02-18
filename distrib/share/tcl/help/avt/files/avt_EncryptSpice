@@ -1,0 +1,14 @@
+
+       void avt_EncryptSpice(char *inputname, char *outputname);
+
+DDEESSCCRRIIPPTTIIOONN
+       Encrypts  all  sections  of  a  Spice file (netlist or technology file)
+       which are encapsulated by the _._p_r_o_t_e_c_t and _._u_n_p_r_o_t_e_c_t spice cards.
+
+AARRGGUUMMEENNTTSS
+       iinnppuuttnnaammee     File to be encrypted
+
+       oouuttppuuttnnaammee    Destination for encrypted output
+
+       EEXXAAMMPPLLEE       _a_v_t___E_n_c_r_y_p_t_S_p_i_c_e _t_e_c_h_n_o_._h_s_p _t_e_c_h_n_o_._h_s_p_._e_n_c
+

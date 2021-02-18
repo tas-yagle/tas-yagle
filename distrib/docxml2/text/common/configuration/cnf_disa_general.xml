@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<glossary>
+<row type="split"><article><index>yagHierarchicalMode</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Activates the hierarchical disassembly mode.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagWriteStatistics</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Statistics of detected power supplies and particular transistor configurations 
+are saved in a file with the suffix <f>.stat</f>.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagMutexHelp</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>An algorithm which attempts to guess any misssing MUTEX constraints is 
+activated. Groups of signals which could have constraints are reported in a file of suffix <f>.mutex</f>.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagSearchLoops</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>An algorithm to detect combinatorial loops of more than two gates is 
+activated. Any loops detected are reported in a file of suffix <f>.loop</f>.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagDebugCone</index></article><def>
+<glossary width='small'>
+<row><article><f>&lt;string&gt;</f></article><def>If set to the name of a cone, then additional debug 
+information for that cone is displayed.</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagNotStrict</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Certain aspects of the net-list coherency are not verified, such as 
+un-driven transistor gates.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagElpCorrection</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Updates the capacitances to take into account technology dependant factors, 
+such as diffusion capacitance, gate capacitance and shrink.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagSuppressBlackboxes</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Reads a hierarchical net-list in which some of the instances are considered to 
+be black boxes (i.e. their internal structure is unavailable). The list of these instances is given by the user in 
+a file whose name is given by <f>avtBlackBoxFile</f>. &tool; creates a new intermediate netlist containing only the 
+non-black box instances, and modifies the original net-list to instantiate this new figure and the black box 
+instances. The modified original netlist is saved to disk, and the functional abstraction is performed on the 
+intermediate figure.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagIgnoreBlackboxes</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Reads a hierarchical netlist in which some of the instances are considered to 
+be black boxes. The name of these instances is given in a file whose name is given by <f>avtBlackBoxFile</f>. The 
+hierarchical netlist is then flattened to the transistor level apart from the black box instances to generate a 
+hybrid transistor and instance netlist. The functional abstraction is performed on this hybrid netlist.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagRemoveInterconnects</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Deletes parasitic information before performing desassembly and functional abstraction.
+</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>yagSilentMode</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>&tool; does not write anything to the standard output.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+</glossary>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Lab4. Characterization Initiation</title>
+<p>This lab presents how &tool; performs characterization in LIB format upon a small combinational design and simple master-slave flip-flop (<f>msdp2_y</f>). This lab takes place in the directory <f>lab4_charac_initiation/</f></p>
+
+
+<section niv='2'><title>Timing Abstraction upon combinational design</title>
+<p>The timing abstraction configuration takes place in the 
+<f>comb_charac.tcl</f> script as follow:</p>
+<glossary>
+<row type='split'><article><f>avt_config tmaDtxInput yes</f></article>
+<def>tells the tool to take input file in DTX format.</def></row>
+</glossary>
+<p>The timing abstraction is done through the command <f>tma_abstract</f>.</p>
+<code>
+<cl>set abs [tma_abstract $fig NULL]</cl>
+<cl>lib_drivefile [list $abs] {} comb.lib max</cl>
+</code>
+</section>
+
+<section niv='2'><title>Timing Abstraction upon flip-flop</title>
+<p>The timing abstraction configuration takes place in the 
+<f>ms_charac.tcl</f> script as follow:</p>
+<glossary>
+<row type='split'><article><f>avt_config tmaDtxInput yes</f></article>
+<def>tells the tool to take input file in DTX format.</def></row>
+<row type='split'><article><f>inf_SetFigureName msdp2_y</f></article>
+<def>tells the tool to apply the SDC constraints to the flip-flop design.  </def></row>
+<row type='split'><article><f>create_clock -period 1000 -waveform {500 0} ck</f></article>
+<def>creates a clock on signal <f>ck</f></def></row>
+</glossary>
+<p>The timing abstraction is done through the command <f>tma_abstract</f>.</p>
+<code>
+<cl>set abs [tma_abstract $fig NULL]</cl>
+<cl>lib_drivefile [list $abs] {} msdp2_y.lib max</cl>
+</code>
+</section>
+
+</section>
+
+</chapter>
+
+

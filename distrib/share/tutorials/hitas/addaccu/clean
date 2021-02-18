@@ -1,0 +1,4 @@
+rm -f rm addaccu\'bbox.simulations.cache *spicedeck* ~* *.cns *.cnv *.dtx *.inf *.lib *.rcx *.rep *.stm *.out *.setuphold *.accessmin *.accessmax *.comb
+rm -f cmd*
+rm -f addaccu_ext.spi
+rm -f addaccu.clog

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="beg">
+
+<err>
+	<lib>BEG-</lib><num>001</num>
+	<msg>%s Attempt to merge bit vector and single bit %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>002</num>
+	<msg>%s Internal error %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>003</num>
+	<msg>%s Connector declared in, used as out %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>004</num>
+	<msg>%s Null condition %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>005</num>
+	<msg>%s Conflicting vector %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>006</num>
+	<msg>%s Expression and variable has different size %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>007</num>
+	<msg>%s Parser Failure %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>008</num>
+	<msg>%s Conflicting declaration and use %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>009</num>
+	<msg>%s Conflicting bus use %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>010</num>
+	<msg>%s Direction of declaration conflicts with use %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>011</num>
+	<msg>%s Selected signal, vector expression not allowed %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>012</num>
+	<msg>%s Attempt to insert a signal into a defined signal %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>013</num>
+	<msg>%s Vector incompletely defined, made external %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>014</num>
+	<msg>%s Connector declared out, used as in %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>015</num>
+	<msg>%s Bad value for 'BEG_USER_WAY', accepted 'to' or 'downto' %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>016</num>
+	<msg>Unknown\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>017</num>
+	<msg>%s Trace: %s\n</msg>
+	<doc></doc>
+</err>
+<err>
+	<lib>BEG-</lib><num>018</num>
+	<msg>%s Convert an In to Out %s\n</msg>
+	<doc></doc>
+</err>
+
+</messages>

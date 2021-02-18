@@ -1,0 +1,10 @@
+* Statitical Distribution of L and W
+
+
+.subckt TP d g s b l=0.18u w=2.23u as=0 ad=0 ps=0 pd=0
+mp d g s b TP l='agauss(l,l/20.0,1) ' w='agauss(w,w/20,1) ' as='as' ad='ad' ps='ps' pd='pd'
+.ends
+
+.subckt TN d g s b l=0.18u w=1.15u as=0 ad=0 ps=0 pd=0
+mp d g s b TN l='agauss(l,l/20,1)' w='agauss(w,w/20,1)' as='as' ad='ad' ps='ps' pd='pd'
+.ends

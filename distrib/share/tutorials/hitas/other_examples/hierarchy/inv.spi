@@ -1,0 +1,11 @@
+
+.subckt inv i f vdd vss 
+M1 vdd i f vdd TP L=0.18U W=2.232U AS=0.80352P AD=0.80352P PS=5.184U PD=5.184U 
++ 
+M2 vss i f vss TN L=0.18U W=1.152U AS=0.41472P AD=0.41472P PS=3.024U PD=3.024U 
++ 
+C0 i vss 1.33488e-15
+C1 f vss 1.62e-15
+
+.ends inv
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="log">
+
+<err>
+    <lib>LOG-</lib><num>000</num>
+    <msg>Internal Error %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>LOG-</lib><num>001</num>
+    <msg>Maximum number of variables for BDDs reached\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>LOG-</lib><num>002</num>
+    <msg>BDD's system not enough memory...\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

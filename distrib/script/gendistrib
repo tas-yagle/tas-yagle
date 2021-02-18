@@ -1,0 +1,511 @@
+#!/bin/sh -f
+#
+# Copyright (c) 1998-2006 Avertec SA. All Rights Reserved
+# Avertec proprietary and confidential information
+#
+# Release generation script
+#
+##########################################################################
+
+hostlog_os_spec()
+{
+    if [ "$1" = "Solaris_2.8" ] ; then
+        HOSTLOG="seville"
+        HOSTLOG_COMPILE_DIR="/export/seville/tool_Solaris_2.8"
+        HOSTLOG_TAR="gtar"
+    elif [ "$1" = "Solaris_2.8_64" ] ; then
+        HOSTLOG="seville"
+        HOSTLOG_COMPILE_DIR="/export/seville/tool_Solaris_2.8_64"
+        HOSTLOG_TAR="gtar"
+    elif [ "$1" = "Solaris_10" ] ; then
+        HOSTLOG="munich"
+        HOSTLOG_COMPILE_DIR="/export/munich/tool_Solaris_10"
+        HOSTLOG_TAR="gtar"
+    elif [ "$1" = "Solaris_10_64" ] ; then
+        HOSTLOG="munich"
+        HOSTLOG_COMPILE_DIR="/export/munich/tool_Solaris_10_64"
+        HOSTLOG_TAR="gtar"
+    elif [ "$1" = "RHEL_3.0" ] ; then
+        HOSTLOG="lepka"
+        HOSTLOG_COMPILE_DIR="/dsk/l1/tasyag/tasyag/Linux.slsoc6x/build"
+        HOSTLOG_TAR="tar"
+    elif [ "$1" = "RHEL_3.0_64" ] ; then
+        HOSTLOG="mexico"
+        HOSTLOG_COMPILE_DIR="/users10/chaos1/RHEL_3.0_64"
+        HOSTLOG_TAR="tar"
+    fi
+    HOSTLOG_DOC="denver"
+}
+
+##########################################################################
+print_help()
+{
+    echo ""
+    echo "Usage: gendistrib [options]"
+    echo ""
+    echo "General options"
+    echo " -all          : generate all OS versions"
+    echo " -s28          : generate Solaris 2.8"
+    echo " -s10          : generate Solaris 10"
+    echo " -s28_64b      : generate 64bit Solaris 2.8"
+    echo " -s10_64b      : generate 64bit Solaris 10"
+    echo " -rhel         : generate RedHat Enterprise Linux 3.0"
+    echo " -rhel_64b     : generate 64bit RedHat Enterprise Linux 3.0"
+    echo " -v            : verbose"
+    echo " -noflex       : compile without flexlm"
+    echo " -nb           : disable backup of the distribution"
+    echo ""
+    echo "Compilation options"
+    echo " -nolicense    : without license"
+    echo " -eval         : evaluation version"
+    echo ""
+}
+
+##########################################################################
+ping_machine()
+{
+#    PINGMACHINE=`ping $1`
+#    echo -n "pinging $1... "
+#    if [ "$PINGMACHINE" != "$1 is alive" ] ; then
+#        echo "failed: $PINGMACHINE"
+#        exit
+#    fi
+    echo "ok"
+}
+
+##########################################################################
+init_version()
+{
+    AVTNUM=`date +%y%m%d` 
+
+    MKFILE=$AVT/distrib/share/etc/Versions.mk
+  
+    if [ ! -f "$MKFILE" ] ; then
+        echo "error: Cannot find $MKFILE"
+        exit
+    fi
+  
+    V_NUMBER=`grep AVT_VERSION $MKFILE | awk '{print $3}'`
+    V_NUMBER=`echo $V_NUMBER | sed 's/"//g'`
+  
+    P_NUMBER=`grep DISTRIB_PATCHVERSION $MKFILE | awk '{print $3}'`
+    P_NUMBER=`echo $P_NUMBER | sed 's/"//g'`
+
+    DATE=`grep AVT_DATE_A $MKFILE | awk '{print $3 " " $4 " " $5}'`
+    DATE=`echo $DATE | sed 's/"//g'`
+
+    VERSIONNUMBER=${V_NUMBER}${P_NUMBER}_${AVTNUM}
+
+    AVTTOOLS_DIR="$AVT/Release/AvtTools_$VERSIONNUMBER"
+}
+
+##########################################################################
+edit_entry()
+{
+    if [ "$FLEXLM" = "NOFLEX" ] ; then
+        statusflex="no"
+    else
+        statusflex="yes"
+    fi
+
+    echo "----------------------------------------------------------"
+    echo "                     GENDISTRIB"
+    echo "----------------------------------------------------------"
+    echo "Compilation type : $AVT_COMPILATION_TYPE"
+    echo "OS versions      : $SYSTEMOS"
+    echo "Flexlm           : $statusflex"
+    echo "Command line     : $*"
+    echo "Version          : $VERSIONNUMBER"
+    echo "Release date     : $DATE"
+    echo "----------------------------------------------------------"
+}
+
+##########################################################################
+read_entry()
+{
+    SYSTEMOS=" "
+  
+    if [ "$*" = "-h" ] || [ "$*" = "-help" ] ; then
+        print_help
+        exit
+    elif [ "$*" != "" ] ; then
+        for option in $* ; do
+            # OS selection
+            if [ "$option" = "-all" ] ; then
+                SYSTEMOS="Solaris_2.8 Solaris_2.8_64 Solaris_10 Solaris_10_64 RHEL_3.0 RHEL_3.0_64"
+            elif [ "$option" = "-s28" ] ; then
+                SYSTEMOS="$SYSTEMOS Solaris_2.8"
+            elif [ "$option" = "-s28_64b" ]  ; then
+                SYSTEMOS="$SYSTEMOS Solaris_2.8_64"
+            elif [ "$option" = "-s10" ] ; then
+                SYSTEMOS="$SYSTEMOS Solaris_10"
+            elif [ "$option" = "-s10_64b" ]  ; then
+                SYSTEMOS="$SYSTEMOS Solaris_10_64"
+            elif [ "$option" = "-rhel" ]   ; then
+                SYSTEMOS="$SYSTEMOS RHEL_3.0"
+            elif [ "$option" = "-rhel_64b" ]   ; then
+                SYSTEMOS="$SYSTEMOS RHEL_3.0_64"
+            # Options
+            elif [ "$option" = "-nolicense" ] ; then
+                AVERTEC_LICENSE="AVERTEC_DUMMY"
+            elif [ "$option" = "-eval" ] ; then
+                AVT_COMPILATION_TYPE="eval"
+            elif [ "$option" = "-v" ] ; then
+                VERBOSE="yes"
+            elif [ "$option" = "-noflex" ] ; then
+                FLEXLM="NO"
+            elif [ "$option" = "-nb" ] ; then
+                BACKUP="no"
+            fi
+        done
+    fi
+
+    if [ "$SYSTEMOS" = " " ] ; then
+        SYSTEMOS="Solaris_2.8 Solaris_2.8_64 Solaris_10 Solaris_10_64 RHEL_3.0 RHEL_3.0_64"
+    fi
+}
+
+##########################################################################
+gen_link_script()
+{
+    echo "#!/bin/sh -f" > $2/link_sources
+    echo "" >> $2/link_sources
+    echo "for object in \`ls $2\` ; do" >> $2/link_sources
+    echo "    if [ \$object != "link_sources" ] ; then" >> $2/link_sources
+    echo "        rm -rf \$object" >> $2/link_sources
+    echo "    fi" >> $2/link_sources
+    echo "done" >> $2/link_sources
+    echo "mkdir $2/api_include" >> $2/link_sources
+    echo "mkdir $2/api_lib" >> $2/link_sources
+    echo "mkdir $2/bin" >> $2/link_sources
+    echo "mkdir $2/include" >> $2/link_sources
+    echo "mkdir $2/lib" >> $2/link_sources
+    echo "mkdir $2/man" >> $2/link_sources
+    echo "mkdir $2/man/man3" >> $2/link_sources
+    echo "ln -s  $AVT/distrib_ref/share/etc $2/etc" >> $2/link_sources
+    echo "" >> $2/link_sources
+    echo "cp $1/sources.tgz $2" >> $2/link_sources
+    echo "cd $2" >> $2/link_sources
+    echo "$HOSTLOG_TAR xzf sources.tgz" >> $2/link_sources
+    echo "mv sources obj" >> $2/link_sources
+    chmod a+x $2/link_sources
+}
+
+##########################################################################
+make_tools_dir()
+{
+    if [ -d "$AVT/distrib_ref/tools/$OS" ] ; then
+        rm $AVT/distrib_ref/tools/$OS
+    fi
+    if [ ! -d "$HOSTLOG_COMPILE_DIR" ] ; then
+        mkdir $HOSTLOG_COMPILE_DIR 
+    fi
+    ln -s $HOSTLOG_COMPILE_DIR $AVT/distrib_ref/tools/$OS
+
+    TOOLS_DIR="$AVT/distrib_ref/tools/$OS"
+    gen_link_script $AVT/distrib_ref $TOOLS_DIR
+}
+
+##########################################################################
+compilation()
+{
+    MAKEFILEVAR=""
+    if [ "$FLEXLM" = "NOFLEX" ] ; then
+        MAKEFILEVAR="$MAKEFILEVAR WITH_FLEXLM=$FLEXLM"
+    fi
+    if [ "$OS" = "Solaris_2.8_64" ] || [ "$OS" = "Solaris_10_64" ]|| [ "$OS" = "RHEL_3.0_64" ] ; then
+        MAKEFILEVAR="$MAKEFILEVAR AVT_COMPILATION_64BIT=yes"
+    fi
+    MAKEFILEVAR="$MAKEFILEVAR AVT_LICENSE_FILE=$AVT_LICENSE_FILE AVT_OS=$OS AVT_LICENSE_SERVER=$AVT_LICENSE_SERVER AVERTEC_LICENSE=$AVERTEC_LICENSE AVT_DISTRIB_DIR=$TOOLS_DIR AVT_COMPILATION_TYPE=$AVT_COMPILATION_TYPE AVERTEC_TOP=$TOOLS_DIR ALLIANCE_TOP=$TOOLS_DIR  PATH=$TOOLS_DIR/bin:$PATH AVERTEC_OS=Linux"
+
+    echo -n "launching $OS compilation on $HOSTLOG... "  
+  
+    if [ "$VERBOSE" = "no" ] ; then
+        ssh $HOSTLOG "cd $TOOLS_DIR ; ./link_sources ; cd $TOOLS_DIR/obj ; make realclean $MAKEFILEVAR>> ${TRASH}/realclean.res.$OS 2>&1; make $MAKEFILEVAR>> ${TRASH}/makefile.res.$OS 2>&1; touch $TRASH/$OS.finished" &
+    else
+        ssh $HOSTLOG "cd $TOOLS_DIR ; ./link_sources ; cd $TOOLS_DIR/obj ; make realclean $MAKEFILEVAR>> ${TRASH}/realclean.res.$OS 2>&1; make $MAKEFILEVAR ; touch $TRASH/$OS.finished" &
+    fi
+    echo ok
+}
+
+##########################################################################
+wait_ending()
+{
+    for systemos in $SYSTEMOS ; do
+        while [ ! -f $TRASH/$systemos.finished ] ; do
+            sleep 10
+            if [ "$VERBOSE" = "no" ] ; then
+                echo -n "."
+            fi
+        done
+    done
+    echo ""
+}
+
+##########################################################################
+copy_distrib()
+{
+    cp -f $AVT/distrib_ref/script/Install $AVTTOOLS_DIR/
+
+    for sharedir in `ls $AVT/distrib_ref/share` ; do
+        if [ "$sharedir" != "etc" ] && [ "$sharedir" != "license_terms" ] && [ "$sharedir" != "man" ] ; then
+            cp -rf $AVT/distrib_ref/share/$sharedir $AVTTOOLS_DIR/
+        elif [ "$sharedir" = "etc" ] ; then
+            mkdir $AVTTOOLS_DIR/etc
+            cp -f $AVT/distrib_ref/share/etc/ReleaseNotes$V_NUMBER $AVTTOOLS_DIR/.
+            cp -f $AVT/distrib_ref/share/etc/avt.slib $AVTTOOLS_DIR/etc/.
+            cp -rf $AVT/distrib_ref/share/tcl $AVTTOOLS_DIR/.
+            cp -f $AVT/distrib_ref/share/etc/avttools.dtb $AVTTOOLS_DIR/etc/.
+            cp -f $AVT/distrib_ref/share/etc/Xtas $AVTTOOLS_DIR/etc/.
+            cp -f $AVT/distrib_ref/share/etc/Xyagle $AVTTOOLS_DIR/etc/.
+            cp -f $AVT/distrib_ref/share/etc/trmodel.cfg $AVTTOOLS_DIR/etc/.
+        elif [ "$sharedir" = "license_terms" ] ; then
+            mkdir $AVTTOOLS_DIR/license_terms
+            cp -f $AVT/distrib_ref/share/license_terms/license.txt $AVTTOOLS_DIR/license_terms/.
+            cp -f $AVT/distrib_ref/share/license_terms/tcltk.license.terms $AVTTOOLS_DIR/license_terms/.
+        elif [ "$sharedir" = "man" ] ; then
+            mkdir $AVTTOOLS_DIR/man
+        fi
+    done
+    if [ -d $AVTTOOLS_DIR/tutorials/yagle_gns ] ; then
+        rm -rf $AVTTOOLS_DIR/tutorials/yagle_gns
+    fi    
+
+    find $AVTTOOLS_DIR -name CVS -exec rm -rf {} \;
+    find $AVTTOOLS_DIR -name lockdir -exec rm -f {} \;
+  
+    mkdir $AVTTOOLS_DIR/tools
+
+    for systemos in $SYSTEMOS ; do
+        mkdir $AVTTOOLS_DIR/tools/$systemos
+        mkdir $AVTTOOLS_DIR/tools/$systemos/bin
+
+        for toolsbin in $TOOLSBIN ; do
+            if [ -f "$AVT/distrib_ref/tools/$systemos/bin/$toolsbin" ] ; then
+                cp $AVT/distrib_ref/tools/$systemos/bin/$toolsbin $AVTTOOLS_DIR/tools/$systemos/bin/.
+            else
+                echo "error: $toolsbin not generated for $systemos"
+            fi
+        done
+
+        for flexbin in $FLEXBIN ; do
+            if [ -f "$FLEXPATH/$systemos/$flexbin" ] ; then
+                cp $FLEXPATH/$systemos/$flexbin $AVTTOOLS_DIR/tools/$systemos/bin/.
+            else
+                echo "error: $flexbin not available for $systemos"
+            fi      
+        done
+
+        if [ ! -d "$AVTTOOLS_DIR/man/man3" ] ; then
+            mkdir $AVTTOOLS_DIR/man/man3
+            cp -rf $AVT/distrib_ref/tools/$systemos/man/man3 $AVTTOOLS_DIR/man/.
+        fi
+    done
+}
+
+##########################################################################
+make_doc()
+{
+    PWD=`pwd`
+    ssh $HOSTLOG_DOC "cd $1/docxml2; make AVERTEC_TOP=$1/share AVT_LICENSE_SERVER=$AVT_LICENSE_SERVER>> ${TRASH}/makefile.res.docxml2 2>&1; touch ${TRASH}/docxml2.finished" &
+    while [ ! -f $TRASH/docxml2.finished ] ; do
+        sleep 10
+        if [ "$VERBOSE" = "no" ] ; then
+            echo -n "."
+        fi
+    done
+    if [ ! -f $1/docxml2/compiled/docavertec.html ] ; then
+        echo "failed";
+        exit 1
+    fi
+    cd $PWD
+}
+
+##########################################################################
+make_compilation_directory()
+{
+    if [ ! -d "$AVT/distrib_ref" ] ; then
+        echo "$AVT/distrib_ref is missing"
+        exit
+    fi
+
+    if [ ! -d "$AVT/Release" ] ; then
+        mkdir $AVT/Release
+    fi
+
+    if [ -d $AVTTOOLS_DIR ] ; then
+        echo -n "$AVTTOOLS_DIR exists, deleting... "
+        rm -rf $AVTTOOLS_DIR
+        echo "ok"
+    fi
+
+    echo -n "creating $AVTTOOLS_DIR directory... "
+    mkdir $AVTTOOLS_DIR
+    echo "ok"
+}
+##########################################################################
+backup()
+{
+    PWD_INIT=`pwd`
+    cd $AVT/distrib_ref
+    PWD_TARGET=`pwd`
+    DIST_REP=`basename $PWD_TARGET`
+    cd `dirname $PWD_TARGET`
+   
+    echo "tools" >> ${VERSIONNUMBER}_exclude
+    gtar cfzX release_${VERSIONNUMBER}.tgz ${VERSIONNUMBER}_exclude $DIST_REP
+    rm ${VERSIONNUMBER}_exclude
+
+    cd $PWD_INIT
+
+    if [ ! -d $AVT/backup/save ] ; then
+        mkdir $AVT/backup/save
+    fi
+   
+    mv `dirname $PWD_TARGET`/release_${VERSIONNUMBER}.tgz $AVT/backup/save/
+}
+
+##########################################################################
+genavt()
+{
+    # ---------------------------------------------------------
+    # Variables
+    # ---------------------------------------------------------
+
+    AVERTEC_LICENSE="AVERTEC_LICENSE"
+    AVT_LICENSE_SERVER=mexico
+    AVT_LICENSE_FILE=/users10/chaos1/avertec/flexnet/avtlicense.lic
+    AVT_COMPILATION_TYPE="distrib"
+    FLEXPATH="/users10/chaos1/avertec/flexnet/flexlm"
+    FLEXBIN="avtlicd lmgrd lmutil"
+    TOOLSBIN="avt_shell avtman xtas xyagle ttvdiff ttvren"
+    BEGINNINGTIME=`date +'%b%e %T'`
+    AVT="/dsk/l1/tasyag/tasyag" 
+
+    # Options
+    FLEXLM=""
+    OS=" "
+    BACKUP="yes"
+    CVS="no"
+    OPTIONS=""
+    VERBOSE="no"
+
+    # ---------------------------------------------------------
+    # Initialisation
+    # ---------------------------------------------------------
+
+    init_version
+    read_entry $*
+    edit_entry $*
+    make_compilation_directory
+
+    # ---------------------------------------------------------
+    # Sources Copying
+    # ---------------------------------------------------------
+
+    echo -n "$AVT/distrib exists... "
+
+    if [ -d $AVT/distrib ] ; then
+        echo "yes"
+    else
+        echo "no, exiting..."
+        exit
+    fi
+
+    echo -n "$AVT/distrib_ref exists... "
+
+    if [ -d $AVT/distrib_ref ] ; then
+        echo -n "yes, cleaning... "
+        rm -rf distrib_ref/docxml2
+        rm -rf distrib_ref/script
+        rm -rf distrib_ref/share
+        rm -rf distrib_ref/sources
+        rm -rf distrib_ref/tools
+        rm -rf distrib_ref/tmp
+        echo ok
+    else
+        echo "no, exiting... "
+        exit
+    fi
+
+    mkdir $AVT/distrib_ref/script
+    mkdir $AVT/distrib_ref/share
+    mkdir $AVT/distrib_ref/tools
+    mkdir $AVT/distrib_ref/docxml2
+    mkdir $AVT/distrib_ref/tmp
+
+    echo -n "copying $AVT/distrib/distrib/docxml2 to distrib_ref... "
+    cp -r $AVT/distrib/docxml2 $AVT/distrib_ref/
+    echo ok
+    echo -n "copying $AVT/distrib/script to distrib_ref... "
+    cp -r $AVT/distrib/script $AVT/distrib_ref/
+    echo ok
+    echo -n "copying $AVT/distrib/share to distrib_ref... "
+    cp -r $AVT/distrib/share $AVT/distrib_ref/
+    echo ok
+    echo -n "copying $AVT/distrib/sources to distrib_ref... "
+    PWD_INIT=`pwd`
+    cd $AVT/distrib
+    gtar czf $AVT/distrib_ref/sources.tgz sources
+    cd $PWD_INIT
+    echo ok
+ 
+    TRASH=$AVT/distrib_ref/tmp
+
+    # ---------------------------------------------------------
+    # Compilation
+    # ---------------------------------------------------------
+
+    for OS in $SYSTEMOS ; do
+        hostlog_os_spec $OS
+        make_tools_dir
+        ping_machine $HOSTLOG
+        compilation
+    done
+
+    echo -n "compiling"
+    wait_ending
+    echo "ok"
+
+    HOSTLOG_DOC="lepka"
+
+    PWD_INIT=`pwd`
+    cd $AVT/distrib_ref
+    gtar xzf sources.tgz
+    rm sources.tgz
+    cd $PWD_INIT
+
+    export PATH=${HOME}/tasyag/Linux.slsoc6x/build/bin:${PATH}
+    hash -r
+
+    echo -n "compiling documentation... "
+    make_doc $AVT/distrib_ref
+    echo "ok"
+
+    echo -n "copying distribution to $AVTTOOLS_DIR... "
+    mkdir $AVT/distrib_ref/share/doc/
+    cp $AVT/distrib_ref/docxml2/compiled/docavertec.html $AVT/distrib_ref/share/doc/
+    cp -r $AVT/distrib_ref/docxml2/compiled/docpdf $AVT/distrib_ref/share/doc/
+    cp -r $AVT/distrib_ref/docxml2/compiled/dochtml $AVT/distrib_ref/share/doc/
+    copy_distrib
+    echo "ok"
+
+    # ---------------------------------------------------------
+    # Backup
+    # ---------------------------------------------------------
+
+    if [ "$BACKUP" = "yes" ] ; then 
+        echo -n "backup of the distribution source files... "
+        backup
+        echo ok
+    fi
+  
+    ENDINGTIME=`date +'%b %e %T'`
+  
+    echo "Distribution completed (Start: $BEGINNINGTIME       End: $ENDINGTIME)"
+
+    exit
+}
+
+genavt $*
+

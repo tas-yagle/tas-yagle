@@ -1,0 +1,11 @@
+
+       void ttv_FreePathList(TimingPathList *lst);
+
+DDEESSCCRRIIPPTTIIOONN
+       Frees the paths in a list
+
+AARRGGUUMMEENNTTSS
+       llsstt           Pointer on the head of a path list
+
+       EEXXAAMMPPLLEE       _t_t_v___F_r_e_e_P_a_t_h_L_i_s_t _$_p___l_i_s_t
+

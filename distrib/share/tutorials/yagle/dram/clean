@@ -1,0 +1,2 @@
+/bin/rm -f *.vhd dram.v *.rcx *.rep *.cns *.cnv *.cor *.v *.stat *.gns *.spi *.out
+

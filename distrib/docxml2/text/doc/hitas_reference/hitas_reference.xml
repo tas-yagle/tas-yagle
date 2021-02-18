@@ -1,0 +1,95 @@
+<!DOCTYPE notice SYSTEM "../../common/common_entity.xml" [
+<!ENTITY tool "HITAS">
+<!ENTITY presentation           SYSTEM "presentation.xml">
+<!ENTITY introduction           SYSTEM "introduction.xml">
+<!ENTITY input_files            SYSTEM "input_files.xml">
+<!ENTITY output_files           SYSTEM "output_files.xml">
+<!ENTITY log_files              SYSTEM "log_files.xml">
+<!ENTITY configuration          SYSTEM "configuration.xml">
+<!ENTITY command_line_tools     SYSTEM "command_line_tools.xml">
+<!ENTITY ttxFormat              SYSTEM "ttxFormat.xml">
+<!ENTITY dtxFormat              SYSTEM "dtxFormat.xml">
+<!ENTITY stmFormat              SYSTEM "stmFormat.xml">
+<!ENTITY strFormat              SYSTEM "strFormat.xml">
+<!ENTITY stoFormat              SYSTEM "stoFormat.xml">
+<!ENTITY ctkFormat              SYSTEM "ctkFormat.xml">
+<!ENTITY ctxFormat              SYSTEM "ctxFormat.xml">
+<!ENTITY tcl_interface          SYSTEM "tcl_interface.xml">
+<!ENTITY avt                    SYSTEM "avt.xml">
+<!ENTITY inf                    SYSTEM "inf.xml">
+<!ENTITY load                   SYSTEM "load.xml">
+<!ENTITY yag                    SYSTEM "yag.xml">
+<!ENTITY tas                    SYSTEM "tas.xml">
+<!ENTITY sdc                    SYSTEM "sdc.xml">
+<!ENTITY stb                    SYSTEM "stb.xml">
+<!ENTITY ttv                    SYSTEM "ttv.xml">
+<!ENTITY tma                    SYSTEM "tma.xml">
+<!ENTITY mbk                    SYSTEM "mbk.xml">
+<!ENTITY avt_API                SYSTEM "avt_API.xml">
+<!ENTITY load_API               SYSTEM "load_API.xml">
+<!ENTITY ttv_API_dtb            SYSTEM "ttv_API_dtb.xml">      
+<!ENTITY ttv_API_sdf            SYSTEM "ttv_API_sdf.xml">      
+<!ENTITY ttv_API_dtbprop        SYSTEM "ttv_API_dtbprop.xml">   
+<!ENTITY ttv_API_path           SYSTEM "ttv_API_path.xml">       
+<!ENTITY ttv_API_pathprop       SYSTEM "ttv_API_pathprop.xml">    
+<!ENTITY ttv_API_line           SYSTEM "ttv_API_line.xml">       
+<!ENTITY ttv_API_sig            SYSTEM "ttv_API_sig.xml">        
+<!ENTITY ttv_API_sigprop        SYSTEM "ttv_API_sigprop.xml">    
+<!ENTITY ttv_API_event          SYSTEM "ttv_API_event.xml">      
+<!ENTITY ttv_API_detail         SYSTEM "ttv_API_detail.xml">     
+<!ENTITY ttv_API_detailprop     SYSTEM "ttv_API_detailprop.xml">   
+<!ENTITY ttv_API_sim            SYSTEM "ttv_API_sim.xml">         
+<!ENTITY ttv_API_generation     SYSTEM "ttv_API_generation.xml">         
+<!ENTITY ttv_API_greybox        SYSTEM "ttv_API_greybox.xml">         
+<!ENTITY ttv_API_report         SYSTEM "ttv_API_report.xml">         
+<!ENTITY avt_API_files          SYSTEM "avt_API_files.xml">      
+<!ENTITY avt_API_system         SYSTEM "avt_API_system.xml">     
+<!ENTITY avt_API_lofig          SYSTEM "avt_API_lofig.xml">   
+<!ENTITY avt_API_config         SYSTEM "avt_API_config.xml">         
+<!ENTITY inf_API_netlist        SYSTEM "inf_API_netlist.xml">
+<!ENTITY inf_API_disa           SYSTEM "inf_API_disa.xml">
+<!ENTITY inf_API_timing         SYSTEM "inf_API_timing.xml">
+<!ENTITY inf_API_abstraction    SYSTEM "inf_API_abstraction.xml">
+<!ENTITY inf_API_stab           SYSTEM "inf_API_stab.xml">
+<!ENTITY inf_API_general        SYSTEM "inf_API_general.xml">
+<!ENTITY inf_API_xtalk          SYSTEM "inf_API_xtalk.xml">
+<!ENTITY stb_API_gen            SYSTEM "stb_API_gen.xml">
+<!ENTITY stb_API_error          SYSTEM "stb_API_error.xml">
+<!ENTITY stb_API_source         SYSTEM "stb_API_source.xml">
+<!ENTITY stb_API_prop           SYSTEM "stb_API_prop.xml">
+<!ENTITY stb_API_browse         SYSTEM "stb_API_browse.xml">
+<!ENTITY inf_API                SYSTEM "inf_API.xml">
+<!ENTITY tas_API                SYSTEM "tas_API.xml">
+<!ENTITY tma_API                SYSTEM "tma_API.xml">
+<!ENTITY lbt_API                SYSTEM "lbt_API.xml">
+<!ENTITY mbk_API                SYSTEM "mbk_API_files.xml">
+<!ENTITY correspondence_inf_sdc SYSTEM "correspondence_inf_sdc.xml">
+<!ENTITY errors                 SYSTEM "errors.xml">
+<!ENTITY ctk                    SYSTEM "ctk.xml">
+<!ENTITY ctk_API_build          SYSTEM "ctk_API_build.xml">
+<!ENTITY ctk_API_sort           SYSTEM "ctk_API_sort.xml">
+<!ENTITY ctk_API_aggressor      SYSTEM "ctk_API_aggressor.xml">
+<!ENTITY ctk_API_statistics     SYSTEM "ctk_API_statistics.xml">
+<!ENTITY avt_API_montecarlo     SYSTEM "avt_API_montecarlo.xml">      
+<!ENTITY mbk_API_montecarlo     SYSTEM "mbk_API_montecarlo.xml">      
+<!ENTITY stb_API_montecarlo     SYSTEM "stb_API_montecarlo.xml">      
+<!ENTITY montecarlo             SYSTEM "montecarlo.xml">
+<!ENTITY cpe                    SYSTEM "cpe.xml">
+<!ENTITY sim_API_cpe            SYSTEM "sim_API_cpe.xml">
+]>
+<notice>
+<presentation>
+&presentation; 
+</presentation>
+<introduction>
+&introduction;
+</introduction>
+<document>
+&input_files;
+&output_files;
+&log_files;
+&configuration;
+&tcl_interface;
+&errors;
+</document>
+</notice>

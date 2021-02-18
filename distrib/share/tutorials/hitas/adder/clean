@@ -1,0 +1,13 @@
+rm -f adder.dtx
+rm -f adder.ttx
+rm -f adder.stm
+rm -f adder.cns
+rm -f adder.cnv
+rm -f adder.rcx
+rm -f adder.rep
+rm -f adder.sto
+rm -f adder.str
+rm -f adder.ctk
+rm -f adder.ctx
+rm -f adder.inf
+

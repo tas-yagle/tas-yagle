@@ -1,0 +1,19 @@
+
+       TimingLine  *ttv_AddHold(char  *input, char *output, double delay, char
+       *dir);
+
+DDEESSCCRRIIPPTTIIOONN
+       Creates a hold constraint line between a data pin and a clock pin.
+
+AARRGGUUMMEENNTTSS
+       iinnppuutt         Data pin
+
+       oouuttppuutt        Clock pin
+
+       ddeellaayy         Nominal constraint value associated with the line
+
+       ddiirr           Transitions on the data and clock pins: _u_u for input ris-
+                     ing/output rising, _u_d for input rising/output falling, _d_d
+                     for  input   falling/output   falling,   _d_u   for   input
+                     falling/output rising.
+

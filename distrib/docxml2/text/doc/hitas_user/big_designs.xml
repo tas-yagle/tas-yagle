@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Managing Big Designs</title>
+
+<p>&tool; offers a set a variables dedicated to speed up execution or to limit the use of memory.</p>
+<p>Memory-use strategies can be classified in three categories: the ones that use disk cache, the ones removing non-critical information, and the ones reducing the number of objects to treat by introducing sharing. Disk-caching strategies are accuracy lossless, but can severely impact execution runtimes. Object-sharing strategies try to use the same model for objects having close shapes. It can be really efficient, and is done in such a way that accuracy is preserved.</p>
+
+<p>Execution speeding-up is most of the times done by keeping more objects in memory. However, it can also be correlated with the memory-use sharing strategies, as they limit the number of objects to treat.</p>
+  
+<section niv='2'><title>File Compression and Disk Caching</title>
+<p>&tool; is able to make a system call to any compression command. To get this mechanism work for input files, 
+one only needs to set two variables: <f>avtInputFilter</f> for specifying the compression command to use, and
+<f>avtFilterSuffix</f>, in order to tell the tool which files it should apply the compression command on, for example:</p>
+<code>
+<cl>avt_config avtInputFilter "gzip -d"</cl>
+<cl>avt_config avtFilterSuffix ".gz"</cl>
+<cl> </cl>
+<cl>avt_LoadFile my_design.spi spice</cl>
+</code>
+<p>This will load seamlessly <f>my_design.spi</f> or <f>my_design.spi.gz</f>.</p>
+
+<p>If <f>avtOutputFilter</f> is used, all output files will be compressed with the specified
+command and will have the suffix <f>avtFilterSuffix</f>.</p>
+
+
+<p>The <f>stmCacheSize</f>, <f>avtMaxCacheFile</f> and <f>avtParasiticCacheSize</f> allow disk caching for very big design.</p>
+</section>
+
+<section niv='2'><title>Information removal</title>
+<p>Non-critical information can be removed through the variables <f>avtNoTransistorName</f> and <f>tasShortNamesForModels</f>.</p>
+</section>
+
+<section niv='2'><title>Object sharing</title>
+<p>Object sharing can be applied to the Timing Models, through the <f>stmShareModels</f> variable.</p>
+</section>
+
+<section niv='2'><title>Execution Speed-up</title>
+<p>Speeding-up strategies are essentially performed for crosstalk analysis, through variables <f>stbCtkFastMode</f> and
+<f>rcxFastMode</f>.</p>
+</section>
+
+
+</section></chapter>

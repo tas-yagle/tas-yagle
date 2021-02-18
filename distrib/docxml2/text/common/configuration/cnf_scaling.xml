@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+<row type='split'><article><index>avtMaxScaleCapaFactor</index></article><def>	
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Allows the user to set a supplementary capacitance scaling 
+factor when calculating maximum delays.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtMinScaleCapaFactor</index></article><def>	
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Allows the user to set a supplementary capacitance scaling 
+factor when calculating minimum delays.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtMaxScaleResiFactor</index></article><def>	
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Allows the user to set a supplementary resistance scaling 
+factor when calculating maximum delays.</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>avtMinScaleResiFactor</index></article><def>	
+<glossary width='small'>
+<row><article><f>&lt;float&gt;</f></article><def>Allows the user to set a supplementary resistance scaling 
+factor when calculating minimum delays.</def></row>
+</glossary>
+</def></row>
+
+</glossary>
+

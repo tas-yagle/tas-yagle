@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<intro_title>About this Document</intro_title>
+<intro>This tutorial describes the validation flow of an automatic Random Access Memory generator. 
+It presents the use of &tool; in this flow, and the way it performs both 
+structural and functional validation of generated RAMs of any size.</intro>

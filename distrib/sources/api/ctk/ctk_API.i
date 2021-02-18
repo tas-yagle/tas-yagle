@@ -1,0 +1,13 @@
+void           ctk_LoadAggressionFile( StabilityFigure *stbfig );
+void           ctk_DriveStatCtk            ( StabilityFigure *stbfig );
+void           ctk_BuildCtkStat            ( StabilityFigure *stbfig );
+Property*      ctk_GetStatNodeProperty     ( StabilityFigure *stbfig, int index, char *property );
+AggressorList* ctk_GetAggressorList        ( StabilityFigure *stbfig, TimingEvent *event );
+Property*      ctk_GetAggressorProperty    ( Aggressor *aggressor, char *property );
+void           ctk_FreeAggressorList       ( AggressorList* );
+void           ctk_SortCtkStatNode         ( StabilityFigure *stbfig, char *criterion );
+int            ctk_GetNumberOfCtkStatNode  ( StabilityFigure *stbfig );
+int            ctk_GetCtkStatNodeFromEvent ( StabilityFigure *stbfig, TimingEvent *event );
+void           ctk_SortCtkStatLine         ( StabilityFigure *stbfig, char *criterion );
+Property*      ctk_GetStatLineProperty     ( StabilityFigure *stbfig, int index, char *property );
+int            ctk_GetNumberOfCtkStatLine  ( StabilityFigure *stbfig );

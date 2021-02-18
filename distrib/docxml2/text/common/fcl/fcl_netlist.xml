@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>Netlist Format</title>
+
+<p>The format for the transistor netlist is a standard flat spice subcircuit contained in a single file. However, a number of special extensions are recognised. These are accomodated as spice comments, lines commencing with an asterisk. The asterisk is followed by a space and one of the following directives, together with parameters (non case-sensitive)</p>
+<p>The directive:</p>
+<code>nettype &lt;index&gt; &lt;typemask&gt;</code>
+<p>Associates the types indicated in &lt;typemask&gt; to any signal in the main circuit corresponding to the signal in the searched for netlist identified by &lt;index&gt;.</p>
+<p>Predefined types are:</p>
+<glossary>
+<ro type='split'w><article>NET_LATCH</article><def>Signal corresponds to a latch memory-point.</def></row>
+<row type='split'><article>NET_FLIPFLOP</article><def>Signal corresponds to a flip-flop memory-point.</def></row>
+<row type='split'><article>NET_MASTER</article><def>Signal corresponds to the master memory-point of a flip-flop.</def></row>
+<row type='split'><article>NET_SLAVE</article><def>Signal corresponds to the slave memory-point of a flip-flop.</def></row>
+<row type='split'><article>NET_MEMSYM</article><def>Signal corresponds to one side of a symmetric memory.</def></row>
+<row type='split'><article>NET_RS</article><def>Signal corresponds to one side of an RS bistable.</def></row>
+<row type='split'><article>NET_VDD</article><def>Signal corresponds to an alimentation.</def></row>
+<row type='split'><article>NET_VSS</article><def>Signal corresponds to ground.</def></row>
+<row type='split'><article>NET_BLOCKER</article><def>No branch of a cone (see man &MIN;) can go through the signal.</def></row>
+<row type='split'><article>NET_STOP</article><def>Cannot exploit logic beyond this point for functional analysis in the disassembler. </def></row>
+<row type='split'><article>NET_BYPASS</article><def>Signal cannot appear in a timing path. </def></row>
+<row type='split'><article>NET_MATCHNAME</article><def>The signal is only matched if the name in the pattern to recognize and the name in the source netlist are identical.</def></row>
+<row type='split'><article>NET_SENSITIVE</article><def>Marks the signal as a particularly sensitive signal. If a timed behavioral model of this signal is produced then the most precise (but cumbersome) model will be generated.</def></row>
+</glossary>
+<p>The directive:</p>
+<code>transtype &lt;name&gt; &lt;typemask&gt;</code>
+<p>Associates the types indicated in &lt;typemask&gt; to any transistor in the main circuit corresponding to the transistor in the searched for netlist identified by &lt;name&gt;. Predefined types are:</p>
+<glossary>
+<row type='split'><article>TRANS_BLEEDER</article><def>Transistor corresponds to a bleeder.</def></row>
+<row type='split'><article>TRANS_FEEDBACK</article><def>Transistor corresponds to a feedback transistor of a memory-point.</def></row>
+<row type='split'><article>TRANS_COMMAND</article><def>Transistor corresponds to a command transistor of a memory-point, i.e driven by command signal.</def></row>
+<row type='split'><article>TRANS_NOT_FUNCTIONAL</article><def>Transistor should be ignored when calculating gate functionality.</def></row>
+<row type='split'><article>TRANS_BLOCKER</article><def>No branch of a cone  can contain this transistor unless it is the first transistor of the branch.</def></row>
+<row type='split'><article>TRANS_UNUSED</article><def>No branch of a cone can contain this transistor.</def></row>
+<row type='split'><article>TRANS_SHORT</article><def>The transistor is considered short-circuited, the gate signal no longer contributes to the list of inputs.</def></row>
+<row type='split'><article>TRANS_MATCHSIZE</article><def>The transistor is only matched if the dimensions correspond exactly or to within a given tolerance (see FCL configuration).</def></row>
+<row type='split'><article>TRANS_SHARE</article><def>The transistor can be matched by several patterns.</def></row>
+</glossary>
+<p>The &lt;typemask&gt; parameter is made up of a list of one or more of the predefined types, separated by the vertical bar '|' character. Directives should be included within the .SUBCKT and .ENDS spice statements.</p>
+<p>The directive:</p>
+<code>cmpup &lt;name&gt; ... &lt;name&gt;</code>
+<p> is a mutual exclusion directive indicating that one and only one of the signals or ports can be at logic one.</p>
+<p>The directive:</p>
+<code>cmpdn &lt;name&gt; ... &lt;name&gt;</code>
+<p> is a mutual exclusion directive indicating that one and only one of the signals or ports can be at logic zero.</p>
+<p>The directive:</p>
+<code>muxup &lt;name&gt; ... &lt;name&gt;</code>
+<p> is a mutual exclusion directive indicating that at most one of the signals or ports can be at logic one.</p>
+<p>The directive:</p>
+<code>muxdn &lt;name&gt; ... &lt;name&gt;</code>
+<p> is a mutual exclusion directive indicating that at most one of the signals or ports can be at logic zero.</p>
+<p>The directive:</p> 
+<code>netoutput &lt;name&gt; [level]</code>
+<p>allows the user to orient transistors, by associating a level with a signal identifying
+the drain or source terminal of a transistor. If no level is specified, the level is implicitely 1.
+Transistors are then oriented from higher level signals or standard signals to
+lower level signals. This directive is usefull to avoid false branch construction, especially
+when dealing with pass-transistors.</p>
+<p>The netoutput directive acts in the same way as the DIROUT directive in the information file.</p>
+</section>

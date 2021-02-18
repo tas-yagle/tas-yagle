@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="ctk_api">
+
+<err>
+    <lib>CTKAPI-</lib><num>001</num>
+    <msg>No crosstalk statistics available.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CTKAPI-</lib><num>002</num>
+    <msg>No crosstalk statistics available for this event.\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CTKAPI-</lib><num>003</num>
+    <msg>unknown property %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CTKAPI-</lib><num>004</num>
+    <msg>%s: The CTK_NETLIST is not set, function ignored\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CTKAPI-</lib><num>005</num>
+    <msg>%s: Error occured when calling function\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CTKAPI-</lib><num>006</num>
+    <msg>%s: Unknown direction '%c' using 'u'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>CTKAPI-</lib><num>007</num>
+    <msg>%s: Unknown delay type '%c' using 'w'\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

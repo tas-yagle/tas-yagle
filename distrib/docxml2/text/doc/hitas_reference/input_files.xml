@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Input Files</title>
+<section niv='2'><title>Technology File and Netlist</title>
+&spice;
+&verilog;
+&vhdl;
+</section>
+
+<section niv='2'><title>Parasitics</title>
+&dspf;
+&spef;
+</section>
+
+<section niv='2'><title>Timing Characterizations</title>
+&lib;
+&tlf;
+</section>
+
+<section niv='2'><title>INF Design Specific Configuration</title>
+&inf_tasuse;
+</section>
+
+</section></chapter>

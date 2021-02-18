@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='2'><title>REP - Report File</title>
+
+<p>Each execution of &tool; results in the generation of a report file. This file is given the name &lt;input_name&gt;.rep. It contains a list of diagnostics (warnings and error messages) attributed to particular signals or transistors within the input net-list. Here we explain in more detail the particular messages which you may come across in this report file.</p>
+
+<section niv='3'><title>Warning Messages</title>
+
+<glossary>
+<row type="split"><article>"[WAR] Possible unconnected supply ?"</article><def>Means that an internal signal whose name contains <f>avtVddName</f> or <f>avtVssName</f> has been found. Verify if this signal should be connected to an external supply, or if <f>avtGlobalVddName</f> and <f>avtGlobalVssName</f> should be positioned.</def></row>
+<row type="split"><article>"[WAR] Transistor used as a resistance"</article><def>Indicates that a transistor P-channel (resp. N-channel) with gate connected to the ground (resp. power supply) has been found in the circuit.</def></row>
+<row type="split"><article>"[WAR] Transistor used as a diode"</article><def>Indicates that a transistor with drain (or source) connected to gate has been found in the circuit, and the signal connecting them is neither power supply nor ground.</def></row>
+<row type="split"><article>"[WAR] Transistor is always off"</article><def>Indicates that a transistor P-channel (resp. N-channel) with gate connected to power supply (resp. ground) has been found in the circuit.</def></row>
+<row type="split"><article>"[WAR] Transistor used as a capacitance"</article><def>Indicates that a transistor with drain and source connected together has been found in the circuit.</def></row>
+<row type="split"><article>"[WAR] Gate of transistor is not connected"</article><def>Indicates that a transistor gate which is connected to nothing has been found in the circuit.</def></row>
+<row type="split"><article>"[WAR] Drain of transistor is not connected"</article><def>Indicates that a transistor drain which is connected to nothing has been found in the circuit.</def></row>
+<row type="split"><article>"[WAR] Source of transistor is not connected"</article><def>Indicates that a transistor source which is connected to nothing has been found in the circuit.</def></row>
+<row type="split"><article>"[WAR] Transistors are not used in the circuit"</article><def>This means that these transistors are not used to pull up or pull down any transistor gate in the circuit, or any external connector. This occurs for example if the output of a gate does not drive anything: In this case &tool; considers the transistors of the gate to be unused.</def></row>
+<row type="split"><article>"[WAR] Loop between 2 gates (bleeder found)"</article><def>This means that a loop corresponding to a bleeder has been found in the circuit.</def></row>
+<row type="split"><article>"[WAR] Loop between 2 gates (latch found)"</article><def>This means that a loop corresponding to a latch has been found in the circuit.</def></row>
+<row type="split"><article>"[WAR] Loop between 2 gates (bi-stable found)"</article><def>This means that a loop corresponding to a bi-stable has been found in the circuit.</def></row>
+<row type="split"><article>"[WAR] Loop between 2 gates (nothing found)"</article><def>This means that a two gate loop which does not correspond to a latch, bleeder or bi-stable has been found in the circuit.</def></row>
+<row type="split"><article>"[WAR] Conflict may occur on signal"</article><def>This means that the signal may be pulled-up and pulled-down simultaneously. This is a warning since this message may disappear with a greater depth for the functional analysis process. Or it may not be possible to resolve the conflict given the logic within the circuit.</def></row>
+<row type="split"><article>"[WAR] HZ state may occur on signal"</article><def>This means that the signal is not pulled up or pulled down for any set of input stimuli on the cone entries. This is a warning for the same reason as a conflict.</def></row>
+<row type="split"><article>"[WAR] Signal does not drive anything"</article><def>This means that the signal is not used as the input to any gate or used to drive any external connector.</def></row>
+<row type="split"><article>"[WAR] Connector unused"</article><def>This means that the external connector is neither the input nor the output of any of the extracted transistor gates.</def></row>
+</glossary>
+
+</section>
+<section niv='3'><title>Error Messages</title>
+
+<p>The presence of any of the following errors will disable the generation of the VHDL or Verilog description. If this behavior is not desired then &tool; must be executed with the <f>yagleNotStrict</f> variable.</p>
+<glossary>
+<row type="split"><article>"[ERR] Bad direction on connector"</article><def>Indicates that the orientation of an external connector after disassembly does not correspond to that specified in the input netlist.</def></row>
+<row type="split"><article>"[ERR] Transistor gate signal is not driven"</article><def>Indicates that a transistor gate can not be pulled up or down.</def></row>
+</glossary>
+
+</section>
+<section niv='3'><title>Fatal Errors</title>
+
+<p>The following error messages will not be found in the report file. These errors are fatal and will abruptly stop the execution of &tool;.</p>
+<glossary>
+<row type="split"><article>"[FATAL] No VDD/VSS connector in the circuit"</article><def>This means that &tool; did not find any external ports whose name is the name of the power supply in the circuit. Do <f>avtVddName</f> and <f>avtVssName</f> have the right value?</def></row>
+<row type="split"><article>"[FATAL] Connector is power supply and ground"</article><def>This means that &tool; found a connector whose name includes <f>avtVddName</f> and <f>avtVssName</f>.</def></row>
+<row type="split"><article>"[FATAL] No VDD/VSS signal in the circuit"</article><def>This means that &tool; did not find any signal whose name is the name of the power supply in the circuit.</def></row>
+<row type="split"><article>"[FATAL] Several external connectors on signal"</article><def>This means that &tool; found several external connectors connected to the same equipotential, a configuration which &tool; considers illegal.</def></row>
+</glossary>
+
+</section>
+</section>

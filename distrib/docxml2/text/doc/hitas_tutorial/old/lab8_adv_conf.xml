@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Lab8. Advanced Configuration</title>
+<p>This lab explains the handling of complex designs such as crossbar.</p>
+<p>This lab takes place in the directory <f>lab8_adv_conf</f></p>
+
+<section niv='2'><title>Database Generation</title>
+<p>The &tool; can add mutual exclusion constraints on signals, in order to help the disassembly
+process. May be especially usefull when dealing with shifters or multiplexors, in
+case mutual exclusion constraints can not be directly derived from internal
+combinational circuitry (if the mutual exclusions constraints come from latched
+values or come from constraints on external pins).</p>
+<p>See HiTas Reference Guide for further details.</p>
+<glossary>
+<row type='split'><article><f>inf_DefineMutex cmpup [list column4_0.n2 column4_0.n3]</f></article>
+<def>adds mutual exclusion constraints on signals (only one of the signals can be up at the same time).</def></row>
+<row type='split'><article><f>inf_DefineIgnore Instances COLUMN4_*.MEM_0</f></article>
+<def>tells the tool to ignore the instances name matched with COLUMN4_*.MEM_0.</def></row>
+</glossary>
+<p>The database generation is done by the following:</p>
+<code>
+<cl>avt_LoadFile ../techno/bsim4_dummy.hsp</cl>
+<cl>avt_LoadFile matrice4x4.spi spice</cl>
+<cl> </cl>
+<cl>set fig [hitas matrice4x4]</cl>
+</code>
+</section>
+
+</section>
+</chapter>
+

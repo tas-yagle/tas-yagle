@@ -1,0 +1,215 @@
+#!/bin/sh -f
+#
+# Verifie les reference des binaires aux librairies.
+#
+#
+##########################################################################
+
+##########################################################################
+defaultinit()
+{
+  AVT_PATH="/users/disk02/avertec/distrib_ref"
+  LIB_OK=""
+  NOT_A_BIN="genapi"
+  BIN=""
+  
+  RUNHOME="`pwd`"
+  if [ -f "$RUNHOME/checklib.resfile" ] ; then
+    rm $RUNHOME/checklib.resfile
+  fi
+  
+  RESFILE="$RUNHOME/checklib.resfile"
+  OSFILE="$RUNHOME/checklib.osfile"
+
+}
+
+##########################################################################
+printhelp()
+{
+  echo ""
+  echo "  Usage: checklib [AvtTools path] [bin list] [-o]"
+  echo ""
+  echo "  checklib return 0 if the list of the dynamic dependencies of"
+  echo "  the executable files is not limited to the following libs:"
+  for lib in $LIB_OK ; do
+    echo "    - $lib"
+  done
+  echo ""
+  echo "  In this case the following report file is created:"
+  echo "    $RESFILE (sorted by binary and OS)"
+  echo "    $OSFILE  (sorted only by OS but each library appear only once)"
+  echo ""
+}
+
+##########################################################################
+readentry()
+{ 
+  if [ "$*" = "-h" ] || [ "$*" = "h" ] || [ "$*" = "-help" ] || [ "$*" = "help" ] ; then
+    printhelp
+    exit
+  elif [ "$*" != "" ] ; then
+    for option in $* ; do
+      if   [ -d "$option" ] ; then
+        AVT_PATH="$option"
+      elif [ "$option" = "-o" ] ; then
+        POSTCHECK="oui"
+      else
+        BIN="$BIN $option"
+      fi
+    done
+  fi
+}
+
+##########################################################################
+hostlogmachine()
+{
+  if   [ "$1" = "Solaris_2.5" ] ; then
+    echo "brisbane"
+  elif [ "$1" = "Solaris_2.6" ] ; then
+    echo "londres"
+  elif [ "$1" = "Solaris_2.7" ] ; then
+    echo "londres"
+  elif [ "$1" = "Solaris_2.8" ] ; then
+    echo "paris"
+  elif [ "$1" = "Solaris_2.8_64" ] ; then
+    echo "paris"
+  elif [ "$1" = "Solaris_2.9" ] ; then
+    echo "denver"
+  elif [ "$1" = "Solaris_2.9_64" ] ; then
+    echo "denver"
+  elif [ "$1" = "Linux_2.2" ] ; then
+    echo "univers"
+  elif [ "$1" = "Linux_2.4" ] ; then
+    echo "oslo"
+  elif [ "$1" = "Linux_demo" ] ; then
+    echo "demo"
+  else
+    echo "inconnu"
+  fi
+}
+
+##########################################################################
+# post_ldd (osfile binresfile)
+post_ldd()
+{
+  lddbuf=${1}_lddbuf
+  echo `sed 's/ /?/g' $2  | grep -v "####"` > $lddbuf
+
+  lddfile=`cat $lddbuf | grep -v "####"`
+  echo "$lddfile" >> /users/disk02/avertec/tmp_lddfile
+  for lddline in $lddfile ; do
+    lddline=`echo $lddline | awk -F\( '{print $1}'`
+    echo "`grep -v \"$lddline?(\" $lddbuf`" > $lddbuf
+    echo "$lddline" >> $lddbuf
+  done
+
+  sed 's/?/ /g' $lddbuf >> $1
+  rm $lddbuf
+
+}
+
+##########################################################################
+# call_ldd (hostname,bin path, bin liste, report file, skip liste, os, osfile)
+call_ldd()
+{
+  rsh="$1"
+  rep="$2"
+  list="$3"
+  resfile="$4"
+  not_a_bin="$5"
+  osdir="$6"
+  osfile="$7"
+  
+  if [ "$list" = "" ] ; then
+    list="`ls $rep`"
+  fi
+  
+  echo "#### $osdir" >> $osfile
+  
+  for bin in $list ; do
+    skip="non"
+    for skipbin in $not_a_bin ; do
+      if [ "$skipbin" = "$bin" ] ; then
+        skip="oui"
+      fi
+    done
+    if [ "$skip" = "non" ] ; then
+      rsh $rsh "cd $rep ; echo \"#### $bin $rep\" >> ${resfile}_${bin}; ldd $bin >>& ${resfile}_${bin}"
+      cat ${resfile}_${bin} >> $resfile
+      #post_ldd "$osfile" "${resfile}_${bin}"
+      rm ${resfile}_${bin}
+    fi
+  done
+}
+
+##########################################################################
+pingmachine()
+{
+  PINGMACHINE=`ping $1`
+  if [ "$PINGMACHINE" != "$1 is alive" ] ; then
+    echo "ko"
+  else
+    echo "pong"
+  fi
+}
+
+##########################################################################
+# gothrowdirs (dir name, binliste)
+#RUNHOME, RESFILE doivent etre connue en dehors de gothrowdirs
+gothrowdirs()
+{
+  if [ -d "$1/tools" ] ; then
+    for OSdir in `ls $1/tools` ; do
+      if [ -d "$1/tools/$OSdir/bin" ] && [ "$OSdir" != "Solaris_2.7" ] ; then
+        cd $1/tools/$OSdir/bin
+        logto=`hostlogmachine $OSdir`
+        ping=`pingmachine $logto`
+        if [ "$ping" = "pong" ] ; then
+          echo " Acces à \"$1/tools/$OSdir/bin\" sur \"$logto\""
+          call_ldd "$logto" "$1/tools/$OSdir/bin" "$2" "$RESFILE" "$3" "$OSdir" "$OSFILE"
+        else
+          echo "Erreur: Acces à \"$1/tools/$OSdir/bin\" sur \"$logto\" impossible"
+        fi
+      else
+        continue
+      fi
+      cd $RUNHOME
+    done
+  else
+    echo "ERREUR: $1/tools is missing..."
+    printhelp
+    exit
+  fi
+}
+
+##########################################################################
+evalres()
+{
+  for lib in $LIB_OK ; do
+    grep -v $lib $2 > buff
+    mv buff $2
+  done
+ 
+  TEST="`grep -v '####' $2`"
+  if [ "$TEST" != "" ] ; then
+    return 0
+  else
+    rm $2
+    return 1
+  fi
+}
+
+##########################################################################
+checklib_main()
+{
+defaultinit
+readentry $*
+
+gothrowdirs "$AVT_PATH" "$BIN" "$NOT_A_BIN"
+
+evalres "$LIB_OK" "$RESFILE"
+}
+
+
+checklib_main $*
+

@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<messages libname="gns">
+
+<err>
+    <lib>GNS-</lib><num>001</num>
+    <msg>instance %s already exist in figure %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>002</num>
+    <msg>instance model is the figure %s itself\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>003</num>
+    <msg>connector number discrepancy between figure %s and instance %s in figure %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>004</num>
+    <msg>Internal error %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>005</num>
+    <msg>Internal warning %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>006</num>
+    <msg>%s: can't find transistor '%s' in model\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>007</num>
+    <msg>Invalid symmetry detected for instance '%s' (%s) on connector '%s' and ? (%s and %s)\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>008</num>
+    <msg>no FCL match for `%s' (instance:'%s' model:`%s')\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>009</num>
+    <msg>Vector ordering failed on instance '%s' (%s) who might be used as \"exclude\"\n. Try to add 'NoOrdering' in the 'GnsFlags' variable\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>010</num>
+    <msg>Found an alim linked to a 'not' alim : %s and %s in %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>011</num>
+    <msg>can't retrieve blackbox instance `%s' (`%s')\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>012</num>
+    <msg>can't retrieve blackbox connector `%s.%s' (`%s')\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>013</num>
+    <msg>can not find generic variable '%s', assumed value 0\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>014</num>
+    <msg>could not find black box '%s' in circuit\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>015</num>
+    <msg>single connector '%s' (instance '%s') is linked to a vector connector %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>016</num>
+    <msg>vector connector '%s' (instance '%s') is linked to a single connector %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>017</num>
+    <msg>could not find correspondance for transistor '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>018</num>
+    <msg>found a transistor with no name\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>019</num>
+    <msg>could not find correspondance for signal '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>020</num>
+    <msg>can't drive '%s' type in function call\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>021</num>
+    <msg>can't drive pointer type in function call\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>022</num>
+    <msg>can't find figure '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>023</num>
+    <msg>Could not write file %s.gns\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>024</num>
+    <msg>Cannot create file %s.gen\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>025</num>
+    <msg>Can't redirect GENIUS output to '/dev/null'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>026</num>
+    <msg>%s:%d: division by zero\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>027</num>
+    <msg>forbidden operators 'mod', 'rem', '**'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>028</num>
+    <msg>variable %s not found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>029</num>
+    <msg>%s:%d: IF forbidden for GNS\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>030</num>
+    <msg>a variable name was expected for instance '%s', found a number\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>031</num>
+    <msg>generic variable '%s' not define\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>032</num>
+    <msg>Value of '%s' for instance '%s' must be %d, actually %ld\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>033</num>
+    <msg>There should be at least one instance of model '%s' with %s=%d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>034</num>
+    <msg>More than 1 unknown generic variable\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>035</num>
+    <msg>variable '%s' is not defined yet\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>036</num>
+    <msg>%s: can't go thru '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>037</num>
+    <msg>%s: can't find instance '%s' in model\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>038</num>
+    <msg>no corresponding transistor for %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>039</num>
+    <msg>*** %d error(s) detected,  I can't get farther!! ***\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>040</num>
+    <msg>for model instance '%s' can not evaluate left or right bound for connector '%s' l=%d r=%d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>041</num>
+    <msg>no correspondance found for signal '%s(%d)</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>042</num>
+    <msg>Error: %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>043</num>
+    <msg>No model file in library\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>044</num>
+    <msg>Cannot open model file %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>045</num>
+    <msg>no model %s found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>046</num>
+    <msg>unknown connector (%s) declared in symmetric connector list\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>047</num>
+    <msg>invalid mix of vector and bit\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>048</num>
+    <msg>unknown connector (%s) declared in coupled connector list\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>049</num>
+    <msg>Could not find subfigure '%s' in file '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>050</num>
+    <msg>Spice file %s should be a flat transistor netlist\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>060</num>
+    <msg>other errors follow...\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>061</num>
+    <msg>in model '%s', connector '%s' of unexistant instance '%s' must not be linked the model interface\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>062</num>
+    <msg>in model '%s', if connector '%s' of unexistant instance '%s' is not used, it must be linked to a supply\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>063</num>
+    <msg>in model '%s', connector '%s' of unexistant instance '%s' must not be linked to another unexistant instance connector\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>064</num>
+    <msg>Inconsistancies found for instance '%s' of model '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>065</num>
+    <msg>Connector '%s' of instance mismatched with connector '%s' of model\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>066</num>
+    <msg>Inconsistancies found for connector '%s' of instance '%s' with model '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>067</num>
+    <msg>Connector number mismatched\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>068</num>
+    <msg>While parsing correspondance tables, line %d, transistor out of context\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>069</num>
+    <msg>While parsing correspondance tables, line %d, could not find transistor '%s' in original netlist\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>070</num>
+    <msg>While parsing correspondance tables, line %d, signal out of context\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>071</num>
+    <msg>While parsing correspondance tables, line %d, could not find signal '%s' in original netlist\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>072</num>
+    <msg>While parsing correspondance tables, line %d, instance out of context\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>073</num>
+    <msg>While parsing correspondance tables, line %d, could not find instance correspondance '%s' table\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>074</num>
+    <msg>While parsing correspondance tables, line %d, could not find instance correspondance table\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>075</num>
+    <msg>While parsing correspondance tables, line %d, variables out of context\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>076</num>
+    <msg>While parsing correspondance tables, line %d, dictionary entry without dictionary mode\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>077</num>
+    <msg>While parsing correspondance tables, line %d, too many entries in dictionary\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>078</num>
+    <msg>While parsing correspondance tables, line %d ignored\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>079</num>
+    <msg>Could not find instance in model to start search with\nThere should be at least one real instance in the model\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>080</num>
+    <msg>could not find instance '%s' in GNS toplevel instance\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>081</num>
+    <msg>out of bounds with %s and %s started from %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>082</num>
+    <msg>computing error for index=%ld end=%d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>083</num>
+    <msg>parameter discrepancy between %s and %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>084</num>
+    <msg>infinite loop on %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>085</num>
+    <msg>transistor in loop is forbidden\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>086</num>
+    <msg>%s:%d: GNS ignored expansed 'FOR' driven by variable '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>087</num>
+    <msg>several signals connected to connector %s of instance '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>088</num>
+    <msg>vector connector %s connected to single signal %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>089</num>
+    <msg>connector '%s' with several signals\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>090</num>
+    <msg>can not compute destination connector index for '%s', the high bound of signal '%s' is not known yet\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>091</num>
+    <msg>vector connector '%s' connected to one bit signal\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>092</num>
+    <msg>bit number %d is out of bounds for signal %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>093</num>
+    <msg>bit number %d is out of bounds for connector %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>094</num>
+    <msg>transistor type/parameter discrepancy (%s)\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>095</num>
+    <msg>%s:%d: too many parameters for transistor '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>096</num>
+    <msg>%s:%d: a number was expected for instance '%s', found a variable name\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>097</num>
+    <msg>%s:%d: A positive non nul number was expected for instance '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>098</num>
+    <msg>%s:%d: unknown transistor parameter '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>099</num>
+    <msg>instance type/parameter discrepancy (%s)\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>100</num>
+    <msg>too many connectors in instance '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>101</num>
+    <msg>connectors %s and %s mismatch for instances %s and %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>102</num>
+    <msg>not enough connectors in instance '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>103</num>
+    <msg>parameter discrepancy between instances %s and %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>104</num>
+    <msg>%s:%d: a variable name was expected for instance '%s', found a number\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>105</num>
+    <msg>could not find generic variable '%s' in entity variable list\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>106</num>
+    <msg>several signals connected to connector %s of instance %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>107</num>
+    <msg>no search done on connector '%s' signal '%s', model must be a connexe graph\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>108</num>
+    <msg>no search done on signal '%s(%ld)', model must be a connexe graph\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>109</num>
+    <msg>can't compute connector bound for connector '%s'\ncertainly while building a fake instance or transistor\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>110</num>
+    <msg>width mismatch between connector '%s(%d..%d)' and signal '%s(%d..%d)'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>111</num>
+    <msg>Index %d is out of range for signal %s (%d..%d)\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>112</num>
+    <msg>Index %d is out of range for signal %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>113</num>
+    <msg>%s:%d: negative vector bound computed for expression, values are %d and %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>114</num>
+    <msg>no search done on connector '%s(%ld)', model '%s' must be a connexe graph\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>115</num>
+    <msg>connector %s.%s is in coupled list but has no symetric\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>116</num>
+    <msg>no symmetry found for connector %s in coupled connector list\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>117</num>
+    <msg>coupling won't work with vectors ... yet...\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>118</num>
+    <msg>can not find coupled connector for '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>119</num>
+    <msg>could not find connector '%s(%d)' for instance '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>120</num>
+    <msg>while swapping %s and %s, one of the connector did not have coupled connector list while the other has\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>121</num>
+    <msg>Internal limitation. too much symmetric informations.\n\tActual limit is %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>122</num>
+    <msg>same signal in different symmetry list\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>123</num>
+    <msg>same signal in different coupled list\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>124</num>
+    <msg>%s:%d: array of signal '%s' out of bounds with model line %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>125</num>
+    <msg>%s:%d: array doesn't match for '%s' (line model %d)\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>126</num>
+    <msg>%s:%d: connector '%s' is missing in left side of instance\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>127</num>
+    <msg>%s:%d: too many connections in Port Map. Component line %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>128</num>
+    <msg>%s:%d: not enough connections in Port Map. Component line %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>129</num>
+    <msg>%s:%d: %s already excluded\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>130</num>
+    <msg>%s:%d: instance %s doesn't exist in architecture %s of %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>131</num>
+    <msg>%s:%d: INPUT '%s' cannot be connected with OUTPUT '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>132</num>
+    <msg>%s:%d: OUTPUT '%s' cannot be connected with INPUT '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>133</num>
+    <msg>%s:%d: OUTPUT '%s' cannot be connected with INPUT '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>134</num>
+    <msg>%s:%d: only one variable authorized in a 'for' expression. Use Hierarchy!\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>135</num>
+    <msg>%s:%d: forbidden operator '%s' on variable\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>136</num>
+    <msg>%s:%d: division by zero could appear\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>137</num>
+    <msg>%s:%d: a generic isn't needed by model line %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>138</num>
+    <msg>%s:%d: a generic is needed by model line %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>139</num>
+    <msg>%s:%d: not enough variables in component. model ends at line %d with '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>140</num>
+    <msg>%s:%d: type '%s' doesn't match with model line %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>141</num>
+    <msg>%s:%d: too many variables in component. model ends at line %d with '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>142</num>
+    <msg>%s:%d: a port isn't needed by model line %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>143</num>
+    <msg>%s:%d: a port is needed by model line %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>144</num>
+    <msg>%s:%d: a bit is expected for '%s' line %d of model\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>145</num>
+    <msg>%s:%d: size of '%s' mismatches with model line %d\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>146</num>
+    <msg>%s:%d: a vector is expected for '%s' line %d of model\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>147</num>
+    <msg>%s:%d: predefined rule '%s': IN Grid, INOUT Source, INOUT Drain, IN Bulk\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>148</num>
+    <msg>%s:%d: There is no vector in predefined rule '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>149</num>
+    <msg>%s:%d: The predefined entity '%s' don't have a generic\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>150</num>
+    <msg>%s:%d: '%s' must be an external connector\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>151</num>
+    <msg>%s:%d: predefined rule '%s' impossible to use as a transistor name as an entity name\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>152</num>
+    <msg>%s:%d: more than one action defined for entity '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>153</num>
+    <msg>%s:%d: no architecture defined for entity '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>154</num>
+    <msg>%s:%d: too many (>%d) transistors in architecture '%s' to start FCL\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>155</num>
+    <msg>%s:%d: Generate forbidden with transistor in model %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>156</num>
+    <msg>%s:%d: Blackbox with generic variables not implemented yet\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>157</num>
+    <msg>%s:%d: GNS can't start on a pure transistor netlist '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>158</num>
+    <msg>you must explicitly specify the vector range for '%s'\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>159</num>
+    <msg>%s:%d: negative vector index\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>160</num>
+    <msg>%s:%d: vector direction error\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>161</num>
+    <msg>no figure model %s found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>162</num>
+    <msg>%s:%d: %s instance '%s' can't be found\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>163</num>
+    <msg>%s:%d: '%s' used several times,  primary use line %d in file %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>164</num>
+    <msg>%s:%d: variable '%s' not defined\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>165</num>
+    <msg>%s:%d: %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>166</num>
+    <msg>Cannot read file %s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>167</num>
+    <msg>Error executing TCL funcion '%s':\n%s\n</msg>
+    <doc></doc>
+</err>
+<err>
+    <lib>GNS-</lib><num>168</num>
+    <msg>internal: unknown transistor model '%s'\n</msg>
+    <doc></doc>
+</err>
+
+</messages>

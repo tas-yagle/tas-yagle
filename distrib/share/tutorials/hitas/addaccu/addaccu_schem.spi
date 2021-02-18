@@ -1,0 +1,1547 @@
+* schematic of adder/accumulator
+
+.TEMP 70
+.GLOBAL vdd vss
+Vsupply vdd 0 DC 1.1
+Vground vss 0 DC 0
+
+.INCLUDE ../techno/bsim4_dummy.hsp
+
+# standard cell library
+
+.subckt a2_x2 i0 i1 q vdd vss 
+Mtr_00006 q sig2 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 vdd i1 sig2 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig2 i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig2 i0 sig3 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 vss sig2 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig3 i1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends a2_x2
+
+
+.subckt a2_x4 i0 i1 q vdd vss 
+Mtr_00008 q sig4 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 vdd sig4 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 vdd i1 sig4 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 sig4 i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 vss sig4 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 q sig4 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig3 i1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig4 i0 sig3 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends a2_x4
+
+
+.subckt a3_x2 i0 i1 i2 q vdd vss 
+Mtr_00008 sig3 i1 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 vdd i0 sig3 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 q sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 vdd i2 sig3 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig3 i0 sig1 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig1 i1 sig2 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig2 i2 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss sig3 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends a3_x2
+
+
+.subckt a3_x4 i0 i1 i2 q vdd vss 
+Mtr_00010 vdd sig2 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 q sig2 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 vdd i2 sig2 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig2 i1 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 vdd i0 sig2 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 sig2 i0 sig3 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 q sig2 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 vss sig2 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig3 i1 sig4 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig4 i2 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends a3_x4
+
+
+.subckt a4_x2 i0 i1 i2 i3 q vdd vss 
+Mtr_00010 q sig2 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 sig2 i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 vdd i1 sig2 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig2 i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 vdd i3 sig2 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 sig4 i2 sig5 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 vss i0 sig3 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig5 i3 sig2 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig3 i1 sig4 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss sig2 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends a4_x2
+
+
+.subckt a4_x4 i0 i1 i2 i3 q vdd vss 
+Mtr_00013 q sig5 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00012 q sig5 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00011 vdd i3 sig5 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00010 sig5 i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 vdd i1 sig5 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 sig5 i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 q sig5 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 q sig5 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 vss sig5 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig3 i1 sig6 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig4 i3 sig5 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 vss i0 sig3 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig6 i2 sig4 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends a4_x4
+
+
+.subckt ao22_x2 i0 i1 i2 q vdd vss 
+Mtr_00008 sig9 i1 sig2 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 vdd i0 sig9 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 sig2 i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 vdd sig2 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00004 q sig2 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 vss i2 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig3 i1 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 sig2 i0 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends ao22_x2
+
+
+.subckt ao22_x4 i0 i1 i2 q vdd vss 
+Mtr_00010 sig2 i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 vdd i0 sig9 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 sig9 i1 sig2 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 vdd sig2 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 q sig2 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 sig2 i0 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 sig1 i1 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 vss i2 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 vss sig2 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 q sig2 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends ao22_x4
+
+
+.subckt ao2o22_x2 i0 i1 i2 i3 q vdd vss 
+Mtr_00010 sig10 i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 sig11 i2 sig3 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 vdd i3 sig11 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig3 i1 sig10 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 q sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 sig2 i2 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 vss i3 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig2 i0 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig3 i1 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 vss sig3 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends ao2o22_x2
+
+
+.subckt ao2o22_x4 i0 i1 i2 i3 q vdd vss 
+Mtr_00012 q sig1 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00011 vdd sig1 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 sig1 i1 sig11 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 vdd i3 sig10 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 sig10 i2 sig1 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig11 i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 q sig1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 vss sig1 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig1 i1 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig2 i0 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 vss i3 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 sig2 i2 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends ao2o22_x4
+
+
+.subckt buf_x2 i q vdd vss 
+Mtr_00004 q sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00003 vdd i sig3 vdd TP L=0.09U W=0.54U AS=0.0972P AD=0.0972P PS=1.44U 
++ PD=1.44U 
+Mtr_00002 vss sig3 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig3 i vss vss TN L=0.09U W=0.27U AS=0.0486P AD=0.0486P PS=0.9U 
++ PD=0.9U 
+.ends buf_x2
+
+
+.subckt buf_x4 i q vdd vss 
+Mtr_00006 q sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 vdd sig3 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00004 vdd i sig3 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 q sig3 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 vss sig3 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig3 i vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends buf_x4
+
+
+.subckt buf_x8 i q vdd vss 
+Mtr_00010 vdd i sig3 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 vdd sig3 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 q sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 vdd sig3 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 q sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 sig3 i vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 q sig3 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 vss sig3 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 vss sig3 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 q sig3 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends buf_x8
+
+
+.subckt inv_x1 i nq vdd vss 
+Mtr_00002 nq i vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U PD=2.16U 
++ 
+Mtr_00001 vss i nq vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends inv_x1
+
+
+.subckt inv_x2 i nq vdd vss 
+Mtr_00002 nq i vdd vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00001 vss i nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U PD=2.16U 
++ 
+.ends inv_x2
+
+
+.subckt inv_x4 i nq vdd vss 
+Mtr_00004 nq i vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U PD=3.96U 
++ 
+Mtr_00003 vdd i nq vdd TP L=0.09U W=1.26U AS=0.2268P AD=0.2268P PS=2.88U 
++ PD=2.88U 
+Mtr_00002 nq i vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U PD=2.16U 
++ 
+Mtr_00001 vss i nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U PD=2.16U 
++ 
+.ends inv_x4
+
+
+.subckt inv_x8 i nq vdd vss 
+Mtr_00008 nq i vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U PD=3.96U 
++ 
+Mtr_00007 vdd i nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U PD=3.96U 
++ 
+Mtr_00006 vdd i nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U PD=3.96U 
++ 
+Mtr_00005 nq i vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U PD=3.96U 
++ 
+Mtr_00004 vss i nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U PD=2.16U 
++ 
+Mtr_00003 nq i vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U PD=2.16U 
++ 
+Mtr_00002 vss i nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U PD=2.16U 
++ 
+Mtr_00001 nq i vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U PD=2.16U 
++ 
+.ends inv_x8
+
+
+.subckt mx2_x2 cmd i0 i1 q vdd vss 
+Mtr_00012 vdd i0 sig11 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00011 sig4 sig5 sig12 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00010 sig11 cmd sig4 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 sig5 cmd vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 sig12 i1 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 vdd sig4 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 q sig4 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 sig1 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 sig4 sig5 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 vss cmd sig5 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig3 cmd sig4 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 vss i1 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends mx2_x2
+
+
+.subckt mx2_x4 cmd i0 i1 q vdd vss 
+Mtr_00014 sig11 i1 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00013 sig3 cmd vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00012 sig12 cmd sig1 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00011 sig1 sig3 sig11 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00010 vdd i0 sig12 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 q sig1 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 vdd sig1 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 vss i1 sig4 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00006 sig4 cmd sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00005 vss cmd sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 sig1 sig3 sig5 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig5 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 q sig1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss sig1 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends mx2_x4
+
+
+.subckt na2_x1 i0 i1 nq vdd vss 
+Mtr_00004 nq i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 vdd i1 nq vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 vss i0 sig3 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig3 i1 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends na2_x1
+
+
+.subckt na2_x4 i0 i1 nq vdd vss 
+Mtr_00010 sig5 sig4 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 nq sig5 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 vdd sig5 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 sig4 i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 vdd i1 sig4 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 vss sig5 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 nq sig5 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 vss sig4 sig5 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig3 i1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig4 i0 sig3 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends na2_x4
+
+
+.subckt na3_x1 i0 i1 i2 nq vdd vss 
+Mtr_00006 nq i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 nq i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 vdd i1 nq vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig1 i2 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig4 i1 sig1 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss i0 sig4 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends na3_x1
+
+
+.subckt na3_x4 i0 i1 i2 nq vdd vss 
+Mtr_00012 vdd i1 sig2 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00011 sig2 i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00010 vdd i0 sig2 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 vdd sig10 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 sig10 sig2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 nq sig10 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 sig5 i1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 sig2 i0 sig4 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig4 i2 sig5 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 vss sig10 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 nq sig10 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss sig2 sig10 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends na3_x4
+
+
+.subckt na4_x1 i0 i1 i2 i3 nq vdd vss 
+Mtr_00008 vdd i1 nq vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 nq i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 vdd i3 nq vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 nq i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 vss i0 sig1 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig1 i1 sig2 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig2 i2 sig5 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig5 i3 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends na4_x1
+
+
+.subckt na4_x4 i0 i1 i2 i3 nq vdd vss 
+Mtr_00014 vdd i3 sig9 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00013 sig9 i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00012 vdd i1 sig9 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00011 sig9 i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00010 nq sig5 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 vdd sig5 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 vdd sig9 sig5 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig2 i2 sig10 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 sig1 i1 sig2 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 vss i0 sig1 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig10 i3 sig9 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 nq sig5 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 vss sig5 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig5 sig9 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends na4_x4
+
+
+.subckt nao22_x1 i0 i1 i2 nq vdd vss 
+Mtr_00006 vdd i2 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 sig5 i0 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00004 nq i1 sig5 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00003 sig2 i0 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 nq i1 sig2 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig2 i2 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends nao22_x1
+
+
+.subckt nao22_x4 i0 i1 i2 nq vdd vss 
+Mtr_00012 sig10 i1 sig3 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00011 vdd i0 sig10 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00010 sig3 i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 vdd sig3 sig2 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 vdd sig2 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 nq sig2 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 vss i2 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00005 vss sig2 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig1 i1 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig3 i0 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig2 sig3 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 nq sig2 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends nao22_x4
+
+
+.subckt nao2o22_x1 i0 i1 i2 i3 nq vdd vss 
+Mtr_00008 nq i1 sig5 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 sig5 i0 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 sig6 i3 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 vdd i2 sig6 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00004 vss i2 sig1 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig1 i3 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 nq i1 sig1 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig1 i0 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends nao2o22_x1
+
+
+.subckt nao2o22_x4 i0 i1 i2 i3 nq vdd vss 
+Mtr_00014 vdd sig3 sig9 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00013 vdd sig9 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00012 nq sig9 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00011 sig11 i0 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00010 sig12 i3 sig3 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 vdd i2 sig12 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 sig3 i1 sig11 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig9 sig3 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00006 nq sig9 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 vss sig9 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig2 i3 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 vss i2 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig2 i0 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 sig3 i1 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends nao2o22_x4
+
+
+.subckt nmx2_x1 cmd i0 i1 nq vdd vss 
+Mtr_00010 nq sig5 sig7 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 sig6 cmd nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 sig7 i1 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 vdd i0 sig6 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 sig5 cmd vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 sig1 cmd nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 nq sig5 sig4 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 vss i1 sig1 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig4 i0 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss cmd sig5 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends nmx2_x1
+
+
+.subckt nmx2_x4 cmd i0 i1 nq vdd vss 
+Mtr_00016 vdd i0 sig13 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00015 sig1 sig5 sig12 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00014 sig13 cmd sig1 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00013 sig5 cmd vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00012 sig12 i1 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00011 vdd sig1 sig9 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00010 vdd sig9 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 nq sig9 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 sig2 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00007 sig1 sig5 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00006 vss cmd sig5 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00005 sig4 cmd sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 vss i1 sig4 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig9 sig1 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 nq sig9 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss sig9 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends nmx2_x4
+
+
+.subckt no2_x1 i0 i1 nq vdd vss 
+Mtr_00004 sig4 i1 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00003 vdd i0 sig4 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00002 nq i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 vss i1 nq vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends no2_x1
+
+
+.subckt no2_x4 i0 i1 nq vdd vss 
+Mtr_00010 vdd i0 sig5 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 sig5 i1 sig2 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 nq sig4 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 vdd sig4 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 vdd sig2 sig4 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 sig2 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 vss i1 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig4 sig2 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 vss sig4 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 nq sig4 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends no2_x4
+
+
+.subckt no3_x1 i0 i1 i2 nq vdd vss 
+Mtr_00006 sig5 i0 sig3 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 sig3 i1 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00004 vdd i2 sig5 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00003 nq i1 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 nq i2 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 vss i0 nq vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends no3_x1
+
+
+.subckt no3_x4 i0 i1 i2 nq vdd vss 
+Mtr_00012 vdd sig3 sig7 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00011 vdd sig7 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 nq sig7 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 sig6 i2 sig3 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 sig5 i1 sig6 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 vdd i0 sig5 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 nq sig7 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 vss sig7 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig7 sig3 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 vss i1 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig3 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 sig3 i2 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends no3_x4
+
+
+.subckt no4_x1 i0 i1 i2 i3 nq vdd vss 
+Mtr_00008 sig3 i2 sig4 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 sig6 i1 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 sig4 i0 sig6 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 vdd i3 sig3 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00004 nq i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 vss i2 nq vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 vss i1 nq vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 nq i3 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends no4_x1
+
+
+.subckt no4_x4 i0 i1 i2 i3 nq vdd vss 
+Mtr_00014 sig4 i2 sig5 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00013 sig3 i1 sig1 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00012 sig5 i0 sig3 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00011 vdd i3 sig4 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 nq sig12 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 vdd sig12 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 vdd sig1 sig12 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig1 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00006 vss i2 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00005 vss i1 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 sig1 i3 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 nq sig12 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 vss sig12 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig12 sig1 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends no4_x4
+
+
+.subckt noa22_x1 i0 i1 i2 nq vdd vss 
+Mtr_00006 vdd i2 sig4 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 nq i0 sig4 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00004 sig4 i1 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00003 vss i0 sig1 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig1 i1 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 nq i2 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends noa22_x1
+
+
+.subckt noa22_x4 i0 i1 i2 nq vdd vss 
+Mtr_00012 nq sig4 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00011 vdd sig4 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 vdd sig1 sig4 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 sig10 i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 sig10 i0 sig1 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig1 i1 sig10 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 nq sig4 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 sig4 sig1 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 sig2 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig1 i1 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 vss sig4 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss i2 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends noa22_x4
+
+
+.subckt noa2a22_x1 i0 i1 i2 i3 nq vdd vss 
+Mtr_00008 sig5 i1 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 nq i0 sig5 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 vdd i3 sig5 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 sig5 i2 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00004 sig4 i2 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 nq i3 sig4 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig2 i1 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss i0 sig2 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends noa2a22_x1
+
+
+.subckt noa2a22_x4 i0 i1 i2 i3 nq vdd vss 
+Mtr_00014 sig12 i1 sig3 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00013 sig12 i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00012 vdd i3 sig12 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00011 sig3 i0 sig12 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00010 nq sig10 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 vdd sig10 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 vdd sig3 sig10 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig2 i1 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00006 vss i0 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00005 sig4 i2 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 sig3 i3 sig4 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 vss sig10 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 nq sig10 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig10 sig3 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends noa2a22_x4
+
+
+.subckt nts_x1 cmd i nq vdd vss 
+Mtr_00006 vdd i sig5 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 sig5 sig4 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00004 sig4 cmd vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig2 i vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 nq cmd sig2 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss cmd sig4 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends nts_x1
+
+
+.subckt nts_x2 cmd i nq vdd vss 
+Mtr_00010 vdd i sig7 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 sig7 sig9 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 nq sig9 sig5 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 sig5 i vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 vdd cmd sig9 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 nq cmd sig4 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig2 cmd nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 vss i sig2 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig4 i vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 sig9 cmd vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends nts_x2
+
+
+.subckt nxr2_x1 i0 i1 nq vdd vss 
+Mtr_00012 vdd sig10 sig6 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00011 sig6 sig5 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 sig6 i0 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 nq i1 sig6 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 vdd i0 sig5 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig10 i1 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 vss i0 sig2 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 sig2 sig10 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 nq sig5 sig3 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig3 i1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 vss i1 sig10 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 sig5 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends nxr2_x1
+
+
+.subckt nxr2_x4 i0 i1 nq vdd vss 
+Mtr_00016 sig9 i1 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00015 vdd i0 sig1 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00014 nq sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00013 vdd sig3 nq vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00012 sig3 sig9 sig6 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00011 sig6 i0 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 sig6 sig1 sig3 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 vdd i1 sig6 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 nq sig3 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 vss sig3 nq vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 sig1 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00005 vss i1 sig9 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 sig4 sig9 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig3 sig1 sig4 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig5 i1 sig3 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss i0 sig5 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends nxr2_x4
+
+
+.subckt o2_x2 i0 i1 q vdd vss 
+Mtr_00006 q sig2 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 vdd i0 sig5 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00004 sig5 i1 sig2 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00003 vss i1 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig2 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 q sig2 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends o2_x2
+
+
+.subckt o2_x4 i0 i1 q vdd vss 
+Mtr_00008 vdd sig1 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 q sig1 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 vdd i0 sig5 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00005 sig5 i1 sig1 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00004 vss sig1 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 vss i1 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig1 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 q sig1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends o2_x4
+
+
+.subckt o3_x2 i0 i1 i2 q vdd vss 
+Mtr_00008 q sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 sig6 i2 sig3 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00006 sig5 i1 sig6 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00005 vdd i0 sig5 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00004 vss sig3 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 vss i1 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig3 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 sig3 i2 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends o3_x2
+
+
+.subckt o3_x4 i0 i1 i2 q vdd vss 
+Mtr_00010 q sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 q sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 vdd i0 sig5 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00007 sig5 i1 sig6 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00006 sig6 i2 sig3 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00005 q sig3 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 vss sig3 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig3 i2 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig3 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 vss i1 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends o3_x4
+
+
+.subckt o4_x2 i0 i1 i2 i3 q vdd vss 
+Mtr_00010 sig5 i3 sig1 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00009 sig4 i1 sig5 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00008 sig7 i0 sig4 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00007 vdd i2 sig7 vdd TP L=0.09U W=1.35U AS=0.243P AD=0.243P PS=3.06U 
++ PD=3.06U 
+Mtr_00006 vdd sig1 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 sig1 i2 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 vss i3 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 vss i0 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig1 i1 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 q sig1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends o4_x2
+
+
+.subckt o4_x4 i0 i1 i2 i3 q vdd vss 
+Mtr_00012 vdd i3 sig7 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00011 sig5 i0 sig4 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 sig4 i1 sig2 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 sig7 i2 sig5 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 vdd sig2 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00007 q sig2 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 sig2 i3 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00005 vss i1 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 vss i2 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig2 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 q sig2 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss sig2 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends o4_x4
+
+
+.subckt oa22_x2 i0 i1 i2 q vdd vss 
+Mtr_00008 sig1 i1 sig9 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig9 i0 sig1 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 sig9 i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 vdd sig1 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00004 sig1 i1 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig3 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 vss i2 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 q sig1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends oa22_x2
+
+
+.subckt oa22_x4 i0 i1 i2 q vdd vss 
+Mtr_00010 sig9 i2 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 sig9 i0 sig1 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 sig1 i1 sig9 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 vdd sig1 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 q sig1 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 vss i2 sig1 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 sig4 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig1 i1 sig4 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 vss sig1 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 q sig1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends oa22_x4
+
+
+.subckt oa2a22_x2 i0 i1 i2 i3 q vdd vss 
+Mtr_00010 sig11 i1 sig3 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 sig11 i3 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 vdd i2 sig11 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig3 i0 sig11 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 q sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00005 sig2 i1 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 vss i0 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig4 i3 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig3 i2 sig4 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 vss sig3 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends oa2a22_x2
+
+
+.subckt oa2a22_x4 i0 i1 i2 i3 q vdd vss 
+Mtr_00012 q sig4 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00011 vdd sig4 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 sig4 i0 sig11 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 vdd i2 sig11 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 sig11 i3 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig11 i1 sig4 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 vss sig4 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 q sig4 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig4 i2 sig3 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig3 i3 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 vss i0 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 sig2 i1 sig4 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends oa2a22_x4
+
+
+.subckt one_x0 q vdd vss 
+Mtr_00001 q vss vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends one_x0
+
+
+.subckt rowend_x0 vdd vss 
+.ends rowend_x0
+
+
+.subckt sff1_x4 ck i q vdd vss 
+Mtr_00026 sig17 q vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00025 sff_s ckr sig17 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00024 y nckr sff_s vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00023 sff_m nckr sig16 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00022 sig16 y vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00021 sig15 ckr sff_m vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00020 nckr ck vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00019 vdd nckr ckr vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00018 u i vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U PD=2.16U 
+Mtr_00017 vdd u sig15 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00016 vdd sff_s q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00015 q sff_s vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00014 y sff_m vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00013 sig12 nckr sff_s vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00012 vss q sig12 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00011 sff_s ckr y vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00010 vss y sig9 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00009 sig9 ckr sff_m vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00008 sff_m nckr sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00007 ckr nckr vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00006 vss ck nckr vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00005 sig2 u vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 vss i u vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U PD=1.26U 
++ 
+Mtr_00003 q sff_s vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 vss sff_s q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 y sff_m vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends sff1_x4
+
+
+.subckt sff2_x4 ck cmd i0 i1 q vdd vss 
+Mtr_00034 vdd sff_s q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00033 vdd u sig22 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00032 y sff_m vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00031 q sff_s vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00030 nckr ck vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00029 vdd nckr ckr vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00028 u sig5 sig20 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00027 sig21 cmd u vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00026 sig20 i1 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00025 sig5 cmd vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00024 vdd i0 sig21 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00023 sig22 ckr sff_m vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00022 sff_m nckr sig23 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00021 sig23 y vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00020 y nckr sff_s vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00019 sff_s ckr sig24 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00018 sig24 q vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00017 sig9 u vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00016 q sff_s vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00015 vss sff_s q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00014 y sff_m vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00013 vss ck nckr vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00012 ckr nckr vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00011 vss i1 sig2 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00010 u sig5 sig4 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00009 sig2 cmd u vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00008 sig4 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00007 vss cmd sig5 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00006 sff_m nckr sig9 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00005 sig15 ckr sff_m vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 vss y sig15 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sff_s ckr y vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 sig18 nckr sff_s vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 vss q sig18 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends sff2_x4
+
+
+.subckt tie_x0 vdd vss 
+.ends tie_x0
+
+
+.subckt ts_x4 cmd i q vdd vss 
+Mtr_00012 sig3 cmd vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00011 q sig6 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 sig6 i vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00009 sig6 sig3 sig4 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00008 vdd cmd sig6 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 vdd sig6 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00006 q sig4 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 vss sig4 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 sig3 cmd vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 sig6 cmd sig4 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 vss sig3 sig4 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 sig4 i vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends ts_x4
+
+
+.subckt ts_x8 cmd i q vdd vss 
+Mtr_00016 sig4 i vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00015 q sig4 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00014 sig7 cmd vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00013 vdd cmd sig4 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00012 sig4 sig7 sig6 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00011 vdd sig4 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 q sig4 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 vdd sig4 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 vss sig6 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 q sig6 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 sig4 cmd sig6 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00005 sig7 cmd vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 sig6 i vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00003 vss sig7 sig6 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00002 q sig6 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss sig6 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends ts_x8
+
+
+.subckt xr2_x1 i0 i1 q vdd vss 
+Mtr_00012 vdd i1 sig6 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00011 sig6 sig5 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 sig6 i0 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 q sig9 sig6 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 vdd i0 sig5 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 sig9 i1 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 vss i0 sig2 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00005 sig2 i1 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00004 q sig5 sig3 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig3 sig9 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 vss i1 sig9 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00001 sig5 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+.ends xr2_x1
+
+
+.subckt xr2_x4 i0 i1 q vdd vss 
+Mtr_00016 sig10 i1 vdd vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00015 vdd i0 sig1 vdd TP L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00014 q sig3 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00013 vdd sig3 q vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00012 sig3 i1 sig7 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00011 sig7 i0 vdd vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00010 sig7 sig1 sig3 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00009 vdd sig10 sig7 vdd TP L=0.09U W=1.8U AS=0.324P AD=0.324P PS=3.96U 
++ PD=3.96U 
+Mtr_00008 q sig3 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00007 vss sig3 q vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00006 sig1 i0 vss vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00005 vss i1 sig10 vss TN L=0.09U W=0.45U AS=0.081P AD=0.081P PS=1.26U 
++ PD=1.26U 
+Mtr_00004 sig4 i1 vss vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00003 sig3 sig1 sig4 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00002 sig5 sig10 sig3 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+Mtr_00001 vss i0 sig5 vss TN L=0.09U W=0.9U AS=0.162P AD=0.162P PS=2.16U 
++ PD=2.16U 
+.ends xr2_x4
+
+
+.subckt addaccu a[0] a[1] a[2] a[3] b[0] b[1] b[2] b[3] sel ck s[0] s[1] s[2] 
++ s[3]  
+xl3 ck s[3] regout_3 vdd vss sff1_x4
+xmux3 sel a[3] regout_3 mux_3 vdd vss mx2_x2
+xl2 ck s[2] regout_2 vdd vss sff1_x4
+xmux2 sel a[2] regout_2 mux_2 vdd vss mx2_x2
+xl1 ck s[1] regout_1 vdd vss sff1_x4
+xmux1 sel a[1] regout_1 mux_1 vdd vss mx2_x2
+xl0 ck s[0] regout_0 vdd vss sff1_x4
+xmux0 sel a[0] regout_0 mux_0 vdd vss mx2_x2
+xn10 sel nsel vdd vss inv_x1
+xxr6 int_9 carry_2 s[3] vdd vss xr2_x1
+xxr5 mux_3 b[3] int_9 vdd vss xr2_x1
+xan8 int_6 int_7 int_8 carry_2 vdd vss o3_x2
+xan7 b[2] carry_1 int_8 vdd vss a2_x2
+xan6 mux_2 carry_1 int_7 vdd vss a2_x2
+xan5 mux_2 b[2] int_6 vdd vss a2_x2
+xxr4 int_5 carry_1 s[2] vdd vss xr2_x1
+xxr3 mux_2 b[2] int_5 vdd vss xr2_x1
+xan4 int_2 int_3 int_4 carry_1 vdd vss o3_x2
+xan3 b[1] carry_0 int_4 vdd vss a2_x2
+xan2 mux_1 carry_0 int_3 vdd vss a2_x2
+xan1 mux_1 b[1] int_2 vdd vss a2_x2
+xxr2 int_1 carry_0 s[1] vdd vss xr2_x1
+xxr1 mux_1 b[1] int_1 vdd vss xr2_x1
+xan0 mux_0 b[0] carry_0 vdd vss a2_x2
+xxr0 mux_0 b[0] s[0] vdd vss xr2_x1
+.ends addaccu
+

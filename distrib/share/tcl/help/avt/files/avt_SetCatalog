@@ -1,0 +1,12 @@
+
+       void avt_SetCatalog(List *argv);
+
+DDEESSCCRRIIPPTTIIOONN
+       Sets the leaves when flattening a netlist to catal level; equivalent to
+       create a CATAL file
+
+AARRGGUUMMEENNTTSS
+       aarrggvv          List of subcircuits that will be used as leaves
+
+       EEXXAAMMPPLLEE       _a_v_t___S_e_t_C_a_t_a_l_o_g _[_l_i_s_t _"_n_a_n_d_2_" _"_i_n_v_" _]
+

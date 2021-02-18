@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>CPU2901</title>
+<section niv='2'><title>Design Description</title>
+<p>This example presents &tool; database construction, case analysis, OCV, Xtalk analysis, based upon a small 4-bit microprocessor design.</p>
+<p>It takes place in the <f>cpu2901/</f> directory. </p>
+<imgsize namehtml="amd2901.gif" namepdf="amd2901.gif" wpdf="340pt"/>
+</section>
+<section niv='2'><title>Database Generation</title>
+<section niv='3'><title>Global Configuration</title>
+<p>The complete configuration required for the database generation takes place in the <f>db.tcl</f>. The script also launches the commands that effectively generate that database. </p>
+<p>Configuration variables are set in the Tcl script by the mean of the <f>avt_config</f> function.</p>
+<glossary>
+<row type='split'><article><f>avt_config tasGenerateConeFile yes</f></article>
+<def>tells the tool to dump on disk the .cns file, which contains the partitions (the cones) created by the partitioning algorithm.</def></row>
+<row type='split'><article><f>inf_SetFigureName cpu2901</f></article>
+<def>tells the tool to apply the SDC constraints to the cpu design.  </def></row>
+<row type='split'><article><f>set_case_analysis 0 test</f></article>
+<def>Applies a 0 constraint on the pin <f>test</f></def></row>
+<row type='split'><article><f>set_case_analysis 1 func</f></article>
+<def>Applies a 1 constraint on the pin <f>func</f></def></row>
+</glossary>
+<p>The temperature and supplies specifications take place in the <f>cpu2901.spi</f> file:</p>
+<code>
+<cl>.TEMP 125</cl>
+<cl>.GLOBAL vdd vss</cl>
+<cl>Vsupply vdd 0 DC 1.62</cl>
+<cl>Vground vss 0 DC 0</cl>
+</code>
+<p>As the <f>cpu2901.spi</f> subcircuit is not instantiated, the <f>vdd</f> and <f>vss</f> signals appear in the <f>.GLOBAL</f>
+statement.</p>
+</section>
+
+<section niv='3'><title>Database Generation</title>
+<p>The generation launch is done through the command hitas:</p>
+<code>
+<cl>avt_LoadFile cpu2901.spi</cl>
+<cl>set fig [hitas cpu2901] </cl>
+</code>
+</section>
+
+</section>
+
+<section niv='2'><title>Database Analysis</title>
+<section niv='3'><title>Path Searching with the Tcl Interface</title>
+<p>The complete configuration required for the database browsing takes place in the <f>report.tcl</f>. </p>
+<p>The command:</p>
+<code>set fig [ttv_LoadSpecifiedTimingFigure cpu2901]</code>
+<p>reads the timing database from disk.</p>
+<p>The command:</p>
+<code>set clist [ttv_GetPaths $fig * * rr 5 critic path max]</code>
+<p>gives the 5 most critical paths (<f>critic</f> and <f>path</f> arguments) of the design, that begin and end on a rising transition (<f>rr</f> argument), with no specification of signal name (<f>* *</f> arguments), in the database pointed out by <f>$fig</f>. The function returns a pointer on the newly created list.</p>
+<p>The command:</p>
+<code>ttv_DisplayPathListDetail $log $clist</code>
+<p>displays in the log file the detail of all the paths of the path list given by the <f>ttv_GetPaths</f> function.</p>
+</section>
+
+</section>
+
+<section niv='2'><title>Timing Checks</title>
+<p>The complete configuration required for stability analysis takes place in the <f>sta.tcl</f>.</p>
+<section niv='3'><title>Timing Constraints</title>
+<p>Timing constraints are set in SDC format. Let's review the constraints commands applied to the cpu2901:</p>
+<glossary>
+
+<row type='split'><article><f>inf_SetFigureName cpu2901</f></article>
+<def> tells the tool to apply the SDC constraints to the design cpu2901.</def></row>
+
+<row type='split'><article><f>create_clock -period 10000 -waveform {5000 0} ck</f></article>
+<def>Creates of clock of period 10000</def></row>
+
+<row type='split'><article><f>set_input_delay -min 2000 -clock ck -clock_fall [all_inputs]</f></article>
+<def></def></row>
+<row type='split'><article><f>set_input_delay -max 3000 -clock ck -clock_fall [all_inputs]</f></article>
+<def>Defines a switching window between times 2000 and 3000 on the input connectors</def></row>
+
+</glossary>
+</section>
+
+<section niv='3'><title>STA</title>
+<p>Launch of the static timing analysis is done by invoking the following commands:</p>
+<p>As before, the command:</p>
+<code>set fig [ttv_LoadSpecifiedTimingFigure cpu2901]</code>
+<p>reads the timing database from disk.</p>
+<p>The command:</p>
+<code>set stbfig [stb $fig]</code>
+<p>launches the STA</p>
+<p>The function:</p>
+<code>
+<cl>stb_DisplaySlackReport [fopen slack.rep w] $fig * * ?? 10  all 10000</cl>
+</code>
+<p>displays a global slack report in the file <f>slack.rep</f>.</p>
+</section>
+
+<section niv='3'><title>OCV</title>
+<p>Comment out the command <f>inf_DefinePathDelayMargin</f> and observe the differences in the slack file. This command adds a margin of 1ns on all data paths</p>
+</section>
+
+<section niv='3'><title>Crosstalk Analysis</title>
+<p>Launch of the crosstalk analysis is done by invoking the following commands (script <f>xtalk.tcl</f>):</p>
+<p>As before, the command:</p>
+<code>set fig [ttv_LoadSpecifiedTimingFigure cpu2901]</code>
+<p>reads the timing database from disk.</p>
+<p>The crosstalk analysis is activated by switching on the following variables:</p>
+<code>
+<cl>avt_config stbDetailedAnalysis yes</cl>
+<cl>avt_config stbCrosstalkMode yes</cl>
+</code>
+
+<p>The command:</p>
+<code>set stbfig [stb $fig]</code>
+<p>launches the crosstalk-aware STA</p>
+<p>The function:</p>
+<code>
+<cl>stb_DisplaySlackReport [fopen slack_xtalk.rep w] $fig * * ?? 10  all 10000</cl>
+</code>
+<p>prints a global slack report in the file <f>slack_xtalk.rep</f>, displaying variations due to crosstalk effects.</p>
+</section>
+
+
+</section>
+
+</section>
+
+</chapter>
+

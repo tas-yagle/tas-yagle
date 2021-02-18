@@ -1,0 +1,19 @@
+
+       void   avt_DisplayNetlistHierarchy(FILE   *f,  char  *netlistname,  int
+       maxdepth);
+
+DDEESSCCRRIIPPTTIIOONN
+       Displays hierarchy information of a given netlist, and other info  such
+       as number of transistors
+
+AARRGGUUMMEENNTTSS
+       ff             Pointer  on the file where to save information, for stan-
+                     dard output set _s_t_d_o_u_t
+
+       nneettlliissttnnaammee   Pointer on the netlist
+
+       mmaaxxddeepptthh      Maximum hierarchical depth coming from top level; can  be
+                     set to 0 for infinite depth
+
+       EEXXAAMMPPLLEE       _a_v_t___D_i_s_p_l_a_y_N_e_t_l_i_s_t_H_i_e_r_a_r_c_h_y _s_t_d_o_u_t _"_m_y___d_e_s_i_g_n_" _3
+

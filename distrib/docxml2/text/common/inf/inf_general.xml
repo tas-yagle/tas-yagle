@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<section niv='3'><title>General</title>
+
+<p>It is necessary to specify the design name. This is done by using the section "name". Optionally, a version
+for the information file can be given.</p>
+<code>
+<cl>NAME mysubckt;</cl>
+<cl>VERSION 1.2;</cl>
+</code>
+
+</section>
+
+

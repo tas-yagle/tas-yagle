@@ -1,0 +1,11 @@
+
+         ttv_FreeConstraints <allobj> ;
+
+DDEESSCCRRIIPPTTIIOONN
+       Frees the constraints.
+
+AARRGGUUMMEENNTTSS
+       aalllloobbjj        Constraint objects to free
+
+       EEXXAAMMPPLLEE       _t_t_v___F_r_e_e_C_o_n_s_t_r_a_i_n_t_s _$_m_y_c_o_n_s_t_r_a_i_n_t_s
+

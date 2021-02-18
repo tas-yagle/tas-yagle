@@ -1,0 +1,14 @@
+
+       void ctk_SortCtkStatLine(StabilityFigure *stbfig, char *criterion);
+
+DDEESSCCRRIIPPTTIIOONN
+       Sorts crosstalk delay statistics according to various criteria
+
+AARRGGUUMMEENNTTSS
+       ssttbbffiigg        Pointer on a stability figure
+
+       ccrriitteerriioonn     _A_B_S_O_L_U_T_E___D_E_L_A_Y,  _A_B_S_O_L_U_T_E___M_A_X___D_E_L_A_Y,  _A_B_S_O_L_U_T_E___M_I_N___D_E_L_A_Y,
+                     _R_E_L_A_T_I_V_E___D_E_L_A_Y,  _R_E_L_A_T_I_V_E___M_A_X___D_E_L_A_Y,  _R_E_L_A_T_I_V_E___M_I_N___D_E_L_A_Y,
+                     _A_B_S_O_L_U_T_E___S_L_O_P_E,  _A_B_S_O_L_U_T_E___M_A_X___S_L_O_P_E,  _A_B_S_O_L_U_T_E___M_I_N___S_L_O_P_E,
+                     _R_E_L_A_T_I_V_E___S_L_O_P_E, _R_E_L_A_T_I_V_E___M_A_X___S_L_O_P_E or _R_E_L_A_T_I_V_E___M_I_N___S_L_O_P_E.
+

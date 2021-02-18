@@ -1,0 +1,14 @@
+
+       BehavioralFigure *avt_LoadBehavior(char *filename, char *format);
+
+DDEESSCCRRIIPPTTIIOONN
+       Loads  behavioral  descriptions  and  construct internal representation
+       according to the file format
+
+AARRGGUUMMEENNTTSS
+       ffiilleennaammee      File to be loaded
+
+       ffoorrmmaatt        Available formats are _v_h_d_l and _v_e_r_i_l_o_g
+
+       EEXXAAMMPPLLEE       _a_v_t___L_o_a_d_F_i_l_e _m_o_d_e_l_._v _v_e_r_i_l_o_g
+

@@ -1,0 +1,14 @@
+
+       void inf_DefineRS(char *name, char *type);
+
+DDEESSCCRRIIPPTTIIOONN
+       Allows  control  of how individual RS are handled. Overrides the global
+       setting in yagAutomaticRSDetection.
+
+AARRGGUUMMEENNTTSS
+       nnaammee          Signal's name, either the set or the reset one is enough.
+
+       ttyyppee          LEGAL, ILLEGAL or MARK_ONLY.
+
+       EEXXAAMMPPLLEE       _i_n_f___D_e_f_i_n_e_R_S _r_s_n_o_d_e _"_L_E_G_A_L_"
+

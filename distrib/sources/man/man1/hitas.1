@@ -1,0 +1,54 @@
+.TH HITAS 1 "06 November 2001" "AVERTEC" "AVERTEC CAD Tools"
+
+.SH NAME
+.PP
+\fBhitas\fP \- A switch level hierarchical static timing analyzer for CMOS circuits
+
+.so man1/avt_origin.1
+
+.SH SYNOPSIS
+.PP
+hitas \fI[options] root_file \fP
+
+.SH DESCRIPTION
+.PP
+See the man \fBtas\fP(1).
+
+.br
+\fBhitas\fP assumes that the circuit under study is hierarchical.
+
+
+.SH NOTES
+\fBhitas\fP is equivalent to \fBtas\fP with the -hr option. 
+For more information see the man of \fBtas\fP, both
+tools are identicals in regards of technicals informations.
+.br
+
+
+.SH OPTIONS
+.PP
+
+Options may appear in  any  order before or after the
+input filename.
+Options called with one single letter can be concatenated
+(\fB-bei\fP for instance).
+
+
+\fBhitas\fP has the same options as \fBtas\fP safe that the options
+of \fBtas\fP incompatible with the -hr option is not availlable for
+\fBhitas\fP.
+
+.SH ENVIRONMENT VARIABLES
+.PP
+\fBhitas\fP  has the same varialbes as \fBtas\fP.
+
+.SH OUTPUT FILES
+.PP
+\fBhitas\fP has the same outputs as \fBtas\fP.
+
+.SH SEE ALSO
+.PP
+     tas(1), xtas(1), etas(1), yagle(1), dtv(5), ttv(5), inf(5), fcl(5)
+
+.so man1/avt_bug_report.1
+

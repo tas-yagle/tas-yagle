@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<chapter>
+<section niv='1'><title>Lab1. Combinational Circuit</title>
+<section niv='2'><title>Design Description</title>
+<p>This lab presents &tool; database construction, database browsing concepts and simulation, based upon a combinatorial design.</p>
+<p>The current lab takes place in the <f>lab1_comb/</f> directory. </p>
+</section>
+
+<section niv='2'><title>Log File</title>
+<p>The script <f>db.tcl</f> performs the database construction in the same way than the previous lab.
+It also presents how to generate a customizable log file.</p>
+<p>The two following variables configure the log file:</p>
+<glossary>
+<row type='split'><article><f>avtLogFile</f></article><def>name of the log file</def></row>
+<row type='split'><article><f>avtLogEnable</f></article><def>enables the logging of different software components</def></row>
+</glossary>
+<p>See HiTas Reference Guide for further details.</p>
+</section>
+
+<section niv='2'><title>Path Searching with the Tcl Interface</title>
+<p>The complete configuration required for the database browsing takes place in the <f>report.tcl</f>. </p>
+<p>The command:</p>
+<code>set fig [ttv_LoadSpecifiedTimingFigure comb]</code>
+<p>reads the timing database from disk (as said before, the re-reading of the database can be avoided by directly taking as an input the return value of the <f>hitas</f> function. For the sake of clarity, and because we are dealing with small timing databases, we preferred to split different verification steps into different scripts).</p>
+<p>The command:</p>
+<code>set paths [ttv_GetPaths $fig i0 * ?? 1 critic path max]</code>
+<p>gives the critical path (<f>critic</f> and <f>path</f> arguments) of the design, that begin on the pin i0, with no specification of the end signal name (<f>*</f> argument), in the database pointed out by <f>$fig</f>. The function returns a pointer on the newly created list.</p>
+<p>The command:</p>
+<code>ttv_DisplayPathList $log $path</code>
+<p>displays in the log file the paths of the path list given by the <f>ttv_GetPaths</f> function.</p>
+</section>
+<p>The command:</p>
+<code>set para_path [ttv_GetParallelPaths $path 2]</code>
+<p>gives the parallel paths of the design, that begin on the pin i0, with no specification of the end signal name (<f>*</f> argument), in the database pointed out by <f>$fig</f>. The function returns a pointer on the newly created list.</p>
+<p>The command:</p>
+<code>ttv_DisplayPathListDetail $log $para_path</code>
+<p>displays in the log file the detail of all the paths of the path list given by the <f>ttv_GetParallelPaths</f> function.</p>
+<p>The command:</p>
+<code>set charac_path [ttv_CharacPaths $fig 200e-12 i0 * ?? 1 critic path max 100.0e-15 1]</code>
+<p>gives the critical path (<f>critic</f> and <f>path</f> arguments) of the design, that begin on the pin i0, with another input slope and another output capacitance. The function returns a pointer on the newly created list.</p>
+<p>The command:</p>
+<code>set probe_delay [ttv_ProbeDelay $fig -1 {i0 s5} dd 1 path max]</code>
+<p>gives the path of the design, that begin on the pin i0(falling) and end on the net s5(falling), with no recomputation. The function returns a pointer on the newly created list.</p>
+<p>To get these paths, launch the script <f>report.tcl</f>.</p>
+</section>
+
+<section niv='2'><title>Path Searching with the GUI</title>
+<p>Database can also be accessed with the xtas GUI. To launch the GUI, type in command line:</p>
+<code># xtas</code>
+<p>Open the database <f>comb.ttx</f> (the <f>comb.stm</f> file will be loaded for SI analysis, and the <f>comb.dtx</f> file will be loaded if a request for the detail of a timing path is done). Open the database from the menu:</p>
+<code>&gt; File &gt; Open</code>
+<p>To get the critical paths of the design, select in the menu:</p>
+<code>&gt; Tools &gt; Get Paths</code>
+<p>This will open the "Get Paths" window. The default configuration will give the 10 max paths, from any input connector to any breakpoint element, and from any breakpoint element to any output connector. </p>
+<code>&gt; OK</code>
+<p>This will open the window "Paths Window".</p>
+<p>To get the detail of a path, select a path, and select in the menu:</p>
+<code>&gt; Tools &gt; Path Detail</code>
+<p>This will open a new window "Get Detail Paths".</p>
+<code>&gt; OK</code>
+<p>This will open the "Path Detail Window".</p>
+</section>
+
+
+
+
+
+
+<section niv='2'><title>Path Simulation</title>
+<p>This lab shows explains the hypothesis and limitations inherent to Static Timing Analysis. It 
+also illustrates the timing modeling of &tool;. It gives guidelines for the use of the
+Critical Path Extraction (CPE) feature of &tool;, which allows to make pertinent comparisons
+between &tool; STA results and a dynamic simulation.</p>
+<p>This lab is based upon the combinational design.</p>
+
+<section niv='3'><title>Path Simulation</title>
+<p>The CPE engine is dedicated to validate the timing results given by &tool;, with regard
+to the hypothesis made for static timing analysis. Indeed, the electrical state of the surrounding
+logic is explicitely set by CPE: the input patterns are set in the SPICE deck in order
+to propagate the transitions in the same way &tool; does. The CPE feature is ideal to validate
+&tool; modeling and make pertinent comparisons (it also set input waveforms as hyperbolic tangents,
+in the same way &tool; interprets them.)</p>
+<p>The <f>simu.tcl</f> script performs the following steps:</p>
+<list>
+<item>Loading of the timing database previously generated</item>
+<item>Searching for max critical path in the design</item>
+<item>Generating the SPICE deck for the path</item>
+<item>Optionally simulating the SPICE deck and retrieving results</item>
+</list>
+<p>If Titan electrical simulator is available in the training labs, set the following variables:</p>
+<code>
+<cl>avt_config avtSpiceString "titan $"</cl>
+</code>
+<code>
+<cl>avt_config SimToolModel titan</cl>
+</code>
+</section>
+
+<section niv='3'><title>Exercises</title>
+<list>
+<item>Ex 4.1. Launch the <f>simu.tcl</f> script and observe the generated files</item>
+</list>
+</section>
+
+</section>
+</chapter>
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<glossary>
+
+<row type='split'><article><index>tasTreatPrecharge</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Precharged signals are also considered as precharged if its 
+name is suffixed by <f>_p</f> or if it is declared in the INF file. To be used only in the flat analysis mode.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasMemoryCharacterization</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Default, &tool; adds the latches' intrinsic setup, hold and access 
+delays</def></row>
+<row><article><f>no</f></article><def></def></row>
+</glossary>
+</def></row>
+
+<row type='split'><article><index>tasPreserveConnectorsDirection</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Preserve connectors direction if there are level 
+constraints on connectors.</def></row>
+<row><article><f>no</f></article><def></def></row>
+</glossary>
+</def></row>
+
+
+</glossary>

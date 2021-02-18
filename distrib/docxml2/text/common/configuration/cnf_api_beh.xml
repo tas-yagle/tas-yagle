@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<glossary>
+<row type="split"><article><index>apiDriveCorrespondenceTable</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Correspondence table between behavioral names and electrical names 
+has to be driven (<f>.cor</f> file)</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>apiUseCorrespondenceTable</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>Use the signal correspondance to revert the driven signals to their
+corresponding name in the original netlist. It removes the artificially created GNS hierarchical names.</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+<row type="split"><article><index>apiDriveAllBehavior</index></article><def>
+<glossary width='small'>
+<row><article><f>yes</f></article><def>All the generated behaviors will be driven.</def></row> 
+<row><article><f>onlymodel</f></article><def>Only the first instance of each model will be driven</def></row>
+<row><article><f>no</f></article><def>Default</def></row>
+</glossary>
+</def></row>
+
+</glossary>
