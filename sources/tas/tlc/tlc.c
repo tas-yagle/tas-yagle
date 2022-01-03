@@ -35,24 +35,24 @@ float TLC_MINSCALE_RESIFACTOR = 1.0;
 float TLC_CAPAFACTOR = 1.0;
 float TLC_RESIFACTOR = 1.0;
 
-inline void tlc_setmaxfactor()
+void tlc_setmaxfactor()
 {
  TLC_RESIFACTOR = TLC_MAXSCALE_RESIFACTOR ;
  TLC_CAPAFACTOR = TLC_MAXSCALE_CAPAFACTOR ;
 }
 
-inline void tlc_setminfactor()
+void tlc_setminfactor()
 {
  TLC_RESIFACTOR = TLC_MINSCALE_RESIFACTOR ;
  TLC_CAPAFACTOR = TLC_MINSCALE_CAPAFACTOR ;
 }
 
-inline float tlc_getcapafactor()
+float tlc_getcapafactor()
 {
  return(TLC_CAPAFACTOR) ;
 }
 
-inline float tlc_getresifactor()
+float tlc_getresifactor()
 {
  return(TLC_RESIFACTOR) ;
 }
