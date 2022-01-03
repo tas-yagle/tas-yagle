@@ -40,10 +40,10 @@ extern float TLC_MINSCALE_RESIFACTOR;
 
 /* Informations on locon */
 
-inline void     tlc_setmaxfactor        __P(( void )) ;
-inline void     tlc_setminfactor        __P(( void )) ;
-inline float    tlc_getcapafactor       __P(( void )) ;
-inline float    tlc_getresifactor       __P(( void )) ;
+extern void     tlc_setmaxfactor        __P(( void )) ;
+extern void     tlc_setminfactor        __P(( void )) ;
+extern float    tlc_getcapafactor       __P(( void )) ;
+extern float    tlc_getresifactor       __P(( void )) ;
 extern void     tlcenv                  __P(( void )) ;
 extern void     tlc_mergeloconparam     __P(( locon_list*, locon_list* ));
 extern void            tlc_setloconparam       __P(( locon_list*, float ));

@@ -51,7 +51,7 @@ int getradindex(char *name)
   return curradindex-1;
 }
 
-inline char *fastradical(locon_list *lc)
+char *fastradical(locon_list *lc)
 {
   Pnode2Radical *r;
   r=(Pnode2Radical *)&lc->PNODE;
@@ -59,7 +59,7 @@ inline char *fastradical(locon_list *lc)
   return radtable[r->radindex];
 }
 
-inline int fastindex(locon_list *lc)
+int fastindex(locon_list *lc)
 {
   Pnode2Radical *r;
   r=(Pnode2Radical *)&lc->PNODE;
