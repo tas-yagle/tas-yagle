@@ -435,7 +435,7 @@ void stb_DisplaySetupTimeReport (FILE *f, stbdebug_list *max, char datadir)
   avt_fprintf(f, "\n");
 
   if (val!=DBL_MAX)
-    avt_fprintf(f, DEC"SETUP        : %s%s¤.\n", val<0?"¤6":"", FormaT(val*DISPLAY_time_unit, buf, DISPLAY_time_format));
+    avt_fprintf(f, DEC"SETUP        : %s%s" AVT_RESET "\n", val<0? AVT_RED :"", FormaT(val*DISPLAY_time_unit, buf, DISPLAY_time_format));
   else
     avt_fprintf(f, DEC"SETUP        : none\n");
 }
@@ -529,7 +529,7 @@ void stb_DisplayHoldTimeReport (FILE *f, stbdebug_list *max, char datadir)
     avt_fprintf(f, " (%s - %s)", FormaT(mindd*DISPLAY_time_unit, buf1, DISPLAY_time_format), FormaT(sub*DISPLAY_time_unit, buf, DISPLAY_time_format));
   avt_fprintf(f, "\n");
   if (val!=DBL_MAX)
-    avt_fprintf(f, DEC"HOLD         : %s%s¤.\n",  val<0?"¤6":"", FormaT(val*DISPLAY_time_unit, buf, DISPLAY_time_format));
+    avt_fprintf(f, DEC"HOLD         : %s%s" AVT_RESET "\n",  val<0?AVT_RED:"", FormaT(val*DISPLAY_time_unit, buf, DISPLAY_time_format));
   else
     avt_fprintf(f, DEC"HOLD         : none\n");
 }
@@ -552,7 +552,7 @@ void stb_DisplayClockRoute(FILE *f, stbdebug_list *max, char type)
 
   tvs=stb_GetPathOutputSignal(max);
 
-  if (max->CMD_EVENT==NULL) {avt_fprintf(f, "¤6<no path to clock found, unknown command node>¤."); return; }
+  if (max->CMD_EVENT==NULL) {avt_fprintf(f, AVT_RED "<no path to clock found, unknown command node>" AVT_RESET); return; }
 
   if (max->CMD_EVENT->TYPE & TTV_NODE_UP) tve=max->CMD_EVENT->ROOT->NODE;
   else tve=max->CMD_EVENT->ROOT->NODE+1;
@@ -613,9 +613,9 @@ void stb_DisplayDataRoute(FILE *f, stbdebug_list *max, char type, char datadir)
                   nodename=ttv_GetDetailSignalName_COND(tc);
 
                   _type=ttv_GetDetailSignalType(tc);
-                  if (strstr(_type,"latch")!=NULL || strstr(_type,"flip-flop")!=NULL) col="¤4";
+                  if (strstr(_type,"latch")!=NULL || strstr(_type,"flip-flop")!=NULL) col=AVT_YELLOW;
                   else col="";
-                  avt_fprintf(f, "%s%s¤.(%c)", col, nodename, dirconv(ttv_GetDetailDirection(tc)));
+                  avt_fprintf(f, "%s%s" AVT_RESET "(%c)", col, nodename, dirconv(ttv_GetDetailDirection(tc)));
                 }
               detail=detail->NEXT;
             }
@@ -625,11 +625,11 @@ void stb_DisplayDataRoute(FILE *f, stbdebug_list *max, char type, char datadir)
           freechain(detailbase);
         }
       else
-        avt_fprintf(f, "¤6<access not found>¤.");
+        avt_fprintf(f, AVT_RED "<access not found>" AVT_RESET);
       ttv_FreePathList(list);
       freechain(list);
     }
-  else avt_fprintf(f, "¤6<not found>¤.");
+  else avt_fprintf(f, AVT_RED "<not found>" AVT_RESET);
 }
 
 
@@ -649,17 +649,17 @@ void stb_DisplaySignalStabilityReport (FILE *f, stbfig_list *stbfig, char *name)
   if (tvs==NULL || f==NULL) return;
   lastmode=stbsetdebugflag(STB_DIFFERENTIATE_INPUT_EVENTS);
 
-  avt_fprintf(f,"¤2Signal '%s'¤. (unit:[%s])\n", ttv_GetFullSignalName_COND(ttv_GetSignalTopTimingFigure(tvs), tvs), DISPLAY_time_string);
+  avt_fprintf(f, AVT_BLUE "Signal '%s'" AVT_RESET " (unit:[%s])\n", ttv_GetFullSignalName_COND(ttv_GetSignalTopTimingFigure(tvs), tvs), DISPLAY_time_string);
 
   val=getsetuphold(tvs,1,2,NULL, NULL, NULL, &shi);
   max=shi.dbl;
 //  val=___findworst(tvs, &max, stb_GetSetup);
   if (stb_GetSetup(max)==-1)
-    avt_fprintf(f," [¤+No Setup Time Available¤.]\n");
+    avt_fprintf(f, " [" AVT_BOLD "No Setup Time Available" AVT_RESET "]\n");
   else if (val!=DBL_MAX && val>=0)
     avt_fprintf(f," [Setup Time]\n");
   else
-    avt_fprintf(f," [¤6Setup Time Error¤.]\n");
+    avt_fprintf(f," [" AVT_RED "Setup Time Error" AVT_RESET "]\n");
    
   //display setup path
   avt_fprintf(f, DEC0"Data route : ");
@@ -675,11 +675,11 @@ void stb_DisplaySignalStabilityReport (FILE *f, stbfig_list *stbfig, char *name)
   max=shi.dbl;
 //  val=___findworst(tvs, &max, stb_GetHold);
   if (stb_GetHold(max)==-1)
-    avt_fprintf(f," [¤+No Hold Time Available¤.]\n");
+    avt_fprintf(f," [" AVT_BOLD "No Hold Time Available" AVT_RESET "]\n");
   else if (val!=DBL_MAX && val>=0)
     avt_fprintf(f," [Hold Time]\n");
   else
-    avt_fprintf(f," [¤6Hold Time Error¤.]\n");
+    avt_fprintf(f," [" AVT_RED "Hold Time Error" AVT_RESET "]\n");
 
   //display hold path
   avt_fprintf(f, DEC0"Data route : ");

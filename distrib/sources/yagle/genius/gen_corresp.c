@@ -782,7 +782,7 @@ lofig_list *gen_add_real_corresp_ptypes (loins_list * ins, corresp_t * root_tbl,
         i_corresp = (losig_list *) gethtitem (root_tbl->SIGNALS, name);
         if ((long)i_corresp == EMPTYHT)
           avt_errmsg(GNS_ERRMSG, "005", AVT_WARNING, 4);
-        //avt_fprintf (stdout, "¤6¤+ - warning (in `%s'): no correspondance for connector `%s'\n", ins->INSNAME, i_con->NAME);
+        //avt_fprintf (stdout, "" AVT_RED "" AVT_BOLD " - warning (in `%s'): no correspondance for connector `%s'\n", ins->INSNAME, i_con->NAME);
         else if (CORRESP_DEBUG > 0)
           fprintf (stdout, "   connector `%s' (`%s')\n", i_con->NAME, gen_losigname (i_corresp));
       }
@@ -841,7 +841,7 @@ lofig_list *gen_add_real_corresp_ptypes (loins_list * ins, corresp_t * root_tbl,
                   if ((long)ff_con==EMPTYHT)
                     {
                       avt_errmsg(GNS_ERRMSG, "007", AVT_FATAL, tbl->GENIUS_INSNAME,ins->INSNAME, f_con->NAME, gen_losigname(f_corresp),gen_losigname(i_corresp));
-/*                      avt_fprintf(stdout,"¤6¤+Invalid symmetry detected for instance '%s' (%s) on connector '%s'<=>?\n", tbl->GENIUS_INSNAME,ins->INSNAME, f_con->NAME);
+/*                      avt_fprintf(stdout,"" AVT_RED "" AVT_BOLD "Invalid symmetry detected for instance '%s' (%s) on connector '%s'<=>?\n", tbl->GENIUS_INSNAME,ins->INSNAME, f_con->NAME);
                       avt_fprintf(stdout,"%s %s\n", gen_losigname(f_corresp),gen_losigname(i_corresp));*/
                       EXIT(1);
                     }
@@ -907,8 +907,8 @@ static void displaycorrespdone(lofig_list *lf, loins_list *li)
   long wei, cpl;
   char g0[10], g1[10];
 
-  avt_fprintf(stderr,"¤6¤+%20s %-20s %4s %4s\n", "Original", "Remapped on", "sym", "cpl");
-  avt_fprintf(stderr,"¤4¤+____________________ ____________________ ____ ____\n");
+  avt_fprintf(stderr,"" AVT_RED "" AVT_BOLD "%20s %-20s %4s %4s\n", "Original", "Remapped on", "sym", "cpl");
+  avt_fprintf(stderr,"" AVT_YELLOW "" AVT_BOLD "____________________ ____________________ ____ ____\n");
   for (lc=lf->LOCON, lc0=li->LOCON; lc!=NULL && lc0!=NULL; lc=lc->NEXT, lc0=lc0->NEXT)
     {
       pt=getptype(lc->USER, FCL_REAL_CORRESP_PTYPE);
@@ -924,7 +924,7 @@ static void displaycorrespdone(lofig_list *lf, loins_list *li)
               sprintf(g1, "%4ld", cpl);
             }
           else strcpy(g1, "   ");
-          avt_fprintf(stderr, "¤6¤+%19s > %-19s¤. %s %s\n", lc->NAME, gen_losigname(ls), g0, g1);
+          avt_fprintf(stderr, "" AVT_RED "" AVT_BOLD "%19s > %-19s" AVT_RESET " %s %s\n", lc->NAME, gen_losigname(ls), g0, g1);
         }
     }
 }
@@ -989,7 +989,7 @@ void gen_check_corresp_table (loins_list * ins, corresp_t * root_tbl, corresp_t 
 
   if (swapped/* && CORRESP_DEBUG > 0*/)
     avt_errmsg(GNS_ERRMSG, "005", AVT_WARNING, 5);
-  //avt_fprintf (stdout, "¤6¤+   !!!!!!!!!!! CHECK FAILED on '%s'\n",ins->INSNAME);
+  //avt_fprintf (stdout, "" AVT_RED "" AVT_BOLD "   !!!!!!!!!!! CHECK FAILED on '%s'\n",ins->INSNAME);
 }
 
 //_____________________________________________________________________________
@@ -1023,7 +1023,7 @@ void gen_swap_corresp_table (fclcorresp_list * fcl_clist, corresp_t * tbl, loins
   if (!fcl_clist) {
     displaycorrespdone(lf, li);
     avt_errmsg(GNS_ERRMSG, "008", AVT_FATAL, li->INSNAME, tbl->GENIUS_INSNAME, tbl->FIGNAME);
-    //avt_error("gns", 2, AVT_ERR, "¤6¤+ no FCL match for `%s' (instance:'%s' model:`%s')\n", li->INSNAME, tbl->GENIUS_INSNAME, tbl->FIGNAME);
+    //avt_error("gns", 2, AVT_ERR, "" AVT_RED "" AVT_BOLD " no FCL match for `%s' (instance:'%s' model:`%s')\n", li->INSNAME, tbl->GENIUS_INSNAME, tbl->FIGNAME);
     EXIT(1);
     return;
   }
@@ -1244,7 +1244,7 @@ void gen_update_corresp_table__recursive (lofig_list * lf, corresp_t * root_tbl,
           if (root_tbl->FLAGS & LOINS_IS_UPDATED)
             {
               avt_errmsg(GNS_ERRMSG, "009", AVT_FATAL, li->INSNAME,li->FIGNAME);      
-//              avt_fprintf(stderr,"[GNS][ ¤6¤+ERROR¤. ] Vector ordering failed on instance '%s' (%s) who might be used as \"exclude\"\n. Try to add 'NoOrdering' in the 'GnsFlags' variable\n",li->INSNAME,li->FIGNAME);
+//              avt_fprintf(stderr,"[GNS][ " AVT_RED "" AVT_BOLD "ERROR" AVT_RESET " ] Vector ordering failed on instance '%s' (%s) who might be used as \"exclude\"\n. Try to add 'NoOrdering' in the 'GnsFlags' variable\n",li->INSNAME,li->FIGNAME);
               EXIT(1);
             }
 
@@ -1271,7 +1271,7 @@ void gen_update_corresp_table__recursive (lofig_list * lf, corresp_t * root_tbl,
         break;
     if (!ch) {
       avt_errmsg(GNS_ERRMSG, "005", AVT_WARNING, 6);
-/*      avt_fprintf (stderr, "¤6¤+ - warning: can't find table for instance %s in %s\n", ins->INSNAME,
+/*      avt_fprintf (stderr, "" AVT_RED "" AVT_BOLD " - warning: can't find table for instance %s in %s\n", ins->INSNAME,
                    root_tbl->FIGNAME);*/
       return;
     }
@@ -1305,7 +1305,7 @@ void dispst0 ()
   {
     int j;
     for (j = 0; j < max; j++)
-      avt_fprintf (stdout, "[Swaps] ¤2%s¤0 : ¤0%.2f¤./¤1%d¤.\n", tab[j].name, (float)tab[j].cnt / tab[j].nb,
+      avt_fprintf (stdout, "[Swaps] " AVT_BLUE "%s" AVT_BLACK " : " AVT_BLACK "%.2f" AVT_RESET "/" AVT_MAGENTA "%d" AVT_RESET "\n", tab[j].name, (float)tab[j].cnt / tab[j].nb,
                    tab[j].tot);
   }
 }
@@ -1388,7 +1388,7 @@ void gen_update_alims (lofig_list *lf, corresp_t *root_tbl, chain_list *distrib_
                       if (lc0==NULL) 
                         {
                           avt_errmsg(GNS_ERRMSG, "010", AVT_FATAL, gen_losigname (i_corresp), gen_losigname ((losig_list *) gethtitem (subins->CRT->SIGNALS, lc->NAME)), ins->INSNAME);
-//                          avt_fprintf(stderr,"¤6¤+Found an alim linked to a 'not' alim : %s <=> %s in %s\n", gen_losigname (i_corresp), gen_losigname ((losig_list *) gethtitem (subins->CRT->SIGNALS, lc->NAME)), ins->INSNAME);
+//                          avt_fprintf(stderr,"" AVT_RED "" AVT_BOLD "Found an alim linked to a 'not' alim : %s <=> %s in %s\n", gen_losigname (i_corresp), gen_losigname ((losig_list *) gethtitem (subins->CRT->SIGNALS, lc->NAME)), ins->INSNAME);
                           EXIT(1);
                         }
                     }
@@ -1426,7 +1426,7 @@ void gen_update_alims (lofig_list *lf, corresp_t *root_tbl, chain_list *distrib_
 /*
 void dispst1 ()
 {
-  avt_fprintf(stdout,"\n[Update Alims] ¤4%d¤. alims in ¤4%d¤. instances were updated", nbalim, nbins);
+  avt_fprintf(stdout,"\n[Update Alims] " AVT_YELLOW "%d" AVT_RESET " alims in " AVT_YELLOW "%d" AVT_RESET " instances were updated", nbalim, nbins);
   nbalim=0, nbins=0;
 }
 */

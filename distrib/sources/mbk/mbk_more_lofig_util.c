@@ -516,9 +516,9 @@ static void addrcininstance(lofig_list *mainlf, lofig_list *inslf)
     }
 
   rcn_mergectclofig(inslf);
-  avt_fprintf(stdout,"GNS Instance '¤3%s¤.'\n", inslf->NAME);
-  avt_fprintf(stdout,"¤+Capas:  Total   Ignored   Toground  Resistances Signals Transistors Instances\n");
-  avt_fprintf(stdout,"¤1       %6d    %6d     %6d   %6d      %6d    %6d    %6d\n", capatotal, capaignored, capatoground, resitotal, countchain((chain_list *)inslf->LOSIG), countchain((chain_list *)inslf->LOTRS),countchain((chain_list *)inslf->LOINS) );
+  avt_fprintf(stdout,"GNS Instance '" AVT_CYAN "%s" AVT_RESET "'\n", inslf->NAME);
+  avt_fprintf(stdout,"" AVT_BOLD "Capas:  Total   Ignored   Toground  Resistances Signals Transistors Instances\n");
+  avt_fprintf(stdout,"" AVT_MAGENTA "       %6d    %6d     %6d   %6d      %6d    %6d    %6d\n", capatotal, capaignored, capatoground, resitotal, countchain((chain_list *)inslf->LOSIG), countchain((chain_list *)inslf->LOTRS),countchain((chain_list *)inslf->LOINS) );
 
 
 }
@@ -756,9 +756,9 @@ static void addmainfigurerc(lofig_list *mainlf, lofig_list *maincutlf, chain_lis
 
   rcn_mergectclofig(maincutlf);
 
-  avt_fprintf(stdout,"Blackbox TOP '¤3%s¤.'\n",maincutlf->NAME);
-  avt_fprintf(stdout,"¤+Capas:  Total   Ignored   Toground  Resistances Signals Transistors Instances\n");
-  avt_fprintf(stdout,"¤1       %6d    %6d     %6d   %6d      %6d    %6d    %6d\n", capatotal, capaignored, capatoground, resitotal, countchain((chain_list *)maincutlf->LOSIG), countchain((chain_list *)maincutlf->LOTRS),countchain((chain_list *)maincutlf->LOINS) );
+  avt_fprintf(stdout,"Blackbox TOP '" AVT_CYAN "%s" AVT_RESET "'\n",maincutlf->NAME);
+  avt_fprintf(stdout,"" AVT_BOLD "Capas:  Total   Ignored   Toground  Resistances Signals Transistors Instances\n");
+  avt_fprintf(stdout,"" AVT_MAGENTA "       %6d    %6d     %6d   %6d      %6d    %6d    %6d\n", capatotal, capaignored, capatoground, resitotal, countchain((chain_list *)maincutlf->LOSIG), countchain((chain_list *)maincutlf->LOTRS),countchain((chain_list *)maincutlf->LOINS) );
 }
 
 

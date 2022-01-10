@@ -559,10 +559,10 @@ genius_print_time(struct rusage *start, struct rusage *end, time_t rstart, time_
     systS = (syst % 6000) / 100;
     systD = (syst % 100) / 10;
 
-    avt_fprintf(GENIUS_OUTPUT, "¤+ %02ldm%02lds", (long) (temps / 60), (long) (temps % 60));
-    avt_fprintf(GENIUS_OUTPUT, "¤+  u:%02ldm%02ld.%ld", userM, userS, userD);
+    avt_fprintf(GENIUS_OUTPUT, "" AVT_BOLD " %02ldm%02lds", (long) (temps / 60), (long) (temps % 60));
+    avt_fprintf(GENIUS_OUTPUT, "" AVT_BOLD "  u:%02ldm%02ld.%ld", userM, userS, userD);
     bytes = mbkprocessmemoryusage();
-    avt_fprintf(GENIUS_OUTPUT, "¤+  M:%ldKb\n", bytes / 1024);
+    avt_fprintf(GENIUS_OUTPUT, "" AVT_BOLD "  M:%ldKb\n", bytes / 1024);
  
     fflush(GENIUS_OUTPUT);
 }

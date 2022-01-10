@@ -207,7 +207,7 @@ void Board_Display_sub(FILE *f, int lib, int lev, Board *B, char *LP)
                 }
             }
           if (f!=NULL)
-            avt_fprintf(f,"¤.\n");
+            avt_fprintf(f,"" AVT_RESET "\n");
           else
             avt_log(lib, lev, "\n");
         }

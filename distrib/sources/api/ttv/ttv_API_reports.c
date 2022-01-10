@@ -1327,7 +1327,7 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
 /*            {
               char *gatename;
               int numinput;
-              colcode="¤+";
+              colcode="" AVT_BOLD "";
               if (ttv_getgateinfo(((unsigned)tc->PROP)>>24, &gatename, &numinput))
                 delaytype=gatename;
               if ((tc->SIGTYPE & TTV_SIG_L)!=0)
@@ -1380,11 +1380,11 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
                   if (!hidectk) error=(deltactk-deltasim)*100/errorref;
                   else error=(deltaref-deltasim)*100/errorref;
                   if (!finite(error)) strcpy(buf1,".....");
-                  else if (fabs(error)>9999) sprintf(buf1,"¤6.....¤.%s", colcode);
+                  else if (fabs(error)>9999) sprintf(buf1,"" AVT_RED "....." AVT_RESET "%s", colcode);
                   else 
                     {
-                      if (fabs(error)>=50) sprintf(buf1, "¤6%+.1f¤.%s", error, colcode);
-                      else if (fabs(error)>10) sprintf(buf1, "¤4%+.1f¤.%s", error, colcode);
+                      if (fabs(error)>=50) sprintf(buf1, "" AVT_RED "%+.1f" AVT_RESET "%s", error, colcode);
+                      else if (fabs(error)>10) sprintf(buf1, "" AVT_YELLOW "%+.1f" AVT_RESET "%s", error, colcode);
                       else sprintf(buf1, "%+.1f", error);
                     }
                 }
@@ -1608,11 +1608,11 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
            error=(tasval_cmp-simval_cmp)*100/(simval_cmp-start_cmp);
          }
       if (!finite(error)) strcpy(buf1,".....");
-      else if (fabs(error)>9999) sprintf(buf1,"¤6.....¤.%s", colcode);
+      else if (fabs(error)>9999) sprintf(buf1,"" AVT_RED "....." AVT_RESET "%s", colcode);
       else 
         {
-          if (fabs(error)>=50) sprintf(buf1, "¤6%+.1f¤.%s", error, colcode);
-          else if (fabs(error)>10) sprintf(buf1, "¤4%+.1f¤.%s", error, colcode);
+          if (fabs(error)>=50) sprintf(buf1, "" AVT_RED "%+.1f" AVT_RESET "%s", error, colcode);
+          else if (fabs(error)>10) sprintf(buf1, "" AVT_YELLOW "%+.1f" AVT_RESET "%s", error, colcode);
           else sprintf(buf1, "%+.1f", error);                  
         }
       _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_ERROR, b, COL_SIM_ERROR, buf1);
@@ -1822,9 +1822,9 @@ void ttv_DisplayRoute(FILE *f, ttvevent_list *tve, char type, chain_list *pthlis
               if (detail!=detailbase) avt_fprintf(f, " - ");
               nodename=ttv_GetDetailSignalName_COND(tc);
               _type=ttv_GetDetailSignalType(tc);
-              if (strstr(_type,"latch")!=NULL || strstr(_type,"flip-flop")!=NULL) col="¤4";
+              if (strstr(_type,"latch")!=NULL || strstr(_type,"flip-flop")!=NULL) col="" AVT_YELLOW "";
               else col="";
-              avt_fprintf(f, "%s%s¤.(%c%s)", col, nodename, dirconv(ttv_GetDetailDirection(tc)), (ttv_PathIsHZ(pth) && detail->NEXT==NULL)?"Z":"");
+              avt_fprintf(f, "%s%s" AVT_RESET "(%c%s)", col, nodename, dirconv(ttv_GetDetailDirection(tc)), (ttv_PathIsHZ(pth) && detail->NEXT==NULL)?"Z":"");
             }
           detail=detail->NEXT;
         }
@@ -1841,7 +1841,7 @@ void ttv_DisplayRoute(FILE *f, ttvevent_list *tve, char type, chain_list *pthlis
           avt_fprintf(f, "%s(%c)", nodename, dirconv(ttv_GetTimingEventDirection(tve)));
         }
       else
-        avt_fprintf(f, "¤6<no path to clock found>¤.");
+        avt_fprintf(f, "" AVT_RED "<no path to clock found>" AVT_RESET "");
     }
 
   if (pthlist==NULL)

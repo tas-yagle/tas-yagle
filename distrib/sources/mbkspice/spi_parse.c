@@ -4134,7 +4134,7 @@ void spi_stat (circuit * ptcir, spifile * df, long *df_temp, long *df_time)
                 }
 
                 sprintf (temp,
-                         "[¤+%08d¤.] aba:%ld ata:%ld [na:%ld|¤1%ld¤. aba:%ld ata:%ld num:%ld] eq:%ld|¤1%ld¤. ~%ldmo",
+                         "[" AVT_BOLD "%08d" AVT_RESET "] aba:%ld ata:%ld [na:%ld|" AVT_MAGENTA "%ld" AVT_RESET " aba:%ld ata:%ld num:%ld] eq:%ld|" AVT_MAGENTA "%ld" AVT_RESET " ~%ldmo",
                          df->linenum, mem_aba, mem_ata, mem_ana_na, mem_ana_na_names, mem_ana_aba, mem_ana_ata,
                          mem_num, mem_equi, mem_equi_nb, mem_tot);
                 avt_fprintf (stdout, temp);

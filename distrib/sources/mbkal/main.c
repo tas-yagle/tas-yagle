@@ -1,4 +1,5 @@
 # include <stdio.h>
+# include <stdlib.h>
 
 # include MUT_H
 # include MLO_H

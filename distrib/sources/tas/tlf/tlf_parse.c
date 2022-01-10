@@ -65,7 +65,7 @@ extern int   tlf4debug;
 
 void parsetlf3 (char *tlf_file)
 {
-  avt_error("library", -1, AVT_INFO, "loading TLF3  '¤2%s¤.'\n", tlf_file);
+  avt_error("library", -1, AVT_INFO, "loading TLF3  '" AVT_BLUE "%s" AVT_RESET "'\n", tlf_file);
   tlf_parse (tlf_file, 3);
 }
 
@@ -73,7 +73,7 @@ void parsetlf3 (char *tlf_file)
 
 void parsetlf4 (char *tlf_file)
 {
-  avt_error("library", -1, AVT_INFO, "loading TLF4  '¤2%s¤.'\n", tlf_file);
+  avt_error("library", -1, AVT_INFO, "loading TLF4  '" AVT_BLUE "%s" AVT_RESET "'\n", tlf_file);
   tlf_parse (tlf_file, 4);
 }
 

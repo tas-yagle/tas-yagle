@@ -783,7 +783,7 @@ int sim_execspice (char *filename, int silent, char *spicename, char *spicestrin
 
        j=0;
        strcpy(buf0,"");
-       if (silent == 0) avt_fprintf (stdout, "\n¤+RUN: ");
+       if (silent == 0) avt_fprintf (stdout, "\n" AVT_BOLD "RUN: ");
        while (argv[j]) {
                 strcat(buf0, " ");
                 strcat(buf0, argv[j]);
@@ -791,15 +791,15 @@ int sim_execspice (char *filename, int silent, char *spicename, char *spicestrin
                 j++;
                 if (silent == 0) fflush (stdout);
             }
-       if (silent == 0) avt_fprintf (stdout, "¤.");
+       if (silent == 0) avt_fprintf (stdout, "" AVT_RESET "");
 
        if (system(buf0)!=0)
        {
         if (silent == 0)
-          avt_fprintf (stdout, "... ¤6¤~ Execution Failed ¤.\n");
+          avt_fprintf (stdout, "... " AVT_RED "" AVT_REV " Execution Failed " AVT_RESET "\n");
         else if (silent == 2)
           {
-            avt_fprintf (stdout, "¤6¤~X¤.");
+            avt_fprintf (stdout, "" AVT_RED "" AVT_REV "X" AVT_RESET "");
             fflush(stdout);
           }
         avt_errmsg( SIM_ERRMSG, "003", AVT_WARNING, spicename, spicename, WEXITSTATUS (status));
@@ -807,10 +807,10 @@ int sim_execspice (char *filename, int silent, char *spicename, char *spicestrin
       }
       else {
         if (silent == 0)
-          avt_fprintf (stdout, "... ¤7¤~ Execution Completed ¤.\n");
+          avt_fprintf (stdout, "... " AVT_GREEN "" AVT_REV " Execution Completed " AVT_RESET "\n");
         else if (silent == 2)
           {
-            avt_fprintf (stdout, "¤7¤~*¤.");
+            avt_fprintf (stdout, "" AVT_GREEN "" AVT_REV "*" AVT_RESET "");
             fflush(stdout);
           }
        }
@@ -837,7 +837,7 @@ int sim_execspice (char *filename, int silent, char *spicename, char *spicestrin
         if (silent == 0) {
             j = 0;
 
-            avt_fprintf (stdout, "\n¤+RUN: ");
+            avt_fprintf (stdout, "\n" AVT_BOLD "RUN: ");
 
             while (argv[j]) {
                 fprintf (stdout, "%s ", argv[j]);
@@ -845,7 +845,7 @@ int sim_execspice (char *filename, int silent, char *spicename, char *spicestrin
                 fflush (stdout);
             }
 
-            avt_fprintf (stdout, "¤.");
+            avt_fprintf (stdout, "" AVT_RESET "");
 
 //            fprintf (stdout, "\n");
             fflush (stdout);
@@ -901,10 +901,10 @@ int sim_execspice (char *filename, int silent, char *spicename, char *spicestrin
       mbk_sem_wait(&simInFork);
       if (WEXITSTATUS (status) != 0) {
         if (silent == 0)
-          avt_fprintf (stdout, "... ¤6¤~ Execution Failed ¤.\n");
+          avt_fprintf (stdout, "... " AVT_RED "" AVT_REV " Execution Failed " AVT_RESET "\n");
         else if (silent == 2)
           {
-            avt_fprintf (stdout, "¤6¤~X¤.");
+            avt_fprintf (stdout, "" AVT_RED "" AVT_REV "X" AVT_RESET "");
             fflush(stdout);
           }
         avt_errmsg( SIM_ERRMSG, "003", AVT_WARNING, spicename, spicename, WEXITSTATUS (status));
@@ -913,10 +913,10 @@ int sim_execspice (char *filename, int silent, char *spicename, char *spicestrin
       }
       else {
         if (silent == 0)
-          avt_fprintf (stdout, "... ¤7¤~ Execution Completed ¤.\n");
+          avt_fprintf (stdout, "... " AVT_GREEN "" AVT_REV " Execution Completed " AVT_RESET "\n");
         else if (silent == 2)
           {
-            avt_fprintf (stdout, "¤7¤~*¤.");
+            avt_fprintf (stdout, "" AVT_GREEN "" AVT_REV "*" AVT_RESET "");
             fflush(stdout);
           }
       }

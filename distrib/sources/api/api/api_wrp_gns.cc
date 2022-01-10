@@ -165,7 +165,7 @@ void GENIUS::create_online (char *name, WIGType *d, ParmList *l, functionman *ma
 
     if (!man) 
       {
-        avt_fprintf(stderr,"¤6¤~ **  WARNING: NO MAN FOR FUNCTION '%s' ** ¤.\n", name);
+        avt_fprintf(stderr,"" AVT_RED "" AVT_REV " **  WARNING: NO MAN FOR FUNCTION '%s' ** " AVT_RESET "\n", name);
         fflush(stderr);
         return;
       }
@@ -345,7 +345,7 @@ void GENIUS::create_man (char *name, WIGType *d, ParmList *l, functionman *man)
 
     if (!man) 
       {
-        avt_fprintf(stderr,"¤6¤~ **  WARNING: NO MAN FOR FUNCTION '%s' ** ¤.\n", name);
+        avt_fprintf(stderr,"" AVT_RED "" AVT_REV " **  WARNING: NO MAN FOR FUNCTION '%s' ** " AVT_RESET "\n", name);
         fflush(stderr);
         return;
       }

@@ -39,6 +39,26 @@
 #define AVT_INIT_KEY {21,34,241,66,171,27,33,65,161,204,23,128,19,14,199,'\0'}
 #define AVT_INIT_SEED (long)6970
 
+#define AVT_STRINGIFY(x) #x
+#define AVT_TOSTRING(x) AVT_STRINGIFY(x)
+#define AVT_COLOUR(COL) "\021" AVT_TOSTRING(COL)
+#define AVT_COLOUR_CHAR '\021'
+#define AVT_COLOUR_STR "\021"
+#define AVT_BLACK AVT_COLOUR(0)
+#define AVT_MAGENTA AVT_COLOUR(1)
+#define AVT_BLUE AVT_COLOUR(2)
+#define AVT_CYAN AVT_COLOUR(3)
+#define AVT_YELLOW AVT_COLOUR(4)
+#define AVT_WHITE AVT_COLOUR(5)
+#define AVT_RED AVT_COLOUR(6)
+#define AVT_GREEN AVT_COLOUR(7)
+
+#define AVT_BOLD AVT_COLOUR(+)
+#define AVT_DIM AVT_COLOUR(-)
+#define AVT_RESET AVT_COLOUR(.)
+#define AVT_UDL AVT_COLOUR(_)
+#define AVT_REV AVT_COLOUR(~)
+
 extern int   AVT_COL;
 extern char *AVERTEC_VERSION ;
 extern char *AVT_FULLVERSION ;
@@ -78,8 +98,6 @@ extern void avt_trace_va  __P((int level, FILE *output, char *fmt, va_list pa));
 extern void avt_date      __P((char *date));
 extern void avt_error     __P((char *lib, int code, int severity, char *fmt, ...));
 
-// printf a colored printf, use '¤<#>" eg. toto = ¤3value
-// value will be colored with AVT_COLOR_3
 extern void avt_fprintf(FILE *output, char *fmt, ...);
 int avt_text_real_length(char *buf);
 void avt_format_text(char *resbuf, char *origbuf, int decal, int max);

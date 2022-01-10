@@ -1166,7 +1166,7 @@ ptype_list *delptype(pthead, type)
       return pthead;
     } else
 #if DELAY_DEBUG_STAT
-      avt_fprintf(stderr, "¤6delptype function called for non existing PTYPE¤.\n");
+      avt_fprintf(stderr, "" AVT_RED "delptype function called for non existing PTYPE" AVT_RESET "\n");
       exit(55);
 #endif
       return NULL;

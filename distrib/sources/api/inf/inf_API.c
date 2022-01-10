@@ -69,7 +69,8 @@ void inf_AddFile(char *filename, char *figname)
   inf_ignorename=1;
   ret=_infRead(figname, filename, 0);
   avt_log(LOGFILEACCESS, 0, "Loading INF file \"%s\" for figure \"%s\"%s\n", filename, figname,ret!=NULL?" done.":" failed.");
-//  avt_error("infapi", -1, AVT_INFO, "load INF '¤2%s¤.' for figure '%s'%s\n", filename, figname,ret!=NULL?" ¤7done¤.":" ¤6failed¤.");
+//  avt_error("infapi", -1, AVT_INFO, "load INF '" AVT_BLUE "%s" AVT_RESET "' for figure '%s'%s\n", filename, figname,
+//            ret!=NULL ? AVT_GREEN " done" AVT_RESET : AVT_RED " failed" AVT_RESET);
   inf_ignorename=0;
 }
 
