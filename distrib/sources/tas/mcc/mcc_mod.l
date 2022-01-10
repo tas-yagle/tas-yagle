@@ -124,7 +124,7 @@ femto                     [fF]
 <UNIT>^{wsp}*\+            {ECHO ; BEGIN INITIAL                        ;}
 <UNIT>\n                   {ECHO ; MCC_LINE++ ;BEGIN INITIAL            ;}
 
-<ENV>{string}              {char *env;
+<ENV>{string}              {const char *env;
                             ECHO ; BEGIN INITIAL ;
                             if ((env = avt_gethashvar(mcc_modtext)) != NULL) {
                                  mcc_modlval.text = mbkstrdup(env) ;
@@ -159,7 +159,7 @@ femto                     [fF]
                      return T_EQUATION ;
                     }
 <EQU>\$             {ECHO ; BEGIN ENV2;}
-<ENV2>[^'`\n]*      {char *env;
+<ENV2>[^'`\n]*      {const char *env;
                      ECHO ;
                      if ((env = avt_gethashvar(mcc_modtext)) != NULL ) {
                           mcc_libenv = mbkstrdup(env) ;

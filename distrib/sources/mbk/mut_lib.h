@@ -235,7 +235,7 @@ extern char       DEBUG_MODE;                  /* debug if Y                  */
 extern char       FAST_MODE;                   /* no consistency control if Y */
 extern char       *WORK_LIB;                   /* working directory           */
 extern char       **CATA_LIB;                  /* read only directory         */
-extern char       *CATAL;                      /* catalog file name           */
+extern const char *CATAL;                      /* catalog file name           */
 extern char       SEPAR;                       /* char used for concatenation */
 extern char       IN_LO[];                     /* logical input format        */
 /* par Fabrice le 7/2/2002 */
@@ -249,18 +249,18 @@ extern char       OUT_LO[];                    /* logical output format       */
 extern char       OUT_PH[];                    /* physical output format      */
 extern long       SCALE_X;                     /* distance scale parameter    */
 extern char       PARSER_INFO[];               /* version number, and so on   */
-extern char       *VDD;                        /* user name for power high    */
-extern char       *VSS;                        /* user name for power ground  */
-extern char       *GLOBAL_VDD;                 /* user name for power high    */
-extern char       *GLOBAL_VSS;                 /* user name for power ground  */
+extern char *VDD;                        /* user name for power high    */
+extern char *VSS;                        /* user name for power ground  */
+extern char *GLOBAL_VDD;                 /* user name for power high    */
+extern char *GLOBAL_VSS;                 /* user name for power ground  */
 extern long       VDD_VSS_THRESHOLD;           /* Threshold between VDD & VSS */
-extern char       *MBK_BBOX_NAME;          /* blackbox list file name     */
+extern const char *MBK_BBOX_NAME;          /* blackbox list file name     */
 extern char       MBK_NO_TRNAME;               /* do not save transistor name */
 extern ptype_list *HEAD_MBKDEBUG;              /* function debug list         */
 extern char       MBK_DEBUG_ON;                /* mode for debug on/off       */
-extern char       *IN_FILTER;
-extern char       *OUT_FILTER;
-extern char       *FILTER_SFX;
+extern const char *IN_FILTER;
+extern const char *OUT_FILTER;
+extern const char *FILTER_SFX;
 extern char       MBKFOPEN_NAME[];             /* dernier fichier ouvert      */
 extern char       MBKFOPEN_FILTER;
 extern endchld_list *HEAD_ENDCHLD;             /* list of terminated process  */
@@ -347,7 +347,7 @@ extern char              MBK_VECTOR_SINGLE[256];
   extern           void  freenum __P((num_list *pt));
   extern       num_list* dupnumlst __P(( num_list *head ));
 
-  extern    chain_list * addchain __P((chain_list *pthead, void *ptdata));
+  extern    chain_list * addchain __P((chain_list *pthead, const void *ptdata));
   extern int countchain(chain_list *doubl);
   extern chain_list *getchain(chain_list *ptchain, void *data);
   extern    chain_list * delchain __P((chain_list *pthead, chain_list *ptdel));
@@ -363,14 +363,14 @@ extern char              MBK_VECTOR_SINGLE[256];
   extern    ptype_list * testanddelptype __P((ptype_list *pthead, long type));
   extern           void  freeptype __P((ptype_list *pt));
   extern    chain_list * append __P((chain_list *pt1, chain_list *pt2));
-  extern          char * namealloc __P((char *inputname));
-  extern          char * sensitive_namealloc(char *name);
-  extern          char * min_namealloc __P((char *inputname));
-  extern          char * namefind __P((char *inputname));
-  extern          char * min_namefind __P((char *inputname));
-  extern          char * mbkstrdup __P((char *s));
+  extern          char * namealloc __P((const char *inputname));
+  extern          char * sensitive_namealloc(const char *name);
+  extern          char * min_namealloc __P((const char *inputname));
+  extern          char * namefind __P((const char *inputname));
+  extern          char * min_namefind __P((const char *inputname));
+  extern          char * mbkstrdup __P((const char *s));
 int mbk_casestrcmp(char *orig, char *dest);
-  extern           void  downstr __P((char *s, char *t));
+  extern           void  downstr __P((const char *s, char *t));
   extern           void  upstr __P((char *s, char *t));
   extern          char * beginstr __P((char *s, char *find, char separ));
   extern          char * endstr __P((char *s, char *find));
@@ -445,12 +445,12 @@ void resetht(ht *pTable);
   extern          void * mbkalloc __P((size_t nbytes));
   extern          void * mbkrealloc __P((void *pt, unsigned int nbytes));
   extern           void  mbkfree __P((void *ptr));
-  extern          FILE * mbkfopen __P((char *name, char *extension, char *mode));
-  extern          FILE * mbkfopen_ext __P((char *name, char *extension, char *mode, char access, char allowcompress ));
-  extern            int  mbkunlink __P((char *name, char *extension));
-  extern          char * filepath __P((char *name, char *extension));
-  extern          char** decompfilter( char* );
-  extern          FILE*  mbkpopen __P(( char*, char*, char ));
+  extern          FILE * mbkfopen __P((const char *name, const char *extension, const char *mode));
+  extern          FILE * mbkfopen_ext __P((const char *name, const char *extension, const char *mode, char access, char allowcompress ));
+  extern            int  mbkunlink __P((const char *name, const char *extension));
+  extern          const char * filepath __P((const char *name, const char *extension));
+  extern          char ** decompfilter( const char * );
+  extern          FILE*  mbkpopen __P(( const char *, const char *, char ));
   extern           void  mbkps();
   extern           void  mbkackchld __P(( int ));
   extern   unsigned long mbkprocessmemoryusage();
@@ -586,8 +586,8 @@ FN_GETSIZE:             Doit renvoyer la taille de l'élément présent en
 // indiquent si un nom de fichier correspond a une lofig
 // prend en compte le FILTER_SFX
 // retourne un pointeur sur le '.' entre le radical et le suffixe
-char *mbkFileIsLofig(char *filename);
-char *mbkIsLofigExt(char *filename, char *ext);
+const char *mbkFileIsLofig(const char *filename);
+const char *mbkIsLofigExt(const char *filename, const char *ext);
 
 /*********** File access ************/
 #define MBK_FILE_STD  ((char)32)
@@ -706,7 +706,7 @@ typedef struct
 
 void CreateNameAllocator(int size, NameAllocator *na, char _case);
 void DeleteNameAllocator(NameAllocator *na);
-char *NameAlloc(NameAllocator *na, char *inputname);
+char *NameAlloc(NameAllocator *na, const char *inputname);
 void NameAllocStat(NameAllocator *na);
 char *NameAllocFind(NameAllocator *na, char *inputname);
 

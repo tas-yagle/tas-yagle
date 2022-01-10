@@ -44,7 +44,7 @@
 #define HMAX_CALLS  20
 
 
-  extern    chain_list * addchain __P((chain_list *pthead, void *ptdata));
+  extern    chain_list * addchain __P((chain_list *pthead, const void *ptdata));
   extern      num_list * addnum __P((num_list *ptnum, long data));
   extern    ptype_list * addptype __P((ptype_list *pthead, long type, void *ptdata));
   extern    chain_list * append __P((chain_list *pt1, chain_list *pt2));
@@ -52,7 +52,7 @@
   extern    chain_list * delchaindata __P((chain_list *pthead, void *ptdeldata));
   extern    chain_list * delchain __P((chain_list *pthead, chain_list *ptdel));
   extern    ptype_list * delptype __P((ptype_list *pthead, long type));
-  extern           void  downstr __P((char *s, char *t));
+  extern           void  downstr __P((const char *s, char *t));
   extern           void  freechain __P((chain_list *pt));
   extern           void  freenum __P((num_list *pt));
   extern           void  freeptype __P((ptype_list *pt));
@@ -66,7 +66,7 @@
 static void loadcatalog();
   extern           void  mbkenv __P(());
   extern           void  readlibfile __P((char *type,void (*fonc)(char *),int reload));
-  extern          char * namealloc __P((char *inputname));
+  extern          char * namealloc __P((const char *inputname));
   extern          char * nameindex __P((char *name, long index));
 static void read_lib();
   extern    chain_list * reverse __P((chain_list *head));

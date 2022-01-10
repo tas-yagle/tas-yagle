@@ -32,7 +32,7 @@ int main(int ac, char *av[])
                 {
                   if (!deact)
                     {
-                      printf(av[2]);      
+                      printf("%s", av[2]);
                       printf(" {");
                     }
                   endpatch++;

@@ -47,7 +47,7 @@ mbk_ascii_decrypt_thread(void *ptfiles)
     unsigned char key[KEYLENGTH(KEYBITS)];
     struct MD5Context md5c;
     int nrounds, i, numchars;
-    char *password;
+    const char *password;
     char *salted_password;
     uint8_t saltbyte;
     int *ptlineno;

@@ -59,11 +59,11 @@
 
 static int          edif_debug = FALSE;
 static FILE        *edif_file;
-static char        *EDIF_LIBNAME;
-static char        *EDIF_SUFFIXES;
+static const char  *EDIF_LIBNAME;
+static const char  *EDIF_SUFFIXES;
 static int          nb_lib = 0;
-static char       **suffixes = NULL;
-static char       **libraries = NULL;
+static const char **suffixes = NULL;
+static const char **libraries = NULL;
 static chain_list **cellules = NULL;
 static chain_list  *already_drived = NULL;
 
@@ -95,7 +95,7 @@ static void         save_libraries_cells( );
 int ParseSuffixes( fill )
 int fill;
 {
-    char *suf;
+    const char *suf;
     char *lib;
     char *pt;
     int   index;
@@ -170,7 +170,7 @@ void edifsavelofig( firstlofig )
 lofig_list *firstlofig;  
 {
 	char        filename[ 255 ];
-	char       *pc;
+	const char       *pc;
     int         index;
 
     edif_debug = avt_gethashvar( DEBUG_MBKEDIF ) != NULL;
@@ -319,12 +319,12 @@ char       *cell_name;
 /*---------------------------------------------------------\
                      found_suffixed_cell
 \---------------------------------------------------------*/
-static char *found_suffixed_cell( name, insert )
+static const char *found_suffixed_cell( name, insert )
 char *name;
 int   insert;
 {
     int index;
-    char *pt;
+    const char *pt;
 
     pt = strrchr( name, '_' );
     if( !pt )
@@ -638,18 +638,18 @@ static void edit_ins(ptins)
 loins_list *ptins;
 {
 	char  cellref_type;
-	char *name;
-	char *pt;
+	char *name, *p;
+	const char *pt;
 
 	while (ptins != (loins_list *) NULL)
 	{      
 		name = mbkalloc( strlen( ptins->INSNAME ) + 1 );
 		strcpy( name, ptins->INSNAME );
-		for( pt = name; *pt; pt++ )
+		for( p = name; *p; p++ )
         {
-			if( *pt == '/' )
+			if( *p == '/' )
             {
-				*pt = '_';
+				*p = '_';
             }
         }
 

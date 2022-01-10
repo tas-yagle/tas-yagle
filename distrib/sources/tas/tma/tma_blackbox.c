@@ -277,7 +277,7 @@ void tma_AddCellLeakagePower (ttvfig_list *newfig, ttvfig_list *fig)
    float low, high, alim, cell_leakage_power = 0.0;
    char *figname = fig->INFO->FIGNAME;
    cnsfig_list *cf;
-   char *where;
+   const char *where;
    inffig_list *ifl;
    tma_leak_pow_list *tmaleakpow = NULL, *tlp;
    cbhseq *ptcbhseq;

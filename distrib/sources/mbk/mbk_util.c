@@ -68,7 +68,7 @@ char FAST_MODE   = 'Y';                        /* no consistency check if 'Y' */
 char SEPAR  = '.';                             /* char used in concatenation  */
 char *WORK_LIB = NULL;                         /* working directory           */
 char **CATA_LIB = NULL;                        /* read only directories       */
-char *CATAL = NULL;                            /* catalog file                */
+const char *CATAL = NULL;                            /* catalog file                */
 /* par Fabrice le 7/2/2002 */
 char IN_PARASITICS[5] = "dspf";                /* parasitic input format      */
 int MBK_LOAD_PARA = 0;                   /* load parasitics enabler     */
@@ -86,11 +86,11 @@ char *VSS = NULL;                              /* user name for power ground  */
 char *GLOBAL_VDD = NULL;                       /* user name for power high    */
 char *GLOBAL_VSS = NULL;                       /* user name for power ground  */
 long  VDD_VSS_THRESHOLD = 0;                   /* Threshold between VDD & VSS */
-char *MBK_BBOX_NAME = NULL;                /* blackbox list file name     */
-char *IN_FILTER = NULL ;
-char *OUT_FILTER = NULL ;
-char *FILTER_SFX = NULL ;
-char *LIB_FILE = NULL ;
+const char *MBK_BBOX_NAME = NULL;                /* blackbox list file name     */
+const char *IN_FILTER = NULL ;
+const char *OUT_FILTER = NULL ;
+const char *FILTER_SFX = NULL ;
+const char *LIB_FILE = NULL ;
 ht *LIB_CATAL = NULL ;
 
 char **MBK_NRD = NULL;
@@ -235,12 +235,12 @@ int mbkwaitpid( int pid, int mode, int *status )
   return( 0 );
 }
 
-int mbk_decodvectorconfig( char *env )
+int mbk_decodvectorconfig(const char *env )
 {
   char        buf[1024] ;
   char        onechar[2] ;
   static char separ = ',';
-  char        *pt ;
+  const char        *pt ;
   int          i ;
   char        vector_open[1024];
   char        vector_close[1024];
@@ -311,8 +311,8 @@ int mbk_decodvectorconfig( char *env )
  *******************************************************************************/
 void mbkenv()
 {
-  char *str, *env;
-  char          *pttok;
+  const char *str, *env;
+  const char          *pttok;
   long nchar;
   struct sigaction sgct;
   sigset_t ens;
@@ -1252,7 +1252,7 @@ chain_list *append(pt1, pt2)
    } while (0)
 #endif
 
-static inline int SUB_HASH_FUNC(char *inputname, char *name, int code, char CASE_SENSITIVE)
+static inline int SUB_HASH_FUNC(const char *inputname, char *name, int code, char CASE_SENSITIVE)
 {
   while (*inputname) {
     if (CASE_SENSITIVE == 'N') *name = tolowertable[(int)*inputname++];
@@ -1266,7 +1266,7 @@ static inline int SUB_HASH_FUNC(char *inputname, char *name, int code, char CASE
   return code;
 }
 
-static inline int HASH_FUNC(char *inputname, char *name, int code, int HASHVAL0)
+static inline int HASH_FUNC(const char *inputname, char *name, int code, int HASHVAL0)
 {
   code = SUB_HASH_FUNC(inputname, name, code, CASE_SENSITIVE) % HASHVAL0;
   return code;
@@ -1340,7 +1340,7 @@ static void NameAlloc_rehash(NameAllocator *na)
   //  fprintf(stdout,"done\n");
 }
 
-inline char *NameAlloc_sub(NameAllocator *na, char *inputname, int find)
+char *NameAlloc_sub(NameAllocator *na, const char *inputname, int find)
 {
   chain_list *pt;
   char buffer[BUFSIZ];
@@ -1384,7 +1384,7 @@ inline char *NameAlloc_sub(NameAllocator *na, char *inputname, int find)
   return name;
 }
 
-char *NameAlloc(NameAllocator *na, char *inputname)
+char *NameAlloc(NameAllocator *na, const char *inputname)
 {
   return NameAlloc_sub(na, inputname, 0);
 
@@ -1421,12 +1421,12 @@ void NameAllocStat(NameAllocator *na)
   printf("  string length: mean=%.1f max=%d\n",(float)moystr/(float)cntstr,maxstr);
 }
 
-char *sensitive_namealloc(char *name)
+char *sensitive_namealloc(const char *name)
 {
   return NameAlloc(&SENSITIVE_NAMEALLOC_ALLOCATOR, name);
 }
   
-char *min_namealloc(char *name)
+char *min_namealloc(const char *name)
 {
   char buf[4096], *temp;
 
@@ -1435,7 +1435,7 @@ char *min_namealloc(char *name)
   return temp;
 }
 
-char *min_namefind(char *name)
+char *min_namefind(const char *name)
 {
   char buf[4096], *temp;
 
@@ -1475,7 +1475,7 @@ static void namealloc_rehash()
 
 
 char *namealloc(inputname)
-     char *inputname;
+     const char *inputname;
 {
   chain_list *pt;
   char *name = buffer; /* ensure no modification of parameter string */
@@ -1885,7 +1885,7 @@ void rightunconcatname(name, left, right)
  * mbkstrdup : since brain damaged system we aim at do not have it              *
  *******************************************************************************/
 char *mbkstrdup(s)
-     char *s;
+     const char *s;
 {
   char *t;
 
@@ -2189,7 +2189,8 @@ static void loadcatalog(table, size, type)
  *******************************************************************************/
 static void read_lib()
 {
-  char *str, *s, *stc, *c;
+  const char *str, *stc;
+  char *s, *c;
   int argc = 0, i;
 
   if (WORK_LIB!=NULL) mbkfree(WORK_LIB);
@@ -4126,7 +4127,7 @@ char *mbk_vect(char *name, char leftb, char rightb)
 
 int mbk_ReadFlags(int varnum, mbk_options_pack_struct *gen_opack, int nbopt, int warn, int initval)
 {
-  char *str;
+  const char *str;
   int i;
   char *l;
   char buf[1024];

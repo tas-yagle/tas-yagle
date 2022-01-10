@@ -98,7 +98,7 @@ void Avtwig_init_args (int argc, char **argv)
     }
     strcpy(buf2, filename);
     if ((dot = strrchr (buf2, '.'))) *dot = '\0';
-    sprintf (buf, "%s_wrap.c", buf2);
+    snprintf (buf, 1024, "%s_wrap.c", buf2);
     wrapperfile = strdup (filename);
     if (!nowrapper) f_wrappers = f_init = f_header = fopen (buf, "w+");
 }
@@ -264,14 +264,14 @@ void Language::create_filter_online (char *filter, char *online_path, Man *mans)
 
 }
 
-void Language::create_man (char *name, ApiType *t, ParmList *l, functionman *m) 
+void Language::create_man (const char *name, ApiType *t, ParmList *l, functionman *m)
 {
   m = NULL;
   l = NULL;
   t = NULL;
   name = NULL;
 }
-void Language::create_xml (char *filename, char *name, ApiType *t, ParmList *l, functionman *m, int first, int mode) 
+void Language::create_xml (const char *filename, const char *name, ApiType *t, ParmList *l, functionman *m, int first, int mode)
 {
   mode = 0;
   first = 0;
@@ -281,7 +281,7 @@ void Language::create_xml (char *filename, char *name, ApiType *t, ParmList *l, 
   name = NULL;
   filename = NULL;
 }
-void Language::create_db (char *filename, char *name, ApiType *t, ParmList *l, functionman *m, int first, int mode) 
+void Language::create_db (const char *filename, const char *name, ApiType *t, ParmList *l, functionman *m, int first, int mode)
 {
   mode=0;
   first = 0;
@@ -313,7 +313,7 @@ void Language::declare_const (char *a, char *b, ApiType *t, char *c)
 void Language::initialize (void) {}
 void Language::headers (void) {}
 void Language::close (void) {}
-void Language::set_module (char *a) 
+void Language::set_module (const char *a) 
 {
   a=NULL;
 }

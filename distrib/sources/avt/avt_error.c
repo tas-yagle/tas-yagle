@@ -5,7 +5,7 @@ ptype_list *AVTERR=NULL;
 ptype_list *AVTLIB=NULL;
 ptype_list *AVTNUM=NULL;
 
-char *AVT_BINARY_NAME="";
+const char *AVT_BINARY_NAME="";
 int   AVT_MAXNBERRMSG = 3 ;
 static int TOTAL_WARNINGS=0, TOTAL_ERRORS=0;
 
@@ -67,7 +67,7 @@ liblogpool LIBLOGPOOL[] = {
   { 0x0, { -1 } }
 } ;
 
-void avt_initerrmsg (char *tool)
+void avt_initerrmsg (const char *tool)
 {
     unsigned int i=0;
     unsigned int j=0;
@@ -104,17 +104,17 @@ void avt_initerrmsg (char *tool)
     }
 }
 
-char *avt_geterrmsg (long lib,char *num)
+const char *avt_geterrmsg (long lib,const char *num)
 {
     unsigned int i=0;
     ptype_list *pt=NULL;
-    char **errtab=NULL;
+    const char **errtab=NULL;
     
     if(! AVTERR)
         avt_initerrmsg(AVT_BINARY_NAME);
     
     if ( ( pt=getptype(AVTERR,(long)lib) ) ) {
-        errtab=(char **)(pt->DATA);
+        errtab=(const char **)(pt->DATA);
         while (errtab[i]) {
             if (!strcmp (num, errtab[i])) return errtab[i + 1];
             i += 2;
@@ -125,22 +125,22 @@ char *avt_geterrmsg (long lib,char *num)
     return NULL;
 }
 
-char *avt_geterrlib (long lib)
+const char *avt_geterrlib (long lib)
 {
     ptype_list *pt=NULL;
-    char *libname=NULL;
+    const char *libname=NULL;
     
     if(! AVTLIB)
         avt_initerrmsg(AVT_BINARY_NAME);
     
     if ( ( pt=getptype(AVTLIB,(long)lib) ) )
-        if ( (libname=(char *)(pt->DATA))!=NULL ) return libname;
+        if ( (libname=(const char *)(pt->DATA))!=NULL ) return libname;
     
     fprintf(stderr,"[Unknown Library Number]:\n'%02ld' is not a valid library number\n",lib);
     return NULL;
 }
 
-int avt_getprintederrmsg( long lib, char *num )
+int avt_getprintederrmsg( long lib, const char *num )
 {
   ptype_list  *ptlnum ;
   int          i ;
@@ -184,16 +184,16 @@ void avt_set_encrypted_mode(int mode)
     encrypted_mode = mode;
 }
 
-void avt_errmsg (long lib, char *num, int type, ...)
+void avt_errmsg (long lib, const char *num, int type, ...)
 {
     va_list va;
-    char *msg=NULL;
-    char *libname=NULL;
-    char *buff;
+    const char *msg=NULL;
+    const char *libname=NULL;
+    const char *buff;
     char resbuf[4096];
     char filtercheck[16];
     int  n;
-    char *filter;
+    const char *filter;
     FILE *outstream;
 
     libname = avt_geterrlib(lib);
@@ -287,12 +287,12 @@ int avt_getlibloglevel (int lib)
   return LIBLOGINFO[lib].LEVEL ;
 }
 
-char* avt_getliblogshortname( int lib )
+const char* avt_getliblogshortname( int lib )
 {
   return LIBLOGINFO[lib].SHORTNAME ;
 }
 
-char* avt_getliblogname( int lib )
+const char* avt_getliblogname( int lib )
 {
   return LIBLOGINFO[lib].NAME ;
 }
@@ -302,7 +302,7 @@ int avt_getliblogmax()
   return LOGMAX ;
 }
 
-void avt_logenterfunction( int lib, int level,char *fnname )
+void avt_logenterfunction( int lib, int level, const char *fnname )
 {
   char buf[1024];
   
@@ -320,7 +320,7 @@ void avt_logexitfunction( int lib, int level)
   return ;
 }
 
-void avt_log( int lib, int level, char *fmt, ... )
+void avt_log( int lib, int level, const char *fmt, ... )
 {
   va_list arg ;
   char    buf2[4096] ;
@@ -328,7 +328,8 @@ void avt_log( int lib, int level, char *fmt, ... )
   char    buflibname[256] ;
   char    bufprintf[10] ;
   int     i ;
-  char    todumpfile   = 0, *c, *tok, *cc ;
+  char    todumpfile   = 0;
+  char *c, *tok, *cc ;
   char    todumpstdout = 0 ;
   static  int newline = 1 ;
   
@@ -397,7 +398,7 @@ void avt_log( int lib, int level, char *fmt, ... )
 void avt_initlog()
 {
   int   i ;
-  char *env ;
+  const char *env ;
   char *ptend ;
   long  level ;
   char *errmsg ;
@@ -435,7 +436,7 @@ defaultlevel = atoi( env );
   
     do {
    
-      while( *env && *env==' ' ) *env++;
+      while( *env && *env==' ' ) env++;
      
       if( *env ) {
         i=0;

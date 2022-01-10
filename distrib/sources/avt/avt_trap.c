@@ -259,7 +259,7 @@ void avt_PopKillExit ()
 
 /* ------------------------------------------------------------------------ */
 
-void avt_PushSegVMessage (char *message)
+void avt_PushSegVMessage (const char *message)
 {
     SEGV_MESSAGE = addchain (SEGV_MESSAGE, message);
 }
@@ -272,7 +272,7 @@ void avt_PopSegVMessage ()
 
 /* ------------------------------------------------------------------------ */
 
-void avt_PushFPEMessage (char *message)
+void avt_PushFPEMessage (const char *message)
 {
     FPE_MESSAGE = addchain (FPE_MESSAGE, message);
 }
@@ -285,7 +285,7 @@ void avt_PopFPEMessage ()
 
 /* ------------------------------------------------------------------------ */
     
-void avt_PushKillMessage (char *message)
+void avt_PushKillMessage (const char *message)
 {
     INT_MESSAGE = addchain (INT_MESSAGE, message);
 }

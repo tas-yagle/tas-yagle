@@ -40,10 +40,10 @@
 # endif
 #endif
 
-  extern    FILE* mbkfopen __P((char *name, char *extension, char *mode));
-  extern    FILE* mbkfopen_ext __P((char *name, char *extension, char *mode, char access, char allowcompress ));
-  extern    FILE* mbkfopentrace __P((char *name, char *extension, char *mode ,char access, char allowcompress ));
-  extern    void  mbkfopen_infos __P((FILE*, char*, char*, char*, char*));
+  extern    FILE* mbkfopen __P((const char *name, const char *extension, const char *mode));
+  extern    FILE* mbkfopen_ext __P((const char *name, const char *extension, const char *mode, char access, char allowcompress ));
+  extern    FILE* mbkfopentrace __P((const char *name, const char *extension, const char *mode ,char access, char allowcompress ));
+  extern    void  mbkfopen_infos __P((FILE*, const char*, const char*, const char*, const char*));
   extern    void* mbkalloc __P((size_t nbytes));
   extern    void* mbkrealloc __P((void *pt, unsigned int nbytes));
   extern    void  mbkfree __P((void *ptr));

@@ -344,4 +344,4 @@ void avt_SetGlobalSeed(unsigned int value);
 */
 unsigned int avt_GetGlobalSeed();
 
-void avt_banner (char *tool, char *comment, char *date);
+void avt_banner (const char *tool, const char *comment, const char *date);

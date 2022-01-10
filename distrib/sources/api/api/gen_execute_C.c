@@ -499,7 +499,12 @@ t_arg *newtarg(char *type, int pointer, char *name)
 // if flag is not set, free only intermediate variable
 void freetarg(t_arg *ta, int flag)
 {
-  if (flag || (!flag && (ta->NAME==CONSTANTE || ta->NAME==INTERM || ta->NAME==CONDITION || strcmp(ta->NAME,"NULL")==0 || strcmp(ta->NAME,"?")==0)))
+  if (flag || (!flag && (
+          strcmp(ta->NAME, CONSTANTE)==0 ||
+          strcmp(ta->NAME, INTERM)==0 ||
+          strcmp(ta->NAME, CONDITION)==0 ||
+          strcmp(ta->NAME,"NULL")==0 ||
+          strcmp(ta->NAME,"?")==0)))
     {
       if (ta->VALUE!=NULL) mbkfree(ta->VALUE);
       mbkfree(ta);

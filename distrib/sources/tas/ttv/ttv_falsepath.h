@@ -21,7 +21,7 @@ typedef struct ttvfalsepath
      long                 SLOPEIN ; 
      char                *SIGOUT ;  
      long                 SLOPEOUT ;
-     char                *CLOCK ;
+     const char          *CLOCK ;
      ptype_list        *SIGLIST ;
     }
 ttvfalsepath_list ;
@@ -32,7 +32,7 @@ extern void   ttv_addfalsepath      __P(( ttvfig_list*,
                                           long,
                                           char *,
                                           long,
-                                          char *,
+                                          const char *,
                                           ptype_list *i,
                                           ht *nametosig,
                                           NameAllocator *NA

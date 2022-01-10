@@ -60,61 +60,60 @@
 #define AVT_REV AVT_COLOUR(~)
 
 extern int   AVT_COL;
-extern char *AVERTEC_VERSION ;
-extern char *AVT_FULLVERSION ;
-extern char *AVT_SUPER_TOKEN_MATCH[];
-extern char *AVT_PRODUCT_TOKEN_MATCH[];
-extern char **AVTENV;
+extern const char *AVERTEC_VERSION ;
+extern const char *AVT_FULLVERSION ;
+extern const char *AVT_SUPER_TOKEN_MATCH[];
+extern const char *AVT_PRODUCT_TOKEN_MATCH[];
+extern const char **AVTENV;
 extern int   AVT_VALID_TOKEN;
 
-extern char *avt_tokenmatch __P((char *));
-extern char *avt_supertokenmatch __P((char *));
+extern const char *avt_tokenmatch __P((const char *));
+extern const char *avt_supertokenmatch __P((const char *));
 
-extern void  avt_sethashvar (char *var, char *val);
-void avt_sethashvar_sub (char *var, char *value, int warn, int set);
+extern void  avt_sethashvar (const char *var, const char *val);
+void avt_sethashvar_sub (const char *var, const char *value, int warn, int set);
 
-extern char *avt_gethashvar (char *var);
-char *avt_gethashvar_sub (char *var, int intable);
+extern const char *avt_gethashvar (const char *var);
+const char *avt_gethashvar_sub (const char *var, int intable);
 
-extern void avt_banner    __P((char *tool,
-                               char *comment,
-                               char *date
+extern void avt_banner    __P((const char *tool,
+                               const char *comment,
+                               const char *date
                              ));
-extern int avt_givetoken  __P((char *,
-                               char *
+extern int avt_givetoken  __P((const char *,
+                               const char *
                              ));
-extern int avt_deltoken   __P((char *,
-                               char *
+extern int avt_deltoken   __P((const char *,
+                               const char *
                              ));
-extern int avt_inftool    __P((char *,
-                               char *
+extern int avt_inftool    __P((const char *,
+                               const char *
                              ));
 
-extern char *avt_getenv   __P((char *)) ;
+extern char *avt_getenv   __P((const char *)) ;
 extern void avtenv        __P(()) ;
-extern void avt_setvar    __P((char *,char *));
-extern void avt_trace     __P((int level, FILE *output, char *fmt, ...));
-extern void avt_trace_va  __P((int level, FILE *output, char *fmt, va_list pa));
+extern void avt_setvar    __P((const char *,const char *));
+extern void avt_trace     __P((int level, FILE *output, const char *fmt, ...));
+extern void avt_trace_va  __P((int level, FILE *output, const char *fmt, va_list pa));
 extern void avt_date      __P((char *date));
-extern void avt_error     __P((char *lib, int code, int severity, char *fmt, ...));
+extern void avt_error     __P((const char *lib, int code, int severity, const char *fmt, ...));
 
-extern void avt_fprintf(FILE *output, char *fmt, ...);
-int avt_text_real_length(char *buf);
-void avt_format_text(char *resbuf, char *origbuf, int decal, int max);
+extern void avt_fprintf(FILE *output, const char *fmt, ...);
+void avt_format_text(char *resbuf, const char *origbuf, int decal, int max);
 extern void avt_back_fprintf(FILE *output, int length);
 extern int avt_terminal(FILE *output) ;
 
 // print like the avtbanner the tool info
 // take comment flag on and comment flag off
 // exemple : avt_printExecInfo(stdout, "/*", "test/n" "*/");
-extern void avt_printExecInfo(FILE *fd, char *flagcomon, char *txt, char *flagcomoff);
+extern void avt_printExecInfo(FILE *fd, const char *flagcomon, const char *txt, const char *flagcomoff);
 
 // this one could generate first and last header line with a flourish style
-extern void avt_printExecInfoFlourish(FILE *fd, char *fon, char *txt, char *foff);
+extern void avt_printExecInfoFlourish(FILE *fd, const char *fon, const char *txt, const char *foff);
 
 
 // this one allow to use custom print function
-extern void avt_printExecInfoCustom(void *file, char *fon, char *txt, char *foff, void (*prn)(void *, ...));
+extern void avt_printExecInfoCustom(void *file, const char *fon, const char *txt, const char *foff, void (*prn)(void *, ...));
 
 extern void avt_TrapSegV ();
 extern void avt_UnTrapSegV ();
@@ -127,14 +126,14 @@ GRAB_IT extern void avt_PushFPEExit (void (*fexit)(int), int code);
 GRAB_IT extern void avt_PopFPEExit ();
 GRAB_IT extern void avt_PushKillExit (void (*fexit)(int), int code);
 GRAB_IT extern void avt_PopKillExit ();
-GRAB_IT extern void avt_PushSegVMessage (char *message);
+GRAB_IT extern void avt_PushSegVMessage (const char *message);
 GRAB_IT extern void avt_PopSegVMessage ();
-GRAB_IT extern void avt_PushFPEMessage (char *message);
+GRAB_IT extern void avt_PushFPEMessage (const char *message);
 GRAB_IT extern void avt_PopFPEMessage ();
-GRAB_IT extern void avt_PushKillMessage (char *message);
+GRAB_IT extern void avt_PushKillMessage (const char *message);
 GRAB_IT extern void avt_PopKillMessage ();
     
-extern int   avt_is_default_technoname ( char *name );
+extern int   avt_is_default_technoname ( const char *name );
 extern char *avt_getusername(char *buf);
 
 
@@ -226,12 +225,12 @@ extern char *avt_getusername(char *buf);
 #define AVT_FATAL 3
 #define AVT_INTERNAL 0
 
-extern char *AVT_BINARY_NAME;
+extern const char *AVT_BINARY_NAME;
 
-void avt_initerrmsg( char *);
-char *avt_geterrmsg( long , char * );
+void avt_initerrmsg( const char *);
+const char *avt_geterrmsg( long , const char * );
 void avt_set_encrypted_mode(int mode);
-void avt_errmsg(long , char *, int , ... );
+void avt_errmsg(long , const char *, int , ... );
 
 struct msgtab {
     long    type;
@@ -241,7 +240,7 @@ struct msgtab {
 
 
 #ifdef Solaris
-extern char *strtok_r(char *s1, const char *s2, char **lasts);
+extern char *strtok_r(char *s1, const char *s2, const char **lasts);
 #endif
 
 void avt_LogConfig();
@@ -300,18 +299,18 @@ typedef struct V_BOOL {
     int   SET;
     char *VAR;
     char *VAR2;
-    int  (*INIT_CHECK_FUNC)(char*var, char *val,int *result);
+    int  (*INIT_CHECK_FUNC)(const char*var, const char *val, int *result);
 } V_BOOL;
 
 typedef struct V_STR {
-    char *VARENV;
+    const char *VARENV;
     int   INDEX;
     char *VALUE;
     int   DOC;
     int   SET;
     char *VAR;
     char *VAR2;
-    int  (*INIT_CHECK_FUNC)(char*var, char *val, char *result);
+    int  (*INIT_CHECK_FUNC)(const char *var, const char *val, char *result);
 } V_STR;
 
 typedef struct V_FLOAT {
@@ -322,7 +321,7 @@ typedef struct V_FLOAT {
     int   SET;
     char *VAR;
     char *VAR2;
-    int  (*INIT_CHECK_FUNC)(char *var, char *val, float *result);
+    int  (*INIT_CHECK_FUNC)(const char *var, const char *val, float *result);
     char  STRBUF[15];
 } V_FLOAT;
 
@@ -334,7 +333,7 @@ typedef struct V_INT {
     int   SET;
     char *VAR;
     char *VAR2;
-    int  (*INIT_CHECK_FUNC)(char *var, char *val, int *result);
+    int  (*INIT_CHECK_FUNC)(const char *var, const char *val, int *result);
     char *(*ENUMSTR_FUNC)(int val);
     char  STRBUF[15];
 } V_INT;
@@ -923,18 +922,18 @@ typedef struct {
 
 extern FILE *AVTLOGFILE ;
 void avt_initlog();
-void avt_log( int lib, int level, char *fmt, ... );
-void avt_logenterfunction( int lib, int level,char *fnname );
+void avt_log( int lib, int level, const char *fmt, ... );
+void avt_logenterfunction( int lib, int level, const char *fnname );
 void avt_logexitfunction( int lib, int level);
 int avt_getliblogmax();
-char* avt_getliblogname( int lib );
-char* avt_getliblogshortname( int lib );
+const char* avt_getliblogname( int lib );
+const char* avt_getliblogshortname( int lib );
 int avt_getlibloglevel (int lib);
 void avt_setlibloglevel (int lib, int level);
 int avt_islog ( int level, int lib );
 void avt_PrintErrorSummary();
-double avt_parse_unit(char *str, char type);
-void V_STR_AFFECT_F(char **x, char *v);
+double avt_parse_unit(const char *str, char type);
+void V_STR_AFFECT_F(char **x, const char *v);
 
 // ------------ configuration variable values -------------
 extern char *ANNOT_T_D, *ANNOT_T_S, *ANNOT_T_G, *ANNOT_T_B;

@@ -4,7 +4,7 @@
 #include MUT_H
 #include "avt_init_funcs.h"
 
-int setnewcurrentmodel( char *var, char *val, int *result );
+int setnewcurrentmodel( const char *var, const char *val, int *result );
 
 //======================================================================
 //  GLOBALS 
@@ -12,8 +12,8 @@ int setnewcurrentmodel( char *var, char *val, int *result );
 
 int                AVT_VALID_TOKEN;
 int                AVT_COL       = 0;
-char              *AVERTEC_VERSION = NULL;
-char              *AVT_FULLVERSION = NULL;
+const char              *AVERTEC_VERSION = NULL;
+const char              *AVT_FULLVERSION = NULL;
 static ptype_list *AVT_VARENV_LIST = NULL;
 static char        AVT_VARENV_FILE = 'Y';
 void *TCL_INTERPRETER=NULL;
@@ -21,7 +21,7 @@ void *TCL_INTERPRETER=NULL;
 //  TOKEN LIST
 //======================================================================
 
-char *AVT_PRODUCT_TOKEN_MATCH[] =
+const char *AVT_PRODUCT_TOKEN_MATCH[] =
 {
     "avt",        "AVT",
     "avt_shell",  "AVT",
@@ -53,7 +53,7 @@ char *AVT_PRODUCT_TOKEN_MATCH[] =
     NULL
 };
 
-char *AVT_SUPER_TOKEN_MATCH[] =
+const char *AVT_SUPER_TOKEN_MATCH[] =
 {
     "AV1000","SP_HITAS",
     "AV1010","SP_XTAS",
@@ -78,7 +78,7 @@ char *AVT_SUPER_TOKEN_MATCH[] =
 // BOOLEAN
 //----------------------------------------------------------------------
 
-int bool_init_check (char *var, char *val, int *result) 
+int bool_init_check (const char *var, const char *val, int *result) 
 { 
   if (!strcasecmp (val, "yes")) *result=1;
   else if (!strcasecmp (val, "no")) *result=0;
@@ -361,9 +361,9 @@ V_BOOL V_BOOL_TAB[] = {
 //----------------------------------------------------------------------
 // STR
 //----------------------------------------------------------------------
-extern int mbk_decodvectorconfig( char *env );
+extern int mbk_decodvectorconfig(const char *env);
 
-int vectorize_init_check (char *var, char *val, char *result) 
+int vectorize_init_check (const char *var, const char *val, char *result)
 { 
   if (!mbk_decodvectorconfig(val))
   {
@@ -373,7 +373,7 @@ int vectorize_init_check (char *var, char *val, char *result)
   return 1;
 }
 
-int tasSetupLatchingVoltage_init_check (char *var, char *val, char *result)
+int tasSetupLatchingVoltage_init_check (const char *var, const char *val, char *result)
 {
     if (!strcmp(val, "vdd") || !strcmp(val, "vdd-div-2") || !strcmp(val, "max-vt-vdd-div-2") || !strcmp(val, "vt")){
         return 1;
@@ -383,7 +383,7 @@ int tasSetupLatchingVoltage_init_check (char *var, char *val, char *result)
     }
 }
 
-int tma_Leakage_Power_Unit_init_check (char *var, char *val, char *result)
+int tma_Leakage_Power_Unit_init_check (const char *var, const char *val, char *result)
 {
     if (!strcmp(val, "1mW")
      || !strcmp(val, "100uW")
@@ -543,7 +543,7 @@ V_STR V_STR_TAB[] = {
 // FLOAT
 //----------------------------------------------------------------------
 
-int margin_check (char *var, char *val, float *result) 
+int margin_check (const char *var, const char *val, float *result) 
 {
   *result=atof(val);
   if (*result>= 0.0 && *result <= 1.0) return 1;
@@ -552,7 +552,7 @@ int margin_check (char *var, char *val, float *result)
   return 0;
 }
 
-int libslewderate_check (char *var, char *val, float *result) 
+int libslewderate_check (const char *var, const char *val, float *result) 
 {
   *result=atof(val);
   if (*result> 0.0 && *result <= 1.0) return 1;
@@ -561,7 +561,7 @@ int libslewderate_check (char *var, char *val, float *result)
   return 0;
 }
 
-int yagpullupratio_check (char *var, char *val, float *result) 
+int yagpullupratio_check (const char *var, const char *val, float *result) 
 {
   *result=atof(val);
   if (*result> 1.0) return 1;
@@ -656,7 +656,7 @@ V_FLOAT V_FLOAT_TAB[] = {
 // INT
 //----------------------------------------------------------------------
 
-int level_check (char *var, char *val, int *result)
+int level_check (const char *var, const char *val, int *result)
 {
   *result=atoi(val);
   if (*result == 0 || *result == 1 || *result == 2) return 1;
@@ -664,7 +664,7 @@ int level_check (char *var, char *val, int *result)
   return 0;
 }
 
-int stbCorrelatedSkewAnalysisDepth_InitCheck (char *var, char *val, int *result)
+int stbCorrelatedSkewAnalysisDepth_InitCheck (const char *var, const char *val, int *result)
 {
   if (!strcasecmp(val,"full")) *result=1000000;
   else *result=atoi(val);
@@ -672,7 +672,7 @@ int stbCorrelatedSkewAnalysisDepth_InitCheck (char *var, char *val, int *result)
   avt_errmsg (AVT_ERRMSG, "041", AVT_WARNING, val, var);
   return 0;
 }
-int stbPrechargeDataHeuristic_Check(char *var, char *val, int *result)
+int stbPrechargeDataHeuristic_Check(const char *var, const char *val, int *result)
 {
   if (!strcasecmp(val,"clock")) *result=1;
   else if (!strcasecmp(val,"notclockdata")) *result=2;
@@ -681,7 +681,7 @@ int stbPrechargeDataHeuristic_Check(char *var, char *val, int *result)
   avt_errmsg (AVT_ERRMSG, "041", AVT_WARNING, val, var);
   return 0;
 }
-int stbSuppressLag_Check(char *var, char *val, int *result)
+int stbSuppressLag_Check(const char *var, const char *val, int *result)
 {
   char buf[1024];
   char *c, *tok;
@@ -706,7 +706,7 @@ int stbSuppressLag_Check(char *var, char *val, int *result)
     }
   return 1;
 }
-int simTransistorAsInstance_InitCheck (char *var, char *val, int *result)
+int simTransistorAsInstance_InitCheck (const char *var, const char *val, int *result)
 {
   if (!strcasecmp(val,"yes")) *result=1;
   else if (!strcasecmp(val,"no")) *result=0;
@@ -720,7 +720,7 @@ int simTransistorAsInstance_InitCheck (char *var, char *val, int *result)
   return 1;
 }
 
-int tasStrictPathCapacitance_InitCheck (char *var, char *val, int *result)
+int tasStrictPathCapacitance_InitCheck (const char *var, const char *val, int *result)
 {
   if (!strcasecmp(val,"yes")) *result=1;
   else if (!strcasecmp(val,"no")) *result=0;
@@ -734,7 +734,7 @@ int tasStrictPathCapacitance_InitCheck (char *var, char *val, int *result)
   return 1;
 }
 
-int yagDriveConflictCondition_InitCheck (char *var, char *val, int *result)
+int yagDriveConflictCondition_InitCheck (const char *var, const char *val, int *result)
 {
   if (!strcasecmp(val,"yes")) *result=1;
   else if (!strcasecmp(val,"no")) *result=0;
@@ -748,7 +748,7 @@ int yagDriveConflictCondition_InitCheck (char *var, char *val, int *result)
   return 1;
 }
 
-int avtPowerCalculation_InitCheck (char *var, char *val, int *result)
+int avtPowerCalculation_InitCheck (const char *var, const char *val, int *result)
 {
   if (!strcasecmp(val,"yes")) *result=1;
   else if (!strcasecmp(val,"no")) *result=0;
@@ -765,7 +765,7 @@ int avtPowerCalculation_InitCheck (char *var, char *val, int *result)
   return 1;
 }
 
-int yagDetectGlitchers_InitCheck (char *var, char *val, int *result)
+int yagDetectGlitchers_InitCheck (const char *var, const char *val, int *result)
 {
   if (!strcasecmp(val,"nondual")) *result=1;
   else if (!strcasecmp(val,"no")) *result=0;
@@ -781,7 +781,7 @@ int yagDetectGlitchers_InitCheck (char *var, char *val, int *result)
 
 static char *simToolModelEnum[] = {"spice","hspice","eldo","titan",NULL};
 
-int simToolModel_InitCheck (char *var, char *val, int *result)
+int simToolModel_InitCheck (const char *var, const char *val, int *result)
 {
     int i;
     
@@ -803,7 +803,7 @@ char *simToolModel_EnumStr (int val)
 
 static char *simToolEnum[] = {"spice","hspice","eldo","titan","titanv7","ltspice","mspice","ngspice",NULL};
 
-int simTool_InitCheck (char *var, char *val, int *result)
+int simTool_InitCheck (const char *var, const char *val, int *result)
 {
     int i;
     
@@ -906,7 +906,7 @@ static int int_comp   (const void *el1, const void *el2) { return ((V_INT*)el1)-
 static int float_comp (const void *el1, const void *el2) { return ((V_FLOAT*)el1)->INDEX - ((V_FLOAT*)el2)->INDEX; }
 
 
-int setnewcurrentmodel( char *var, char *val, int *result )
+int setnewcurrentmodel( const char *var, const char *val, int *result )
 {
   int res;
   if( (res=bool_init_check( var, val, result ))!=0 ) {
@@ -945,13 +945,13 @@ int setnewcurrentmodel( char *var, char *val, int *result )
   return res;
 }
 //======================================================================
-static char *checknull(char *str)
+static const char *checknull(const char *str)
 {
   if (str==NULL) return "(null)";
   return str;
 }
 
-static int avt_sethashvar_sub_bool(char *var, char *value, int warn, int set, int index)
+static int avt_sethashvar_sub_bool(const char *var, const char *value, int warn, int set, int index)
 {
     int start=0, end=V_BOOL_TAB_SIZE, oldval, oldset, i, i_val;
 
@@ -1000,7 +1000,7 @@ static int avt_sethashvar_sub_bool(char *var, char *value, int warn, int set, in
   return 0;
 }
 
-static int avt_sethashvar_sub_string(char *var, char *value, int warn, int set, int index)
+static int avt_sethashvar_sub_string(const char *var, const char *value, int warn, int set, int index)
 {
   int start=0, end=V_STR_TAB_SIZE, oldset, i;
   char *oldval=NULL;
@@ -1047,7 +1047,7 @@ static int avt_sethashvar_sub_string(char *var, char *value, int warn, int set, 
   return 0;
 }
 
-static int avt_sethashvar_sub_integer(char *var, char *value, int warn, int set, int index)
+static int avt_sethashvar_sub_integer(const char *var, const char *value, int warn, int set, int index)
 {
   int start=0, end=V_INT_TAB_SIZE, oldval, oldset, i, i_val;
   char buffer[512];
@@ -1092,7 +1092,7 @@ static int avt_sethashvar_sub_integer(char *var, char *value, int warn, int set,
     }
   return 0;
 }
-static int avt_sethashvar_sub_float(char *var, char *value, int warn, int set, int index)
+static int avt_sethashvar_sub_float(const char *var, const char *value, int warn, int set, int index)
 {
   int start=0, end=V_FLOAT_TAB_SIZE, oldset, i;
   char buffer[512];
@@ -1182,7 +1182,7 @@ void avt_init_v ()
       avt_errmsg (AVT_ERRMSG, "058", AVT_WARNING, "V_FLOAT_TAB", i, V_FLOAT_TAB[ i ].INDEX );
 }
 
-void avt_sethashvar_sub (char *var, char *value, int warn, int set)
+void avt_sethashvar_sub (const char *var, const char *value, int warn, int set)
 {
   if (!avt_sethashvar_sub_bool(var, value, warn, set, -1))
     if (!avt_sethashvar_sub_string(var, value, warn, set, -1))
@@ -1193,7 +1193,7 @@ void avt_sethashvar_sub (char *var, char *value, int warn, int set)
           }
 }
 
-void avt_sethashvar (char *var, char *value)
+void avt_sethashvar (const char *var, const char *value)
 {
   avt_sethashvar_sub(var, value, 1, AVT_VAR_SET_BY_TCLCONFIG);
 }
@@ -1202,7 +1202,7 @@ void avt_sethashvar (char *var, char *value)
 /*                        function avt_gethashvar ()                         */
 /*****************************************************************************/
 
-char *avt_gethashvar_sub (char *var, int intable)
+const char *avt_gethashvar_sub (const char *var, int intable)
 {
   unsigned int i;
 
@@ -1246,7 +1246,7 @@ char *avt_gethashvar_sub (char *var, int intable)
   return getenv (var);// Environment variable if not defined
 }
 
-char *avt_gethashvar (char *var)
+const char *avt_gethashvar (const char *var)
 {
    return avt_gethashvar_sub(var, 0);
 }
@@ -1391,7 +1391,7 @@ void avtenv ()
 
 //======================================================================
 
-int avt_is_default_technoname ( char *name )
+int avt_is_default_technoname ( const char *name )
 {
     return !strcasecmp (name, "avtdefault.tec");
 }
@@ -1568,7 +1568,7 @@ void avt_man (int all)
 
 }
 
-void V_STR_AFFECT_F(char **x, char *v)
+void V_STR_AFFECT_F(char **x, const char *v)
 {
   if (*x!=NULL) free(*x);
   *x=(v==NULL)?NULL:strdup(v);

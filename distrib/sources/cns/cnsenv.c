@@ -33,7 +33,6 @@ static int donecnsenv=0;
 void 
 cnsenv()
 {
-    char           *avt_gethashvar (char *);
     char           *str;
 
 

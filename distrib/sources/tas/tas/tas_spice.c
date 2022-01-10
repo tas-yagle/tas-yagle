@@ -939,7 +939,7 @@ int  tas_simu_netlist (ttvfig_list *ttvfig,
   chain_list *sig2plot = NULL, *name2plot = NULL;
   chain_list *added_capa = NULL;
   double input_slope;
-  char *env, *lastsig;
+  const char *env, *lastsig;
   int res = 0, err;
   ht *htsigname = NULL; // correspondance des noms des sig : orig => hierarchiq
   float vth = -1.0;

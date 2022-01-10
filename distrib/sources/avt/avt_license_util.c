@@ -23,9 +23,9 @@ static int hb_status = 1;
 #endif
 
 static chain_list *supertokens_called = NULL;
-static char *first_supertoken_called = NULL;
+static const char *first_supertoken_called = NULL;
 
-static char *MAIN_TOKEN_AVT = "AVT";
+static const char *MAIN_TOKEN_AVT = "AVT";
 
 #ifndef NOFLEX
 
@@ -254,10 +254,9 @@ int givetoken_flex(char *env, char *tool, int nbtoken)
 /*                                                                          */
 /*                                                                          */
 /****************************************************************************/
-char *avt_tokenshift(token)
-char *token;
+const char *avt_tokenshift(const char* token)
 {
-  char *pt=MAIN_TOKEN_AVT;
+  const char *pt=MAIN_TOKEN_AVT;
   unsigned int i=0;
 
   while (AVT_SUPER_TOKEN_MATCH[i]) {
@@ -272,22 +271,19 @@ char *token;
   return pt;
 }
 
-int avt_tokenName_old2new(char *old, char **new)
+int avt_tokenName_old2new(const char *old, const char **new)
 {
   int        i;
 
   i = 0;
-  if (AVT_PRODUCT_TOKEN_MATCH)
-  {
-    while (AVT_PRODUCT_TOKEN_MATCH[i])
-      if (!strcmp (old, AVT_PRODUCT_TOKEN_MATCH[i]))
-      {
-        *new = AVT_PRODUCT_TOKEN_MATCH[i + 1];
-        return 0;
-      }
-      else
-        i += 2;
-  }
+  while (AVT_PRODUCT_TOKEN_MATCH[i])
+    if (!strcmp (old, AVT_PRODUCT_TOKEN_MATCH[i]))
+    {
+      *new = AVT_PRODUCT_TOKEN_MATCH[i + 1];
+      return 0;
+    }
+    else
+      i += 2;
 
   return 1;
 }
@@ -297,12 +293,12 @@ int avt_tokenName_old2new(char *old, char **new)
 /*                                                                          */
 /*                                                                          */
 /****************************************************************************/
-char *avt_tokenmatch(tool)
-char *tool;
+const char *avt_tokenmatch(const char* tool)
 {
-  char *token;
-  char *sptoken = MAIN_TOKEN_AVT;
-  char *pt=NULL,*buff=NULL,*ptest=NULL,*testref=NULL;
+  const char *token;
+  const char *sptoken = MAIN_TOKEN_AVT;
+  char *pt=NULL,*buff=NULL,*ptest=NULL;
+  const char *testref=NULL;
   const char *separ = ",";
   chain_list *ptchain;
 
@@ -344,22 +340,19 @@ char *tool;
   return MAIN_TOKEN_AVT;
 }
 
-char *avt_supertokenmatch(token)
-char *token;
+const char *avt_supertokenmatch(const char* token)
 {
-  char        *supertoken = MAIN_TOKEN_AVT;
+  const char        *supertoken = MAIN_TOKEN_AVT;
   chain_list  *chain = NULL;
   int          addsupertoken=1;
   unsigned int i=0;
 
-  if (AVT_SUPER_TOKEN_MATCH) {
-    while (AVT_SUPER_TOKEN_MATCH[i]) {
-      if (!strcmp (token, AVT_SUPER_TOKEN_MATCH[i])) {
-        supertoken = AVT_SUPER_TOKEN_MATCH[i + 1];
-        break;
-      } else {
-        i += 2;
-      }
+  while (AVT_SUPER_TOKEN_MATCH[i]) {
+    if (!strcmp (token, AVT_SUPER_TOKEN_MATCH[i])) {
+      supertoken = AVT_SUPER_TOKEN_MATCH[i + 1];
+      break;
+    } else {
+      i += 2;
     }
   }
 
@@ -388,8 +381,8 @@ int avt_givetoken(env,tool)
 char *env;
 char *tool;
 {
-  char              *token = avt_tokenmatch(tool);
-  char              *sptoken = avt_supertokenmatch(token);
+  const char *token = avt_tokenmatch(tool);
+  const char *sptoken = avt_supertokenmatch(token);
   int                t,s;
 
 #ifdef NOFLEX

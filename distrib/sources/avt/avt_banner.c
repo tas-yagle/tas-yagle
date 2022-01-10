@@ -53,7 +53,7 @@ char *avt_getusername(char *buf)
 /****************************************************************************/
 static inline void
 fill_line(char *buf, void (*prn)(void *,...), void *file,
-          char *flagon, char *txt, char *flagoff, char fillchar, ...)
+          const char *flagon, const char *txt, const char *flagoff, char fillchar, ...)
 {
   int        i, j;
   va_list    arg;
@@ -99,7 +99,7 @@ fill_line(char *buf, void (*prn)(void *,...), void *file,
 /*                                                                          */
 /****************************************************************************/
 static inline void
-printExecInfoCustom(void *file, char *fon, char *txt, char *foff,
+printExecInfoCustom(void *file, const char *fon, const char *txt, const char *foff,
                     void (*prn)(void *, ...), int mode)
 {
   time_t             clock;
@@ -181,7 +181,7 @@ printExecInfoCustom(void *file, char *fon, char *txt, char *foff,
 /*                                                                          */
 /****************************************************************************/
 void
-avt_printExecInfo(FILE *fd, char *fon, char *txt, char *foff)
+avt_printExecInfo(FILE *fd, const char *fon, const char *txt, const char *foff)
 {
   printExecInfoCustom((void*)fd,fon,txt,foff,(void(*)(void*,...))fprintf,0);
 }
@@ -192,7 +192,7 @@ avt_printExecInfo(FILE *fd, char *fon, char *txt, char *foff)
 /*                                                                          */
 /****************************************************************************/
 void
-avt_printExecInfoFlourish(FILE *fd, char *fon, char *txt, char *foff)
+avt_printExecInfoFlourish(FILE *fd, const char *fon, const char *txt, const char *foff)
 {
   printExecInfoCustom((void*)fd,fon,txt,foff,(void(*)(void*,...))fprintf,1);
 }
@@ -203,7 +203,7 @@ avt_printExecInfoFlourish(FILE *fd, char *fon, char *txt, char *foff)
 /*                                                                          */
 /****************************************************************************/
 void
-avt_printExecInfoCustom(void *file, char *fon, char *txt, char *foff,
+avt_printExecInfoCustom(void *file, const char *fon, const char *txt, const char *foff,
                         void (*prn)(void *, ...))
 {
   printExecInfoCustom(file,fon,txt,foff,prn,0);
@@ -425,7 +425,7 @@ static void avt_cartouche (char *tool, char *date, char *av, char *pn, char *dat
 /* genere un banniere pour avertec                                           */
 /*****************************************************************************/
 
-void avt_banner (char *tool, char *comment, char *date)
+void avt_banner (const char *tool, const char *comment, const char *date)
 {
 
     avt_initerrmsg(tool);
