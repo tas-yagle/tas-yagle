@@ -76,7 +76,7 @@ timing_iv* stm_modiv_create( int   nve,
       for( ns=0 ; ns<nvs ; ns++ ) {
         r = fnct( data, iv->VE[ne], iv->VS[ns] , &is ) ;
         if( r ) {
-          if( !finite( is ) )
+          if( !isfinite( is ) )
             r = 0;
         }
         if( !r ) {

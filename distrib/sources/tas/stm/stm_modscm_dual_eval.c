@@ -122,7 +122,7 @@ double stm_modscm_dual_get_ir( double t,
     /* Valeur du bruit rapporté proportionnel à Vm / Vr */
     br = b * Vr / V ;
 
-    if( !finite( br ) )
+    if( !isfinite( br ) )
       return 0.0 ;
     
     /* Nouvelle tension d'entrée rapportée */
@@ -1521,7 +1521,7 @@ double stm_modscm_dual_calts_newctk( stm_dual_param_timing *param,
 
   mbk_pwl_free_pwl( pwlout );
 
-  if( !finite( t ) || !finite( param->TIN ) ) {
+  if( !isfinite( t ) || !isfinite( param->TIN ) ) {
     printf( "delay calculation error !!! (fordebug=%d,iter=%d)\n", fordebug,iter );
     exit(1);
   }

@@ -3312,7 +3312,7 @@ int spi_parse_param (circuit * ptcir, chain_list *ligne, eqt_ctx * ctx, spifile 
               }
               else
               {
-                  if (!finite(valeur))
+                  if (!isfinite(valeur))
                      avt_errmsg (SPI_ERRMSG, "076", AVT_ERROR, df->filename, df->linenum, paramname, paramexpr?paramexpr:"?", " : returned NaN or Inf");
                   eqt_addvar (ctx, namealloc (paramname), valeur);
               }
@@ -7810,7 +7810,7 @@ static double spi_eval (spifile * df, eqt_ctx * ctx, char *ptexp, char **ptparam
     if (eqt_resistrue (ctx) && !eqt_var_involved (ctx))
     {
         save_param = 0;
-        if (!finite(valeur))
+        if (!isfinite(valeur))
           avt_errmsg(SPI_ERRMSG, "080", AVT_ERROR, df?df->filename:"?", df?df->linenum:0, exp," returned NaN or Inf");
         else if (checkneg && valeur<0)
           avt_errmsg(SPI_ERRMSG, "080", AVT_ERROR, df?df->filename:"?", df?df->linenum:0, exp," returned negative value");

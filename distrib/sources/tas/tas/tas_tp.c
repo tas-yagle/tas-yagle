@@ -424,7 +424,7 @@ char typetr;
 
       if ((link->ULINK.LOTRS->TYPE & CNS_TP) == CNS_TP) {
         rdd = tas_getparam(link->ULINK.LOTRS, TAS_CASE, TP_RDD);
-        if (!finite(rdd)) {
+        if (!isfinite(rdd)) {
           TAS_PVT_COUNT++;
           tas_error(71, cone->NAME, TAS_WARNING);
           return -1.0;
@@ -434,7 +434,7 @@ char typetr;
             (double) TAS_GETWIDTH(link);
       } else {
         rud = tas_getparam(link->ULINK.LOTRS, TAS_CASE, TP_RUD);
-        if (!finite(rud)) {
+        if (!isfinite(rud)) {
           TAS_PVT_COUNT++;
           tas_error(71, cone->NAME, TAS_WARNING);
           return -1.0;
@@ -1863,10 +1863,10 @@ int tas_calc_k3_k4_k5(link_list *maillonc, char type_front, float *k3, float *k4
     }
 /*----------------------------------------*/      
      
-    if (!finite (rdd = (float) (rdd * lw)))
+    if (!isfinite (rdd = (float) (rdd * lw)))
       return 0;
     *k3 = rdd;
-    if (!finite (kdd = (float) (kdd)))
+    if (!isfinite (kdd = (float) (kdd)))
       return 0;
     *k4 = kdd;
     *k5 = (float) (rdf * lw);
@@ -1910,10 +1910,10 @@ int tas_calc_k3_k4_k5(link_list *maillonc, char type_front, float *k3, float *k4
       kud = rud / rno;
     }
 /*----------------------------------------*/      
-    if (!finite (rud = (float) (rud * lw)))
+    if (!isfinite (rud = (float) (rud * lw)))
       return 0;
     *k3 = rud;
-    if (!finite (kud = (float) (kud)))
+    if (!isfinite (kud = (float) (kud)))
       return 0;
     *k4 = kud;
     *k5 = (float) (ruf * lw);
@@ -2457,7 +2457,7 @@ double *K;
       (double) TAS_GETWIDTH(activelink);
   *K = tas_getparam(activelink->ULINK.LOTRS, TAS_CASE, TP_KG);
 
-  if (!finite(*rtot) || !finite(*K))
+  if (!isfinite(*rtot) || !isfinite(*K))
     return 0;
 
   for (ptlink = activelink->NEXT; ptlink != NULL; ptlink = ptlink->NEXT) {

@@ -879,7 +879,7 @@ void mcc_InitGlobalMonteCarloDistributions(lofig_list *lf)
                       mcc_set_var_err_msg(mccMCPARAMctx, (char *)pt->DATA, errbuf);
                       avt_errmsg(MCC_ERRMSG, "038", AVT_ERROR, (char *)pt->TYPE, (char *)pt->DATA, errbuf);
                     }
-                  else if (!finite(res[i]))
+                  else if (!isfinite(res[i]))
                     avt_errmsg(MCC_ERRMSG, "038", AVT_ERROR, (char *)pt->TYPE, (char *)pt->DATA," : returned NaN or Inf");
                 }
             }
@@ -1786,7 +1786,7 @@ void mcc_evalmodel(mcc_modellist *ptmodel, double L, double W, int modtype)
                             {
                               newdone++;
                               eqt_addvar (mccEqtCtx, ptopt->UNAME.SPECIAL, value);
-                              if (!finite(value))
+                              if (!isfinite(value))
                                 avt_errmsg(MCC_ERRMSG, "038", AVT_ERROR, ptopt->UNAME.SPECIAL, ptopt->UDATA.EXPR," : returned NaN or Inf");
                               if ( trace )
                                 {
@@ -1827,7 +1827,7 @@ void mcc_evalmodel(mcc_modellist *ptmodel, double L, double W, int modtype)
                             {
                               newdone++;
                               eqt_addvar(mccEqtCtx,ptexp->NAME, value);
-                              if (!finite(value))
+                              if (!isfinite(value))
                                 avt_errmsg(MCC_ERRMSG, "038", AVT_ERROR, ptexp->NAME, ptexp->EXPR," : returned NaN or Inf");
                               if ( trace )
                                 {
@@ -1924,7 +1924,7 @@ double mcc_evalparam_sub(mcc_paramlist *param)
          mcc_set_var_err_msg(mccEqtCtx, ptexp->EXPR, errbuf);
          avt_errmsg(MCC_ERRMSG, "038", AVT_ERROR, ptexp->NAME, ptexp->EXPR, errbuf);
        }
-     else if (!finite(res))
+     else if (!isfinite(res))
        avt_errmsg(MCC_ERRMSG, "038", AVT_ERROR, ptexp->NAME, ptexp->EXPR," : returned NaN or Inf");
 //     res = eqt_eval(mccEqtCtx,ptexp->EXPR,EQTFAST) ;
      eqt_addvar(mccEqtCtx,ptexp->NAME,res) ;
@@ -2011,7 +2011,7 @@ void mcc_eval_all_param(mcc_modellist *ptmodel)
                        mcc_set_var_err_msg(mccMCPARAMctx, (char *)l, errbuf);
                        avt_errmsg(MCC_ERRMSG, "038", AVT_ERROR, param->NAME, (char *)l, errbuf);
                      }
-                   else if (!finite(param->MCVALUE))
+                   else if (!isfinite(param->MCVALUE))
                      avt_errmsg(MCC_ERRMSG, "038", AVT_ERROR, param->NAME, (char *)l," : returned NaN or Inf");
                  }
              }
