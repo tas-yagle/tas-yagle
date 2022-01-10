@@ -211,7 +211,7 @@ char mbk_pwl_calc_deriv( char (*fn)(void*, double, double*),
   if( !fn( data, x1, &y1 ) ) return 0;
 
   *p = (y1-y0)/(x1-x0);
-  if( !finite( *p ) )
+  if( !isfinite( *p ) )
     return 0;
 
   return 1;
@@ -229,7 +229,7 @@ char mbk_pwl_calc_deriv2( char (*fn)(void*, double, double*),
   if( !fn( data, x1, &y1 ) ) return 0;
 
   *p = (y1-y0)/(x1-x0);
-  if( !finite( *p ) )
+  if( !isfinite( *p ) )
     return 0;
 
   return 1;
@@ -508,7 +508,7 @@ static char mbk_pwl_create_default_rec( char (*fn)(void*, double, double*),
 
     yd = ( p2->Y - p1->Y ) / ( p2->X - p1->X ) * ( xm - p1->X ) + p1->Y ;
     
-    if( !finite(yd) || fabs( y - yd ) < (param->PARAM.DEFAULT.DELTAYMAX/OPTIM13) )
+    if( !isfinite(yd) || fabs( y - yd ) < (param->PARAM.DEFAULT.DELTAYMAX/OPTIM13) )
       return 1;
 
     pm = mbk_pwl_alloc_point();
@@ -534,7 +534,7 @@ static char mbk_pwl_create_default_rec( char (*fn)(void*, double, double*),
       return 0;
 
     yd = ( p2->Y - p1->Y ) / ( p2->X - p1->X ) * ( xm - p1->X ) + p1->Y ;
-    if( !finite(yd) || fabs( y - yd ) < (param->PARAM.DEFAULT.DELTAYMAX/OPTIM13) )
+    if( !isfinite(yd) || fabs( y - yd ) < (param->PARAM.DEFAULT.DELTAYMAX/OPTIM13) )
       return 1;
       
     pm = mbk_pwl_alloc_point();
@@ -570,7 +570,7 @@ static char mbk_pwl_create_default_rec( char (*fn)(void*, double, double*),
 
     xm = ( p2->O - p1->O ) / ( p1->P - p2->P ) ;
 
-    if( finite( xm ) && xm > p1->X && xm < p2->X ) {
+    if( isfinite( xm ) && xm > p1->X && xm < p2->X ) {
      
       // Test de l'ecart entre l'intersection des deux dérivées et la fonction.
       if( !fn( data, xm, &y ) )
@@ -766,7 +766,7 @@ char mbk_pwl_get_inv_value( mbk_pwl *pwl, double y, double *x )
     if( y >= y0 && y <= y1 ||
         y <= y0 && y >= y1    ) {
       *x = ( y - pwl->DATA[i].B ) / pwl->DATA[i].A ;
-      if( finite( *x ) )
+      if( isfinite( *x ) )
         return 1;
     }
   }

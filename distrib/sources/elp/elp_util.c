@@ -2242,22 +2242,22 @@ elpmodel_list *model ;
    int i ;
   
    for( i=0 ; i<elpSHRINKNUM ; i++ ) 
-     if( !finite(model->elpShrink[i]) ) //elpError(1004,elpTechnoFile) ;
+     if( !isfinite(model->elpShrink[i]) ) //elpError(1004,elpTechnoFile) ;
         avt_errmsg(ELP_ERRMSG, "004", AVT_ERROR, elpTechnoFile);
    for( i=0 ; i<elpMODELNUM ; i++ )
-     if( !finite(model->elpModel[i]) ) //elpError(1004,elpTechnoFile) ;
+     if( !isfinite(model->elpModel[i]) ) //elpError(1004,elpTechnoFile) ;
         avt_errmsg(ELP_ERRMSG, "004", AVT_ERROR, elpTechnoFile);
    for( i=0 ; i<elpVOLTNUM ; i++ )
-     if( !finite(model->elpVoltage[i]) ) //elpError(1004,elpTechnoFile) ;
+     if( !isfinite(model->elpVoltage[i]) ) //elpError(1004,elpTechnoFile) ;
         avt_errmsg(ELP_ERRMSG, "004", AVT_ERROR, elpTechnoFile);
    for( i=0 ; i<elpCAPANUM ; i++ )
-     if( !finite(model->elpCapa[i]) ) //elpError(1004,elpTechnoFile) ;
+     if( !isfinite(model->elpCapa[i]) ) //elpError(1004,elpTechnoFile) ;
         avt_errmsg(ELP_ERRMSG, "004", AVT_ERROR, elpTechnoFile);
    for( i=0 ; i<elpRSSNUM ; i++ )
-     if( !finite(model->elpRss[i]) ) //elpError(1004,elpTechnoFile) ;
+     if( !isfinite(model->elpRss[i]) ) //elpError(1004,elpTechnoFile) ;
         avt_errmsg(ELP_ERRMSG, "004", AVT_ERROR, elpTechnoFile);
    for( i=0 ; i<elpRACCNUM ; i++ )
-     if( !finite(model->elpRacc[i]) ) //elpError(1004,elpTechnoFile) ;
+     if( !isfinite(model->elpRacc[i]) ) //elpError(1004,elpTechnoFile) ;
         avt_errmsg(ELP_ERRMSG, "004", AVT_ERROR, elpTechnoFile);
    
    if( 

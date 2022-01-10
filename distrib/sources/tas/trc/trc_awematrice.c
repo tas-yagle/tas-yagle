@@ -130,7 +130,7 @@ int mat_solve( matrice *a, matrice *c, matrice *res )
     for( k = l+1 ; k < n ; k++ )
     {
       m = MATELEM( a, k, l ) / MATELEM( a, l, l );
-      if( !finite( m ) )
+      if( !isfinite( m ) )
         return(0);
       for( x = 0 ; x < n ; x++ )
       {
@@ -147,7 +147,7 @@ int mat_solve( matrice *a, matrice *c, matrice *res )
     for( k = l+1 ; k < n ; k++ )
       m = m - MATELEM( a, l, k ) * MATELEM( res, k, 0 );
     MATELEM( res, l, 0 ) = m / MATELEM( a, l, l );
-    if( !finite(  MATELEM( res, l, 0 ) ) )
+    if( !isfinite(  MATELEM( res, l, 0 ) ) )
       return(0);
   }
 

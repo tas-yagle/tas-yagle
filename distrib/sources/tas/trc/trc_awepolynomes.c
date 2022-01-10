@@ -119,7 +119,7 @@ RCXFLOAT poly_gauss( RCXFLOAT *poly, int n, RCXFLOAT epsilon, char *status )
   if( n==1 ) {
     RCXFLOAT r;
     r = -poly[0]/poly[1];
-    if( finite(r) ) {
+    if( isfinite(r) ) {
       *status='y';
       return( r );
     } else {
@@ -134,7 +134,7 @@ RCXFLOAT poly_gauss( RCXFLOAT *poly, int n, RCXFLOAT epsilon, char *status )
     c=poly[0];
     delta = b*b-4*a*c;
     r = - (b+sqrt(delta))/2/a;
-    if( finite(r) ) {
+    if( isfinite(r) ) {
       *status='y';
       return( r );
     } else {

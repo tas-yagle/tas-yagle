@@ -105,7 +105,7 @@ char stm_solver_calc_ids( stm_solver_maillon *trans,
                      ids
                    );
   if( r ) {
-    if( !finite(*ids) )
+    if( !isfinite(*ids) )
       r=0;
   }
 
