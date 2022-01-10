@@ -688,7 +688,7 @@ chain_list *ttv_DoPropagation_PRECISION_LEVEL1(ttvfig_list *tvf, ttvfig_list *tv
     if ((type & TTV_FIND_MIN)!=0) oslop=((ttvline_list *)line_list->DATA)->FMIN;
     else oslop=((ttvline_list *)line_list->DATA)->FMAX;
     rat=((float)(input->CTK.FIND_DELAY-node->FIND->DELAY))*100.0/node->FIND->DELAY;
-    avt_fprintf(stderr,"%s%s %s is:%ld od:%ld os:%ld -> od:%ld os:%ld (%+.1f%%)¤.\n",fabs(rat)<5?"":fabs(rat)<10?"¤4":"¤6", n1, n2, inslope,node->FIND->DELAY,oslop,input->CTK.FIND_DELAY,res,rat);
+    avt_fprintf(stderr,"%s%s %s is:%ld od:%ld os:%ld -> od:%ld os:%ld (%+.1f%%)" AVT_RESET "\n",fabs(rat)<5?"":fabs(rat)<10?"" AVT_YELLOW "":"" AVT_RED "", n1, n2, inslope,node->FIND->DELAY,oslop,input->CTK.FIND_DELAY,res,rat);
     line_list=reverse(line_list);
   }
 #endif  

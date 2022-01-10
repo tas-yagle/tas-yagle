@@ -46,12 +46,12 @@ void mbk_debugstat(char *label, int reset)
         systD = (syst % 100) / 10;
         
 //        fprintf(stderr, "s:+%02ldm%02lds", (long) (temps / 60), (long) (temps % 60));
-        avt_fprintf(stdout, "¤5%s",label!=NULL?label:"");
+        avt_fprintf(stdout, "" AVT_WHITE "%s",label!=NULL?label:"");
         avt_fprintf(stdout, "s:+%02ldm%02ld.%ld", systM, systS, systD);
         avt_fprintf(stdout, " u:+%02ldm%02ld.%ld", userM, userS, userD);
         bytes = (unsigned long long)mbkprocessmemoryusage()-(unsigned long long)mem;
         mem=mbkprocessmemoryusage();
-        avt_fprintf(stdout, " m:%+lldk (top=%ldk)¤.\n", ((long long)bytes)/1024, mbkprocessmemoryusage()/1024);
+        avt_fprintf(stdout, " m:%+lldk (top=%ldk)" AVT_RESET "\n", ((long long)bytes)/1024, mbkprocessmemoryusage()/1024);
  
         fflush(stderr);
       }

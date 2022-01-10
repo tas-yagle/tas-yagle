@@ -170,10 +170,10 @@ static int message_filter_logged=0;
 static void print_color(FILE *outstream, int type)
 {
   switch( type ) {
-      case AVT_ERROR   : avt_fprintf(outstream,"¤6")    ; break ;
-      case AVT_WARNING : avt_fprintf(outstream,"¤4") ; break ;
-      case AVT_FATAL   : avt_fprintf(outstream,"¤6")    ; break ;
-      default          : avt_fprintf(outstream,"¤7")  ; break ;
+      case AVT_ERROR   : avt_fprintf(outstream,"" AVT_RED "")    ; break ;
+      case AVT_WARNING : avt_fprintf(outstream,"" AVT_YELLOW "") ; break ;
+      case AVT_FATAL   : avt_fprintf(outstream,"" AVT_RED "")    ; break ;
+      default          : avt_fprintf(outstream,"" AVT_GREEN "")  ; break ;
   }
 }
 
@@ -239,13 +239,13 @@ void avt_errmsg (long lib, char *num, int type, ...)
                 print_color(outstream, type);
                 avt_fprintf(outstream,"[%s %s-%s]: ",buff,libname,num);
                 avt_fprintf(outstream,"%s",resbuf);
-                avt_fprintf(outstream,"¤.");
+                avt_fprintf(outstream,"" AVT_RESET "");
               }
               else {
                 if( n == AVT_MAXNBERRMSG ) {
                   print_color(outstream, type);
                   avt_fprintf(outstream,"[%s %s-%s]: more errors of that kind reported in log file\n",buff,libname,num);
-                  avt_fprintf(outstream,"¤.");
+                  avt_fprintf(outstream,"" AVT_RESET "");
                 }
               }
             }
@@ -253,7 +253,7 @@ void avt_errmsg (long lib, char *num, int type, ...)
               print_color(outstream, type);
               avt_fprintf(outstream,"[%s %s-%s]: ",buff,libname,num);
               avt_fprintf(outstream,"%s",resbuf);
-              avt_fprintf(outstream,"¤.");
+              avt_fprintf(outstream,"" AVT_RESET "");
               fflush( outstream );
            }
        } 

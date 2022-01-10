@@ -75,7 +75,7 @@ void patchlofig_if_needed(lofig_list *lf)
 
   if (getptype(lf->USER, GEN_VISITED_PTYPE)!=NULL) return;
 
-//  avt_fprintf(stdout,"¤6¤~    PATCH RCX    ¤...."); fflush(stdout);
+//  avt_fprintf(stdout, AVT_RED "    PATCH RCX    " AVT_RESET "..."); fflush(stdout);
   
   for (ls=lf->LOSIG; ls!=NULL; ls=ls->NEXT)
     {
@@ -97,7 +97,7 @@ void patchlofig_if_needed(lofig_list *lf)
         }
     }
 
-//  avt_fprintf(stdout," DONE¤.\n"); fflush(stdout);
+//  avt_fprintf(stdout," DONE" AVT_RESET "\n"); fflush(stdout);
   
   lf->USER=addptype(lf->USER, GEN_VISITED_PTYPE, NULL);
 }

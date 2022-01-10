@@ -52,7 +52,7 @@ int pavo_UpdateFunction(Scheduler *S, int index, void *data)
 
   ci=(ConeInformations *)Scheduler_GetRegisterObject(S, index);
   
-  if (DEBUG) avt_fprintf(stdout,"date ¤+%ld¤. : update '%s' %g -> %g\n", S->Date, ci->CONE->NAME, ci->CurrentVoltage, newval);
+  if (DEBUG) avt_fprintf(stdout,"date " AVT_BOLD "%ld" AVT_RESET " : update '%s' %g -> %g\n", S->Date, ci->CONE->NAME, ci->CurrentVoltage, newval);
 
   if (fabs(ci->CurrentVoltage-newval)>1e-3)
     {
@@ -148,8 +148,8 @@ void pavo_RandomPatterns(Scheduler *S, long lastdate, long nextdate)
       int var, inewval;
       char name[10];
 
-      if (DEBUG) avt_fprintf(stdout, "¤2reading patterns at %ld¤.\n",nextpatterndate);
-      else avt_fprintf(stdout, "\r¤2reading patterns at %ld¤.",nextpatterndate);
+      if (DEBUG) avt_fprintf(stdout, "" AVT_BLUE "reading patterns at %ld" AVT_RESET "\n",nextpatterndate);
+      else avt_fprintf(stdout, "\r" AVT_BLUE "reading patterns at %ld" AVT_RESET "",nextpatterndate);
       switch (nextpatterndate)
         {
         case 0:

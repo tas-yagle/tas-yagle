@@ -244,7 +244,7 @@ void LoadDynamicLibraries(FILE *debug)
                 }
               else 
                 avt_errmsg(API_ERRMSG, "002", AVT_WARNING, libpath, message);
-                // avt_fprintf(stderr,"[¤4warning¤.] could not open dynamic library '¤+%s¤.'\n\treason: %s\n", libpath, message);
+                // avt_fprintf(stderr,"[" AVT_YELLOW "warning" AVT_RESET "] could not open dynamic library '" AVT_BOLD "%s" AVT_RESET "'\n\treason: %s\n", libpath, message);
               grab_special_functions(libpath); // API en static peut etre
             }
           else   
@@ -271,7 +271,7 @@ void LoadDynamicLibraries(FILE *debug)
             }
           else 
             avt_errmsg(API_ERRMSG, "002", AVT_WARNING, libpath, message);
-            // avt_fprintf(stderr,"[¤4warning¤.] could not open dynamic library '¤+%s¤.'\n\treason: %s\n", libpath, message);
+            // avt_fprintf(stderr,"[" AVT_YELLOW "warning" AVT_RESET "] could not open dynamic library '" AVT_BOLD "%s" AVT_RESET "'\n\treason: %s\n", libpath, message);
           grab_special_functions(libpath); // API en static peut etre
         }
       else 

@@ -121,16 +121,16 @@ void avt_error (char *lib, int code, int severity, char *fmt, ...)
 
     switch(severity)
       {
-      case AVT_ERR: typemsg="¤6¤+Error"; break;
-      case AVT_WAR: typemsg="¤4Warning"; break;        
+      case AVT_ERR: typemsg=AVT_RED AVT_BOLD "Error"; break;
+      case AVT_WAR: typemsg=AVT_YELLOW "Warning"; break;
       case AVT_INFO:
       default:
-        typemsg="¤1Info";
+        typemsg="" AVT_MAGENTA "Info";
       }
     if (code<=0)
-      sprintf (error_msg, "[%s¤.][¤+%s¤.] ", typemsg, lib);
+      sprintf (error_msg, "[%s" AVT_RESET "][" AVT_BOLD "%s" AVT_RESET "] ", typemsg, lib);
     else
-      sprintf (error_msg, "[%s #%d¤.][¤+%s¤.] ", typemsg, code, lib);
+      sprintf (error_msg, "[%s #%d" AVT_RESET "][" AVT_BOLD "%s" AVT_RESET "] ", typemsg, code, lib);
 
     car = strlen (error_msg);
 
@@ -257,7 +257,7 @@ void avt_fprintf(FILE *output, char *fmt, ...)
     va_end(pa);
 
     str=temp;
-    e=strchr(str,'¤');
+    e=strchr(str, AVT_COLOUR_CHAR);
     while (e!=NULL)
       {
         if (*(e+1)>='0' && *(e+1)<='0'+NBCOLORS-1)
@@ -302,10 +302,31 @@ void avt_fprintf(FILE *output, char *fmt, ...)
             break;
           default:
             *e='\0';
-            fprintf(output,"%s¤",str);
+<<<<<<< HEAD
+            fprintf(output,"%s",str);
             str=e+1;
           }
-        e=strchr(str,'¤');
+        e=strchr(str,AVT_COLOUR_CHAR);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+            fprintf(output,"%s",str);
+            str=e+1;
+          }
+        e=strchr(str,AVT_COL_CHAR);
+=======
+            fprintf(output,"%sÃÂÃÂÃÂÃÂ¤",str);
+            str=e+1;
+          }
+        e=strchr(str,'ÃÂÃÂÃÂÃÂ¤');
+>>>>>>> a2da871 (Bulk convert to UTF-8 from ISO8859-1)
+=======
+            fprintf(output,"%s" AVT_COLOUR_STR ,str);
+            str=e+1;
+          }
+        e=strchr(str,AVT_COLOUR_CHAR);
+>>>>>>> 1844917 (mergeme - fix avt colour macro)
+>>>>>>> e1f276a (mergeme - fix avt colour macro)
       }
 
     fputs (str, output);
@@ -319,7 +340,19 @@ int avt_text_real_length(char *buf)
   int cnt=0;
   while (*buf!='\0')
     {
-      if (*buf=='¤' && *(buf+1)!='\0') cnt-=1;
+<<<<<<< HEAD
+      if (*buf==AVT_COLOUR_CHAR && *(buf+1)!='\0') cnt-=1;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+      if (*buf==AVT_COL_CHAR && *(buf+1)!='\0') cnt-=1;
+=======
+      if (*buf=='ÃÂÃÂÃÂÃÂ¤' && *(buf+1)!='\0') cnt-=1;
+>>>>>>> a2da871 (Bulk convert to UTF-8 from ISO8859-1)
+=======
+      if (*buf==AVT_COLOUR_CHAR && *(buf+1)!='\0') cnt-=1;
+>>>>>>> 1844917 (mergeme - fix avt colour macro)
+>>>>>>> e1f276a (mergeme - fix avt colour macro)
       else cnt++;
       buf++;
     }
@@ -333,7 +366,19 @@ void avt_format_text(char *resbuf, char *origbuf, int decal, int max)
   while (origbuf[i]!='\0')
     {
       resbuf[j++]=origbuf[i];
-      if (origbuf[i]=='¤' && origbuf[i+1]!='\0') cnt-=1;
+<<<<<<< HEAD
+      if (origbuf[i]==AVT_COLOUR_CHAR && origbuf[i+1]!='\0') cnt-=1;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+      if (origbuf[i]==AVT_COL_CHAR && origbuf[i+1]!='\0') cnt-=1;
+=======
+      if (origbuf[i]=='ÃÂÃÂÃÂÃÂ¤' && origbuf[i+1]!='\0') cnt-=1;
+>>>>>>> a2da871 (Bulk convert to UTF-8 from ISO8859-1)
+=======
+      if (origbuf[i]==AVT_COLOUR_CHAR && origbuf[i+1]!='\0') cnt-=1;
+>>>>>>> 1844917 (mergeme - fix avt colour macro)
+>>>>>>> e1f276a (mergeme - fix avt colour macro)
       else cnt++;
       i++;
       if (origbuf[i]=='\n' || cnt>=max)

@@ -93,7 +93,7 @@ $(TARGET_INCLUDE)/$(CNS_H) : $(CNSh)
 	echo "#define CNS" >> $(TARGET_INCLUDE)/$(CNS_H)
 	echo "" >> $(TARGET_INCLUDE)/$(CNS_H)
 	echo "" >> $(TARGET_INCLUDE)/$(CNS_H)
-	$(CAT) $(CNSh) | expand -3 >> $(TARGET_INCLUDE)/$(CNS_H)
+	$(CAT) $(CNSh) | LC_ALL=C expand -3 >> $(TARGET_INCLUDE)/$(CNS_H)
 	echo "#endif" >> $(TARGET_INCLUDE)/$(CNS_H)
 	@if [ -f y.output ] ; then $(RM) y.output ; fi
 

@@ -131,7 +131,7 @@ void stb_progressbar( int max, int current )
     for( i=(last<0?0:last) ; i<=pos ; i++ ) {
       ligne[i]='#';
     }
-    avt_fprintf( stdout, "\r%3ld%%  [¤2%s¤.] %7ldKb", r, ligne, mbkprocessmemoryusage()/1024 );
+    avt_fprintf( stdout, "\r%3ld%%  [" AVT_BLUE "%s" AVT_RESET "] %7ldKb", r, ligne, mbkprocessmemoryusage()/1024 );
     fflush( stdout );
     last  = pos;
     lastr = r;

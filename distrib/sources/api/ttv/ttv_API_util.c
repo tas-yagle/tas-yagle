@@ -147,7 +147,7 @@ cnsfig_list *ttvutil_cnsload(char *figname, inffig_list *ifl)
       if (where!=NULL)
         {
           avt_log(LOGFILEACCESS, 0, "Loading Cone netlist \"%s\"\n", where);
-          //avt_error("library", -1, AVT_INFO, "loading CNS '¤2%s¤.'\n", where);
+          //avt_error("library", -1, AVT_INFO, "loading CNS '" AVT_BLUE "%s" AVT_RESET "'\n", where);
           cf=getcnsfig(figname, NULL);
           cns_addmultivoltage(ifl, cf);
         }

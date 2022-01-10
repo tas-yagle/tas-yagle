@@ -175,7 +175,7 @@ static void _DriveTransistors(FILE *f, corresp_t *crt, lofig_list *lf)
           if (ctr==NULL)
             {
               avt_errmsg(GNS_ERRMSG, "017", AVT_FATAL, lt->TRNAME);
-              //avt_fprintf(stderr,"[¤3¤+Error¤.][¤2crt driver¤.] could not find correspondance for transistor '%s'\n",lt->TRNAME);
+              //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "][" AVT_BLUE "crt driver" AVT_RESET "] could not find correspondance for transistor '%s'\n",lt->TRNAME);
               EXIT(1);
             }
           else
@@ -187,7 +187,7 @@ static void _DriveTransistors(FILE *f, corresp_t *crt, lofig_list *lf)
               else
                 {
                   avt_errmsg(GNS_ERRMSG, "018", AVT_FATAL);
-                  //avt_fprintf(stderr,"[¤3¤+Error¤.][¤2crt driver¤.] found a transistor with no name\n");
+                  //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "][" AVT_BLUE "crt driver" AVT_RESET "] found a transistor with no name\n");
                   EXIT(1);
                 }
             }
@@ -240,7 +240,7 @@ static void _DriveSignals(FILE *f, corresp_t *crt, lofig_list *lf)
           if (cls==NULL && !gen_wasunused())
             {
               avt_errmsg(GNS_ERRMSG, "019", AVT_FATAL, gen_losigname(ls));
-              //avt_fprintf(stderr,"[¤3¤+Error¤.][¤2crt driver¤.] could not find correspondance for signal '%s'\n",gen_losigname(ls));
+              //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "][" AVT_BLUE "crt driver" AVT_RESET "] could not find correspondance for signal '%s'\n",gen_losigname(ls));
               EXIT(1);
             }
           else
@@ -267,7 +267,7 @@ static void _DriveSignals(FILE *f, corresp_t *crt, lofig_list *lf)
             else 
               {
                 avt_errmsg(GNS_ERRMSG, "019", AVT_FATAL, gen_losigname(ls));
-                //avt_fprintf(stderr,"[¤3¤+Error¤.][¤2crt driver¤.] could not find correspondance for signal '%s'\n",gen_losigname(ls));
+                //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "][" AVT_BLUE "crt driver" AVT_RESET "] could not find correspondance for signal '%s'\n",gen_losigname(ls));
                 //EXIT(1);
               }
           if (count>15)
@@ -301,7 +301,7 @@ static void _PrintCall(FILE *f, APICallFunc *cf)
           else 
             {
               avt_errmsg(GNS_ERRMSG, "020", AVT_FATAL, ta->TYPE);
-              //avt_fprintf(stderr,"[¤3¤+Error¤.][¤2crt driver¤.] can't drive '%s' type in function call\n",ta->TYPE);
+              //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "][" AVT_BLUE "crt driver" AVT_RESET "] can't drive '%s' type in function call\n",ta->TYPE);
               EXIT(1);
             }
         }
@@ -318,7 +318,7 @@ static void _PrintCall(FILE *f, APICallFunc *cf)
           else
             {
               avt_errmsg(GNS_ERRMSG, "021", AVT_FATAL);
-              //avt_fprintf(stderr,"[¤3¤+Error¤.][¤2crt driver¤.] can't drive pointer type in function call\n",ta->TYPE);
+              //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "][" AVT_BLUE "crt driver" AVT_RESET "] can't drive pointer type in function call\n",ta->TYPE);
               EXIT(1);
             }
         }
@@ -387,7 +387,7 @@ static void recur_drive_corresp(FILE *f, subinst_t *si)
   if (lf==NULL)
     {
       avt_errmsg(GNS_ERRMSG, "022", AVT_FATAL, si->CRT->GENIUS_FIGNAME);
-      //avt_fprintf(stderr,"[¤3¤+Error¤.][¤2crt driver¤.] can't find figure '%s'\n",si->CRT->GENIUS_FIGNAME);
+      //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "][" AVT_BLUE "crt driver" AVT_RESET "] can't find figure '%s'\n",si->CRT->GENIUS_FIGNAME);
       EXIT(2);
     }
   _DriveTransistors(f, si->CRT, lf);
@@ -425,7 +425,7 @@ static void nametoindex_DriveTransistors(corresp_t *crt, lofig_list *lf, long *i
       if (ctr==NULL)
         {
           avt_errmsg(GNS_ERRMSG, "017", AVT_ERROR, lt->TRNAME);
-          //avt_fprintf(stderr,"[¤3¤+Error¤.][¤2crt driver¤.] could not find correspondance for transistor '%s'\n",lt->TRNAME);
+          //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "][" AVT_BLUE "crt driver" AVT_RESET "] could not find correspondance for transistor '%s'\n",lt->TRNAME);
           continue;
         }
       else
@@ -438,7 +438,7 @@ static void nametoindex_DriveTransistors(corresp_t *crt, lofig_list *lf, long *i
           else
             {
               avt_errmsg(GNS_ERRMSG, "018", AVT_FATAL);
-              //avt_fprintf(stderr,"[¤3¤+Error¤.][¤2crt driver¤.] found a transistor with no name\n");
+              //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "][" AVT_BLUE "crt driver" AVT_RESET "] found a transistor with no name\n");
               EXIT(1);
             }
         }
@@ -466,7 +466,7 @@ static void nametoindex_DriveSignals(corresp_t *crt, lofig_list *lf, long *index
       if (cls==NULL && !gen_wasunused())
         {
           avt_errmsg(GNS_ERRMSG, "019", AVT_ERROR, gen_losigname(ls));
-          //avt_fprintf(stderr,"[¤3¤+Error¤.][¤2crt driver¤.] could not find correspondance for signal '%s'\n",gen_losigname(ls));
+          //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "][" AVT_BLUE "crt driver" AVT_RESET "] could not find correspondance for signal '%s'\n",gen_losigname(ls));
           continue;
         }
       else
@@ -494,7 +494,7 @@ static void recur_nametoindex(subinst_t *si, long *index)
   if (lf==NULL)
     {
       avt_errmsg(GNS_ERRMSG, "022", AVT_FATAL, si->CRT->GENIUS_FIGNAME);
-      //avt_fprintf(stderr,"[¤3¤+Error¤.][¤2crt driver¤.] can't find figure '%s'\n",si->CRT->GENIUS_FIGNAME);
+      //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "][" AVT_BLUE "crt driver" AVT_RESET "] can't find figure '%s'\n",si->CRT->GENIUS_FIGNAME);
       EXIT(2);
     }
   nametoindex_DriveTransistors(si->CRT, lf, index);
@@ -580,7 +580,7 @@ void gnsDriveCorrespondanceTables(ALL_FOR_GNS *all, int mode)
   if (f==NULL)
     {
       avt_errmsg(GNS_ERRMSG, "023", AVT_ERROR, all->FIGNAME);
-      //avt_fprintf(stderr,"[¤3¤+Error¤.] Could not write file %s.gns\n",all->FIGNAME);
+      //avt_fprintf(stderr,"[" AVT_CYAN "" AVT_BOLD "Error" AVT_RESET "] Could not write file %s.gns\n",all->FIGNAME);
       return;
     }
   if (mode=='y' || mode=='Y') COMPACT=1;

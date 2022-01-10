@@ -209,9 +209,9 @@ static void Sort_Search(lofig_list *circuit, model_list *model, chain_list* name
       gen_printf(0,"select model: %s\n",select_model);
       
       if (model->NAME!=modelradical(model->NAME))
-        avt_fprintf(GENIUS_OUTPUT,"¤+%s¤. (%s):  ", modelradical(model->NAME),strchr(model->NAME,' ')+1);
+        avt_fprintf(GENIUS_OUTPUT,"" AVT_BOLD "%s" AVT_RESET " (%s):  ", modelradical(model->NAME),strchr(model->NAME,' ')+1);
       else
-        avt_fprintf(GENIUS_OUTPUT,"¤+%s¤.:  ",model->NAME);
+        avt_fprintf(GENIUS_OUTPUT,"" AVT_BOLD "%s" AVT_RESET ":  ",model->NAME);
       fflush(GENIUS_OUTPUT);
       
       count=genFindInstances(circuit, model, select_model); // zinaps
@@ -274,31 +274,31 @@ static void Sort_Search(lofig_list *circuit, model_list *model, chain_list* name
       if (nosearch)
         {
           if (model->NAME!=modelradical(model->NAME))
-            avt_fprintf(GENIUS_OUTPUT,"¤+%s¤. (%s):  ", modelradical(model->NAME),strchr(model->NAME,' ')+1);
+            avt_fprintf(GENIUS_OUTPUT,"" AVT_BOLD "%s" AVT_RESET " (%s):  ", modelradical(model->NAME),strchr(model->NAME,' ')+1);
           else
-            avt_fprintf(GENIUS_OUTPUT,"¤+%s¤.:  ",model->NAME);
+            avt_fprintf(GENIUS_OUTPUT,"" AVT_BOLD "%s" AVT_RESET ":  ",model->NAME);
           fflush(GENIUS_OUTPUT);
         }
 
       if (count0==0)
-        avt_fprintf(GENIUS_OUTPUT,"¤+¤3%d¤. found",count); //gen_printf(-1,"%d found\n",count);
+        avt_fprintf(GENIUS_OUTPUT,"" AVT_BOLD "" AVT_CYAN "%d" AVT_RESET " found",count); //gen_printf(-1,"%d found\n",count);
       else
-        avt_fprintf(GENIUS_OUTPUT,"¤+¤3%d¤. (¤3%d¤.¤4+%d¤.) found",count,count-count0,count0);
-      if (current_variable_values==NULL) avt_fprintf(GENIUS_OUTPUT,"  (¤3%s¤.)\n",genius_getutime(&lSTART,&lEND));
+        avt_fprintf(GENIUS_OUTPUT,"" AVT_BOLD "" AVT_CYAN "%d" AVT_RESET " (" AVT_CYAN "%d" AVT_RESET "" AVT_YELLOW "+%d" AVT_RESET ") found",count,count-count0,count0);
+      if (current_variable_values==NULL) avt_fprintf(GENIUS_OUTPUT,"  (" AVT_CYAN "%s" AVT_RESET ")\n",genius_getutime(&lSTART,&lEND));
       else
         {
           chain_list *cl;
-          avt_fprintf(GENIUS_OUTPUT,"   (¤1%s¤. = ",current_variable_name);
+          avt_fprintf(GENIUS_OUTPUT,"   (" AVT_MAGENTA "%s" AVT_RESET " = ",current_variable_name);
           for (cl=current_variable_values;cl!=NULL;cl=cl->NEXT)
             {
-              avt_fprintf(GENIUS_OUTPUT,"¤4%ld¤.",(long)cl->DATA);
+              avt_fprintf(GENIUS_OUTPUT,"" AVT_YELLOW "%ld" AVT_RESET "",(long)cl->DATA);
               if (cl->NEXT!=NULL) avt_fprintf(GENIUS_OUTPUT,", ");
             }
-          avt_fprintf(GENIUS_OUTPUT,")  (¤3%s¤.)\n",genius_getutime(&lSTART,&lEND));
+          avt_fprintf(GENIUS_OUTPUT,")  (" AVT_CYAN "%s" AVT_RESET ")\n",genius_getutime(&lSTART,&lEND));
         }
     }
   else 
-    if (!nosearch) avt_fprintf(GENIUS_OUTPUT,"¤6not found\n",count); //gen_printf(-1,"not found\n");
+    if (!nosearch) avt_fprintf(GENIUS_OUTPUT,"" AVT_RED "not found\n",count); //gen_printf(-1,"not found\n");
 
   freechain(current_variable_values);
    
@@ -501,7 +501,7 @@ void ExecuteActions()
 
           if (modname!=prev)
             {
-              avt_fprintf(GENIUS_OUTPUT, "¤+~~~ %s¤.\n", modname);
+              avt_fprintf(GENIUS_OUTPUT, "" AVT_BOLD "~~~ %s" AVT_RESET "\n", modname);
               fflush(stdout);
               prev=modname;
             }
@@ -576,7 +576,7 @@ extern chain_list *FindInstances(netlist,genius_models,fcl_models)
   ClearLOFIGLoconFlags(netlist);
 
   InitSymmetricAndCoupledInfoMecanism();
-  avt_fprintf(GENIUS_OUTPUT,"\n¤+_________________________¤.¤0¤~  FCL   ¤.\n");
+  avt_fprintf(GENIUS_OUTPUT,"\n" AVT_BOLD "_________________________" AVT_RESET "" AVT_BLACK "" AVT_REV "  FCL   " AVT_RESET "\n");
   genius_chrono(&START,&start);
   /* search first base model within only transistors*/
   for (p=fcl_models;p;p=p->NEXT) {
@@ -591,9 +591,9 @@ extern chain_list *FindInstances(netlist,genius_models,fcl_models)
     else add_foundmodel(NULL,model);
 
     if (name!=modelradical(name)) 
-      avt_fprintf(GENIUS_OUTPUT,"¤+%s¤. (%s):  ",modelradical(name),strchr(name,' ')+1);
+      avt_fprintf(GENIUS_OUTPUT,"" AVT_BOLD "%s" AVT_RESET " (%s):  ",modelradical(name),strchr(name,' ')+1);
     else 
-      avt_fprintf(GENIUS_OUTPUT,"¤+%s¤.:  ",name);
+      avt_fprintf(GENIUS_OUTPUT,"" AVT_BOLD "%s" AVT_RESET ":  ",name);
     fflush(GENIUS_OUTPUT);
 
     count=0;
@@ -693,12 +693,12 @@ extern chain_list *FindInstances(netlist,genius_models,fcl_models)
     genius_chrono(&lEND,&lend);
     if (count0==0 && count1==0)
       {
-        if (count) avt_fprintf(GENIUS_OUTPUT,"¤+¤3%d¤. found  (¤3%s¤.)\n",count,genius_getutime(&lSTART,&lEND));
-        else avt_fprintf(GENIUS_OUTPUT,"¤6not found\n",count);
+        if (count) avt_fprintf(GENIUS_OUTPUT,"" AVT_BOLD "" AVT_CYAN "%d" AVT_RESET " found  (" AVT_CYAN "%s" AVT_RESET ")\n",count,genius_getutime(&lSTART,&lEND));
+        else avt_fprintf(GENIUS_OUTPUT,"" AVT_RED "not found\n",count);
       }
     else
       {
-        avt_fprintf(GENIUS_OUTPUT,"¤+¤3%d¤. (¤3%d¤.¤4+%d¤.¤5+%d¤.) found  (¤3%s¤.)\n",count,count-count0-count1,count0,count1,genius_getutime(&lSTART,&lEND));
+        avt_fprintf(GENIUS_OUTPUT,"" AVT_BOLD "" AVT_CYAN "%d" AVT_RESET " (" AVT_CYAN "%d" AVT_RESET "" AVT_YELLOW "+%d" AVT_RESET "" AVT_WHITE "+%d" AVT_RESET ") found  (" AVT_CYAN "%s" AVT_RESET ")\n",count,count-count0-count1,count0,count1,genius_getutime(&lSTART,&lEND));
       }
   }
 
@@ -709,7 +709,7 @@ extern chain_list *FindInstances(netlist,genius_models,fcl_models)
   genius_chrono(&END,&end);
   genius_print_time(&START,&END,start,end);
 
-  avt_fprintf(GENIUS_OUTPUT,"\n¤+_________________________¤.¤0¤~ GENIUS ¤.\n");
+  avt_fprintf(GENIUS_OUTPUT,"\n" AVT_BOLD "_________________________" AVT_RESET "" AVT_BLACK "" AVT_REV " GENIUS " AVT_RESET "\n");
   genius_chrono(&START,&start);
   /* genius_models is in reversed order so it will in good ordering */
   /*creating a file for instances storing and also sort by priority model*/
@@ -753,7 +753,7 @@ extern chain_list *FindInstances(netlist,genius_models,fcl_models)
   UpdateTOPInstancesCorrespondanceTable();
 //  dispst0();
   genius_chrono(&lEND,&lend);
-  avt_fprintf(GENIUS_OUTPUT,"(¤3%s¤.)\n",genius_getutime(&lSTART,&lEND));
+  avt_fprintf(GENIUS_OUTPUT,"(" AVT_CYAN "%s" AVT_RESET ")\n",genius_getutime(&lSTART,&lEND));
   avt_fprintf(GENIUS_OUTPUT,"Executing actions :\n"); fflush(GENIUS_OUTPUT);
 
   LATEST_GNS_RUN->HIER_HT_LOFIG=GEN_HT_LOFIG;
@@ -783,7 +783,7 @@ extern chain_list *FindInstances(netlist,genius_models,fcl_models)
   genius_chrono(&END,&end);
   genius_print_time(&START,&END,start,end);
   RemoveSymmetricAndCoupledInfoMecanism();
-  avt_fprintf(GENIUS_OUTPUT,"\n¤+_________________________¤.¤0¤~  END   ¤.\n");
+  avt_fprintf(GENIUS_OUTPUT,"\n" AVT_BOLD "_________________________" AVT_RESET "" AVT_BLACK "" AVT_REV "  END   " AVT_RESET "\n");
 
   return ret;
 }

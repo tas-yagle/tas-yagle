@@ -270,7 +270,7 @@ int main(int argc, char *argv[])
       else strcpy(OUT_LO, ouf);
     }
 
-  avt_error("gnshr", -1, AVT_INFO, "input format: ¤+%s¤.   output format : ¤+%s¤.\n", IN_LO, OUT_LO);
+  avt_error("gnshr", -1, AVT_INFO, "input format: " AVT_BOLD "%s" AVT_RESET "   output format : " AVT_BOLD "%s" AVT_RESET "\n", IN_LO, OUT_LO);
 
   // sets scale_x so the parameters in meter fit in LONG*SCALE_X
   SCALE_X=1000;
@@ -279,7 +279,7 @@ int main(int argc, char *argv[])
   mbk_debugstat("",1);
 #endif
 
-  avt_error("gnshr", -1, AVT_INFO,"loading input netlist : '¤3%s¤.'\n",av[1]);
+  avt_error("gnshr", -1, AVT_INFO,"loading input netlist : '" AVT_CYAN "%s" AVT_RESET "'\n",av[1]);
   mainlf=lf=getlofig(av[1],'A');
 
 #ifdef DELAY_DEBUG_STAT
@@ -289,10 +289,10 @@ int main(int argc, char *argv[])
   if (SUBFIGURE!=NULL)
     {
       if ((mainlf=lf=getloadedlofig(SUBFIGURE))!=NULL)
-        avt_error("gnshr", -1, AVT_INFO, "using sub-figure '¤3%s¤.'\n",SUBFIGURE);
+        avt_error("gnshr", -1, AVT_INFO, "using sub-figure '" AVT_CYAN "%s" AVT_RESET "'\n",SUBFIGURE);
       else
         {
-          avt_error("gnshr", 3, AVT_ERR, "Could not find sub-figure '¤3%s¤.'\n",SUBFIGURE);
+          avt_error("gnshr", 3, AVT_ERR, "Could not find sub-figure '" AVT_CYAN "%s" AVT_RESET "'\n",SUBFIGURE);
           return 1;
         }
       if (ac<4) { av[3]=lf->NAME; ac=4; topmode=1; }
@@ -309,7 +309,7 @@ int main(int argc, char *argv[])
     {
       if ((bbox=getloadedlofig(av[i]))!=NULL)
           {
-            avt_error("gnshr", -1, AVT_INFO, "¤~     ¤. Blackbox '¤+%s¤.'\n",av[i]);
+            avt_error("gnshr", -1, AVT_INFO, "" AVT_REV "     " AVT_RESET " Blackbox '" AVT_BOLD "%s" AVT_RESET "'\n",av[i]);
             if (bbox->LOINS!=NULL)
               {
                 avt_error("gnshr", -1, AVT_INFO, "flattening Netlist...");
@@ -317,7 +317,7 @@ int main(int argc, char *argv[])
                 mbk_StartChrono(&mc);
                 flatOutsideList(bbox);
                 mbk_StopChrono(&mc);
-                avt_fprintf(stderr, " (¤3%s¤.)\n", mbk_GetUserChrono(&mc, buf));
+                avt_fprintf(stderr, " (" AVT_CYAN "%s" AVT_RESET ")\n", mbk_GetUserChrono(&mc, buf));
               }
             
             curbbox=(bbox_list *)mbkalloc(sizeof(bbox_list));
@@ -376,10 +376,10 @@ int main(int argc, char *argv[])
 
   subcktlist=striplist(subcktlist);
 
-  avt_error("gnshr", -1, AVT_INFO, "driving output netlist : '¤3%s¤.'\n",av[2]);
+  avt_error("gnshr", -1, AVT_INFO, "driving output netlist : '" AVT_CYAN "%s" AVT_RESET "'\n",av[2]);
   if ((f=mbkfopen(av[2], OUT_LO, WRITE_TEXT))==NULL)
     {
-      avt_error("gnshr", 4, AVT_ERR, "could not open output file for netlist '¤3%s¤.'\n",av[2]);
+      avt_error("gnshr", 4, AVT_ERR, "could not open output file for netlist '" AVT_CYAN "%s" AVT_RESET "'\n",av[2]);
       return 2;
     }
 
