@@ -690,7 +690,7 @@ void inf_DefineFalsePath(chain_list *elems)
               if (strcasecmp((char *)elems->NEXT->DATA, "<hz>")==0)
                 pt=addptype(pt, INF_CK, infTasVectName("^"));
               else if (strcasecmp((char *)elems->NEXT->DATA, "<nothz>")==0)
-                pt=addptype(pt, INF_CK, infTasVectName("°"));
+                pt=addptype(pt, INF_CK, infTasVectName("%"));
               else
                 pt=addptype(pt, INF_CK, infTasVectName(elems->NEXT->DATA));
             }        

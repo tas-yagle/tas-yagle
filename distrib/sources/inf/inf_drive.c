@@ -782,9 +782,9 @@ void inf_driveFalsepath (FILE * f, INF_INFOSET * is)
         inf_fprintf (f, "< VOID >");
         break;
       case INF_CK:
-        if (name[0]=='^')
+        if (strncmp(name, INF_HZ_STR, 1) == 0)
           inf_fprintf (f, ": < HZ >");
-        else if (name[0]=='°')
+        else if (strncmp(name, INF_NOTHZ_STR, 1) == 0)
           inf_fprintf (f, ": < NOTHZ >");
         else
           inf_fprintf (f, ": \"%s\"", inf_reVectName (name));

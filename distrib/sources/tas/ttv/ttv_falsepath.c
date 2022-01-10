@@ -569,9 +569,10 @@ static int ttv_isfalsedetailpath(ttvfig_list *ttvfig,ttvevent_list *eventin,ttve
 /*****************************************************************************/
 static int falsepath_matchhz(long type, ttvfalsepath_list *pt)
 {
-  if ((type & TTV_FIND_HZ)!=0 && (pt->CLOCK==NULL || pt->CLOCK[0]=='^')) return 1;
-  if ((type & TTV_FIND_HZ)==0 && (pt->CLOCK==NULL || pt->CLOCK[0]=='°')) return 1;
-//  if (pt->CLOCK!=NULL && pt->CLOCK[0]=='^' && pt->CLOCK[0]=='°')
+  if ((type & TTV_FIND_HZ)!=0 && (pt->CLOCK==NULL ||
+       strncmp(pt->CLOCK[0], INF_HZ_STR, 1))) return 1;
+  if ((type & TTV_FIND_HZ)==0 && (pt->CLOCK==NULL ||
+       strncmp(pt->CLOCK[0], INF_HZ_STR, 1))) return 1;
   return 0;
 }
 

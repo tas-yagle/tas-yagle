@@ -18,6 +18,8 @@
 #define INF_DONTLOG 2
 
 #define INF_JOK '*'
+#define INF_HZ_STR "^"
+#define INF_NOTHZ_STR "%"
 #define INF_ANY_VALUES ((char *)0xabcdef01)
 
 /* TAS info type constants */
