@@ -7,7 +7,8 @@
 
 #define MBK_JOK '*'
 #define MBKREGEXBUFSIZE 1024
-#define MBKMAXREGEXCACHE 4096
+#define MBKMAXREGEXCACHE 4097
+#define CACHE_ID_CHAR (char) 002 //STX
 
 static char CONFIG_REGEX_MODE=' ';
 static regex_t latest_regular_expression;
@@ -47,7 +48,7 @@ char *mbk_index_regex(char *r)
   regex_cache[regex_cnt].orig=nr;
 
   tui[0]='%';
-  tui[1]='°';
+  tui[1]=CACHE_ID_CHAR;
   tui[2]=((regex_cnt>>8) & 0xff) + 1;
   tui[3]=regex_cnt & 0xff;
   tui[4]='\0';
@@ -61,7 +62,7 @@ char *mbk_index_regex(char *r)
 int mbk_get_index_regex(char *refname)
 {
   int index;
-  if (regex_cache_index!=NULL && refname[0]=='°')
+  if (regex_cache_index!=NULL && refname[0]==CACHE_ID_CHAR)
     {
       index=((unsigned char)refname[2]) | (((unsigned char)refname[1]-1)<<8);
       return index;
