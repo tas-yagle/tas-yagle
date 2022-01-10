@@ -349,7 +349,7 @@ void mbkenv()
 
     SCALE_X = (long)V_INT_TAB[__MBK_SCALE_X].VALUE;
 
-  srand((unsigned int) MBK_RAND_SEED);
+  srand(*((unsigned int*) MBK_RAND_SEED));
 
   str = V_STR_TAB[__MBK_IN_LO].VALUE;
   if (str) {
