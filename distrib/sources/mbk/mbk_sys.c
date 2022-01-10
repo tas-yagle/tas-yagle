@@ -76,7 +76,6 @@
 #include <mach/shared_memory_server.h>
 #endif
 
-
 #define VFORKMAXTRY 100
 
 static char filename[BUFSIZ];
@@ -128,17 +127,17 @@ void *ptr;
    defines the strategy used for searching and opening file in the
    mbk environement. */
 FILE* mbkfopen( name, extension, mode )
-char *name;
-char *extension;
-char *mode;
+const char *name;
+const char *extension;
+const char *mode;
 {
   return mbkfopen_ext( name, extension, mode, 0, 1 );
 }
 
 FILE* mbkfopen_ext( name, extension, mode, access, allowcompress )
-char *name;
-char *extension;
-char *mode;
+const char *name;
+const char *extension;
+const char *mode;
 char  access;
 char  allowcompress;
 {
@@ -167,12 +166,12 @@ char  allowcompress;
   return( ptf );
 }
 
-void mbkfopen_infos( in, filename, name, extension, mode ) 
+void mbkfopen_infos( in, filename, name, extension, mode )
 FILE *in;
-char *filename;
-char *name;
-char *extension;
-char *mode;
+const char *filename;
+const char *name;
+const char *extension;
+const char *mode;
 {
   avt_log( LOGFILEACCESS, 2,
            "%s : %s, (%s,%s,%s)\n",
@@ -360,13 +359,13 @@ FILE *mbkfopentrace(name, extension, mode, access, allowcompress)
 char *name, *extension, *mode;
 char access, allowcompress ;
 {
-FILE *in;
-FILE *infilter;
-int i;
-char suffix[512], suffixfilter[512] ;
-char filenamefilter[BUFSIZE];
-char *prefixlist[64];
-char local ;
+  FILE *in;
+  FILE *infilter;
+  int i;
+  char suffix[512], suffixfilter[512] ;
+  char filenamefilter[BUFSIZE];
+  const char *prefixlist[64];
+  char local ;
 
   if (!CATA_LIB || !WORK_LIB)
     mbkenv(); /* not done yet */
@@ -538,8 +537,8 @@ char *name, *extension;
 	
 /* filepath :
    find the complete path of file from mbkfopen point of view. */
-char *filepath(name, extension)
-char *name, *extension;
+const char *filepath(name, extension)
+const char *name, *extension;
 {
 FILE *in;
 int i ,ln ,le ,j ;
@@ -663,7 +662,7 @@ static int times;
  * Gregoire.Avot
  */
 
-FILE* mbkpopen( char *nom, char *filter, char mode )
+FILE* mbkpopen( const char *nom, const char *filter, char mode )
 {
   int ptf[2];
   static int fic;
@@ -861,7 +860,7 @@ FILE* mbkpopen( char *nom, char *filter, char mode )
   return( file );
 }
 
-char **decompfilter( char *filter )
+char **decompfilter( const char *filter )
 {
   int         pos;
   int         i;
@@ -1073,6 +1072,7 @@ unsigned long mbkprocessmemoryusage()
   #endif
 
   #ifdef Darwin
+
   struct task_basic_info t_info;
   mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
   task_t task = MACH_PORT_NULL;
@@ -1085,9 +1085,9 @@ unsigned long mbkprocessmemoryusage()
   return 0;
 }
 
-char *mbkIsLofigExt(char *filename, char *ext)
+const char *mbkIsLofigExt(const char *filename, const char *ext)
 {
-  char *c;
+  const char *c;
   c=&filename[strlen(filename)-1];
   while (c!=filename && *c!='.') c--;
   if (c==filename) return NULL;
@@ -1105,14 +1105,14 @@ char *mbkIsLofigExt(char *filename, char *ext)
 }
 
 static int done=0;
-static char *ext[]={"","","","al","spi","hns","fdn","vhd","vlg","v","vst"};
+static const char *ext[]={"","","","al","spi","hns","fdn","vhd","vlg","v","vst"};
 
 static void setext()
 {
-  char *c;
+  const char *c;
   if (!done)
     {
-      char *SPI_SFX="spi", *VHD_SFX="vhd", *VLG_SFX="vlg";
+      const char *SPI_SFX="spi", *VHD_SFX="vhd", *VLG_SFX="vlg";
       if ((c=V_STR_TAB[__MBK_SPI_SUFFIX].VALUE)!=NULL) SPI_SFX=c;
       if ((c=V_STR_TAB[__MVL_FILE_SUFFIX].VALUE)!=NULL) VHD_SFX=c;
       if ((c=V_STR_TAB[__MGL_FILE_SUFFIX].VALUE)!=NULL) VLG_SFX=c;
@@ -1123,10 +1123,10 @@ static void setext()
     }
 }
 
-char *mbkFileIsLofig(char *filename)
+const char *mbkFileIsLofig(const char *filename)
 {
   unsigned int i;
-  char *c;
+  const char *c;
   setext();
   for (i=0;i<sizeof(ext)/sizeof(*ext); i++)
     if ((c=mbkIsLofigExt(filename, ext[i]))!=NULL) return c;

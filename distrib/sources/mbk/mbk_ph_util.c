@@ -513,7 +513,7 @@ char face, sym;
 	(void)fprintf(stderr, "instanceface impossible :\n");
 	(void)fprintf(stderr, "face: %c, sym %c\n", face, sym);
 	EXIT(1);
-	return (char)NULL; /* never reached */
+	return '\0'; /* never reached */
 }
 
 #define BV_VIA_VIA    6 /* must be even, whatever!                */

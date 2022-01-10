@@ -66,7 +66,7 @@ unsigned long int STM_CACHE_SIZE=0; /* default  = 0 */
 
 void stmenv () 
 {
-    char *str, *ptend ;
+    const char *str, *ptend ;
     
     stm_init();
     

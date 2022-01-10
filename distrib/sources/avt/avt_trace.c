@@ -75,7 +75,8 @@ char *leveltab[]=
 void readusercolor()
 {
   unsigned int i;
-  char temp[100], *e;
+  char temp[100];
+  const char *e;
   for (i=0;(unsigned)i<sizeof(colors)/sizeof(*colors);i++)
     {
       sprintf(temp,"AVT_COL_%d",i);
@@ -108,7 +109,7 @@ void readusercolor()
 
 }
 
-void avt_error (char *lib, int code, int severity, char *fmt, ...)
+void avt_error (const char *lib, int code, int severity, const char *fmt, ...)
 {
     va_list pa;
     char *typemsg;
@@ -138,13 +139,13 @@ void avt_error (char *lib, int code, int severity, char *fmt, ...)
     avt_fprintf (stderr, "%s", error_msg);
 }
 
-void avt_trace (int level, FILE *output, char *fmt, ...) 
+void avt_trace (int level, FILE *output, const char *fmt, ...)
 {
     va_list pa;
     int color = 0;
     static int avt_color = 0;
     static int color_env = 1;
-    char *str = NULL;
+    const char *str = NULL;
 
     if (color_env) {
         if ((str = avt_gethashvar ("AVT_COL")))
@@ -176,12 +177,12 @@ void avt_trace (int level, FILE *output, char *fmt, ...)
         fputs(COLOR(CL_RESET), output);
 }
 
-void avt_trace_va (int level, FILE *output, char *fmt, va_list pa) 
+void avt_trace_va (int level, FILE *output, const char *fmt, va_list pa)
 {
     int color = 0;
     static int avt_color = 0;
     static int color_env = 1;
-    char *str = NULL;
+    const char *str = NULL;
 
     if (color_env) {
         if ((str = avt_gethashvar ("AVT_COL")))
@@ -230,7 +231,7 @@ void avt_back_fprintf(FILE *output, int length)
     }
 }
 
-void avt_fprintf(FILE *output, char *fmt, ...) 
+void avt_fprintf(FILE *output, const char *fmt, ...)
 {
     va_list pa;
     int color = 0, ln;
@@ -335,7 +336,7 @@ void avt_fprintf(FILE *output, char *fmt, ...)
       fputs(COLOR(CL_RESET), output);
 }
 
-int avt_text_real_length(char *buf)
+int avt_text_real_length(const char *buf)
 {
   int cnt=0;
   while (*buf!='\0')
@@ -359,7 +360,7 @@ int avt_text_real_length(char *buf)
   return cnt;
 }
 
-void avt_format_text(char *resbuf, char *origbuf, int decal, int max)
+void avt_format_text(char *resbuf, const char *origbuf, int decal, int max)
 {
   int i=0, j=0, k, cnt=decal;
   

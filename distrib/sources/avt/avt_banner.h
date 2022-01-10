@@ -19,8 +19,8 @@
 #define LINES 15
 #define ASCENT 13
 
-extern char *AVERTEC_VERSION ;
-extern char *AVT_FULLVERSION ;
+extern const char *AVERTEC_VERSION ;
+extern const char *AVT_FULLVERSION ;
 
 static char screen[LINES][WINDOW_SIZE];
 
@@ -1164,7 +1164,7 @@ static void avt_cartouche   __P((char *,
                                  char *,
                                  int
                                ));
-extern void avt_banner      __P((char *,
-                                 char *,
-                                 char *
+extern void avt_banner      __P((const char *,
+                                 const char *,
+                                 const char *
                                ));

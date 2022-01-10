@@ -2331,8 +2331,8 @@ static void readqintresults(char *name, char *n[8], int j, char location)
       }
   sim_readspifiletab (fileout,argv,8,tabsize,tab,MCC_VDDmax,MCC_DC_STEP) ;
 
-  sprintf(buffer, "%s.spice.dat", sim_getjoker("$",name) );
-  
+  snprintf(buffer, 1024, "%s.spice.dat", sim_getjoker("$",name) );
+
   f = mbkfopen( buffer, NULL, "w" );
   fprintf( f, "#vsweep" ) ;
   for( k=0 ; k<8 ; k++ ) {

@@ -49,5 +49,5 @@ unsigned int avt_GetMainSeed();
 unsigned int avt_GetGlobalSeed();
 
 /*void help (char *subject);*/
-void avt_banner (char *tool, char *comment, char *date);
+void avt_banner (const char *tool, const char *comment, const char *date);
 

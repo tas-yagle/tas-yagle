@@ -1,5 +1,10 @@
 #include <dlfcn.h>
 #include <tcl.h>
+#undef STRINGIFY
+#if !defined(Tcl_GetErrorLine)
+  #define Tcl_GetErrorLine(interp) (interp->errorLine)
+#endif
+
 #include API_H
 #include AVT_H
 
@@ -527,7 +532,7 @@ void APIPreprocess(char *src, char *dest, chain_list *defines)
           cs++;
         }
       else
-        if (cs!='\0')
+        if (*cs!='\0')
           {
             start--;
             while (start!=cs) *(cd++)=*(start++);

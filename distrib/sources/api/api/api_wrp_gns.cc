@@ -33,7 +33,7 @@ void GENIUS::parse ()
 
 /* -------------------------------------------------------------------------- */
 
-String *get_proto (char *name, WIGType *d, ParmList *l)
+String *get_proto (const char *name, WIGType *d, ParmList *l)
 {
     WIGType *pt;
     Parm *p;
@@ -77,7 +77,7 @@ String *get_proto (char *name, WIGType *d, ParmList *l)
 
 /* -------------------------------------------------------------------------- */
 
-String *get_short_proto (char *name, WIGType *d, ParmList *l)
+String *get_short_proto (const char *name, WIGType *d, ParmList *l)
 {
     WIGType *pt;
     Parm *p;
@@ -154,7 +154,7 @@ void stripCR (char *str, char *buf)
     buf[j] = '\0';
 }
 
-void GENIUS::create_online (char *name, WIGType *d, ParmList *l, functionman *man) 
+void GENIUS::create_online (char *name, WIGType *d, ParmList *l, functionman *man)
 { 
     FILE *f;
     char fname[1024], date[1024];
@@ -334,7 +334,7 @@ void GENIUS::create_man_man (chain_list *proto_list)
     fclose (f);
 }
 
-void GENIUS::create_man (char *name, WIGType *d, ParmList *l, functionman *man) 
+void GENIUS::create_man (const char *name, WIGType *d, ParmList *l, functionman *man)
 { 
     FILE *f;
     char fname[1024], date[1024];
@@ -475,7 +475,7 @@ xml_text(char *buf, char *src)
         }
         else if (*src == '\\')
         {
-           char *add=NULL;
+           const char *add=NULL;
            if (*(src+1)=='$') add="<br></br>";
            if (*(src+1)=='{') add="{";
            if (*(src+1)=='}') add="}";
@@ -499,14 +499,14 @@ xml_text(char *buf, char *src)
     *buf = 0;
 }
 
-void GENIUS::create_xml (char *filename, char *name, WIGType *d, ParmList *l, functionman *man, int first, int mode) 
+void GENIUS::create_xml (const char *filename, const char *name, WIGType *d, ParmList *l, functionman *man, int first, int mode)
 { 
     FILE *f;
     char fname[1024];
     char tmpname[1024];
     char *description;
     char *prototype;
-    char *basename;
+    const char *basename;
     char  textbuf[10000];
     char *args;
     int i;
@@ -590,12 +590,13 @@ void GENIUS::create_xml (char *filename, char *name, WIGType *d, ParmList *l, fu
     fclose (f);
 }
 
-void GENIUS::create_db (char *filename, char *name, WIGType *d, ParmList *l, functionman *man, int first, int mode) 
+void GENIUS::create_db (const char *filename, const char *name, WIGType *d, ParmList *l, functionman *man, int first, int mode) 
 { 
     FILE *f;
     char fname[1024];
     char tmpname[1024];
-    char *prototype, *basename, *c;
+    char *prototype, *c;
+    const char *basename;
     char  textbuf[10000];
 
     if (!DBPATH) return;
@@ -889,7 +890,7 @@ void GENIUS::declare_const (char *name, char *iname, WIGType *t, char *value)
 
 void GENIUS::initialize (void) 
 { 
-    if (!module) module = "genius";
+    if (!module) set_module("genius");
     Printf (f_init, "void %s_initialize () {\n", module);
 }
 
@@ -926,7 +927,7 @@ void GENIUS::close (void)
 
 /* -------------------------------------------------------------------------- */
 
-void GENIUS::set_module (char *mod_name) 
+void GENIUS::set_module (const char *mod_name)
 { 
     if (module) return;
     module = new char[strlen (mod_name) + 1];
@@ -1185,7 +1186,7 @@ void GENIUS::create_filter_online (char *filter, char *online_path, Man *mans)
     Parm *function;
     char **argtab;
     char *args;
-    char *section;
+    const char *section;
     int i;
 
     if (!filter || !online_path || !mans) return;
