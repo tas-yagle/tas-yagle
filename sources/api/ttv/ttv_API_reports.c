@@ -1036,36 +1036,36 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
 
   Board_NewLine(b);
   
-  Board_SetValue(b, COL_SSTA_MIN, "éSSTA");
-  Board_SetValue(b, COL_SSTA_MOY, "ç");
-  Board_SetValue(b, COL_SSTA_MAX, "èInformation");
+  Board_SetValue(b, COL_SSTA_MIN, TITLE_START "SSTA");
+  Board_SetValue(b, COL_SSTA_MOY, TITLE_CONT "");
+  Board_SetValue(b, COL_SSTA_MAX, TITLE_END "Information");
   Board_SetValue(b, COL_SSTA_SIGMA, "Sigma");
   
-  sprintf(buf, "èDelay");
-  sprintf(buf1, "éDelay[%s]", DISPLAY_time_string);
+  sprintf(buf, TITLE_END "Delay");
+  sprintf(buf1, TITLE_START "Delay[%s]", DISPLAY_time_string);
       
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_ACC, b, COL_SIM_ACC, "éSim");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_ACC, b, COL_SIM_ACC, TITLE_START "Sim");
   _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_DELTA, b, COL_SIM_DELTA, buf);
   _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_SLOPE, b, COL_SIM_SLOPE, "Sim_R/F");
   _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_ERROR, b, COL_SIM_ERROR, "% ");
   
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_ACC, b, COL_REF_ACC, "éDelay");
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_DELTA, b, COL_REF_DELTA, "è");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_ACC, b, COL_REF_ACC, TITLE_START "Delay");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_DELTA, b, COL_REF_DELTA, TITLE_END "");
 
   if (split)
     {
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_ACC, b, COL_CTK_ACC, "éCtk");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_ACC, b, COL_CTK_ACC, TITLE_START "Ctk");
       _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_DELTA, b, COL_CTK_DELTA, buf);
       _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_SLOPE, b, COL_CTK_SLOPE, "Ctk_R/F");
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_LAG_ACC, b, COL_CTK_LAG_ACC, "éCtk");
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_LAG_DELTA, b, COL_CTK_LAG_DELTA, "èLAG");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_LAG_ACC, b, COL_CTK_LAG_ACC, TITLE_START "Ctk");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_LAG_DELTA, b, COL_CTK_LAG_DELTA, TITLE_END "LAG");
     }
   else
     {
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_ACC, b, COL_CTK_ACC, "éDelay");
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_DELTA, b, COL_CTK_DELTA, "è");
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_CTK_LAG_ACC, "éLAG");
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_CTK_LAG_DELTA, "è");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_ACC, b, COL_CTK_ACC, TITLE_START "Delay");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_DELTA, b, COL_CTK_DELTA, TITLE_END "");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_CTK_LAG_ACC, TITLE_START "LAG");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_CTK_LAG_DELTA, TITLE_END "");
     }
       
 //  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_NODETYPE, b, COL_NODETYPE, "Node");
@@ -1073,22 +1073,22 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
 //  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_TRANSISTORS, b, COL_TRANSISTORS, "Switching");
 
 #ifndef CTK_DIFF_MODE
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_REF_LAG_ACC, "éLAG");
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_REF_LAG_DELTA, "è");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_REF_LAG_ACC, TITLE_START "LAG");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_REF_LAG_DELTA, TITLE_END "");
 #else
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_REF_LAG_ACC, "éCtk effect \%");
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_REF_LAG_DELTA, "è");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_REF_LAG_ACC, TITLE_START "Ctk effect \%");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_REF_LAG_DELTA, TITLE_END "");
 #endif
 
   sprintf(buf, "time[%s]", DISPLAY_time_string);
   sprintf(buf1, "Cap[%s]", DISPLAY_capa_string);
 
-  Board_SetValue(b, COL_CTK_SCORE_TOT, "éCTK");
-  Board_SetValue(b, COL_CTK_SCORE_NOISE, "çScores");
-  Board_SetValue(b, COL_CTK_SCORE_CTK, "ç");
-  Board_SetValue(b, COL_CTK_SCORE_ACTIV, "ç");
-  Board_SetValue(b, COL_CTK_SCORE_INTERV, "ç");
-  Board_SetValue(b, COL_CTK_SCORE_PROBA, "è");
+  Board_SetValue(b, COL_CTK_SCORE_TOT, TITLE_START "CTK");
+  Board_SetValue(b, COL_CTK_SCORE_NOISE, TITLE_CONT "Scores");
+  Board_SetValue(b, COL_CTK_SCORE_CTK, TITLE_CONT "");
+  Board_SetValue(b, COL_CTK_SCORE_ACTIV, TITLE_CONT "");
+  Board_SetValue(b, COL_CTK_SCORE_INTERV, TITLE_CONT "");
+  Board_SetValue(b, COL_CTK_SCORE_PROBA, TITLE_END "");
 
   
   Board_NewLine(b);

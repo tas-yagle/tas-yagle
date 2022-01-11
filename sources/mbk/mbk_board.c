@@ -3,6 +3,7 @@
 #include MUT_H
 
 #define SEPARATOR " "
+#define BUF_LEN 1024
 
 Board *Board_CreateBoard()
 {
@@ -59,19 +60,19 @@ void Board_SetValue(Board *B, int col, char *val)
   bc=(BoardColumn *)B->list->DATA;
   if (bc[col].value!=NULL) mbkfree(bc[col].value);
   bc[col].value=mbkstrdup(val);
-  if (val[0]!='é' && val[0]!='è' && val[0]!='ç' && (l=avt_text_real_length(val))>B->prop[col].size) B->prop[col].size=l;
+  if (val[0]!=TITLE_START_CHAR && val[0]!=TITLE_END_CHAR && val[0]!=TITLE_CONT_CHAR && (l=avt_text_real_length(val))>B->prop[col].size) B->prop[col].size=l;
 }
 
 
-static void center(char *buf, int size, char *txt)
+static void center(char *buf, int len, int width, char *txt)
 {
   int txts, i, j, diff;
-  txts=avt_text_real_length(txt);
-  diff=size-txts;
-  for (i=0; i<diff/2; i++) buf[i]=' ';
-  for (j=0; txt[j]!='\0'; j++) buf[i++]=txt[j];
+  txts=avt_text_real_length(txt); //TODO - should be printable length on current terminal
+  diff=width-txts;
+  for (i=0; i<diff/2 && i<len-1; i++) buf[i]=' ';
+  for (j=0; txt[j]!='\0' && i<len-1; j++) buf[i++]=txt[j];
   diff-=diff/2;
-  while (diff>0) buf[i++]=' ', diff--;
+  while (diff>i && i<len-1) buf[i++]=' ', diff--;
   buf[i++]='\0';
 }
 
@@ -118,8 +119,8 @@ void Board_Display_sub(FILE *f, int lib, int lev, Board *B, char *LP)
   chain_list *cl;
   BoardColumn *bc;
   int i, cnt, diff, title_print_tag=0, totsize;
-  char format[1024];
-  char title[1024];
+  char format[BUF_LEN];
+  char title[BUF_LEN];
 
   B->list=reverse(B->list);
   for (cl=B->list; cl!=NULL; cl=cl->NEXT)
@@ -142,26 +143,26 @@ void Board_Display_sub(FILE *f, int lib, int lev, Board *B, char *LP)
                   title_print_tag=0;
                   if (bc[i].value!=NULL)
                     {
-                      if (bc[i].value[0]=='é')
+                      if (bc[i].value[0]==TITLE_START_CHAR)
                         {
                           totsize=0;
                           strcpy(title, &bc[i].value[1]);
                           totsize=B->prop[i].size+diff+1-1;
                           title_print_tag=1;
                         }
-                      else if (bc[i].value[0]=='è' || bc[i].value[0]=='ç') 
+                      else if (bc[i].value[0]==TITLE_CONT_CHAR || bc[i].value[0]==TITLE_END_CHAR)
                         {
                           if (strcmp(&bc[i].value[1],"")!=0)
                             {
-                              strcat(title,"_");
-                              strcat(title, &bc[i].value[1]);                              
+                              strncat(title,"_", sizeof(title) - strlen(title) - 1);
+                              strncat(title, &bc[i].value[1], sizeof(title) - strlen(title) - 1);
                             }
 
                           title_print_tag=1;
                           totsize+=B->prop[i].size+diff+1+1-1;
-                          if (bc[i].value[0]=='è')
+                          if (bc[i].value[0]==TITLE_END_CHAR)
                             {
-                              center(format, totsize, title);
+                              center(format, sizeof(format), totsize, title);
                               if (f!=NULL)
                                 avt_fprintf(f, "%s ", format);
                               else
@@ -178,9 +179,9 @@ void Board_Display_sub(FILE *f, int lib, int lev, Board *B, char *LP)
                       if (B->prop[i].align=='c')
                         {
                           if (bc[i].value!=NULL)
-                            center(format, B->prop[i].size+diff+1, bc[i].value);
+                            center(format, sizeof(format), B->prop[i].size+diff+1, bc[i].value);
                           else
-                            center(format, B->prop[i].size+diff+1, "");
+                            center(format, sizeof(format), B->prop[i].size+diff+1, "");
                           if (f!=NULL)
                             avt_fprintf(f, "%s ", format);
                           else

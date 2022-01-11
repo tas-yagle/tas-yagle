@@ -1118,6 +1118,14 @@ int             mbk_scanint ( mbk_tableint *table, int n );
 //
 #define MAXCOL 64
 
+#define TITLE_START "\022"
+#define TITLE_CONT "\023"
+#define TITLE_END "\024"
+#define TITLE_START_CHAR '\022'
+#define TITLE_CONT_CHAR '\023'
+#define TITLE_END_CHAR '\024'
+
+
 typedef struct BoardColumn
 {
   char *value;
