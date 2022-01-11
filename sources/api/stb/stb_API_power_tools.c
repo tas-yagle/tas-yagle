@@ -435,8 +435,8 @@ void stb_compute_local_margins(stbfig_list *stbfig)
     Board_SetSize(b, NB_CTRL_POINT, 7, DISPLAY_number_justify);
     Board_NewLine(b);
 
-    Board_SetValue(b, RANGE_MIN, "éRange");
-    Board_SetValue(b, RANGE_MAX, "è");
+    Board_SetValue(b, RANGE_MIN, TITLE_START "Range");
+    Board_SetValue(b, RANGE_MAX, TITLE_END "");
 
     Board_NewLine(b);
 

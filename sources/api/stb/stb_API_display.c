@@ -1510,10 +1510,10 @@ static void __stb_DisplaySlackReport_grab(FILE *f, stbfig_list *stbfig, char *st
 
   Board_SetValue(b, COL_INDEX, "Path");
   Board_SetValue(b, COL_SLACK, "Slack");
-  Board_SetValue(b, COL_DV_TIME, "éData");
-  Board_SetValue(b, COL_DV_REL, "èvalid");
-  Board_SetValue(b, COL_DR_TIME, "éData");
-  Board_SetValue(b, COL_DR_REL, "èrequired");
+  Board_SetValue(b, COL_DV_TIME, TITLE_START "Data");
+  Board_SetValue(b, COL_DV_REL, TITLE_END "valid");
+  Board_SetValue(b, COL_DR_TIME, TITLE_START "Data");
+  Board_SetValue(b, COL_DR_REL, TITLE_END "required");
   Board_SetValue(b, COL_FROMNODE, "From_node");
   Board_SetValue(b, COL_TONODE, "To_node");
 

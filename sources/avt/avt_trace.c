@@ -303,31 +303,10 @@ void avt_fprintf(FILE *output, const char *fmt, ...)
             break;
           default:
             *e='\0';
-<<<<<<< HEAD
             fprintf(output,"%s",str);
             str=e+1;
           }
         e=strchr(str,AVT_COLOUR_CHAR);
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-            fprintf(output,"%s",str);
-            str=e+1;
-          }
-        e=strchr(str,AVT_COL_CHAR);
-=======
-            fprintf(output,"%sÃÂÃÂÃÂÃÂ¤",str);
-            str=e+1;
-          }
-        e=strchr(str,'ÃÂÃÂÃÂÃÂ¤');
->>>>>>> a2da871 (Bulk convert to UTF-8 from ISO8859-1)
-=======
-            fprintf(output,"%s" AVT_COLOUR_STR ,str);
-            str=e+1;
-          }
-        e=strchr(str,AVT_COLOUR_CHAR);
->>>>>>> 1844917 (mergeme - fix avt colour macro)
->>>>>>> e1f276a (mergeme - fix avt colour macro)
       }
 
     fputs (str, output);
@@ -341,19 +320,8 @@ int avt_text_real_length(const char *buf)
   int cnt=0;
   while (*buf!='\0')
     {
-<<<<<<< HEAD
       if (*buf==AVT_COLOUR_CHAR && *(buf+1)!='\0') cnt-=1;
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-      if (*buf==AVT_COL_CHAR && *(buf+1)!='\0') cnt-=1;
-=======
-      if (*buf=='ÃÂÃÂÃÂÃÂ¤' && *(buf+1)!='\0') cnt-=1;
->>>>>>> a2da871 (Bulk convert to UTF-8 from ISO8859-1)
-=======
       if (*buf==AVT_COLOUR_CHAR && *(buf+1)!='\0') cnt-=1;
->>>>>>> 1844917 (mergeme - fix avt colour macro)
->>>>>>> e1f276a (mergeme - fix avt colour macro)
       else cnt++;
       buf++;
     }
@@ -367,19 +335,8 @@ void avt_format_text(char *resbuf, const char *origbuf, int decal, int max)
   while (origbuf[i]!='\0')
     {
       resbuf[j++]=origbuf[i];
-<<<<<<< HEAD
       if (origbuf[i]==AVT_COLOUR_CHAR && origbuf[i+1]!='\0') cnt-=1;
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-      if (origbuf[i]==AVT_COL_CHAR && origbuf[i+1]!='\0') cnt-=1;
-=======
-      if (origbuf[i]=='ÃÂÃÂÃÂÃÂ¤' && origbuf[i+1]!='\0') cnt-=1;
->>>>>>> a2da871 (Bulk convert to UTF-8 from ISO8859-1)
-=======
       if (origbuf[i]==AVT_COLOUR_CHAR && origbuf[i+1]!='\0') cnt-=1;
->>>>>>> 1844917 (mergeme - fix avt colour macro)
->>>>>>> e1f276a (mergeme - fix avt colour macro)
       else cnt++;
       i++;
       if (origbuf[i]=='\n' || cnt>=max)
