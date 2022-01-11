@@ -3185,7 +3185,7 @@ int eqt_sortCompareNode(const void *node1, const void *node2)
     return 1;
   else if (IsValue(n2))
     return -1;
-  else if ((leafres == -eqt_isLeaf(n2)))
+  else if ((leafres = -eqt_isLeaf(n2)))
     return leafres;
   else
     return (Operator(n1) - Operator(n2));
