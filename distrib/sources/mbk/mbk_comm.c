@@ -224,8 +224,8 @@ int opensocket( int *port )
 {
   int sock ;
   struct sockaddr_in name ;
-  int t ;
- 
+  socklen_t t;
+
   sock = socket( PF_INET, SOCK_STREAM, 0 );
   if( sock == -1 ) {
 //    perror( "socket() " );
@@ -300,7 +300,7 @@ mbk_comdata* mbk_activatecommaster( int n )
 void handleincomingconnection( mbk_comdata *comdata )
 {
   int i;
-  int x ;
+  socklen_t x;
   struct sockaddr origin ;
   
   for( i=0 ; i<comdata->n ; i++ ) {
