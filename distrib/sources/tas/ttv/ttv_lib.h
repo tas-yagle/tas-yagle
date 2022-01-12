@@ -3,7 +3,7 @@
 /*                      Chaine de CAO & VLSI   Alliance                     */
 /*                                                                          */
 /*    Produit : TTV Version 1                                               */
-/*    Fichier : ttv200.h                                                    */
+/*    Fichier : ttv_lib.h                                                   */
 /*                                                                          */
 /*    (c) copyright 1995-1998 Laboratoire LIP6 equipe ASIM                  */
 /*    Tous droits reserves                                                  */
@@ -15,8 +15,8 @@
 /* les structures et base de donnees de TTV                                 */
 /****************************************************************************/
 
-#ifndef TTV
-#define TTV
+#ifndef __TTV_LIB_H__
+#define __TTV_LIB_H__
 
 /* LISTE DES INCLUDE */
 #include <stdio.h>
@@ -1631,5 +1631,4 @@ char *ttv_getsigname_sub(ttvfig_list *ttvfig,char *ptname,ttvsig_list *ptsig, in
 chain_list *ttv_get_signals_from_netname(ttvfig_list *tvf, ht **h, char *netname);
 void ttv_free_signals_from_netname(ht *h);
 
-#endif
-
+#endif // __TTV_LIB_H__

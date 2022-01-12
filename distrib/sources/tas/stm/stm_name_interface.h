@@ -12,8 +12,8 @@
 /*                                                                          */
 /****************************************************************************/
 
-#ifndef STM_NAME_INTERFACE_H
-#define STM_NAME_INTERFACE_H
+#ifndef __STM_NAME_INTERFACE_H__
+#define __STM_NAME_INTERFACE_H__
 
 #include STM_H
 

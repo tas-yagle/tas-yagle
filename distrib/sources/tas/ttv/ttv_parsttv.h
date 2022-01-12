@@ -13,6 +13,9 @@
 /*                                                                          */
 /****************************************************************************/
 
+#ifndef __TTV_PARSTTV_H__
+#define __TTV_PARSTTV_H__
+
 #define TTV_FILE_COMP      'C'                  /* fichier compresse         */
 #define TTV_FILE_NOTCOMP   'N'                  /* fichier non compresse     */
 
@@ -83,3 +86,5 @@ extern void         ttv_freehtabfig    __P(( ttvfig_list*, long ));
 extern void         ttv_freehtabttvfig __P(( ttvfig_list*, long ));
 extern void         ttv_calcstatus     __P(( ttvfig_list*, long, char, char ));
 extern ttvfig_list* ttv_parsttvfig     __P(( ttvfig_list*, long, long ));
+
+#endif //__TTV_PARSTTV_H__

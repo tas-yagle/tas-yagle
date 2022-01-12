@@ -13,6 +13,9 @@
 /*                                                                          */
 /****************************************************************************/
 
+#ifndef __TTV_ALLOC_H__
+#define __TTV_ALLOC_H__
+
 extern ttvfig_list *TTV_LIST_TTVFIG ;
 extern chain_list *TTV_HEAD_TTVFIG ;
 extern ttvsbloc_list *TTV_FREE_SBLOC ;
@@ -119,3 +122,5 @@ void ttv_initfindstb(ttvfind_stb_stuff *sfs);
 
 ttvpath_stb_stuff *ttv_allocpath_stb_stuff();
 void ttv_freepathstblist(ttvpath_stb_stuff *head);
+
+#endif // __TTV_ALLOC_H__

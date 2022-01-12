@@ -13,6 +13,9 @@
 /*                                                                          */
 /****************************************************************************/
 
+#ifndef __TTV_UTIL_H__
+#define __TTV_UTIL_H__
+
 extern chain_list *TTV_NAME_IN ;
 extern chain_list *TTV_NAME_OUT ;
 extern char TTV_LANG ;
@@ -62,3 +65,4 @@ int ttv_get_path_margins_info(ttvfig_list *tvf, ttvpath_list *path, float *facto
 void ttv_disablecache(ttvfig_list *ttvfig);
 ht *ttv_buildquickaccessht(ttvfig_list *tvf, NameAllocator *NA);
 
+#endif //__TTV_UTIL_H__

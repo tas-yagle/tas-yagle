@@ -13,6 +13,9 @@
 /*                                                                          */
 /****************************************************************************/
 
+#ifndef __TTV_CTX_H__
+#define __TTV_CTX_H__
+
 extern char *CTX_FILE ;
 extern int CTX_LINE ;
 
@@ -22,3 +25,5 @@ extern void               ttv_printctxline    __P(( ttvfig_list*,
                                                     long 
                                                  ));
 extern void               ttv_ctxdrive        __P(( ttvfig_list* ));
+
+#endif //__TTV_CTX_H__

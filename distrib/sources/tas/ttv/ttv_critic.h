@@ -13,6 +13,9 @@
 /*                                                                          */
 /****************************************************************************/
 
+#ifndef __TTV_CRITIC_H__
+#define __TTV_CRITIC_H__
+
 typedef struct infopara
     {
      struct ttvfig       *FIG ;
@@ -371,3 +374,5 @@ extern void            ttv_addpath        __P(( ttvfig_list*,
                                                 long
                                              ));
 extern void            ttv_builtpath      __P(( ttvfig_list*, long ));
+
+#endif //__TTV_CRITIC_H__

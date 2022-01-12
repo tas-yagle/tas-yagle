@@ -13,6 +13,9 @@
 /*                                                                          */
 /****************************************************************************/
 
+#ifndef __TTV_FIG_H__
+#define __TTV_FIG_H__
+
 #define TTV_NODE_LOOP      ((long) 0x01000000 ) /* noeud dans une loop       */
 #define TTV_NODE_USED      ((long) 0x02000000 ) /* noeud deja parcouru       */
 #define TTV_NODE_USEDDUAL  ((long) 0x04000000 ) /* noeud deja parcouru       */
@@ -410,3 +413,4 @@ extern void                ttv_setallsigcapas       __P(( lofig_list *lofig,
                                                        ));
 int ttv_addsig_addrcxpnode(int mode);
 
+#endif // __TTV_FIG_H__

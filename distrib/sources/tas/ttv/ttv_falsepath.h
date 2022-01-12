@@ -13,6 +13,9 @@
 /*                                                                          */
 /****************************************************************************/
 
+#ifndef __TTV_FALSEPATH_H__
+#define __TTV_FALSEPATH_H__
+
 typedef struct ttvfalsepath               
     {
      struct ttvfalsepath *NEXT ;
@@ -51,3 +54,4 @@ extern int   ttv_isfalsepath        __P(( ttvfig_list*,
 ht *ttv_buildquickaccessht_forfalsepath(ttvfig_list *ttvfig, NameAllocator *NA);
 void ttv_freeequickaccessht_forfalsepath(ht *h, NameAllocator *NA);
 
+#endif //__TTV_FALSEPATH_H__

@@ -13,6 +13,9 @@
 /*                                                                          */
 /****************************************************************************/
 
+#ifndef __TTV_DRITTV_H__
+#define __TTV_DRITTV_H__
+
 extern long TTV_SEUIL_MAX ;
 extern long TTV_SEUIL_MIN ;
 extern long TTV_INFO_CAPARM ;
@@ -48,3 +51,5 @@ extern void ttv_printhead     __P(( ttvfig_list*,
 extern void ttv_drittv(ttvfig_list *ttvfig, long type, long find, char *filename);
 //extern void ttv_drittv        __P(( ttvfig_list*, long, long ));
 extern void ttv_drittvold     __P(( ttvfig_list*, long, long ));
+
+#endif //__TTV_DRITTV_H__
