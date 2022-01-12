@@ -54,7 +54,7 @@ XalButtonsItemStruct;
 
 typedef struct XalBitmaps
     {
-     char *name ;
+     const char *name ;
      char *bitmap ;
      int   width ;
      int   height ;
