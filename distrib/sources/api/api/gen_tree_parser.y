@@ -257,7 +257,7 @@ rules_list:
  /*synchronisation with a special token*/
  while ((yychar != GEN_TOKEN_ENTITY) && (yychar != GEN_TOKEN_ARCHITECTURE) 
         && (yychar != GEN_TOKEN_ACTION) && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
  $$=NULL;
 }
@@ -372,7 +372,7 @@ entity_header:
     yychar = yylex ();
  /*synchronisation with a special token*/
  while ((yychar != GEN_TOKEN_PORT) && (yychar != GEN_TOKEN_GENERIC) && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
  $$=NULL;
 }
@@ -386,7 +386,7 @@ entity_end:
 {do  {yychar = yylex ();}
  while ((yychar != GEN_TOKEN_ARCHITECTURE) && (yychar != GEN_TOKEN_ENTITY) 
         && (yychar != GEN_TOKEN_ACTION) && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
 }
 ;
@@ -405,7 +405,7 @@ generic:
     yychar = yylex ();
  /*synchronisation with a special token*/
  while ((yychar != GEN_TOKEN_PORT) && (yychar != GEN_TOKEN_END) && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
  $$=NULL;
 }
@@ -430,7 +430,7 @@ generic_list:
 {do  yychar = yylex ();
  /*synchronisation with a special token*/
  while ((yychar != ';') && (yychar != ')') && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
  $$=NULL;
 }
@@ -466,7 +466,7 @@ port:
 {do  {yychar = yylex ();}
  /*synchronisation with a special token*/
  while ((yychar != GEN_TOKEN_END) && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
  $$=NULL;
 }
@@ -491,7 +491,7 @@ port_list:
 {do  {yychar = yylex ();}
  /*synchronisation with a special token*/
  while ((yychar != ';') && (yychar != ')') && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
  $$=NULL;
 }
@@ -594,7 +594,7 @@ architecture_header:
     yychar = yylex ();
  /*synchronisation with next token*/
  while ((yychar != GEN_TOKEN_IDENT) && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
  $$=NULL;
 }
@@ -610,7 +610,7 @@ architecture_end:
  /*synchronisation with next token*/
  while ((yychar != GEN_TOKEN_ARCHITECTURE) && (yychar != GEN_TOKEN_ENTITY) 
         && (yychar != GEN_TOKEN_ACTION) && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
 }
 ;
@@ -681,7 +681,7 @@ signal:
    /*synchronisation with next token*/
    while ((yychar != GEN_TOKEN_COMPONENT) && (yychar != GEN_TOKEN_SIGNAL) 
         && (yychar != GEN_TOKEN_BEGIN) && (yychar != GEN_TOKEN_STOP));
-   if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+   if (yychar==GEN_TOKEN_STOP) return 0;
    yyerrok;
    $$=NULL;
   }
@@ -710,7 +710,7 @@ component_header:
 {do  {yychar = yylex ();}
  /*synchronisation with next token*/
  while ((yychar != GEN_TOKEN_PORT) && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
  $$=NULL;
 }
@@ -725,7 +725,7 @@ component_end:
  /*synchronisation with next token*/
  while ((yychar != GEN_TOKEN_COMPONENT) && (yychar != GEN_TOKEN_SIGNAL) 
         && (yychar != GEN_TOKEN_BEGIN) && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
 }
 ;
@@ -838,7 +838,7 @@ instance:
 {do  
     yychar = yylex ();
  while ((yychar != ';') && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  if (yychar==';') yychar = yylex ();
  yyerrok;
  $$=NULL;
@@ -859,7 +859,7 @@ generic_map:
 {do  
     yychar = yylex ();
  while ((yychar != ';') && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
  $$=NULL;
 }
@@ -960,7 +960,7 @@ port_map:
 {do  
     yychar = yylex ();
  while ((yychar != ';') && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
  $$=NULL;
 }
@@ -979,7 +979,7 @@ equi:
   {do  {yychar = yylex ();}
    /*synchronisation with a special token*/
    while ((yychar != ',') && (yychar != ')') && (yychar != GEN_TOKEN_STOP));
-   if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+   if (yychar==GEN_TOKEN_STOP) return 0;
    yyerrok;
    $$=NULL;
   }
@@ -995,7 +995,7 @@ map2:
   {do  {yychar = yylex ();}
    /*synchronisation with a special token*/
    while ((yychar != ',') && (yychar != ')') && (yychar != GEN_TOKEN_STOP));
-   if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+   if (yychar==GEN_TOKEN_STOP) return 0;
    yyerrok;
    $$=NULL;
   }
@@ -1028,7 +1028,7 @@ map:
   {do  {yychar = yylex ();}
    /*synchronisation with a special token*/
    while ((yychar != ',') && (yychar != ')') && (yychar != GEN_TOKEN_STOP));
-   if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+   if (yychar==GEN_TOKEN_STOP) return 0;
    yyerrok;
    $$=NULL;
   }
@@ -1148,7 +1148,7 @@ pseudo_C:
 {do  
     yychar = yylex ();
  while ((yychar != ';') && (yychar != GEN_TOKEN_STOP));
- if (yychar==GEN_TOKEN_STOP) return (int)NULL;
+ if (yychar==GEN_TOKEN_STOP) return 0;
  yyerrok;
  $$=NULL;
 }
