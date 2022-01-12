@@ -364,9 +364,9 @@ identique_trs(lotrs_list *pttrans, lotrs_list *ptmodeltrans)
                 }
             }
             else {
-                if (abs(pttrans->WIDTH - ptmodeltrans->WIDTH) <
+                if (labs(pttrans->WIDTH - ptmodeltrans->WIDTH) <
                     ((FCL_SIZE_TOLERANCE * ptmodeltrans->WIDTH) / 100)
-                    || abs(pttrans->LENGTH - ptmodeltrans->LENGTH) <
+                    || labs(pttrans->LENGTH - ptmodeltrans->LENGTH) <
                     ((FCL_SIZE_TOLERANCE * ptmodeltrans->LENGTH) / 100)) {
                     return FALSE;
                 }

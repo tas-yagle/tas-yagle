@@ -2529,7 +2529,7 @@ void stb_drive_line( stbfile *report,
   dmaxcc = ttv_getdelaymax( line )/TTV_UNIT;
   fmaxcc = ttv_getslopemax( line )/TTV_UNIT;
 
-  if( abs(dmin-dmincc) >= CTK_REPORT_DELTA_DELAY_MIN && 
+  if( fabs(dmin-dmincc) >= CTK_REPORT_DELTA_DELAY_MIN && 
       ttv_getdelaymin( line ) != TTV_NOTIME ) {
     if( title==0 ) {
       stb_info( report, 
@@ -2541,7 +2541,7 @@ void stb_drive_line( stbfile *report,
     }
     stb_info( report, "    delay min : %.1f -> %.1f\n", dmin, dmincc );
   }
-  if( abs(dmax-dmaxcc) >= CTK_REPORT_DELTA_DELAY_MIN && 
+  if( fabs(dmax-dmaxcc) >= CTK_REPORT_DELTA_DELAY_MIN && 
       ttv_getdelaymax( line ) != TTV_NOTIME ) {
     if( title==0 ) {
       stb_info( report, 
@@ -2553,7 +2553,7 @@ void stb_drive_line( stbfile *report,
     }
     stb_info( report, "    delay max : %.1f -> %.1f\n", dmax, dmaxcc );
   }
-  if( abs(fmin-fmincc) >= CTK_REPORT_DELTA_SLOPE_MIN && 
+  if( fabs(fmin-fmincc) >= CTK_REPORT_DELTA_SLOPE_MIN && 
       ttv_getslopemin( line ) != TTV_NOSLOPE ){
     if( title==0 ) {
       stb_info( report, 
@@ -2565,7 +2565,7 @@ void stb_drive_line( stbfile *report,
     }
     stb_info( report, "    slope min : %.1f -> %.1f\n", fmin, fmincc );
   }
-  if( abs(fmax-fmaxcc) >= CTK_REPORT_DELTA_SLOPE_MIN &&
+  if( fabs(fmax-fmaxcc) >= CTK_REPORT_DELTA_SLOPE_MIN &&
       ttv_getslopemax( line ) != TTV_NOSLOPE ){
     if( title==0 ) {
       stb_info( report, 

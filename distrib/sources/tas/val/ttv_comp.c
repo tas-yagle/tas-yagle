@@ -295,7 +295,7 @@ long        type;
   diff = capa2-capa1;
   sign = (diff<0.0)?'-':'+';
   diff = fabs(diff);
-  diffpercent = fabs(((capa1<capa2)?(long)((float)diff*100.0/(float)capa2):(long)((float)diff*100.0/(float)capa1)));
+  diffpercent = labs(((capa1<capa2)?(long)((float)diff*100.0/(float)capa2):(long)((float)diff*100.0/(float)capa1)));
 
   if ( ( (diff >= (float)DELTA)
          && ((type&(DIFF_OPT_DELTA|DIFF_OPT_DELTAC)) == DIFF_OPT_DELTA ) )
@@ -808,7 +808,7 @@ char    type;
   {
     diff = daccess2-daccess1;
     sign = (diff<0.0)?'-':'+';
-    diff = fabs(diff);
+    diff = labs(diff);
     diffpercent = labs((daccess1<daccess2) ? (long)((float)diff*100.0/(float)daccess2)
                        : (long)((float)diff*100.0/(float)daccess1));
     fprintf(file,"delay %c%ldps (%c%ld%%)\n",sign,diff,sign,diffpercent);
@@ -823,7 +823,7 @@ char    type;
   {
     diff = saccess2-saccess1;
     sign = (diff<0.0)?'-':'+';
-    diff = fabs(diff);
+    diff = labs(diff);
     diffpercent = labs((saccess1<saccess2) ? (long)((float)diff*100.0/(float)saccess2)
                        : (long)((float)diff*100.0/(float)saccess1));
     fprintf(file,"slew %c%ldps (%c%ld%%)\n",sign,diff,sign,diffpercent);
@@ -838,7 +838,7 @@ char    type;
   {
     diff = slew2-slew1;
     sign = (diff<0.0)?'-':'+';
-    diff = fabs(diff);
+    diff = labs(diff);
     diffpercent = labs((slew1<slew2)?(long)((float)diff*100.0/(float)slew2):(long)((float)diff*100.0/(float)slew1));
     fprintf(file,"slew %c%ldps (%c%ld%%)\n",sign,diff,sign,diffpercent);
     if (sign=='-')

@@ -2702,7 +2702,7 @@ void essayer_d_aligner_par_rapport_aux_entrees(cgvcol_list *cur, cgvcol_list *pr
 {
   cgvcon_list *con;
   cgvcel_list *cell;
-  int cmoyenne, y, tmoyenne, tnb, besty;
+  long cmoyenne, y, tmoyenne, tnb, besty;
   cgvbox_list *box;
 
   for (cell = cur->CELL; cell; cell = cell->NEXT) 
@@ -2771,9 +2771,9 @@ void essayer_d_aligner_par_rapport_aux_entrees(cgvcol_list *cur, cgvcol_list *pr
 		  || strcmp(box->NAME,"nand3_d")==0
 		  )
 		printf("%s: y=%d y0=%d, besty=%d  %d %d\n",box->NAME,y,y0,besty,tmoyenne,tnb);*/
-	      if (abs(box->Y-besty)>abs(besty-y))
+	      if (labs(box->Y-besty)>labs(besty-y))
 		box->Y=y;
-	      if (abs(box->Y-besty)>abs(besty-y0))
+	      if (labs(box->Y-besty)>labs(besty-y0))
 		box->Y=y0;
 	    }	  
 	}

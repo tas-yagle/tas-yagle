@@ -407,9 +407,9 @@ long XtasGetValFromTab(long value)
     for(i = 0 ; i < XTAS_MAXTABVALUE ; i++) {
         if((value > XtasTabValue[i] - XTAS_TABERROR) &&
            (value < XtasTabValue[i] + XTAS_TABERROR)) {
-            error_before  = abs(XtasTabValue[i-1] - value) ;
-            error_current = abs(XtasTabValue[i] - value) ;
-            error_next    = abs(XtasTabValue[i+1] - value) ;
+            error_before  = labs(XtasTabValue[i-1] - value) ;
+            error_current = labs(XtasTabValue[i] - value) ;
+            error_next    = labs(XtasTabValue[i+1] - value) ;
             
             if((error_before <= error_current) && 
                (error_before <= error_next)) {
@@ -1162,10 +1162,10 @@ void XtasDrawStateRep(x0, x1, y0, y1, setup, hold)
     
 //    XFillRectangle(XtasGraphicDisplay, XtasGraphicPixmap, XtasColor[VERIFY][STIPPLE], 
 //                   MIN(sx0, sx1),  y0,
-//                   sx1 - sx0, abs(y1 - y0)) ;
+//                   sx1 - sx0, labs(y1 - y0)) ;
     XFillRectangle(XtasGraphicDisplay, XtasGraphicPixmap, XtasColor[VERIFY][STIPPLE], 
                    sx0,  y0,
-                   sx1 - sx0, abs(y1 - y0)) ;
+                   sx1 - sx0, labs(y1 - y0)) ;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -1198,7 +1198,7 @@ void XtasDrawEdgeRep(x, y0, y1, setup, hold, holdperiod)
         /*
         XFillRectangle (XtasGraphicDisplay, XtasGraphicPixmap, XtasColor[VERIFY][STIPPLE], 
                        MIN (ss, sh), y0,
-                       abs (sh - ss), abs (y1 - y0)) ;
+                       labs (sh - ss), labs (y1 - y0)) ;
         */
         XtasAddValTab ((long)(ss*1000));
         XtasAddValTab ((long)(sh*1000));

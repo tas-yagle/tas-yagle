@@ -649,7 +649,7 @@ input_decl          : T_INPUT range_option variable_list ';'
                                     if ((ptprevsig = (losig_list *)mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN)) != NULL) {
                                         prevleft = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN);
                                         prevright = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN);
-                                        if ((prevleft == prevright && abs(index-prevright) != 1)
+                                        if ((prevleft == prevright && labs(index-prevright) != 1)
                                         || (prevleft < prevright && index != prevright+1)
                                         || (prevleft > prevright && index != prevright-1)) {
                                             avt_errmsg(MGL_ERRMSG, "007", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
@@ -717,7 +717,7 @@ output_decl         : T_OUTPUT range_option variable_list ';'
                                     if ((ptprevsig = (losig_list *)mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN)) != NULL) {
                                         prevleft = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN);
                                         prevright = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN);
-                                        if ((prevleft == prevright && abs(index-prevright) != 1)
+                                        if ((prevleft == prevright && labs(index-prevright) != 1)
                                         || (prevleft < prevright && index != prevright+1)
                                         || (prevleft > prevright && index != prevright-1)) {
                                             avt_errmsg(MGL_ERRMSG, "007", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
@@ -785,7 +785,7 @@ inout_decl          : T_INOUT range_option variable_list ';'
                                     if ((ptprevsig = (losig_list *)mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN)) != NULL) {
                                         prevleft = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN);
                                         prevright = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN);
-                                        if ((prevleft == prevright && abs(index-prevright) != 1)
+                                        if ((prevleft == prevright && labs(index-prevright) != 1)
                                         || (prevleft < prevright && index != prevright+1)
                                         || (prevleft > prevright && index != prevright-1)) {
                                             avt_errmsg(MGL_ERRMSG, "007", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
@@ -844,7 +844,7 @@ net_decl            : nettype charge_strength expandrange_option delay_option va
                                     if ((ptprevsig = (losig_list *)mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN)) != NULL) {
                                         prevleft = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN);
                                         prevright = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN);
-                                        if ((prevleft == prevright && abs(index-prevright) != 1)
+                                        if ((prevleft == prevright && labs(index-prevright) != 1)
                                         || (prevleft < prevright && index != prevright+1)
                                         || (prevleft > prevright && index != prevright-1)) {
                                             avt_errmsg(MGL_ERRMSG, "007", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
@@ -895,7 +895,7 @@ net_decl            : nettype charge_strength expandrange_option delay_option va
                                     if ((ptprevsig = (losig_list *)mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_PNTDFN)) != NULL) {
                                         prevleft = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_LFTDFN);
                                         prevright = mgl_chktab(MGL_CONTEXT(HSHTAB), radical, MGL_CONTEXT(FIGNAME), MGL_RGTDFN);
-                                        if ((prevleft == prevright && abs(index-prevright) != 1)
+                                        if ((prevleft == prevright && labs(index-prevright) != 1)
                                         || (prevleft < prevright && index != prevright+1)
                                         || (prevleft > prevright && index != prevright-1)) {
                                             avt_errmsg(MGL_ERRMSG, "007", AVT_ERROR, radical, MGL_CONTEXT(LINENUM));
@@ -1303,7 +1303,7 @@ named_port_connection : '.' Identifier '(' expression ')'
                              && (ptfig = getloadedlofig(MGL_CONTEXT(MODELNAME))) != NULL) {
                                 mgl_getloconrange(ptfig->LOCON, $2, &left, &right);
                                 for (ptchain = $4.CONCAT; ptchain; ptchain = ptchain->NEXT) i++;
-                                if (left == -1 || right == -1 || abs(right-left)+1 != i) {
+                                if (left == -1 || right == -1 || labs(right-left)+1 != i) {
                                     avt_errmsg(MGL_ERRMSG, "006", AVT_ERROR, MGL_CONTEXT(LINENUM));
                                     EXIT(1);
                                 }

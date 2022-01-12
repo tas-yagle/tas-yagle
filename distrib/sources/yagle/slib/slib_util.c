@@ -631,13 +631,13 @@ void slib_add_motif_arc(motif_draw *ptm_draw,long ax,long ay,long bx,long by,lon
     
     if (ptm_data->ALPHA * ptm_data->DELTA > 0)
       {
-            if( abs(ay-cy) < abs(by-cy) )
+            if( labs(ay-cy) < labs(by-cy) )
                     ptm_data->CORNER_Y = ptm_data->CORNER_Y + slib_sign(ptm_data->ALPHA) * 2 * slib_sign(ay-cy) * ( ay - cy ) ;
             else
                     ptm_data->CORNER_Y = ptm_data->CORNER_Y + slib_sign(ptm_data->ALPHA) * 2 * slib_sign(by-cy) * ( by - cy ) ;
       }  // end of if (ptm_data->ALPHA * ptm_data->DELTA > 0)
     
-    delta = abs( ptm_data->ALPHA - ptm_data->DELTA );
+    delta = labs( ptm_data->ALPHA - ptm_data->DELTA );
     if( ptm_data->DELTA < ptm_data->ALPHA )
          ptm_data->ALPHA = ptm_data->DELTA; 
 

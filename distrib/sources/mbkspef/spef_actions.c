@@ -555,9 +555,9 @@ void spef_setneg2posnode(lofig_list *Lofig)
             node = (long)0 ;
             for(ptwire = ptsig->PRCN->PWIRE; ptwire; ptwire = ptwire->NEXT){
                 if(ptwire->NODE1 < 0)
-                    ptwire->NODE1 = ptsig->PRCN->NBNODE + abs(ptwire->NODE1) - 1;
+                    ptwire->NODE1 = ptsig->PRCN->NBNODE + labs(ptwire->NODE1) - 1;
                 if(ptwire->NODE2 < 0)
-                    ptwire->NODE2 = ptsig->PRCN->NBNODE + abs(ptwire->NODE2) - 1;
+                    ptwire->NODE2 = ptsig->PRCN->NBNODE + labs(ptwire->NODE2) - 1;
                 if(node < ptwire->NODE1)
                     node = ptwire->NODE1 ;
                 if(node < ptwire->NODE2)
@@ -567,9 +567,9 @@ void spef_setneg2posnode(lofig_list *Lofig)
             for(chain = ptsig->PRCN->PCTC; chain; chain = chain->NEXT){
                 ptctc = (loctc_list*)chain->DATA;
                 if(ptctc->NODE1 < 0)
-                    ptctc->NODE1 = ptctc->SIG1->PRCN->NBNODE + abs(ptctc->NODE1) - 1;
+                    ptctc->NODE1 = ptctc->SIG1->PRCN->NBNODE + labs(ptctc->NODE1) - 1;
                 if(ptctc->NODE2 < 0)
-                    ptctc->NODE2 = ptctc->SIG2->PRCN->NBNODE + abs(ptctc->NODE2) - 1;
+                    ptctc->NODE2 = ptctc->SIG2->PRCN->NBNODE + labs(ptctc->NODE2) - 1;
                 if(ptsig == ptctc->SIG1)
                     if(node < ptctc->NODE1)
                         node = ptctc->NODE1 ;
@@ -582,7 +582,7 @@ void spef_setneg2posnode(lofig_list *Lofig)
                 ptcon = (locon_list *)chain->DATA ;
                 for(num = ptcon->PNODE; num; num = num->NEXT) {
                 if(num->DATA < 0)
-                    num->DATA = ptsig->PRCN->NBNODE + abs(num->DATA) - 1;
+                    num->DATA = ptsig->PRCN->NBNODE + labs(num->DATA) - 1;
                 if(node < num->DATA)
                     node = num->DATA ;
                 }
