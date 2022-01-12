@@ -44,7 +44,7 @@ MAKE             = /usr/bin/make
 MAKEFLAGS        = 
 
 CC               = /usr/bin/gcc -fno-common
-SCC              = /usr/bin/gcc -fno-common -Xlinker -undefined -Xlinker suppress -Xlinker -flat_namespace -dynamiclib
+SCC              = $(CC)
 CPLUSPLUS        = /usr/bin/g++
 CFLAGS           = -O3
 CPPFLAGS         ?= 

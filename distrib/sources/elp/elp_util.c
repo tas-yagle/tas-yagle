@@ -2284,7 +2284,7 @@ elpmodel_list *model ;
    (model->elpTransTechno       == 0.0 ) ||
    ((model->elpTemp         < ELPMINTEMP ) && (elpGeneral[elpTEMP] < ELPMINTEMP))))
    )
-   if( (model->elpTransModel == elpMOS)) {
+   if (model->elpTransModel == elpMOS) {
         if (model->elpModel[elpVT]  == 0.0 ) {
             avt_errmsg(ELP_ERRMSG, "010", AVT_ERROR, elpTechnoFile, model->elpModelName, "VT", model->elpModel[elpVT]);
             return 1004 ; 
@@ -2346,7 +2346,7 @@ elpmodel_list *model ;
             avt_errmsg(ELP_ERRMSG, "010", AVT_ERROR, elpTechnoFile, model->elpModelName, "CGSD", model->elpModel[elpCGSD]);
             return 1004 ; 
         }
-        if ((model->elpCapa[elpCGP]  == 0.0 )) {
+        if (model->elpCapa[elpCGP]  == 0.0 ) {
             avt_errmsg(ELP_ERRMSG, "010", AVT_ERROR, elpTechnoFile, model->elpModelName, "CGP", model->elpModel[elpCGP]);
             return 1004 ; 
         }
@@ -2359,19 +2359,19 @@ elpmodel_list *model ;
             model->elpCapa[elpCGPDMIN] = model->elpCapa[elpCGP];
             model->elpCapa[elpCGPDMAX] = model->elpCapa[elpCGP];
         }
-        if ((model->elpCapa[elpCGPUMIN]  == 0.0 )) {
+        if (model->elpCapa[elpCGPUMIN]  == 0.0 ) {
             avt_errmsg(ELP_ERRMSG, "010", AVT_ERROR, elpTechnoFile, model->elpModelName, "CGPUMIN", model->elpModel[elpCGPUMIN]);
             return 1004 ; 
         }
-        if ((model->elpCapa[elpCGPUMAX]  == 0.0 )) {
+        if (model->elpCapa[elpCGPUMAX]  == 0.0 ) {
             avt_errmsg(ELP_ERRMSG, "010", AVT_ERROR, elpTechnoFile, model->elpModelName, "CGPUMAX", model->elpModel[elpCGPUMAX]);
             return 1004 ; 
         }
-        if ((model->elpCapa[elpCGPDMIN]  == 0.0 )) {
+        if (model->elpCapa[elpCGPDMIN]  == 0.0 ) {
             avt_errmsg(ELP_ERRMSG, "010", AVT_ERROR, elpTechnoFile, model->elpModelName, "CGPDMIN", model->elpModel[elpCGPDMIN]);
             return 1004 ; 
         }
-        if ((model->elpCapa[elpCGPDMAX]  == 0.0 )) {
+        if (model->elpCapa[elpCGPDMAX]  == 0.0 ) {
             avt_errmsg(ELP_ERRMSG, "010", AVT_ERROR, elpTechnoFile, model->elpModelName, "CGPDMAX", model->elpModel[elpCGPDMAX]);
             return 1004 ; 
         }

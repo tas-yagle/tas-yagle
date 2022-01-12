@@ -692,7 +692,7 @@ XtPointer cbs;
                                     if(p)
                                         *p = '\0';
                                 //    XmTextSetString( xtas_woutput_file_name, filename);
-                                    if((TOOL == TAS_TOOL) /*|| ((TOOL == TMA_TOOL) && (!strcmp(tma_tmppar->in,"spi")))*/) 
+                                    if (TOOL == TAS_TOOL) /*|| ((TOOL == TMA_TOOL) && (!strcmp(tma_tmppar->in,"spi")))*/
                                         strcpy(tas_tmppar->infile,filename);
                                                                    
                                     else {

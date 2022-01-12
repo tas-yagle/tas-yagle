@@ -342,7 +342,7 @@ lotrs_list *addlotrs(ptfig, type, x, y, width, length, ps, pd, xs, xd, ptgrid,
   /* No check is done for transistor name */
   pttrs->TRNAME = name;
 
-  if ((TRACE_MODE == 'Y'))
+  if (TRACE_MODE == 'Y')
     (void)fprintf(stdout,
                   "--- mbk --- addlotrs  : %s  X=%ld, Y=%ld, W=%ld, L=%ld, PS = %ld, PD = %ld, XS = %ld, XD = %ld\n",
                   MLO_IS_TRANSN(type) ? "TRANSN" : "TRANSP", x, y, width, length,
