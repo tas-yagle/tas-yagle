@@ -114,7 +114,7 @@ static void          NewVarname            (eqt_node *node, char *varname);
 static void          SubstN1ByN2           (eqt_node *n1,eqt_node *n2, char mode);
 static void          EvalVarname           (eqt_ctx *ctx, eqt_node *node);
 static void          eqt_addimportedvar    (eqt_ctx *ctx, char *var_name, double value);
-inline double __eqt_getvar (eqt_ctx *ctx, char *var_name, int usenamealloc, int ctxonly);
+static double __eqt_getvar (eqt_ctx *ctx, char *var_name, int usenamealloc, int ctxonly);
 
 /****************************************************************************/
 /*     functions for fast allocation                                        */
@@ -1906,7 +1906,7 @@ static void eqt_addimportedvar (eqt_ctx *ctx, char *var_name, double value)
 }
 
 /****************************************************************************/
-inline double __eqt_getvar (eqt_ctx *ctx, char *var_name, int usenamealloc, int ctxonly)
+double __eqt_getvar (eqt_ctx *ctx, char *var_name, int usenamealloc, int ctxonly)
 {
   long htvalue;
   int i;
