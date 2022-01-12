@@ -2532,7 +2532,7 @@ static BEG_OBJ beg_def_beout(char *name, chain_list *abl, unsigned int time, int
   beout_list        *ptout      = NULL;
 
   beg_get_vectname(name,&shortname,&left,&right,BEG_SEARCH_NAME);
-  if (abs(left-right)+1 != verifyVectAbl(abl))
+  if (labs(left-right)+1 != verifyVectAbl(abl))
     beg_error(BEG_ERR_SIZE,name);
 
   if ((out = beg_isInternalSig(shortname)))
@@ -2601,7 +2601,7 @@ static BEG_OBJ beg_def_beaux(char *name, chain_list *abl, unsigned int time, int
   beaux_list        *ptaux      = NULL;
 
   beg_get_vectname(name,&shortname,&left,&right,BEG_SEARCH_NAME);
-  if (abs(left - right) + 1 != verifyVectAbl(abl))
+  if (labs(left - right) + 1 != verifyVectAbl(abl))
     beg_error(BEG_ERR_SIZE,name);
 
   if ((aux = beg_isInternalSig(shortname)))
@@ -2674,7 +2674,7 @@ static BEG_OBJ beg_def_bebux(char *name,
 
   beg_get_vectname(name,&shortname,&left,&right,BEG_SEARCH_NAME);
   if (!biabl->FLAG & BEH_CND_LOOP)
-    if (abs(left - right) + 1 != verifyVectAbl(biabl->VALABL))
+    if (labs(left - right) + 1 != verifyVectAbl(biabl->VALABL))
       beg_error(BEG_ERR_SIZE,name);
 
   if ((bux = beg_isInternalSig(shortname)))
@@ -2740,7 +2740,7 @@ static BEG_OBJ beg_def_bebus(char *name,
 
   beg_get_vectname(name,&shortname,&left,&right,BEG_SEARCH_NAME);
   if (!biabl->FLAG&BEH_CND_LOOP)
-    if (abs(left-right)+1 != verifyVectAbl(biabl->VALABL))
+    if (labs(left-right)+1 != verifyVectAbl(biabl->VALABL))
       beg_error(BEG_ERR_SIZE,name);
 
   if ((bus = beg_isInternalSig(shortname)))
@@ -2806,7 +2806,7 @@ static BEG_OBJ beg_def_bereg(char *name,
 
   beg_get_vectname(name,&shortname,&left,&right,BEG_SEARCH_NAME);
   if (!beh_isloop(biabl))
-    if (abs(left-right)+1 != verifyVectAbl(biabl->VALABL))
+    if (labs(left-right)+1 != verifyVectAbl(biabl->VALABL))
       beg_error(BEG_ERR_SIZE,name);
 
   if ((reg = beg_isInternalSig(shortname)))//||(reg = beg_isPor(shortname)))
@@ -3172,8 +3172,8 @@ solRight :
   return;
 
 solIn :
-  left  = abs(left - *oldleft);
-  right = abs(right- *oldleft);
+  left  = labs(left - *oldleft);
+  right = labs(right- *oldleft);
   if (!changeAblAtRange(*oldabl,left,right,abl,1))
     beg_error(BEG_ERR_EXISTSIG,NULL);
 }
@@ -4044,7 +4044,7 @@ static int beg_mergeAtom(chain_list *atm1,chain_list *atm2)
     if (left2 == right2)
     {
       if (left1 == right1)
-        if (abs(right1-left2) == 1)
+        if (labs(right1-left2) == 1)
         {
           delchain(atm2,atm2);
           VALUE_ATOM(atm1) = createVectAtomName(rad1,left1,right2);
@@ -4072,7 +4072,7 @@ static int beg_mergeAtom(chain_list *atm1,chain_list *atm2)
           return 0;
     }
     else if (beg_way(left1,right1) == beg_way(left2,right2)
-             && abs(right1-left2) == 1)
+             && labs(right1-left2) == 1)
     {
       delchain(atm2,atm2);
       VALUE_ATOM(atm1) = createVectAtomName(rad1,left1,right2);
@@ -4305,7 +4305,7 @@ static vectbiabl_list *beg_detectLoop(vectbiabl_list *vbiabl)
     whichbiabl      = 0;
     left            = vbiabl->LEFT;
     right           = vbiabl->RIGHT;
-    step            = abs(left - right) + 1;
+    step            = labs(left - right) + 1;
 
     for (base = vbiabl->BIABL; base; base = base->NEXT, whichbiabl ++)
     {
@@ -4332,7 +4332,7 @@ static vectbiabl_list *beg_detectLoop(vectbiabl_list *vbiabl)
           biablx    = biablx->NEXT;
         if (!biablx)
           break;
-        if ( abs(leftx - rightx) == step-1 && leftx == (cpt+1)*step + left)
+        if ( labs(leftx - rightx) == step-1 && leftx == (cpt+1)*step + left)
         {
           onepass   = 1;
           if (!beg_isSameByLoopVar(base,biablx,bascs,basvs,&refcs,&refvs,
@@ -4660,7 +4660,7 @@ static void beg_modifyAblVect(chain_list *abl, chain_list *sup, char *lvar)
 
       chain_list  *expr;
 
-      expr = replicateAbl(createAtom(chainx->DATA),abs(left-right) + 1);
+      expr = replicateAbl(createAtom(chainx->DATA),labs(left-right) + 1);
       replaceAtomByExpr(abl,chainx->DATA,expr);
       freeExpr(expr);
     }

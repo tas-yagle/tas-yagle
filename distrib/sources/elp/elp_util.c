@@ -4497,8 +4497,8 @@ int elp_is_valcomprise ( long val1, long val2, double precision )
       res = 1;
   }
   else {
-    abs_val1 = abs (val1);
-    abs_val2 = abs (val2);
+    abs_val1 = labs (val1);
+    abs_val2 = labs (val2);
     min = elpDouble2Long (abs_val2 * (1.0 - precision));
     max = elpDouble2Long (abs_val2 * (1.0 + precision));
     if ( abs_val1 >= min && abs_val1 <= max )

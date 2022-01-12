@@ -91,7 +91,7 @@ long
 hashLoc (high, low)
      pNode high, low;
 {
-  return (abs (high->index + low->index +
+  return (labs (high->index + low->index +
 	       (((long) high) >> 4) + (((long) low) >> 5) +
 	       (long) high + (long) low));
 }

@@ -107,7 +107,7 @@ hashBdd (index, high, low)
      int index;
      pNode high, low;
 {
-  return (abs (index + ((long) high << 1) + (long) low +
+  return (labs (index + ((long) high << 1) + (long) low +
                ((long) high >> 4) + ((long) low >> 5)));
 }
 
