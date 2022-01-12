@@ -15,6 +15,9 @@
 /* fichier header a inclure dans tous les fichiers .c                       */
 /****************************************************************************/
 
+#ifndef __TTV_H__
+#define __TTV_H__
+
 /* les inclusions systemes */
 #include <stdio.h>
 #include <stdlib.h>
@@ -65,3 +68,5 @@
 #include "ttv_util.h"
 #include "ttv_falsepath.h"
 #include "ttv_ctx.h"
+
+#endif //__TTV_H__

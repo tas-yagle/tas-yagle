@@ -1,5 +1,5 @@
 #ifndef _MGL_IFDSTREAM_
-#define _IFDSTREAM_
+#define _MGL_IFDSTREAM_
 
 #include <unistd.h>
 #include <streambuf>

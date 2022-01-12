@@ -13,6 +13,9 @@
 /*                                                                          */
 /****************************************************************************/
 
+#ifndef __TTV_FACT_H__
+#define __TTV_FACT_H__
+
 #define TTV_SIG_NEW        ((long) 0x00001004 ) /* nouveau signal            */
 
 #define TTV_NODE_CMPT      ((long) 0x00001001 ) /* compteur d'un noeud       */
@@ -111,3 +114,5 @@ extern long           ttv_count         __P(( ttvfig_list*,
                                            ));
 extern long           ttv_countsep      __P(( ttvfig_list*, long, char ));
 extern void           ttv_detectinter   __P(( ttvfig_list*, int ));
+
+#endif //__TTV_FACT_H__

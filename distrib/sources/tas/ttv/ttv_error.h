@@ -13,5 +13,9 @@
 /*                                                                          */
 /****************************************************************************/
 
+#ifndef __TTV_ERROR_H__
+#define __TTV_ERROR_H__
+
 extern int ttv_error __P(( int, char*, int )) ;
 
+#endif //__TTV_ERROR_H__

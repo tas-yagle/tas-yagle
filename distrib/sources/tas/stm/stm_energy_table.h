@@ -12,8 +12,8 @@
 /*                                                                          */
 /****************************************************************************/
 
-#ifndef STM_MODTBL_H
-#define STM_MODTBL_H
+#ifndef __STM_ENERGY_TABLE_H__
+#define __STM_ENERGY_TABLE_H__
 
 /****************************************************************************/
 /*     includes                                                             */
@@ -32,4 +32,4 @@ extern timing_table    *stm_energy_table_create_energy2D_fparams (energyparams *
 extern timing_table    *stm_energy_table_create_energy1Dslewfix_fparams (energyparams *eparams, double *l_axis, int nl, double slew, double ci0, float vdd);
 extern timing_table    *stm_energy_table_create_energy1Dloadfix_fparams (energyparams *eparams, double *s_axis, int ns, double load, float vdd);
 
-#endif
+#endif //__STM_ENERGY_TABLE_H__
