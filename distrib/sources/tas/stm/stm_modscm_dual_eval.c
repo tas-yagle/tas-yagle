@@ -2061,7 +2061,7 @@ double stm_get_qsat_derivative( stm_qsat *qsat, double t )
   return dq ;
 }
 
-inline double stm_get_qsat( stm_qsat *qsat, double t )
+double stm_get_qsat( stm_qsat *qsat, double t )
 {
   double q = 0.0 ;
   double vi ;
@@ -3442,23 +3442,23 @@ int    stm_modscm_dual_calts_amjad (double    imax,
     return ret ;
 }
 
-inline double stm_modscm_dual_calts_dicho_q( double imax, 
-                                             double t, 
-                                             double f, 
-                                             double bu, 
-                                             double bu2, 
-                                             double c, 
-                                             double seuil, 
-                                             double ci, 
-                                             double vt, 
-                                             double vddin, 
-                                             double dtin, 
-                                             double fin, 
-                                             double qinit,
-                                             double strans,
-                                             double icf0,
-                                             stm_qsat *qsat 
-                                           )
+double stm_modscm_dual_calts_dicho_q( double imax,
+                                      double t,
+                                      double f,
+                                      double bu,
+                                      double bu2,
+                                      double c,
+                                      double seuil,
+                                      double ci,
+                                      double vt,
+                                      double vddin,
+                                      double dtin,
+                                      double fin,
+                                      double qinit,
+                                      double strans,
+                                      double icf0,
+                                      stm_qsat *qsat
+                                      )
 {
   double q ;
   double tin ;

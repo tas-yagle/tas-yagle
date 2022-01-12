@@ -3267,7 +3267,7 @@ int stb_ctk_sort_delay_cmp( sortdelaycmp *delay1, sortdelaycmp *delay2 )
   return 0 ;
 }
 
-inline void filltabdelayvalue( sortdelaycmp *elem, char criterion )
+void filltabdelayvalue( sortdelaycmp *elem, char criterion )
 {
   float deltamax ;
   float deltamin ;
