@@ -1419,7 +1419,7 @@ long nbfront ;
          locont = NULL ;
          flag = 'N' ;
          if((incone->TYPE & CNS_EXT) == CNS_EXT){
-             if((incone->UEDGE.LOCON->DIRECTION == CNS_T)){
+             if (incone->UEDGE.LOCON->DIRECTION == CNS_T) {
                  locont = incone->UEDGE.LOCON ;
                  if(locont->TYPE != EXTERNAL)
                      locont = NULL ;
@@ -2642,7 +2642,7 @@ ttvfig_list *ttvfig ;
  char flaglocon ;
  int i, forceit ;
 
- if((lofig == NULL)/* || (TAS_CONTEXT->TAS_CNS_LOAD == 'Y')*/)
+ if (lofig == NULL) /* || (TAS_CONTEXT->TAS_CNS_LOAD == 'Y')*/
   return ;
 
  TAS_CONTEXT->TAS_CALCRCX = 'N' ;

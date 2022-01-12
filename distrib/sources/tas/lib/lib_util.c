@@ -334,7 +334,7 @@ chain_list *lib_strToChainFloat(char *s)
                dest[j] = *src;
                j++;
            }
-           else if ((flag == 'N')) {
+           else if (flag == 'N') {
                if (src != chn) {
                 dest[j] = *src;
                 j++;

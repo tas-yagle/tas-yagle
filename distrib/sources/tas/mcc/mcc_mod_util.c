@@ -2655,17 +2655,17 @@ void mcc_drvmod()
                    (ptmodel->MODELTYPE == MCC_NOMODEL) || 
                    (ptmodel->MODELTYPE == MCC_MOS2))
                modeltype = "MOS2" ;
-           else if ((ptmodel->MODELTYPE == MCC_BSIM3V3))
+           else if (ptmodel->MODELTYPE == MCC_BSIM3V3)
                modeltype = "BSIM3V3" ;
-           else if ((ptmodel->MODELTYPE == MCC_MM9))
+           else if (ptmodel->MODELTYPE == MCC_MM9)
                modeltype = "MM9" ;
-           else if ((ptmodel->MODELTYPE == MCC_BSIM4))
+           else if (ptmodel->MODELTYPE == MCC_BSIM4)
                modeltype = "BSIM4" ;
-           else if ((ptmodel->MODELTYPE == MCC_MPSP))
+           else if (ptmodel->MODELTYPE == MCC_MPSP)
                modeltype = "PSP" ;
-           else if ((ptmodel->MODELTYPE == MCC_MPSPB))
+           else if (ptmodel->MODELTYPE == MCC_MPSPB)
                modeltype = "PSPB" ;
-           else if ((ptmodel->MODELTYPE == MCC_EXTMOD))
+           else if (ptmodel->MODELTYPE == MCC_EXTMOD)
                modeltype = "EXT" ;
            
            fprintf(stdout, "* Model type : %s\n\n", modeltype) ;
