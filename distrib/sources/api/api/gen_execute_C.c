@@ -22,6 +22,7 @@
 #include <dlfcn.h>
 #include <setjmp.h>
 #include <tcl.h>
+#undef STRINGIFY
 
 #include MUT_H
 //#include MLO_H
@@ -593,7 +594,6 @@ static t_arg *setvalue(t_arg *ta, char *type)
 static void setsametype(t_arg **ta, t_arg **tb)
 {
   char *bt;
-  double val;
   if ((bt=getbesttype(*ta, *tb))==NULL) return;
   *ta=setvalue(*ta, bt);
   *tb=setvalue(*tb, bt);
@@ -703,7 +703,7 @@ int testtarg(t_arg *left)
 
 t_arg *gen_docast(char *type, int pointer, t_arg *ta)
 {
-  t_arg *tmp;
+  t_arg *tmp = NULL;
   if (ta->POINTER>0 && pointer>0)
     {
       tmp=newtarg(type, pointer, INTERM);
@@ -823,7 +823,6 @@ int GenCatchFunction(t_arg **ret, t_arg **tab, int nb, char *name)
 #if 0
   chain_list *cl;
 #endif // ..anto..
-  int i;
   t_arg *ret_value;
 
   if (strcmp(name,"malloc")==0)
@@ -1296,7 +1295,7 @@ static t_arg *Eval_Exp_C(tree_list *tree, chain_list *env)
         if (*((double *)right->VALUE) == 0.0) error=1;
         break;
       default:
-        avt_errmsg(API_ERRMSG, "040", AVT_FATAL,FILE_NAME(tree),LINE(tree),left->TYPE,deref(left->POINTER));
+        avt_errmsg(API_ERRMSG, "040", AVT_FATAL,FILE_NAME(tree),LINE(tree),right->TYPE,deref(right->POINTER));
         // fprintf(stderr,"%s:%d: Unautorized operation on type %s%s\n",FILE_NAME(tree),LINE(tree),left->TYPE,deref(left->POINTER));
         EXIT(1);
       }
@@ -1351,7 +1350,7 @@ static t_arg *Eval_Exp_C(tree_list *tree, chain_list *env)
         if (*((double *)right->VALUE) == 0.0) error=1;
         break;
       default:
-        avt_errmsg(API_ERRMSG, "040", AVT_FATAL,FILE_NAME(tree),LINE(tree),left->TYPE,deref(left->POINTER));
+        avt_errmsg(API_ERRMSG, "040", AVT_FATAL,FILE_NAME(tree),LINE(tree),right->TYPE,deref(right->POINTER));
         //fprintf(stderr,"%s:%d: Unautorized operation on type %s%s\n",FILE_NAME(tree),LINE(tree),left->TYPE,deref(left->POINTER));
         EXIT(1);
       }
@@ -2585,7 +2584,7 @@ extern chain_list *Eval_Inst_C(tree_list *tree,chain_list *env)
           tmp=Eval_Exp_C(tree,env);
           asserttargistype(tmp, T_CHAR, 1);
           format=*(char **)tmp->VALUE;
-          fprintf(flow,format);
+          fprintf(flow, "%s", format);
           freetarg(tmp,0);
         }
       if (flow==stdout || flow==stderr) fflush(flow);
