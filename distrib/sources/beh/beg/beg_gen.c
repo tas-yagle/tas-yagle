@@ -2804,11 +2804,6 @@ static BEG_OBJ beg_def_bereg(char *name,
   bevectreg_list    *vectreg    = NULL;
   bereg_list        *ptreg      = NULL;
 
-  // type is declared to get compatibility with the other functions
-  // there is no use to type
-  type      = '®';
-  
-  
   beg_get_vectname(name,&shortname,&left,&right,BEG_SEARCH_NAME);
   if (!beh_isloop(biabl))
     if (abs(left-right)+1 != verifyVectAbl(biabl->VALABL))
