@@ -15,7 +15,7 @@
 #include AVT_H
 
 static char           *buffer      = NULL;
-static unsigned int    buff_size   = 0;
+static int             buff_size   = 0;
 static struct circuit *circuit_pnt = NULL;
 
 static void display(struct stack curpnt, union value *pnt, long *typ, char **str);
