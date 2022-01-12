@@ -62,7 +62,8 @@ Widget  shell_w;
 Display *dpy;
 {
 Window   window,root;
-unsigned int x, y, width, height, border_width, depth;
+unsigned int width, height, border_width, depth;
+int x, y;
 
 XtVaGetValues(shell_w, XmNiconWindow, &window, NULL);
 
