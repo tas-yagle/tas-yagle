@@ -222,7 +222,7 @@ int myfclose(FILE *f)
   return 0;
 }
 
-void myfflush(FILE *f)
+int myfflush(FILE *f)
 {
   if (f!=NULL)
     return fflush (f);
