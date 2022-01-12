@@ -7,7 +7,7 @@
 extern FILE *myfopen(const char *name, const char *mode);
 extern int myfclose(FILE *f);
 int myfputs (const char *s, FILE *stream);
-void myfflush(FILE *f);
+int myfflush(FILE *f);
 
 void runStatHiTas_sub( char *numrun, char *script, char *tool, char *resfile, int incremental, char *resdir);
 void avt_McPostData( char *msg );
