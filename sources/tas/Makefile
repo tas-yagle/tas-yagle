@@ -1,6 +1,13 @@
 # makefile for timing analyzer
 # date    : 26/06/96
 
+ifdef BUILD_GRAPHICAL
+	XTAS_MAKE:=@cd xtas ; $(MAKE)
+else
+	XTAS_MAKE:=@true
+endif
+
+
 distrib :
 	@cd tlc ; $(MAKE) 
 	@cd trc ; $(MAKE) 
@@ -19,7 +26,7 @@ distrib :
 	@cd val ; $(MAKE) 
 	@cd zen ; $(MAKE) 
 	@cd xal ; $(MAKE) 
-	@cd xtas ; $(MAKE) 
+	$(XTAS_MAKE) 
 
 headers :
 	-@cd tlc ; $(MAKE) headers
@@ -38,7 +45,7 @@ headers :
 	-@cd val ; $(MAKE) headers
 	-@cd zen ; $(MAKE) headers
 	-@cd xal ; $(MAKE) headers
-	-@cd xtas ; $(MAKE) headers
+	$(XTAS_MAKE) headers
 
 clean :
 	@cd tlc ; $(MAKE) clean
@@ -59,7 +66,7 @@ clean :
 	@cd val ; $(MAKE) clean
 	@cd zen ; $(MAKE) clean
 	@cd xal ; $(MAKE) clean
-	@cd xtas ; $(MAKE) clean
+	$(XTAS_MAKE) clean
 
 realclean :
 	@cd tlc ; $(MAKE) realclean
@@ -80,4 +87,4 @@ realclean :
 	@cd val ; $(MAKE) realclean
 	@cd zen ; $(MAKE) realclean
 	@cd xal ; $(MAKE) realclean
-	@cd xtas ; $(MAKE) realclean
+	$(XTAS_MAKE) realclean
