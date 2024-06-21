@@ -1,7 +1,12 @@
 include $(AVERTEC_TOP)/etc/$(AVERTEC_OS).mk
 
+ifdef BUILD_GRAPHICAL
+	XYAGLE_MAKE = @cd xyagle ; $(MAKE) -f Makefile
+else
+	XYAGLE_MAKE = @true
+endif
+
 all : lib
-	@cd xyagle ; $(MAKE) -f Makefile
 
 bin : lib
 	@cd fcl ; $(MAKE) -f Makefile
@@ -9,7 +14,7 @@ bin : lib
 	@cd yagle ; $(MAKE) -f Makefile
 	@cd slib ; $(MAKE) -f Makefile
 	@cd cgv ; $(MAKE) -f Makefile
-	@cd xyagle ; $(MAKE) -f Makefile
+	$(XYAGLE_MAKE)
 	@$(MAKE) -C gnshr
 
 lib :
@@ -18,7 +23,7 @@ lib :
 	@cd yagle ; $(MAKE) -f Makefile lib
 	@cd slib ; $(MAKE) -f Makefile
 	@cd cgv ; $(MAKE) -f Makefile
-	@cd xyagle ; $(MAKE) -f Makefile lib
+	$(XYAGLE_MAKE) lib
 
 headers :
 	@cd fcl ; $(MAKE) -f Makefile headers
@@ -26,7 +31,7 @@ headers :
 	@cd yagle ; $(MAKE) -f Makefile headers
 	@cd slib ; $(MAKE) -f Makefile headers
 	@cd cgv ; $(MAKE) -f Makefile headers
-	@cd xyagle ; $(MAKE) -f Makefile headers
+	$(XYAGLE_MAKE) headers
 
 clean :
 	@cd fcl ; $(MAKE) -f Makefile clean
