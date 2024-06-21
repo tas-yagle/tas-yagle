@@ -84,6 +84,8 @@ LOCAL_LIB  = $(FLEXOBJS) -L$(TARGET_LIB) $(STATIC_LIB)\
 
 all : init $(TARGET_BIN)/ttvdiff $(TARGET_BIN)/ttvren
 
+headers : ;
+
 extras : $(TARGET_BIN)/val  $(TARGET_BIN)/ttvtest
 
 $(TARGET_BIN)/ttvdiff : $(TTVDIFF_OBJ) 
