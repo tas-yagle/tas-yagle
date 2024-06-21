@@ -16,7 +16,6 @@ popd
 popd
 
 # Create build subdirectories
-pushd distrib
 buildDir="`pwd`"
 buildDirs="api_include api_lib bin lib include man/man3 share/doc"
 for dir in ${buildDirs}; do
@@ -28,7 +27,7 @@ ln -fs share/etc etc
 CFLAGS="-g -O3 -Wno-implicit-function-declaration -Wno-knr-promoted-parameter -I${localInstall}/include"
 CPPFLAGS="-g -O3 -I${localInstall}/include"
 pushd obj
-make WITH_FLEXLM=NOFLEX            \
+make --print-directory WITH_FLEXLM=NOFLEX            \
   ALLIANCE_TOP=${buildDir}         \
   AVERTEC_TOP=${buildDir}          \
   AVERTEC_OS=`uname -s`            \
@@ -41,8 +40,7 @@ make WITH_FLEXLM=NOFLEX            \
   LEX=${localInstall}/bin/flex     \
   JAVA_HOME=/usr/lib/jvm/default   \
   CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" STRIP=true \
-  SAXON="java -jar ${buildDir}/../distrib_extras/saxon9.jar"
-popd
+  SAXON="java -jar ${buildDir}/distrib_extras/saxon9.jar"
 popd
 
 
