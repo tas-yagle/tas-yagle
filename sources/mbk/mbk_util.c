@@ -125,8 +125,6 @@ long i_nbchain=0, i_nbptype=0, i_nbnum=0;
 
 /* table de hash de namealloc() et namefind() */
 static chain_list **NAME_HASHTABLE=NULL;//[HASHVAL];
-static char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
-static char str[BUFSIZ];                       /* buffer for concatname       */
 static char tolowertable[1 << BITS(char)];     /* number of chars             */
 static char touppertable[1 << BITS(char)];     /* number of chars             */
 char CASE_SENSITIVE = 'P';                     /* namealloc case sensistive   */
@@ -1314,6 +1312,7 @@ void DeleteNameAllocator(NameAllocator *na)
 
 static void NameAlloc_rehash(NameAllocator *na)
 {
+  char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
   chain_list **nn, *cl;
   int i, code;
   char *name = buffer;
@@ -1448,6 +1447,7 @@ static void namealloc_rehash()
 {
   chain_list **nn, *cl;
   int i, code;
+  char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
   char *name = buffer;
 
   //  fprintf(stdout,".rehashing name dico: %d -> %d...",namealloc_primes[namealloc_primes_index],namealloc_primes[namealloc_primes_index+1]); fflush(stdout);
@@ -1478,6 +1478,7 @@ char *namealloc(inputname)
      const char *inputname;
 {
   chain_list *pt;
+  char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
   char *name = buffer; /* ensure no modification of parameter string */
   int code = 0;
   int depth;
@@ -1530,6 +1531,7 @@ char *namefind(inputname)
      char *inputname;
 {
   chain_list *pt;
+  char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
   char *name = buffer; /* ensure no modification of parameter string */
   register int code = 0;
 
@@ -1669,6 +1671,7 @@ char *vectorize(radical, index)
      char *radical;
      long index;
 {
+  char str[BUFSIZ];
   (void)sprintf(str,"%s %ld", radical, index);
   return namealloc(str);
 }
@@ -1679,6 +1682,7 @@ char *vectorize(radical, index)
 char *vectorradical(name)
      char *name;
 {
+  char str[BUFSIZ];
   char *s;
   char t;
   if ((t=name[strlen(name)-1])<'0' || t>'9') return name;
@@ -1789,6 +1793,8 @@ int naturalstrcmp(s, t)
 {
   char *spt, *tpt , *st = s, *tt = t;
   int u, ls, lt;
+  char buffer[BUFSIZ];
+  char str[BUFSIZ];
 
   spt = buffer, tpt = str;
 
@@ -1815,6 +1821,7 @@ int naturalstrcmp(s, t)
 char *concatname(name1, name2)
      char *name1, *name2;
 {
+  char str[BUFSIZ];
   (void)sprintf(str,"%s%c%s", name1, SEPAR, name2);
   return namealloc(str);
 }
@@ -1829,6 +1836,7 @@ char *concatname(name1, name2)
 void leftunconcatname(name, left, right)
      char *name, **left, **right;
 {
+  char str[BUFSIZ];
   int   i;
 
   // On recherche le premier séparateur.
@@ -1859,6 +1867,7 @@ void leftunconcatname(name, left, right)
 void rightunconcatname(name, left, right)
      char *name, **left, **right;
 {
+  char str[BUFSIZ];
   int   i, m;
 
   // Positionne sur le dernier caractère;
@@ -2082,7 +2091,8 @@ static void loadcatalog(table, size, type)
   static char **tabs[4];
   static int sizes[4];
   static int read;
- 
+  char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
+
   if (!read) {
     read++;
     (void)sprintf(buffer, "%s/%s", WORK_LIB, CATAL ? CATAL : "CATAL");
@@ -3064,6 +3074,7 @@ static void banner(s, police, nl)
 {
   int i, j, k, l, m;
   char *line;
+  char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
 
   /* rince off :
      the buffer is filled with nul characteres. */
@@ -3130,6 +3141,7 @@ static void cartouche(tool, tv, comment, date, av, authors, contrib)
   time_t timer;
   char day[4], month[4];
   int year, nday, hour, minute, second;
+  char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
 
   (void)time(&timer);
   (void)sscanf(ctime(&timer), "%s %s %d %d:%d:%d %d",
