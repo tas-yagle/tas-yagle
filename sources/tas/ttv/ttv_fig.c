@@ -39,8 +39,7 @@ chain_list *ttv_getallsigbytype_sub(ttvfig_list *ttvfig,long type,chain_list *ma
 /*                                                                           */
 /* ajoute un model dans la table des modeles                                 */
 /*****************************************************************************/
-void ttv_addhtmodel(ttvfig)
-ttvfig_list *ttvfig ;
+void ttv_addhtmodel(ttvfig_list *ttvfig)
 {
   if(TTV_HT_MODEL == NULL)
    TTV_HT_MODEL = addht(10) ;
@@ -56,8 +55,7 @@ ttvfig_list *ttvfig ;
 /*                                                                           */
 /* supprime un model dans la table des modeles                               */
 /*****************************************************************************/
-void ttv_delhtmodel(ttvfig)
-ttvfig_list *ttvfig ;
+void ttv_delhtmodel(ttvfig_list *ttvfig)
 {
   if(TTV_HT_MODEL == NULL)
      return ;
@@ -73,8 +71,7 @@ ttvfig_list *ttvfig ;
 /*                                                                           */
 /* trouve le model dans la table des models                                  */
 /*****************************************************************************/
-ttvfig_list *ttv_gethtmodel(name)
-char *name ;
+ttvfig_list *ttv_gethtmodel(char *name)
 {
  ttvfig_list *ttvfig ;
 
@@ -96,8 +93,7 @@ char *name ;
 /*                                                                           */
 /* ajoute un tableau de signal a une figure                                  */
 /*****************************************************************************/
-ttvsbloc_list **ttv_addsigtab(ttvfig)
-ttvfig_list *ttvfig ;
+ttvsbloc_list **ttv_addsigtab(ttvfig_list *ttvfig)
 {
  ptype_list *ptype = getptype(ttvfig->USER,TTV_FIG_SIGBLOCTAB) ;
  ttvsbloc_list **tabbloc = NULL ;
@@ -137,8 +133,7 @@ ttvfig_list *ttvfig ;
 /*                                                                           */
 /* ajoute un tableau de signal a une figure                                  */
 /*****************************************************************************/
-void ttv_delsigtab(ttvfig)
-ttvfig_list *ttvfig ;
+void ttv_delsigtab(ttvfig_list *ttvfig)
 {
  ptype_list *ptype = getptype(ttvfig->USER,TTV_FIG_SIGBLOCTAB) ;
 
@@ -188,12 +183,7 @@ int ttv_addsig_addrcxpnode(int mode)
   return old;
 }
 
-ttvsig_list *ttv_addsig(ttvfig,name,net,capa,type)
-ttvfig_list *ttvfig ;
-char *name ;
-char *net ;
-float capa ;
-long type ;
+ttvsig_list *ttv_addsig(ttvfig_list *ttvfig, char *name, char *net, float capa, long type)
 {
  ttvsig_list *ptsig ;
  long nbsig;
@@ -230,17 +220,6 @@ long type ;
  return(ptsig) ;
 }
 
-/*****************************************************************************/
-/*                        function ttv_addrefsig()                           */
-/* parametres :                                                              */
-/* ttvfig : ttvfig ou l'on rajoute un signal                                 */
-/* name : nom du signal                                                      */
-/* type : type du signal                                                     */
-/* headchain : chain list des autres signaux references du meme type         */
-/*                                                                           */
-/* cree un signal reference a une ttvfig et l'ajoute dans une chain_list     */
-/* il faut construire le tableau plus tard pour que la ttvfig soit coherente */
-/*****************************************************************************/
 void ttv_init_refsig(ttvfig_list *ttvfig, ttvsig_list *ptsig, char *name, char *net, float capa, long type)
 {
  ptsig->NAME = namealloc(name) ;
@@ -268,13 +247,19 @@ void ttv_init_refsig(ttvfig_list *ttvfig, ttvsig_list *ptsig, char *name, char *
  if (ttv_addrcxpnode) ttv_set_rcx_node_info(ttvfig, ptsig);
 }
 
-chain_list *ttv_addrefsig(ttvfig,name,net,capa,type,headchain)
-ttvfig_list *ttvfig ;
-char *name ;
-char *net ;
-float capa ;
-long type ;
-chain_list *headchain ;
+/*****************************************************************************/
+/*                        function ttv_addrefsig()                           */
+/* parametres :                                                              */
+/* ttvfig : ttvfig ou l'on rajoute un signal                                 */
+/* name : nom du signal                                                      */
+/* type : type du signal                                                     */
+/* headchain : chain list des autres signaux references du meme type         */
+/*                                                                           */
+/* cree un signal reference a une ttvfig et l'ajoute dans une chain_list     */
+/* il faut construire le tableau plus tard pour que la ttvfig soit coherente */
+/*****************************************************************************/
+
+chain_list *ttv_addrefsig( ttvfig_list *ttvfig, char *name, char *net, float capa, long type, chain_list *headchain)
 {
  ttvsig_list *ptsig ;
  long nbsig;
@@ -311,8 +296,7 @@ chain_list *headchain ;
 /*                                                                           */
 /* renvoie le type d'un signal                                               */
 /*****************************************************************************/
-long ttv_gettypesig(ptsig)
-ttvsig_list *ptsig ;
+long ttv_gettypesig(ttvsig_list *ptsig)
 {
  long type ;
 
@@ -335,8 +319,7 @@ ttvsig_list *ptsig ;
 /* cree un signal reference a une ttvfig et l'ajoute dans une chain_list     */
 /* il faut construire le tableau plus tard pour que la ttvfig soit coherente */
 /*****************************************************************************/
-void ttv_delrefsig(ptsig)
-ttvsig_list *ptsig ;
+void ttv_delrefsig(ttvsig_list *ptsig)
 {
  ptype_list *ptype ;
 
@@ -380,15 +363,15 @@ ttvsig_list *ptsig ;
 /*                                                                           */
 /* cree un lien dans une ttvfig et relie les deux noeuds                     */
 /*****************************************************************************/
-ttvline_list *ttv_addline(ttvfig,root,node,valmax,fmax,valmin,fmin,type)
-ttvfig_list *ttvfig ;
-ttvevent_list *root ;
-ttvevent_list *node ;
-long valmax ;
-long fmax ;
-long valmin ;
-long fmin ;
-long type ;
+ttvline_list *ttv_addline(
+        ttvfig_list *ttvfig,
+        ttvevent_list *root,
+        ttvevent_list *node,
+        long valmax,
+        long fmax,
+        long valmin,
+        long fmin,
+        long type)
 {
  ttvline_list *ptline ;
  long nbline ;
@@ -510,12 +493,12 @@ long type ;
 /*                                                                           */
 /* fonction d'allocation d'une caracterisation de lien                       */
 /*****************************************************************************/
-void ttv_addcaracline(ptline,mdmax,mdmin,mfmax,mfmin)
-ttvline_list *ptline ;
-char *mdmax ;
-char *mdmin ;
-char *mfmax ;
-char *mfmin ;
+void ttv_addcaracline(
+        ttvline_list *ptline,
+        char *mdmax,
+        char *mdmin,
+        char *mfmax,
+        char *mfmin)
 {
  ptline->MDMAX = mdmax ;
  ptline->MDMIN = mdmin ;
@@ -531,11 +514,11 @@ char *mfmin ;
 /*                                                                           */
 /* calcul les caracteristique electriques des nouvelles line                 */
 /*****************************************************************************/
-int ttv_calcaracline(ptline,ptlinenew,type,index)
-ttvline_list *ptline ;
-ttvline_list *ptlinenew ;
-long type ;
-int index ;
+int ttv_calcaracline(
+        ttvline_list *ptline,
+        ttvline_list *ptlinenew,
+        long type,
+        int index)
 {
  ttvfig_list *ttvfig ;
  chain_list *chainfig = NULL ;
@@ -690,9 +673,7 @@ int index ;
 /*                                                                           */
 /* ajoute un type de contraintes à une line                                  */
 /*****************************************************************************/
-void ttv_addconttype(ptline,type)
-ttvline_list *ptline ;
-long type ;
+void ttv_addconttype(ttvline_list *ptline, long type)
 {
  ptype_list *ptype ;
 
@@ -709,8 +690,7 @@ long type ;
 /*                                                                           */
 /* renvoie le type de contrainte                                             */
 /*****************************************************************************/
-long ttv_getconttype(ptline)
-ttvline_list *ptline ;
+long ttv_getconttype(ttvline_list *ptline)
 {
  ptype_list *ptype ;
 
@@ -735,8 +715,7 @@ ttvline_list *ptline ;
 /*                                                                           */
 /* efface la contrainte d'un lien                                            */
 /*****************************************************************************/
-void ttv_delconttype(ptline)
-ttvline_list *ptline ;
+void ttv_delconttype(ttvline_list *ptline)
 {
  if(getptype(ptline->USER,TTV_LINE_CONTR) != NULL)
    ptline->USER = delptype(ptline->USER,TTV_LINE_CONTR) ;
@@ -751,10 +730,7 @@ ttvline_list *ptline ;
 /*                                                                           */
 /* donne un nom de modele et d'instance à une line                           */
 /*****************************************************************************/
-void ttv_addmodelline(ptline,model,instance)
-ttvline_list *ptline ;
-char *model ;
-char *instance ;
+void ttv_addmodelline(ttvline_list *ptline, char *model, char *instance)
 {
  ptype_list *ptype ;
 
@@ -778,10 +754,7 @@ char *instance ;
 /*                                                                           */
 /* retrouve le nom d'instance et de model d'une line                         */
 /*****************************************************************************/
-void ttv_getmodelline(ptline,model,instance)
-ttvline_list *ptline ;
-char **model ;
-char **instance ;
+void ttv_getmodelline(ttvline_list *ptline, char **model, char **instance)
 {
  ptype_list *ptype ;
 
@@ -803,8 +776,7 @@ char **instance ;
 /*                                                                           */
 /* efface un nom de modele et d'instance à une line                          */
 /*****************************************************************************/
-void ttv_delmodelline(ptline)
-ttvline_list *ptline ;
+void ttv_delmodelline(ttvline_list *ptline)
 {
  if(getptype(ptline->USER,TTV_LINE_MODNAME) != NULL)
    ptline->USER = delptype(ptline->USER,TTV_LINE_MODNAME) ;
@@ -821,8 +793,7 @@ ttvline_list *ptline ;
 /* supprime un lien du graphe                                                */
 /* renvoie 1 si le lien est supprimer 0 sinon                                */
 /*****************************************************************************/
-int ttv_delline(ptline)
-ttvline_list *ptline ;
+int ttv_delline(ttvline_list *ptline)
 {
  ttvline_list *ptlinex ;
  ttvline_list *ptlinesav = NULL ;
@@ -967,8 +938,7 @@ ttvline_list *ptline ;
 /*                                                                           */
 /* donne le type d'un arc                                                    */
 /*****************************************************************************/
-long ttv_getlinetype(ptline)
-ttvline_list *ptline ;
+long ttv_getlinetype(ttvline_list *ptline)
 {
  long type ;
 
@@ -989,10 +959,7 @@ ttvline_list *ptline ;
 /*                                                                           */
 /* donne le type d'un arc avec les extremitées                               */
 /*****************************************************************************/
-long ttv_getnewlinetype(ptline,sigin,sigout)
-ttvline_list *ptline ;
-ttvsig_list *sigin ;
-ttvsig_list *sigout ;
+long ttv_getnewlinetype(ttvline_list *ptline, ttvsig_list *sigin, ttvsig_list *sigout)
 {
  long type ;
 
@@ -1036,9 +1003,7 @@ ttvsig_list *sigout ;
 /*                                                                           */
 /* effacce les references aux commandes dans une ttvfig                      */
 /*****************************************************************************/
-void ttv_delcmd(ttvfig,cmd)
-ttvfig_list *ttvfig ;
-ttvsig_list *cmd ;
+void ttv_delcmd(ttvfig_list *ttvfig, ttvsig_list *cmd)
 {
  ttvsig_list *ptsig ;
  ptype_list *ptype ;
@@ -1069,9 +1034,7 @@ ttvsig_list *cmd ;
 /*                                                                           */
 /* trouve une commande dans la figure hierarchique ttvfig                    */
 /*****************************************************************************/
-ttvevent_list *ttv_getcmd(ttvfig,cmd)
-ttvfig_list *ttvfig ;
-ttvevent_list *cmd ;
+ttvevent_list *ttv_getcmd(ttvfig_list *ttvfig, ttvevent_list *cmd)
 {
  ptype_list *ptype ;
 
@@ -1108,10 +1071,7 @@ ttvevent_list *cmd ;
 /*                                                                           */
 /* renvoie une command a un lien qui fini sur un latch                       */
 /*****************************************************************************/
-ttvevent_list *ttv_getlinecmd(ttvfig,line,type)
-ttvfig_list *ttvfig ;
-ttvline_list *line ;
-long type ;
+ttvevent_list *ttv_getlinecmd(ttvfig_list *ttvfig, ttvline_list *line, long type)
 {
  ptype_list *ptype ;
 
@@ -1134,10 +1094,7 @@ long type ;
 /*                                                                           */
 /* ajoute une command a un lien qui fini sur un latch                        */
 /*****************************************************************************/
-ptype_list *ttv_addcmd(line,type,cmd)
-ttvline_list *line ;
-ttvevent_list *cmd ;
-long type ;
+ptype_list *ttv_addcmd(ttvline_list *line, long type, ttvevent_list *cmd)
 {
  if(cmd == NULL) return(NULL) ;
  line->USER = addptype(line->USER,type,(void*)ttv_getcmd(line->FIG,cmd)) ;
@@ -1152,9 +1109,7 @@ long type ;
 /*                                                                           */
 /* donne la liste des commandes d'un latch ou d'une precharge de la ttvfig   */
 /*****************************************************************************/
-chain_list *ttv_getlrcmd(ttvfig,ptsig)
-ttvfig_list *ttvfig ;
-ttvsig_list *ptsig ;
+chain_list *ttv_getlrcmd(ttvfig_list *ttvfig, ttvsig_list *ptsig)
 {
  ptype_list *ptype ;
  ttvevent_list *cmd ;
@@ -1189,8 +1144,7 @@ ttvsig_list *ptsig ;
 /*                                                                           */
 /* ajoute un ptype sur le lien d'avant pour la liberation des liens          */
 /*****************************************************************************/
-void ttv_addprevline(ptline)
-ttvline_list *ptline ;
+void ttv_addprevline(ttvline_list *ptline)
 {
   if(ptline->NEXT == NULL) return ;
 
@@ -1210,8 +1164,7 @@ ttvline_list *ptline ;
 /*                                                                           */
 /* suprime un ptype sur le lien d'avant pour la liberation des liens         */
 /*****************************************************************************/
-void ttv_delprevline(ptline)
-ttvline_list *ptline ;
+void ttv_delprevline(ttvline_list *ptline)
 {
  ptline->USER = delptype(ptline->USER,TTV_LINE_PREVLINE) ;
  ptline->TYPE &= ~(TTV_LINE_PREV) ;
@@ -1225,10 +1178,7 @@ ttvline_list *ptline ;
 /*                                                                           */
 /* suprime un ptype sur le lien d'avant pour la liberation des liens         */
 /*****************************************************************************/
-int ttv_islinelevel(ttvfig,ptline,level)
-ttvfig_list *ttvfig ;
-ttvline_list *ptline ;
-long level ;
+int ttv_islinelevel(ttvfig_list *ttvfig, ttvline_list *ptline, long level)
 {
   if((((ptline->TYPE & (TTV_LINE_D | TTV_LINE_T)) != 0) &&
       (ptline->FIG != ttvfig)) ||
@@ -1337,10 +1287,7 @@ ttvfig_list *ttv_getttvfig(char *figname, long type)
 /*                                                                           */
 /* recherche une ttvins dans la liste des instances d'une figure             */
 /*****************************************************************************/
-ttvfig_list *ttv_getttvins(ttvfig,figname,insname)
-ttvfig_list *ttvfig ;
-char *figname ;
-char *insname ;
+ttvfig_list *ttv_getttvins(ttvfig_list *ttvfig, char *figname, char *insname)
 {
  ttvfig_list *ttvins = NULL ;
  chain_list *chain = ttv_getttvfiglist(ttvfig) ;
@@ -1370,10 +1317,7 @@ char *insname ;
 /* recherche une ttvfig dans la liste des ttvfig haut niveau                 */
 /* en cree une nouvelle sinon                                                */
 /*****************************************************************************/
-ttvfig_list *ttv_givehead(figname,insname,root)
-char *figname ;
-char *insname ;
-ttvfig_list *root ;
+ttvfig_list *ttv_givehead(char *figname, char *insname, ttvfig_list *root)
 {
  ttvfig_list *ttvfig ;
  chain_list *chain ;
@@ -1411,10 +1355,7 @@ ttvfig_list *root ;
 /* recherche une ttvfig dans la liste des ttvfig si c'est une instance il    */
 /* en cree une nouvelle sinon il renvoie la precedante                       */
 /*****************************************************************************/
-ttvfig_list *ttv_givettvfig(figname,insname,root)
-char *figname ;
-char *insname ;
-ttvfig_list *root ;
+ttvfig_list *ttv_givettvfig(char *figname, char *insname, ttvfig_list *root)
 {
  ttvfig_list *ttvfig ;
  ttvfig_list *ttvfigx ;
@@ -1479,8 +1420,7 @@ ttvfig_list *root ;
 /*                                                                           */
 /* renvoie la liste des figures d'un arbre hierarchique                      */
 /*****************************************************************************/
-chain_list *ttv_getttvfiglist(ttvfig)
-ttvfig_list *ttvfig ;
+chain_list *ttv_getttvfiglist(ttvfig_list *ttvfig)
 {
  chain_list *chainfig = NULL ;
  chain_list *chain ;
@@ -1501,10 +1441,7 @@ ttvfig_list *ttvfig ;
 /*                                                                           */
 /* ecrit dans le buffer ptname le nom hierarchique d'une instance            */
 /*****************************************************************************/
-char *ttv_getinsname(ttvfig,ptname,ttvins)
-ttvfig_list *ttvfig ;
-char *ptname ;
-ttvfig_list *ttvins ;
+char *ttv_getinsname(ttvfig_list *ttvfig, char *ptname, ttvfig_list *ttvins)
 {
  ttvfig_list *ttvfigx ;
  chain_list *chain = NULL ;
@@ -1637,9 +1574,7 @@ char *ttv_getnetname(ttvfig_list *ttvfig,char *ptname,ttvsig_list *ptsig)
 /*                                                                           */
 /* recherche un signal dans une ttvfig grace a son nom hierachique           */
 /*****************************************************************************/
-ttvsig_list *ttv_getsig(ttvfig,name)
-ttvfig_list *ttvfig ;
-char *name ;
+ttvsig_list *ttv_getsig(ttvfig_list *ttvfig, char *name)
 {
  ttvsig_list *ptsig = NULL ;
  ttvfig_list *ttvins ;

@@ -46,7 +46,7 @@ static jmp_buf interactive_exit;
 //static char   copyright[] = " - Copyright (C) 2001-2005 LAAS-CNRS";
 //static char  *version = ELTCLSH_VERSION;
 
-avt_interactive_exit()
+void avt_interactive_exit(int dummy)
 {
     longjmp(interactive_exit, 1);
 }
