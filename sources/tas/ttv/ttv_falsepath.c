@@ -191,7 +191,7 @@ static int ttv_addfalsepath_entry_in_hash_table(ttvfig_list *ttvfig, long destin
 /* ajoute un faux chemin dans la liste des faux chemins                      */
 /*****************************************************************************/
 
-void ttv_addfalsepath(ttvfig_list *ttvfig, char *sigin, long slopein, char *sigout, long slopeout, char *clock, ptype_list *siglist, ht *nametosig,NameAllocator *NA)
+void ttv_addfalsepath(ttvfig_list *ttvfig, char *sigin, long slopein, char *sigout, long slopeout, const char *clock, ptype_list *siglist, ht *nametosig,NameAllocator *NA)
 {
  ttvfalsepath_list *pt, **whereptype;
  ttvsig_list *ptsig  ;
@@ -301,14 +301,6 @@ void ttv_addfalsepath(ttvfig_list *ttvfig, char *sigin, long slopein, char *sigo
  }
 }
 
-/*****************************************************************************/
-/*                        function ttv_freefalsepath                         */
-/* parametres :                                                              */
-/* ttvfig : figure                                                           */
-/*                                                                           */
-/* modelise un lien en fonction de sa resistance et son parametre de front   */
-/*****************************************************************************/
-
 static void cleanallnodes(ttvfig_list *ttvfig)
 {
   chain_list *chainsig, *chain;
@@ -330,8 +322,15 @@ static void cleanallnodes(ttvfig_list *ttvfig)
   freechain(chainsig) ;
 }
 
-void ttv_freefalsepath(ttvfig)
-ttvfig_list *ttvfig ;
+/*****************************************************************************/
+/*                        function ttv_freefalsepath                         */
+/* parametres :                                                              */
+/* ttvfig : figure                                                           */
+/*                                                                           */
+/* modelise un lien en fonction de sa resistance et son parametre de front   */
+/*****************************************************************************/
+
+void ttv_freefalsepath(ttvfig_list *ttvfig)
 {
  ptype_list *ptype ;
  falsepath_info *fpi;
