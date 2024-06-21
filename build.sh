@@ -17,16 +17,14 @@ popd
 
 # Create build subdirectories
 buildDir="`pwd`"
-buildDirs="api_include api_lib bin lib include man/man3 share/doc"
+buildDirs="api_include api_lib bin lib include man/man3 doc"
 for dir in ${buildDirs}; do
 	mkdir -p ${dir}
 done
-ln -fs sources obj
-ln -fs share/etc etc
 
 CFLAGS="-g -O3 -Wno-implicit-function-declaration -Wno-knr-promoted-parameter -I${localInstall}/include"
 CPPFLAGS="-g -O3 -I${localInstall}/include"
-pushd obj
+pushd sources
 make --print-directory WITH_FLEXLM=NOFLEX            \
   ALLIANCE_TOP=${buildDir}         \
   AVERTEC_TOP=${buildDir}          \
@@ -52,14 +50,14 @@ mkdir -p ${installDir}/bin
 mkdir -p ${installDir}/share/tasyag/etc
 
 for conf in avt.slib avttools.dtb Xtas Xyagle trmodel.cfg; do
-  cp distrib/share/etc/$conf ${installDir}/share/tasyag/etc
+  cp etc/$conf ${installDir}/share/tasyag/etc
 done
 
 for tool in avt_shell avtman xtas xyagle ttvdiff ttvren; do
   cp distrib/bin/${tool} ${installDir}/bin
 done
 
-cp -r distrib/share/tcl ${installDir}/share/tasyag
+cp -r tcl ${installDir}/share/tasyag
 
 echo "AVERTEC_TOP=`pwd`/install/share/tasyag" > "${installDir}/avt_env.sh"
 echo 'PATH=${AVERTEC_TOP}/tcl:${PATH}' >> "${installDir}/avt_env.sh"
