@@ -126,3 +126,6 @@
 /* Cache */
 #include "stm_cache_model.h"
 
+/* Prop */
+#include "stm_prop.h"
+
