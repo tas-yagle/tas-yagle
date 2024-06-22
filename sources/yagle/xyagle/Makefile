@@ -131,9 +131,9 @@ REGULAR_LIB	= $(CGV_L) \
 LOCAL_MBK_LIB = -L$(TARGET_LIB) $(WHOLE) $(REGULAR_LIB) $(NOWHOLE) -ldl $(PSP_L)
 
 API_STATICLIB = $(FLEXOBJS) $(STATIC_LIB) $(LOCAL_MOTIF_LIB) $(LOCAL_X11_LIB) $(LOCAL_XPM_LIB) \
-				-L$(TARGET_LIB) $(WHOLE) $(APIALL_L) $(TCL_L) $(REGULAR_LIB) $(NOWHOLE) -leditline -ltermcap -ldl -lm $(FLEXLIBS)
+				-L$(TARGET_LIB) $(WHOLE) $(APIALL_L) $(TCL_L) $(REGULAR_LIB) $(NOWHOLE) $(EDITLINELIBS) -ldl -lm $(FLEXLIBS)
 
-LOCAL_LIB =  $(FLEXOBJS) $(STATIC_LIB) $(LOCAL_MOTIF_LIB) $(LOCAL_X11_LIB) $(LOCAL_XPM_LIB) $(LOCAL_MBK_LIB) $(TCL_L) -ledit -lpthread -ltermcap -lm $(FLEXLIBS)
+LOCAL_LIB =  $(FLEXOBJS) $(STATIC_LIB) $(LOCAL_MOTIF_LIB) $(LOCAL_X11_LIB) $(LOCAL_XPM_LIB) $(LOCAL_MBK_LIB) $(TCL_L) $(EDITLINELIBS) -lpthread -lm $(FLEXLIBS)
 
 # /*------------------------------------------------------------\
 # |                          Local objects                      |
