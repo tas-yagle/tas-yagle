@@ -7,6 +7,7 @@
 #define SPGNS "gns>"
 #define MAXLEXEM 512
 
+#define MAGIC_CHAR '\037'
 
 static ALL_FOR_GNS *cur;
 static int dicosize, dicoindex;
@@ -99,7 +100,7 @@ static APICallFunc *buildcallfunc(char **tab, int cnt)
           int j;
           strcpy(temp, &tab[i][1]);
           temp[strlen(temp)-1]='\0';
-          for (j=0; temp[j]!='\0'; j++) if (temp[j]=='ù') temp[j]=' ';
+          for (j=0; temp[j]!='\0'; j++) if (temp[j]==MAGIC_CHAR) temp[j]=' ';
           cl=APIAddPointerTARG(cl, "?", "char", 1, sensitive_namealloc(temp));
         }
       else if (strchr(tab[i],'.')!=NULL)

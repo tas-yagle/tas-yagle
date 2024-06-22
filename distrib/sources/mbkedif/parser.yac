@@ -1172,9 +1172,6 @@ char        mode;
 
 	static char Vierge = 1; /* first time */
 
-#ifndef __ALL__WARNING__
-	mode	= '®';
-#endif
 	yylineno = 0;
 
     YY_RIPPER_IN  = (char *)NULL;

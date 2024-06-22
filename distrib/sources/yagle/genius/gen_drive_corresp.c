@@ -8,7 +8,7 @@ static int COMPACT=1;
 
 #define SPGNS "* gns> "
 
-
+#define MAGIC_CHAR '\037'
 
 static ht_v2 *NAMETOLONG;
 static chain_list *ALLNAMES;
@@ -312,7 +312,7 @@ static void _PrintCall(FILE *f, APICallFunc *cf)
               char temp[4096];
               int i;
               strcpy(temp, *(char **)ta->VALUE);
-              for (i=0;temp[i]!='\0'; i++) if (temp[i]==' ') temp[i]='ù';
+              for (i=0;temp[i]!='\0'; i++) if (temp[i]==' ') temp[i]=MAGIC_CHAR;
               fprintf(f," \"%s\"", temp);
             }
           else
