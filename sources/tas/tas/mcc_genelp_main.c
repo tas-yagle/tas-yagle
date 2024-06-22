@@ -55,7 +55,7 @@ char *argv[];
       ELP_LOAD_FILE_TYPE = ELP_LOADELP_FILE;
      }
 
-	if (V_INT_TAB[__MBK_SCALE_X].VALUE == NULL)
+	if (V_INT_TAB[__MBK_SCALE_X].VALUE == 0)
 		SCALE_X = 10000 ;
 	else {
 		if (SCALE_X < 1000)
@@ -167,13 +167,12 @@ char *argv[];
       {
          char buf[1024];
 
-         sprintf (buf,pt);
          if ( MCC_DEBUG_PASS_TRANS != 'X' )
-           sprintf ( buf , "%s_p%c",buf,MCC_DEBUG_PASS_TRANS);
+           snprintf ( buf , 1024, "%s_p%c",buf,MCC_DEBUG_PASS_TRANS);
          else if ( MCC_DEBUG_SWITCH != 'X' )
-           sprintf ( buf , "%s_s%c",buf,MCC_DEBUG_SWITCH);
+           snprintf ( buf , 1024, "%s_s%c",buf,MCC_DEBUG_SWITCH);
          if ( MCC_DEBUG_BLEEDER == 'Y' )
-           sprintf ( buf , "%s_bleed",buf);
+           snprintf ( buf , 1024, "%s_bleed",buf);
          MCC_DEBUG_GATE = buf ;
       }
 

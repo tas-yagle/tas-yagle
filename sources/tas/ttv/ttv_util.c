@@ -232,10 +232,11 @@ char *name ;
 
         if(namex[i] == '[')
            {
-            while(namex[j] != '\0')
-            namex[j] = namex[++j] ;
-
-            namex[i] = ' ' ;
+            while (namex[j] != '\0') {
+              namex[j] = namex[j+1];
+              j++;
+            }
+            namex[i] = ' ';
            }
        }
     }

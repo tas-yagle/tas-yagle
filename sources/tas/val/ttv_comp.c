@@ -1102,7 +1102,7 @@ char        type;
   int            i;
   long           delaymax1, delaymax2, delaymin1, delaymin2;
   long           slopemax1, slopemax2, slopemin1, slopemin2;
-  char           delaytype[16], slopetype[16], extratype[16], modeltype[16];
+  char           delaytype[32], slopetype[32], extratype[32], modeltype[32];
 
   for (chainx= siglist1; chainx; chainx= chainx->NEXT)
   {
