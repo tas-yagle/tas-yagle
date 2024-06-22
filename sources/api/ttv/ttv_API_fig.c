@@ -1439,8 +1439,8 @@ void ttv_API_Action_Terminate() // commentaire pour desactiver l'ajout de token
   if (!editmode)
   {
     ttv_setttvdate (current_ttvfig, TTV_DATE_LOCAL);
-    current_ttvfig->INFO->TOOLNAME = namealloc ("ttv_API");
-    current_ttvfig->INFO->TOOLVERSION = namealloc ("1.0");
+    current_ttvfig->INFO->TOOLNAME = "ttv_API";
+    current_ttvfig->INFO->TOOLVERSION = "1.0";
     current_ttvfig->INFO->TECHNONAME = namealloc ("spice");
     current_ttvfig->INFO->TECHNOVERSION = namealloc ("1.0");
     current_ttvfig->INFO->SLOPE = (long)(TTVSLOPE*1e12*TTV_UNIT);

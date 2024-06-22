@@ -374,7 +374,7 @@ ttvfig_list *tma_DupTtvFigHeader (char *newfigname, ttvfig_list *fig)
    newfig = ttv_givehead (newfigname, newfigname, NULL);
    ttv_setttvlevel (newfig);
    newfig->INFO->TOOLNAME      = "TMA";
-   newfig->INFO->TOOLVERSION   = AVT_FULLVERSION;
+   newfig->INFO->TOOLVERSION   = namealloc(AVT_FULLVERSION);
    newfig->INFO->TECHNONAME    = fig->INFO->TECHNONAME;   
    newfig->INFO->TECHNOVERSION = fig->INFO->TECHNOVERSION;
    newfig->INFO->SLOPE         = fig->INFO->SLOPE;      
