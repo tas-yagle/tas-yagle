@@ -27,4 +27,5 @@ FLEX_attr = $(FLEX)/../machind/lm_attr.h
 WITH_FLEXLM = WITH_FLEXLM
 endif
 
+EDITLINELIBS = -ledit -ltermcap
 LICENSE_API = license_api

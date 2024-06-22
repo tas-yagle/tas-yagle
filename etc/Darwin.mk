@@ -67,7 +67,7 @@ SWIG             = $(shell brew --prefix swig)/bin/swig
 TCL_H            = -L$(shell brew --prefix tcl-tk)/include
 TCL_L            = -L$(shell brew --prefix tcl-tk)/lib -ltcl8.6
 
-WHOLE            = -all_load
-NOWHOLE          = 
+WHOLE            = -all_load -Wl,-no_warn_duplicate_libraries
+NOWHOLE          = -Wl,-no_warn_duplicate_libraries
 
 # EOF
