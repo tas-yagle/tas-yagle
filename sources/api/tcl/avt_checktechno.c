@@ -14,6 +14,6 @@
 
 void avt_CheckTechno(char *label, char *tn, char *tp)
 {
-  hitas_tcl_pt=hitas_tcl;  
+  hitas_tcl_pt=(hitas_tcl_pt_t) hitas_tcl;
   mcc_CheckTechno(label, tn, tp);
 }

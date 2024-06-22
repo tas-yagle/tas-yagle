@@ -1482,7 +1482,9 @@ int mcc_check_sat_param( double a,
                          char   type /* 'B'=branch, 'T'=transistor */
                        );
 
-extern void (*hitas_tcl_pt)(char *name);
+typedef void (*hitas_tcl_pt_t)(char *name);
+extern hitas_tcl_pt_t hitas_tcl_pt;
+
 void mcc_CheckTechno(char *label, char *tn, char *tp);
 
 /******* hack des netlist *******/
