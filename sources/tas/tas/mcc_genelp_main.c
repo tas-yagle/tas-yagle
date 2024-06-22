@@ -47,7 +47,7 @@ char *argv[];
 
     elpenv() ;
 
-    hitas_tcl_pt=hitas_tcl;
+    hitas_tcl_pt=(hitas_tcl_pt_t)hitas_tcl;
 
     if (ELP_LOAD_FILE_TYPE != ELP_LOADELP_FILE)
      {
