@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -ex
 
-
 # Build patched flex, if needed
 mkdir -p localinstall
 pushd localinstall
@@ -53,8 +52,13 @@ for conf in avt.slib avttools.dtb Xtas Xyagle trmodel.cfg; do
   cp etc/$conf ${installDir}/share/tasyag/etc
 done
 
-for tool in avt_shell avtman xtas xyagle ttvdiff ttvren; do
-  cp distrib/bin/${tool} ${installDir}/bin
+TOOLS="avt_shell avtman ttvdiff ttvren"
+if [ ${GRAPHICAL+x} ] ; then
+  TOOLS="$TOOLS xtas xyargle"
+fi
+
+for tool in $TOOLS; do
+  cp bin/${tool} ${installDir}/bin
 done
 
 cp -r tcl ${installDir}/share/tasyag
