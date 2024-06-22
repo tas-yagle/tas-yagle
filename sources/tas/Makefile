@@ -2,9 +2,11 @@
 # date    : 26/06/96
 
 ifdef BUILD_GRAPHICAL
-	XTAS_MAKE:=@cd xtas ; $(MAKE)
+	XAL_MAKE = @cd xal ; $(MAKE)
+	XTAS_MAKE = @cd xtas ; $(MAKE)
 else
-	XTAS_MAKE:=@true
+	XAL_MAKE = @true
+	XTAS_MAKE = @true
 endif
 
 
@@ -25,7 +27,7 @@ distrib :
 	@cd tma ; $(MAKE) 
 	@cd val ; $(MAKE) 
 	@cd zen ; $(MAKE) 
-	@cd xal ; $(MAKE) 
+	$(XAL_MAKE)
 	$(XTAS_MAKE) 
 
 headers :
@@ -44,7 +46,7 @@ headers :
 	-@cd tma ; $(MAKE) headers
 	-@cd val ; $(MAKE) headers
 	-@cd zen ; $(MAKE) headers
-	-@cd xal ; $(MAKE) headers
+	$(XAL_MAKE) headers
 	$(XTAS_MAKE) headers
 
 clean :
@@ -65,7 +67,7 @@ clean :
 	@cd x2v ; $(MAKE) clean
 	@cd val ; $(MAKE) clean
 	@cd zen ; $(MAKE) clean
-	@cd xal ; $(MAKE) clean
+	$(XAL_MAKE) clean
 	$(XTAS_MAKE) clean
 
 realclean :
@@ -86,5 +88,5 @@ realclean :
 	@cd x2v ; $(MAKE) realclean
 	@cd val ; $(MAKE) realclean
 	@cd zen ; $(MAKE) realclean
-	@cd xal ; $(MAKE) realclean
+	$(XAL_MAKE) realclean
 	$(XTAS_MAKE) realclean
