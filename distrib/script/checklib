@@ -165,10 +165,10 @@ gothrowdirs()
         logto=`hostlogmachine $OSdir`
         ping=`pingmachine $logto`
         if [ "$ping" = "pong" ] ; then
-          echo " Acces à \"$1/tools/$OSdir/bin\" sur \"$logto\""
+          echo " Acces Ã  \"$1/tools/$OSdir/bin\" sur \"$logto\""
           call_ldd "$logto" "$1/tools/$OSdir/bin" "$2" "$RESFILE" "$3" "$OSdir" "$OSFILE"
         else
-          echo "Erreur: Acces à \"$1/tools/$OSdir/bin\" sur \"$logto\" impossible"
+          echo "Erreur: Acces Ã  \"$1/tools/$OSdir/bin\" sur \"$logto\" impossible"
         fi
       else
         continue

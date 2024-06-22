@@ -445,7 +445,7 @@ lofig_list *gen_build_from_GNS (lofig_list *lf, chain_list *loins, chain_list *l
   for (sig = fig->LOSIG; sig; sig = sig->NEXT)
     if (sig->FLAGS==1)
       {
-        // priorité de l'alim externe sur l'alim interne
+        // prioritÃ© de l'alim externe sur l'alim interne
         eal = (mbk_LosigIsVDD(sig) && sig->TYPE == 'E'); ial = (mbk_LosigIsVDD(sig) && sig->TYPE == 'I');
         if ((onevdd==NULL && (eal || ial)) ||
             (onevdd!=NULL && eal)) onevdd=sig;

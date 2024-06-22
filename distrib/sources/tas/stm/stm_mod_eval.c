@@ -235,8 +235,8 @@ void stm_mod_timing_pi( timing_model *dmodel,
     if( fout  ) *fout  = fin ;
     if( pwlout ) *pwlout = NULL ;
 
-    /* Si les modèles ne sont pas les meme pour le front et le delai, il ne faut pas faire l'hypothèse
-       que la capacité equivalente à la charge en pi sera la meme */
+    /* Si les modÃ¨les ne sont pas les meme pour le front et le delai, il ne faut pas faire l'hypothÃ¨se
+       que la capacitÃ© equivalente Ã  la charge en pi sera la meme */
     if( dmodel->UTYPE      == STM_MOD_MODSCM     && 
         fmodel->UTYPE      == STM_MOD_MODSCM     &&
         dmodel->UMODEL.SCM == fmodel->UMODEL.SCM    ) {

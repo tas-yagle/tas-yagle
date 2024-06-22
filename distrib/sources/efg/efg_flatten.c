@@ -186,7 +186,7 @@ Gestion du contexte
 \******************************************************************************/
 
 /*
-Permet de retrouver à partir d'un losig dans l'ensemble de figures original
+Permet de retrouver Ã  partir d'un losig dans l'ensemble de figures original
 son fullsig correspondant.
 */
 
@@ -261,7 +261,7 @@ void efg_clearfullsig( char *context,
 */
 
 /******************************************************************************\
-Savoir si une loins de base a été copiée
+Savoir si une loins de base a Ã©tÃ© copiÃ©e
 \******************************************************************************/
 
 int efg_isloinscopied( char *context, char *insname )
@@ -290,7 +290,7 @@ void efg_setloinscopied( char *context, char *insname )
 }
 
 /******************************************************************************\
-A travers la hiérarchie
+A travers la hiÃ©rarchie
 \******************************************************************************/
 
 char* efg_getsigname( efg_fullsiglist *fullsig )
@@ -357,7 +357,7 @@ efg_srcsiglist* efg_gettopsig( efg_fullsiglist *fullsig )
   efg_srcsiglist *siglist ;
   efg_srcsiglist *topsig = NULL;
 
-  // Construction des tables de conversion des index des noeuds, à partir du
+  // Construction des tables de conversion des index des noeuds, Ã  partir du
   // signal de plus haut niveau.
   for( siglist = fullsig->SIGLIST; siglist ; siglist = siglist->NEXT ) {
     if( siglist->LEVEL < minlevel ) {
@@ -370,7 +370,7 @@ efg_srcsiglist* efg_gettopsig( efg_fullsiglist *fullsig )
 }
 
 /******************************************************************************\
-Fonctions concernant le travail à faire
+Fonctions concernant le travail Ã  faire
 \******************************************************************************/
 
 /******************************************************************************\
@@ -462,7 +462,7 @@ efg_fullsiglist* efg_buildfullsig( char            *context,
 }
 
 /******************************************************************************\
-Regroupe tous les signaux equipotentiel à currentsig à travers la hiérarchie.
+Regroupe tous les signaux equipotentiel Ã  currentsig Ã  travers la hiÃ©rarchie.
 \******************************************************************************/
 
 void efg_recgetmerge( efg_fullsiglist *head,
@@ -520,7 +520,7 @@ efg_fullsiglist* efg_getmerge( efg_fullsiglist *head,
 }
 
 /******************************************************************************\
-Construit tous les fullsig de la lofig context, et de ses niveaux inférieurs.
+Construit tous les fullsig de la lofig context, et de ses niveaux infÃ©rieurs.
 
 Fonction de haut niveau : efg_buildhierfullsig( lofig->NAME, 1, NULL, 1 );
 \******************************************************************************/
@@ -549,7 +549,7 @@ efg_fullsiglist* efg_buildhierfullsig( char            *context,
 }
 
 /******************************************************************************\
-Création des losig dans la figure destination. Ajoute les locons sur les signaux
+CrÃ©ation des losig dans la figure destination. Ajoute les locons sur les signaux
 externes.
 \******************************************************************************/
 
@@ -655,7 +655,7 @@ void efg_set_loins_rc_node (loins_list *loins)
 
 /******************************************************************************\
 Construction des instances.
-Ajoute les losig et les locons des entrées des instances qui ne sont pas sur 
+Ajoute les losig et les locons des entrÃ©es des instances qui ne sont pas sur 
 le chemin.
 Appelle efg_setdestlocon().
 \******************************************************************************/
@@ -830,7 +830,7 @@ void efg_addtabconv( efg_srcsiglist *siglist, int decalage )
 }
 
 /******************************************************************************\
-Recupère la valeur d'un noeud dans la figure de destination.
+RecupÃ¨re la valeur d'un noeud dans la figure de destination.
 \******************************************************************************/
 
 int efg_getequivnode( efg_srcsiglist *sig, int index )
@@ -867,7 +867,7 @@ int efg_buildtabconv( efg_fullsiglist *fullsig,
 }
 
 /******************************************************************************\
-Libère les tables de correspondance des noeuds.
+LibÃ¨re les tables de correspondance des noeuds.
 \******************************************************************************/
 
 void efg_cleantabconv( efg_fullsiglist *fullsig )
@@ -883,7 +883,7 @@ void efg_cleantabconv( efg_fullsiglist *fullsig )
 }
 
 /******************************************************************************\
-Duplique les réseaux RC.
+Duplique les rÃ©seaux RC.
 \******************************************************************************/
 void efg_copyrc( efg_srcsiglist *srcsig, losig_list *dstsig, losig_list *dstvss )
 {
@@ -944,7 +944,7 @@ void efg_copyrc( efg_srcsiglist *srcsig, losig_list *dstsig, losig_list *dstvss 
 }
 
 /******************************************************************************\
-Construit les réseaux rc dans la figure destination.
+Construit les rÃ©seaux rc dans la figure destination.
 \******************************************************************************/
 
 void efg_createrc( efg_fullsiglist *fullsig )
@@ -960,7 +960,7 @@ void efg_createrc( efg_fullsiglist *fullsig )
 }
 
 /******************************************************************************\
-Construit tous les réseaux RC.
+Construit tous les rÃ©seaux RC.
 \******************************************************************************/
 
 void efg_createallrc( efg_fullsiglist *headsig )
@@ -1035,6 +1035,6 @@ void efg_exit( int index )
 {
   avt_errmsg(EFG_ERRMSG, "004", AVT_FATAL, index);
 /*  fflush( stdout );
-  fprintf( stderr, "\n\nFatal error n° %d in efg module.\n",index );*/
+  fprintf( stderr, "\n\nFatal error nÂ° %d in efg module.\n",index );*/
   EXIT( 1 );
 }

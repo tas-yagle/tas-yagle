@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -836,7 +836,7 @@ int		 mal_line;
         onword = 0;
       }
 
-      /* Ici si des symbols sont considérés comme des mots à part entière */
+      /* Ici si des symbols sont considÃ©rÃ©s comme des mots Ã  part entiÃ¨re */
     }
   }
 

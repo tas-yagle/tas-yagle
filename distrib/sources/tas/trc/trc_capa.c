@@ -45,16 +45,16 @@ int RCX_CAPA_DW_NOMF_MAX = -1 ;
 
 /******************************************************************************\
 
-Renvoie la capacité associée à un locon.
+Renvoie la capacitÃ© associÃ©e Ã  un locon.
 
 slope  : TRC_SLOPE_UP, TRC_SLOPE_DOWN, TRC_SLOPE_UNK.
 type   : TRC_CAPA_MIN, TRC_CAPA_NOM, TRC_CAPA_NOM_MIN, 
          TRC_CAPA_NOM_MAX, TRC_CAPA_MAX.
 domain : TRC_HALF, TRC_END
 
-status (peut être NULL) : indique quelle est la valeur de la capacité.
-  RCX_CAPA_OK :    la capacité a été exactement trouvée.
-  RCX_CAPA_EQUIV : la capacité a été déduite.                     
+status (peut Ãªtre NULL) : indique quelle est la valeur de la capacitÃ©.
+  RCX_CAPA_OK :    la capacitÃ© a Ã©tÃ© exactement trouvÃ©e.
+  RCX_CAPA_EQUIV : la capacitÃ© a Ã©tÃ© dÃ©duite.                     
 
 \******************************************************************************/
 
@@ -397,9 +397,9 @@ float rcx_get_all_locon_capa( losig_list *losig, char slope, char type, char dom
 }
 /******************************************************************************\
 
-Initialise la capacité sur un locon.
-Seul l'un des deux arguments lofig ou loins doit être positionné. Il s'agit de
-l'endroit où est stocké le tableau des capacités allouées par tat.
+Initialise la capacitÃ© sur un locon.
+Seul l'un des deux arguments lofig ou loins doit Ãªtre positionnÃ©. Il s'agit de
+l'endroit oÃ¹ est stockÃ© le tableau des capacitÃ©s allouÃ©es par tat.
 
 \******************************************************************************/
 
@@ -484,7 +484,7 @@ void rcx_setloconcapa_l1( lofig_list *lofig,
   }
 }
 
-/* les capacités capa_up_min, capa_up_max, capa_dw_min, capa_dw_max sont prise en 
+/* les capacitÃ©s capa_up_min, capa_up_max, capa_dw_min, capa_dw_max sont prise en 
 compte uniquement si domain=TRC_HALF */
 void rcx_setloconcapa_l2( lofig_list *lofig, 
                           loins_list *loins, 
@@ -547,9 +547,9 @@ void rcx_setloconcapa_l2( lofig_list *lofig,
 
 /******************************************************************************\
 
-Ajoute la capacité sur un locon.
-Seul l'un des deux arguments lofig ou loins doit être positionné. Il s'agit de
-l'endroit où est stocké le tableau des capacités allouées par tat.
+Ajoute la capacitÃ© sur un locon.
+Seul l'un des deux arguments lofig ou loins doit Ãªtre positionnÃ©. Il s'agit de
+l'endroit oÃ¹ est stockÃ© le tableau des capacitÃ©s allouÃ©es par tat.
 
 \******************************************************************************/
 
@@ -635,7 +635,7 @@ void rcx_addloconcapa_l1( lofig_list *lofig,
   }
 }
 
-/* les capacités capa_up_min, capa_up_max, capa_dw_min, capa_dw_max sont prise en 
+/* les capacitÃ©s capa_up_min, capa_up_max, capa_dw_min, capa_dw_max sont prise en 
 compte uniquement si domain=TRC_HALF */
 void rcx_addloconcapa_l2( lofig_list *lofig, 
                           loins_list *loins, 
@@ -696,7 +696,7 @@ void rcx_addloconcapa_l2( lofig_list *lofig,
 
 /******************************************************************************\
 
-Ajoute les capacités de loconb dans celles de locona.
+Ajoute les capacitÃ©s de loconb dans celles de locona.
 
 \******************************************************************************/
 
@@ -821,7 +821,7 @@ void rcx_add_capa_locon( lofig_list *lofig,
 
 /******************************************************************************\
 
-Efface une capacité associée à un locon.
+Efface une capacitÃ© associÃ©e Ã  un locon.
 
 \******************************************************************************/
 
@@ -836,9 +836,9 @@ void rcx_freeloconcapa( lofig_list *lofig,
 
 /******************************************************************************\
 
-Ajoute un emplacement pour stocker une capacité sur un locon.
-Seul l'un des deux arguments lofig ou loins doit être positionné. Il s'agit de
-l'endroit où est stocké le tableau des capacités allouées par tat.
+Ajoute un emplacement pour stocker une capacitÃ© sur un locon.
+Seul l'un des deux arguments lofig ou loins doit Ãªtre positionnÃ©. Il s'agit de
+l'endroit oÃ¹ est stockÃ© le tableau des capacitÃ©s allouÃ©es par tat.
 
 \******************************************************************************/
 
@@ -869,8 +869,8 @@ float* rcx_loconcapa_addspace( lofig_list *lofig,
 
 /******************************************************************************\
 
-Renvoie l'emplacement pour stocker une capacité sur un locon, ou NULL si cet
-emplacement n'a jamais été créé par rcx_loconcapa_addspace().
+Renvoie l'emplacement pour stocker une capacitÃ© sur un locon, ou NULL si cet
+emplacement n'a jamais Ã©tÃ© crÃ©Ã© par rcx_loconcapa_addspace().
 
 \******************************************************************************/
 
@@ -885,7 +885,7 @@ float* rcx_loconcapa_getspace( locon_list *locon )
 
 /******************************************************************************\
 
-Libère l'emplacement pour stocker une capacité.
+LibÃ¨re l'emplacement pour stocker une capacitÃ©.
 
 \******************************************************************************/
 
@@ -909,7 +909,7 @@ char rcx_loconcapa_freespace( lofig_list *lofig,
 
 /******************************************************************************\
 
-Renvoie un HeapAlloc associé soit à une lofig, soit à une loins.
+Renvoie un HeapAlloc associÃ© soit Ã  une lofig, soit Ã  une loins.
 
 \******************************************************************************/
 
@@ -955,7 +955,7 @@ HeapAlloc* rcx_loconcapa_giveheap( lofig_list *lofig, loins_list *loins )
 
 /******************************************************************************\
 
-Libère le HeapAlloc
+LibÃ¨re le HeapAlloc
 
 \******************************************************************************/
 
@@ -1008,7 +1008,7 @@ RCXFLOAT rcx_getnodecapa( losig_list  *ptsig,
 
   ptrcx = getrcx( ptsig );
   
-  // Capacité due aux capacités couplées.
+  // CapacitÃ© due aux capacitÃ©s couplÃ©es.
   c = 0.0 ;
   for( chain = node->CTCLIST ; chain ; chain = chain->NEXT ) {
     ctc = (loctc_list*)chain->DATA;
@@ -1016,7 +1016,7 @@ RCXFLOAT rcx_getnodecapa( losig_list  *ptsig,
   }
   capa = capa + c;
 
-  // Capacité due aux fils.
+  // CapacitÃ© due aux fils.
   c = 0.0 ;
   for( chain = node->WIRELIST ; chain ; chain = chain->NEXT ) {
     lowire = (lowire_list*)(chain->DATA);
@@ -1024,7 +1024,7 @@ RCXFLOAT rcx_getnodecapa( losig_list  *ptsig,
   }
   capa = capa + c;
 
-  // Capacité due aux connecteurs.
+  // CapacitÃ© due aux connecteurs.
   c = 0.0 ;
   for( chain = getloconnode( node ) ; chain ; chain = chain->NEXT ) {
     
@@ -1054,11 +1054,11 @@ RCXFLOAT rcx_getnodecapa( losig_list  *ptsig,
   }
   capa = capa + c ;
 
-  // Application du correctif pour les capacités de couplage globales.
+  // Application du correctif pour les capacitÃ©s de couplage globales.
 
   capa = capa * coefctc ;
   
-  // Redimensionnement des capacités
+  // Redimensionnement des capacitÃ©s
 
   capa = capa * tlc_getcapafactor();
 
@@ -1067,21 +1067,21 @@ RCXFLOAT rcx_getnodecapa( losig_list  *ptsig,
 
 /******************************************************************************\
 
-Récupère différents type de capacité :
+RÃ©cupÃ¨re diffÃ©rents type de capacitÃ© :
 
    capatype : flag
-     RCX_SIGCAPA_GROUND : Renvoie les capacités à la masse.
-     RCX_SIGCAPA_CTK :    Renvoie les capacités de couplage.
+     RCX_SIGCAPA_GROUND : Renvoie les capacitÃ©s Ã  la masse.
+     RCX_SIGCAPA_CTK :    Renvoie les capacitÃ©s de couplage.
    capapos : flag
-     RCX_SIGCAPA_LOCAL :   Prend en compte les capacités localisées.
-     RCX_SIGCAPA_GLOBAL :  Prend en compte les capacités globales.
+     RCX_SIGCAPA_LOCAL :   Prend en compte les capacitÃ©s localisÃ©es.
+     RCX_SIGCAPA_GLOBAL :  Prend en compte les capacitÃ©s globales.
    capadyna : valeur
-     RCX_SIGCAPA_NORM :   CTC à leurs valeurs nominales.
+     RCX_SIGCAPA_NORM :   CTC Ã  leurs valeurs nominales.
      RCX_SIGCAPA_MILLER : Modifie la valeurs des CTC avec l'effet Miller.
-     RCX_SIGCAPA_DELTA :  Calcule la VARIATION de capacité due à l'effet Miller.
+     RCX_SIGCAPA_DELTA :  Calcule la VARIATION de capacitÃ© due Ã  l'effet Miller.
 
-   slope : utilisé seulement si capadyna différent de RCX_SIGCAPA_NORM.
-   type :  RCX_MIN | RCX_MAX. utilisé seulement si capadyna différent de 
+   slope : utilisÃ© seulement si capadyna diffÃ©rent de RCX_SIGCAPA_NORM.
+   type :  RCX_MIN | RCX_MAX. utilisÃ© seulement si capadyna diffÃ©rent de 
            RCX_SIGCAPA_NORM.
    
 \******************************************************************************/
@@ -1209,7 +1209,7 @@ RCXFLOAT rcx_getsigcapa( lofig_list    *lofig,
 }
 
 /******************************************************************************\
-Renvoie la capacité vue par un net RCX
+Renvoie la capacitÃ© vue par un net RCX
 \******************************************************************************/
 float rcx_getcapa( lofig_list *lofig, losig_list *losig )
 {

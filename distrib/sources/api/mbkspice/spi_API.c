@@ -131,7 +131,7 @@ int spi_DriveSignal( losig_list *losig )
   }
   spi_print( ptf, "\n\n" );
 
-  /* Drive des résistances */
+  /* Drive des rÃ©sistances */
   
   for( scanwire = ((losig_list*)losig)->PRCN->PWIRE ; 
        scanwire ; 
@@ -160,7 +160,7 @@ int spi_DriveSignal( losig_list *losig )
   }
   spi_print( ptf, "\n" );
 
-  /* Drive des capacités */
+  /* Drive des capacitÃ©s */
 
   for( chain = ((losig_list*)losig)->PRCN->PCTC ;
        chain ; 

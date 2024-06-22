@@ -519,10 +519,10 @@ ptype_list *efg_CreatePathByInf (list_list *infpathsig)
 /*                                                                           */
 /* NB : la liste represente le chemin, le premier element est le 1er sig     */
 /*                                                                           */
-/* AJOUT : event_list peut contenir plusieurs chemins séparés par des ptype  */
+/* AJOUT : event_list peut contenir plusieurs chemins sÃ©parÃ©s par des ptype  */
 /* dont les champs valent 0. Dans ce cas le premier chemin est un chemin de  */
 /* DATA, et les suivant sont des chemins de COMMAND. Sert uniquement pour    */
-/* la génération d'un spicedeck permettant de mesurer le SETUP et le HOLD.   */
+/* la gÃ©nÃ©ration d'un spicedeck permettant de mesurer le SETUP et le HOLD.   */
 /*                                                                           */
 /*****************************************************************************/
 

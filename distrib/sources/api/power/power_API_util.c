@@ -5,7 +5,7 @@
 /*    Produit : AVERTEC global tools                                        */
 /*    Fichier : power_API_util.c                                            */
 /*                                                                          */
-/*    © copyright 2009 AVERTEC                                              */
+/*    Â© copyright 2009 AVERTEC                                              */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
 /*    Auteur(s) : Olivier BICHAUT                                           */

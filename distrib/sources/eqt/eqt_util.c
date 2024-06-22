@@ -1300,7 +1300,7 @@ void print_space(int space)
   int     i;
 
   for (i = 0; i < space; i++)
-    fprintf(stdout,"¦ ");
+    fprintf(stdout,"Â¦ ");
 }
 
 /*}}}************************************************************************/
@@ -1326,7 +1326,7 @@ void print_spaceII(char *EQT_PRINTYES, int space)
   int i;
 
   for (i = 0; i < space; i++)
-    fprintf(stdout,"%c ",EQT_PRINTYES[i] ? ' ' : '¦');
+    fprintf(stdout,"%c ",EQT_PRINTYES[i] ? ' ' : 'Â¦');
 }
 
 /*}}}************************************************************************/

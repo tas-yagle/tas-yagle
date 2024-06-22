@@ -197,7 +197,7 @@ function    : STRING LPAR expression_list RPAR
             strcat(concat, $3);
             strcat(concat, ")");
             $$ = mbkstrdup(concat);
-            //printf("### fonction crée:\t%s\n",$$);
+            //printf("### fonction crÃ©e:\t%s\n",$$);
             mbkfree($3);
             }
             ;

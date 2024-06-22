@@ -6,9 +6,9 @@
 #define RCX_CACHE_SET 0x52435810
 // Indique le la lofig est lue avec le cache actif.
 
-/* Active le cache de la description des RC. Ce chache ne doit être activé que 
-sur des lofig qu'on lit à partir d'un fichier. L'appel doit se faire avant
-l'appel à la fonction rcx_getlofig(). Chaque lofig sait si elle a été lue avec
+/* Active le cache de la description des RC. Ce chache ne doit Ãªtre activÃ© que 
+sur des lofig qu'on lit Ã  partir d'un fichier. L'appel doit se faire avant
+l'appel Ã  la fonction rcx_getlofig(). Chaque lofig sait si elle a Ã©tÃ© lue avec
 ou sans cache. */
 extern void rcx_cache_enable( void );
 

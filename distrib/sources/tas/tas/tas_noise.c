@@ -73,7 +73,7 @@ void tas_rssfig( cnsfig_list *cnsfig )
   }
 }
 
-/* Calcule la résistance petits signaux d'un cône */
+/* Calcule la rÃ©sistance petits signaux d'un cÃ´ne */
 void tas_rssgate( cone_list *cone, float *rssdown, float *rssup )
 {
   float        rssvdd=-1.0;
@@ -113,7 +113,7 @@ void tas_rssgate( cone_list *cone, float *rssdown, float *rssup )
   }
 }
 
-/* Renvoie la résistance maximum d'une liste de branches */
+/* Renvoie la rÃ©sistance maximum d'une liste de branches */
 float tas_rsslistbranch( branch_list *head ) 
 {
   branch_list *branch ;
@@ -129,7 +129,7 @@ float tas_rsslistbranch( branch_list *head )
   return rmax ;
 }
 
-/* Renvoie la résistance d'une branche
+/* Renvoie la rÃ©sistance d'une branche
    NE PAS UTILISER : NE COMPTE PAS LA TAILLE DES TRANSISTORS */
 float tas_rssbranch( branch_list *branch )
 {

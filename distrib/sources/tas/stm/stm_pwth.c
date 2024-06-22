@@ -23,9 +23,9 @@
 /****************************************************************************/
 
 /* Transforme une structure stm_pwl en un ensemble de tangentes hyperbolique
-   le tableau pwth doit contenir (n-1) éléments.
+   le tableau pwth doit contenir (n-1) Ã©lÃ©ments.
    Renvoie 1 si OK, 0 si un pb est survenu.
-   ntanh contient au retour le nb d'éléments dans pwth.
+   ntanh contient au retour le nb d'Ã©lÃ©ments dans pwth.
 */
 
 int stm_pwl_to_tanh( stm_pwl  *pwl, 
@@ -331,7 +331,7 @@ int stm_get_v_pwth_fn( stm_pwth_fn *args, double t, double *v )
   return 1 ;
 }
 
-/* Renvoie la tension à l'instant t */
+/* Renvoie la tension Ã  l'instant t */
 double stm_get_v_pwth (float t, float vt, float vdd, char sens, stm_pwth *pwth )
 {
   int i ;
@@ -360,7 +360,7 @@ double stm_get_v_pwth (float t, float vt, float vdd, char sens, stm_pwth *pwth )
   return v ;
 }
 
-/* Renvoie l'instant t où le signal passe à v */
+/* Renvoie l'instant t oÃ¹ le signal passe Ã  v */
 double stm_get_t_pwth (float vddin, float vt, float seuil, stm_pwth *pwth )
 {
   double vemax, tmax, dt, f ;

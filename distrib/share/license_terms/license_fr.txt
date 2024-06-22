@@ -6,42 +6,42 @@ DES TERMES DU PRESENT CONTRAT.
 SI VOUS N'ACCEPTEZ PAS LES TERMES DU PRESENT CONTRAT, N'UTILISEZ PAS CE
 LOGICIEL D'EVALUATION.
 
-Vous êtes intéressé par la version d'évaluation du logiciel HITAS ("Logiciel 
-d'évaluation") proposée par Avertec et consentez à exploiter ce Logiciel 
-d'évaluation selon les termes du présent contrat de licence.
+Vous Ãªtes intÃ©ressÃ© par la version d'Ã©valuation du logiciel HITAS ("Logiciel 
+d'Ã©valuation") proposÃ©e par Avertec et consentez Ã  exploiter ce Logiciel 
+d'Ã©valuation selon les termes du prÃ©sent contrat de licence.
 
-Veuillez noter que la durée d'utilisation de ce Logiciel d'évaluation est 
-peut-être limitée.
+Veuillez noter que la durÃ©e d'utilisation de ce Logiciel d'Ã©valuation est 
+peut-Ãªtre limitÃ©e.
 
-1.  Licence.  Le Logiciel d'évaluation vous est cédé, mais non vendu, selon 
-les termes de la présente licence par Avertec, Avertec se réservant tous 
-les droits qui ne vous sont pas expressément octroyés. La présente licence, 
-non exclusive et non cessible, autorise l'utilisateur à utiliser le 
-Logiciel d'évaluation sur un seul ordinateur. Le terme "utiliser" désigne 
-soit le chargement du Logiciel d'évaluation en mémoire vive, soit son 
+1.  Licence.  Le Logiciel d'Ã©valuation vous est cÃ©dÃ©, mais non vendu, selon 
+les termes de la prÃ©sente licence par Avertec, Avertec se rÃ©servant tous 
+les droits qui ne vous sont pas expressÃ©ment octroyÃ©s. La prÃ©sente licence, 
+non exclusive et non cessible, autorise l'utilisateur Ã  utiliser le 
+Logiciel d'Ã©valuation sur un seul ordinateur. Le terme "utiliser" dÃ©signe 
+soit le chargement du Logiciel d'Ã©valuation en mÃ©moire vive, soit son 
 installation permanente (sur disque dur, CD-ROM ou autre support). Vous 
-êtes autorisé à effectuer une (1) copie de ce Logiciel d'évaluation à des 
+Ãªtes autorisÃ© Ã  effectuer une (1) copie de ce Logiciel d'Ã©valuation Ã  des 
 fins de sauvegarde exclusivement. Toute copie doit porter la mention du 
-copyright ou toute autre mention de propriété figurant sur l'original 
+copyright ou toute autre mention de propriÃ©tÃ© figurant sur l'original 
 fourni par Avertec.
 
-2.  Restrictions.  Le Logiciel d'évaluation contient des secrets de 
+2.  Restrictions.  Le Logiciel d'Ã©valuation contient des secrets de 
 fabrication pour la protection desquels il est interdit de DECOMPILER, 
 DESASSEMBLER OU RAMENER LE CODE DU LOGICIEL D'EVALUATION A UNE FORME 
 DECHIFFRABLE PAR L'HOMME. IL EST INTERDIT DE MODIFIER, D'ADAPTER, DE 
 TRADUIRE, DE LOUER, DE PRETER OU DE CEDER A TITRE ONEREUX TOUT OU PARTIE DU 
 LOGICIEL D'EVALUATION, ET D'EN CREER DES PRODUITS DERIVES.
 
-3.  Résiliation.  La présente Licence reste valable jusqu'à sa résiliation. 
-La résiliation peut intervenir, sans préavis de la part de Avertec ni 
-décision judiciaire, en cas de non-respect des dispositions de la présente 
-Licence. En cas de résiliation, vous vous engagez à détruire tous les 
-exemplaires du Logiciel d'évaluation et de la documentation qui les 
-accompagne. Toutefois, les alinéas 2, 4, 5, 6 et 7 demeureront valables 
-après la résiliation.  
+3.  RÃ©siliation.  La prÃ©sente Licence reste valable jusqu'Ã  sa rÃ©siliation. 
+La rÃ©siliation peut intervenir, sans prÃ©avis de la part de Avertec ni 
+dÃ©cision judiciaire, en cas de non-respect des dispositions de la prÃ©sente 
+Licence. En cas de rÃ©siliation, vous vous engagez Ã  dÃ©truire tous les 
+exemplaires du Logiciel d'Ã©valuation et de la documentation qui les 
+accompagne. Toutefois, les alinÃ©as 2, 4, 5, 6 et 7 demeureront valables 
+aprÃ¨s la rÃ©siliation.  
 
-4.  Exportation.  L'utilisateur s'engage à ce que le Logiciel d'évaluation 
-ne soit pas exporté ou réexporté.
+4.  Exportation.  L'utilisateur s'engage Ã  ce que le Logiciel d'Ã©valuation 
+ne soit pas exportÃ© ou rÃ©exportÃ©.
 
 5.  Limitation de la garantie.  VOUS RECONNAISSEZ QUE LE LOGICIEL 
 D'EVALUATION PEUT NE PAS SATISFAIRE TOUS VOS BESOINS NI ETRE EXEMPT DE TOUT 
@@ -62,14 +62,14 @@ LA RESPONSABILITE DE AVERTEC POUR UN PREJUDICE REEL QUELCONQUE SUBI PAR
 L'UTILISATEUR, QUEL QUE SOIT LE RECOURS INVOQUE, NE PEUT EN AUCUN CAS 
 DEPASSER 100 F. CETTE LIMITATION NE S'APPLIQUE PAS EN CAS DE DECES OU 
 DE DOMMAGES CORPORELS, NI EN CAS DE PERTE, DE DOMMAGES OU DE DESTRUCTION DE
-BIENS DESTINES À LA CONSOMMATION OU A L'USAGE PRIVE, SI ET DANS LA MESURE OU
+BIENS DESTINES Ã€ LA CONSOMMATION OU A L'USAGE PRIVE, SI ET DANS LA MESURE OU
 LA LEGISLATION PREVOIT LES CONDITIONS D'UNE TELLE RESPONSABILITE.
 CERTAINES JURIDICTIONS N'AUTORISANT PAS LE DENI DE RESPONSABILITE POUR LES
 PREJUDICES FORTUITS OU INDUITS, IL SE PEUT QUE CETTE EXCLUSION NE S'APPLIQUE
 PAS.
 
-7.  Remarques générales. La présente Licence est soumise au droit français. 
-Si l'une quelconque de ses dispositions est jugée contraire à la loi par un 
-tribunal compétent, elle sera néanmoins appliquée dans tous ses éléments 
-conformes à la loi, les autres dispositions restant par ailleurs pleinement 
+7.  Remarques gÃ©nÃ©rales. La prÃ©sente Licence est soumise au droit franÃ§ais. 
+Si l'une quelconque de ses dispositions est jugÃ©e contraire Ã  la loi par un 
+tribunal compÃ©tent, elle sera nÃ©anmoins appliquÃ©e dans tous ses Ã©lÃ©ments 
+conformes Ã  la loi, les autres dispositions restant par ailleurs pleinement 
 valables.

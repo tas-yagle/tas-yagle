@@ -11,9 +11,9 @@
 /*                                                                          */
 /*    Auteur(s) : Gregoire AVOT                                             */
 /*                                                                          */
-/*    Description : Fonctions relatives à la mémorisation des vues RCX à    */
-/*    l'intérieur d'une loins. Ces fonctions sont principalement appellées  */
-/*    par le parser et les fonctions de mise à plat des vues RCX.           */
+/*    Description : Fonctions relatives Ã  la mÃ©morisation des vues RCX Ã     */
+/*    l'intÃ©rieur d'une loins. Ces fonctions sont principalement appellÃ©es  */
+/*    par le parser et les fonctions de mise Ã  plat des vues RCX.           */
 /*                                                                          */
 /****************************************************************************/
 

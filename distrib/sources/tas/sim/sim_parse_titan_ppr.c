@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                             */
 /*    Tous droits reserves                                                   */
 /*                                                                           */
-/*    Auteur(s) : Grégoire Avot                                              */
+/*    Auteur(s) : GrÃ©goire Avot                                              */
 /*                                                                           */
 /*****************************************************************************/
 
@@ -18,22 +18,22 @@
 
 /*
 
-Un fichier Titan se décrit sous la forme :
+Un fichier Titan se dÃ©crit sous la forme :
 
-      | infos non interprétées
+      | infos non interprÃ©tÃ©es
       | ....
-      | infos non interprétées
-      | TIME\n                    <---- Repéré comme le début des infos à parser
+      | infos non interprÃ©tÃ©es
+      | TIME\n                    <---- RepÃ©rÃ© comme le dÃ©but des infos Ã  parser
       | V(print1)\n               <---- Les mesures, une par ligne
       | V(print2)\n
       | V(print3)\n
-      | 0.000 0.000 0.000 0.000\n <---- Les datas, présentées par colonnes.
+      | 0.000 0.000 0.000 0.000\n <---- Les datas, prÃ©sentÃ©es par colonnes.
       | ...
-      | 9.999 9.999 9.999 9.999\n <---- La dernière ligne du fichier.
+      | 9.999 9.999 9.999 9.999\n <---- La derniÃ¨re ligne du fichier.
 
 
-Pb : le STEP sur fichier ne correspond pas forcement à celui qui a été
-demandé. Par exemple, on a dans le fichier de commande :
+Pb : le STEP sur fichier ne correspond pas forcement Ã  celui qui a Ã©tÃ©
+demandÃ©. Par exemple, on a dans le fichier de commande :
 
 .tran 1e-12s 1e-07s
 
@@ -97,9 +97,9 @@ void sim_parse_titan_ppr( char *filename,
   dataread = 0 ;
   
   /* les tableaux id_spicetosim et id_simtospice permettent de faire la 
-  correspondance entre la n-ieme serie de donnée lue dans le fichier spice et
-  la m-ieme serie de donnée de sim. Dans le fichier résultat de Titan, il y
-  a une série de données en plus : le temps.
+  correspondance entre la n-ieme serie de donnÃ©e lue dans le fichier spice et
+  la m-ieme serie de donnÃ©e de sim. Dans le fichier rÃ©sultat de Titan, il y
+  a une sÃ©rie de donnÃ©es en plus : le temps.
   */
   
   id_spicetosim = (int*)mbkalloc( sizeof( int ) * ( 1 + nbprint) );
@@ -116,7 +116,7 @@ void sim_parse_titan_ppr( char *filename,
     }
      
     if( intitle == NO && indata == NO ) {
-      /* Cherche le début des résultats */
+      /* Cherche le dÃ©but des rÃ©sultats */
       if( strcmp( buffer, "TIME\n" )==0 || strcmp( buffer, "VAR\n" )==0  ) {
         intitle = YES ;
         id_spicetosim[nlabel]=999999999;
@@ -156,10 +156,10 @@ void sim_parse_titan_ppr( char *filename,
         break;
       }
 
-      /* Fin des labels, début des séries de données */
+      /* Fin des labels, dÃ©but des sÃ©ries de donnÃ©es */
       intitle = NO;
       indata  = YES;
-      /* buffer de récupéraiton d'une ligne */
+      /* buffer de rÃ©cupÃ©raiton d'une ligne */
       bufdata = (double*)mbkalloc( sizeof( double ) * nlabel );
       /* tableau des tableaux des valeurs lues */
       datas   = (double**)mbkalloc( sizeof( double* ) * nlabel );
@@ -214,7 +214,7 @@ void sim_parse_titan_ppr( char *filename,
   }
 }
 
-/* Lecture de n nombre réels dans la chaine string. Renvoie 1 si OK, 0 si non */
+/* Lecture de n nombre rÃ©els dans la chaine string. Renvoie 1 si OK, 0 si non */
 
 char sim_get_ppr_data( char *string, int n, double *data ) 
 {

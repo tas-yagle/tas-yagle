@@ -9,7 +9,7 @@
 /*    Tous droits reserves                                                  */
 /*    Support : e-mail alliance-support@asim.lip6.fr                        */
 /*                                                                          */
-/*    Auteur(s) : Grégoire Avot                                             */
+/*    Auteur(s) : GrÃ©goire Avot                                             */
 /*                                                                          */
 /****************************************************************************/
 

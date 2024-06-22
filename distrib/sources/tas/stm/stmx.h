@@ -611,7 +611,7 @@ typedef struct stm_solver_maillon_list {
 } stm_solver_maillon_list;
 
 /******************************************************************************\
-Paramètres de simulation.
+ParamÃ¨tres de simulation.
 \******************************************************************************/
 typedef struct {
   float         DEFAULT_TIME_STEP;      // Fs

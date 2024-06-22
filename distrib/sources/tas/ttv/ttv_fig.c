@@ -688,7 +688,7 @@ int index ;
 /* ptline : lien a caracterise                                               */
 /* type : type de contraintes                                                */
 /*                                                                           */
-/* ajoute un type de contraintes à une line                                  */
+/* ajoute un type de contraintes Ã  une line                                  */
 /*****************************************************************************/
 void ttv_addconttype(ptline,type)
 ttvline_list *ptline ;
@@ -749,7 +749,7 @@ ttvline_list *ptline ;
 /* model : model de la line                                                  */
 /* instance :  instance de la line                                           */
 /*                                                                           */
-/* donne un nom de modele et d'instance à une line                           */
+/* donne un nom de modele et d'instance Ã  une line                           */
 /*****************************************************************************/
 void ttv_addmodelline(ptline,model,instance)
 ttvline_list *ptline ;
@@ -801,7 +801,7 @@ char **instance ;
 /* parametres :                                                              */
 /* ptline : lien a caracterise                                               */
 /*                                                                           */
-/* efface un nom de modele et d'instance à une line                          */
+/* efface un nom de modele et d'instance Ã  une line                          */
 /*****************************************************************************/
 void ttv_delmodelline(ptline)
 ttvline_list *ptline ;
@@ -987,7 +987,7 @@ ttvline_list *ptline ;
 /* node   : noeud                                                            */
 /* root   : noeud                                                            */
 /*                                                                           */
-/* donne le type d'un arc avec les extremitées                               */
+/* donne le type d'un arc avec les extremitÃ©es                               */
 /*****************************************************************************/
 long ttv_getnewlinetype(ptline,sigin,sigout)
 ttvline_list *ptline ;
@@ -3464,7 +3464,7 @@ ttvevent_list *node ;
 /* type : type de recherche                                                  */
 /* mark : type de marquage                                                   */
 /*                                                                           */
-/* marque les noeuds deja traités                                            */
+/* marque les noeuds deja traitÃ©s                                            */
 /*****************************************************************************/
 void ttv_marknode(ttvfig,node,type,mark)
 ttvfig_list *ttvfig ;
@@ -4431,7 +4431,7 @@ long type ;
 /* nb : nombre de lien a trouver                                             */
 /* order : ordonner ou pas                                                   */
 /*                                                                           */
-/* recherche une lien en fonction de ses caractéristiques                    */
+/* recherche une lien en fonction de ses caractÃ©ristiques                    */
 /*****************************************************************************/
 ttvline_list *ttv_getline(ttvfig,ttvins,node,root,cmd,type,typecmd,nb,order)
 ttvfig_list *ttvfig ;
@@ -4619,7 +4619,7 @@ float cmin ;
 
  ptdelay = ttv_getlinedelay(line) ;
 
- // On vérifie si les informations à mémoriser seront différentes de celles
+ // On vÃ©rifie si les informations Ã  mÃ©moriser seront diffÃ©rentes de celles
  // contenues sur le line
  if( ( ( dmax != TTV_NOTIME && dmax == line->VALMAX            ) ||
        ( ptdelay            && ptdelay->VALMAX == line->VALMAX )    ) &&
@@ -4985,8 +4985,8 @@ long val_new;
 /*                                                                           */
 /* Renvoie le front maximum sur une line, en prenant en compte les lines RC  */
 /* en aval.                                                                  */
-/* which : TTV_MODE_LINE | TTV_MODE_DELAY. Renvoie soit le délai sans        */
-/*         agression, soit le délai recalculé.                               */
+/* which : TTV_MODE_LINE | TTV_MODE_DELAY. Renvoie soit le dÃ©lai sans        */
+/*         agression, soit le dÃ©lai recalculÃ©.                               */
 /*****************************************************************************/
 float ttv_getslopeforload( line, which )
 ttvline_list *line;
@@ -5102,8 +5102,8 @@ float  *nrjmax ;
  char typemin ;
  char *figname, *input, *output ;
  long delta=0 ;
- float noisedeltadelaymin; // Influence du bruit sur les délais de type porte
- float noisedeltadelaymax; // due à la diaphonie.
+ float noisedeltadelaymin; // Influence du bruit sur les dÃ©lais de type porte
+ float noisedeltadelaymax; // due Ã  la diaphonie.
  ttvdelay_list *delay ;
  float f;
  timing_model *modmax;
@@ -5401,7 +5401,7 @@ float  *nrjmax ;
 
        modmax = stm_getmodel( figname, line->MDMAX );
 
-       /* la structure slope a été remplie juste au dessus 
+       /* la structure slope a Ã©tÃ© remplie juste au dessus 
        slope.F0MAX  = ttv_getslopenode( line->ROOT->ROOT->ROOT,
                                         line->ROOT->ROOT->ROOT->INFO->LEVEL,
                                         line->ROOT,
@@ -5888,8 +5888,8 @@ char mode ;
 /*****************************************************************************/
 /*                        function ttv_calcnodedelay()                       */
 /*                                                                           */
-/* Met à jour la structure delay du node ROOT d'une line.                    */
-/* Si ils ne sont pas utilisés, ptpwlmax et ptpwlmin sont effacés.           */
+/* Met Ã  jour la structure delay du node ROOT d'une line.                    */
+/* Si ils ne sont pas utilisÃ©s, ptpwlmax et ptpwlmin sont effacÃ©s.           */
 /*****************************************************************************/
 int ttv_calcnodedelay( line, type, dmax, fmax, ptpwlmax, dmin, fmin, ptpwlmin )
 ttvline_list *line;
@@ -5999,7 +5999,7 @@ stm_pwl *ptpwlmin;
 /*                        function ttv_updatenodedelay ()                    */
 /*                                                                           */
 /* Met a jour les structure ttvdelay des node, uniquement en appliquant les  */
-/* règles de propagation dans la vue TTV.                                    */
+/* rÃ¨gles de propagation dans la vue TTV.                                    */
 /*                                                                           */
 /*****************************************************************************/
 void ttv_updatenodedelayslope(ttvfig,level,node,type,mode)
@@ -6123,7 +6123,7 @@ char mode ;
 /*                                                                           */
 /* calcul les delays et les fronts d'un noeud                                */
 /* Renvoie la valeur absolue de la variation maximum des fronts sur les      */
-/* line concernés.                                                           */
+/* line concernÃ©s.                                                           */
 /*****************************************************************************/
 static void ttv_find_a_slope(ttvfig_list *ttvfig, ttvevent_list *node, long level, long type, ttvdelay_list *delay)
 {
@@ -6401,9 +6401,9 @@ char mode ;
    if((line->TYPE & TTV_LINE_HZ) != TTV_LINE_HZ)
        ret = ttv_calcnodedelay(line,type,dmax,fmax,ptpwlmax,dmin,fmin,ptpwlmin);
 
-   /* Récupère les paramètres de la transition qui a donnée le pire cas.
-      La prise en compte des paramètres sur le chemin le plus long n'est pas 
-      réalisée. Il faudrait le faire dans ttv_calcnodedelay().
+   /* RÃ©cupÃ¨re les paramÃ¨tres de la transition qui a donnÃ©e le pire cas.
+      La prise en compte des paramÃ¨tres sur le chemin le plus long n'est pas 
+      rÃ©alisÃ©e. Il faudrait le faire dans ttv_calcnodedelay().
    */
 
    if( ret & TTV_PROP_MIN ) { 
@@ -6562,7 +6562,7 @@ char mode ;
 /*                                                                           */
 /* calcul les delays et les fronts d'un noeud                                */
 /* Renvoie la valeur absolue de la variation maximum des fronts sur les      */
-/* line concernés.                                                           */
+/* line concernÃ©s.                                                           */
 /*****************************************************************************/
 long ttv_calcnodeconstraint(ttvfig,level,node,type,mode)
 ttvfig_list *ttvfig ;
@@ -7386,7 +7386,7 @@ void ttv_readcell(char *name)
 /*****************************************************************************/
 /*                        function ttvenv ()                                 */
 /*                                                                           */
-/* chargement des bibliothèques                                              */
+/* chargement des bibliothÃ¨ques                                              */
 /*****************************************************************************/
 void ttvenv()
 {
@@ -7470,7 +7470,7 @@ long type ;
 /*****************************************************************************/
 /*                        function ttv_copyttvinsinttvfig()                  */
 /*                                                                           */
-/* mise à plat d'une ttvfig recursivement                                    */
+/* mise Ã  plat d'une ttvfig recursivement                                    */
 /*****************************************************************************/
 chain_list *ttv_copyttvinsinttvfig(ttvfig,ttvins,type)
 ttvfig_list *ttvfig ;
@@ -7737,7 +7737,7 @@ long type ;
 /*****************************************************************************/
 /*                        function ttv_flatttvfigrec()                       */
 /*                                                                           */
-/* mise à plat d'une ttvfig recursivement                                    */
+/* mise Ã  plat d'une ttvfig recursivement                                    */
 /*****************************************************************************/
 chain_list  *ttv_flatttvfigrec(ttvfig,ttvinslist,type)
 ttvfig_list *ttvfig ;
@@ -7762,7 +7762,7 @@ long type ;
 /*****************************************************************************/
 /*                        function ttv_flatttvfigfromlist()                  */
 /*                                                                           */
-/* mise à plat d'une ttvfig recursivement                                    */
+/* mise Ã  plat d'une ttvfig recursivement                                    */
 /*****************************************************************************/
 void ttv_flatttvfigfromlist(ttvfig,ttvinslist,type)
 ttvfig_list *ttvfig ;
@@ -7997,7 +7997,7 @@ long type ;
 /*****************************************************************************/
 /*                        function ttv_flatttvfig()                          */
 /*                                                                           */
-/* mise à plat d'une ttvfig                                                  */
+/* mise Ã  plat d'une ttvfig                                                  */
 /*****************************************************************************/
 void ttv_flatttvfig(ttvfig,ttvinslist,type)
 ttvfig_list *ttvfig ;
@@ -8139,7 +8139,7 @@ long type ;
 /*****************************************************************************
 *                           fonction ttv_getlosigfromevent()                 *
 ******************************************************************************
-* Récupère un losig correspondant à un ttvsig.                               *
+* RÃ©cupÃ¨re un losig correspondant Ã  un ttvsig.                               *
 *****************************************************************************/
 losig_list* ttv_getlosigfromevent( ttvfig, signal, insname, chainfig, lofig )
 ttvfig_list     *ttvfig;
@@ -8176,10 +8176,10 @@ lofig_list     **lofig;
 /*****************************************************************************
 *                           fonction ttv_getttvinsbyhiername                 *
 ******************************************************************************
-* Récupère une instance TTV à partir de son nom hiérarchique :               *
+* RÃ©cupÃ¨re une instance TTV Ã  partir de son nom hiÃ©rarchique :               *
 * toto.titi.tata.                                                            *
-* Les modèles ne sont pas pris en compte.                                    *
-* Paramètres : topfig : la ttvfig au toplevel.                               *
+* Les modÃ¨les ne sont pas pris en compte.                                    *
+* ParamÃ¨tres : topfig : la ttvfig au toplevel.                               *
 *****************************************************************************/
 ttvfig_list* ttv_getttvinsbyhiername( ttvfig_list *topfig, char *completename )
 {
@@ -8229,7 +8229,7 @@ ttvfig_list* ttv_getttvinsbyhiername( ttvfig_list *topfig, char *completename )
 /*****************************************************************************
 *                           fonction ttv_isttvsigdriver()                    *
 ******************************************************************************
-* Renvoie 1 si le ttvsig passé en argument correspond au driver d'un réseau  *
+* Renvoie 1 si le ttvsig passÃ© en argument correspond au driver d'un rÃ©seau  *
 * RC.                                                                        *
 *                                                                            *
 *****************************************************************************/
@@ -8293,11 +8293,11 @@ int ttv_isttvsigdriver( ttvfig_list *toplevel,
 ttv_getttvsigfast()
 ttv_addttvsigfast()
 
-Récupère le ttvsig correspondant à un losig en utilisant des tables de hash.
+RÃ©cupÃ¨re le ttvsig correspondant Ã  un losig en utilisant des tables de hash.
 
 Valeurs pour ttvsig :
 
-EMPTYHT :       le losig n'a jamais été mis dans les tables de hash. Il faut 
+EMPTYHT :       le losig n'a jamais Ã©tÃ© mis dans les tables de hash. Il faut 
                 rechercher le ttvsig en passant par les fonctions de ttv.
 Autres ( y compris NULL ) : le ttvsig correspondant.
 \******************************************************************************/
@@ -8312,7 +8312,7 @@ void ttv_addttvsigfast( ttvfig_list *topfig,
   ht            *hashins;
   ptype_list    *ptl;
   
-  // Récupère ou crée la table des instances.
+  // RÃ©cupÃ¨re ou crÃ©e la table des instances.
   ptl = getptype( topfig->USER, TTV_FIG_HTAB_SIG );
   if( !ptl ) {
     topfig->USER = addptype( topfig->USER, TTV_FIG_HTAB_SIG, addht( 10 ) );
@@ -8320,7 +8320,7 @@ void ttv_addttvsigfast( ttvfig_list *topfig,
   }
   hashins = (ht*)ptl->DATA;
 
-  // Récupère ou crée la tables des losig pour cette instance.
+  // RÃ©cupÃ¨re ou crÃ©e la tables des losig pour cette instance.
   hashsig = (ht*)gethtitem( hashins, insname );
   if( hashsig == (ht*)EMPTYHT ) {
     hashsig = addht(10);
@@ -8341,7 +8341,7 @@ ttvsig_list* ttv_getttvsigfast( ttvfig_list *topfig,
   ptype_list *ptl;
   ttvsig_list *ttvsig;
   
-  // Récupère la table de hash des noms d'instance hiérarchiques.
+  // RÃ©cupÃ¨re la table de hash des noms d'instance hiÃ©rarchiques.
   ptl = getptype( topfig->USER, TTV_FIG_HTAB_SIG );
   if( !ptl ) return (ttvsig_list*)EMPTYHT;
   hashins = (ht*)ptl->DATA;
@@ -8351,8 +8351,8 @@ ttvsig_list* ttv_getttvsigfast( ttvfig_list *topfig,
   if( !hashsig || hashsig==(ht*)EMPTYHT || hashsig==(ht*)DELETEHT )
     return (ttvsig_list*)EMPTYHT;
 
-  // La valeur NULL est autorisée : aux itérations précédente il n'y avait
-  // pas de ttvsig correspondant à ce losig.
+  // La valeur NULL est autorisÃ©e : aux itÃ©rations prÃ©cÃ©dente il n'y avait
+  // pas de ttvsig correspondant Ã  ce losig.
   ttvsig = (ttvsig_list*)gethtitem( hashsig, losig );
   if( ttvsig==(ttvsig_list*)EMPTYHT || ttvsig==(ttvsig_list*)DELETEHT )
     return (ttvsig_list*)EMPTYHT;
@@ -8362,11 +8362,11 @@ ttvsig_list* ttv_getttvsigfast( ttvfig_list *topfig,
 /*****************************************************************************
 *                           fonction ttv_getttvsig()                         *
 ******************************************************************************
-* Récupère un signal TTV driver sur un losig. Pour l'instant, cette fonction *
-* ne supporter qu'un seul driver par signal, comme cela semble être le cas   *
+* RÃ©cupÃ¨re un signal TTV driver sur un losig. Pour l'instant, cette fonction *
+* ne supporter qu'un seul driver par signal, comme cela semble Ãªtre le cas   *
 * dans TTV.                                                                  *
-* Si fastmode==1, on utilise des tables de hash pour accélerer les           *
-* recherches ultérieures. Ces tables de hash sont assez couteuses en mémoire *
+* Si fastmode==1, on utilise des tables de hash pour accÃ©lerer les           *
+* recherches ultÃ©rieures. Ces tables de hash sont assez couteuses en mÃ©moire *
 *****************************************************************************/
 ttvsig_list* ttv_getttvsig_sub(ttvfig_list   *figdest, losig_list *losig, long level, long type)
 {

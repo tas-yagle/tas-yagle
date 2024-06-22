@@ -531,7 +531,7 @@ combinational_entry : input_list ':' output_symbol ';'
                                 if ($3=='1')
                                 {
                                 // creation d'une expression type 0 and 1 and !2
-                                // les numéros sont des terminaux à expanser
+                                // les numÃ©ros sont des terminaux Ã  expanser
                                 for (input=BGL_CONTEXT(NM2LST),count=0;input!=NULL;input=input->NEXT,count++)
                                 {
                                         sprintf(name,"%d",count);
@@ -601,7 +601,7 @@ sequential_entry    : input_list ':' state ':' next_state ';'
                                 if ($5=='1' || $5=='0')
                                 {
                                 // creation d'une expression type 0 and 1 and !2
-                                // les numéros sont des terminaux à expanser
+                                // les numÃ©ros sont des terminaux Ã  expanser
                                 for (input=BGL_CONTEXT(NM2LST),count=0;input!=NULL;input=input->NEXT,count++)
                                 {
                                         sprintf(name,"%d",count);

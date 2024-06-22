@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - DÈpartement ASIM
+ * Copyright (C) Laboratoire LIP6 - D√©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -1352,18 +1352,18 @@ ginterf *interf;
            *|I X inv B
            *|I Y inv A
 
-           en mÈmoire, on a :
+           en m√©moire, on a :
 
-           GINTERF = VSS VDD A   B    <- c'est l'ordre ‡ respecter.
+           GINTERF = VSS VDD A   B    <- c'est l'ordre √† respecter.
            IINTERF = X   Y   Z   T    <- ordre d'instanciation 
 
            les icname nous indiquent : 
 
-           X doit Ítre connectÈ sur B
-           Y doit Ítre connectÈ sur A
+           X doit √™tre connect√© sur B
+           Y doit √™tre connect√© sur A
 
-           CrÈe une liste chainÈe des noeuds dont les informations icname correspondent
-           ‡ celle du modËle. Si aucun ne correspond, un NULL est insÈrÈ dans la chaine.
+           Cr√©e une liste chain√©e des noeuds dont les informations icname correspondent
+           √† celle du mod√®le. Si aucun ne correspond, un NULL est ins√©r√© dans la chaine.
 
            newhead vaudra : null null Y X
          */
@@ -1407,8 +1407,8 @@ ginterf *interf;
 
         newhead = reverse (newhead);
 
-        /* Une seconde passe est effectuÈe pour remplir les ÈlÈments qu'on a pas eu 
-           durant la boucle prÈcÈdente, en conservant l'ordre.
+        /* Une seconde passe est effectu√©e pour remplir les √©l√©ments qu'on a pas eu 
+           durant la boucle pr√©c√©dente, en conservant l'ordre.
 
            newhead vaudra : Z T Y X.
          */
@@ -1610,7 +1610,7 @@ allinterf *ALLINTERF;
 
     /* On cree pour chaque signal de l'interface une chain_list contenant tous
      * les noms possibles pour un signal. Pour chaque signal, le nom retenu en
-     * priorite est le premier nommÈ sur l'interface */
+     * priorite est le premier nomm√© sur l'interface */
 
     /* Calcul du nombre d'elements */
     nb = 0;
@@ -1699,10 +1699,10 @@ allinterf *ALLINTERF;
     ninterf->GINTERF = reverse (ninterf->GINTERF);
     ninterf->CORRESPINTERFNAME = reverse (ninterf->CORRESPINTERFNAME);
     /*
-       La liste DUPCON sert ‡ repÈrer les noeuds du subckt qui apparaissent en 
-       plusieurs fois sur l'interface du subckt. On crÈe une liste chainÈe jumelle de
-       GINTERF, dont les champs DATA valent NULL, sauf dans le cas o˘ un doublon est
-       dÈtectÈ. Dans ce cas le champ DATA pointe vers le chain_list correspondant.
+       La liste DUPCON sert √† rep√©rer les noeuds du subckt qui apparaissent en 
+       plusieurs fois sur l'interface du subckt. On cr√©e une liste chain√©e jumelle de
+       GINTERF, dont les champs DATA valent NULL, sauf dans le cas o√π un doublon est
+       d√©tect√©. Dans ce cas le champ DATA pointe vers le chain_list correspondant.
        ex :
        subckt toto 1 2 1 3 1 4
        avec
@@ -3682,7 +3682,7 @@ void spi_end_decrypt(spifile *df)
 }
 
 /******************************************************************************/
-/* On rÈcupËre les paramËtres non standards : $X, $Y                          */
+/* On r√©cup√®re les param√®tres non standards : $X, $Y                          */
 /******************************************************************************/
 
 int spi_get_xy (chain_list * ligne, float *com_x, float *com_y, int *Tx, int *Ty, int *R, int *A)
@@ -3950,7 +3950,7 @@ void spi_parse_ends (circuit * ptcir, lofig_list * topfig, chain_list * ligne, a
     }
 
     *complet = 1;
-    /* VÈrification de l'existence des modËles pour les instances */
+    /* V√©rification de l'existence des mod√®les pour les instances */
 
     for (scaninst = ptcir->INST; scaninst; scaninst = scaninst->SUIV) {
         if ((l = gethtitem (ALLINTERF->h, namealloc (scaninst->MODELE))) == EMPTYHT)
@@ -3968,7 +3968,7 @@ void spi_parse_ends (circuit * ptcir, lofig_list * topfig, chain_list * ligne, a
         }
 
         if (!scaninterf && SPI_AUTO_LOAD) {
-            // On cherche un fichier toto.spi qui correspond ‡ l'instance toto
+            // On cherche un fichier toto.spi qui correspond √† l'instance toto
             sprintf (buf, "%s.%s", scaninst->MODELE, SPI_SUFFIX);
             ALLINTERF = traiteinclude (ALLINTERF, buf, topfig);
         }
@@ -4134,7 +4134,7 @@ void spi_stat (circuit * ptcir, spifile * df, long *df_temp, long *df_time)
                 }
 
                 sprintf (temp,
-                         "[§+%08d§.] aba:%ld ata:%ld [na:%ld|§1%ld§. aba:%ld ata:%ld num:%ld] eq:%ld|§1%ld§. ~%ldmo",
+                         "[¬§+%08d¬§.] aba:%ld ata:%ld [na:%ld|¬§1%ld¬§. aba:%ld ata:%ld num:%ld] eq:%ld|¬§1%ld¬§. ~%ldmo",
                          df->linenum, mem_aba, mem_ata, mem_ana_na, mem_ana_na_names, mem_ana_aba, mem_ana_ata,
                          mem_num, mem_equi, mem_equi_nb, mem_tot);
                 avt_fprintf (stdout, temp);
@@ -4936,7 +4936,7 @@ allinterf *ALLINTERF;
                             removetableint (htab, t);
                             pt2->DATA = NULL;
                         }
-                        /* Cas o˘ on est sur le meme signal : on ne fait rien */
+                        /* Cas o√π on est sur le meme signal : on ne fait rien */
                     }
                     settableint (signbnode, pt->TYPE, (void *)(long)l1);
 
@@ -5174,7 +5174,7 @@ allinterf *ALLINTERF;
 
             pt = (ptype_list *) tsttableint (htab, node1->signal->b.SIGNAL);
 
-            if (((chain_list *) pt->DATA)->NEXT == NULL) {    /* noeud isolÈ */
+            if (((chain_list *) pt->DATA)->NEXT == NULL) {    /* noeud isol√© */
 
                 /* recherche son nom */
                 AdvancedNameAllocName (ptcir->ana, node1->index, nom0);
@@ -5248,7 +5248,7 @@ allinterf *ALLINTERF;
     }
 
 
-    /* RenumÈrote les noeud doublons sur l'interface des instances */
+    /* Renum√©rote les noeud doublons sur l'interface des instances */
 
     for (scaninst = ptcir->INST; scaninst; scaninst = scaninst->SUIV) {
         sci = (ginterf *) gethtitem (ALLINTERF->h, namealloc (scaninst->MODELE));
@@ -5564,7 +5564,7 @@ char mode;
     if (ptcir->PARAM)
         ptfig->USER = addptype (ptfig->USER, OPT_PARAMS, ptcir->PARAM);
 
-    /* CrÈation du tableau des signaux */
+    /* Cr√©ation du tableau des signaux */
 
     nbsig = 0;
     for (i = 0; i < ptcir->nbnodes; i++) {
@@ -5587,8 +5587,8 @@ char mode;
         tabsig[i] = NULL;
     }
 
-    // RenumÈrote les signaux pour les faire correspondre ‡ ceux de la lofig
-    // qui existent dÈj‡.
+    // Renum√©rote les signaux pour les faire correspondre √† ceux de la lofig
+    // qui existent d√©j√†.
 
     {
         // Le tableau destsig contient la correspondance entre l'ancien index de 
@@ -5604,7 +5604,7 @@ char mode;
         }
 
 
-        // Trouve les signaux qui doivent Ítre renumÈrotÈ.
+        // Trouve les signaux qui doivent √™tre renum√©rot√©.
 
         sci = ALLINTERF->teteinterf;
         for (sc1 = ptcir->CINTERF, sc2 = sci->GINTERF; sc1 && sc2; sc1 = sc1->NEXT, sc2 = sc2->NEXT) {
@@ -5628,7 +5628,7 @@ char mode;
             }
         }
 
-        // RenumÈrote les autres
+        // Renum√©rote les autres
 
         maxsig = 1;
         for (i = 1; i <= nbsig; i++) {
@@ -5640,7 +5640,7 @@ char mode;
             }
         }
 
-        // RenumÈrote les noeuds
+        // Renum√©rote les noeuds
 
         for (i = 0; i < ptcir->nbnodes; i++) {
             scannoeud = (noeud *) GetAdvancedTableElem (ptcir->ata, i);
@@ -5655,14 +5655,14 @@ char mode;
         destsig = NULL;
     }
 
-    // On ajoute les signaux qui sont dÈj‡ dans la lofig : l'interface
+    // On ajoute les signaux qui sont d√©j√† dans la lofig : l'interface
 
 
     for (scanlocon = ptfig->LOCON; scanlocon; scanlocon = scanlocon->NEXT)
         tabsig[scanlocon->SIG->INDEX - 1] = scanlocon->SIG;
 
 
-    /* CrÈation des signaux */
+    /* Cr√©ation des signaux */
 
     if (!ptfig->BKSIG.TAB) {
 /*    if (nbsig > 4096)
@@ -5798,7 +5798,7 @@ char mode;
     }
 
 
-    /* Traitement du nom des connecteurs externes. Comme les noms sont gÈrÈs par
+    /* Traitement du nom des connecteurs externes. Comme les noms sont g√©r√©s par
        AdvancedNameAllocName(), on ne conserve pas le pointeur vers le bon nom mais
        le pointeur vers le noeud */
 
@@ -5860,7 +5860,7 @@ char mode;
 
 
         if (AdvancedNameAllocName (ptcir->ana, scannoeud->index, nom0) != 0 && ptsig->NAMECHAIN == NULL) {
-            // Modif pour retrouver les mÍme noms que Xcalibre
+            // Modif pour retrouver les m√™me noms que Xcalibre
             if (SPI_NO_SIG_PREFIX)
                 sprintf (buf, "%s", nom0);
             else
@@ -5879,7 +5879,7 @@ char mode;
     for (scancapa = ptcir->CAPA; scancapa; scancapa = nextcapa) {
         nextcapa = (loctc_list *) scancapa->SIG1;
 
-        /* ne pas prendre en compte du tout une capacitÈ dont les deux extrÈmitÈes sont sur le 
+        /* ne pas prendre en compte du tout une capacit√© dont les deux extr√©mit√©es sont sur le 
            meme signal */
         if (tabsig[((noeud *) scancapa->NODE2)->signal->b.SIGNAL - 1] ==
             tabsig[((noeud *) scancapa->NODE1)->signal->b.SIGNAL - 1])
@@ -6018,7 +6018,7 @@ char mode;
                 scanlocon = addlocon (ptfig, nom, ptsig, UNKNOWN);
                 if (lc_tab[ptnoeud->signal->b.SIGNAL]==NULL) lc_tab[ptnoeud->signal->b.SIGNAL] = scanlocon;
 
-                // Le nom de signal doit Ítre le mÍme que celui du locon externe.
+                // Le nom de signal doit √™tre le m√™me que celui du locon externe.
 
                 for (sc3 = ptsig->NAMECHAIN; sc3; sc3 = sc3->NEXT)
                     if (sc3->DATA == nom)
@@ -6335,7 +6335,7 @@ char mode;
     }
 
     ptfig->LOTRS = ptcir->TRANS;
-    ptcir->TRANS = NULL;        // par sÈcuritÈ
+    ptcir->TRANS = NULL;        // par s√©curit√©
 
     for (i = 0; i < ptcir->nbnodes; i++) {
         scannoeud = (noeud *) GetAdvancedTableElem (ptcir->ata, i);
@@ -7405,7 +7405,7 @@ char *nom;
     pt = mbkstrdup (nom);
 
     /* On retire l'extention du nom, c'est a dire qu'on arrete la chaine au
-     * dernier point rencontrÈ */
+     * dernier point rencontr√© */
     /* >0 : On laisse quand meme 1 caractere si le nom commence par un point */
     for (i = strlen (pt) - 1; i > 0; i--)
         if (pt[i] == '.') {
@@ -7882,7 +7882,7 @@ char *name;
 }
 
 /******************************************************************************\
-Fonctions pour gÈrer le pre-load en spice
+Fonctions pour g√©rer le pre-load en spice
 
 Attention : ne pas changer le SPI_USE_PRELOADED_LIB en cours de route !!!
 \******************************************************************************/
@@ -7897,11 +7897,11 @@ exemple
 
 il faut passer : "e", "s", "e", "s", "e", "vdd", "vss"
 
-On ne gËre pas le cas des connecteurs identiques sur l'interface d'un subckt.
-exemple non supportÈ :
+On ne g√®re pas le cas des connecteurs identiques sur l'interface d'un subckt.
+exemple non support√© :
 .subckt inv 1 1 2 vdd vss
 
-Si on veut le faire un jour, il jour gÈrer la chain_list DUPCON.
+Si on veut le faire un jour, il jour g√©rer la chain_list DUPCON.
 */
 
 allinterf *spi_addlofiginterf (char *insname, chain_list * loconlist, allinterf * ALLINTERF)

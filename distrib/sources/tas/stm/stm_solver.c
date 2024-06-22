@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                            */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
-/*    Auteur(s) : Grégoire Avot                                             */
+/*    Auteur(s) : GrÃ©goire Avot                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -115,7 +115,7 @@ char stm_solver_calc_ids( stm_solver_maillon *trans,
 /******************************************************************************\
 stm_solver_estim_imax()
 Calcule une estimation du courant dans une branche lorsque celle ci est 
-soumise à une tension vmax. Thèse Amjad, pIV/3 (4-2).
+soumise Ã  une tension vmax. ThÃ¨se Amjad, pIV/3 (4-2).
 \******************************************************************************/
 char stm_solver_estim_imax( stm_solver_maillon_list *branch, 
                             float vmax,
@@ -152,10 +152,10 @@ char stm_solver_estim_imax( stm_solver_maillon_list *branch,
 
 /******************************************************************************\
 stm_solver_i()
-Détermine le courant circulant dans une branche.
+DÃ©termine le courant circulant dans une branche.
 vout est la tension en sortie de la branche.
-Toutes les tensions doivent être données par rapport à vss.
-Le courant est un flottant relatif, correspondant à la convention générateur
+Toutes les tensions doivent Ãªtre donnÃ©es par rapport Ã  vss.
+Le courant est un flottant relatif, correspondant Ã  la convention gÃ©nÃ©rateur
 pour la charge de la porte. i>0, transition montante, i<0, transition 
 descendante.
 \******************************************************************************/
@@ -192,13 +192,13 @@ char stm_solver_i( stm_solver_maillon_list *head,
   printf( "solver vout=%g\n", vout );
   #endif
   
-  // Récupère la fin de la chaine.
+  // RÃ©cupÃ¨re la fin de la chaine.
   for( base = head ; base->NEXT ; base = base->NEXT );
 
   // Polarisation de la branche
   vbase = base->MAILLON->VS ;
 
-  // Différence de potentiel absolue dans la branche
+  // DiffÃ©rence de potentiel absolue dans la branche
   vbr = fabs( vout - vbase );
 
   if( vbr < param->MINDELTAVOLTAGE ) {
@@ -206,7 +206,7 @@ char stm_solver_i( stm_solver_maillon_list *head,
     return 1;
   }
 
-  // Récupère le courant estimé dans la branche.
+  // RÃ©cupÃ¨re le courant estimÃ© dans la branche.
   if( !stm_solver_estim_imax( head, vout, &iestim ) )
     return 0;
 
@@ -266,7 +266,7 @@ char stm_solver_i( stm_solver_maillon_list *head,
       last         = maillon;
     }
 
-    // Vérification de la solution
+    // VÃ©rification de la solution
 
     if( bloque == 1 ) {
       // Convergence sur i
@@ -321,11 +321,11 @@ char stm_solver_i( stm_solver_maillon_list *head,
         else {
             /*
             Ici, on a qu'une borne minimum connue.
-            Théoriquement, on trouve directement i par extrapolation. Mais
-            il y a des cas où la convergence est extrèmement lente : on converge
-            vers la solution sans jamais la dépasser, on a donc jamais de borne 
-            MAX. Pour accélérer cette converge en obtenant une solution MAX, on
-            ajoute au i extrapolé 20% du courant estimé initialement. */
+            ThÃ©oriquement, on trouve directement i par extrapolation. Mais
+            il y a des cas oÃ¹ la convergence est extrÃ¨mement lente : on converge
+            vers la solution sans jamais la dÃ©passer, on a donc jamais de borne 
+            MAX. Pour accÃ©lÃ©rer cette converge en obtenant une solution MAX, on
+            ajoute au i extrapolÃ© 20% du courant estimÃ© initialement. */
             i = i * (vout-vbase)/(maillon->VD-vbase) + 0.2 * iestim ;
         }
       }
@@ -345,9 +345,9 @@ char stm_solver_i( stm_solver_maillon_list *head,
        );
 
   if( iter >= param->MAXITER ) {
-    /* grosse bidouille : Test si on a raté la convergence sur imax. Ca arrive
-       lorsqu'on a des très faibles courants en bsim3 car on calcule vds avec
-       une précision de 10-3 */
+    /* grosse bidouille : Test si on a ratÃ© la convergence sur imax. Ca arrive
+       lorsqu'on a des trÃ¨s faibles courants en bsim3 car on calcule vds avec
+       une prÃ©cision de 10-3 */
     if( imax == STM_UNDEF && fabs( imin-i ) < param->I_EPSILON )
       ret = 1;
     else
@@ -360,7 +360,7 @@ char stm_solver_i( stm_solver_maillon_list *head,
   return ret;
 }
 
-/******************************************************************************\Fonctions de manipulation des données
+/******************************************************************************\Fonctions de manipulation des donnÃ©es
 \******************************************************************************/
 
 stm_solver_maillon* stm_solver_new_maillon( void )

@@ -11,7 +11,7 @@ Comment:
 
 
 Files:     *
-Copyright: 1990-2012 Université Pierre & Marie Curie (UPMC)
+Copyright: 1990-2012 UniversitÃ© Pierre & Marie Curie (UPMC)
 License:   UPMC-Non-Commercial
 
 License: UPMC-Non-Commercial
@@ -19,8 +19,8 @@ License: UPMC-Non-Commercial
  .
  Between 
  .
- Université Pierre et Marie Curie (Paris  6), a not for profit corporation under
- the laws of  France, N° SIRET :  19751722000012 - Code APE :  8542Z, having its
+ UniversitÃ© Pierre et Marie Curie (Paris  6), a not for profit corporation under
+ the laws of  France, NÂ° SIRET :  19751722000012 - Code APE :  8542Z, having its
  place of business at 4, place Jussieu, 75252 Paris cedex 5, France, represented
  by its President Mr Jean CHAMBAZ, (hereinafter called "UPMC"),
  .
@@ -87,15 +87,15 @@ License: UPMC-Non-Commercial
  .
  The RECIPIENT  agrees that  this SOFTWARE has  not been reviewed,  nor received
  clearance for marketing from any health- regulation-agency such as the Food and
- Drug Administration,  Health Canada or  Agence Française de  Sécurité Sanitaire
- des Produits de Santé, in any country.
+ Drug Administration,  Health Canada or  Agence FranÃ§aise de  SÃ©curitÃ© Sanitaire
+ des Produits de SantÃ©, in any country.
  .
  3. DISCLAIMER OF WARRANTY:
  .
- This SOFTWARE is ©  copyright UPMC – 2011. UPMC holds all  the ownership on the
+ This SOFTWARE is Â©  copyright UPMC â 2011. UPMC holds all  the ownership on the
  SOFTWARE.
  .
- UPMC and the authors of the SOFTWARE are hereinafter called the “DISCLOSERS”.
+ UPMC and the authors of the SOFTWARE are hereinafter called the âDISCLOSERSâ.
  .
  RECIPIENT acknowledges that  the SOFTWARE is a research tool,  that it is being
  supplied "as is" and that DISCLOSERS are not committed to provide any services,
@@ -125,7 +125,7 @@ License: UPMC-Non-Commercial
  all costs of  necessary service, repair, or correction.  Further, DISCLOSERS do
  not warrant,  guarantee, or make any  representations regarding the  use of the
  SOFTWARE  in  terms  of  correctness, accuracy,  reliability,  currentness,  or
- otherwise ; and the RECIPIENT relies on  the SOFTWARE and the results solely at
+ otherwiseÂ ; and the RECIPIENT relies on  the SOFTWARE and the results solely at
  his own risk.
  .
  4. LIMITATION OF LIABILITY - INDEMNITY:
@@ -171,14 +171,14 @@ License: UPMC-Non-Commercial
  .
  - Technical Contact:
        Laboratoire LIP6
-       Département SoC
-       Équipe CIAN
+       DÃ©partement SoC
+       Ãquipe CIAN
        4, place Jussieu
        F-75252 Paris cedex 05
        c/o: Mr. Jean-Paul Chaput
  .
  - Administrative Contact:
-       Université Pierre et Marie Curie (Paris 6)
+       UniversitÃ© Pierre et Marie Curie (Paris 6)
        Direction de la Recherche et du Transfert de Technologies
        Tour Zamansky
        4, Place Jussieu

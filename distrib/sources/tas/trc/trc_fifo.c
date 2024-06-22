@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                            */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
-/*    Auteur(s) : Grégoire Avot                                             */
+/*    Auteur(s) : GrÃ©goire Avot                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -22,7 +22,7 @@ Date     : $Date: 2002/07/02 13:22:22 $
 
 #include "trc.h"
 
-// Création d'une fifo de taille initiale 'taille'
+// CrÃ©ation d'une fifo de taille initiale 'taille'
 
 trc_fifo* trc_fifocreate( void )
 {
@@ -44,7 +44,7 @@ void trc_fifodelete( trc_fifo *fifo )
   mbkfree( fifo );
 }
 
-// Effacement d'un élément à l'intérieur de la fifo
+// Effacement d'un Ã©lÃ©ment Ã  l'intÃ©rieur de la fifo
 
 int trc_fiforemove( trc_fifo *fifo, void *elem )
 {

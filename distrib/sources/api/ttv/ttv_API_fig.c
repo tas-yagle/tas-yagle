@@ -846,7 +846,7 @@ void checkslope(char *type, char *input, char *output, char *dir, double *val)
     {
       *val=(TAS_CONTEXT->FRONT_CON/TTV_UNIT)*1e-12;
       avt_errmsg(TTV_API_ERRMSG, "008", AVT_ERROR, type, TAS_CONTEXT->FRONT_CON/TTV_UNIT, input, output, dir);
-//      avt_error("ttvapi", 1, AVT_WAR, "nul or negative %sslope set to %gps for line %s¤4->¤.%s %s\n", type, TAS_CONTEXT->FRONT_CON/TTV_UNIT, input, output, dir);
+//      avt_error("ttvapi", 1, AVT_WAR, "nul or negative %sslope set to %gps for line %sÂ¤4->Â¤.%s %s\n", type, TAS_CONTEXT->FRONT_CON/TTV_UNIT, input, output, dir);
     }
 }
 
@@ -1317,7 +1317,7 @@ void ShareStmFCTModels()
     }
   
   if (cnt!=0)
-    avt_fprintf(stdout,"[¤1info¤.] %d/%d timing lines share their model\n",cnt,total);
+    avt_fprintf(stdout,"[Â¤1infoÂ¤.] %d/%d timing lines share their model\n",cnt,total);
   DeleteNameAllocator(&na);
   delht(uniquemodels);
   freechain(ALL_LINES);

@@ -5,7 +5,7 @@
 /*    Produit : AVERTEC global tools                                        */
 /*    Fichier : beg_API_correspondance.c                                    */
 /*                                                                          */
-/*    © copyright 2000 AVERTEC                                              */
+/*    Â© copyright 2000 AVERTEC                                              */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
 /*    Auteur(s) : Antony PINTO                                              */

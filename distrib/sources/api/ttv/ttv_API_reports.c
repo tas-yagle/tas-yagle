@@ -1036,36 +1036,36 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
 
   Board_NewLine(b);
   
-  Board_SetValue(b, COL_SSTA_MIN, "éSSTA");
-  Board_SetValue(b, COL_SSTA_MOY, "ç");
-  Board_SetValue(b, COL_SSTA_MAX, "èInformation");
+  Board_SetValue(b, COL_SSTA_MIN, "Ã©SSTA");
+  Board_SetValue(b, COL_SSTA_MOY, "Ã§");
+  Board_SetValue(b, COL_SSTA_MAX, "Ã¨Information");
   Board_SetValue(b, COL_SSTA_SIGMA, "Sigma");
   
-  sprintf(buf, "èDelay");
-  sprintf(buf1, "éDelay[%s]", DISPLAY_time_string);
+  sprintf(buf, "Ã¨Delay");
+  sprintf(buf1, "Ã©Delay[%s]", DISPLAY_time_string);
       
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_ACC, b, COL_SIM_ACC, "éSim");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_ACC, b, COL_SIM_ACC, "Ã©Sim");
   _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_DELTA, b, COL_SIM_DELTA, buf);
   _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_SLOPE, b, COL_SIM_SLOPE, "Sim_R/F");
   _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_ERROR, b, COL_SIM_ERROR, "% ");
   
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_ACC, b, COL_REF_ACC, "éDelay");
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_DELTA, b, COL_REF_DELTA, "è");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_ACC, b, COL_REF_ACC, "Ã©Delay");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_DELTA, b, COL_REF_DELTA, "Ã¨");
 
   if (split)
     {
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_ACC, b, COL_CTK_ACC, "éCtk");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_ACC, b, COL_CTK_ACC, "Ã©Ctk");
       _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_DELTA, b, COL_CTK_DELTA, buf);
       _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_SLOPE, b, COL_CTK_SLOPE, "Ctk_R/F");
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_LAG_ACC, b, COL_CTK_LAG_ACC, "éCtk");
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_LAG_DELTA, b, COL_CTK_LAG_DELTA, "èLAG");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_LAG_ACC, b, COL_CTK_LAG_ACC, "Ã©Ctk");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_CTK_LAG_DELTA, b, COL_CTK_LAG_DELTA, "Ã¨LAG");
     }
   else
     {
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_ACC, b, COL_CTK_ACC, "éDelay");
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_DELTA, b, COL_CTK_DELTA, "è");
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_CTK_LAG_ACC, "éLAG");
-      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_CTK_LAG_DELTA, "è");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_ACC, b, COL_CTK_ACC, "Ã©Delay");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_DELTA, b, COL_CTK_DELTA, "Ã¨");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_CTK_LAG_ACC, "Ã©LAG");
+      _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_CTK_LAG_DELTA, "Ã¨");
     }
       
 //  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_NODETYPE, b, COL_NODETYPE, "Node");
@@ -1073,22 +1073,22 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
 //  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_TRANSISTORS, b, COL_TRANSISTORS, "Switching");
 
 #ifndef CTK_DIFF_MODE
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_REF_LAG_ACC, "éLAG");
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_REF_LAG_DELTA, "è");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_REF_LAG_ACC, "Ã©LAG");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_REF_LAG_DELTA, "Ã¨");
 #else
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_REF_LAG_ACC, "éCtk effect \%");
-  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_REF_LAG_DELTA, "è");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_REF_LAG_ACC, "Ã©Ctk effect \%");
+  _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_REF_LAG_DELTA, "Ã¨");
 #endif
 
   sprintf(buf, "time[%s]", DISPLAY_time_string);
   sprintf(buf1, "Cap[%s]", DISPLAY_capa_string);
 
-  Board_SetValue(b, COL_CTK_SCORE_TOT, "éCTK");
-  Board_SetValue(b, COL_CTK_SCORE_NOISE, "çScores");
-  Board_SetValue(b, COL_CTK_SCORE_CTK, "ç");
-  Board_SetValue(b, COL_CTK_SCORE_ACTIV, "ç");
-  Board_SetValue(b, COL_CTK_SCORE_INTERV, "ç");
-  Board_SetValue(b, COL_CTK_SCORE_PROBA, "è");
+  Board_SetValue(b, COL_CTK_SCORE_TOT, "Ã©CTK");
+  Board_SetValue(b, COL_CTK_SCORE_NOISE, "Ã§Scores");
+  Board_SetValue(b, COL_CTK_SCORE_CTK, "Ã§");
+  Board_SetValue(b, COL_CTK_SCORE_ACTIV, "Ã§");
+  Board_SetValue(b, COL_CTK_SCORE_INTERV, "Ã§");
+  Board_SetValue(b, COL_CTK_SCORE_PROBA, "Ã¨");
 
   
   Board_NewLine(b);
@@ -1327,7 +1327,7 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
 /*            {
               char *gatename;
               int numinput;
-              colcode="¤+";
+              colcode="Â¤+";
               if (ttv_getgateinfo(((unsigned)tc->PROP)>>24, &gatename, &numinput))
                 delaytype=gatename;
               if ((tc->SIGTYPE & TTV_SIG_L)!=0)
@@ -1380,11 +1380,11 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
                   if (!hidectk) error=(deltactk-deltasim)*100/errorref;
                   else error=(deltaref-deltasim)*100/errorref;
                   if (!finite(error)) strcpy(buf1,".....");
-                  else if (fabs(error)>9999) sprintf(buf1,"¤6.....¤.%s", colcode);
+                  else if (fabs(error)>9999) sprintf(buf1,"Â¤6.....Â¤.%s", colcode);
                   else 
                     {
-                      if (fabs(error)>=50) sprintf(buf1, "¤6%+.1f¤.%s", error, colcode);
-                      else if (fabs(error)>10) sprintf(buf1, "¤4%+.1f¤.%s", error, colcode);
+                      if (fabs(error)>=50) sprintf(buf1, "Â¤6%+.1fÂ¤.%s", error, colcode);
+                      else if (fabs(error)>10) sprintf(buf1, "Â¤4%+.1fÂ¤.%s", error, colcode);
                       else sprintf(buf1, "%+.1f", error);
                     }
                 }
@@ -1608,11 +1608,11 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
            error=(tasval_cmp-simval_cmp)*100/(simval_cmp-start_cmp);
          }
       if (!finite(error)) strcpy(buf1,".....");
-      else if (fabs(error)>9999) sprintf(buf1,"¤6.....¤.%s", colcode);
+      else if (fabs(error)>9999) sprintf(buf1,"Â¤6.....Â¤.%s", colcode);
       else 
         {
-          if (fabs(error)>=50) sprintf(buf1, "¤6%+.1f¤.%s", error, colcode);
-          else if (fabs(error)>10) sprintf(buf1, "¤4%+.1f¤.%s", error, colcode);
+          if (fabs(error)>=50) sprintf(buf1, "Â¤6%+.1fÂ¤.%s", error, colcode);
+          else if (fabs(error)>10) sprintf(buf1, "Â¤4%+.1fÂ¤.%s", error, colcode);
           else sprintf(buf1, "%+.1f", error);                  
         }
       _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_SIM_ERROR, b, COL_SIM_ERROR, buf1);
@@ -1822,9 +1822,9 @@ void ttv_DisplayRoute(FILE *f, ttvevent_list *tve, char type, chain_list *pthlis
               if (detail!=detailbase) avt_fprintf(f, " - ");
               nodename=ttv_GetDetailSignalName_COND(tc);
               _type=ttv_GetDetailSignalType(tc);
-              if (strstr(_type,"latch")!=NULL || strstr(_type,"flip-flop")!=NULL) col="¤4";
+              if (strstr(_type,"latch")!=NULL || strstr(_type,"flip-flop")!=NULL) col="Â¤4";
               else col="";
-              avt_fprintf(f, "%s%s¤.(%c%s)", col, nodename, dirconv(ttv_GetDetailDirection(tc)), (ttv_PathIsHZ(pth) && detail->NEXT==NULL)?"Z":"");
+              avt_fprintf(f, "%s%sÂ¤.(%c%s)", col, nodename, dirconv(ttv_GetDetailDirection(tc)), (ttv_PathIsHZ(pth) && detail->NEXT==NULL)?"Z":"");
             }
           detail=detail->NEXT;
         }
@@ -1841,7 +1841,7 @@ void ttv_DisplayRoute(FILE *f, ttvevent_list *tve, char type, chain_list *pthlis
           avt_fprintf(f, "%s(%c)", nodename, dirconv(ttv_GetTimingEventDirection(tve)));
         }
       else
-        avt_fprintf(f, "¤6<no path to clock found>¤.");
+        avt_fprintf(f, "Â¤6<no path to clock found>Â¤.");
     }
 
   if (pthlist==NULL)

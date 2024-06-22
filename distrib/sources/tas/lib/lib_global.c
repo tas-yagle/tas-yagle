@@ -32,7 +32,7 @@ void    lib_treat_group_head(char *ident, chain_list *param)
             lib_setenv();
             lib_init();
             if(LIB_TRACE_MODE == 'N') {
-//                avt_error("library", -1, AVT_INFO, "loading LIB   '¤2%s¤.'\n", (char*)param->DATA);
+//                avt_error("library", -1, AVT_INFO, "loading LIB   'Â¤2%sÂ¤.'\n", (char*)param->DATA);
 /*                fprintf(stdout,"\nLOADING LIBRARY %s LIB... ", (char*)param->DATA);
                 fflush( stdout );*/
             }

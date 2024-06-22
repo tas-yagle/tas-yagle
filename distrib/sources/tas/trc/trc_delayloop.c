@@ -24,10 +24,10 @@ Date     : $Date: 2007/07/04 12:49:40 $
 #include "trc.h"
 
 /*
-Renvoie une estimation à la louche du delais RC d'un réseau lorsque celui
-contient des boucles. Il s'agit du délai d'Elmore maximum entre 2 locon du
-réseau RC pour le délai maximum, et du délai d'Elmore minimum entre 2 locon du
-réseau RC pour le délai minimum.
+Renvoie une estimation Ã  la louche du delais RC d'un rÃ©seau lorsque celui
+contient des boucles. Il s'agit du dÃ©lai d'Elmore maximum entre 2 locon du
+rÃ©seau RC pour le dÃ©lai maximum, et du dÃ©lai d'Elmore minimum entre 2 locon du
+rÃ©seau RC pour le dÃ©lai minimum.
 */
 int TRC_MARK_CON = 0;                      //tmp for test
 
@@ -35,17 +35,17 @@ void rcx_delayloop( lofig_list *lofig,      // La figure
                     losig_list *losig,      // Le signal
                     locon_list *locon,      // Le locon emetteur
                     rcx_slope  *slopemiller,   //                maximum
-                    RCXFLOAT    smax,       // Front d'entrée minimum
-                    RCXFLOAT    smin,       // Front d'entrée minimum
+                    RCXFLOAT    smax,       // Front d'entrÃ©e minimum
+                    RCXFLOAT    smin,       // Front d'entrÃ©e minimum
                     RCXFLOAT    vmax,       // La tension finale
                     RCXFLOAT    vt,         // Le seuil d'un transistor
-                    RCXFLOAT    extcapa,    // La capacité externe
-                    RCXFLOAT   *dmax,       // Le délai maximum calculé
+                    RCXFLOAT    extcapa,    // La capacitÃ© externe
+                    RCXFLOAT   *dmax,       // Le dÃ©lai maximum calculÃ©
                     RCXFLOAT   *dmin,       //          minimum
-                    RCXFLOAT   *fmax,       // Le front maximum calculé
+                    RCXFLOAT   *fmax,       // Le front maximum calculÃ©
                     RCXFLOAT   *fmin,       //          minimum
-                    locon_list **cmax,      // Connecteur où dmax a été trouvé  
-                    locon_list **cmin       // Connecteur où dmin a été trouvé  
+                    locon_list **cmax,      // Connecteur oÃ¹ dmax a Ã©tÃ© trouvÃ©  
+                    locon_list **cmin       // Connecteur oÃ¹ dmin a Ã©tÃ© trouvÃ©  
                   )
 {
   static losig_list  *lastcalllosig = NULL;
@@ -151,7 +151,7 @@ void rcx_delayloop( lofig_list *lofig,      // La figure
                   smin,
                   vmax,      // La tension finale
                   vt,        // Le seuil d'un transistor
-                  extcapa,   // La capacité externe
+                  extcapa,   // La capacitÃ© externe
                   coefctc,
                   dmax,
                   dmin,
@@ -182,7 +182,7 @@ void rcx_delayloop( lofig_list *lofig,      // La figure
   rcn_unlock_signal( lofig, losig );
 }
 
-/* Place un ptype RCX_NOWAY dans les résistances pour empécher un parcours des
+/* Place un ptype RCX_NOWAY dans les rÃ©sistances pour empÃ©cher un parcours des
 boucles. */
 
 void rcx_makenoloop( losig_list *losig )
@@ -214,14 +214,14 @@ void rcx_makenolooprec( losig_list *losig,
   
   if( wire ) {
  
-    /* Si on arrive directement sur un noeud où on est déjà passé. */
+    /* Si on arrive directement sur un noeud oÃ¹ on est dÃ©jÃ  passÃ©. */
     if( RCN_GETFLAG( start->FLAG, RCN_FLAG_PASS ) ) {
       if( !getptype( wire->USER, RCX_NOWAY ) )
         wire->USER = addptype( wire->USER, RCX_NOWAY, NULL );
       return ;
     }
-    /* Si la résistance est déjà marquée comme une interdiction. Je met ça par
-       précaution car dans ce cas, on aurait déjà eu le RCN_FLAG_PASS sur le
+    /* Si la rÃ©sistance est dÃ©jÃ  marquÃ©e comme une interdiction. Je met Ã§a par
+       prÃ©caution car dans ce cas, on aurait dÃ©jÃ  eu le RCN_FLAG_PASS sur le
        noeud... */
     if( getptype( wire->USER, RCX_NOWAY ) )
       return;
@@ -239,8 +239,8 @@ void rcx_makenolooprec( losig_list *losig,
                         );
     }
 
-    /* On arrive à une intersection. Si on y est déjà passé, on marque la 
-       résistance RCX_NOWAY, et on a fini pour cette branche */
+    /* On arrive Ã  une intersection. Si on y est dÃ©jÃ  passÃ©, on marque la 
+       rÃ©sistance RCX_NOWAY, et on a fini pour cette branche */
     if( RCN_GETFLAG( ptnode->FLAG, RCN_FLAG_PASS ) ) {
       if( !getptype( wire->USER, RCX_NOWAY ) )
         wire->USER = addptype( wire->USER, RCX_NOWAY, NULL );
@@ -248,7 +248,7 @@ void rcx_makenolooprec( losig_list *losig,
     }
   }
   else {
-    /* Le noeud de départ est déjà traité */
+    /* Le noeud de dÃ©part est dÃ©jÃ  traitÃ© */
     if( RCN_GETFLAG( ptnode->FLAG, RCN_FLAG_PASS ) )
       return;
   }
@@ -286,7 +286,7 @@ void  rcx_loopelmore( losig_list *losig,
                       RCXFLOAT   smin,
                       RCXFLOAT vmax,      // La tension finale
                       RCXFLOAT vt,        // Le seuil d'un transistor
-                      RCXFLOAT extcapa,   // La capacité externe
+                      RCXFLOAT extcapa,   // La capacitÃ© externe
                       RCXFLOAT coefctc,
                       RCXFLOAT *dmax,
                       RCXFLOAT *dmin,
@@ -464,7 +464,7 @@ void rcx_loopelmdelay( losig_list  *losig,
     }
   }
 
-  /* Calcul de la capacité des branches en aval */
+  /* Calcul de la capacitÃ© des branches en aval */
   if( !wire || !getptype( wire->USER, RCX_NOWAY ) ) {
     for( chain = ptnode->WIRELIST ; chain ; chain = chain->NEXT ) {
     
@@ -484,7 +484,7 @@ RCXFLOAT rcx_loopelmcapa( losig_list  *losig,
                           RCXFLOAT     smin,
                           RCXFLOAT     vmax,      // La tension finale
                           RCXFLOAT     vt,        // Le seuil d'un transistor
-                          RCXFLOAT     extcapa,   // La capacité externe
+                          RCXFLOAT     extcapa,   // La capacitÃ© externe
                           RCXFLOAT     coefctc,
                           lowire_list *wire
                         )
@@ -514,7 +514,7 @@ RCXFLOAT rcx_loopelmcapa( losig_list  *losig,
     }
   }
 
-  /* Calcul de la capacité des branches en aval */
+  /* Calcul de la capacitÃ© des branches en aval */
   if( !wire || !getptype( wire->USER, RCX_NOWAY ) ) {
     for( chain = ptnode->WIRELIST ; chain ; chain = chain->NEXT ) {
     
@@ -536,12 +536,12 @@ RCXFLOAT rcx_loopelmcapa( losig_list  *losig,
     }
   }
 
-  /* On remonte en mettant à jour les capacité. On marque le premier noeud
+  /* On remonte en mettant Ã  jour les capacitÃ©. On marque le premier noeud
   terminal */
 
   while( ptnode->INDEX != start )
   {
-    /* Calcul de la capacité sur le noeud courant */
+    /* Calcul de la capacitÃ© sur le noeud courant */
     if( !wire || !getptype( wire->USER, RCX_NOWAY ) ) {
 
       capa = capa + rcx_getnodecapa( losig,
@@ -553,7 +553,7 @@ RCXFLOAT rcx_loopelmcapa( losig_list  *losig,
                                      coefctc
                                    );
 
-      /* Stockage de la capacité sur le noeud courant */
+      /* Stockage de la capacitÃ© sur le noeud courant */
       ptcapa = mbkalloc( sizeof( RCXFLOAT ) );
       *ptcapa = capa;
       ptnode->USER = addptype( ptnode->USER, RCXLOOPCAPA, ptcapa );
@@ -571,7 +571,7 @@ RCXFLOAT rcx_loopelmcapa( losig_list  *losig,
 
   }
 
-  /* Capacité sur le noeud de départ */
+  /* CapacitÃ© sur le noeud de dÃ©part */
   {
     capa = capa + rcx_getnodecapa( losig,
                                    ptnode,

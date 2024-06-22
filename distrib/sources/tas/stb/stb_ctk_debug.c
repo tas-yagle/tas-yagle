@@ -10,7 +10,7 @@
 /*                                                                          */
 /*    Auteur(s) : Karim DIOURY                                              */
 /*                Anthony LESTER                                            */
-/*                Grégoire AVOT                                             */
+/*                GrÃ©goire AVOT                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -88,7 +88,7 @@ void stb_ctkprint( int level, char *fmt, ... )
     vfprintf( CTK_LOGFILE, fmt, index );
 }
 
-/*** infos conso mémoire ******************************************************/
+/*** infos conso mÃ©moire ******************************************************/
 
 void stb_display_mem( stbfig_list *stbfig )
 {
@@ -103,7 +103,7 @@ void stb_display_mem( stbfig_list *stbfig )
   lofig_list            *figvic;
   chain_list            *chainfig;
 
-  printf( "Mémoire :\n" );
+  printf( "MÃ©moire :\n" );
   for( scan = stbfig->NODE ; scan ; scan = scan->NEXT ) {
     node = (ttvevent_list*)scan->DATA;
     ttvsig = node->ROOT;
@@ -137,8 +137,8 @@ void stb_display_mem( stbfig_list *stbfig )
 void stb_mem_hash( ptype_list *USER, 
                    long pthash, 
                    long ptptype,
-                   unsigned int *util, // Ce qui est réellement utilisé
-                   unsigned int *real, // Ce qui est réellement alloué
+                   unsigned int *util, // Ce qui est rÃ©ellement utilisÃ©
+                   unsigned int *real, // Ce qui est rÃ©ellement allouÃ©
                    unsigned int *lost  // Hash : la taille libre dans table
                  )
 {

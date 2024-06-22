@@ -29,21 +29,21 @@ extern FILE *RCXFILELOG ;
 // USER des losig
 
 #define RCX_BELLOW 0x52435800
-// Lorsque ce ptype est présent, ce signal n'existe pas au niveau courant, mais
-// est défini dans une des instances de la figure courante..
-// Le nom du signal est la chaîne de caractère dans le champs DATA, sous la
+// Lorsque ce ptype est prÃ©sent, ce signal n'existe pas au niveau courant, mais
+// est dÃ©fini dans une des instances de la figure courante..
+// Le nom du signal est la chaÃ®ne de caractÃ¨re dans le champs DATA, sous la
 // forme NOMINSTANCE.NOMSIGNAL.
 
 #define RCX_COPIED 0x52435806
-// Dans la fonction rcxbuild(), indique que ce signal a été traité, et qu'il
-// est devenu le losig pointé par le champ data.
+// Dans la fonction rcxbuild(), indique que ce signal a Ã©tÃ© traitÃ©, et qu'il
+// est devenu le losig pointÃ© par le champ data.
 
 #define RCXLOSIGFLAG 0x52435812
-// Contient des flags. Ce ptype est utilisé dans rcn_coupledinformation, il 
+// Contient des flags. Ce ptype est utilisÃ© dans rcn_coupledinformation, il 
 // correspond donc aux valeurs 0x52435812 et 0x52435813
 
 #define RCX_NODE_BASE 0x52435814
-// Contient le décalage à appliquer sur un noeud de signal d'instance.
+// Contient le dÃ©calage Ã  appliquer sur un noeud de signal d'instance.
 
 // Flag de couplage.
 #define RCX_NI_LOSIG 0x1
@@ -63,8 +63,8 @@ extern char RCX_USEREALSLOPE;
 /* Fonctions externes */
 
 /* Indique que les crosstalk actifs seront pris en compte. Si cette 
-fonction n'est pas appellée, les capacités de couplage sont prise à leur valeurs
-nominales (pas d'effet de couplage). Cette fonction ne doit pas être utilisée 
+fonction n'est pas appellÃ©e, les capacitÃ©s de couplage sont prise Ã  leur valeurs
+nominales (pas d'effet de couplage). Cette fonction ne doit pas Ãªtre utilisÃ©e 
 pendant la construction des vues RCX. */
 extern int rcx_crosstalkactive( int );
 
@@ -87,7 +87,7 @@ void rcx_setnotinfluentagressor( losig_list *victime, losig_list *agresseur );
 void rcx_clearnotinfluentagressor( losig_list *victime, losig_list *agresseur );
 int rcx_iscrosstalkcapa( loctc_list*, losig_list* );
 
-/* Sélectionne le type de représentation d'un losig */
+/* SÃ©lectionne le type de reprÃ©sentation d'un losig */
 extern int setrcxmodel( lofig_list*, losig_list*, int );
 
 void rcx_freewire( losig_list* );

@@ -128,7 +128,7 @@ RCXFLOAT rcx_getdelay( lofig, loconb, locone )
 
 rcx_getdelayslope()
 
-Calcul des délais et/ou des fronts dans les réseaux RC. Renvoie 1 si le calcul
+Calcul des dÃ©lais et/ou des fronts dans les rÃ©seaux RC. Renvoie 1 si le calcul
 a pu se faire, et 0 en cas d'erreur.
 
 *******************************************************************************/
@@ -287,8 +287,8 @@ mbk_pwl           **pwloutmin ;
    return 0;
  }
  
- // Convertion du front d'entrée en un front montant. Dans les réseau RC, tous
- // est linéaire.
+ // Convertion du front d'entrÃ©e en un front montant. Dans les rÃ©seau RC, tous
+ // est linÃ©aire.
  
  if( slope->SENS == TRC_SLOPE_UP ) {
    vmaxmax = slope->MAX.vend;
@@ -314,12 +314,12 @@ mbk_pwl           **pwloutmin ;
    return 0;
  }
 
- // Récupération du réseau RC.
+ // RÃ©cupÃ©ration du rÃ©seau RC.
 
  rcn_lock_signal( lofig, losig );
 
- /* On gère seulement le cas où on a détecté une erreur de modèle auparavant.
-    On ne détecte pas d'erreur ici car les causes peuvent etre multiples. Mais
+ /* On gÃ¨re seulement le cas oÃ¹ on a dÃ©tectÃ© une erreur de modÃ¨le auparavant.
+    On ne dÃ©tecte pas d'erreur ici car les causes peuvent etre multiples. Mais
     il faudrait le faire... */
 
  if( rcx_isctkbasicmodel( ptrcx ) ) {
@@ -341,7 +341,7 @@ mbk_pwl           **pwloutmin ;
      }
    }
 
-   // Calcul des délais.
+   // Calcul des dÃ©lais.
 
    if( RCX_USING_AWEMATRIX == RCX_USING_AWEMATRIX_NEVER ) {
      if(! rcx_isloop( ptrcx, losig ) ) {
@@ -449,21 +449,21 @@ void rcx_rcnload_reset( losig_list *losig )
   }
 }
 
-/* Calcul de la charge vue à partir du noeud 'pin'.
- * Le champ model spécifie le type de charge : RCX_CAPALOAD ou RCX_PILOAD. On
- * peut demander à la fonction de déterminer elle même ce qu'elle veut faire à
+/* Calcul de la charge vue Ã  partir du noeud 'pin'.
+ * Le champ model spÃ©cifie le type de charge : RCX_CAPALOAD ou RCX_PILOAD. On
+ * peut demander Ã  la fonction de dÃ©terminer elle mÃªme ce qu'elle veut faire Ã 
  * l'aide de la valeur RCX_BESTLOAD.
- * Renvoie soit RCX_CAPALOAD, soit RCX_PILOAD, selon le type de charge calculée
- * RCX_CAPALOAD  : simple capacité dans c1.
+ * Renvoie soit RCX_CAPALOAD, soit RCX_PILOAD, selon le type de charge calculÃ©e
+ * RCX_CAPALOAD  : simple capacitÃ© dans c1.
  * RCX_PILOAD    : cellule en pi dans r, c1, c2.
  * RCX_LOADERROR : une erreur est survenue.
  *
- * Attention : cette fonction mémorise sur le signal le dernier type de 
- * charge utilisée si cette fonction est appellée avec RCX_BESTLOAD. Lors des
- * appels ultérieurs avec RCX_BESTLOAD, le test du type de charge à utiliser
- * n'est pas refait. Ce n'est genant que dans TMA où l'on fait varier le 
- * extcapa. Dans ce cas on peut réinitialiser le type de flag avec un appel
- * à la fonction rcx_rcnload_reset()
+ * Attention : cette fonction mÃ©morise sur le signal le dernier type de 
+ * charge utilisÃ©e si cette fonction est appellÃ©e avec RCX_BESTLOAD. Lors des
+ * appels ultÃ©rieurs avec RCX_BESTLOAD, le test du type de charge Ã  utiliser
+ * n'est pas refait. Ce n'est genant que dans TMA oÃ¹ l'on fait varier le 
+ * extcapa. Dans ce cas on peut rÃ©initialiser le type de flag avec un appel
+ * Ã  la fonction rcx_rcnload_reset()
  */
 
 char rcx_rcnload( lofig_list *lofig,
@@ -620,7 +620,7 @@ char rcx_rcnload_basic( lofig_list *lofig,
 
   avt_logenterfunction(LOGTRC,2,"rcx_rcnload_basic()");
 
-  // Si on est en mode crosstalk, la charge dépend du front d'entrée.
+  // Si on est en mode crosstalk, la charge dÃ©pend du front d'entrÃ©e.
 
   rcn_lock_signal( lofig, ptsig );
 
@@ -820,7 +820,7 @@ char rcx_rcnload_basic( lofig_list *lofig,
   return( model );
 }
 
-/* Renvoie la capacité totale d'un signal */
+/* Renvoie la capacitÃ© totale d'un signal */
 RCXFLOAT rcx_getsumcapa( lofig_list *lofig, 
                       losig_list    *losig, 
                       rcx_slope     *slope,
@@ -841,7 +841,7 @@ RCXFLOAT rcx_getsumcapa( lofig_list *lofig,
   return cl;
 }
 
-/* Renvoie la somme des résistances sur un signal */
+/* Renvoie la somme des rÃ©sistances sur un signal */
 RCXFLOAT rcx_getsumresi( losig_list *ptsig )
 {
   lowire_list   	*pwire;
@@ -1053,22 +1053,22 @@ int rcx_up_forload( losig_list  *losig,
   return 1 ;
 }
 
-/* Récupère un développement limité à l'ordre 3 d'un réseau RC.
+/* RÃ©cupÃ¨re un dÃ©veloppement limitÃ© Ã  l'ordre 3 d'un rÃ©seau RC.
  * y(p) = y0+y1.p+y2.p^2+y3.p^3
- * y0 est toujours nul car on a pas de resistances à la masse.
+ * y0 est toujours nul car on a pas de resistances Ã  la masse.
  *
  * Arguments :
- *   ptsig :      signal possédant un réseau RC, une table des noeuds et ne
+ *   ptsig :      signal possÃ©dant un rÃ©seau RC, une table des noeuds et ne
  *                comportant pas de boucles.
- *   src :        index du noeud de départ. Typiquement un connecteur.
+ *   src :        index du noeud de dÃ©part. Typiquement un connecteur.
  *   y1, y2, y3 : les trois termes.
  *
  * Elements pris en compte :
  *
- * Les résistances,
- * Les capacités à la masse,
- * Les capacités de couplage (coef=1),
- * Les capacités dans les connecteurs ( tlc_getloconparam() ).
+ * Les rÃ©sistances,
+ * Les capacitÃ©s Ã  la masse,
+ * Les capacitÃ©s de couplage (coef=1),
+ * Les capacitÃ©s dans les connecteurs ( tlc_getloconparam() ).
 */
 
 void    rcx_admittance( losig_list *ptsig,
@@ -1260,7 +1260,7 @@ void     rcx_recadmi( losig_list  *ptsig,
     c = rcx_getnodecapa( ptsig, ptnode, extcapa, slope, type, TRC_HALF, coefctc );
     yu1 = yu1 + c ;
   
-    /* Sur la résistance */
+    /* Sur la rÃ©sistance */
     r = scanwire->RESI;
 
     yd1 = yu1;
@@ -1350,7 +1350,7 @@ void     rcx_triangle_admi( losig_list  *ptsig,
   y22 = y22 + yd2-r*yd1*yd1;
   y23 = y23 + r*r*yd1*yd1*yd1+yd3-2*r*yd1*yd2;
 
-  /* Tronçon commun */
+  /* TronÃ§on commun */
   
   r = triangle->Z0;
   
@@ -1546,10 +1546,10 @@ int rcx_iscrosstalk( lofig_list *lofig, losig_list *losig, char test )
 
 /******************************************************************************\
 rcx_checkcrosstalk()
-- Utilise un flag RCXTREATEDNI afin de ne pas effectuer cette opération 
+- Utilise un flag RCXTREATEDNI afin de ne pas effectuer cette opÃ©ration 
   inutilement.
-- Marque les agresseurs ayant une importance relative inférieure à
-  RCX_MINRELCTKFILTER comme étant Non Influent.
+- Marque les agresseurs ayant une importance relative infÃ©rieure Ã 
+  RCX_MINRELCTKFILTER comme Ã©tant Non Influent.
 \******************************************************************************/
 
 void rcx_checkcrosstalk( losig_list *losig )
@@ -1572,7 +1572,7 @@ void rcx_checkcrosstalk( losig_list *losig )
     return;
   SETFLAG( rcx->FLAG, RCXTREATEDNI );
 
-  // Récupère le nombre d'agresseurs
+  // RÃ©cupÃ¨re le nombre d'agresseurs
   
   for( scanctc = losig->PRCN->PCTC ; scanctc ; scanctc = scanctc->NEXT ) {
   
@@ -1590,7 +1590,7 @@ void rcx_checkcrosstalk( losig_list *losig )
   if( maxagr == 0 )
     return;
 
-  // Création et remplissage des tableaux
+  // CrÃ©ation et remplissage des tableaux
 
   tabsig = (losig_list**)mbkalloc( sizeof( losig_list*) * maxagr );
   tabcapa = (RCXFLOAT*)mbkalloc( sizeof( RCXFLOAT ) * maxagr );
@@ -1613,7 +1613,7 @@ void rcx_checkcrosstalk( losig_list *losig )
     }
   }
 
-  // Trie des tableaux suivant la valeur des capacité : trie à bulle...
+  // Trie des tableaux suivant la valeur des capacitÃ© : trie Ã  bulle...
 
   for( i=0 ; i<maxagr ; i++ ) {
     refmin=i;
@@ -1639,7 +1639,7 @@ void rcx_checkcrosstalk( losig_list *losig )
     tabsum[i]=tabsum[i-1]+tabcapa[i];
  
   
-  // Marque les capacités non significatives
+  // Marque les capacitÃ©s non significatives
 
   for( i=0 ; i<maxagr ; i++ ) {
     if( tabsum[i] / rcn_getcapa(NULL,losig) < RCX_MINRELCTKFILTER ) {
@@ -1674,9 +1674,9 @@ void rcx_checkcrosstalk( losig_list *losig )
   mbkfree( tabsum );
 }
 
-/* Facteur multiplicatif à appliquer aux capacités pour prendre en compte
-l'effet global des capacités. Si on a pas déjà calculé groundcapa, il faut
-mettre une valeur négative. */
+/* Facteur multiplicatif Ã  appliquer aux capacitÃ©s pour prendre en compte
+l'effet global des capacitÃ©s. Si on a pas dÃ©jÃ  calculÃ© groundcapa, il faut
+mettre une valeur nÃ©gative. */
 
 RCXFLOAT rcx_getcoefctc( lofig_list        *lofig,
                          losig_list        *ptsig,

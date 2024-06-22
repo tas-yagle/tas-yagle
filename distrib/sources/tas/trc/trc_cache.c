@@ -47,7 +47,7 @@ unsigned long int rcx_cache_parse( lofig_list *lofig, losig_list *losig )
 /*******************************************************************************
 * rcx_cache_set|isset_lofig()                                                  *
 ********************************************************************************
-* Positionne ou récupère le mode d'une lofig : avec ou sans cache.             *
+* Positionne ou rÃ©cupÃ¨re le mode d'une lofig : avec ou sans cache.             *
 *******************************************************************************/
 void rcx_set_cache_lofig( lofig_list *lofig, 
                           char *filename,
@@ -60,7 +60,7 @@ void rcx_set_cache_lofig( lofig_list *lofig,
   FILE *ptf;
   
   if( RCX_USECACHE == 'Y' ) {
-    // On vérifie si on peut faire de l'accès direct sur le fichier avant
+    // On vÃ©rifie si on peut faire de l'accÃ¨s direct sur le fichier avant
     // d'activer le cache.
     ptf = mbkfopen( filename, extname, "r" );
     if( ptf ) {

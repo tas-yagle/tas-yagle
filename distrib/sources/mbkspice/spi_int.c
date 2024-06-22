@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - DÈpartement ASIM
+ * Copyright (C) Laboratoire LIP6 - D√©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -70,14 +70,14 @@ void *data;
 
     if( table[ p ].index == value )
     {
-      /* L'element existe dÈj‡ : on le remplace */
+      /* L'element existe d√©j√† : on le remplace */
       table[ p ].data = data;
       return( 0 );
     }
 
     if( table[ p ].index == 0 )
     {
-      /* Nouvel ÈlÈment */
+      /* Nouvel √©l√©ment */
       table[ p ].index = value;
       table[ p ].data  = data;
       return( 1 );
@@ -107,7 +107,7 @@ int value;
 
     if( table[ p ].index == value )
     {
-      /* L'element existe dÈj‡ : on le vire */
+      /* L'element existe d√©j√† : on le vire */
       table[ p ].index = 0;
       table[ p ].data = NULL;
       return;
@@ -234,7 +234,7 @@ int             n;
       if( t[ i ].index )
         return( t[ i ].index );
     }
-    /* jamais executÈ */
+    /* jamais execut√© */
   }
 
   while( 1 )

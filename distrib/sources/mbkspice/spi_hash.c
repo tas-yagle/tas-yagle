@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -187,7 +187,7 @@ int             l;
       if (CASE_SENSITIVE != 'P') b = ( *c >> bit ) & 0x1;
       else b = ( tolower((int)*c) >> bit ) & 0x1;
 
-      /* Polynome générateur : X^15 + X + 1 */
+      /* Polynome gÃ©nÃ©rateur : X^15 + X + 1 */
       dec = ( ( dec & 0x3FFE ) << 1 )                               |
             ( ( ( dec & 0x4000 ) >> 13 ) ^ ( ( dec & 0x1 ) << 1 ) ) |
 	    ( ( ( dec & 0x4000 ) >> 14 ) ^ b ) ;

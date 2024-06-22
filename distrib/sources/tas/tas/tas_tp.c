@@ -1570,7 +1570,7 @@ tas_threshold(double an, double bn, double vtn, double ap, double bp,
 /*-----------------------------------------------------------------------------
 *                    capa_eqparam()                                           *
 *                                                                             *
-* calcule pour chaque maillon les paramètres ci et cf de la capacite          *
+* calcule pour chaque maillon les paramÃ¨tres ci et cf de la capacite          *
 * equivalente pour la branche qui le separe de la sortie pour good et false   *
 -----------------------------------------------------------------------------*/
 void
@@ -1611,7 +1611,7 @@ char *tn;
   /*capa = ci0 + pconf1 * fcarac + ccarac */
 
   /* capa intrinseque de chaque maillon (a partir du deuxieme) et
-   * calcul des paramètres de capa ramenée acti et bcti*/
+   * calcul des paramÃ¨tres de capa ramenÃ©e acti et bcti*/
   ptlink = link0->NEXT;
   if (ptlink) {
     while (ptlink->NEXT) {
@@ -1709,7 +1709,7 @@ char *tn;
 /*-----------------------------------------------------------------------------
 *                    capa_eqparampath()                                       *
 *                                                                             *
-* calcule pour chaque maillon les paramètres ci et cf de la capacite          *
+* calcule pour chaque maillon les paramÃ¨tres ci et cf de la capacite          *
 * equivalente pour la branche qui le separe de la sortie pour tpd_path        *
 -----------------------------------------------------------------------------*/
 void capa_eqparampath(link0, srcil, srl, srcih, srh, tab0, tabi, t0, ti)
@@ -1746,7 +1746,7 @@ char *ti;
   /*capa = ci0 + pconf1 * fcarac + ccarac */
 
   /* capa intrinseque de chaque maillon (a partir du deuxieme) et
-   * calcul des paramètres de capa ramenée acti et bcti*/
+   * calcul des paramÃ¨tres de capa ramenÃ©e acti et bcti*/
   ptlink = link0->NEXT;
   if (ptlink) {
     while (ptlink) {
@@ -1925,7 +1925,7 @@ int tas_calc_k3_k4_k5(link_list *maillonc, char type_front, float *k3, float *k4
 /*-----------------------------------------------------------------------------
 *                    tpd_pathparams()                                         *
 *                                                                             *
-* calcule les paramètres k3, k4 et k5 de la chaine pass-transistors           *
+* calcule les paramÃ¨tres k3, k4 et k5 de la chaine pass-transistors           *
 -----------------------------------------------------------------------------*/
 int tpd_pathparams(cone, maillon0, type_front, tab0, tabi, tabn)
 cone_list *cone;
@@ -2309,7 +2309,7 @@ double gate_th;
   /* capa equivalente de la chaine pass */
   ptlink = duallink->NEXT;
   duallink->NEXT = NULL;
-  /* calcul des paramètres permettant le calcul des capas de
+  /* calcul des paramÃ¨tres permettant le calcul des capas de
    * la chaine de path transistors (4 params par transistor)*/
   capa_eqparam(link0, srcil, srl, srcih, srh, tab0, tabi, tabn, &t0, &ti,
                &tn);
@@ -2363,11 +2363,11 @@ double gate_th;
     return NULL;
   }
 
-  /* calcul des paramètres de capa intrinseque
+  /* calcul des paramÃ¨tres de capa intrinseque
    * capa = capai + cconf / irap avec cconf=pconf0_cfb + pconf1 * fcarac */
   tas_getcapaparamsgood(branch, duallink, activelink, imax, QY, &capai, &irap);
 
-  /* partie non duale, calcul des paramètres k3, k4, k5 */
+  /* partie non duale, calcul des paramÃ¨tres k3, k4, k5 */
   if ((activelink->ULINK.LOTRS->TYPE & CNS_TP) == CNS_TP)
     good = tpd_pathparams(cone, pathlink, 'U', tab0, tabi, tabn);
   else
@@ -4211,7 +4211,7 @@ tas_FP_UDM(delay_list * delaymin, delay_list * delaymax, cone_list * cone0,
 /*----------------------------------------------------------------------------
 *                    tas_tpd()                                               *
 ----------------------------------------------------------------------------*/
-// si un break point n'a pas de délai calculé, on force le front par delaut pour
+// si un break point n'a pas de dÃ©lai calculÃ©, on force le front par delaut pour
 // que des lines partent du breakpoint
 void tas_check_break_point_with_no_delay(cone_list *cone, char minmax)
 {
@@ -5353,7 +5353,7 @@ double tas_get_cgd_from_link( cone_list  *cone,
     
       trspair = (lotrs_list*)ptype->DATA ;
       
-      /* retrouve un link correspondant à ce transistor */
+      /* retrouve un link correspondant Ã  ce transistor */
       
       headbranch[0] = cone->BRVDD ;
       headbranch[1] = cone->BRVSS ;
@@ -5624,7 +5624,7 @@ float tas_get_point_rsat_br_delta( float *tabi, float *tabv, int n, int k, int l
 /* 
   calcule le point isat/vsat qui permet d'obtenir la meilleur caracteristique 
   statique rlin/rsat d'une branche.
-  cette fonction est utilisée pour les switchs.
+  cette fonction est utilisÃ©e pour les switchs.
 */
 void tas_get_point_rsat_br( branch_list *branch, 
                             double       vddmax, 
@@ -6648,7 +6648,7 @@ double gate_th;
 
   if (cgda >= 0.0 && cgpa >= 0.0 && cgdc >= 0.0 && cgpc >= 0.0) {
 
-    /* facteur de prise en compte de l'overshoot déchargé par le 
+    /* facteur de prise en compte de l'overshoot dÃ©chargÃ© par le 
        transistor conflictuel */
     kf = 1.0 - (vddmax - vtp - VT) / (vddmax - vtp);
 
@@ -8510,11 +8510,11 @@ void tas_getinverterforswitch( cone_list *cone, link_list *activelink, lotrs_lis
     *retdelay = TAS_NOTIME ;
 
   /*
-    Détermine la position du maillon actif par rapport au maillon dégradé.
-    maillon = 'a' (after)  : le maillon actif commute après le maillon dégradé
-    maillon = 'b' (before) : le maillon actif commute avant le maillon dégradé
-    ( après ou avant c'est par rapport à l'inverseur entre les deux maillons : 
-    ça ne considère pas un éventuel temps de propagation négatif pour
+    DÃ©termine la position du maillon actif par rapport au maillon dÃ©gradÃ©.
+    maillon = 'a' (after)  : le maillon actif commute aprÃ¨s le maillon dÃ©gradÃ©
+    maillon = 'b' (before) : le maillon actif commute avant le maillon dÃ©gradÃ©
+    ( aprÃ¨s ou avant c'est par rapport Ã  l'inverseur entre les deux maillons : 
+    Ã§a ne considÃ¨re pas un Ã©ventuel temps de propagation nÃ©gatif pour
     l'inverseur ).
   */
   
@@ -8565,9 +8565,9 @@ void tas_getinverterforswitch( cone_list *cone, link_list *activelink, lotrs_lis
   pairlink     = (link_list*)(pairlinklist->DATA);
   freechain( pairlinklist );
 
-  /* delta mesure le retard entre le maillon actif et le maillon dégradé.
-     delta > 0 : le maillon dégradé commute après le maillon actif 
-     delta < 0 : le maillon dégradé commuté avant le maillon actif
+  /* delta mesure le retard entre le maillon actif et le maillon dÃ©gradÃ©.
+     delta > 0 : le maillon dÃ©gradÃ© commute aprÃ¨s le maillon actif 
+     delta < 0 : le maillon dÃ©gradÃ© commutÃ© avant le maillon actif
   */
 
   ptype = getptype( edge->USER, TAS_DELAY_MAX );
@@ -8660,7 +8660,7 @@ double tas_getcdeltaswitch_static( link_list *branch,
   tpiv_set_voltage_driving_lotrs( activelink->ULINK.LOTRS, vgactive );
   tpiv_set_voltage_driving_lotrs( pairlink->ULINK.LOTRS,   vgpair   );
 
-  /* calcule le courant de la branche et récupère la polarisation de la sortie */
+  /* calcule le courant de la branche et rÃ©cupÃ¨re la polarisation de la sortie */
   tpiv_i_brdual( branch, vdd, 0.0, imax, YES );
   vout = tas_get_vpol( linkout );
   
@@ -8997,8 +8997,8 @@ void tas_getcdeltaswitch( cone_list *cone,
   }
   
   /* 
-    cas où le maillon dégradé commute avant le maillon actif : il faut compter une charge
-    initiale déchargée par le maillon dégradé.
+    cas oÃ¹ le maillon dÃ©gradÃ© commute avant le maillon actif : il faut compter une charge
+    initiale dÃ©chargÃ©e par le maillon dÃ©gradÃ©.
   */
 
   vs   = vdd ;
@@ -9008,16 +9008,16 @@ void tas_getcdeltaswitch( cone_list *cone,
   if( deltaref < 0 ) {
 
     /*
-    Calcul du delta de charge : on prend un modèle extrèmement simple car :
-    - on suppose que les fronts sur les 2 commandes sont  dans le modèle
+    Calcul du delta de charge : on prend un modÃ¨le extrÃ¨mement simple car :
+    - on suppose que les fronts sur les 2 commandes sont  dans le modÃ¨le
       scm, sans prendre en compte qu'ici on calcule l'effet que ces 2 fronts ne sont
       pas identiques.
     - on a que les branches duales, pas les branches contenant le maillon
-      dégradé
-    - effet constant, indépendant du front d'entrée
+      dÃ©gradÃ©
+    - effet constant, indÃ©pendant du front d'entrÃ©e
     */
    
-    /* recrée la branche */
+    /* recrÃ©e la branche */
     headlink = NULL ;
     for( link=link0 ; link != activelink ; link = link->NEXT ) {
       headlink = addlink( headlink, link->TYPE, link->ULINK.PTR, link->SIG );
@@ -9031,7 +9031,7 @@ void tas_getcdeltaswitch( cone_list *cone,
     else 
       r = 0.0 ;
 
-    /* modèle RC pour calculer la charge perdue dans la branche pendant un temps delta */
+    /* modÃ¨le RC pour calculer la charge perdue dans la branche pendant un temps delta */
 
     if( headlink )
       freelklist( headlink ) ;
@@ -9102,9 +9102,9 @@ void tas_getcdeltaswitch( cone_list *cone,
       lt  = t ;
     }
 
-    /* Ici, on a pas compté le conflit. On vérifie qu'à l'instant où le maillon 
-    non dégradé devient passant (son entrée atteind vt) la tension vs n'est
-    pas inférieur à la tension statique */
+    /* Ici, on a pas comptÃ© le conflit. On vÃ©rifie qu'Ã  l'instant oÃ¹ le maillon 
+    non dÃ©gradÃ© devient passant (son entrÃ©e atteind vt) la tension vs n'est
+    pas infÃ©rieur Ã  la tension statique */
 
     if( linkconf0 ) {
       vgdeg = vtc + (vdd-vtc)*tanh(-deltaref/fdeg);
@@ -9131,9 +9131,9 @@ void tas_getcdeltaswitch( cone_list *cone,
   }
 
   /*
-  Calcule en faisant une simulation très simplifiée l'écart de charge entre une
-  commutation symétrique des deux maillons et la commutation décalée.
-  Pb : l'impacte de vs est très significatif sur les switchs car Rsat est très
+  Calcule en faisant une simulation trÃ¨s simplifiÃ©e l'Ã©cart de charge entre une
+  commutation symÃ©trique des deux maillons et la commutation dÃ©calÃ©e.
+  Pb : l'impacte de vs est trÃ¨s significatif sur les switchs car Rsat est trÃ¨s
   faible.
   La tension initiale de la sortie vaut vs.
   */
@@ -9227,9 +9227,9 @@ void tas_getcdeltaswitch( cone_list *cone,
 }
 
 /* Pour les switchs :
-   Renvoie la valeur de la tension de grille du maillon dégradé à l'instant t
+   Renvoie la valeur de la tension de grille du maillon dÃ©gradÃ© Ã  l'instant t
    du maillon actif (tjs vue comme une transition montante).
-   Renvoie < 0.0 si problème.
+   Renvoie < 0.0 si problÃ¨me.
 */
 
 float tas_getvgsdeg( link_list *pairlink, float delta, float fdeg, float t )
@@ -9259,8 +9259,8 @@ float tas_getvgsdeg_old( cone_list *cone, link_list *pairlink, float delta, floa
     return 0.0 ;
 
   /* approximation : fdeg = fin
-     consequence : le temps qui sépare les vt des maillons actifs et 
-     dégradés vaut delta.
+     consequence : le temps qui sÃ©pare les vt des maillons actifs et 
+     dÃ©gradÃ©s vaut delta.
   */
   fdeg = tas_getfin( pairlink, cone, 0.0, NULL, NULL, NULL, NULL );
   fdeg = stm_thr2scm( fdeg / TTV_UNIT, STM_DEFAULT_SMINR, STM_DEFAULT_SMAXR,
@@ -9450,7 +9450,7 @@ float tas_getrintercone( cone_list *cone, cone_list *cone_avant )
           head_edge  = (chain_list*)ptl_rc_cone_edge->DATA ;
           headpathrc = NULL ;
 
-          /* Pour l'instant, récupère le premier délai RC qui vient. */
+          /* Pour l'instant, rÃ©cupÃ¨re le premier dÃ©lai RC qui vient. */
           for( chain_avant = head_avant ; chain_avant ; chain_avant = chain_avant->NEXT ) {
             locon_avant = (locon_list*)chain_avant->DATA ;
             if( locon_avant->PNODE ) {

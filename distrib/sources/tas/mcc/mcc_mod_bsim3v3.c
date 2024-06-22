@@ -1818,7 +1818,7 @@ if ( calcul_dimension ) {
           }
         }
       }
-      /* fin modif, pour la suite de capmod=0, j'ai remplacé vgs par vgseff */
+      /* fin modif, pour la suite de capmod=0, j'ai remplacÃ© vgs par vgseff */
 
       //===> subthreshold region
       if ( Vgseff < Vth ) {
@@ -1888,7 +1888,7 @@ if ( calcul_dimension ) {
                  (1.0-Abulk)*c3*vds/ (12.0*c1));
             /* documentation bsim3v3 fausse : qd non continue en vdsat_cv 
             Qd = -Cox* (c2/2.0+c3/4.0-c3*c3/(24.0*c1));
-            correction d'après source de ngspice */
+            correction d'aprÃ¨s source de ngspice */
             Qd = Cox*( 0.75*c3 - 0.5*c2 - 0.125*c3*c3/(c2-0.5*c3) );
             Qs = - (Qg+Qb+Qd);
           }

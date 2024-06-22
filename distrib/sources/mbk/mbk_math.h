@@ -1,16 +1,16 @@
 /******************************************************************************\
 
-Bibliothèque de manipulation des objets mathématiques MBK.
+BibliothÃ¨que de manipulation des objets mathÃ©matiques MBK.
 
 \******************************************************************************/
 
-// Définitions locales 
+// DÃ©finitions locales 
 
 typedef struct mbk_pwl_point {
   struct mbk_pwl_point  *PREV;
   struct mbk_pwl_point  *NEXT;
   double                 X;     // Point d'abscisse
-  double                 Y;     // Ordonnée
+  double                 Y;     // OrdonnÃ©e
   double                 P;     // Pente sur ce point
   double                 O;     // Origine de la pente
 } mbk_pwl_point_list ;

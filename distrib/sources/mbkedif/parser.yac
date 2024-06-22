@@ -1173,7 +1173,7 @@ char        mode;
 	static char Vierge = 1; /* first time */
 
 #ifndef __ALL__WARNING__
-	mode	= '®';
+	mode	= 'Â®';
 #endif
 	yylineno = 0;
 

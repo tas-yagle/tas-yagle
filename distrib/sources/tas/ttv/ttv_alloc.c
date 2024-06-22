@@ -1722,7 +1722,7 @@ ttvpath_list *pthead ;
 /*                        function ttv_allocfind()                          */
 /* parametres :                                                              */
 /*                                                                           */
-/* ajoute un element à la recherche                                          */
+/* ajoute un element Ã  la recherche                                          */
 /*****************************************************************************/
 
 void ttv_initfindstb(ttvfind_stb_stuff *sfs)

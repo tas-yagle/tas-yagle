@@ -1117,7 +1117,7 @@ static void ttv_uncachenodelines(ttvfig_list *ttvfig,ttvfig_list *ttvins,ttveven
 /* ptsig : latch d'erreur                                                    */
 /* type : type de recheche                                                   */
 /*                                                                           */
-/* dit si un connecteur ne doit pas être traversé                            */
+/* dit si un connecteur ne doit pas Ãªtre traversÃ©                            */
 /*****************************************************************************/
 int ttv_islocononlyend(ttvfig,node,type)
      ttvfig_list *ttvfig ;
@@ -1146,7 +1146,7 @@ int ttv_islocononlyend(ttvfig,node,type)
 /* ptsig : latch d'erreur                                                    */
 /* type : type de recheche                                                   */
 /*                                                                           */
-/* dit si un connecteur ne doit pas être traversé                            */
+/* dit si un connecteur ne doit pas Ãªtre traversÃ©                            */
 /*****************************************************************************/
 int ttv_islineonlyend(ttvfig,line,type)
      ttvfig_list *ttvfig ;

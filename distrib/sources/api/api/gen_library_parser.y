@@ -367,7 +367,7 @@ lib_entry *APIReadLibrary(char *library, char *path, FILE *debug)
    file=library;        /*var. glob. */
    /* model file exists? */
    if (!(yyin = mbkfopen(library, NULL, READ_TEXT))) {
-       fprintf(stderr, "Cannot open library file %s (error n°%d)\n",
+       fprintf(stderr, "Cannot open library file %s (error nÂ°%d)\n",
                library,errno);
        EXIT(-2);
    }

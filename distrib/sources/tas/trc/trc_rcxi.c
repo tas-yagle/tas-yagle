@@ -26,8 +26,8 @@ Date     : $Date: 2007/07/04 12:49:42 $
 /******************************************************************************\
 rcxi_error
 
-Chaine de caractère indiquant la raison d'une erreur sur la dernière fonction
-rcxi appellée.
+Chaine de caractÃ¨re indiquant la raison d'une erreur sur la derniÃ¨re fonction
+rcxi appellÃ©e.
 
 \******************************************************************************/
 
@@ -36,9 +36,9 @@ char rcxi_error[1024];
 /******************************************************************************\
 rcxi_getcapa()
 
-Renvoie la capacité totale sur un net. 
+Renvoie la capacitÃ© totale sur un net. 
 
-Entrée
+EntrÃ©e
 
   lofig
   losig
@@ -48,7 +48,7 @@ Entrée
 
 Sortie
 
-  capa          La somme des capacités demandées.
+  capa          La somme des capacitÃ©s demandÃ©es.
 \******************************************************************************/
 
 int rcxi_getcapa( lofig_list *lofig,
@@ -315,7 +315,7 @@ int rcxi_getagrlist( lofig_list *lofig, losig_list *losig, chain_list **head )
 
 /******************************************************************************\
 rcxi_freeagrlist()
-Libère toutes les infos précédement allouées par rcx_getagrlist()
+LibÃ¨re toutes les infos prÃ©cÃ©dement allouÃ©es par rcx_getagrlist()
 \******************************************************************************/
 int rcxi_freeagrlist( lofig_list *lofig, losig_list *losig, chain_list *head )
 {
@@ -341,7 +341,7 @@ rcxparam* rcxi_getrcxparam( lofig_list *lofig, losig_list *losig )
 /******************************************************************************\
 rcxi_getmiller()
 Calcul l'effet Miller entre un signal victime et son agresseur. Il faut
-avoir executé un rcxi_getagrlist() sur victime.
+avoir executÃ© un rcxi_getagrlist() sur victime.
 type = RCXI_MAX | RCXI_MIN | RCX_FORCED
 \******************************************************************************/
 int rcxi_getmiller( lofig_list *lofig, 
@@ -426,8 +426,8 @@ int rcxi_getmiller( lofig_list *lofig,
 
 /******************************************************************************\
 rcxi_getcoefctc()
-Détermine le coefficient à appliquer sur les capacités à la masse pour prendre
-en compte l'effet des capacités de couplage globales.
+DÃ©termine le coefficient Ã  appliquer sur les capacitÃ©s Ã  la masse pour prendre
+en compte l'effet des capacitÃ©s de couplage globales.
 type = RCXI_MAX | RCXI_MIN
 \******************************************************************************/
 int rcxi_getcoefctc( lofig_list *lofig,

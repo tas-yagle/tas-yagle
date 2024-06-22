@@ -1316,7 +1316,7 @@ stb_initcmd (stbfig, cmd, active, verif, type, typesig, ctk)
        }
       
    /* si flip flop ou break la phase de fermeture reference c'est la commande 
-      sinon c'est l'evenement opposé à la commance */
+      sinon c'est l'evenement opposÃ© Ã  la commance */
       if (((event == cmd)
            && ((typesig == STB_TYPE_FLIPFLOP) || (typesig == STB_TYPE_BREAK)))
           || ((((event != cmd) && (STB_OPEN_LATCH_PHASE == 'N')) ||

@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                            */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
-/*    Auteur(s) : Grégoire AVOT                                             */
+/*    Auteur(s) : GrÃ©goire AVOT                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -448,8 +448,8 @@ int  stb_ctk_noise_node( stbfig_list    *stbfig,
 }
 
 /******************************************************************************\
-Fonction de comparaison pour trier les tableaux de valeur de bruit. Le critère
-de trie doit être mis dans la variable globale STB_CTK_NOISE_COMPARE.
+Fonction de comparaison pour trier les tableaux de valeur de bruit. Le critÃ¨re
+de trie doit Ãªtre mis dans la variable globale STB_CTK_NOISE_COMPARE.
 \******************************************************************************/
 int stb_ctk_noise_compare( stb_ctk_tab_stat *n1, stb_ctk_tab_stat *n2 )
 {
@@ -638,7 +638,7 @@ void stb_ctk_sort_stat( stb_ctk_stat *stat,
 
 /*
 
-Met à jour la structure stb_ctk_detail si elle est présente.
+Met Ã  jour la structure stb_ctk_detail si elle est prÃ©sente.
 La chain_list head contient une list d'event agresseur du node.
 
 */

@@ -96,7 +96,7 @@ int tas_compelmdelay(losig1,losig2)
 
 /*****************************************************************************/
 /*                        function tas_testelmore()                          */
-/* verifie la validité du delai d'elmore                                     */
+/* verifie la validitÃ© du delai d'elmore                                     */
 /*****************************************************************************/
 void tas_testelmore(lofig)
      lofig_list *lofig ;

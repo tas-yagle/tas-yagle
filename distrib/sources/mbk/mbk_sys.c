@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -186,19 +186,19 @@ char *mode;
 
 /*******************************************************************************
 
-Fonctions d'accès aux fichiers en 32 ou en 64 bits dans un environnement 32
+Fonctions d'accÃ¨s aux fichiers en 32 ou en 64 bits dans un environnement 32
 bits.
 
 Informations :
 
-En écriture, le mode 64 est toujours utilisé.
+En Ã©criture, le mode 64 est toujours utilisÃ©.
 
-En lecture, si la taille du fichier est inférieure à MBK_LIMIT_USELARGEFILE, 
-le mode 32 bits est utilisé, sinon, c'est le mode 64.
-Pour savoir en quel mode a été ouvert un fichier, il faut utiliser 
+En lecture, si la taille du fichier est infÃ©rieure Ã  MBK_LIMIT_USELARGEFILE, 
+le mode 32 bits est utilisÃ©, sinon, c'est le mode 64.
+Pour savoir en quel mode a Ã©tÃ© ouvert un fichier, il faut utiliser 
 mbk_getfileacces, qui renvoit MBK_FILE_STD ou MBK_FILE_LFS.
-Lorsque le programme est compilé en 64 bits, le mode MBK_FILE_STD est toujours
-utilisé puisque les fonctions de base accèdent en mode natif à des fichiers
+Lorsque le programme est compilÃ© en 64 bits, le mode MBK_FILE_STD est toujours
+utilisÃ© puisque les fonctions de base accÃ¨dent en mode natif Ã  des fichiers
 en 64bits.
 MBK_OFFSET_STD et MBK_OFFSET_LFS sont les types qui permettent de stocker les
 offsets, selon le mode renvoyer par mbk_getfileacces(). L'objet MBK_OFFSET_STD
@@ -207,8 +207,8 @@ est stockable dans un long.
 Fonctions de positionnement dans un fichier.
 
 mbkftell() et mbkfseek() permettent d'appeller les fonctions fseek et ftell sans
-se soucier du mode d'acces au fichier. Les offsets étant de taille variable, ils
-sont passés par pointeur. Le type MBK_OFFSET_MAX est un type qui permet de
+se soucier du mode d'acces au fichier. Les offsets Ã©tant de taille variable, ils
+sont passÃ©s par pointeur. Le type MBK_OFFSET_MAX est un type qui permet de
 stocker n'importe quelle taille d'offset. 
 
 *******************************************************************************/
@@ -229,7 +229,7 @@ char mbk_getfileacces( FILE *file )
   return (char)getititem( MBK_TAB_FILE_ACCES, fileno( file ) );
 }
 
-// Renvoie 1 en cas de succès, 0 en cas d'echec.
+// Renvoie 1 en cas de succÃ¨s, 0 en cas d'echec.
 int mbkftell( FILE *file, MBK_OFFSET_MAX *offset )
 {
   int r=1;
@@ -253,7 +253,7 @@ int mbkftell( FILE *file, MBK_OFFSET_MAX *offset )
   return r;
 }
 
-// Renvoie 1 en cas de succès, 0 en cas d'echec.
+// Renvoie 1 en cas de succÃ¨s, 0 en cas d'echec.
 int mbkfseek( FILE *file, MBK_OFFSET_MAX *offset, int whence )
 {
   int r;
@@ -353,7 +353,7 @@ FILE *mbksysfopen( char *name, char *mode, char access )
 
 /******************************************************************************/
 
-// Ouvre un fichier. Le nom UNIX de ce fichier est stocké dans la variable 
+// Ouvre un fichier. Le nom UNIX de ce fichier est stockÃ© dans la variable 
 // global MBKFOPEN_NAME.
 
 FILE *mbkfopentrace(name, extension, mode, access, allowcompress)
@@ -387,7 +387,7 @@ char local ;
   
   if (*mode == 'a') allowcompress=0;
 
-  // Le tableau prefixlist contient la liste des répertoires où acceder les
+  // Le tableau prefixlist contient la liste des rÃ©pertoires oÃ¹ acceder les
   // fichiers.
  
   if( name[0]=='/' ) {
@@ -409,7 +409,7 @@ char local ;
     }
   }
 
-  // Accès aux fichiers
+  // AccÃ¨s aux fichiers
   i=0;
   while( prefixlist[i] ) {
   
@@ -459,9 +459,9 @@ char local ;
       }
     }
 
-    // Stratégies différentes selon le mode d'ouverture :
-    // Ecriture : le format preféré est le compressé, l'autre est effacé
-    // Lecture : le format préféré est le non compressé, l'autre est ignoré
+    // StratÃ©gies diffÃ©rentes selon le mode d'ouverture :
+    // Ecriture : le format prefÃ©rÃ© est le compressÃ©, l'autre est effacÃ©
+    // Lecture : le format prÃ©fÃ©rÃ© est le non compressÃ©, l'autre est ignorÃ©
 
     if( *mode == 'r' ) {
    
@@ -935,8 +935,8 @@ void mbkackchld( int sig )
   int               status;
   autoackchld_list *scanauto, *prevauto, *nextauto;
   
-  /* Le handlert d'interruption SIGCHLD. Il doit avoir été configuré pour ne
-   * pas être interrompu par lui même. */
+  /* Le handlert d'interruption SIGCHLD. Il doit avoir Ã©tÃ© configurÃ© pour ne
+   * pas Ãªtre interrompu par lui mÃªme. */
   
   if( sig != SIGCHLD )
   {
@@ -1016,12 +1016,12 @@ void mbksetautoackchld( int pid )
   sigset_t  set;
   int       status;
 
-  /* Fonction utilisateur : on met dans la liste HEAD_AUTOACKCHLD un numéro de
-   * pid. Dès qu'un processus fils se termine ave ce pid, il sera 
-   * automatiquement supprimé. */
+  /* Fonction utilisateur : on met dans la liste HEAD_AUTOACKCHLD un numÃ©ro de
+   * pid. DÃ¨s qu'un processus fils se termine ave ce pid, il sera 
+   * automatiquement supprimÃ©. */
 
-  /* Dans le déroulement normal du programme, on touche ici à des structures
-   * qui sont modifiées par le handler SIGCHLD. On évite de mettre le bazard en
+  /* Dans le dÃ©roulement normal du programme, on touche ici Ã  des structures
+   * qui sont modifiÃ©es par le handler SIGCHLD. On Ã©vite de mettre le bazard en
    * blindant le morceau de code. */
 
   sigemptyset( &set );
@@ -1031,7 +1031,7 @@ void mbksetautoackchld( int pid )
   if( waitpid( pid, &status, WNOHANG ) == 0 ) /* pas deja termine */
   {
     /* On ne voudra jamais savoir ce qu'est devenu le processus fils pid. On le
-     * met dans la liste des processus à acquiter automatiquement */
+     * met dans la liste des processus Ã  acquiter automatiquement */
     new         = mbkgetautoackchld();
     new->PID    = pid;
     new->NEXT   = HEAD_AUTOACKCHLD ;

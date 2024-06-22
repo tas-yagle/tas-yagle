@@ -490,7 +490,7 @@ void infclone(char *name, inffig_list *ifig);
 chain_list *infGetInfo(inffig_list *myfig, int type);
 int infHasInfo(inffig_list *myfig, int type);
 
-// que viva la revolución
+// que viva la revoluciÃ³n
 void inf_RemoveKey(inffig_list *ifl, int location, char *key, char *type);
 
 chain_list *inf_GetEntriesByType(inffig_list *ifl, char *type, char *val);

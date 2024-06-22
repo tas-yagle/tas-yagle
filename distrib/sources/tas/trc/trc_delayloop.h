@@ -12,27 +12,27 @@ void rcx_delayloop( lofig_list *lofig,      // La figure
                     losig_list *losig,      // Le signal
                     locon_list *locon,      // Le locon emetteur
                     char        sens,       // Le type de transition
-                    RCXFLOAT       smin,    // Front d'entrée minimum
+                    RCXFLOAT       smin,    // Front d'entrÃ©e minimum
                     RCXFLOAT       smax,    //                maximum
                     RCXFLOAT       vmax,    // La tension finale
                     RCXFLOAT       vt,      // Le seuil d'un transistor
-                    RCXFLOAT       extcapa, // La capacité externe
-                    RCXFLOAT      *dmax,    // Le délai maximum calculé
+                    RCXFLOAT       extcapa, // La capacitÃ© externe
+                    RCXFLOAT      *dmax,    // Le dÃ©lai maximum calculÃ©
                     RCXFLOAT      *dmin,    //          minimum
-                    RCXFLOAT      *fmax,    // Le front maximum calculé
+                    RCXFLOAT      *fmax,    // Le front maximum calculÃ©
                     RCXFLOAT      *fmin,    //          minimum
-                    locon_list   **cmax,    // Là où dmax a été trouvé
+                    locon_list   **cmax,    // LÃ  oÃ¹ dmax a Ã©tÃ© trouvÃ©
                     locon_list   **cmin     //       dmin
                   );
 
 RCXFLOAT rcx_loopelmcapa( losig_list  *losig, 
                        long         node,
                        char         sens,      // Le type de transition
-                       RCXFLOAT        smin,      // Front d'entrée minimum
+                       RCXFLOAT        smin,      // Front d'entrÃ©e minimum
                        RCXFLOAT        smax,      //                maximum
                        RCXFLOAT        vmax,      // La tension finale
                        RCXFLOAT        vt,        // Le seuil d'un transistor
-                       RCXFLOAT        extcapa,   // La capacité externe
+                       RCXFLOAT        extcapa,   // La capacitÃ© externe
                        RCXFLOAT        coefctc,
                        lowire_list *wire
                      );
@@ -40,11 +40,11 @@ RCXFLOAT rcx_loopelmcapa( losig_list  *losig,
 void  rcx_loopelmore( losig_list *losig, 
                       locon_list *source, 
                       char  sens,      // Le type de transition
-                      RCXFLOAT smin,      // Front d'entrée minimum
+                      RCXFLOAT smin,      // Front d'entrÃ©e minimum
                       RCXFLOAT smax,      //                maximum
                       RCXFLOAT vmax,      // La tension finale
                       RCXFLOAT vt,        // Le seuil d'un transistor
-                      RCXFLOAT extcapa,   // La capacité externe
+                      RCXFLOAT extcapa,   // La capacitÃ© externe
                       RCXFLOAT coefctc,
                       RCXFLOAT *dmax,
                       RCXFLOAT *dmin,

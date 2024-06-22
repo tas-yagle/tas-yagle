@@ -96,9 +96,9 @@ stm_curve* stm_curve_iv_pi( timing_model *model,
                              &param
                            );
   
-  // Superpose la capacité de conflit.
+  // Superpose la capacitÃ© de conflit.
   
-  // 1) récupère te, ts
+  // 1) rÃ©cupÃ¨re te, ts
   te=0.0;
   ts=0.0;
   for( n=0 ; n < curve->TIME.NBPOINTS && (te==0.0 || ts==0.0) ; n++ ) {

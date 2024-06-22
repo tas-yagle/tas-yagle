@@ -4,7 +4,7 @@
 /*                                                                          */
 /*    Fichier : stm_mod_display.c                                           */
 /*                                                                          */
-/*    © copyright 2003 AVERTEC                                              */
+/*    Â© copyright 2003 AVERTEC                                              */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
 /*    Auteur(s) :   Antony PINTO                                            */
@@ -29,9 +29,9 @@ void stm_displayTable(char *str, timing_table *table)
       for (k = 0; k <= (table->NX)/nb ; k ++)
       {
         x = k*nb + ((k < (table->NX)/nb) ? nb : (table->NX - k*nb)%nb);
-        avt_log (LOGSTM, 1, "/¯¯¯¯¯¯¯¯");
+        avt_log (LOGSTM, 1, "/Â¯Â¯Â¯Â¯Â¯Â¯Â¯Â¯");
         for (i = k*nb; i < x; i ++)
-          avt_log (LOGSTM, 1, "|¯¯¯¯¯¯¯¯¯");
+          avt_log (LOGSTM, 1, "|Â¯Â¯Â¯Â¯Â¯Â¯Â¯Â¯Â¯");
         avt_log (LOGSTM, 1, "\\\n");
 
         avt_log (LOGSTM, 1, "|%8s|",str);
@@ -71,9 +71,9 @@ void stm_displayTable(char *str, timing_table *table)
       {
         x = k*nb + ((k < (table->NX)/nb) ? nb : (table->NX - k*nb)%nb);
         
-        avt_log (LOGSTM, 1, "/¯¯¯¯¯");
+        avt_log (LOGSTM, 1, "/Â¯Â¯Â¯Â¯Â¯");
         for (i = k*nb; i < x; i ++)
-          avt_log (LOGSTM, 1, "|¯¯¯¯¯¯¯¯¯");
+          avt_log (LOGSTM, 1, "|Â¯Â¯Â¯Â¯Â¯Â¯Â¯Â¯Â¯");
         avt_log (LOGSTM, 1, "\\\n");
 
         avt_log (LOGSTM, 1, "|  X  ");

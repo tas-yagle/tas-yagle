@@ -11,14 +11,14 @@
 
 /* USER field of mcc_modellist* */
 #define PSPHASHINSTANCEPARAM 0x00001
-/* index des parametres d'instance. global à un modele                  */
+/* index des parametres d'instance. global Ã  un modele                  */
 #define PSPHASHMODELPARAM    0x00002
-/* index des parametres de modele. global à un modele                   */
+/* index des parametres de modele. global Ã  un modele                   */
 #define PSPCACHECHARGE       0x00003
 /* charges. depend de chaque instance                                   */
 #define PSPCACHEMODEL        0x00004
-/* tableau des couples idx-valeur des parametres de modele. global à un 
-   modèle                                                               */
+/* tableau des couples idx-valeur des parametres de modele. global Ã  un 
+   modÃ¨le                                                               */
 #define PSPCACHEINSTANCE     0x00005
 /* tableau des couples idx-valeur des parametres d'instance. 
    depend de chaque instance                                            */

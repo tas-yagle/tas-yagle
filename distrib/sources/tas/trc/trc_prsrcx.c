@@ -35,24 +35,24 @@ Date     : $Date: 2008/11/28 15:31:42 $
 *                                                                              *
 * rcxparsesignalparasitics()                                                   *
 *                                                                              *
-* Lecture du détail d'un signal.                                               *
-* La première ligne lue doit être "beginparasitics", et la dernière            *
+* Lecture du dÃ©tail d'un signal.                                               *
+* La premiÃ¨re ligne lue doit Ãªtre "beginparasitics", et la derniÃ¨re            *
 * "endparasitics".                                                             *
 *                                                                              *
 * mode = RCXPARSE_LOAD : le signal est lu normalement.                         *
 * mode = RCXPARSE_CACHE : le signal est lu dans un contexte d'utilisation d'un *
 *                         cache sur les RC.                                    *
 * mode = RCXPARSE_MEMPOS : Le signal n'est pas lu, seule une information de    *
-*                          mémorisation de son emplacement est crée.           *
+*                          mÃ©morisation de son emplacement est crÃ©e.           *
 * mode = RCXPARSE_SKIP :   Ignore le signal.                                   *
 *                                                                              *
-* Renvoie le nb d'éléments parasites lus.                                      *
+* Renvoie le nb d'Ã©lÃ©ments parasites lus.                                      *
 *******************************************************************************/
 
 unsigned long int
 rcxparsesignalparasitics( FILE *datafile,       /* Le fichier.                */
                           char *filename,       /* Le nom du fich (parse err).*/
-                          int *nbligne,         /* Le n° de ligne (parse err).*/
+                          int *nbligne,         /* Le nÂ° de ligne (parse err).*/
   
                           lofig_list *lofig,    /* La destination.            */
                           loins_list *ptins,
@@ -62,7 +62,7 @@ rcxparsesignalparasitics( FILE *datafile,       /* Le fichier.                */
                           losig_list *pseudovss,
                           losig_list *pseudovssni,
                           char mode,            /* Mode de lecture            */
-                          chain_list **siglist  /* La liste des signaux ajoutés
+                          chain_list **siglist  /* La liste des signaux ajoutÃ©s
                                                    sur des ctc                */
                         )
 {
@@ -514,7 +514,7 @@ ht         *loadspecified;
           else if( strcasecmp( mot, "ENDEXTERNAL" ) == 0 ) {
             if( ptins )
             // Si on est en train de lire une instance pour la construction
-            // hiérarchique, on s'arrête à la fin des signaux externes.
+            // hiÃ©rarchique, on s'arrÃªte Ã  la fin des signaux externes.
               break;
           }
 
@@ -562,13 +562,13 @@ ht         *loadspecified;
                 }
                 pt->TYPE=(long)scancon;
 
-                // Si on lit une instance, il faut impérativement qu'on ai un
+                // Si on lit une instance, il faut impÃ©rativement qu'on ai un
                 // locon externe.
                 if(ptins && !scancon)
                   fatalerror( filename, nbligne );
 
                 // Si on lit une figure, il n'y a pas de raisons pour qu'on ai
-                // déjà un connecteur externe.
+                // dÃ©jÃ  un connecteur externe.
                 if(lofig && scancon)
                   fatalerror( filename, nbligne );
               }
@@ -584,7 +584,7 @@ ht         *loadspecified;
               if( !loadspecified || 
                   gethtitem( loadspecified, namecon ) != EMPTYHT ) {
 
-                // Ce signal est peut être déjà apparu lors de la lecture d'une
+                // Ce signal est peut Ãªtre dÃ©jÃ  apparu lors de la lecture d'une
                 // CTC. Dans ce cas, on enleve le ptype RCX_UNRESOLVED.
                 
                 if (pt==allcon)
@@ -870,8 +870,8 @@ ht         *loadspecified;
 
                 trc_addlocondir(newcon,dir) ;
                 /* note : les connecteurs internes sont ceux dont on a qu'un
-                          exemplaire car la résistance interne des cellules leur
-                          correspondant est négligée. */
+                          exemplaire car la rÃ©sistance interne des cellules leur
+                          correspondant est nÃ©gligÃ©e. */
               }
               freenum(headpnodeup);
               freenum(headpnodedn);
@@ -997,8 +997,8 @@ ht         *loadspecified;
   if( !lofig || !rcx_isset_cache_lofig( lofig ) )
     fclose(datafile);
 
-  /* Post traitement : Création de la liste des signaux non résolu et mise
-     à 0 des noeud des CTC pour lesquels cette information n'est pas
+  /* Post traitement : CrÃ©ation de la liste des signaux non rÃ©solu et mise
+     Ã  0 des noeud des CTC pour lesquels cette information n'est pas
      significative. */
 
   if( ptins )
@@ -1057,7 +1057,7 @@ ht         *loadspecified;
 
   }
 
-  /* Met à jour le lofigchain quand on est en mode lofig */
+  /* Met Ã  jour le lofigchain quand on est en mode lofig */
 
   if( lofig ) {
     for( ptsig = lofig->LOSIG ; ptsig ; ptsig = ptsig->NEXT ) {
@@ -1094,9 +1094,9 @@ ht         *loadspecified;
 * LIBERER. En cas d'erreur, cette fonction renvoie NULL et status contient     *
 * le code d'erreur :                                                           *
 *            1 Ligne trop longue.                                              *
-*            2 La fin de fichier est atteinte avant un retour à la ligne.      *
+*            2 La fin de fichier est atteinte avant un retour Ã  la ligne.      *
 *            3 Le fichier n'est pas un fichier texte.                          *
-* Le caractère \n de fin de ligne est remplacé par 0.                          *
+* Le caractÃ¨re \n de fin de ligne est remplacÃ© par 0.                          *
 *                                                                              *
 *******************************************************************************/
 
@@ -1163,8 +1163,8 @@ int	*status;
 *                                                                              *
 * nbfield(char*)                                                               *
 *                                                                              *
-* Compte le nombre de champs dans une ligne. Les champs sont matérialisés par  *
-* un ou plusieurs espaces consécutifs.                                         *
+* Compte le nombre de champs dans une ligne. Les champs sont matÃ©rialisÃ©s par  *
+* un ou plusieurs espaces consÃ©cutifs.                                         *
 *                                                                              *
 *******************************************************************************/
 
@@ -1186,10 +1186,10 @@ chain_list *ligne;
 *                                                                              *
 * float getfloat(int,ligne,status);                                            *
 *                                                                              *
-* Renvoie le nombre en virgule flottante se trouvant à la position nb de ligne *
+* Renvoie le nombre en virgule flottante se trouvant Ã  la position nb de ligne *
 * La valeur status contient :                                                  *
-*       1 Tout c'est bien passé                                                *
-*       0 La chaîne ne représente pas un nombre.                               *
+*       1 Tout c'est bien passÃ©                                                *
+*       0 La chaÃ®ne ne reprÃ©sente pas un nombre.                               *
 *                                                                              *
 *******************************************************************************/
 
@@ -1216,10 +1216,10 @@ int		*status;
 *                                                                              *
 * long  getint(int,ligne,status);                                              *
 *                                                                              *
-* Renvoie le nombre entier se trouvant à la position nb de ligne               *
+* Renvoie le nombre entier se trouvant Ã  la position nb de ligne               *
 * La valeur status contient :                                                  *
-*       1 Tout c'est bien passé                                                *
-*       0 La chaîne ne représente pas un nombre.                               *
+*       1 Tout c'est bien passÃ©                                                *
+*       0 La chaÃ®ne ne reprÃ©sente pas un nombre.                               *
 *                                                                              *
 *******************************************************************************/
 
@@ -1342,8 +1342,8 @@ void rcx_parse_free( lofig_list *lofig )
 }
 
 /******************************************************************************\
-Fonction appellée à partir de buildrcx. Le fichier a été drivé, et les offset
-des signaux ont été mémorisé. Il faut juste mettre en place le mécanisme de
+Fonction appellÃ©e Ã  partir de buildrcx. Le fichier a Ã©tÃ© drivÃ©, et les offset
+des signaux ont Ã©tÃ© mÃ©morisÃ©. Il faut juste mettre en place le mÃ©canisme de
 cache. 
 \******************************************************************************/
 void rcx_reload( lofig_list *lofig, char fileacces )

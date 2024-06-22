@@ -8,7 +8,7 @@ mbkcache*         RCN_POOLCACHE[RCN_MAXCACHE];
 int               RCN_NBCACHE=0;
 
 /******************************************************************************\
-Fonction d'accès aux ensembles de cache.
+Fonction d'accÃ¨s aux ensembles de cache.
 \******************************************************************************/
 mbkcache* rcn_getpoolcache( int pool )
 {
@@ -30,9 +30,9 @@ int rcn_getnewpoolcache( void )
 
 /******************************************************************************\
 
-Active le cache pour la lofig. Aucuns réseaux RC ne doit être déjà présent. Si 
-un réseau RC est déjà présent sur un signal, le cache n'est pas actif pour ce 
-signal. Cette fonction est principalement destinée à être utilisée dans les
+Active le cache pour la lofig. Aucuns rÃ©seaux RC ne doit Ãªtre dÃ©jÃ  prÃ©sent. Si 
+un rÃ©seau RC est dÃ©jÃ  prÃ©sent sur un signal, le cache n'est pas actif pour ce 
+signal. Cette fonction est principalement destinÃ©e Ã  Ãªtre utilisÃ©e dans les
 parser.
 
 \******************************************************************************/
@@ -66,7 +66,7 @@ void rcn_enable_cache( lofig_list *lofig,
 
 /******************************************************************************\
 
-Libération du cache
+LibÃ©ration du cache
 
 \******************************************************************************/
 
@@ -96,7 +96,7 @@ void rcn_disable_cache( lofig_list *lofig )
 
 /******************************************************************************\
 
-Récupère les informations relative au cache pour une lofig. Si cette fonction
+RÃ©cupÃ¨re les informations relative au cache pour une lofig. Si cette fonction
 renvoie NULL, c'est que le cache n'est pas actif pour cette lofig.
 
 \******************************************************************************/
@@ -129,7 +129,7 @@ void rcn_alloclofigcache( lofig_list *lofig,
 
 /******************************************************************************\
 
-Met à jour un signal. Sans effet si le cache n'est pas actif.
+Met Ã  jour un signal. Sans effet si le cache n'est pas actif.
 
 \******************************************************************************/
 
@@ -208,7 +208,7 @@ char rcn_islock_signal( lofig_list *lofig, losig_list *losig )
 
 /******************************************************************************\
 
-Force la libération des RC d'un signal
+Force la libÃ©ration des RC d'un signal
 
 \******************************************************************************/
 
@@ -286,7 +286,7 @@ void rcn_checkwritesignal( losig_list *losig )
 
 /******************************************************************************\
 
-Indicateurs de l'état d'un signal.
+Indicateurs de l'Ã©tat d'un signal.
 
 \******************************************************************************/
 
@@ -321,7 +321,7 @@ char rcn_issignal_disablecache( losig_list *losig )
 
 /******************************************************************************\
 
-Fonction appellée par mbk_cache qui libère le signal.
+Fonction appellÃ©e par mbk_cache qui libÃ¨re le signal.
 
 \******************************************************************************/
 
@@ -362,7 +362,7 @@ unsigned long int rcn_cache_release( lofig_list *lofig, losig_list *losig )
 /******************************************************************************\
 
 Lors de l'effacement d'une ctc en raison d'un flush du cache, renvoie 1 si la 
-capacité passée en paramètre peut être retirée, et 0 sinon.
+capacitÃ© passÃ©e en paramÃ¨tre peut Ãªtre retirÃ©e, et 0 sinon.
 
 \******************************************************************************/
 
@@ -376,8 +376,8 @@ char rcn_cache_removable_ctc( loctc_list *ctc )
 
 /******************************************************************************\
 
-Lors de l'ajout d'une capacité lors d'un refresh d'un signal, renvoie 1 si il
-faut ajouter une capacité placée entre les 2 signaux.
+Lors de l'ajout d'une capacitÃ© lors d'un refresh d'un signal, renvoie 1 si il
+faut ajouter une capacitÃ© placÃ©e entre les 2 signaux.
 
 \******************************************************************************/
 

@@ -8,7 +8,7 @@ rcxfile* rcx_init_driver( lofig_list *lofig, int iscache )
 
   file = rcx_file_alloc();
  
-  // Stratégie de compression / cache : si le cache est actif, il ne faut pas
+  // StratÃ©gie de compression / cache : si le cache est actif, il ne faut pas
   // compresser le fichier.
  
   if( iscache ) {
@@ -94,7 +94,7 @@ rcxfile* rcx_file_alloc( void )
 /******************************************************************************\
 rcx_driver_sort_losig()
 
-Renvoie une liste chainée des signaux à driver dans le fichier RCX dans cet
+Renvoie une liste chainÃ©e des signaux Ã  driver dans le fichier RCX dans cet
 ordre. Lorsque le champs DATA est nul, il faut appeller la fonction 
 rcx_end_external().
 \******************************************************************************/
@@ -255,10 +255,10 @@ void rcxprintlocon( rcxfile *file, rcx_list *rcxdata )
   ptype_list  *ptl ;
   num_list    *headup, *headdn ;
   
-  /* Note : Toute la difficulté est de prendre en compte les locons qui ont le
+  /* Note : Toute la difficultÃ© est de prendre en compte les locons qui ont le
      meme getloconrcxname() mais qui ne sont physiquement pas les meme. Dans ce
-     cas on ne garde qu'un seul de ces locons. Ceux éliminés sont renommés 
-     pour conserver les capacités.
+     cas on ne garde qu'un seul de ces locons. Ceux Ã©liminÃ©s sont renommÃ©s 
+     pour conserver les capacitÃ©s.
   */
 
   tabcapa = alloca(sizeof(float)*32);
@@ -267,7 +267,7 @@ void rcxprintlocon( rcxfile *file, rcx_list *rcxdata )
   sortlocon = (chain_list**)alloca( sizeof( chain_list* ) * n );
   nomlocon  = addht(50);
 
-  /* Les éléments du tableau sortlocon sont des chain_list de locon ayant
+  /* Les Ã©lÃ©ments du tableau sortlocon sont des chain_list de locon ayant
      le meme getloconrcxname(). A partir d'un getloconrcxname(), on retrouve
      l'index dans le tableau sortlocon avec la table de hash nomlocon. */
 
@@ -305,10 +305,10 @@ void rcxprintlocon( rcxfile *file, rcx_list *rcxdata )
 
   delht( nomlocon ) ; nomlocon = NULL ;
 
-  /* Pour chaque liste dans le tableau sortlocon, vérifie et déplace les
-     locon qui ne sont pas physiquement identiques. Le nombre 'n' d'éléments 
-     dans le tableau peut être augmenté, et les listes contenir des champs 
-     DATA inutilisés.
+  /* Pour chaque liste dans le tableau sortlocon, vÃ©rifie et dÃ©place les
+     locon qui ne sont pas physiquement identiques. Le nombre 'n' d'Ã©lÃ©ments 
+     dans le tableau peut Ãªtre augmentÃ©, et les listes contenir des champs 
+     DATA inutilisÃ©s.
   */
 
   for( i=0 ; i<n ; i++ ) {
@@ -319,7 +319,7 @@ void rcxprintlocon( rcxfile *file, rcx_list *rcxdata )
 
     locon = (locon_list*)sortlocon[i]->DATA ;
 
-    /* Elimine les connecteurs physiques différents */
+    /* Elimine les connecteurs physiques diffÃ©rents */
     sortlocon[n] = NULL ;
     increase_n = 'N' ;
     for( scanchain = sortlocon[i]->NEXT ; 
@@ -355,7 +355,7 @@ void rcxprintlocon( rcxfile *file, rcx_list *rcxdata )
       n++;
   }
 
-  /* Calcule les capacités et drive les connecteurs */
+  /* Calcule les capacitÃ©s et drive les connecteurs */
   for( i=0 ; i<n ; i++ ) {
   
     for( j=0 ; j<32 ; j++ ) tabcapa[j]=0.0 ;
@@ -541,7 +541,7 @@ void rcxprintlocon( rcxfile *file, rcx_list *rcxdata )
     }
     rcx_file_print( file, "\n" );
 
-    /* Libération des chain courantes */
+    /* LibÃ©ration des chain courantes */
     for( scanchain = sortlocon[i] ; scanchain ; scanchain = scanchain->NEXT ) {
       locon = scanchain->DATA ;
       if( !locon )

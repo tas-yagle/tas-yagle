@@ -48,7 +48,7 @@ void gen_API_Action_Initialize ()// commentaire pour desactiver l'ajout de token
 void gen_API_Action_Terminate ()// commentaire pour desactiver l'ajout de token
 {
   recur--;
-  if (recur<0) avt_fprintf(stderr,"¤6internal_error in gen_API¤.");
+  if (recur<0) avt_fprintf(stderr,"Â¤6internal_error in gen_APIÂ¤.");
 
   mbkSwitchContext(&gen_api_ctx[recur]);
   /*

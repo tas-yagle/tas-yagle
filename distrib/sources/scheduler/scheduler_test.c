@@ -72,7 +72,7 @@ void addsig(Scheduler *S, char *name, char *func, char *a, char *b, char *c, int
 int updatefunc(Scheduler *S, int index, void *data)
 {
   int newval=*(int *)data;
-  if (DEBUG) avt_fprintf(stdout,"date ¤+%ld¤. : update '%s' %d -> %d\n",S->Date,allsigs[index].nom, allsigs[index].val, newval);
+  if (DEBUG) avt_fprintf(stdout,"date Â¤+%ldÂ¤. : update '%s' %d -> %d\n",S->Date,allsigs[index].nom, allsigs[index].val, newval);
   if (allsigs[index].val!=newval)
     {
       if (DUMPVCD)
@@ -160,8 +160,8 @@ void pattern(Scheduler *S, long min, long next)
       long delta=nextpatterndate-min;
       int newval, var;
       char name[10];
-      if (DEBUG) avt_fprintf(stdout, "¤2reading patterns at %ld¤./%ld\n",nextpatterndate,min);
-      else avt_fprintf(stdout, "\r¤2reading patterns at %ld¤./%ld",nextpatterndate,min);
+      if (DEBUG) avt_fprintf(stdout, "Â¤2reading patterns at %ldÂ¤./%ld\n",nextpatterndate,min);
+      else avt_fprintf(stdout, "\rÂ¤2reading patterns at %ldÂ¤./%ld",nextpatterndate,min);
       switch (nextpatterndate)
         {
         case 0:

@@ -2024,7 +2024,7 @@ ttvpath_list *ttv_mergepathlists(ttvpath_list *pathx, int nbx, ttvpath_list *pat
 {
   ttvpath_list *pathr=NULL, *pathxx, *pathh=NULL;
   int nbe;
-  // les deux liste sont inversées, ont garde les max elem de la fin
+  // les deux liste sont inversÃ©es, ont garde les max elem de la fin
   nbe=0;
   *nbtot=0;
   while(pathx != NULL || path != NULL)

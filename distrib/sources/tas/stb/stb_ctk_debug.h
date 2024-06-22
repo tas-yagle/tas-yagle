@@ -3,7 +3,7 @@ extern int CTK_LOGLEVEL;
 void stb_log_chain( stbfig_list *stbfig, chain_list *headagr, char *title );
 void stb_ctkprint( int, char*, ... );
 void stb_debug_stab( stbfig_list *stbfig, ttvevent_list *evtvic, chain_list *headagr );
-/****** infos conso mémoire *******/
+/****** infos conso mÃ©moire *******/
 #define STBMEMPASS 0x6000001A
 void stb_display_mem( stbfig_list *stbfig );
 void stb_mem_hash( ptype_list *USER, long pthash, long ptptype, unsigned int *util, unsigned int *real, unsigned int *lost);

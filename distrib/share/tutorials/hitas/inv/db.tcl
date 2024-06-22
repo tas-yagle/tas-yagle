@@ -21,7 +21,7 @@ set fig [hitas inv]
 
 puts ""
 puts "Power supply: [ttv_GetTimingFigureProperty $fig DEF_SUPPLY]V"
-puts "Temperature: [ttv_GetTimingFigureProperty $fig TEMP]°C"
+puts "Temperature: [ttv_GetTimingFigureProperty $fig TEMP]Â°C"
 set sig [ttv_GetTimingSignal $fig y]
 puts ""
 puts "y signal capacitance: [ttv_GetTimingSignalProperty $sig CAPA]fF"

@@ -17,15 +17,15 @@
 /******************************************************************************\
 stm_solvepi()
 
- Détermine le temps de (dé)charge d'une cellule en PI alimentée par un
- générateur de courant constant.
+ DÃ©termine le temps de (dÃ©)charge d'une cellule en PI alimentÃ©e par un
+ gÃ©nÃ©rateur de courant constant.
 
  Arguments : 
 
  vth : tension de seuil, typiquement vdd/2.
- i   : courant dans le générateur de courant.
- r   : résistance de la cellule en PI.
- c1  : capacité de la cellule en PI.
+ i   : courant dans le gÃ©nÃ©rateur de courant.
+ r   : rÃ©sistance de la cellule en PI.
+ c1  : capacitÃ© de la cellule en PI.
  c2  : idem
 
  Retour : Temps de (de)charge.
@@ -39,11 +39,11 @@ float stm_solvepi (float i, float r, float c1, float c2, float vth)
 	int n;
 	float delta;
 
-	/* Resolution (t) de l'équation :
+	/* Resolution (t) de l'Ã©quation :
 	   *   v = vi + i * ( t/(c1+c2) + r*c2^2/(c1+c2)^2*(1-e(-(c1+c2)/r/c1/c2*t)) )
-	   *   cohérence :
-	   *   i doit être positif pour v > vi
-	   *   i doit être négatif pour v < vi
+	   *   cohÃ©rence :
+	   *   i doit Ãªtre positif pour v > vi
+	   *   i doit Ãªtre nÃ©gatif pour v < vi
 	 */
 
 	a = i * r * c2 * c2 / (c1 + c2) / (c1 + c2);
@@ -53,8 +53,8 @@ float stm_solvepi (float i, float r, float c1, float c2, float vth)
 	/* Valeur initiale : le temps moyen d'une porte */
 	t = 20.0;
 
-	/* Ensuite on résoud en utilisant comme solution l'équation de droite
-	   * correspondant à la dérivée */
+	/* Ensuite on rÃ©soud en utilisant comme solution l'Ã©quation de droite
+	   * correspondant Ã  la dÃ©rivÃ©e */
 
 	n = 1;
 	do {
@@ -68,7 +68,7 @@ float stm_solvepi (float i, float r, float c1, float c2, float vth)
 		if (delta < 0.0)
 			delta = -delta;
 	}
-	while (delta > 1.0);		/* On demande une précision de 1pS */
+	while (delta > 1.0);		/* On demande une prÃ©cision de 1pS */
 
 	return t;
 }
@@ -76,14 +76,14 @@ float stm_solvepi (float i, float r, float c1, float c2, float vth)
 /******************************************************************************\
 stm_capaeq()
 
-Renvoie la capacité équivalente vue par un générateur de courant constant 
+Renvoie la capacitÃ© Ã©quivalente vue par un gÃ©nÃ©rateur de courant constant 
 lorsque celui-ci attaque une charge en pi.
 
 Arguments :
 
 i               Valeur du courant constant.
 r, c1, c2       Charge en pi.
-vth             Tension à laquelle est calculée cette capacité équivalente.
+vth             Tension Ã  laquelle est calculÃ©e cette capacitÃ© Ã©quivalente.
 \******************************************************************************/
 
 float stm_capaeq (float i, float r, float c1, float c2, float vth, char *signame)
@@ -105,7 +105,7 @@ float stm_capaeq (float i, float r, float c1, float c2, float vth, char *signame
 
 /******************************************************************************\
 stm_calc_pi_pwl_plot
-Fonction de debuggage : affiche la réponse d'une charge en pi.
+Fonction de debuggage : affiche la rÃ©ponse d'une charge en pi.
 \******************************************************************************/
 void stm_calc_pi_pwl_plot( mbk_laplace *laplace,
                            mbk_pwl     *lines,
@@ -161,7 +161,7 @@ void stm_calc_pi_pwl_plot( mbk_laplace *laplace,
                            
 /******************************************************************************\
 stm_calc_c_pwl
-Calcule la tension sur le premier noeud de la capacité à l'instant t.
+Calcule la tension sur le premier noeud de la capacitÃ© Ã  l'instant t.
 \******************************************************************************/
 double stm_calc_c_pwl( mbk_laplace *laplace,
                        double t,
@@ -188,7 +188,7 @@ double stm_calc_c_pwl( mbk_laplace *laplace,
 
 /******************************************************************************\
 stm_calc_pi_pwl
-Calcule la tension sur le premier noeud de la charge en pi à l'instant t.
+Calcule la tension sur le premier noeud de la charge en pi Ã  l'instant t.
 \******************************************************************************/
 double stm_calc_pi_pwl( mbk_laplace *laplace,
                         double t,
@@ -307,9 +307,9 @@ double stm_calc_pi_rlin( double rl, double vdd, double r, double c1, double c2, 
 
 /******************************************************************************\
 stm_calc_pi_pwl_instant
-Calcule l'instant où la tension sur le premier noeud de la charge en pi
+Calcule l'instant oÃ¹ la tension sur le premier noeud de la charge en pi
 atteind vth.
-La réponse doit être strictement croissante.
+La rÃ©ponse doit Ãªtre strictement croissante.
 \******************************************************************************/
 double stm_calc_pi_pwl_instant( mbk_laplace *laplace,
                                 double vth,
@@ -347,7 +347,7 @@ double stm_calc_pi_pwl_instant( mbk_laplace *laplace,
 
   if( n >= 100 ) return -1.0;
 
-  // Résolution par dichotomie
+  // RÃ©solution par dichotomie
  
   n=0;
   do {
@@ -383,8 +383,8 @@ double stm_calc_pi_pwl_instant( mbk_laplace *laplace,
 /******************************************************************************\
 stm_capaeq_laplace()
 
-Renvoie la capacité équivalente qui permet d'obtenir le temps tpi lorque le
-générateur est décrit sous la forme d'un ensemble de droites.
+Renvoie la capacitÃ© Ã©quivalente qui permet d'obtenir le temps tpi lorque le
+gÃ©nÃ©rateur est dÃ©crit sous la forme d'un ensemble de droites.
 \******************************************************************************/
 
 double stm_capaeq_laplace( mbk_laplace *laplace, double tpi, double vth )
@@ -416,17 +416,17 @@ double stm_capaeq_laplace( mbk_laplace *laplace, double tpi, double vth )
 /******************************************************************************\
 stm_capaeq_fn()
 
-Renvoie la capacité équivalente vue par un générateur de courant décrit par une
+Renvoie la capacitÃ© Ã©quivalente vue par un gÃ©nÃ©rateur de courant dÃ©crit par une
 fonction lorsque celui-ci attaque une charge en pi.
 
 Arguments :
 
-fn              Fonction à appeler pour déterminer i=f(t).
-data            Paramètre passé à cette fonction.
-tmax            Temps à partir duquel on considère que le générateur est 
+fn              Fonction Ã  appeler pour dÃ©terminer i=f(t).
+data            ParamÃ¨tre passÃ© Ã  cette fonction.
+tmax            Temps Ã  partir duquel on considÃ¨re que le gÃ©nÃ©rateur est 
                 constant.
 r, c1, c2       Charge en pi.
-vth             Tension à laquelle est calculée cette capacité équivalente.
+vth             Tension Ã  laquelle est calculÃ©e cette capacitÃ© Ã©quivalente.
 \******************************************************************************/
 
 float stm_capaeq_fn( char (*fn)( void*, double, double* ),
@@ -462,15 +462,15 @@ float stm_capaeq_fn( char (*fn)( void*, double, double* ),
   }
   else {
 
-    // Création de l'approximation par segments de droites
-    // du générateur.
+    // CrÃ©ation de l'approximation par segments de droites
+    // du gÃ©nÃ©rateur.
     lines = mbk_pwl_create( fn, data, 0.0, tmax, NULL ) ;
     if( !lines ) {
       avt_errmsg (STM_ERRMSG,"003", AVT_ERROR, signame?signame:"?");
       return fabs(c1+c2) ;
     }
    
-    // Calculs des paramètres constants pour les transformées de Laplace
+    // Calculs des paramÃ¨tres constants pour les transformÃ©es de Laplace
 
     laplace = mbk_pwl_to_laplace( lines, sizeof( stm_laplace_capaeq ) );
     ct = c1 + c2 ;
@@ -505,7 +505,7 @@ float stm_capaeq_fn( char (*fn)( void*, double, double* ),
       ((stm_laplace_capaeq*)laplace->DATA)[i].k7 = k7 ;
     }
    
-    // Estimation de la solution recherchée (pour accélérer les convergences).
+    // Estimation de la solution recherchÃ©e (pour accÃ©lÃ©rer les convergences).
     
     if( !fn( data, tmax, &iestim ) ) {
       mbk_free_laplace( laplace );
@@ -541,7 +541,7 @@ float stm_capaeq_fn( char (*fn)( void*, double, double* ),
       tpi = tpi + tplin ;
     }
     
-    // Détermination de la capacité équivalente.
+    // DÃ©termination de la capacitÃ© Ã©quivalente.
     
     c = stm_capaeq_laplace( laplace, tpi, vth );
 

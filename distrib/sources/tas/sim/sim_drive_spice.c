@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                              */
 /*    Tous droits reserves                                                    */
 /*                                                                            */
-/*    Auteur(s) : Grégoire AVOT                                               */
+/*    Auteur(s) : GrÃ©goire AVOT                                               */
 /*                                                                            */
 /******************************************************************************/
 
@@ -18,7 +18,7 @@
 
 /******************************************************************************\
 
-Fonction de haut niveau pour driver et simuler un modèle de simulation.
+Fonction de haut niveau pour driver et simuler un modÃ¨le de simulation.
 
 \******************************************************************************/
 
@@ -175,7 +175,7 @@ char sim_run_simu_spice( sim_model *model, int run, char *outputname, FILE *outp
 
 /******************************************************************************\
 
-Les deux fonctions qui suivent gérent l'environnement pour contrôler en détail
+Les deux fonctions qui suivent gÃ©rent l'environnement pour contrÃ´ler en dÃ©tail
 le driver Spice.
 
 \******************************************************************************/
@@ -213,7 +213,7 @@ void sim_run_simu_spice_restoreenv( drive_spice *context )
 
   strcpy( OUT_LO, context->MEMOUTLO );
 
-  // Libérations
+  // LibÃ©rations
 
   for( current = context->CURRENT ; current ; current = next ) {
     next = current->NEXT ;
@@ -226,7 +226,7 @@ void sim_run_simu_spice_restoreenv( drive_spice *context )
 
 /******************************************************************************\
 
-Libère les fichiers créés par SIM. 
+LibÃ¨re les fichiers crÃ©Ã©s par SIM. 
 
 \******************************************************************************/
 
@@ -248,8 +248,8 @@ void sim_run_simu_spice_drive_remove_files( drive_spice *context )
 
 /******************************************************************************\
 
-Cette fonction est appellée par le driver Spice, juste avant le ENDS. On 
-mémorise dans la structure CURRENT les sources de tension pour la mesure du
+Cette fonction est appellÃ©e par le driver Spice, juste avant le ENDS. On 
+mÃ©morise dans la structure CURRENT les sources de tension pour la mesure du
 courant.
 
 \******************************************************************************/
@@ -269,7 +269,7 @@ void sim_run_simu_spice_drive_ngspice_current( FILE *ptf,
   char           tmpbuf[BUFSIZ];
  
   // Recherche parmis la liste des mesures les locon qui font parti de 
-  // la lofig courante (passée en paramètre).
+  // la lofig courante (passÃ©e en paramÃ¨tre).
   
   measure=NULL;
   while( (measure = sim_measure_scan( ((drive_spice*)context)->MODEL, measure ))
@@ -296,7 +296,7 @@ void sim_run_simu_spice_drive_ngspice_current( FILE *ptf,
               sim_model_get_lofig( ((drive_spice*)context)->MODEL ) ) )
           {
          
-          // On mémorise les "trous" laissés pour les mesures de courants dans
+          // On mÃ©morise les "trous" laissÃ©s pour les mesures de courants dans
           // la structure CURRENT.
           
           inodelist = spi_getinode( locon );
@@ -367,11 +367,11 @@ void sim_run_simu_spice_drive_ngspice_current( FILE *ptf,
 
 /******************************************************************************\
 
-Cette fonction est appellée par le driver Spice, juste avant le ENDS. On inclus
-les mesures de courants dans les trous formés par les directives spi*inode. A
-chaque fois qu'une source de tension est drivée, on mémorise son nom dans les 
+Cette fonction est appellÃ©e par le driver Spice, juste avant le ENDS. On inclus
+les mesures de courants dans les trous formÃ©s par les directives spi*inode. A
+chaque fois qu'une source de tension est drivÃ©e, on mÃ©morise son nom dans les 
 sim_measure_detail. On fera le print du courant dans la fonction 
-sim_run_simu_spice_drive_measure() avec les noms mémorisés dans les 
+sim_run_simu_spice_drive_measure() avec les noms mÃ©morisÃ©s dans les 
 sim_measure_detail.
 
 \******************************************************************************/
@@ -390,7 +390,7 @@ void sim_run_simu_spice_drive_eldo_current( FILE *ptf,
   char         srcname[BUFSIZ], hiername[BUFSIZ], tmpbuf[BUFSIZ];
  
   // Recherche parmis la liste des mesures les locon qui font parti de 
-  // la lofig courante (passée en paramètre).
+  // la lofig courante (passÃ©e en paramÃ¨tre).
   
   measure=NULL;
   while( (measure = sim_measure_scan( ((drive_spice*)context)->MODEL, measure ))
@@ -425,7 +425,7 @@ void sim_run_simu_spice_drive_eldo_current( FILE *ptf,
                                           hiername
                                         );
 
-          // On drive les sources de tension dans les "trous" laissés entre
+          // On drive les sources de tension dans les "trous" laissÃ©s entre
           // chaque connecteur et le reste de la netlist.
           
           inodelist = spi_getinode( locon );
@@ -480,8 +480,8 @@ void sim_run_simu_spice_drive_eldo_current( FILE *ptf,
 
 /******************************************************************************\
 
-Les deux fonctions qui suivent servent à récupérer un index de noeud unique sur
-un signal sans avoir à modifier le NBNODE.
+Les deux fonctions qui suivent servent Ã  rÃ©cupÃ©rer un index de noeud unique sur
+un signal sans avoir Ã  modifier le NBNODE.
 
 \******************************************************************************/
 
@@ -515,21 +515,21 @@ void sim_run_simu_spice_drive_clear_index_inode( lofig_list *lofig )
 
 /******************************************************************************\
 
-Mesure de courant à l'intérieur d'un circuit :
-Les deux fonctions qui suivent servent à introduire des "trous" dans la netlist
-au format Spice au moyen des directives Inode. Ces trous seront comblé par
-des générateurs de tension nulle qui serviront à mesurer le courant.
+Mesure de courant Ã  l'intÃ©rieur d'un circuit :
+Les deux fonctions qui suivent servent Ã  introduire des "trous" dans la netlist
+au format Spice au moyen des directives Inode. Ces trous seront comblÃ© par
+des gÃ©nÃ©rateurs de tension nulle qui serviront Ã  mesurer le courant.
 
 Cas de Ngspice :
-Dans ngspice, on ne peut pas faire un print d'une source de tension à 
-l'intérieur d'un subckt. On peut par contre déclarer la source de tension à
-l'extérieur de ce subckt. C'est la fonction 
-sim_run_simu_spice_drive_eldo_current() qui créera les sources de tension, et la
-fonction sim_run_simu_spice_drive_measure() qui créera les .print.
+Dans ngspice, on ne peut pas faire un print d'une source de tension Ã  
+l'intÃ©rieur d'un subckt. On peut par contre dÃ©clarer la source de tension Ã 
+l'extÃ©rieur de ce subckt. C'est la fonction 
+sim_run_simu_spice_drive_eldo_current() qui crÃ©era les sources de tension, et la
+fonction sim_run_simu_spice_drive_measure() qui crÃ©era les .print.
 
 Cas de Eldo :
-On peut faire un print des sources de tension situées à l'intérieur d'un subckt.
-la fonction sim_run_simu_spice_drive_eldo_current() crée les sources de tension,
+On peut faire un print des sources de tension situÃ©es Ã  l'intÃ©rieur d'un subckt.
+la fonction sim_run_simu_spice_drive_eldo_current() crÃ©e les sources de tension,
 et la fonction sim_run_simu_spice_drive_measure() fera les print.
 \******************************************************************************/
 
@@ -564,8 +564,8 @@ void sim_run_simu_spice_drive_set_inode( drive_spice *context,
           loins = NULL;
         if( !loins || ( loins && loins->FIGNAME == lofig->NAME ) ) {
 
-          // Le locon appartient à la lofig courante, et on a une mesure de
-          // courant à réaliser dessus
+          // Le locon appartient Ã  la lofig courante, et on a une mesure de
+          // courant Ã  rÃ©aliser dessus
           
           inodelist = NULL;
           if( locon->PNODE ) {
@@ -584,7 +584,7 @@ void sim_run_simu_spice_drive_set_inode( drive_spice *context,
         }
         else {
           if( loins ) {
-            /* Comme la hiérarchie n'est pas forcement drivée, on ne peut pas
+            /* Comme la hiÃ©rarchie n'est pas forcement drivÃ©e, on ne peut pas
                la modifier pour y rajouter des "trous". */
             fprintf( stderr, "can't drive internal current measure %s\n",
                              sim_measure_get_name( scan ) );
@@ -699,7 +699,7 @@ void sim_drive_corresp_alias ( drive_spice *context, lofig_list *fig )
 /******************************************************************************\
 
 Ecrit sur disque le ou les fichiers qu'on va simuler. Cette fonction s'occupe
-de créer les emplacement nécessaires pour introduire les mesures de courant.
+de crÃ©er les emplacement nÃ©cessaires pour introduire les mesures de courant.
 
 \******************************************************************************/
 
@@ -814,9 +814,9 @@ int  sim_run_simu_spice_drive_subckt( drive_spice *context )
 
 /******************************************************************************\
 
-Crée un nom de fichier pour la simulation. 
-Pour l'instant, ça ne fait pas grand chose, mais on peut peut être prévoir 
-vérifier si un fichier du même nom n'existe pas déjà.
+CrÃ©e un nom de fichier pour la simulation. 
+Pour l'instant, Ã§a ne fait pas grand chose, mais on peut peut Ãªtre prÃ©voir 
+vÃ©rifier si un fichier du mÃªme nom n'existe pas dÃ©jÃ .
 
 \******************************************************************************/
 
@@ -835,7 +835,7 @@ void sim_run_simu_spice_create_cmdfilename( drive_spice *context )
 
 /******************************************************************************\
 
-Drive toutes les entrées pour la simulation.
+Drive toutes les entrÃ©es pour la simulation.
 
 \******************************************************************************/
 static double thres_2_real(sim_model *sc, double slope)
@@ -1412,10 +1412,10 @@ void sim_run_simu_spice_drive_ic( drive_spice *context )
 Drive toutes les mesures pour la simulation.
 
 Mesures de tension :
-Les sim_measure_detail sont crées ici, en même temps qu'on fait les print.
+Les sim_measure_detail sont crÃ©es ici, en mÃªme temps qu'on fait les print.
 
 Mesures de courant :
-Les sources de tension ont été créés, il n'y a qu'a faire un print des 
+Les sources de tension ont Ã©tÃ© crÃ©Ã©s, il n'y a qu'a faire un print des 
 sim_measure_detail.
 
 \******************************************************************************/
@@ -1594,7 +1594,7 @@ void sim_run_simu_spice_drive_measure( drive_spice *context )
 
 /******************************************************************************\
 
-Crée l'appel au subckt du circuit à simuler.
+CrÃ©e l'appel au subckt du circuit Ã  simuler.
 
 \******************************************************************************/
 
@@ -1665,7 +1665,7 @@ void sim_run_simu_spice_drive_x( drive_spice *context )
 
 /******************************************************************************\
 
-Création des alimentations générales.
+CrÃ©ation des alimentations gÃ©nÃ©rales.
 
 \******************************************************************************/
 
@@ -1749,7 +1749,7 @@ void sim_run_simu_spice_drive_alim( drive_spice *context )
 
 /******************************************************************************\
 
-Création du fichier de simulation général, celui qui va étre passé en paramètre
+CrÃ©ation du fichier de simulation gÃ©nÃ©ral, celui qui va Ã©tre passÃ© en paramÃ¨tre
 au simulateur.
 
 \******************************************************************************/
@@ -1886,8 +1886,8 @@ int  sim_run_simu_spice_drive_cmd( drive_spice *context )
 
 /******************************************************************************\
 
-Calcul les points correspondant à n'importe quelle fonction mathématique.
-L'argument 'result' est un tableau qui contiendra les résultats sous la forme
+Calcul les points correspondant Ã  n'importe quelle fonction mathÃ©matique.
+L'argument 'result' est un tableau qui contiendra les rÃ©sultats sous la forme
 de couples (x,y). 'nbelem' doit contenir la taille maximum du tableau, et en
 sortie il contient le nombre de valeurs dans le tableau.
 
@@ -1969,9 +1969,9 @@ void sim_calc_func( sim_model *model,
 
 /******************************************************************************\
 
-Crée les sources de tension externes au subckt. Cela concerne les mesures de
+CrÃ©e les sources de tension externes au subckt. Cela concerne les mesures de
 courant sur les connecteurs du subckt, ou dans le cas de ngspice les mesures
-de courant dans le subckt.  Les mesures à réaliser ont été mémorisées dans la 
+de courant dans le subckt.  Les mesures Ã  rÃ©aliser ont Ã©tÃ© mÃ©morisÃ©es dans la 
 structure CURRENT par les fonctions sim_run_simu_spice_drive_pin() et
 sim_run_simu_spice_drive_ngspice_current().
 
@@ -1996,12 +1996,12 @@ void sim_run_simu_spice_drive_measure_current( drive_spice *context )
 
 /******************************************************************************\
 
-Cette fonction est à utiliser lorsqu'on veut mesurer le courant entrant dans le 
-circuit. Au lieu de référencer directement un noeud de l'interface de 
-l'instance, on passe par cette fonction qui renvoie éventuellement un autre 
+Cette fonction est Ã  utiliser lorsqu'on veut mesurer le courant entrant dans le 
+circuit. Au lieu de rÃ©fÃ©rencer directement un noeud de l'interface de 
+l'instance, on passe par cette fonction qui renvoie Ã©ventuellement un autre 
 noeud si jamais une mesure existe sur ce noeud. Dans ce dernier cas, on
 note les deux noeuds dans la structure CURRENT, et on drivera plus tards les
-générateurs de tension nulle, avec la fonction 
+gÃ©nÃ©rateurs de tension nulle, avec la fonction 
 sim_run_simu_spice_drive_measure_current().
 
 \******************************************************************************/
@@ -2040,9 +2040,9 @@ char* sim_run_simu_spice_drive_pin( char *loconname,
 
 /******************************************************************************\
 
-Crée une chaine de caractère correspondant à un noeud dans le fichier de
-commande Spice drivé. 
-Si losig vaut NULL, seule la hiérarchie est créée.
+CrÃ©e une chaine de caractÃ¨re correspondant Ã  un noeud dans le fichier de
+commande Spice drivÃ©. 
+Si losig vaut NULL, seule la hiÃ©rarchie est crÃ©Ã©e.
 
 \******************************************************************************/
 
@@ -2063,7 +2063,7 @@ void sim_run_simu_spice_name_signal( sim_model    *model,
   ptype_list *ptl ;
   locon_list *locon ;
 
-  /* Si on est au top level, et que le noeud est externe, on le référence 
+  /* Si on est au top level, et que le noeud est externe, on le rÃ©fÃ©rence 
      directement sur l'exterieur */
   driveexternal = NO;
   if( !headins && losig->TYPE=='E' ) {
@@ -2122,7 +2122,7 @@ void sim_run_simu_spice_name_signal( sim_model    *model,
     hiername[0]='\0';
   }
   
-  /* Voyage au travers de la hiérarchie */
+  /* Voyage au travers de la hiÃ©rarchie */
 
   for( chins = headins ; chins ; chins = chins->NEXT ) {
     loins = (loins_list*)(chins->DATA);
@@ -2149,7 +2149,7 @@ void sim_run_simu_spice_name_signal( sim_model    *model,
   }
 
   if( losig ) {
-    /* Création de noeud */
+    /* CrÃ©ation de noeud */
           
     switch( sim_parameter_get_tool( model ) )
     {
@@ -2178,7 +2178,7 @@ void sim_run_simu_spice_name_signal( sim_model    *model,
 }
 
 /******************************************************************************\
-Lorsqu'on doit faire référence à un signal sans plus d'information, renvoie
+Lorsqu'on doit faire rÃ©fÃ©rence Ã  un signal sans plus d'information, renvoie
 un noeud "significatif" sur ce signal.
 \******************************************************************************/
 

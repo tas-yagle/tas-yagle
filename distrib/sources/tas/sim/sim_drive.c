@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                             */
 /*    Tous droits reserves                                                   */
 /*                                                                           */
-/*    Auteur(s) : Grégoire AVOT                                              */
+/*    Auteur(s) : GrÃ©goire AVOT                                              */
 /*                                                                           */
 /*****************************************************************************/
 

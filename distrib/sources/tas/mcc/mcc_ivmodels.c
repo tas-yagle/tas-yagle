@@ -15,8 +15,8 @@ char mcc_trans_is_reverse( mcc_trans_mcc *trsmcc, float ids )
 }
 
 /******************************************************************************\
-Paramètres pour le transistor MCC
-Si le signal losigdrain est spécifié, prend en compte les résistances d'accès
+ParamÃ¨tres pour le transistor MCC
+Si le signal losigdrain est spÃ©cifiÃ©, prend en compte les rÃ©sistances d'accÃ¨s
 sur le drain et la source.
 \******************************************************************************/
 
@@ -86,7 +86,7 @@ void mcc_delete_trans_mcc( mcc_trans_mcc *trs )
 }
 
 /******************************************************************************\
-Caractéristiques transistor MCC
+CaractÃ©ristiques transistor MCC
 \******************************************************************************/
 
 char mcc_mcc_characteristic( mcc_trans_mcc *trs,
@@ -448,8 +448,8 @@ void mcc_mcc_plot( mcc_trans_mcc *trs, float vdmax, float vs )
 }
 
 /******************************************************************************\
-Paramètres pour le transistor BSIM3
-Si le signal losigdrain est spécifié, prend en compte les résistances d'accès
+ParamÃ¨tres pour le transistor BSIM3
+Si le signal losigdrain est spÃ©cifiÃ©, prend en compte les rÃ©sistances d'accÃ¨s
 sur le drain et la source.
 \******************************************************************************/
 
@@ -489,7 +489,7 @@ mcc_trans_spice* mcc_create_trans_spice( lotrs_list *lotrs, float vdd, losig_lis
       lotrsparam->VBULK = (trs->TRANSTYPE == MCC_NMOS) ? 0.0 : vdd;
   }
   trs->PARAM      = lotrsparam;
-  trs->LOTRS      = lotrs ; // necessaire pour récupérer le subckt...
+  trs->LOTRS      = lotrs ; // necessaire pour rÃ©cupÃ©rer le subckt...
  
   mcc_update_technoparams( trs->TRANSNAME, trs->TRANSTYPE == MCC_NMOS ? MCC_TRANS_N : MCC_TRANS_P, trs->TRLENGTH*1e6, trs->TRWIDTH*1e6, trs->LOTRS, trs->TRANSCASE );
   mcc_calcRACCESS( trs->MODELFILE, trs->TRANSNAME, trs->TRANSTYPE, trs->TRANSCASE, trs->TRLENGTH, trs->TRWIDTH, trs->PARAM, &rs, &rd );
@@ -521,7 +521,7 @@ void mcc_delete_trans_spice( mcc_trans_spice *trs )
 }
 
 /******************************************************************************\
-Caractéristiques transistor BSIM3
+CaractÃ©ristiques transistor BSIM3
 \******************************************************************************/
 
 char mcc_spice_vds_list( chain_list *trs,
@@ -967,7 +967,7 @@ char mcc_mcc_vds_list( chain_list *headtrs,
     mcc_mcc_vds_list_compute_raccess( headtrs, &rs, &rd );
     vsr = vs + rs * ids ;
     
-    /* calcule une estimation de l'encadrement du vds recherché */
+    /* calcule une estimation de l'encadrement du vds recherchÃ© */
 
     r = mcc_mcc_vds_list_estim_vds( headtrs, vs, ids, &vdse );
     if( !r ) {
@@ -996,8 +996,8 @@ char mcc_mcc_vds_list( chain_list *headtrs,
 
     vdrmax = vsr + vdse ;
 
-    /* détermine le imax correspondant à cette tension, et on corrige si la valeur
-       imax est inférieur à ids */
+    /* dÃ©termine le imax correspondant Ã  cette tension, et on corrige si la valeur
+       imax est infÃ©rieur Ã  ids */
     imin   = FLT_MAX ;
     vdrmin = FLT_MAX ;
    
@@ -1035,13 +1035,13 @@ char mcc_mcc_vds_list( chain_list *headtrs,
       return 1 ;
     }
 
-    /* borne inférieur */
+    /* borne infÃ©rieur */
     if( vdrmin == FLT_MAX ) {
       vdrmin = vsr ;
       imin   = 0.0 ;
     }
 
-    /* résolution par dichotomie */
+    /* rÃ©solution par dichotomie */
 
     iter = 100 ;
 

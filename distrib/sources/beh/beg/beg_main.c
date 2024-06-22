@@ -947,7 +947,7 @@ int main(int argc, char **argv)
          
          for (k = 0; k < 2; k ++)
          {
-           printf("    Compact n°%d",k);
+           printf("    Compact nÂ°%d",k);
            beg_compact();
            time(&cur);ela=cur-bef;bef=cur;printhour(ela);
          }
@@ -984,7 +984,7 @@ int main(int argc, char **argv)
          
            for (j = 0; j < 3; j ++)
            {
-             printf("        Compact %d-n°%d",k,j);
+             printf("        Compact %d-nÂ°%d",k,j);
              beg_compact();
              time(&cur);ela=cur-bef;bef=cur;printhour(ela);
            }
@@ -1005,7 +1005,7 @@ int main(int argc, char **argv)
          
          for (k = 0; k < 3; k ++)
          {
-           printf("    Compact n°%d",k);
+           printf("    Compact nÂ°%d",k);
            beg_compact();
            time(&cur);ela=cur-bef;bef=cur;printhour(ela);
          }
@@ -1029,7 +1029,7 @@ int main(int argc, char **argv)
          
          for (k = 0; k < 1; k ++)
          {
-           printf("    Compact n°%d",k);
+           printf("    Compact nÂ°%d",k);
            beg_compact();
            time(&cur);ela=cur-bef;bef=cur;printhour(ela);
          }

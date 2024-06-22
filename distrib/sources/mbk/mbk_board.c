@@ -59,7 +59,7 @@ void Board_SetValue(Board *B, int col, char *val)
   bc=(BoardColumn *)B->list->DATA;
   if (bc[col].value!=NULL) mbkfree(bc[col].value);
   bc[col].value=mbkstrdup(val);
-  if (val[0]!='é' && val[0]!='è' && val[0]!='ç' && (l=avt_text_real_length(val))>B->prop[col].size) B->prop[col].size=l;
+  if (val[0]!='Ã©' && val[0]!='Ã¨' && val[0]!='Ã§' && (l=avt_text_real_length(val))>B->prop[col].size) B->prop[col].size=l;
 }
 
 
@@ -142,14 +142,14 @@ void Board_Display_sub(FILE *f, int lib, int lev, Board *B, char *LP)
                   title_print_tag=0;
                   if (bc[i].value!=NULL)
                     {
-                      if (bc[i].value[0]=='é')
+                      if (bc[i].value[0]=='Ã©')
                         {
                           totsize=0;
                           strcpy(title, &bc[i].value[1]);
                           totsize=B->prop[i].size+diff+1-1;
                           title_print_tag=1;
                         }
-                      else if (bc[i].value[0]=='è' || bc[i].value[0]=='ç') 
+                      else if (bc[i].value[0]=='Ã¨' || bc[i].value[0]=='Ã§') 
                         {
                           if (strcmp(&bc[i].value[1],"")!=0)
                             {
@@ -159,7 +159,7 @@ void Board_Display_sub(FILE *f, int lib, int lev, Board *B, char *LP)
 
                           title_print_tag=1;
                           totsize+=B->prop[i].size+diff+1+1-1;
-                          if (bc[i].value[0]=='è')
+                          if (bc[i].value[0]=='Ã¨')
                             {
                               center(format, totsize, title);
                               if (f!=NULL)
@@ -207,7 +207,7 @@ void Board_Display_sub(FILE *f, int lib, int lev, Board *B, char *LP)
                 }
             }
           if (f!=NULL)
-            avt_fprintf(f,"¤.\n");
+            avt_fprintf(f,"Â¤.\n");
           else
             avt_log(lib, lev, "\n");
         }

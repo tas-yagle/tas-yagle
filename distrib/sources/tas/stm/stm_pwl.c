@@ -131,7 +131,7 @@ double stm_get_t_pwl( stm_pwl *pwl, float v )
   return t ;
 }
 
-/* Shrink le front d'entrée pwl suivant la transformation qui a été faite 
+/* Shrink le front d'entrÃ©e pwl suivant la transformation qui a Ã©tÃ© faite 
    pour la tanh originale. */
 stm_pwl* stm_shrink_pwl( stm_pwl *pwin, float u0, float f0, float u1, float f1, float vt )
 {

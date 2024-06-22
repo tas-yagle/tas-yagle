@@ -121,16 +121,16 @@ void avt_error (char *lib, int code, int severity, char *fmt, ...)
 
     switch(severity)
       {
-      case AVT_ERR: typemsg="¤6¤+Error"; break;
-      case AVT_WAR: typemsg="¤4Warning"; break;        
+      case AVT_ERR: typemsg="Â¤6Â¤+Error"; break;
+      case AVT_WAR: typemsg="Â¤4Warning"; break;        
       case AVT_INFO:
       default:
-        typemsg="¤1Info";
+        typemsg="Â¤1Info";
       }
     if (code<=0)
-      sprintf (error_msg, "[%s¤.][¤+%s¤.] ", typemsg, lib);
+      sprintf (error_msg, "[%sÂ¤.][Â¤+%sÂ¤.] ", typemsg, lib);
     else
-      sprintf (error_msg, "[%s #%d¤.][¤+%s¤.] ", typemsg, code, lib);
+      sprintf (error_msg, "[%s #%dÂ¤.][Â¤+%sÂ¤.] ", typemsg, code, lib);
 
     car = strlen (error_msg);
 
@@ -257,7 +257,7 @@ void avt_fprintf(FILE *output, char *fmt, ...)
     va_end(pa);
 
     str=temp;
-    e=strchr(str,'¤');
+    e=strchr(str,'Â¤');
     while (e!=NULL)
       {
         if (*(e+1)>='0' && *(e+1)<='0'+NBCOLORS-1)
@@ -302,10 +302,10 @@ void avt_fprintf(FILE *output, char *fmt, ...)
             break;
           default:
             *e='\0';
-            fprintf(output,"%s¤",str);
+            fprintf(output,"%sÂ¤",str);
             str=e+1;
           }
-        e=strchr(str,'¤');
+        e=strchr(str,'Â¤');
       }
 
     fputs (str, output);
@@ -319,7 +319,7 @@ int avt_text_real_length(char *buf)
   int cnt=0;
   while (*buf!='\0')
     {
-      if (*buf=='¤' && *(buf+1)!='\0') cnt-=1;
+      if (*buf=='Â¤' && *(buf+1)!='\0') cnt-=1;
       else cnt++;
       buf++;
     }
@@ -333,7 +333,7 @@ void avt_format_text(char *resbuf, char *origbuf, int decal, int max)
   while (origbuf[i]!='\0')
     {
       resbuf[j++]=origbuf[i];
-      if (origbuf[i]=='¤' && origbuf[i+1]!='\0') cnt-=1;
+      if (origbuf[i]=='Â¤' && origbuf[i+1]!='\0') cnt-=1;
       else cnt++;
       i++;
       if (origbuf[i]=='\n' || cnt>=max)

@@ -18,12 +18,12 @@
 #define BGL_CONTEXT(x) ((bgl_getcontext(context))->x)
 
 /*
-  Calcul un signal (out) sur n bits effectuant une opération
+  Calcul un signal (out) sur n bits effectuant une opÃ©ration
   logique entre deux signaux (expr1 et expr2) de n bits
 
   oper=? AND, OR, NAND, NOR, ...
 
-  PS: NAND et NOR sont générée avec NOT(AND) et NOT(OR)
+  PS: NAND et NOR sont gÃ©nÃ©rÃ©e avec NOT(AND) et NOT(OR)
 */
 void bgl_NewOperation(bgl_expr *out, short oper, bgl_expr *expr1, bgl_expr *expr2)
 {
@@ -60,8 +60,8 @@ void bgl_NewOperation(bgl_expr *out, short oper, bgl_expr *expr1, bgl_expr *expr
 }
 
 /*
-  Ajoute une entrée de déclaration d'un signal
-  à la liste des signaux du circuit
+  Ajoute une entrÃ©e de dÃ©claration d'un signal
+  Ã  la liste des signaux du circuit
 */
 bgldecl_list *bgl_addgen(bgl_bcompcontext *context, char *name)
 {
@@ -89,8 +89,8 @@ bgldecl_list *bgl_addgen(bgl_bcompcontext *context, char *name)
 }
 
 /*
-  Ajoute un signal à la liste des signaux du circuit
-  NB: Le signal est dévectorisé si c'est un vecteur
+  Ajoute un signal Ã  la liste des signaux du circuit
+  NB: Le signal est dÃ©vectorisÃ© si c'est un vecteur
 */
 int AddaNewSignalorSignals(bgl_bcompcontext *context, char *name, int left, int right, char dir)
 { 
@@ -115,7 +115,7 @@ int AddaNewSignalorSignals(bgl_bcompcontext *context, char *name, int left, int 
     }
   else 
     {
-      // signal vectorisé, on devectorise
+      // signal vectorisÃ©, on devectorise
       int i,inc=1;
       char extname[200];
       beh_addtab(context->HSHTAB, name, context->FIGNAME, BGL_PNTDFN, 1); // 1 = c'est un vecteur
@@ -123,7 +123,7 @@ int AddaNewSignalorSignals(bgl_bcompcontext *context, char *name, int left, int 
       beh_addtab(context->HSHTAB, name, context->FIGNAME, BGL_LFTDFN, left);
       beh_addtab(context->HSHTAB, name, context->FIGNAME, BGL_RGTDFN, right);
 
-      // creation des signaux non vectorisés
+      // creation des signaux non vectorisÃ©s
       if (left >= right)
 	inc = -1;
       
@@ -151,7 +151,7 @@ int AddaNewSignalorSignals(bgl_bcompcontext *context, char *name, int left, int 
 }
 
 /*
-  Met à jour le flag d'un signal selon le context courant
+  Met Ã  jour le flag d'un signal selon le context courant
   dans un IF, dans un ELSE, dans un BLOCK
   TAG: IS_BUS, IS_REG
 */
@@ -246,10 +246,10 @@ biabl_list *reverseAndreflag(biabl_list *bl0)
 }
 
 /*
-  Génère les signaux d'une befig à partir de la déclaration
+  GÃ©nÃ¨re les signaux d'une befig Ã  partir de la dÃ©claration
   des signaux
   les tags IS_BUS, IS_REG ainsi que la direction des signaux
-  sont utilisés pour savoir dans quelles listes mettre les
+  sont utilisÃ©s pour savoir dans quelles listes mettre les
   signaux
 */
 void bgl_generateBEH(bgl_bcompcontext *context)
@@ -376,7 +376,7 @@ void bgl_generateBEH(bgl_bcompcontext *context)
 /*
   Recherche l'occurence de x and not stable x
   Renvoie cette occurence
-  Retourne 1 si une occurence a été trouvée
+  Retourne 1 si une occurence a Ã©tÃ© trouvÃ©e
 */
 int
 bgl_search_stable(chain_list *ptabl, chain_list **found, int *nb)
@@ -445,11 +445,11 @@ void UnaryBitwise(int op, bgl_expr *out, bgl_expr *in)
   Calcul un signal (out) ayant comme fonction logique la comparaison
   entre deux signaux (a et b) de n bits
 
-  Renvoie une valeur différente de 0 si la condition est toujours
+  Renvoie une valeur diffÃ©rente de 0 si la condition est toujours
   fausse ou toujours vraie
 
-  op==0 => égalité
-  op==1 => différence
+  op==0 => Ã©galitÃ©
+  op==1 => diffÃ©rence
 */
 int bgl_compare(int op, bgl_expr *out, bgl_expr *a, bgl_expr *b)
 {
@@ -488,13 +488,13 @@ int bgl_compare(int op, bgl_expr *out, bgl_expr *a, bgl_expr *b)
 		{
 		  if (btype==0)
 		    {
-		      if (op==0) tmp=notExpr(cla->DATA); // égalité a 0
-		      else tmp=cla->DATA; // inégalité a 0
+		      if (op==0) tmp=notExpr(cla->DATA); // Ã©galitÃ© a 0
+		      else tmp=cla->DATA; // inÃ©galitÃ© a 0
 		    }
 		  else
 		    {
-		      if (op==1) tmp=notExpr(cla->DATA); // inégalité a 0
-		      else tmp=cla->DATA; // égalité a 1
+		      if (op==1) tmp=notExpr(cla->DATA); // inÃ©galitÃ© a 0
+		      else tmp=cla->DATA; // Ã©galitÃ© a 1
 		    }
 		}
 	      else
@@ -502,27 +502,27 @@ int bgl_compare(int op, bgl_expr *out, bgl_expr *a, bgl_expr *b)
 		  {
 		    if (atype==0)
 		      {
-			if (op==0) tmp=notExpr(clb->DATA); // égalité a 0
-			else tmp=clb->DATA; // inégalité a 0
+			if (op==0) tmp=notExpr(clb->DATA); // Ã©galitÃ© a 0
+			else tmp=clb->DATA; // inÃ©galitÃ© a 0
 		      }
 		    else
 		      {
-			if (op==1) tmp=notExpr(clb->DATA); // inégalité a 0
-			else tmp=clb->DATA; // égalité a 1
+			if (op==1) tmp=notExpr(clb->DATA); // inÃ©galitÃ© a 0
+			else tmp=clb->DATA; // Ã©galitÃ© a 1
 		      }
 		  }
 		else
 		  {
 		    if (op==0) 
 		      {
-			chain_list *ab,*ba;// égalité
+			chain_list *ab,*ba;// Ã©galitÃ©
 			ab=createBinExpr(OR,notExpr(cla->DATA),copyExpr(clb->DATA)); 
 			ba=createBinExpr(OR,notExpr(clb->DATA),copyExpr(cla->DATA)); 
 			tmp=createBinExpr(AND,ab,ba); // NXOR
 		      }
 		    else 
 		      {
-			chain_list *ab,*ba;// inégalité
+			chain_list *ab,*ba;// inÃ©galitÃ©
 			ab=createBinExpr(AND,notExpr(cla->DATA),copyExpr(clb->DATA)); 
 			ba=createBinExpr(AND,notExpr(clb->DATA),copyExpr(cla->DATA)); 
 			tmp=createBinExpr(OR,ab,ba); // XOR
@@ -550,7 +550,7 @@ int bgl_compare(int op, bgl_expr *out, bgl_expr *a, bgl_expr *b)
 }
 
 /*
-  Calcul un signal (out) sur 1 bits effectuant une opération
+  Calcul un signal (out) sur 1 bits effectuant une opÃ©ration
   logique entre les n bits d'un signal (expr1)
 
   oper==0 => NOT
@@ -603,7 +603,7 @@ int CheckSize(chain_list *cl, int skeepfirst)
   Substitue les ATOM d'un ABL par un ABL lui correspondant
   La correspondance se trouve dans le tableau nouveau
   
-  Renvoie l'ABL modifié
+  Renvoie l'ABL modifiÃ©
 */
 chain_list *bgl_substPhyExpr (chain_list *expr1, chain_list **nouveau,int max,int *most)
 {
@@ -644,10 +644,10 @@ chain_list *bgl_substPhyExpr (chain_list *expr1, chain_list **nouveau,int max,in
 }
 
 /*
-  Soit une double liste chainée T(a,b)
+  Soit une double liste chainÃ©e T(a,b)
 
-  Calcule une liste chainée contenant les éléments T(*,num)
-  renvoie 1 si il n'y a pas d'élément T(*,num)
+  Calcule une liste chainÃ©e contenant les Ã©lÃ©ments T(*,num)
+  renvoie 1 si il n'y a pas d'Ã©lÃ©ment T(*,num)
 */
 int bgl_getline(chain_list **tab,int num, chain_list *terms,int max)
 {
@@ -693,7 +693,7 @@ char *bgl_getlvalue(int num, chain_list *terms)
 }
 
 /*
-  Expanse toutes les primites dans toutes les befig présentes
+  Expanse toutes les primites dans toutes les befig prÃ©sentes
 
   allcont => toutes les befig avec leur context
   allprims => toutes les primitives
