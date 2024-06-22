@@ -674,8 +674,8 @@ ttvpath_list ;
 
 typedef struct ttvinfo                        /* information sur la ttvfig   */
     {
-     char                *TOOLNAME ;          /* outil tas ou htas           */
-     char                *TOOLVERSION ;       /* version de l'outil          */
+     const char          *TOOLNAME ;          /* outil tas ou htas           */
+     const char          *TOOLVERSION ;       /* version de l'outil          */
      char                *TECHNONAME ;        /* technologie elp             */
      char                *TECHNOVERSION ;     /* version de la technologie   */
      char                *FIGNAME ;           /* nom de modele               */
