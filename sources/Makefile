@@ -28,7 +28,7 @@ ALL_DIRS_API_BUILD = $(ALL_DIRS_API:%=%.$(XXX_AB))
 WORK_DIRS = bin include lib api_bin api_include api_lib man man/man1 man/man3
 FULL_NAME_WORK_DIRS = $(WORK_DIRS:%=$(AVT_DISTRIB_DIR)/%)
 
-BIN_LIST = avt_shell avtreserve gnshr x2v avtdeltoken avttool gnstest xtas avtgenkey cnsdiff license_api ttvdiff xyagle avtinfo netutil ttvren avtlicense genapi router ttvtest avtlog genelp  val avtman gentest wrap
+BIN_LIST = avt_shell avtreserve gnshr x2v avtdeltoken avttool gnstest xtas avtgenkey cnsdiff license_api ttvdiff xyagle avtinfo netutil ttvren avtlicense genapi router ttvtest avtlog genelp  val avtman gentest wrap yargle hitas
 BIN_LIST_DEL = $(BIN_LIST:%=%.del)
 
 all : working_dirs $(ALL_DIRS_HEADERS) build

@@ -23,7 +23,7 @@ distrib :
 	@cd lib ; $(MAKE) 
 	@cd mcc ; $(MAKE) 
 	@cd stb ; $(MAKE) 
-	@cd tas ; $(MAKE) 
+	@cd tas ; $(MAKE) bin
 	@cd tma ; $(MAKE) 
 	@cd val ; $(MAKE) 
 	@cd zen ; $(MAKE) 
