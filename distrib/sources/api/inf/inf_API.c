@@ -69,7 +69,7 @@ void inf_AddFile(char *filename, char *figname)
   inf_ignorename=1;
   ret=_infRead(figname, filename, 0);
   avt_log(LOGFILEACCESS, 0, "Loading INF file \"%s\" for figure \"%s\"%s\n", filename, figname,ret!=NULL?" done.":" failed.");
-//  avt_error("infapi", -1, AVT_INFO, "load INF '¤2%s¤.' for figure '%s'%s\n", filename, figname,ret!=NULL?" ¤7done¤.":" ¤6failed¤.");
+//  avt_error("infapi", -1, AVT_INFO, "load INF 'Â¤2%sÂ¤.' for figure '%s'%s\n", filename, figname,ret!=NULL?" Â¤7doneÂ¤.":" Â¤6failedÂ¤.");
   inf_ignorename=0;
 }
 
@@ -689,7 +689,7 @@ void inf_DefineFalsePath(chain_list *elems)
               if (strcasecmp((char *)elems->NEXT->DATA, "<hz>")==0)
                 pt=addptype(pt, INF_CK, infTasVectName("^"));
               else if (strcasecmp((char *)elems->NEXT->DATA, "<nothz>")==0)
-                pt=addptype(pt, INF_CK, infTasVectName("°"));
+                pt=addptype(pt, INF_CK, infTasVectName("Â°"));
               else
                 pt=addptype(pt, INF_CK, infTasVectName(elems->NEXT->DATA));
             }        

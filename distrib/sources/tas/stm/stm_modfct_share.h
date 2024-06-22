@@ -4,7 +4,7 @@
 /*                                                                          */
 /*    Fichier : stm_modfct_cache.h                                          */
 /*                                                                          */
-/*    © copyright 2003 AVERTEC                                              */
+/*    Â© copyright 2003 AVERTEC                                              */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
 /*    Auteur(s) :   Antony PINTO                                            */

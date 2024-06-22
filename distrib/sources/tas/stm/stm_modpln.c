@@ -126,7 +126,7 @@ timing_polynom *stm_modpln_create (long nbvar, long *degree, long *coef_def, flo
     /* ici les 6 premiers coefs doivent etre*/
     /* pris en compte. Avec la meme config  */
     /* que ci-dessus, on a:                 */
-    /* a + bx + cx² + dy + exy + fx²y       */
+    /* a + bx + cxÂ² + dy + exy + fxÂ²y       */
     /* a,b,c,d,e et f etant les coefs.      */
     /* COEF_TAB[0] = a                      */
     /* COEF_TAB[1] = b                      */

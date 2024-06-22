@@ -4,7 +4,7 @@
 /*                                                                          */
 /*    Fichier : stm_mod_display.h                                           */
 /*                                                                          */
-/*    © copyright 2003 AVERTEC                                              */
+/*    Â© copyright 2003 AVERTEC                                              */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
 /*    Auteur(s) :   Antony PINTO                                            */

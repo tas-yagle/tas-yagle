@@ -358,10 +358,10 @@ chain_list* sim_get_hier_list(char *hiername)
 /*{{{                                                                       */
 /*                                                                          */
 /*                                                                          */
-/* Recherche un locon ou un losig d'après son nom hiérarchique. Renvoie la liste
-chaînée des instances où il se trouve depuis topfig.
+/* Recherche un locon ou un losig d'aprÃ¨s son nom hiÃ©rarchique. Renvoie la liste
+chaÃ®nÃ©e des instances oÃ¹ il se trouve depuis topfig.
 
-      Les noms doivent être sous la forme :
+      Les noms doivent Ãªtre sous la forme :
       Z                 -> Locon sur l'interface de lofig.
       tr.Z              -> Locon sur un transistor de la lofig.
       i1.Z              -> Locon sur une instance de la lofig.
@@ -369,7 +369,7 @@ chaînée des instances où il se trouve depuis topfig.
       i1.i2.Z           -> Locon sur une instance i2 de l'instance i1
       i1.i2.tr.Z        -> et ainsi de suite.
     OU
-      i1.i2.tr.Z        -> la netlist est à plat, le trs s'appelle i1.i2.tr
+      i1.i2.tr.Z        -> la netlist est Ã  plat, le trs s'appelle i1.i2.tr
       ...
 */
 /****************************************************************************/
@@ -543,7 +543,7 @@ locon_list* sim_find_by_nameInt(char        *name,
   chain_list    *chainx, *ins = NULL, *headTrs;
   lofig_list    *figx;
   
-  // descend la hiérarchie. Les noms sont de la forme
+  // descend la hiÃ©rarchie. Les noms sont de la forme
   // A.B.locon
   // A.tr.locon
   // A.losig
@@ -566,7 +566,7 @@ locon_list* sim_find_by_nameInt(char        *name,
   if (ins)
   {
     locon           = findLoconInLoins(ins->DATA,insname,name);
-    /* Greg, le 13/10/03 : il faut retirer la dernière instance de la liste 
+    /* Greg, le 13/10/03 : il faut retirer la derniÃ¨re instance de la liste 
        puisque le locon ne se situe pas DANS l'instance */
     chainx          = ins ;
     ins             = ins->NEXT ;
@@ -575,8 +575,8 @@ locon_list* sim_find_by_nameInt(char        *name,
     
   }
 
-  /* C'est sur un transistor : on gère le cas où le nom du transistor 
-     correspond à un nom hiérarchique. */
+  /* C'est sur un transistor : on gÃ¨re le cas oÃ¹ le nom du transistor 
+     correspond Ã  un nom hiÃ©rarchique. */
   if (!locon && headTrs->NEXT)
   {
     // creation of transistor name
@@ -621,8 +621,8 @@ locon_list* sim_find_by_nameInt(char        *name,
 }
 
 /*}}}************************************************************************/
-/* Renvoie la liste chainée des figures nécessaires pour lancer une simulation.
-Cette liste est ordonnée des instances les plus basses vers les instances les
+/* Renvoie la liste chainÃ©e des figures nÃ©cessaires pour lancer une simulation.
+Cette liste est ordonnÃ©e des instances les plus basses vers les instances les
 plus hautes. */
 
 chain_list *sim_getfiglist( lofig_list *lofig )

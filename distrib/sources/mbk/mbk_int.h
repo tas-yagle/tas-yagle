@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -35,30 +35,30 @@
 
 
 /* Lors qu'on ajoute quelque chose dans la liste, le pointeur DATA ne doit pas
-   etre NULL, cette valeur etant utilisée en interne sur ce champs */
+   etre NULL, cette valeur etant utilisÃ©e en interne sur ce champs */
 
 #define SPI_MBK_TABLEINTMAX  256
 #define SPI_MBK_TABLEINTMASK 0x000000FF
 
 mbk_tableint*	creatmbk_tableint __P(());
-/* Crée une nouvelle table						*/
+/* CrÃ©e une nouvelle table						*/
 
 int		setmbk_tableint __P(( mbk_tableint *table, int value, int data ));
-/* Ajoute un élément dans la table. Renvoie 1 si l'élément est nouveau,
-   0 sinon (l'élément précédent est alors remplacé)			*/
+/* Ajoute un Ã©lÃ©ment dans la table. Renvoie 1 si l'Ã©lÃ©ment est nouveau,
+   0 sinon (l'Ã©lÃ©ment prÃ©cÃ©dent est alors remplacÃ©)			*/
 
 void            removembk_tableint __P(( mbk_tableint*, int ));
 
 int		tstmbk_tableint __P(( mbk_tableint *table, int value ));
-/* Renvoie l'élément recherché par la valeur				*/
+/* Renvoie l'Ã©lÃ©ment recherchÃ© par la valeur				*/
 
 void		freembk_tableint __P(( mbk_tableint *table ));
-/* Libère la table							*/
+/* LibÃ¨re la table							*/
 
 int             mbk_scanint __P(( mbk_tableint *table, int n ));
-/* Parcour des éléments mémorisés dans la table. On commence par mettre
-  l'entier d'entrée à 0, puis pour les elements suivant on met la valeur
-  du noeud retourné précédement. La fin est indiqué par un retour 0	*/
+/* Parcour des Ã©lÃ©ments mÃ©morisÃ©s dans la table. On commence par mettre
+  l'entier d'entrÃ©e Ã  0, puis pour les elements suivant on met la valeur
+  du noeud retournÃ© prÃ©cÃ©dement. La fin est indiquÃ© par un retour 0	*/
 
 
 #endif //spi_int

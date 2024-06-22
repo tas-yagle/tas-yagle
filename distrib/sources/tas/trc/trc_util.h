@@ -18,16 +18,16 @@
 // USER des losig
 
 #define RCX_ORIGIN 0x52435801
-// Contient la liste chaînée des nom de signaux ayant servi à construire ce
+// Contient la liste chaÃ®nÃ©e des nom de signaux ayant servi Ã  construire ce
 // signal.
 
 // USER des loins
 
 #define RCXPSEUDOVSS 0x52435803
-// Le champ DATA contient un losig correspondant à un signal de masse.
+// Le champ DATA contient un losig correspondant Ã  un signal de masse.
 
 #define RCX_VSSNI 0x52435811
-// Défini un signal qu'on ne connait pas mais qu'on considère comme toujours
+// DÃ©fini un signal qu'on ne connait pas mais qu'on considÃ¨re comme toujours
 // actif.
 
 // USER des lonodes
@@ -40,17 +40,17 @@
 // USER des wire
 
 #define RCXTRIANGLE 0x5243581A
-// Le triangle auxquel appartient cette résistance.
+// Le triangle auxquel appartient cette rÃ©sistance.
 
 
 // USER des lofig
 
 #define RCX_SIGVSS 0x52435803
-// Le champ DATA contient un losig correspondant à un signal de masse.
+// Le champ DATA contient un losig correspondant Ã  un signal de masse.
 
 #define RCX_MODINS 0x52435807
 // Le champ DATA contient une table de hash qui permet d'obtenir un nom de
-// modèle à partir du nom d'instance.
+// modÃ¨le Ã  partir du nom d'instance.
 
 
 #define RCXTABCON ((long)1666)
@@ -110,7 +110,7 @@ int         rcx_isloconexternal( locon_list* );
 losig_list* rcx_getvssni( lofig_list* );
 char       *rcx_getinsname( loins_list* );
 
-// Récupère le nom du signal utilisé pour le drive
+// RÃ©cupÃ¨re le nom du signal utilisÃ© pour le drive
 extern char *rcx_getsigname( losig_list *losig );
 extern void rcx_setsigname( losig_list *losig, char *name );
 

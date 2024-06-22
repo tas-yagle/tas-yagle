@@ -303,8 +303,8 @@ typedef struct stbnode            /* type qui sera ajoute dans le
      stbpair_list **SPECIN;       /* contraintes sur les entrees      */
      stbpair_list **SPECOUT;      /* contraintes sur les sorties      */
      stbck        *CK;            /* horloge locale                   */
-     stbpair_list **STBTAB;       /* variable de stabilité            */
-     stbpair_list **STBHZ;        /* variable de stabilité HZ         */
+     stbpair_list **STBTAB;       /* variable de stabilitÃ©            */
+     stbpair_list **STBHZ;        /* variable de stabilitÃ© HZ         */
      long          SETUP ;        /* setup du latch ou de la commande */
      long          HOLD ;         /* hold du latch ou de la commande  */
      char          NBINDEX ;      /* indice d'horloge max             */
@@ -330,7 +330,7 @@ typedef struct stbchrono         /* description des chronogramme    */
      long              CKDN_MIN;  /* horloge au niveau du noeud       */
      long              CKDN_MAX;  /* horloge au niveau du noeud       */
      char              VERIF;     /* type de contraintes              */
-     char              TYPE;      /* type de données                  */
+     char              TYPE;      /* type de donnÃ©es                  */
      char              SLOPE;     /* type de front ou d'etat          */
     }
 stbchrono_list ;

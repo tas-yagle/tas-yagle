@@ -895,7 +895,7 @@ void slib_make_motif_file(library *ptlib)
             fprintf(file,"void %s_symbol(Widget w, XtPointer client_data, XtPointer event_data )\n",ptsym->NAME);
             fprintf(file,"{\n");
             fprintf(file,"\tWindow win = XtWindow(client_data);\n\n");      
-            slib_display_motif(file,ptlib,ptsym); //la fonction est récursive
+            slib_display_motif(file,ptlib,ptsym); //la fonction est rÃ©cursive
             fprintf(file,"}\n");
             }       // end  if(top_level_symbol == TRUE)
           }         // end for(ptsym=ptlib->SYMB;ptsym;ptsym=ptsym->NEXT)

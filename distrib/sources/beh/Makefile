@@ -1,6 +1,6 @@
 #
 # This file is part of the Alliance CAD System
-# Copyright (C) Laboratoire LIP6 - Département ASIM
+# Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
 # Universite Pierre et Marie Curie
 # 
 # Home page          : http://www-asim.lip6.fr/alliance/

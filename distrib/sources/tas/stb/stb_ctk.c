@@ -10,7 +10,7 @@
 /*                                                                          */
 /*    Auteur(s) : Karim DIOURY                                              */
 /*                Anthony LESTER                                            */
-/*                Grégoire AVOT                                             */
+/*                GrÃ©goire AVOT                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -49,14 +49,14 @@
 #include "stb_communication.c"
 // -------------
 
-// Variation de front minimum pour considérer un changement significatif
+// Variation de front minimum pour considÃ©rer un changement significatif
 long STB_CTK_MINSLOPECHANGE=0;
 
-// Nombre maximum d'itération lorsqu'il n'y a plus de nouvelles agressions
-// détectées.
+// Nombre maximum d'itÃ©ration lorsqu'il n'y a plus de nouvelles agressions
+// dÃ©tectÃ©es.
 int  STB_CTK_MAXLASTITER=3;
 
-// Autorise plus de consommation mémoire pour aller plus vite
+// Autorise plus de consommation mÃ©moire pour aller plus vite
 char STB_CTK_FASTMODE=1;
 
 // Comportement des agresseurs pour lesquels il n'y a pas d'information temporelle
@@ -67,7 +67,7 @@ long  CTK_REPORT_DELTA_DELAY_MIN = 0;
 long  CTK_REPORT_DELTA_SLOPE_MIN = 0;
 float CTK_REPORT_CTK_MIN         = 0.0;
 long  CTK_REPORT_NOISE_MIN       = 0;
-// La marge pour la détection des agressions
+// La marge pour la dÃ©tection des agressions
 long STB_CTK_MARGIN=0l;
 
 long NBPTYPE=0l;
@@ -83,9 +83,9 @@ long NBPTYPE=0l;
 /* Largeur de la barre de progression */
 #define STB_PROGRESS_WIDTH 50
 
-/* Fonction à appeller pour la barre de progression */
+/* Fonction Ã  appeller pour la barre de progression */
 void (*CTK_PROGRESSBAR)(int, int, int, char*) = stb_progress ;
-/* Fonction à appeller pour l'affichage d'informations */
+/* Fonction Ã  appeller pour l'affichage d'informations */
 void (*CTK_PRINTINFO)(char*) = stb_print ;
 
 int STBCTK_NBDELAYCALC;
@@ -131,7 +131,7 @@ void stb_progressbar( int max, int current )
     for( i=(last<0?0:last) ; i<=pos ; i++ ) {
       ligne[i]='#';
     }
-    avt_fprintf( stdout, "\r%3ld%%  [¤2%s¤.] %7ldKb", r, ligne, mbkprocessmemoryusage()/1024 );
+    avt_fprintf( stdout, "\r%3ld%%  [Â¤2%sÂ¤.] %7ldKb", r, ligne, mbkprocessmemoryusage()/1024 );
     fflush( stdout );
     last  = pos;
     lastr = r;
@@ -173,34 +173,34 @@ void stb_progress( int iteration, int max, int pos, char *msg )
 
 Principe :
 
-Dans beaucoups de cas, il y a très peu d'agresseurs actifs. Une ptype_list
+Dans beaucoups de cas, il y a trÃ¨s peu d'agresseurs actifs. Une ptype_list
 pour stocker l'agresseur (champs DATA) et le type d'agression (champs TYPE)
-est donc satisfaisante, même si entre les fonctions stb_fillactifrcxparam(), 
+est donc satisfaisante, mÃªme si entre les fonctions stb_fillactifrcxparam(), 
 stb_saveactifrcxparam(), stb_getagressiontype() et stb_setagressiontype() cela
-conduit à des algos en n².
+conduit Ã  des algos en nÂ².
 
-Lorsque le n² devient inacceptable ( STB_CTK_MAXCHAIN²), les ptype_list sont
-remplacées par des tables de hash. Le gain est double : la consomation mémoire
+Lorsque le nÂ² devient inacceptable ( STB_CTK_MAXCHAINÂ²), les ptype_list sont
+remplacÃ©es par des tables de hash. Le gain est double : la consomation mÃ©moire
 ( la table de hash est un tableau de 2 valeurs, il n'y a pas de champs NEXT)
-et le temps de calcul sont réduit.
+et le temps de calcul sont rÃ©duit.
 
-Q : Pourquoi ne pas avoir utilisé alors systématiquement une table de hash ?
+Q : Pourquoi ne pas avoir utilisÃ© alors systÃ©matiquement une table de hash ?
 
-Parceque le malloc() standard utilisé par défaut dans addht() consomme en
-réalité 24 octets au lieu de 12, et si on prend un petit nombre initial (par
+Parceque le malloc() standard utilisÃ© par dÃ©faut dans addht() consomme en
+rÃ©alitÃ© 24 octets au lieu de 12, et si on prend un petit nombre initial (par
 exemple 2), le malloc des htitem consomme 24 octets au lieu de 16. Pour les 
-petits nombres d'agresseurs actifs (jusqu'à 6), la table de hash est donc plus 
-coûteuse en mémoire, pour un gain CPU très faible.
+petits nombres d'agresseurs actifs (jusqu'Ã  6), la table de hash est donc plus 
+coÃ»teuse en mÃ©moire, pour un gain CPU trÃ¨s faible.
 
 
-On ne peut pas utiliser les flags de rcx/rcn car les vues rcx sont factorisées :
-Deux ttvsig peuvent correspondre à un losig.
+On ne peut pas utiliser les flags de rcx/rcn car les vues rcx sont factorisÃ©es :
+Deux ttvsig peuvent correspondre Ã  un losig.
 */
 
 /*****************************************************************************
 *                           fonction stb_getagressiontype()                  *
 ******************************************************************************
-* Récupère l'agression entre deux signaux.                                   *
+* RÃ©cupÃ¨re l'agression entre deux signaux.                                   *
 *****************************************************************************/
 char stb_getagressiontype( victime, agresseur )
 ttvsig_list     *victime;
@@ -240,7 +240,7 @@ ttvsig_list     *agresseur;
 /*****************************************************************************
 *                           fonction stb_setagressiontype()                  *
 ******************************************************************************
-* Mémorise l'agression entre deux signaux.                                   *
+* MÃ©morise l'agression entre deux signaux.                                   *
 *****************************************************************************/
 void stb_setagressiontype( victime, agresseur, type )
 ttvsig_list     *victime;
@@ -324,11 +324,11 @@ void stb_cleanagressiontype( ttvsig_list *signal )
 }
 
 /*
-  Marque les driver de victime. Renvoie la chain_list des ttvsig marqués pour
+  Marque les driver de victime. Renvoie la chain_list des ttvsig marquÃ©s pour
   les nettoyer plus tard
 
   victime est un ttvsig en sortie de gate
-  Ne fonctionne qu'à plat.
+  Ne fonctionne qu'Ã  plat.
 */
 
 chain_list* stb_mark_input( ttvfig_list *ttvfig, 
@@ -363,7 +363,7 @@ chain_list* stb_mark_input( ttvfig_list *ttvfig,
         toclean = addchain( toclean, ttvsig );
       }
 
-      /* on marque également les driver des entrées rc */
+      /* on marque Ã©galement les driver des entrÃ©es rc */
 
       for( j=0 ; j<=1 ; j++ ) {
         for( linerc = ttvsig->NODE[j].INLINE ; linerc ; linerc = linerc->NEXT ) 
@@ -507,7 +507,7 @@ void stb_cleanup_fast_nodepair(stbfig_list *stbfig)
 ******************************************************************************
 * Ajoute dans tous les rcxparam d'une liste le ttvsig correspondant. Remplie *
 * egalement les champs FMINUP et FMINDW. Lorsque plusieurs agresseurs sont   *
-* présents, on prend le pire en terme de fronts.                             *
+* prÃ©sents, on prend le pire en terme de fronts.                             *
 *****************************************************************************/
 void stb_fillttvsigrcxparam( ttvfig, level, type, headlist )
 ttvfig_list     *ttvfig;
@@ -608,7 +608,7 @@ chain_list      *headlist;
 /*****************************************************************************
 *                           fonction stb_delttvsigrcxparam()                 *
 ******************************************************************************
-* Libère dans tous les rcxparam d'une liste le ttvsig correspondant.         *
+* LibÃ¨re dans tous les rcxparam d'une liste le ttvsig correspondant.         *
 *****************************************************************************/
 void stb_delttvsigrcxparam( headlist )
 chain_list      *headlist;
@@ -632,7 +632,7 @@ chain_list      *headlist;
 /*****************************************************************************
 *                           fonction stb_getttvsigrcxparam()                 *
 ******************************************************************************
-* Récupère le ttvsig correspondant à un rcxparam                             *
+* RÃ©cupÃ¨re le ttvsig correspondant Ã  un rcxparam                             *
 *****************************************************************************/
 ttvsig_list* stb_getttvsigrcxparam( param )
 rcxparam        *param;
@@ -651,7 +651,7 @@ rcxparam        *param;
 /*****************************************************************************
 *                           fonction stb_getrcxparamfromevent()              *
 ******************************************************************************
-* Récupère le rcxparam d'un event.                                           *
+* RÃ©cupÃ¨re le rcxparam d'un event.                                           *
 *****************************************************************************/
 rcxparam* stb_getrcxparamfromevent( event )
 ttvevent_list *event;
@@ -674,7 +674,7 @@ ttvevent_list *event;
 /*****************************************************************************
 *                           fonction stb_addrcxparamfromevent()              *
 ******************************************************************************
-* Récupère le rcxparam d'un event.                                           *
+* RÃ©cupÃ¨re le rcxparam d'un event.                                           *
 *****************************************************************************/
 void stb_addrcxparamfromevent( event, param )
 ttvevent_list *event;
@@ -697,7 +697,7 @@ rcxparam   *param;
 /*****************************************************************************
 *                           fonction stb_getrcxparamfromevent()              *
 ******************************************************************************
-* Récupère le rcxparam d'un event.                                           *
+* RÃ©cupÃ¨re le rcxparam d'un event.                                           *
 *****************************************************************************/
 void stb_delrcxparamfromevent( event )
 ttvevent_list *event;
@@ -719,10 +719,10 @@ ttvevent_list *event;
 /*****************************************************************************
 *                           fonction stb_fillactifrcxparam()                 *
 ******************************************************************************
-* Remplis le champs ACTIF des structures rcxparam à partir des valeurs       *
-* calculées aux itérations précédentes.                                      *
-* mutex vaut 'Y' ou 'N'. A 'N', seul les aggressions sont renvoyées. A 'Y',  *
-* les résultats de mutex sont pris en compte.                                *
+* Remplis le champs ACTIF des structures rcxparam Ã  partir des valeurs       *
+* calculÃ©es aux itÃ©rations prÃ©cÃ©dentes.                                      *
+* mutex vaut 'Y' ou 'N'. A 'N', seul les aggressions sont renvoyÃ©es. A 'Y',  *
+* les rÃ©sultats de mutex sont pris en compte.                                *
 *****************************************************************************/
 #define STB_MAX_AGR 10000
 
@@ -874,8 +874,8 @@ char             mutex;
 /*****************************************************************************
 *                           fonction stb_fillinactifrcxparam()               *
 ******************************************************************************
-* Remplis le champs ACTIF des structures rcxparam à partir des valeurs       *
-* calculées aux itérations précédentes.                                      *
+* Remplis le champs ACTIF des structures rcxparam Ã  partir des valeurs       *
+* calculÃ©es aux itÃ©rations prÃ©cÃ©dentes.                                      *
 *****************************************************************************/
 void stb_fillinactifrcxparam( ttvfig, victime, headlist, mutex )
 ttvfig_list     *ttvfig;
@@ -949,10 +949,10 @@ char             mutex;
 /*****************************************************************************
 *                           fonction stb_saveactifrcxparam()                 *
 ******************************************************************************
-Mémorise dans STB les nouvelles agressions détectées. Renvoie 1 si il y en
+MÃ©morise dans STB les nouvelles agressions dÃ©tectÃ©es. Renvoie 1 si il y en
 a eu au moins une nouvelle, et 0 sinon. 
-Les nouvelles agressions sont stockées de manière définitive, qu'elles soient 
-MUTEX ou non. L'information MUTEX est mémorisée, mais de manière non définitive.
+Les nouvelles agressions sont stockÃ©es de maniÃ¨re dÃ©finitive, qu'elles soient 
+MUTEX ou non. L'information MUTEX est mÃ©morisÃ©e, mais de maniÃ¨re non dÃ©finitive.
 *****************************************************************************/
 int stb_saveactifcoupling( ttvevent_list *victime, ttvsig_list *aggressor, int rcxaggression )
 {
@@ -1042,7 +1042,7 @@ chain_list      *headlist;
 /*****************************************************************************
 *                           fonction stb_saveinactifrcxparam()               *
 ******************************************************************************
-* Mémorise dans STB les nouvelles agressions détectées. Renvoie 1 si il y en *
+* MÃ©morise dans STB les nouvelles agressions dÃ©tectÃ©es. Renvoie 1 si il y en *
 * a eu au moins une nouvelle, et 0 sinon.                                    *
 *****************************************************************************/
 
@@ -1141,7 +1141,7 @@ chain_list      *headlist;
 /*****************************************************************************
 *                           fonction stb_marqsigfromgap()                    *
 ******************************************************************************
-* Marque tous les signaux d'un gap comme étant des agresseurs actifs.        *
+* Marque tous les signaux d'un gap comme Ã©tant des agresseurs actifs.        *
 *****************************************************************************/
 void stb_marqactiffromgap( evtvic, gap )
 ttvevent_list   *evtvic;
@@ -1184,7 +1184,7 @@ stbgap_list     *gap;
 /*****************************************************************************
 *                           fonction stb_createchainevent()                  *
 ******************************************************************************
-* Crée une liste d'event à partir d'une liste de rcxparam.                   *
+* CrÃ©e une liste d'event Ã  partir d'une liste de rcxparam.                   *
 *****************************************************************************/
 chain_list* stb_createchainevent( headagr, type )
 chain_list      *headagr;
@@ -1219,11 +1219,11 @@ long             type;
 /*****************************************************************************
 *                           fonction stb_getchainevent()                     *
 ******************************************************************************
-* Cette fonction a deux fonctionnalités :                                    *
-*   - Renvoie une liste chainée des event correspondant aux agresseurs ;     *
-*   - Ajoute un ptype STB_CTK_RCXPARAM dans les event ( utilisé par la       *
+* Cette fonction a deux fonctionnalitÃ©s :                                    *
+*   - Renvoie une liste chainÃ©e des event correspondant aux agresseurs ;     *
+*   - Ajoute un ptype STB_CTK_RCXPARAM dans les event ( utilisÃ© par la       *
 *     fonction stb_marqsigfromgap() ).                                       *
-* La liste et les ptypes doivent être effacés par un appel à la fonction     *
+* La liste et les ptypes doivent Ãªtre effacÃ©s par un appel Ã  la fonction     *
 * stb_freechainevent().                                                      *
 *****************************************************************************/
 chain_list *stb_getchainevent( evtvic, type, headagr )
@@ -1252,7 +1252,7 @@ chain_list      *headagr;
 /*****************************************************************************
 *                           fonction stb_freechainevent()                    *
 ******************************************************************************
-* Libère la chaine et les ptypes alloués par la fonction stb_getchainevent().*
+* LibÃ¨re la chaine et les ptypes allouÃ©s par la fonction stb_getchainevent().*
 *****************************************************************************/
 void stb_freechainevent( eventlist )
 chain_list      *eventlist;
@@ -1274,9 +1274,9 @@ chain_list      *eventlist;
 ******************************************************************************
 * Positionne dans les structures rcxparam de la chain_list headagr les bits  *
 * indiquant les agressions observables. Cette fonction renvoie 1 si au moins *
-* une nouvelle agression a été détectée, et 0 sinon.                         *
+* une nouvelle agression a Ã©tÃ© dÃ©tectÃ©e, et 0 sinon.                         *
 * L'approche est pire cas : toutes les agressions sont initialement prises   *
-* en compte et éliminées progressivement.                                    *
+* en compte et Ã©liminÃ©es progressivement.                                    *
 *****************************************************************************/
 void stb_detectactiveagressorworst( stbfig, level, type, evtvic, headagr )
 stbfig_list     *stbfig;
@@ -1308,11 +1308,11 @@ chain_list      *headagr;
   
   stb_ctkprint( 0, "  Checking worst case agression.\n" );
 
-  // Récupère la liste des agresseurs.
+  // RÃ©cupÃ¨re la liste des agresseurs.
   eventlist   = stb_getchainevent( evtvic, STB_CTK_WORST_AGR, headagr );
   stb_debug_stab( stbfig, evtvic, eventlist );
 
-  // Récupère la liste des agresseurs qui ne sont pas sur la même phase que
+  // RÃ©cupÃ¨re la liste des agresseurs qui ne sont pas sur la mÃªme phase que
   // evtvic.
   alwaysagrlist = stb_diftdomain( stbfig, evtvic, eventlist );
   testagrlist = subchain( eventlist, alwaysagrlist );
@@ -1320,7 +1320,7 @@ chain_list      *headagr;
   stb_log_chain( stbfig, alwaysagrlist, 
                  "  agressors located on another clock domain" 
                );
-  // Récupère la liste des intervales qui recouvrent la victime.
+  // RÃ©cupÃ¨re la liste des intervales qui recouvrent la victime.
   
   realagrlist = stb_overlap( stbfig, 
                              evtvic, 
@@ -1329,7 +1329,7 @@ chain_list      *headagr;
                              STB_STD 
                            );
 
-  // Marque les event qu'il faut considérer comme agresseur
+  // Marque les event qu'il faut considÃ©rer comme agresseur
   for( chain = realagrlist ; chain ; chain = chain->NEXT ) {
     event = ((ttvevent_list*)chain->DATA);
     event->USER = addptype( event->USER, STB_CTK_MARKREALACTIF, NULL );
@@ -1430,7 +1430,7 @@ chain_list      *headagr;
 * Positionne dans les structures rcxparam de la chain_list headagr les bits  *
 * indiquant les agressions observables.                                      *
 * L'approche est meilleurs cas : Aucune agression n'est initialement prise   *
-* en compte et détectées progressivement.                                    *
+* en compte et dÃ©tectÃ©es progressivement.                                    *
 *****************************************************************************/
 void stb_detectactiveagressorbest( stbfig, level, type, evtvic, headagr )
 stbfig_list       *stbfig;
@@ -1467,7 +1467,7 @@ chain_list        *headagr;
   
   stb_ctkprint( 0, "  Checking worst case agression.\n" );
  
-  // Récupère la liste des event correspondant aux agresseurs.
+  // RÃ©cupÃ¨re la liste des event correspondant aux agresseurs.
   eventlist = stb_getchainevent( evtvic, STB_CTK_WORST_AGR, headagr );
   stb_debug_stab( stbfig, evtvic, eventlist );
 
@@ -1602,7 +1602,7 @@ chain_list        *headagr;
 *                           fonction stb_setminoldslope()                    *
 *                           fonction stb_setmaxoldslope()                    *
 ******************************************************************************
-* Récupère l'ancien le front mémorisé à l'itération précédante.              *
+* RÃ©cupÃ¨re l'ancien le front mÃ©morisÃ© Ã  l'itÃ©ration prÃ©cÃ©dante.              *
 *****************************************************************************/
 long stb_getminoldslope( node )
 ttvevent_list *node;
@@ -1669,7 +1669,7 @@ ttvevent_list *node;
 /*****************************************************************************
 *                           fonction stb_hasslopechanged()                   *
 ******************************************************************************
-* Indique si le front sur le noeud a changé depuis la dernière itération.    *
+* Indique si le front sur le noeud a changÃ© depuis la derniÃ¨re itÃ©ration.    *
 * Renvoie STB_NO, STB_YES ou STB_UNK.                                        *
 *****************************************************************************/
 
@@ -1771,7 +1771,7 @@ long           type;
 /*****************************************************************************
 *                           fonction stb_needeval()                          *
 ******************************************************************************
-* Indique si le node doit être réévalué. Renvoie STB_YES, STB_NO ou STB_UNK. *
+* Indique si le node doit Ãªtre rÃ©Ã©valuÃ©. Renvoie STB_YES, STB_NO ou STB_UNK. *
 *****************************************************************************/
 
 int stb_needeval( ttvfig, level, node, type, mode, headagr )
@@ -2255,7 +2255,7 @@ stbfig_list *stbfig;
 }
 
 /******************************************************************************\
-Construit les tables de hash dans la hiérarchie TTV.
+Construit les tables de hash dans la hiÃ©rarchie TTV.
 \******************************************************************************/
 void stb_built_ttv_htab( ttvfig_list *rootfig )
 {
@@ -2263,7 +2263,7 @@ void stb_built_ttv_htab( ttvfig_list *rootfig )
 }
 
 /******************************************************************************\
-Remet à jour les infos de stb, notament les holorloges avec les nouveaux délais.
+Remet Ã  jour les infos de stb, notament les holorloges avec les nouveaux dÃ©lais.
 \******************************************************************************/
 void stb_resync( stbfig_list *stbfig )
 {
@@ -2298,11 +2298,11 @@ void stb_resync( stbfig_list *stbfig )
 
 /******************************************************************************\
 fonction stb_ctk()
-Détermine les agressions et calcule les délais élémentaires en présence de 
+DÃ©termine les agressions et calcule les dÃ©lais Ã©lÃ©mentaires en prÃ©sence de 
 crosstalk.
-Après avoir appellé cette fonction, les agressions calculées sont accessibles
+AprÃ¨s avoir appellÃ© cette fonction, les agressions calculÃ©es sont accessibles
 par la fonction stb_getagressiontype().
-On libère cette information avec la fonction stb_ctk_clean().
+On libÃ¨re cette information avec la fonction stb_ctk_clean().
 \******************************************************************************/
 
 
@@ -2366,7 +2366,7 @@ stbfig_list *stbfig;
   do
   {
    i++ ;
-   stb_ctkprint( 0, "\nItération %d\n\n", i );
+   stb_ctkprint( 0, "\nItÃ©ration %d\n\n", i );
 
    stb_ctk_drive_iteration_report_save_last_iteration_info(stbfig);
    
@@ -3682,7 +3682,7 @@ void stb_ctk_stat_event( stbfig_list        *stbfig,
 {
   float capa ;
 
-  /* Remplis les infos dont on dispose immédiatement */
+  /* Remplis les infos dont on dispose immÃ©diatement */
   
   stat->NODE           = ctkdetail->NODE ;
   
@@ -3692,8 +3692,8 @@ void stb_ctk_stat_event( stbfig_list        *stbfig,
   stat->FALL_PEAK_MAX  = ctkdetail->NOISE_MAX_UND ;
   stat->VTH            = ctkdetail->NOISE_VTH ;
 
-  /* Dans ctk_detail, on différencie les modèles de bruit rise et fall.
-     Dans la pratique, c'est le même. On conserve celui qui va vers vdd/2 */
+  /* Dans ctk_detail, on diffÃ©rencie les modÃ¨les de bruit rise et fall.
+     Dans la pratique, c'est le mÃªme. On conserve celui qui va vers vdd/2 */
 
   if( ( ctkdetail->NODE->TYPE & TTV_NODE_UP ) == TTV_NODE_UP ) 
     stat->NOISE_MODEL = ctkdetail->MODEL_OVR ;
@@ -3715,7 +3715,7 @@ void stb_ctk_stat_event( stbfig_list        *stbfig,
 /******************************************************************************\
 Si on est en mode STB_CTK_LINE :
 
-Met à jour les champs delai et front des line avec crosstalk et nettoie les 
+Met Ã  jour les champs delai et front des line avec crosstalk et nettoie les 
 structures delay de la ttvfig si on est en mode line.
 \******************************************************************************/
 
@@ -3730,7 +3730,7 @@ stb_ctk_handle_mutex()
 
 Enleve le flag RCX_AGRBEST ou RCX_AGRWORST des structures rcxparam des 
 event qui ne peuvent pas se produire (mutex). Lorsqu'un de ces flags est
-enlevé, on le remplace par RCX_MTX_BEST ou RCX_MTX_WORST pour le report.
+enlevÃ©, on le remplace par RCX_MTX_BEST ou RCX_MTX_WORST pour le report.
 
 \******************************************************************************/
 void stb_ctk_handle_mutex( ttvfig_list *ttvfig, 

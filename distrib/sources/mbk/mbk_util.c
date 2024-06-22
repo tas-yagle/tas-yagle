@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -1166,7 +1166,7 @@ ptype_list *delptype(pthead, type)
       return pthead;
     } else
 #if DELAY_DEBUG_STAT
-      avt_fprintf(stderr, "¤6delptype function called for non existing PTYPE¤.\n");
+      avt_fprintf(stderr, "Â¤6delptype function called for non existing PTYPEÂ¤.\n");
       exit(55);
 #endif
       return NULL;
@@ -1831,7 +1831,7 @@ void leftunconcatname(name, left, right)
 {
   int   i;
 
-  // On recherche le premier séparateur.
+  // On recherche le premier sÃ©parateur.
 
   for( i=0;
        name[i] != SEPAR && name[i]!= 0 ;
@@ -1840,7 +1840,7 @@ void leftunconcatname(name, left, right)
   str[i]=0;
  
   if( name[i] != SEPAR ) {
-    // Il n'y a plus de séparateur : il ne reste donc que le right.
+    // Il n'y a plus de sÃ©parateur : il ne reste donc que le right.
     *right = name;
     *left  =NULL;
   } else {
@@ -1861,13 +1861,13 @@ void rightunconcatname(name, left, right)
 {
   int   i, m;
 
-  // Positionne sur le dernier caractère;
+  // Positionne sur le dernier caractÃ¨re;
   for( i=0, m=-1 ; name[i] ; i++)
     if( name[i] == SEPAR )
       m=i;
 
   if( m == -1 ) {
-    // Il n'y a plus de séparateur : il ne reste donc que le left
+    // Il n'y a plus de sÃ©parateur : il ne reste donc que le left
     *right = NULL;
     *left  = name;
   } else {
@@ -4170,14 +4170,14 @@ char* mbk_getvssname()
   
     l = strlen( GLOBAL_VSS );
     
-    /* Passe tous les caractères ':' ou '*' */
+    /* Passe tous les caractÃ¨res ':' ou '*' */
     for( i = 0 ; 
          i < l && ( GLOBAL_VSS[i] == ':' || GLOBAL_VSS[i] == '*' ) ;
          i++ 
          );
     
     if( i < l ) {
-      /* retiens tous les caractères différents de ':' ou '*' */
+      /* retiens tous les caractÃ¨res diffÃ©rents de ':' ou '*' */
       for( p = 0 ; 
            i < l && GLOBAL_VSS[i] != ':' && GLOBAL_VSS[i] != '*' ;
            i++, p++ 
@@ -4201,14 +4201,14 @@ char* mbk_getvddname()
   
     l = strlen( GLOBAL_VDD );
     
-    /* Passe tous les caractères ':' ou '*' */
+    /* Passe tous les caractÃ¨res ':' ou '*' */
     for( i = 0 ; 
          i < l && ( GLOBAL_VDD[i] == ':' || GLOBAL_VDD[i] == '*' ) ;
          i++ 
          );
     
     if( i < l ) {
-      /* retiens tous les caractères différents de ':' ou '*' */
+      /* retiens tous les caractÃ¨res diffÃ©rents de ':' ou '*' */
       for( p = 0 ; 
            i < l && GLOBAL_VDD[i] != ':' && GLOBAL_VDD[i] != '*' ;
            i++, p++ 

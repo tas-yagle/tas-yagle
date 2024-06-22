@@ -1,15 +1,15 @@
 typedef struct {
   float I_EPSILON;      // Ecart maximum autours de i (A)
   float V_EPSILON;      // Ecart maximum autours de v (V)
-  int   MAXITER;        // Nombre maximum d'itérations
-  int   DICHOTOMIE;     // Normalement, on calcul le i proportionnellement à la
-                        // tension max et à la tension min trouvée. Cette 
-                        // convergence étant lente vers la fin, il est plus
-                        // rapide de prendre le millieu dès que le nb d'itér
-                        // est inférieur à cette valeur
+  int   MAXITER;        // Nombre maximum d'itÃ©rations
+  int   DICHOTOMIE;     // Normalement, on calcul le i proportionnellement Ã  la
+                        // tension max et Ã  la tension min trouvÃ©e. Cette 
+                        // convergence Ã©tant lente vers la fin, il est plus
+                        // rapide de prendre le millieu dÃ¨s que le nb d'itÃ©r
+                        // est infÃ©rieur Ã  cette valeur
   float MINDELTAVOLTAGE;// Valeur de tension de branche en dessous de laquelle
                         // on ne simule rien (V)
-  float MINCURRENT;     // Courant estimé dans la branche en dessous du quel
+  float MINCURRENT;     // Courant estimÃ© dans la branche en dessous du quel
                         // on ne simule rien.
 } stm_solver_i_param;
 
@@ -27,7 +27,7 @@ int stm_solver_pi_load_ts( stm_solver_maillon_list *head, stm_solver_maillon *co
 
 
 /******************************************************************************\
-Liste des fonctions de gestion des données.
+Liste des fonctions de gestion des donnÃ©es.
 \******************************************************************************/
 extern stm_solver_maillon* stm_solver_new_maillon( void );
 extern void stm_solver_free_maillon( stm_solver_maillon *maillon );

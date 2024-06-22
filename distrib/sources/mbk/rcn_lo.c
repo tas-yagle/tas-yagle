@@ -38,7 +38,7 @@ losig_list *ptsig;
 }
 
 /*******************************************************************************function rcn_existcapa()
-Renvoie 1 si une capacité peut potentiellement exister sur ce signal, et 
+Renvoie 1 si une capacitÃ© peut potentiellement exister sur ce signal, et 
 0 sinon.
 *******************************************************************************/
 char rcn_existcapa( lofig, losig )
@@ -49,27 +49,27 @@ losig_list *losig;
   if( !losig->PRCN )
     return 0;
   
-  // Est-ce qu'il y a une capacité ? On ne fait surtout pas de refresh pour 
+  // Est-ce qu'il y a une capacitÃ© ? On ne fait surtout pas de refresh pour 
   // la calculer, on veut juste savoir si il y en a une.
   if( rcn_getcapa( NULL, losig ) > 0.0 )
     return 1;
     
-  // Est-ce qu'il y a des éléments RC dans le rc ?
+  // Est-ce qu'il y a des Ã©lÃ©ments RC dans le rc ?
   if( losig->PRCN->PWIRE || losig->PRCN->PCTC )
     return 1;
     
-  // On a un cache, donc on trouvera dedans des rc. Un test plus précis serait
+  // On a un cache, donc on trouvera dedans des rc. Un test plus prÃ©cis serait
   // de savoir si le signal est cacheable, mais seul le parser le sait.
   if( rcn_getlofigcache( lofig ) )
     return 1;
   
-  // On a rien trouvé, il n'y a donc pas de capacité sur ce signal.
+  // On a rien trouvÃ©, il n'y a donc pas de capacitÃ© sur ce signal.
   return 0;
 }
 
 /*******************************************************************************
 function rcn_synccapa()
-Prend en compte la capacité due aux interconnect. Cette fonction s'utilise lors
+Prend en compte la capacitÃ© due aux interconnect. Cette fonction s'utilise lors
 d'un rcn_refresh_signal().
 *******************************************************************************/
 void rcn_synccapa( lofig, ptsig )
@@ -84,8 +84,8 @@ losig_list *ptsig;
 
 /*******************************************************************************
 function rcn_getcapa()
-Renvoie la capacité sur un signal. Si la capacité due aux éléments RC n'a pas
-été calculée, l'argument lofig permet de faire un refresh pour la calculer.
+Renvoie la capacitÃ© sur un signal. Si la capacitÃ© due aux Ã©lÃ©ments RC n'a pas
+Ã©tÃ© calculÃ©e, l'argument lofig permet de faire un refresh pour la calculer.
 *******************************************************************************/
 float rcn_getcapa(lofig,ptsig)
 lofig_list *lofig;
@@ -104,7 +104,7 @@ losig_list *ptsig;
 /*******************************************************************************
 function rcn_isnetcapaok()
 function rcn_setnetcapaok()
-Fonctions qui servent à mémoriser si on a pris en compte la capacité due aux RC.
+Fonctions qui servent Ã  mÃ©moriser si on a pris en compte la capacitÃ© due aux RC.
 *******************************************************************************/
 char rcn_isnetcapaok(ptsig)
 losig_list *ptsig;
@@ -178,7 +178,7 @@ float       value;
 }
 
 /******************************************************************************\
-Calcule la capacité due aux éléments RC.
+Calcule la capacitÃ© due aux Ã©lÃ©ments RC.
 \******************************************************************************/
 float rcn_getnetcapa( losig_list *ptsig )
 {
@@ -194,7 +194,7 @@ float rcn_getnetcapa( losig_list *ptsig )
 }
 
 /******************************************************************************\
-Remplace la capacité du signal par la capacité due aux éléments RC
+Remplace la capacitÃ© du signal par la capacitÃ© due aux Ã©lÃ©ments RC
 \******************************************************************************/
 float rcn_calccapa( losig_list *ptsig )
 {
@@ -487,7 +487,7 @@ freeloctcparams(loctc_list *ptloctc)
 }
  
 /******************************************************************************\
-Fonctions de renumérotation des noeuds.
+Fonctions de renumÃ©rotation des noeuds.
 Ces fonctions effacent la table des noeuds. Ca peut se changer facilement.
 \******************************************************************************/
 void rcn_changewirenodes( losig_list *losig, lowire_list *wire, int n1, int n2 )
@@ -519,7 +519,7 @@ void rcn_changectcnodes( loctc_list *ctc, int n1, int n2 )
 /*******************************************************************************
 * function freectclist()                                                       *
 * Efface toute les ctc sur une liste de signaux. Si la chaine est NULL, alors  *
-* tous les signaux de la lofig sont effacés.                                   *
+* tous les signaux de la lofig sont effacÃ©s.                                   *
 *******************************************************************************/
 void freectclist( ptfig, headsig )
 lofig_list      *ptfig;
@@ -596,7 +596,7 @@ losig_list	*signal;
     return 0 ;
   }
 
-  /* Libère la table des noeuds */
+  /* LibÃ¨re la table des noeuds */
   if( gettabnode(signal->PRCN) )
     freetable(signal);
 
@@ -1620,8 +1620,8 @@ lowire_list	*from;
   RCN_SETFLAG( ptnode->FLAG, flag );
 
   /*
-  Récursif sur les branches multiples
-  Itératif entre 2 wires
+  RÃ©cursif sur les branches multiples
+  ItÃ©ratif entre 2 wires
   */
 
   for( scanchain = ptnode->WIRELIST ; scanchain ; scanchain = scanchain->NEXT )
@@ -2468,7 +2468,7 @@ losig_list      *losig;
 }
 
 /* Regroupe les CTC en double entre deux noeuds sur un signal. Renvoie le
-nombre de ctc effacées. */
+nombre de ctc effacÃ©es. */
 
 int rcn_mergectclosig( losig_list *losig )
 {
@@ -2541,7 +2541,7 @@ int rcn_mergectclosig( losig_list *losig )
 }
 
 /* Regroupe les CTC en double entre deux noeuds sur la figure. Renvoie le
-nombre de ctc effacées. */
+nombre de ctc effacÃ©es. */
 
 int rcn_mergectclofig( lofig_list *lofig )
 {
@@ -2566,7 +2566,7 @@ void delloctc( loctc_list *ptctc )
   lonode_list   *ptnode;
   chain_list    *scanchain;
 
-  // Efface la ctc des listes chainées.
+  // Efface la ctc des listes chainÃ©es.
  
   freeloctcparams (ptctc);
 
@@ -2689,7 +2689,7 @@ void delloctc( loctc_list *ptctc )
 }
 
 /******************************************************************************\
-Renvoie la somme des capacités de couplage entre deux signaux.
+Renvoie la somme des capacitÃ©s de couplage entre deux signaux.
 \******************************************************************************/
 
 float rcn_getcouplingcapacitance( lofig_list *lofig,

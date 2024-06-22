@@ -11,7 +11,7 @@ int        MBK_MAX_CACHE = 128 ;
 /*****************************************************************************\
 mbk_cache_create()
 Fonction utilisateur.
-Crée un nouveau cache.
+CrÃ©e un nouveau cache.
 \*****************************************************************************/
 
 mbkcache* mbk_cache_create( char              (*isactive)( void *root, void *elem ),
@@ -36,8 +36,8 @@ mbkcache* mbk_cache_create( char              (*isactive)( void *root, void *ele
 /*****************************************************************************\
 mbk_cache_refresh()
 Fonction utilisateur. 
-Charge en mémoire un élément si il n'est pas déjà présent. Libère d'autres 
-éléments si c'est nécessaire.
+Charge en mÃ©moire un Ã©lÃ©ment si il n'est pas dÃ©jÃ  prÃ©sent. LibÃ¨re d'autres 
+Ã©lÃ©ments si c'est nÃ©cessaire.
 \*****************************************************************************/
 
 void mbk_cache_refresh( mbkcache *cache, void *root, void *elem )
@@ -52,18 +52,18 @@ void mbk_cache_refresh( mbkcache *cache, void *root, void *elem )
   
   if( incache ) {
     avt_log(LOGMBKCACHE,2,"element already loaded\n");
-    // L'élément est présent dans le cache, on le met en tête des éléments les
-    // derniers accédés.
+    // L'Ã©lÃ©ment est prÃ©sent dans le cache, on le met en tÃªte des Ã©lÃ©ments les
+    // derniers accÃ©dÃ©s.
     if( incache != cache->FIRST )
       mbk_cache_makeitfirst( cache, incache );
   }
   else {
   
-    // L'élément n'est pas dans le cache. On fait du ménage si necéssaire, puis
-    // on lit le nouvel élément.
+    // L'Ã©lÃ©ment n'est pas dans le cache. On fait du mÃ©nage si necÃ©ssaire, puis
+    // on lit le nouvel Ã©lÃ©ment.
  
-    // si le cache est limité en nb d'éléments, on réserve un éléments pour
-    // celui qui va être lu.
+    // si le cache est limitÃ© en nb d'Ã©lÃ©ments, on rÃ©serve un Ã©lÃ©ments pour
+    // celui qui va Ãªtre lu.
     if( cache->MAXELEM )
       cache->CURELEM++;
 
@@ -82,7 +82,7 @@ void mbk_cache_refresh( mbkcache *cache, void *root, void *elem )
 /*****************************************************************************\
 mbk_cache_release()
 Fonction utilisateur. 
-Force la libération d'un élément du cache.
+Force la libÃ©ration d'un Ã©lÃ©ment du cache.
 \*****************************************************************************/
 
 void mbk_cache_release( mbkcache *cache, void *root, void *elem )
@@ -102,8 +102,8 @@ void mbk_cache_release( mbkcache *cache, void *root, void *elem )
 /*****************************************************************************\
 mbk_cache_delete()
 Fonction utilisateur. 
-Efface le cache. Appel mbk_cache_release() pour tous les éléments encore 
-présents dans le cache.
+Efface le cache. Appel mbk_cache_release() pour tous les Ã©lÃ©ments encore 
+prÃ©sents dans le cache.
 \*****************************************************************************/
 
 extern void mbk_cache_delete( mbkcache *cache, void *root )
@@ -116,7 +116,7 @@ extern void mbk_cache_delete( mbkcache *cache, void *root )
 /*****************************************************************************\
 mbk_cache_lock()
 Fonction utilisateur. 
-Verrouille un élément en mémoire
+Verrouille un Ã©lÃ©ment en mÃ©moire
 \*****************************************************************************/
 
 extern void mbk_cache_lock( mbkcache *cache, void *elem )
@@ -132,7 +132,7 @@ extern void mbk_cache_lock( mbkcache *cache, void *elem )
 /*****************************************************************************\
 mbk_cache_unlock()
 Fonction utilisateur. 
-Deverrouille un élément en mémoire
+Deverrouille un Ã©lÃ©ment en mÃ©moire
 \*****************************************************************************/
 
 extern void mbk_cache_unlock( mbkcache *cache, void *elem )
@@ -149,7 +149,7 @@ extern void mbk_cache_unlock( mbkcache *cache, void *elem )
 /*****************************************************************************\
 mbk_cache_islock()
 Fonction utilisateur. 
-Informe si l'élément est vérouillé
+Informe si l'Ã©lÃ©ment est vÃ©rouillÃ©
 \*****************************************************************************/
 
 extern char mbk_cache_islock( mbkcache *cache, void *elem )
@@ -167,8 +167,8 @@ extern char mbk_cache_islock( mbkcache *cache, void *elem )
 /*****************************************************************************\
 mbk_cache_update_size()
 Fonction utilisateur. 
-Informe le cache que la taille d'un ou plusieurs de ses éléments a changée.
-Libère des éléments si la taille maximum du cache a été dépassée.
+Informe le cache que la taille d'un ou plusieurs de ses Ã©lÃ©ments a changÃ©e.
+LibÃ¨re des Ã©lÃ©ments si la taille maximum du cache a Ã©tÃ© dÃ©passÃ©e.
 \*****************************************************************************/
 void mbk_cache_update_size( mbkcache *cache, void *root, long int size )
 {
@@ -179,7 +179,7 @@ void mbk_cache_update_size( mbkcache *cache, void *root, long int size )
 /*****************************************************************************\
 mbk_cache_list_content()
 Fonction utilisateur. 
-renvoie la liste chainée des éléments présents dans le cache
+renvoie la liste chainÃ©e des Ã©lÃ©ments prÃ©sents dans le cache
 \*****************************************************************************/
 chain_list* mbk_cache_list_content( mbkcache *cache )
 {
@@ -198,11 +198,11 @@ chain_list* mbk_cache_list_content( mbkcache *cache )
 /*****************************************************************************\
 mbk_cache_set_limit_element()
 Fonction utilisateur
-Limite le nombre d'éléments pouvant être présent à chaque instant dans le
-cache, en plus du critère de taille de cache.
-Si 0, le nombre d'élément est illimité, le nombre d'éléments présents dans le
-cache n'est limité que par la taille du cache.
-Appelle automatiquement mbk_cache_release() pour tous les éléments en excès dans
+Limite le nombre d'Ã©lÃ©ments pouvant Ãªtre prÃ©sent Ã  chaque instant dans le
+cache, en plus du critÃ¨re de taille de cache.
+Si 0, le nombre d'Ã©lÃ©ment est illimitÃ©, le nombre d'Ã©lÃ©ments prÃ©sents dans le
+cache n'est limitÃ© que par la taille du cache.
+Appelle automatiquement mbk_cache_release() pour tous les Ã©lÃ©ments en excÃ¨s dans
 le cache.
 \*****************************************************************************/
 void mbk_cache_set_limit_element( mbkcache *cache, 
@@ -217,8 +217,8 @@ void mbk_cache_set_limit_element( mbkcache *cache,
 /*****************************************************************************\
 mbk_cache_update_memory()
 Fonction interne.
-Si la taille maximum du cache est atteinte ou dépassée, libère les éléments de
-la mémoire
+Si la taille maximum du cache est atteinte ou dÃ©passÃ©e, libÃ¨re les Ã©lÃ©ments de
+la mÃ©moire
 \*****************************************************************************/
 void mbk_cache_update_memory( mbkcache *cache, void *root )
 {
@@ -243,7 +243,7 @@ void mbk_cache_update_memory( mbkcache *cache, void *root )
       lastlock = testremove ;
 
     if( cache->FIRST == lastlock ) {
-      /* Le cache est saturé d'éléments vérrouillés */
+      /* Le cache est saturÃ© d'Ã©lÃ©ments vÃ©rrouillÃ©s */
       if( cache->MAXELEM > 0 && cache->CURELEM > cache->MAXELEM ) {
         avt_log(LOGMBKCACHE,2,"maximum number of element in cache is excedeed : max=%u current=%u\n", cache->MAXELEM, cache->CURELEM );
       }
@@ -255,7 +255,7 @@ void mbk_cache_update_memory( mbkcache *cache, void *root )
 /*****************************************************************************\
 mbk_cache_add()
 Fonction interne.
-Ajoute un élément dans le cache.
+Ajoute un Ã©lÃ©ment dans le cache.
 \*****************************************************************************/
 void mbk_cache_add( mbkcache *cache, void *root, void *elem )
 {
@@ -284,7 +284,7 @@ void mbk_cache_add( mbkcache *cache, void *root, void *elem )
 /*****************************************************************************\
 mbk_cache_remove()
 Fonction interne.
-Libère un élément présent du cache.
+LibÃ¨re un Ã©lÃ©ment prÃ©sent du cache.
 \*****************************************************************************/
 void mbk_cache_remove( mbkcache *cache, mbkcachelist *incache, void *root )
 {
@@ -310,7 +310,7 @@ void mbk_cache_remove( mbkcache *cache, mbkcachelist *incache, void *root )
 /*****************************************************************************\
 mbk_cache_makeitfirst()
 Fonction interne.
-Fait de l'élément incache le premier élément de la liste.
+Fait de l'Ã©lÃ©ment incache le premier Ã©lÃ©ment de la liste.
 \*****************************************************************************/
 
 void mbk_cache_makeitfirst( mbkcache *cache, mbkcachelist *incache )
@@ -353,7 +353,7 @@ unsigned long int mbk_cache_call_release( mbkcache *cache, void *root, void *ele
 }
 
 /*****************************************************************************\
-Accède à un mbkcachelist à partir du data.
+AccÃ¨de Ã  un mbkcachelist Ã  partir du data.
 Fonctions internes.
 \*****************************************************************************/
 
@@ -439,7 +439,7 @@ Fonctions permettant de limiter le nombre maximum de fichiers ouverts.
 /*****************************************************************************\
 mbk_cache_set_file()
 Fonctions utilisateur.
-Renvoie un index associé au fichier passé en paramètre.
+Renvoie un index associÃ© au fichier passÃ© en paramÃ¨tre.
 \*****************************************************************************/
 int mbk_cache_set_file( FILE *fd, char *filename, char *extension )
 {
@@ -471,7 +471,7 @@ int mbk_cache_set_file( FILE *fd, char *filename, char *extension )
 /*****************************************************************************\
 mbk_cache_get_file()
 Fonctions utilisateur.
-Renvoie le fichier associé à l'index passé en paramètre
+Renvoie le fichier associÃ© Ã  l'index passÃ© en paramÃ¨tre
 \*****************************************************************************/
 FILE* mbk_cache_get_file( int id )
 {
@@ -492,8 +492,8 @@ FILE* mbk_cache_get_file( int id )
 /*****************************************************************************\
 mbk_cache_clear_file()
 Fonctions utilisateur.
-Libère les informations associées à l'index passé en paramètre. Si le fichier 
-est ouvert, il est fermé.
+LibÃ¨re les informations associÃ©es Ã  l'index passÃ© en paramÃ¨tre. Si le fichier 
+est ouvert, il est fermÃ©.
 \*****************************************************************************/
 void mbk_cache_clear_file( int id )
 {
@@ -516,7 +516,7 @@ void mbk_cache_clear_file( int id )
 /*****************************************************************************\
 mbk_cache_file_open()
 Fonction interne.
-Fonction de refresh : elle est appellée pour ouvrir un fichier.
+Fonction de refresh : elle est appellÃ©e pour ouvrir un fichier.
 \*****************************************************************************/
 unsigned long int mbk_cache_file_open( void *root, cache_file *elem )
 {
@@ -538,7 +538,7 @@ unsigned long int mbk_cache_file_open( void *root, cache_file *elem )
 /*****************************************************************************\
 mbk_cache_file_close()
 Fonction interne.
-Fonction de libération : elle est appellée pour fermer un fichier.
+Fonction de libÃ©ration : elle est appellÃ©e pour fermer un fichier.
 \*****************************************************************************/
 unsigned long int mbk_cache_file_close( void *root, cache_file *elem )
 {

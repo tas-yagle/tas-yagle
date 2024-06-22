@@ -98,10 +98,10 @@ RCXFLOAT rcx_noise_basic_scr( RCXFLOAT vdd, RCXFLOAT f, RCXFLOAT rv, RCXFLOAT cc
 
 /******************************************************************************\
 rcx_noise_detail()
-Calcule le bruit pour chacun des agresseurs. Pour libérer le tableau de 
-résultats, il faut faire :
+Calcule le bruit pour chacun des agresseurs. Pour libÃ©rer le tableau de 
+rÃ©sultats, il faut faire :
   rcx_freetabagr( tableau, sizeof( rcx_signal_noise ), nbagr );
-Le signal victime est supposé stable.
+Le signal victime est supposÃ© stable.
 \******************************************************************************/
 
 rcx_signal_noise* rcx_noise_scr_detail( lofig_list *lofig,
@@ -128,13 +128,13 @@ rcx_signal_noise* rcx_noise_scr_detail( lofig_list *lofig,
                           );
   if( tabagr == NULL ) return NULL;
 
-  // Calcule la capacité totale à la masse lorsque tous les agresseurs sont
+  // Calcule la capacitÃ© totale Ã  la masse lorsque tous les agresseurs sont
   // muets.
   ct=cm;
   for( n=0 ; n < *nbagr ; n++ ) 
     ct = ct + tabagr[n].CLOCALE;
   
-  /* On fait le calcul en SI : ça évite les embrouilles... */
+  /* On fait le calcul en SI : Ã§a Ã©vite les embrouilles... */
   ct  = ct * RCX_UNIT_CAPA_ALC_TO_SI;
 
   for( n=0 ; n < *nbagr ; n++ ) {
@@ -144,7 +144,7 @@ rcx_signal_noise* rcx_noise_scr_detail( lofig_list *lofig,
     cc = tabagr[n].CLOCALE + tabagr[n].CGLOBALE ;
 
     if( cc > 0.0 ) {
-      /* On fait le calcul en SI : ça évite les embrouilles... */
+      /* On fait le calcul en SI : Ã§a Ã©vite les embrouilles... */
       cc = cc * RCX_UNIT_CAPA_ALC_TO_SI;
          
       ccm = ct - cc ;
@@ -216,12 +216,12 @@ rcx_signal_noise* rcx_noise_scr_detail( lofig_list *lofig,
 
 /******************************************************************************\
 rcx_noise_scr_x()
-Calcule le bruit due aux agresseurs marqués actif.
+Calcule le bruit due aux agresseurs marquÃ©s actif.
 
-rv :    Résistance de driver de la victime.
-type :  Le bruit est calculé pour un délai max ou min
+rv :    RÃ©sistance de driver de la victime.
+type :  Le bruit est calculÃ© pour un dÃ©lai max ou min
 staticvic : YES|NO. Indique si le signal victime est stable ou non ( pour 
-            prendre en compte le front réel sur l'agresseur ).
+            prendre en compte le front rÃ©el sur l'agresseur ).
 \******************************************************************************/
 
 RCXFLOAT rcx_noise_scr_1 ( lofig_list *lofig,
@@ -250,14 +250,14 @@ RCXFLOAT rcx_noise_scr_1 ( lofig_list *lofig,
   tabagr = rcx_buildtabagr( lofig, victime, sizeof( agrnoise ), & nbagr, &cm );
   if( tabagr == NULL ) return 0.0;
 
-  // Calcule la capacité totale à la masse lorsque tous les agresseurs sont
+  // Calcule la capacitÃ© totale Ã  la masse lorsque tous les agresseurs sont
   // muets.
   ct=cm;
   for( n=0 ; n<nbagr ; n++ ) 
     ct = ct + tabagr[n].CLOCALE;
   bruitotal = 0.0;
   
-  /* On fait le calcul en SI : ça évite les embrouilles... */
+  /* On fait le calcul en SI : Ã§a Ã©vite les embrouilles... */
   ct  = ct * RCX_UNIT_CAPA_ALC_TO_SI;
 
   avt_log(LOGTRC,2, "Noise on signal %s %s %s\n", 
@@ -363,7 +363,7 @@ RCXFLOAT rcx_noise_scr_1 ( lofig_list *lofig,
 
       if( cc > 0.0 ) {
 
-        /* On fait le calcul en SI : ça évite les embrouilles... */
+        /* On fait le calcul en SI : Ã§a Ã©vite les embrouilles... */
         f   = f * RCX_UNIT_TIME_TAS_TO_SI;
         cc = cc * RCX_UNIT_CAPA_ALC_TO_SI;
         
@@ -412,7 +412,7 @@ RCXFLOAT rcx_noise_scr_1 ( lofig_list *lofig,
 }
 
 /******************************************************************************\
-Fonctions déterminant le bruit de crosstalk de façon <<précise>>
+Fonctions dÃ©terminant le bruit de crosstalk de faÃ§on <<prÃ©cise>>
 \******************************************************************************/
 
 RCXFLOAT rcx_noise_scr_2( lofig_list *lofig,
@@ -426,12 +426,12 @@ RCXFLOAT rcx_noise_scr_2( lofig_list *lofig,
 {
   agrnoise2     *tabagr ;       // tableau des agresseurs
   int            nbagr ;        // taille de ce tableau
-  double         cm ;           // capacité de masse
-  double         ct ;           // capacité totale
+  double         cm ;           // capacitÃ© de masse
+  double         ct ;           // capacitÃ© totale
   int            idmax ;        // index de l'agresseur ayant le + long front
   double         tamax ;        // front le plus long
-  agrnoise_data  infos ;        // regroupement des infos pour la résolution
-  int            itmax ;        // le nombre maximum d'itérations
+  agrnoise_data  infos ;        // regroupement des infos pour la rÃ©solution
+  int            itmax ;        // le nombre maximum d'itÃ©rations
   int            n ;
   double         bt = 0.0 ;
   double         tmin ;

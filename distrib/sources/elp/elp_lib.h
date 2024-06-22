@@ -112,7 +112,7 @@ extern double elpGeneral[elpGENERALNUM] ;
 #define elpDWC      5           /* parametre de reduction de la largeur NMOS  */
 #define elpDWCJ     6           /* parametre de reduction de la largeur NMOS  */
 
-/* les parametres de validité du model */
+/* les parametres de validitÃ© du model */
 #define elpRANGENUM 4          /* nombre de parametres du tableau range      */
 #define elpLMIN     0           /* longueur min                              */
 #define elpLMAX     1           /* longueur max                              */
@@ -141,10 +141,10 @@ extern double elpGeneral[elpGENERALNUM] ;
 #define elpA        14   /* parametre A                             */
 #define elpB        15   /* parametre B                             */
 #define elpRT       16   /* resistance en mode lineaire             */
-#define elpRS       17   /* resistance en mode saturé               */
-#define elpKT       18   /* resistance en mode saturé               */
-#define elpKS       19   /* resistance en mode saturé               */
-#define elpKR       20   /* resistance en mode saturé               */
+#define elpRS       17   /* resistance en mode saturÃ©               */
+#define elpKT       18   /* resistance en mode saturÃ©               */
+#define elpKS       19   /* resistance en mode saturÃ©               */
+#define elpKR       20   /* resistance en mode saturÃ©               */
 #define elpKRT      21   /* vlin=krt*vdd                            */
 #define elpKRS      22   /* vsat=krs*vdd                            */
 #define elpVT0      23   /* VT techno                               */
@@ -218,7 +218,7 @@ extern double elpGeneral[elpGENERALNUM] ;
 #define elpCGDC2    46
 #define elpCAPANUM  47  /* nombre de capacites carrees               */
 
-/* Les parametres pour le calcul de la résistance en petits signaux */
+/* Les parametres pour le calcul de la rÃ©sistance en petits signaux */
 #define elpRSSNUM  3   /* Nombre de parametres */
 #define elpRSSL    0   /* Coefficient du L */
 #define elpRSSC    1   /* Constante        */

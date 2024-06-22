@@ -88,10 +88,10 @@ void dead_cycle()
 {
   timer(0,0);
   
-  // __/¨¨ 
+  // __/Â¨Â¨ 
   ckUP();
   cycle(timer(TCH,0));
-  // ¨¨\__ 
+  // Â¨Â¨\__ 
   ckDW();
   cycle(timer(TCH,TCL));
 }
@@ -100,13 +100,13 @@ void write_mem(long nextadress, long data)
 {
   data      = invert(data,4);
   timer(0,0);
-  // __/¨¨ 
+  // __/Â¨Â¨ 
   ckUP ();
   cycle  (timer(TCH,-40));
   Assign ("write"    , 1);
   Assign ("dout"     , data);
   cycle(timer(TCH,0));
-  // ¨¨\__ 
+  // Â¨Â¨\__ 
   ckDW();
   cycle  (timer(TCH,80));
   Assign ("adr"      , nextadress);
@@ -119,18 +119,18 @@ void write_mem(long nextadress, long data)
 void read_mem(long adress)
 {
   timer(0,0);
-  // ¨¨\__ 
+  // Â¨Â¨\__ 
   ckDW();
   cycle  (timer(TCH,-40));
   Assign ("adr"      , adress);
   Assign ("write"    , 0);
   cycle(timer(TCH,0));
-  // __/¨¨ 
+  // __/Â¨Â¨ 
   ckUP ();
   cycle  (timer(TCH,100));
   //Assign ("dout"     , WEAK_UNK);
   cycle  (timer(TCH,TCL));
-  // ¨¨\__ 
+  // Â¨Â¨\__ 
   ckDW();
 }
 

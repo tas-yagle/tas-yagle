@@ -145,8 +145,8 @@ typedef struct spisig
          float           VTHHIGH;           // seuil de mesure high du front
          float           VTH;               // VT pour le front d entree
          float           VTHHZ;               // VT pour les hz
-         char            START;             // 1 : c'est un noeud de départ, 0 : non
-         char            END;               // 1 : c'est un noeud d'arrivée, 0 : non
+         char            START;             // 1 : c'est un noeud de dÃ©part, 0 : non
+         char            END;               // 1 : c'est un noeud d'arrivÃ©e, 0 : non
          char            CLK;               // 1 : c'est un noeud sur un chemin de command, 0 : non
          char            GOODRC;
          char            HASRCLINE;

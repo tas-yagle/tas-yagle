@@ -213,7 +213,7 @@ chain_list *stb_dupchain (chain_list *ch)
 /*****************************************************************************
 *                           fonction stb_union                               *
 *****************************************************************************/
-/* realise l'union de gap1 dans gap0. gap1 et gap0 sont détruites           */
+/* realise l'union de gap1 dans gap0. gap1 et gap0 sont dÃ©truites           */
 /****************************************************************************/
 
 stbgap_list *stb_union (stbgap_list *gap0, stbgap_list *gap1)
@@ -232,7 +232,7 @@ stbgap_list *stb_union (stbgap_list *gap0, stbgap_list *gap1)
 
   while( sgap0 || sgap1 ) {
 
-    /* détermine si il y a un gap non recouvrant */
+    /* dÃ©termine si il y a un gap non recouvrant */
     alone = -1 ;
     
     if( !sgap0 ) 
@@ -273,14 +273,14 @@ stbgap_list *stb_union (stbgap_list *gap0, stbgap_list *gap1)
       gap->NEXT = NULL ;
       
     }
-    else { /* ici, nous sommes sûr d'avoir sgap0 et sgap1 */
+    else { /* ici, nous sommes sÃ»r d'avoir sgap0 et sgap1 */
 
       if( sgap0->START == sgap1->START ) {
 
         if( sgap0->END  == sgap1->END ) {
             
-          /* traitement de deux gap égaux : merge de deux liste, dont l'une ne
-             contient qu'un seul élément (c'est sgap1) */
+          /* traitement de deux gap Ã©gaux : merge de deux liste, dont l'une ne
+             contient qu'un seul Ã©lÃ©ment (c'est sgap1) */
 
           gap = sgap0 ;
           sgap0 = sgap0->NEXT ;
@@ -302,7 +302,7 @@ stbgap_list *stb_union (stbgap_list *gap0, stbgap_list *gap1)
         }
         else {
 
-          /* le plus long des deux gap est séparé en deux à la fin du gap
+          /* le plus long des deux gap est sÃ©parÃ© en deux Ã  la fin du gap
              le plus court */
           if( sgap0->END > sgap1->END ) {
             gap = stb_addgap( NULL,
@@ -332,7 +332,7 @@ stbgap_list *stb_union (stbgap_list *gap0, stbgap_list *gap1)
       }
       else {
 
-        /* le gap qui commence le plus tôt est séparé en deux au début du 
+        /* le gap qui commence le plus tÃ´t est sÃ©parÃ© en deux au dÃ©but du 
            second gap */
         if( sgap0->START < sgap1->START ) {
           gap = stb_addgap( NULL,
@@ -561,9 +561,9 @@ int stb_intersect (stbpair_list *victim_pair, stbpair_list *aggr_pair)
 \---------------------------------------------------------------------------*/
 /****************************************************************************\
 *                           fonction stb_overlapdev                          * 
-* Renvoie une liste d'intervales correspondant aux différents contextes      *
-* (gap) d'agression. Le refevent et les event sont supposés n'appartenir     *
-* qu'à un seul et meme domaine d'horloge.                                    *
+* Renvoie une liste d'intervales correspondant aux diffÃ©rents contextes      *
+* (gap) d'agression. Le refevent et les event sont supposÃ©s n'appartenir     *
+* qu'Ã  un seul et meme domaine d'horloge.                                    *
 \****************************************************************************/
 
 stbgap_list *stb_overlapdev_old (stbfig_list *stbfig, ttvevent_list *refevent, chain_list *eventlist, long margin )
@@ -687,7 +687,7 @@ char stb_getckindex( stbck *cklist )
 
 /****************************************************************************\
 Renvoie le nb de domaines d'horloge auquel appartient le signal.
-La valeur -1 est renvoyée si on est pas en mesure de déterminer à quelle 
+La valeur -1 est renvoyÃ©e si on est pas en mesure de dÃ©terminer Ã  quelle 
 domaine d'horloge appartient ce signal.
 \****************************************************************************/
 int stb_numberofdomain( stbfig_list *stbfig, stbnode *node )
@@ -753,11 +753,11 @@ int stb_numberofdomain( stbfig_list *stbfig, stbnode *node )
 }
 
 /*****************************************************************************
-* Renvoie la stabilité du premier domaine d'horloge d'un event en prenant en *
+* Renvoie la stabilitÃ© du premier domaine d'horloge d'un event en prenant en *
 * compte :                                                                   *
-* - La stabilité originale déterminée à vdd/2                                *
+* - La stabilitÃ© originale dÃ©terminÃ©e Ã  vdd/2                                *
 * - Les fronts                                                               *
-* - Le réseau RC                                                             *
+* - Le rÃ©seau RC                                                             *
 * - Une marge                                                                *
 *****************************************************************************/
 stbpair_list* stb_getpairnode( stbfig_list   *stbfig,
@@ -867,7 +867,7 @@ stbpair_list* stb_getpairnode( stbfig_list   *stbfig,
     if( margin )
       pair = stb_adddelaystbpair( pair, margin, -margin, 0, 0 );
 
-    /* Duplication sur la période précédente et suivante */
+    /* Duplication sur la pÃ©riode prÃ©cÃ©dente et suivante */
     period = stb_getperiod( stbfig, phase );
     if( period != STB_NO_TIME ) {
       pairbefore = stb_dupstbpairlist( pair );
@@ -888,10 +888,10 @@ stbpair_list* stb_getpairnode( stbfig_list   *stbfig,
 }
 
 /*****************************************************************************
-* Renvoie la stabilité correspondant aux limites extrèmes des intervalles.   *
-* - La stabilité originale déterminée à vdd/2                                *
+* Renvoie la stabilitÃ© correspondant aux limites extrÃ¨mes des intervalles.   *
+* - La stabilitÃ© originale dÃ©terminÃ©e Ã  vdd/2                                *
 * - Les fronts                                                               *
-* - Le réseau RC                                                             *
+* - Le rÃ©seau RC                                                             *
 * - Une marge                                                                *
 *****************************************************************************/
 stbpair_list* stb_getlimitpairnode( stbfig_list   *stbfig,
@@ -998,7 +998,7 @@ stbpair_list* stb_getlimitpairnode( stbfig_list   *stbfig,
       
     pair   = stb_insertckpair( pair, stbnode,  event ->TYPE );
 
-    /* Duplication sur la période précédente et suivante */
+    /* Duplication sur la pÃ©riode prÃ©cÃ©dente et suivante */
     if( period != STB_NO_TIME ) {
       pairbefore = stb_dupstbpairlist( pair );
       pairbefore = stb_adddelaystbpair( pairbefore, 0, 0, period, period );
@@ -1077,8 +1077,8 @@ chain_list *stb_overlap ( stbfig_list   *stbfig,
 
 /*****************************************************************************
 * Renvoie la liste des signaux qui ne sont pas sur le meme domaine que le    *
-* signal de référence. Si la phase de reference comporte plusieurs domaines, *
-* tous les signaux sont supposés sur une phase différente.                   *
+* signal de rÃ©fÃ©rence. Si la phase de reference comporte plusieurs domaines, *
+* tous les signaux sont supposÃ©s sur une phase diffÃ©rente.                   *
 *****************************************************************************/
 chain_list *stb_diftdomain( stbfig_list   *stbfig, 
                             ttvevent_list *ref,
@@ -1104,13 +1104,13 @@ chain_list *stb_diftdomain( stbfig_list   *stbfig,
  
   case -1 :
     /* Cas tordu, le noeud n'est sur aucun domaine d'horloge. On suppose dans
-       ce cas que tous les agresseurs sont sur un domaine différent. */
+       ce cas que tous les agresseurs sont sur un domaine diffÃ©rent. */
     retchain = dupchainlst( testlist );
     break;
     
   case 0 : 
-    /* cas ou il n'y a pas d'horloge : on considère que les agresseurs qui
-       n'ont pas d'horloge sont sur le même domaine. */
+    /* cas ou il n'y a pas d'horloge : on considÃ¨re que les agresseurs qui
+       n'ont pas d'horloge sont sur le mÃªme domaine. */
        
     retchain = NULL ;
     
@@ -1139,7 +1139,7 @@ chain_list *stb_diftdomain( stbfig_list   *stbfig,
 
   case 1 :
     /* Classique. On doit trouver parmis les agresseurs ceux qui sont sur un
-       domaine différent. */
+       domaine diffÃ©rent. */
        
     retchain = NULL ;
     ptdomain = NULL ;
@@ -1191,9 +1191,9 @@ chain_list *stb_diftdomain( stbfig_list   *stbfig,
     break;
     
   default :
-    /* Cas rare : Le signal appartient à au moins deux domaines différents. On
+    /* Cas rare : Le signal appartient Ã  au moins deux domaines diffÃ©rents. On
        suppose dans ce cas que tous les agresseurs sont sur un domaine
-       différent. */
+       diffÃ©rent. */
     retchain = dupchainlst( testlist );
     break;
   }

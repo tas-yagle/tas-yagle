@@ -13,35 +13,35 @@ void rcx_file_print( rcxfile *file, ... );
 // Alloue une structure rcxfile
 rcxfile* rcx_file_alloc( void );
 
-// Renvoie une liste chainée des losig, les externes, puis null, puis les 
+// Renvoie une liste chainÃ©e des losig, les externes, puis null, puis les 
 // internes.
 chain_list* rcx_driver_sort_losig( lofig_list *lofig );
 
-// Sort le séparateur signaux externes / internes
+// Sort le sÃ©parateur signaux externes / internes
 void rcx_end_external( rcxfile *file );
 
-// Sort l'en tête d'un signal
+// Sort l'en tÃªte d'un signal
 void rcx_drive_signal_header( rcxfile *file, losig_list *losig, rcx_list *rcx );
 
 // Sort la fin d'un signal
 void rcx_drive_signal_end( rcxfile *file, losig_list *losig );
 
-// Sort le début de la description d'un RC
+// Sort le dÃ©but de la description d'un RC
 void rcx_drive_begin_net( rcxfile *file );
 
 // Sort la fin de la description d'un RC
 void rcx_drive_end_net( rcxfile *file );
 
-// Drive une résistance
+// Drive une rÃ©sistance
 void rcx_drive_wire( rcxfile *file, int n1, int n2, float r, float c );
 
-// Drive une capacité à la masse
+// Drive une capacitÃ© Ã  la masse
 void rcx_drive_ground_capa( rcxfile *file, int n, float c );
 
-// Drive une capacité de couplage ni
+// Drive une capacitÃ© de couplage ni
 void rcx_drive_ctcni_capa( rcxfile *file, int n, float c );
 
-// Drive une capacité de couplage
+// Drive une capacitÃ© de couplage
 void rcx_drive_ctc_capa( rcxfile *file, int n, float c, char *agrname, int nodeagr );
 
 // Drive l'origine des signaux

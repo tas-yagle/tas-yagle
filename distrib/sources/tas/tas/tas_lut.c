@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------------*/
-/*      fichier.c où se trouve les fonctions ajoutées au code pour          */
+/*      fichier.c oÃ¹ se trouve les fonctions ajoutÃ©es au code pour          */
 /*                                                                          */
 /*      @     @@   @@  @  @ @  @ @@@    @@@@@  @@  @@@  @     @@@           */
 /*      @    @  @ @  @ @ @  @  @ @  @     @   @  @ @  @ @    @              */
@@ -17,10 +17,10 @@
 
 /*--------------------------------------------------------------------------*/
 /*caracmode()  renvoie le mode de caracterisation pour un cone et son input */
-/*             FCARAC: caractérisation par une liste de fronts              */
-/*             CCARAC: caractérisation par une liste de capas               */
-/*             LES2:   caractérisation par 2 listes                         */
-/*             mode=0: pas de caractérisation(cone interne)                 */
+/*             FCARAC: caractÃ©risation par une liste de fronts              */
+/*             CCARAC: caractÃ©risation par une liste de capas               */
+/*             LES2:   caractÃ©risation par 2 listes                         */
+/*             mode=0: pas de caractÃ©risation(cone interne)                 */
 /*--------------------------------------------------------------------------*/
 int caracmode(cone_list *cone, edge_list *input, double **ccarac, int *nccarac, double **fcarac, int *nfcarac)
 {

@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                            */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
-/*    Auteur(s) : Grégoire Avot                                             */
+/*    Auteur(s) : GrÃ©goire Avot                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -24,8 +24,8 @@ Date     : $Date: 2002/12/06 14:52:38 $
 /*
  * Manipulation de polynomes.
  *
- * Les coefficients d'un polynome de degrès n sont stocké dans un tableau
- * de n+1 élements : a0, a1, a2, ..., an
+ * Les coefficients d'un polynome de degrÃ¨s n sont stockÃ© dans un tableau
+ * de n+1 Ã©lements : a0, a1, a2, ..., an
  */
 
 int poly_findroot ( RCXFLOAT*, int, RCXFLOAT* );

@@ -1,4 +1,4 @@
-// Résistance par défaut quand le modèle de bruit n'est pas SCR.
+// RÃ©sistance par dÃ©faut quand le modÃ¨le de bruit n'est pas SCR.
 extern RCXFLOAT STB_NOISE_DEFAULT_RESI;
 
 chain_list* stb_ctk_noise_event_list( stbfig_list *stbfig, ttvevent_list *evtvic, chain_list *headevent, rcx_signal_noise *tab, char calcul, RCXFLOAT *v );

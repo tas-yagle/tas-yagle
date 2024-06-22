@@ -5,7 +5,7 @@
 /*    Produit : YAGLE/TAS                                                   */
 /*    Fichier : inf_drive.c                                                 */
 /*                                                                          */
-/*    © copyright 2000 AVERTEC                                              */
+/*    Â© copyright 2000 AVERTEC                                              */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
 /*    Auteur(s) : Caroline BLED                                             */
@@ -784,7 +784,7 @@ void inf_driveFalsepath (FILE * f, INF_INFOSET * is)
       case INF_CK:
         if (name[0]=='^')
           inf_fprintf (f, ": < HZ >");
-        else if (name[0]=='°')
+        else if (name[0]=='Â°')
           inf_fprintf (f, ": < NOTHZ >");
         else
           inf_fprintf (f, ": \"%s\"", inf_reVectName (name));

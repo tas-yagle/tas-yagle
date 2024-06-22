@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                            */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
-/*    Auteur(s) : Grégoire Avot                                             */
+/*    Auteur(s) : GrÃ©goire Avot                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -124,7 +124,7 @@ int mat_solve( matrice *a, matrice *c, matrice *res )
   
   n = a->lin;
   
-  /* diagonalisation du système d'équations */
+  /* diagonalisation du systÃ¨me d'Ã©quations */
   for( l = 0 ; l < n-1 ; l++ )
   {
     for( k = l+1 ; k < n ; k++ )
@@ -140,7 +140,7 @@ int mat_solve( matrice *a, matrice *c, matrice *res )
     }
   }
 
-  /* calcul du résultat */
+  /* calcul du rÃ©sultat */
   for( l = n-1 ; l >= 0 ; l-- )
   {
     m = MATELEM( c, l, 0 ) ;

@@ -4,9 +4,9 @@
 
 /* 
 Ajoute un ptype RCXPLM_NODE sur tous les noeuds de la composante connexe
-contenant un long int, numéroté depuis 0 sur les noeuds du driver, puis les
-autres noeuds. Un numéro inférieur ou égal à 0 signifie que c'est un driver. 
-Renvoie le nombre de noeuds numérotés.
+contenant un long int, numÃ©rotÃ© depuis 0 sur les noeuds du driver, puis les
+autres noeuds. Un numÃ©ro infÃ©rieur ou Ã©gal Ã  0 signifie que c'est un driver. 
+Renvoie le nombre de noeuds numÃ©rotÃ©s.
 */
 void rcxplm_build_node_index( losig_list         *losig,
                               wirefromlocon_list *group, 
@@ -62,7 +62,7 @@ void rcxplm_build_node_index( losig_list         *losig,
 }
 
 /*
-Libère les numéros créés par la fonction rcxplm_build_node_index().
+LibÃ¨re les numÃ©ros crÃ©Ã©s par la fonction rcxplm_build_node_index().
 */
 void rcxplm_free_node_index( losig_list *losig, wirefromlocon_list *group )
 {
@@ -88,7 +88,7 @@ void rcxplm_free_node_index( losig_list *losig, wirefromlocon_list *group )
 }
 
 /*
-Crée les matrices.
+CrÃ©e les matrices.
 */
 void rcxplm_fill_matrix( losig_list         *losig,
                          mbk_matrix         *r,
@@ -128,7 +128,7 @@ void rcxplm_fill_matrix( losig_list         *losig,
 
     if( n1>0 && n2>0 ) {
 
-      /* wire non connecté directement sur un driver */
+      /* wire non connectÃ© directement sur un driver */
       
       prev = mbk_GetMatrixValue( r, n1, n1 );
       mbk_SetMatrixValue( r, n1, n1, prev-val );
@@ -212,7 +212,7 @@ void rcxplm_fill_matrix( losig_list         *losig,
 }
 
 /*
-Crée le vecteur solution pour y2 et plus .
+CrÃ©e le vecteur solution pour y2 et plus .
 */
 void rcxplm_create_s( long nbnode, 
                       long nbdriver, 
@@ -254,7 +254,7 @@ void rcxplm_get_y( long    nbdriver,
 }
 
 /* 
-Calcule l'admittance équivalente au 3° ordre d'un réseau RC.
+Calcule l'admittance Ã©quivalente au 3Â° ordre d'un rÃ©seau RC.
 */
 void rcx_piload_matrix( losig_list *losig, 
                         num_list   *driver, 

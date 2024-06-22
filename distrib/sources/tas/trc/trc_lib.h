@@ -18,22 +18,22 @@
 
 #define RCXFLOAT double
 
-// Bidouilles de Marc. Pour l'instant, ça marche.
+// Bidouilles de Marc. Pour l'instant, Ã§a marche.
 #define TRC_LOCON_AWE    (long)0x00000007  // TMP
 extern int TRC_MARK_CON; // SOLUTION TMP
 
 
-// Les convertions d'unités entre TAS, RCX et le SI...
+// Les convertions d'unitÃ©s entre TAS, RCX et le SI...
 
-// Tas et TTV : capa=fF, délais=pS
-// Alliance :   capa=pF, délais=pS
+// Tas et TTV : capa=fF, dÃ©lais=pS
+// Alliance :   capa=pF, dÃ©lais=pS
 
 #define RCX_PTRTESTANDSET( p, v ) if(p) *p=v;
 #define RCX_UNIT_TIME_TAS_TO_SI (1e-12)
 #define RCX_UNIT_CAPA_ALC_TO_SI (1e-12)
 
-// Structures temporaires crée sur les agresseurs créée par rcx_getagrlist() et 
-// libérée par rcx_freeagrlist(). L'utilisateur doit remplir les champs FMINUP,
+// Structures temporaires crÃ©e sur les agresseurs crÃ©Ã©e par rcx_getagrlist() et 
+// libÃ©rÃ©e par rcx_freeagrlist(). L'utilisateur doit remplir les champs FMINUP,
 // FMINDW, EVENT et ACTIF.
 
 typedef struct rcxparam {
@@ -44,7 +44,7 @@ typedef struct rcxparam {
   RCXFLOAT               F0UP;          // Front minimum sans crosstalk
   RCXFLOAT               FMINDW;
   RCXFLOAT               F0DW;
-  RCXFLOAT               CC;            // Capacité de couplage vers l'agresseur
+  RCXFLOAT               CC;            // CapacitÃ© de couplage vers l'agresseur
   RCXFLOAT               CCA;           // Valeur totale des ctc sur l'agresseur
   char                   ACTIF;
   chain_list            *SIGLOCAL;
@@ -58,8 +58,8 @@ typedef struct rcxparam {
 #define RCX_MTX_WORST 0x08
 #define RCX_QUIET     0x10
 /* Les trois dernieres valeurs ne sont pas prise en compte par RCX. Elle servent
-à indiquer que cet agresseur a été éliminé car il existe une contrainte de
-mutuelle exclusion avec un autre agresseur. C'est géré par STB-CTK. */
+Ã  indiquer que cet agresseur a Ã©tÃ© Ã©liminÃ© car il existe une contrainte de
+mutuelle exclusion avec un autre agresseur. C'est gÃ©rÃ© par STB-CTK. */
 
 // Ptype sur le losig qui pointe vers le rcxparam.
 #define RCX_REALAGRESSOR 0x52435808
@@ -69,11 +69,11 @@ mutuelle exclusion avec un autre agresseur. C'est géré par STB-CTK. */
 
 /* Note concernant les slopes :
 
-  Les champs FCCMAX et F0MAX servent à calculer les capacités équivalentes par
-  effet Miller. Les champs slope des structures MIN et MAX sont les fronts à
-  appliquer à l'entrée du réseau RC. Le MAX.slope n'est pas forcement égale au
-  FCCMAX, car FCCMAX est le front le plus mous sur tout le réseau RC et 
-  MAX.slope est le front en entrée du réseau RC. 
+  Les champs FCCMAX et F0MAX servent Ã  calculer les capacitÃ©s Ã©quivalentes par
+  effet Miller. Les champs slope des structures MIN et MAX sont les fronts Ã 
+  appliquer Ã  l'entrÃ©e du rÃ©seau RC. Le MAX.slope n'est pas forcement Ã©gale au
+  FCCMAX, car FCCMAX est le front le plus mous sur tout le rÃ©seau RC et 
+  MAX.slope est le front en entrÃ©e du rÃ©seau RC. 
 */
 
 typedef struct {
@@ -115,12 +115,12 @@ typedef struct rcx
 
 
 
-// Définition du sens d'une transition
+// DÃ©finition du sens d'une transition
 
 #define TRC_SLOPE_UP   'U'
 #define TRC_SLOPE_DOWN 'D'
 
-// Type de résultat
+// Type de rÃ©sultat
 #define RCX_MIN 'm'
 #define RCX_MAX 'M'
 
@@ -205,7 +205,7 @@ typedef struct rcxfile {
   char   ISCACHE;
 } rcxfile;
 
-/* Configuration du modèle de crosstalk */
+/* Configuration du modÃ¨le de crosstalk */
 
 #define RCX_MILLER_NONE      '-'
 #define RCX_MILLER_0C2C      'm'
@@ -244,7 +244,7 @@ extern char RCX_CTK_SLOPE_DELAY ;
 #define RCXI_UP                 ((char)'u')
 #define RCXI_DW                 ((char)'d')
 
-// Modèle Miller : 0c-2c ou -1c-3c
+// ModÃ¨le Miller : 0c-2c ou -1c-3c
 
 #define RCX_MILLER2C ((char)2)
 #define RCX_MILLER4C ((char)4)
@@ -308,7 +308,7 @@ typedef struct
 #define TRC_CAPA_NOM_MIN 'i'
 #define TRC_CAPA_NOM_MAX 'a'
 
-/* Valeur 'status' renvoyée par rcx_getloconcapa */
+/* Valeur 'status' renvoyÃ©e par rcx_getloconcapa */
 #define RCX_CAPA_OK    'y'
 #define RCX_CAPA_EQUIV 'e'
 

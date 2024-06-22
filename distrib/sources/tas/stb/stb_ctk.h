@@ -10,7 +10,7 @@
 /*                                                                          */
 /*    Auteur(s) : Karim DIOURY                                              */
 /*                Anthony LESTER                                            */
-/*                Grégoire AVOT                                             */
+/*                GrÃ©goire AVOT                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -18,7 +18,7 @@
 #define STB_CTK_WORST_AGR   ((char)(0x2))
 #define STB_CTK_BEST_AGR    ((char)(0x1))
 
-/* Constantes pour la définition d'une agression */
+/* Constantes pour la dÃ©finition d'une agression */
 /* mode meilleur cas : */
 #define STB_CTK_UP_WRST      ((char)(0x01))
 #define STB_CTK_UP_BEST      ((char)(0x02))
@@ -43,21 +43,21 @@
 #define STB_CTK_OLDMAXSLOPE   ((long) 0x43544B18 ) /* slope                  */
 #define STB_CTK_MARKREALACTIF ((long) 0x43544B19)
 /* Ptype des ttvsig */
-#define STB_CTK_RCXAGRPT    ((long) 0x43544B15 ) /* Agresseurs stockés sous la
+#define STB_CTK_RCXAGRPT    ((long) 0x43544B15 ) /* Agresseurs stockÃ©s sous la
                                                     forme d'une ptype list    */
-#define STB_CTK_RCXAGRHT    ((long) 0x43544B16 ) /* Agresseurs stockés sous la
+#define STB_CTK_RCXAGRHT    ((long) 0x43544B16 ) /* Agresseurs stockÃ©s sous la
                                                     forme d'une table de hash */
 #define STB_CTK_EXCLUDED    ((long) 0x43544B1A )
 /* Ptype des ttvfig */
 #define STB_CTK_TTVTABSIG   ((long) 0x43544B20 ) /* ht des signaux           */
 
 /* Ptype des stbfig */
-#define STB_CTK_STAT        ((long) 0x43544B11 ) /* tableau résultat crosstalk */
+#define STB_CTK_STAT        ((long) 0x43544B11 ) /* tableau rÃ©sultat crosstalk */
 
 /* Ptype temporaire des ttvsig */
 #define STB_CTK_DRIVER      ((long) 0x43544B21)
 
-/* Nombre d'élément maximum dans la ptype_list                          */
+/* Nombre d'Ã©lÃ©ment maximum dans la ptype_list                          */
 #define STB_CTK_MAXCHAIN ((int)10)
 
 /* Valeur de retour pour stb_hasslopechanged */

@@ -310,11 +310,11 @@ int cnsdiff_cnsfiglotrs_diff(file,cnsfig1,cnsfig2,maskopt)
     if (((long)ptlotrs=gethtitem(htmin,(void *)lotrsindex))==EMPTYHT) {
       count++;
       if ((maskopt&DIFF_OPT_NOOUT)!=DIFF_OPT_NOOUT) {
-        (void)fprintf(file,"*** ERROR: transistors %d non trouvé\n",
+        (void)fprintf(file,"*** ERROR: transistors %d non trouvÃ©\n",
                      lotrsindex) ; 
       }  // if (maskopt&DIFF_OPT_NOOUT)
       if ((maskopt&DIFF_OPT_VERBOSE)==DIFF_OPT_VERBOSE) {
-        (void)fprintf(stdout,"*** ERROR:transistors %d non trouvé\n",
+        (void)fprintf(stdout,"*** ERROR:transistors %d non trouvÃ©\n",
                      lotrsindex) ; 
       } // if (maskopt&DIFF_OPT_VERBOSE)
     }
@@ -803,12 +803,12 @@ int loc_coneloop_branch(file,maskopt,cone_name,branch_chain,branch_ptcone)
   if (chainindex != ptconeindex) {
     count++;
     if ((maskopt&DIFF_OPT_NOOUT)!=DIFF_OPT_NOOUT) {
-       (void)fprintf(file,"*** ERROR: nombre de branches de %s différents.\n",
+       (void)fprintf(file,"*** ERROR: nombre de branches de %s diffÃ©rents.\n",
                      cone_name) ;
        (void)fprintf(file,"\n") ; 
     }  // if (maskopt&DIFF_OPT_NOOUT)
     if ((maskopt&DIFF_OPT_VERBOSE)==DIFF_OPT_VERBOSE) {
-       (void)fprintf(stdout,"*** ERROR: nombre de branches de %s différents.\n",
+       (void)fprintf(stdout,"*** ERROR: nombre de branches de %s diffÃ©rents.\n",
                      cone_name) ;
        (void)fprintf(stdout,"\n") ; 
     } // if (maskopt&DIFF_OPT_VERBOSE)
@@ -882,12 +882,12 @@ int loc_coneloop_cells(file,maskopt,cone_name,chaincells,ptconecells)
   if (chainindex != ptconeindex) {
     count++;
     if ((maskopt&DIFF_OPT_NOOUT)!=DIFF_OPT_NOOUT) {
-       (void)fprintf(file,"*** ERROR: nombre de CELLS de %s différents.\n",
+       (void)fprintf(file,"*** ERROR: nombre de CELLS de %s diffÃ©rents.\n",
                      cone_name) ;
        (void)fprintf(file,"\n") ; 
     }  // if (maskopt&DIFF_OPT_NOOUT)
     if ((maskopt&DIFF_OPT_VERBOSE)==DIFF_OPT_VERBOSE) {
-       (void)fprintf(stdout,"*** ERROR: nombre de CELLS de %s différents.\n",
+       (void)fprintf(stdout,"*** ERROR: nombre de CELLS de %s diffÃ©rents.\n",
                      cone_name) ;
        (void)fprintf(stdout,"\n") ; 
     } // if (maskopt&DIFF_OPT_VERBOSE)

@@ -1291,7 +1291,7 @@ void mcc_hacktechno( lofig_list *lofig, int whatjob )
 
       mcc_drive_dot_model( file, model );
 
-      /* remet le modèle en sortant dans l'état où on l'a trouvé en entrant... */
+      /* remet le modÃ¨le en sortant dans l'Ã©tat oÃ¹ on l'a trouvÃ© en entrant... */
       mcc_restoreparamlist( model, keepvalue0 );
       mcc_restoreparamlist( model, keepvalue1 );
     }

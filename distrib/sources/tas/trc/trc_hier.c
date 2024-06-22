@@ -38,16 +38,16 @@ chain_list* rcx_getchainfig( char *nomhier ) ;
 
 /*
 
-Récupère un signal à son plus haut niveau de hiérarchie où il est défini.
-Renvoie NULL si il n'existe pas : cas où il est connecté à une alimentation.
+RÃ©cupÃ¨re un signal Ã  son plus haut niveau de hiÃ©rarchie oÃ¹ il est dÃ©fini.
+Renvoie NULL si il n'existe pas : cas oÃ¹ il est connectÃ© Ã  une alimentation.
 
 Arguments :
 
-Entrée :
+EntrÃ©e :
   signal : le signal.
   insname  = nom d'instance de la figure courante.
-  chainfig = liste chainée des figures, du niveau courant jusqu'au plus haut
-             niveau de la hiérarchie. Cette liste est automatiquement libérée.
+  chainfig = liste chainÃ©e des figures, du niveau courant jusqu'au plus haut
+             niveau de la hiÃ©rarchie. Cette liste est automatiquement libÃ©rÃ©e.
            
 retour     = le losig
 
@@ -105,17 +105,17 @@ losig_list* rcx_gethierlosig( losig_list *signal,
 
 /*
 
-Renvoie le losig au niveau au niveau ou il est défini (pas de BELLOW).
+Renvoie le losig au niveau au niveau ou il est dÃ©fini (pas de BELLOW).
 
 Arguments :
 
-Entrée :
+EntrÃ©e :
   signal : le signal dans l'instance courante.
-  figure : la figure courante dans laquelle est déclaré le signal.
+  figure : la figure courante dans laquelle est dÃ©clarÃ© le signal.
 Sortie :
-  insname : une chaîne de caractère qui contiendra le nom d'instance relatif
-            où a été trouvé la définition du losig.
-  figlist : liste chaînée des figure où est défini le losig.
+  insname : une chaÃ®ne de caractÃ¨re qui contiendra le nom d'instance relatif
+            oÃ¹ a Ã©tÃ© trouvÃ© la dÃ©finition du losig.
+  figlist : liste chaÃ®nÃ©e des figure oÃ¹ est dÃ©fini le losig.
           
 */
 
@@ -152,17 +152,17 @@ losig_list* rcx_getdownlosig( losig_list *signal,
 /*
 
 Renvoie le losig au niveau maximum ou il existe : soit il devient internal,
-soit le dernier niveau de hiérarchie est atteind.
+soit le dernier niveau de hiÃ©rarchie est atteind.
 On peut ne pas trouver de signal (la fonction renvoie NULL) si il le connecteur
-n'a pas de vue RCX au niveau supérieur. Ce cas arrive lorsqu'on connecte une
-entree directement à une alimentation.
+n'a pas de vue RCX au niveau supÃ©rieur. Ce cas arrive lorsqu'on connecte une
+entree directement Ã  une alimentation.
 
 Arguments :
 
-Entrée :
+EntrÃ©e :
   signal : le signal dans l'instance courante.
   nominstance : le nom courant de l'instance.
-  chainfig : la liste des lofig (le premier élément est la figure courante).
+  chainfig : la liste des lofig (le premier Ã©lÃ©ment est la figure courante).
 
 */
 
@@ -181,12 +181,12 @@ losig_list* rcx_getuplosig( losig_list *signal,
 
   while( rcx_islosigexternal( signal ) && chainfig->NEXT ) {
  
-    // Récupère la figure au dessus.
+    // RÃ©cupÃ¨re la figure au dessus.
     rightunconcatname( nominstance, &nominstance, &nominstancecourante );
     chainfig = chainfig->NEXT ;
     figurecourante = (lofig_list*)chainfig->DATA;
     
-    // Le nom du signal est maintenant hiérarchique.
+    // Le nom du signal est maintenant hiÃ©rarchique.
     nomsignal = rcx_getsigname( signal );
     nomsignal = concatname( nominstancecourante, nomsignal );
     

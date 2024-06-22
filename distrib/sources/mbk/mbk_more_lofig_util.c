@@ -32,7 +32,7 @@ void mbk_set_rc_external(locon_list *lc)
   p->DATA=(void *)0;
 }
 
-// renvoie la liste de tous les models utilisés dans la hierarchie
+// renvoie la liste de tous les models utilisÃ©s dans la hierarchie
 // d'une lofig dans l'ordre inverse (bas niveau -> top niveau)
 // tabin doit valoir NULL
 void mbk_build_hierarchy_list(lofig_list *lf, ht *tabin, chain_list **list)
@@ -66,9 +66,9 @@ void mbk_build_hierarchy_list(lofig_list *lf, ht *tabin, chain_list **list)
   fonctions de decoupage de netlist
   point d'entree: mbk_modify_hierarchy
   bbox : netlist a decouper
-  recognised : list des instances mappées sur bbox
+  recognised : list des instances mappÃ©es sur bbox
   paralleltransistorwerehidden : flag indiquant les se sont des instances genius, dans ce cas
-  les transistor paralleles seront recherchés de dupliqués
+  les transistor paralleles seront recherchÃ©s de dupliquÃ©s
 */
 
 #define CORRESP 0x20050526
@@ -516,9 +516,9 @@ static void addrcininstance(lofig_list *mainlf, lofig_list *inslf)
     }
 
   rcn_mergectclofig(inslf);
-  avt_fprintf(stdout,"GNS Instance '¤3%s¤.'\n", inslf->NAME);
-  avt_fprintf(stdout,"¤+Capas:  Total   Ignored   Toground  Resistances Signals Transistors Instances\n");
-  avt_fprintf(stdout,"¤1       %6d    %6d     %6d   %6d      %6d    %6d    %6d\n", capatotal, capaignored, capatoground, resitotal, countchain((chain_list *)inslf->LOSIG), countchain((chain_list *)inslf->LOTRS),countchain((chain_list *)inslf->LOINS) );
+  avt_fprintf(stdout,"GNS Instance 'Â¤3%sÂ¤.'\n", inslf->NAME);
+  avt_fprintf(stdout,"Â¤+Capas:  Total   Ignored   Toground  Resistances Signals Transistors Instances\n");
+  avt_fprintf(stdout,"Â¤1       %6d    %6d     %6d   %6d      %6d    %6d    %6d\n", capatotal, capaignored, capatoground, resitotal, countchain((chain_list *)inslf->LOSIG), countchain((chain_list *)inslf->LOTRS),countchain((chain_list *)inslf->LOINS) );
 
 
 }
@@ -756,9 +756,9 @@ static void addmainfigurerc(lofig_list *mainlf, lofig_list *maincutlf, chain_lis
 
   rcn_mergectclofig(maincutlf);
 
-  avt_fprintf(stdout,"Blackbox TOP '¤3%s¤.'\n",maincutlf->NAME);
-  avt_fprintf(stdout,"¤+Capas:  Total   Ignored   Toground  Resistances Signals Transistors Instances\n");
-  avt_fprintf(stdout,"¤1       %6d    %6d     %6d   %6d      %6d    %6d    %6d\n", capatotal, capaignored, capatoground, resitotal, countchain((chain_list *)maincutlf->LOSIG), countchain((chain_list *)maincutlf->LOTRS),countchain((chain_list *)maincutlf->LOINS) );
+  avt_fprintf(stdout,"Blackbox TOP 'Â¤3%sÂ¤.'\n",maincutlf->NAME);
+  avt_fprintf(stdout,"Â¤+Capas:  Total   Ignored   Toground  Resistances Signals Transistors Instances\n");
+  avt_fprintf(stdout,"Â¤1       %6d    %6d     %6d   %6d      %6d    %6d    %6d\n", capatotal, capaignored, capatoground, resitotal, countchain((chain_list *)maincutlf->LOSIG), countchain((chain_list *)maincutlf->LOTRS),countchain((chain_list *)maincutlf->LOINS) );
 }
 
 

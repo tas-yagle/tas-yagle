@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                            */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
-/*    Auteur(s) : Grégoire Avot                                             */
+/*    Auteur(s) : GrÃ©goire Avot                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -48,8 +48,8 @@ stm_simu_pi_load_parameter stm_simu_param_standard = {
 
 /******************************************************************************\
 
-   Convention générateur : 
-   transition UD : le courant décharge la sortie, il est négatif.
+   Convention gÃ©nÃ©rateur : 
+   transition UD : le courant dÃ©charge la sortie, il est nÃ©gatif.
    transition DU : le courant charge la sortie, il est positif
 
 \******************************************************************************/
@@ -123,32 +123,32 @@ char stm_simu_tanh( stm_simu_tanh_param *param, float t, float *v )
 
 /******************************************************************************\
 
-Unités :
+UnitÃ©s :
 --------
-   Courant      Ampère
+   Courant      AmpÃ¨re
    Tension      Volt
-   Capacité     Femto-seconde
+   CapacitÃ©     Femto-seconde
    Temps        Femto-seconde
 
-Paramètres :
+ParamÃ¨tres :
 ------------
    fn_is        Pointeur sur fonction de calcul du courant dans la branche.
-   fn_ve        Pointeur sur fonction de calcul de la tension d'entrée.
-   dat_is       Données utilisées par fn_is.
-   dat_ve       Données utilisées par fn_ve.
+   fn_ve        Pointeur sur fonction de calcul de la tension d'entrÃ©e.
+   dat_is       DonnÃ©es utilisÃ©es par fn_is.
+   dat_ve       DonnÃ©es utilisÃ©es par fn_ve.
    r, c1, c2    Charge de la branche.
    vi           Tension initiale de la sortie.
-   vth          Tension de sortie à laquelle la simulation s'arrète.
-   ts, fs       Pointeurs vers le temps et le front simulé lorsque la sortie
-                vaut vth. NULL autorisé.
-   param        Configuration du simulateur. NULL autorisé.
+   vth          Tension de sortie Ã  laquelle la simulation s'arrÃ¨te.
+   ts, fs       Pointeurs vers le temps et le front simulÃ© lorsque la sortie
+                vaut vth. NULL autorisÃ©.
+   param        Configuration du simulateur. NULL autorisÃ©.
 
 Notes :
 -------
 
-   Le front calculé correspond à la pente du signal, en V/fs. Il ne correspond
-   PAS au front défini par Amjad. Le passage de l'un à l'autre se fait avec la
-   relation 3-12-b page III/15 de la thèse.
+   Le front calculÃ© correspond Ã  la pente du signal, en V/fs. Il ne correspond
+   PAS au front dÃ©fini par Amjad. Le passage de l'un Ã  l'autre se fait avec la
+   relation 3-12-b page III/15 de la thÃ¨se.
 
 \******************************************************************************/
 
@@ -259,7 +259,7 @@ char stm_simu_pi_load_ts( char (*fn_is)( void *dat_is,
       /* Fin du corp */
     
       if( param->VARIABLE_STEP ) {
-        /* Vérification du step */
+        /* VÃ©rification du step */
         di = ii - ij ;
         if( di < 0.0 )
           di = -di ;
@@ -282,7 +282,7 @@ char stm_simu_pi_load_ts( char (*fn_is)( void *dat_is,
       break;
 
     if( param->VARIABLE_STEP ) {
-      /* Vérification du step */
+      /* VÃ©rification du step */
       if( ( di < param->MIN_DELTA_CURRENT && 
             dv < param->MIN_DELTA_VOLTAGE    ) && dt < param->MAX_TIME_STEP )
       {

@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -271,7 +271,7 @@ typedef struct spi_load_global
   int blackboxed;
 } spi_load_global;
 
-/* Fonctions d'allocation mémoire pour un circuit */
+/* Fonctions d'allocation mÃ©moire pour un circuit */
 
 void*		spiciralloue  __P(( circuit*, int ));
 void		liberecircuit __P(( circuit* ));

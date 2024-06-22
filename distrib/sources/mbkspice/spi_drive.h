@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -48,8 +48,8 @@ typedef struct sconvindex
 
 /* NOTE : 
   Le champs premier contient le numerot du premier noeud dans le fichier
-  Spice. Dans les vues RCN, le premier numérot de noeud est le 1. Le numérot
-  de noeud Spice est donc donné par la relation : 
+  Spice. Dans les vues RCN, le premier numÃ©rot de noeud est le 1. Le numÃ©rot
+  de noeud Spice est donc donnÃ© par la relation : 
       noeud_spice = noeud_rcn + premier - 1
 */
 void   spi_vect             __P(( char* ));

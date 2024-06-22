@@ -4,7 +4,7 @@
 /*                                                                          */
 /*    Fichier : stm_API_cache.c                                             */
 /*                                                                          */
-/*    © copyright 2003 AVERTEC                                              */
+/*    Â© copyright 2003 AVERTEC                                              */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
 /*    Auteur(s) :   Antony PINTO                                            */
@@ -751,7 +751,7 @@ static double stm_thresholdTest(double x0, double x1, double x,
     X       = (2*(x-x0)/(x1-x0) - 1) * Y;
     res     = exp(-pow(X,2)) * 100 * sqrt(angle);
 #ifdef _PRINT
-    printf("angle : %4.2f° ",angle*90);
+    printf("angle : %4.2fÂ° ",angle*90);
     printf("threshold : %4.2f%%\n",res);
 #endif
     return res;

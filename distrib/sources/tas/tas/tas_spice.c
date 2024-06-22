@@ -1368,10 +1368,10 @@ int  tas_simu_netlist (ttvfig_list *ttvfig,
         while ((argv[i] = sim_getarg (sim_parameter_get_tool_cmd(model), buf0, i, buf, &bufidx)))
           i++;
 
-        avt_fprintf (stdout, "¤+RUN: ");
+        avt_fprintf (stdout, "Â¤+RUN: ");
         for (i=0; argv[i]!=NULL; i++)
           fprintf (stdout, "%s ", argv[i]);
-        avt_fprintf (stdout, "¤. ... ");
+        avt_fprintf (stdout, "Â¤. ... ");
         fflush(stdout);
 
         for (sl=tscs->slopes, a=0, i=0; sl!=NULL; sl=sl->NEXT, a++)

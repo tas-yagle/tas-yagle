@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -541,31 +541,31 @@ typedef struct {
   HeapAlloc             HEAPCACHELIST;
 } mbkcache;
 
-/* Définition du cache */
+/* DÃ©finition du cache */
 extern mbkcache* mbk_cache_create( char (*isactive)( void *root, void *elem ), unsigned long int (*load)( void *root, void *elem ), unsigned long int (*release)( void *root, void *elem ), unsigned long int cachesize);
 extern void mbk_cache_delete( mbkcache *cache, void *root );
 
-/* Opération sur un élément du cache */
+/* OpÃ©ration sur un Ã©lÃ©ment du cache */
 extern void mbk_cache_refresh( mbkcache *cache, void *root, void *elem );
 extern void mbk_cache_release( mbkcache *cache, void *root, void *elem );
 
-/* Mécanisme de vérouillage d'un élément du cache. L'élément doit avoir été 
-chargé en mémoire avant d'être vérrouillé. On peut faire autant d'appels à 
-mbk_cache_lock() pour un seul élément, et pour le dévérouiller il faudra faire
+/* MÃ©canisme de vÃ©rouillage d'un Ã©lÃ©ment du cache. L'Ã©lÃ©ment doit avoir Ã©tÃ© 
+chargÃ© en mÃ©moire avant d'Ãªtre vÃ©rrouillÃ©. On peut faire autant d'appels Ã  
+mbk_cache_lock() pour un seul Ã©lÃ©ment, et pour le dÃ©vÃ©rouiller il faudra faire
 autant de mbk_cache_unlock(). */
 extern void mbk_cache_lock( mbkcache *cache, void *elem );
 extern void mbk_cache_unlock( mbkcache *cache, void *elem );
 extern char mbk_cache_islock( mbkcache *cache, void *elem );
 
-/* Change directement la taille du cache. Libération automatique des éléments si
-la capacité maximale est atteinte ou dépassée */
+/* Change directement la taille du cache. LibÃ©ration automatique des Ã©lÃ©ments si
+la capacitÃ© maximale est atteinte ou dÃ©passÃ©e */
 void mbk_cache_update_size( mbkcache *cache, void *root, long int size );
 chain_list* mbk_cache_list_content( mbkcache *cache );
 
-/* Limite le nombre d'éléments présents dans le cache à un instant donné */
+/* Limite le nombre d'Ã©lÃ©ments prÃ©sents dans le cache Ã  un instant donnÃ© */
 void mbk_cache_set_limit_element( mbkcache *cache, void *root, unsigned int nbelem );
 
-/* Mécanisme de cache des fichiers ouverts */
+/* MÃ©canisme de cache des fichiers ouverts */
 extern int   MBK_MAX_CACHE ;
 extern void  mbk_cache_clear_file( int id );
 extern FILE* mbk_cache_get_file( int id );
@@ -573,14 +573,14 @@ extern int   mbk_cache_set_file( FILE *fd, char *filename, char *extension );
 
 /*****************************************************************************\
 POINTEURS SUR LES FONCTIONS UTILISATEUR.
-FN_ISACTIVE :           Doit renvoyer 1 si le cache est actif pour l'élément, 
+FN_ISACTIVE :           Doit renvoyer 1 si le cache est actif pour l'Ã©lÃ©ment, 
                         ou 0 sinon.
-FN_GETINFOS :           L'utilisateur doit mémoriser pour chaque élément 
-FN_SETINFOS             present dans le cache un pointeur différent de NULL.
-FN_LOAD :               Chargement d'un élément. Renvoie le pointeur sur l'élément.
-FN_RELEASE :            Libération d'un élément.
-FN_GETSIZE:             Doit renvoyer la taille de l'élément présent en 
-                        mémoire.
+FN_GETINFOS :           L'utilisateur doit mÃ©moriser pour chaque Ã©lÃ©ment 
+FN_SETINFOS             present dans le cache un pointeur diffÃ©rent de NULL.
+FN_LOAD :               Chargement d'un Ã©lÃ©ment. Renvoie le pointeur sur l'Ã©lÃ©ment.
+FN_RELEASE :            LibÃ©ration d'un Ã©lÃ©ment.
+FN_GETSIZE:             Doit renvoyer la taille de l'Ã©lÃ©ment prÃ©sent en 
+                        mÃ©moire.
 \*****************************************************************************/
 
 // indiquent si un nom de fichier correspond a une lofig
@@ -730,12 +730,12 @@ void FreeAdvancedTableAllocator(AdvancedTableAllocator *ata);
 includes for mbk_math
 \******************************************************************************/
 
-// La définition des pentes y = A.x + B
+// La dÃ©finition des pentes y = A.x + B
 
 typedef struct {
-  double        X0 ;    // Absisse de début (jusqu'à la pente suivante).
+  double        X0 ;    // Absisse de dÃ©but (jusqu'Ã  la pente suivante).
   double        A ;     // Pente.
-  double        B ;     // Valeur à l'origine.
+  double        B ;     // Valeur Ã  l'origine.
 } mbk_pwl_data ;
 
 typedef struct {
@@ -744,7 +744,7 @@ typedef struct {
   double        X1;       // Abscisse finale.
 } mbk_pwl ;
 
-// Modèles de construction
+// ModÃ¨les de construction
 
 #define MBK_PWL_DEFAULT ((char)'d')
 #define MBK_PWL_SURFACE ((char)'f')
@@ -752,13 +752,13 @@ typedef struct {
 typedef struct {
   double        DELTAYMAX;      // Valeur max entre la fn et l'approximation.
   double        DELTAXMIN;      // Ecart minimum entre 2 absisses de pentes.
-  double        SDERIVE;        // Ecart pour calculer la dérivée de la fn.
+  double        SDERIVE;        // Ecart pour calculer la dÃ©rivÃ©e de la fn.
 } mbk_pwl_param_default ;
 
 typedef struct {
   double        EPSILON;        // part relative maximum de la surface initiale.
   double        DELTAXMIN;      // Ecart minimum entre 2 absisses de pentes.
-  double        SDERIVE;        // Ecart pour calculer la dérivée de la fn.
+  double        SDERIVE;        // Ecart pour calculer la dÃ©rivÃ©e de la fn.
 } mbk_pwl_param_surface ;
 
 typedef union {
@@ -778,7 +778,7 @@ typedef struct {
   mbk_pwl_param_point_list  *POINTS;
 } mbk_pwl_param ;
 
-// Configuration de la transformée
+// Configuration de la transformÃ©e
 mbk_pwl_param* mbk_pwl_get_surface_param( char (*fn)(void*, double, double*),
                                           void *data,
                                           double x0,
@@ -792,7 +792,7 @@ mbk_pwl_param* mbk_pwl_get_default_param( char (*fn)(void*, double, double*),
 void mbk_pwl_add_param_point( mbk_pwl_param *param, double x );
 void mbk_pwl_free_param( mbk_pwl_param *param );
 
-// Création de la transformée
+// CrÃ©ation de la transformÃ©e
 mbk_pwl* mbk_pwl_create( char (*fn)(void*, double, double*),
                          void *data,
                          double x0,
@@ -806,16 +806,16 @@ mbk_pwl* mbk_create_pwl_according_tanh( char (*fn)(void*, float, float*),
                                         float v1,
                                         float v2
                                       );
-// Utilisation de la transformée
+// Utilisation de la transformÃ©e
 mbk_pwl* mbk_pwl_duplicate( mbk_pwl *pwl );
 
 int mbk_qsort_dbl_cmp( double *x1, double *x2 );
 
 // Code de retour de mbk_pwl_get_value() et mbk_pwl_get_value_bytabindex().
-#define MBK_PWL_ERROR ((int)0)  // Impossible de déterminer de résultat.
-#define MBK_PWL_FOUND ((int)1)  // Un résultat a été trouvé.
-#define MBK_PWL_EXTPL ((int)2)  // Un résultat a été trouvé, mais il a fallu
-                                // extrapoler le 1° ou le dernier interval.
+#define MBK_PWL_ERROR ((int)0)  // Impossible de dÃ©terminer de rÃ©sultat.
+#define MBK_PWL_FOUND ((int)1)  // Un rÃ©sultat a Ã©tÃ© trouvÃ©.
+#define MBK_PWL_EXTPL ((int)2)  // Un rÃ©sultat a Ã©tÃ© trouvÃ©, mais il a fallu
+                                // extrapoler le 1Â° ou le dernier interval.
 
 int mbk_pwl_get_value( mbk_pwl *pwl, double x, double *y );
 int mbk_pwl_get_value_bytabindex ( mbk_pwl *pwl, double x, double *y, int *tabindex );
@@ -823,7 +823,7 @@ char mbk_pwl_get_inv_value( mbk_pwl *pwl, double y, double *x );
 void mbk_pwl_gnuplot( mbk_pwl *lines, double tstart, double tstop, char *fname );
 
 
-// Structure plus pratique à utiliser pour calculer des transformées
+// Structure plus pratique Ã  utiliser pour calculer des transformÃ©es
 // de Laplace
 
 typedef struct {
@@ -843,7 +843,7 @@ void mbk_free_laplace( mbk_laplace *pt );
 
 int mbk_dichotomie( int(*fn)(void*, double, double*), int (*fnd)(void*, double, double*), void *data, double *x0, double *x1, char mode, int *itmax, double epsilonx, double epsilony, double *x );
 
-// Paramètre 'mode' de la fonction mbk_dichotomie().
+// ParamÃ¨tre 'mode' de la fonction mbk_dichotomie().
 #define MBK_DICHO_EQUAL ((char)'e')
 #define MBK_DICHO_PROP  ((char)'p')
 #define MBK_DICHO_DERIV ((char)'d')

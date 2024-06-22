@@ -29,27 +29,27 @@ char RCX_FREEUNUSEDCTC='Y';
 char RCX_USECACHE='Y';
 char RCX_FASTMODE=1;
 
-/* Valeur du produit RC sur un signal en dessous duquel on considère qu'il n'y 
-a pas de délais RC à prendre en compte. */
+/* Valeur du produit RC sur un signal en dessous duquel on considÃ¨re qu'il n'y 
+a pas de dÃ©lais RC Ã  prendre en compte. */
 RCXFLOAT RCX_MINRCSIGNAL=1.0;
 
-/* Valeur relative entre 0 et 1 de la part de capacité de couplage sur un signal
-en dessous de laquelle on considère que le signal n'est pas sujet au couplage */
+/* Valeur relative entre 0 et 1 de la part de capacitÃ© de couplage sur un signal
+en dessous de laquelle on considÃ¨re que le signal n'est pas sujet au couplage */
 RCXFLOAT RCX_MINRELCTKSIGNAL=0.05;
 
-/* Filtrage des capacités de couplage : valeur relative entre 0 et 1 de la part
-des capacités à négliger */
+/* Filtrage des capacitÃ©s de couplage : valeur relative entre 0 et 1 de la part
+des capacitÃ©s Ã  nÃ©gliger */
 RCXFLOAT RCX_MINRELCTKFILTER=0.05;
 
-/* Paramètres de la fonction rcx_rcnload() lorsque l'argument flag vaut
+/* ParamÃ¨tres de la fonction rcx_rcnload() lorsque l'argument flag vaut
    RCX_BESTLOAD.
 
   RCX_CAPALOAD_MAXRC : Temps (en pico secondes) en dessous duquel le produit
-  de la somme des résistances x somme des capacités doit être inférieur pour 
-  qu'on prenne systématiquement une charge purement capacitive.
+  de la somme des rÃ©sistances x somme des capacitÃ©s doit Ãªtre infÃ©rieur pour 
+  qu'on prenne systÃ©matiquement une charge purement capacitive.
 
-  RCX_MAXDELTALOAD : Ecart maximum autorisé entre la cellule en pi et la
-  capacité pure lorsque le générateur de courant est constant (valeur sans
+  RCX_MAXDELTALOAD : Ecart maximum autorisÃ© entre la cellule en pi et la
+  capacitÃ© pure lorsque le gÃ©nÃ©rateur de courant est constant (valeur sans
   influence).
 */
 RCXFLOAT RCX_CAPALOAD_MAXRC = 5.0;
@@ -63,7 +63,7 @@ char RCX_CTK_SLOPE_DELAY  = RCX_SLOPE_DELAY_CTK ;
 
 double RCX_SLOPE_UNSHRINK = 0.6 ;
 
-/* Prend en compte les fronts améliorés pour l'effet miller */
+/* Prend en compte les fronts amÃ©liorÃ©s pour l'effet miller */
 #define RCX_CORREC_MILLER
 
 /*******************************************************************************
@@ -284,7 +284,7 @@ void rcx_copyrcx( lofig_list *lofig,
     headnum = NULL ;
     
     // On commence par calculer les noeuds du locon avant de toucher
-    // à autre chose.
+    // Ã  autre chose.
     rcx_trsfnodelocon( loconint, RCX_LOINS );
 
     while(loconint->PNODE)
@@ -316,13 +316,13 @@ void rcx_copyrcx( lofig_list *lofig,
 
     freenum( headnum );
 
-    // On transfert la capacité associée au locon ( a cause des allocations
+    // On transfert la capacitÃ© associÃ©e au locon ( a cause des allocations
     // par tat ).
 
     rcx_transfert_capa_from_instance_to_figure( loins, lofig, loconint );
   }
 
-  // On ne touche plus à ces connecteurs.
+  // On ne touche plus Ã  ces connecteurs.
   freechain( rcxint->RCXINTERNAL );
   rcxint->RCXINTERNAL = NULL;
 
@@ -331,11 +331,11 @@ void rcx_copyrcx( lofig_list *lofig,
 /******************************************************************************\
 rcx_dump_loins() :
 - Drive les RC
-- Crée les BELLOW dans la lofig.
+- CrÃ©e les BELLOW dans la lofig.
 
-Drive les éléments RC d'un signal d'une instance dans le fichier. Crée des 
-signaux BELLOW dans la lofig pour les agresseurs internes à la loins. Ils sont
-accessibles par le ptype RCX_COPIED mis dans les losigs typés UNRESOLVED de
+Drive les Ã©lÃ©ments RC d'un signal d'une instance dans le fichier. CrÃ©e des 
+signaux BELLOW dans la lofig pour les agresseurs internes Ã  la loins. Ils sont
+accessibles par le ptype RCX_COPIED mis dans les losigs typÃ©s UNRESOLVED de
 l'instance.
 \******************************************************************************/
 void rcx_dump_loins( rcxfile *file, 
@@ -401,7 +401,7 @@ void rcx_dump_loins( rcxfile *file,
     if( sigagr != pseudovssins && sigagr != pseudovssinsni ) {
     
       if( getptype( sigagr->USER, RCX_UNRESOLVEDSIG ) ) {
-        // L'agresseur n'a pas été lu, il correspond à un signal interne. 
+        // L'agresseur n'a pas Ã©tÃ© lu, il correspond Ã  un signal interne. 
         pt = getptype( sigagr->USER, RCX_COPIED );
         
         if( !pt ) {
@@ -424,7 +424,7 @@ void rcx_dump_loins( rcxfile *file,
                           );
       }
       else {
-        // On teste le cas où il n'y a pas de vue RCX sur le signal externe.
+        // On teste le cas oÃ¹ il n'y a pas de vue RCX sur le signal externe.
         /*
         locon_agr = (locon_list*)getptype( sigagr->USER, RCX_LOCONINS )->DATA;
         */
@@ -467,7 +467,7 @@ void rcx_dump_loins( rcxfile *file,
 
 
 /******************************************************************************\
-Crée les réseaux RC à plat en mémoire lorsqu'il n'y a pas de cache
+CrÃ©e les rÃ©seaux RC Ã  plat en mÃ©moire lorsqu'il n'y a pas de cache
 \******************************************************************************/
 void rcn_flatnet( lofig_list *lofig )
 {
@@ -488,8 +488,8 @@ void rcn_flatnet( lofig_list *lofig )
   vss   = rcx_getvss( lofig );
   vssni = rcx_getvssni( lofig );
 
-  /* Il faut renuméroter tous les RC de la lofig avant d'y ajouter les éléments
-     RC des instances pour ne pas avoir de problèmes avec les CTC/
+  /* Il faut renumÃ©roter tous les RC de la lofig avant d'y ajouter les Ã©lÃ©ments
+     RC des instances pour ne pas avoir de problÃ¨mes avec les CTC/
   */
   
   for( losig = lofig->LOSIG ; losig ; losig = losig->NEXT ) {
@@ -583,7 +583,7 @@ void rcn_flatnet( lofig_list *lofig )
 }
 
 /******************************************************************************\
-Drive les éléments RC d'un signal d'une lofig.
+Drive les Ã©lÃ©ments RC d'un signal d'une lofig.
 \******************************************************************************/
 void rcx_dumpnet( rcxfile *file, losig_list *losig )
 {
@@ -644,9 +644,9 @@ void rcx_dumpnet( rcxfile *file, losig_list *losig )
 
 /******************************************************************************\
 rcx_mergercn()
-Réalise le merge d'un losig d'une instance sur un signal externe. Utilise les
-BELLOW créés par rcx_dump_loins.
-Les vrais capacités de couplage qui ont été copiées ont un ptype RCX_COPIED, il
+RÃ©alise le merge d'un losig d'une instance sur un signal externe. Utilise les
+BELLOW crÃ©Ã©s par rcx_dump_loins.
+Les vrais capacitÃ©s de couplage qui ont Ã©tÃ© copiÃ©es ont un ptype RCX_COPIED, il
 ne faudra plus les copier.
 \******************************************************************************/
 void rcx_mergercn( lofig_list *lofig, 
@@ -713,11 +713,11 @@ void rcx_mergercn( lofig_list *lofig,
     {
     
       if( getptype( sigagr->USER, RCX_UNRESOLVEDSIG ) ) {
-        // L'agresseur n'a pas été lu, il correspond à un signal interne. 
+        // L'agresseur n'a pas Ã©tÃ© lu, il correspond Ã  un signal interne. 
         pt = getptype( sigagr->USER, RCX_COPIED );
         
         if( !pt ) {
-          // ce cas n'arrive jamais. Il a été traité dans rcx_dump_loins()
+          // ce cas n'arrive jamais. Il a Ã©tÃ© traitÃ© dans rcx_dump_loins()
           rcx_error(27,sigagr, AVT_ERROR );
         }
         else  {
@@ -750,8 +750,8 @@ void rcx_mergercn( lofig_list *lofig,
             }
           }
           else {
-            // Cas où l'agresseur est un signal ordinaire qui est connecté en 
-            // externe à vdd ou vss.
+            // Cas oÃ¹ l'agresseur est un signal ordinaire qui est connectÃ© en 
+            // externe Ã  vdd ou vss.
             if( tlc_islosigalim( sigagrext ) ) 
               addloctc( sigext, 
                         rcx_get_new_num_node( sigint, node, RCX_LOINS, NO ),
@@ -778,8 +778,8 @@ void rcx_mergercn( lofig_list *lofig,
 
 /******************************************************************************\
 rcx_trsfloinscapa()
-Dans le cas où les résistance ne sont pas prise en compte, transfère la 
-capacité des connecteurs internes vers le connecteur externe.
+Dans le cas oÃ¹ les rÃ©sistance ne sont pas prise en compte, transfÃ¨re la 
+capacitÃ© des connecteurs internes vers le connecteur externe.
 sigint est un losig dans une instance.
 \******************************************************************************/
 void rcx_trsfloinscapa( lofig_list *lofig, 
@@ -813,7 +813,7 @@ void rcx_trsfloinscapa( lofig_list *lofig,
 /******************************************************************************\
 rcx_buildrcxnowire();
 Conserve le nombre minimum de locon sur une vue RCX si celle-ci est type nowire.
-Stratégie : 
+StratÃ©gie : 
 Si le signal est externe, on ne conserve que le connecteur externe.
 Si le signal est interne, on ne conserve que le connecteur qui a le meme nom que
 le signal.
@@ -873,7 +873,7 @@ void rcx_buildrcxnowire( lofig_list *lofig, losig_list *losig )
     rcx_add_capa_locon( lofig, goodlocon, locon );
     rcx_freeloconcapa( lofig, NULL, locon );
     if( !locon->ROOT ) { 
-      // Libère les locons alloués par RCX
+      // LibÃ¨re les locons allouÃ©s par RCX
       freenum( locon->PNODE ); locon->PNODE = NULL;
       locon->SIG = NULL;
       freercxlocon( locon );
@@ -890,9 +890,9 @@ void rcx_buildrcxnowire( lofig_list *lofig, losig_list *losig )
 
 /******************************************************************************\
 buildrcx()
-Met les vues RCX à plat. Fonctionne avec ou sans cache.
-Dans la boucle des losigs, les réseaux RC ont leurs index de noeud d'origine. 
-Par contre, les connecteurs sont renumérotés au fur et à mesure qu'on les 
+Met les vues RCX Ã  plat. Fonctionne avec ou sans cache.
+Dans la boucle des losigs, les rÃ©seaux RC ont leurs index de noeud d'origine. 
+Par contre, les connecteurs sont renumÃ©rotÃ©s au fur et Ã  mesure qu'on les 
 rencontre.
 \******************************************************************************/
 
@@ -1066,16 +1066,16 @@ lofig_list	*currentfig;
   for( scanloins = currentfig->LOINS ; scanloins ; scanloins = scanloins->NEXT )
     rcx_cleanloins( scanloins );
 
-  // Création des tables de hash
+  // CrÃ©ation des tables de hash
   for( sigext = currentfig->LOSIG ; sigext ; sigext = sigext->NEXT )
   {
     chain_list *cl;
     if( tlc_islosigalim( sigext ) )
       continue;
 
-    /* Modif Grégoire le 19 Mai 2003. Grosse bidouille immonde.
-       TAS récupère les vecteurs sous la forme toto[23] car c'est comme ca que
-       Yagle crée les noms. Pb : MBK/RCX n'est pas informé de ce nommage. On le
+    /* Modif GrÃ©goire le 19 Mai 2003. Grosse bidouille immonde.
+       TAS rÃ©cupÃ¨re les vecteurs sous la forme toto[23] car c'est comme ca que
+       Yagle crÃ©e les noms. Pb : MBK/RCX n'est pas informÃ© de ce nommage. On le
        fait donc maintenant ici.
     */
     strcpy( buffer, rcx_getsigname( sigext ) );
@@ -1137,9 +1137,9 @@ int code;
 }
 
 /******************************************************************************\
-Mémorise et retrouve les agresseurs d'un signal.
+MÃ©morise et retrouve les agresseurs d'un signal.
 insname est le nom d'instance de la lofig.
-rcx_getagrlistfast() renvoie EMPTYHY si on a jamais traité ce signal dans 
+rcx_getagrlistfast() renvoie EMPTYHY si on a jamais traitÃ© ce signal dans 
 l'instance insname.
 \******************************************************************************/
 chain_list* rcx_getagrlistfast( lofig_list *lofig,
@@ -1156,19 +1156,19 @@ chain_list* rcx_getagrlistfast( lofig_list *lofig,
   chain_list    *chain;
   losig_list    *losig;
  
-  // Récupère la table des instances de cette lofig.
-  // Il s'agit des différents noms sous laquelle est instanciée cette lofig. Il
-  // ne s'agit pas d'un table pour accéder rapidement à un LOINS de cette lofig.
+  // RÃ©cupÃ¨re la table des instances de cette lofig.
+  // Il s'agit des diffÃ©rents noms sous laquelle est instanciÃ©e cette lofig. Il
+  // ne s'agit pas d'un table pour accÃ©der rapidement Ã  un LOINS de cette lofig.
   ptl = getptype( lofig->USER, RCX_HTAGR );
   if( !ptl ) return (chain_list*)EMPTYHT;
   htins=(ht*)ptl->DATA;
 
-  // Récupère la table des signaux.
+  // RÃ©cupÃ¨re la table des signaux.
   htsig = (ht*)gethtitem( htins, insname );
   if( htsig == (ht*)EMPTYHT || htsig == (ht*)DELETEHT )
     return (chain_list*)EMPTYHT;
 
-  // Récupère la liste des agresseurs.
+  // RÃ©cupÃ¨re la liste des agresseurs.
   headagr = (chain_list*)gethtitem( htsig, victime );
   if( headagr == (chain_list*)EMPTYHT || headagr == (chain_list*)DELETEHT )
     return (chain_list*)EMPTYHT;
@@ -1203,9 +1203,9 @@ void rcx_setagrlistfast( lofig_list *lofig,
   chain_list    *oldagr;
   #endif
  
-  // Récupère la table des instances de cette lofig.
-  // Il s'agit des différents noms sous laquelle est instanciée cette lofig. Il
-  // ne s'agit pas d'un table pour accéder rapidement à un LOINS de cette lofig.
+  // RÃ©cupÃ¨re la table des instances de cette lofig.
+  // Il s'agit des diffÃ©rents noms sous laquelle est instanciÃ©e cette lofig. Il
+  // ne s'agit pas d'un table pour accÃ©der rapidement Ã  un LOINS de cette lofig.
   ptl = getptype( lofig->USER, RCX_HTAGR );
   if( !ptl ) {
     lofig->USER = addptype( lofig->USER, RCX_HTAGR, addht(1) );
@@ -1213,7 +1213,7 @@ void rcx_setagrlistfast( lofig_list *lofig,
   }
   htins=(ht*)ptl->DATA;
 
-  // Récupère la table des signaux.
+  // RÃ©cupÃ¨re la table des signaux.
   htsig=(ht*)gethtitem( htins, insname );
   if( htsig == (ht*)EMPTYHT || htsig == (ht*)DELETEHT ) {
     htsig = addht(10);
@@ -1221,7 +1221,7 @@ void rcx_setagrlistfast( lofig_list *lofig,
   }
   
 
-  // Récupère la liste des agresseurs.
+  // RÃ©cupÃ¨re la liste des agresseurs.
   #ifdef RCX_CHECK
   oldagr = (chain_list*)gethtitem( htsig, victime );
   if( oldagr != (chain_list*)EMPTYHT && oldagr != (chain_list*)DELETEHT )
@@ -1233,8 +1233,8 @@ void rcx_setagrlistfast( lofig_list *lofig,
 /******************************************************************************\
 
 rcx_getagrlist()
-- Récupère une liste de rcxparam correspondant aux agresseurs possédant une vue
-  rcx et n'étant pas marqué NI par la fonction rcx_checkcrosstalk().
+- RÃ©cupÃ¨re une liste de rcxparam correspondant aux agresseurs possÃ©dant une vue
+  rcx et n'Ã©tant pas marquÃ© NI par la fonction rcx_checkcrosstalk().
 - Place dans chaque agresseur local un ptype RCX_REALAGRESSOR vers le rcxparam.
 
 \******************************************************************************/
@@ -1426,18 +1426,18 @@ void rcx_freeagrlist( lofig_list *lofig,
 }
 
 /******************************************************************************\
-Renvoie le front réel sans la contribution du signal. 
+Renvoie le front rÃ©el sans la contribution du signal. 
 cc=0    -> FCC
 cc=cca  -> F0
 
 arguments :
 
-cc  : somme des capacité de couplage entre la paire de signaux.
-cca : somme des capacité de couplage sur le signal.
-fcc : front calculé avec les agresseurs actifs
+cc  : somme des capacitÃ© de couplage entre la paire de signaux.
+cca : somme des capacitÃ© de couplage sur le signal.
+fcc : front calculÃ© avec les agresseurs actifs
 f0  : front sans agression.
 
-Si cca vaut 0, le fcc est renvoyé.
+Si cca vaut 0, le fcc est renvoyÃ©.
 \******************************************************************************/
 
 RCXFLOAT rcx_realslope( RCXFLOAT cc, RCXFLOAT cca, RCXFLOAT fcc, RCXFLOAT f0 )
@@ -1496,8 +1496,8 @@ RCXFLOAT rcx_getmiller( RCXFLOAT fvic, RCXFLOAT fagr, char type, char model )
 }
 
 /******************************************************************************\
-Renvoie la valeur d'une capacité prenant en compte l'effet Miller. Les fronts
-sont corrigés pour ne pas être pris de façon trop pessimiste.
+Renvoie la valeur d'une capacitÃ© prenant en compte l'effet Miller. Les fronts
+sont corrigÃ©s pour ne pas Ãªtre pris de faÃ§on trop pessimiste.
 type :  RCX_MIN | RCX_MAX.
 \******************************************************************************/
 
@@ -1644,9 +1644,9 @@ RCXFLOAT rcx_capamiller( losig_list *victime,
 }
 
 /******************************************************************************\
-Flags entre deux signaux couplés.
-La fonction rcx_getflagcoupled() renvoie seulement les bits sélectionnés si flag
-est différent de 0, et la totalité des bits si flag vaut 0.
+Flags entre deux signaux couplÃ©s.
+La fonction rcx_getflagcoupled() renvoie seulement les bits sÃ©lectionnÃ©s si flag
+est diffÃ©rent de 0, et la totalitÃ© des bits si flag vaut 0.
 \******************************************************************************/
 
 void rcx_setflagcoupled( losig_list *victime, losig_list *agresseur, long flag )
@@ -1683,8 +1683,8 @@ void rcx_freeflagcoupled( losig_list *victime )
 }
 
 /******************************************************************************\
-Impose que l'agresseur est à considérer comme non influent, c'est à dire qu'on
-le considère toujours actif pour ne pas l'avoir dans le stboverlapdev.
+Impose que l'agresseur est Ã  considÃ©rer comme non influent, c'est Ã  dire qu'on
+le considÃ¨re toujours actif pour ne pas l'avoir dans le stboverlapdev.
 \******************************************************************************/
 
 int rcx_isnotinfluentagressor( losig_list *victime, losig_list *agresseur )
@@ -1721,7 +1721,7 @@ int rcx_iscrosstalkcapa( loctc_list *loctc, losig_list *losig )
     return 1;
 
   if( GETFLAG( rcx->FLAG, RCXNOCTC ) )
-    // On considère que toutes les CTC sont des capacités à la masse.
+    // On considÃ¨re que toutes les CTC sont des capacitÃ©s Ã  la masse.
     return 0;
 
   sigagr = rcn_ctcothersig( loctc, losig );
@@ -1731,7 +1731,7 @@ int rcx_iscrosstalkcapa( loctc_list *loctc, losig_list *losig )
   }
 
   if( rcx_isnotinfluentagressor( losig, sigagr ) ) {
-    // Capa de couplage non significative, mais capa de couplage quand même...
+    // Capa de couplage non significative, mais capa de couplage quand mÃªme...
     return 1;
   }
 
@@ -1820,7 +1820,7 @@ int setrcxmodel( lofig_list *lofig, losig_list *losig, int request )
     retval = RCX_ALL;
     
   if( retval == RCX_NORCTC && V_INT_TAB[__ELP_CAPA_LEVEL].VALUE == ELP_CAPA_LEVEL0 ) {
-    // On met seulement la capa à jour
+    // On met seulement la capa Ã  jour
     ptl = getptype( losig->USER, LOFIGCHAIN );
     if( ptl ) {
       for( chain = (chain_list*)ptl->DATA ; chain ; chain = chain->NEXT ) {
@@ -1866,7 +1866,7 @@ losig_list      *losig;
 
   if( RCX_USING_AWEMATRIX == RCX_USING_AWEMATRIX_FORCE ) {
     /* Le 6/04/2005, il y a une boucle infinie chez Sony dans le 
-       parcours des rc : lorsqu'on est en mode force, on considère
+       parcours des rc : lorsqu'on est en mode force, on considÃ¨re
        que tous les rc ont des boucles et il ne faut surtout pas
        passer par rcn_treetrip */
     SETFLAG( ptrcx->FLAG, RCXHASLOOP );
@@ -1914,7 +1914,7 @@ losig_list      *losig;
 
   if( GETFLAG( ptrcx->FLAG, RCXHASLOOP ) ) {
     avt_log(LOGTRC,2,"loop found\n" );
-    /* il faut effacer les triangles qui ont commencés à être construits */
+    /* il faut effacer les triangles qui ont commencÃ©s Ã  Ãªtre construits */
     htpack = addht( 100 );
     headpack = NULL ;
     for( wire = losig->PRCN->PWIRE ; wire ; wire = wire->NEXT ) {
@@ -2376,13 +2376,13 @@ int rcx_islosigbreakloop( losig_list *losig )
 
 
 /******************************************************************************\
-Fonction qui répare les locon de la lofig qui ont leur PNODE à 0.
+Fonction qui rÃ©pare les locon de la lofig qui ont leur PNODE Ã  0.
 
-Hypothèses :
+HypothÃ¨ses :
 
-- Le signal doit être présent en mémoire.
-- On a pas le droit de modifier des PNODE existant car ils ont peut être été
-référencés par d'autres signaux via la fonction rcx_get_new_num_node().
+- Le signal doit Ãªtre prÃ©sent en mÃ©moire.
+- On a pas le droit de modifier des PNODE existant car ils ont peut Ãªtre Ã©tÃ©
+rÃ©fÃ©rencÃ©s par d'autres signaux via la fonction rcx_get_new_num_node().
 
 \******************************************************************************/
 void rcx_repair_pnode( losig_list *losig )
@@ -2415,8 +2415,8 @@ void rcx_repair_pnode( losig_list *losig )
   if( goodnode == -1 ) // aucun locon n'a de PNODE.
     goodnode = losig->PRCN->NBNODE;
 
-  // Idée de bug : ca n'arrivera jamais, mais que ce passe t'il si il y 
-  // a des résistances...
+  // IdÃ©e de bug : ca n'arrivera jamais, mais que ce passe t'il si il y 
+  // a des rÃ©sistances...
 
   for( chain = (chain_list*)ptl->DATA ; chain ; chain = chain->NEXT ) {
   
@@ -2442,9 +2442,9 @@ void rcx_repair_pnode( losig_list *losig )
 
 /******************************************************************************\
 
-Fonctions utilisées dans buildrcx pour déterminer le numéro d'un noeud d'un
+Fonctions utilisÃ©es dans buildrcx pour dÃ©terminer le numÃ©ro d'un noeud d'un
 signal.
-Hypothèse : 
+HypothÃ¨se : 
 - On ne connait pas le NBNODE sur les signaux de la lofig (si on a jamais eu
   de refresh sur le signal).
 - On connait le NBNODE sur les signaux des instances.
@@ -2474,7 +2474,7 @@ int rcx_get_new_num_node( losig_list *losig,
     locon_ext = (locon_list*)getptype( losig->USER, RCX_LOCONINS )->DATA ;
     ptrcx_ext = getrcx( locon_ext->SIG );
 
-    // Cas où le connecteur externe ne contient pas de pnode
+    // Cas oÃ¹ le connecteur externe ne contient pas de pnode
     if( !locon_ext->PNODE ) {
       if( withnowire==YES && GETFLAG( ptrcx_ext->FLAG, RCXNOWIRE ) ) {
         base_ext = 1;
@@ -2534,7 +2534,7 @@ int rcx_get_new_num_node( losig_list *losig,
   return newnode;
 }
 
-// Créé les infos pour les signaux qui auront des noeuds renumérotés.
+// CrÃ©Ã© les infos pour les signaux qui auront des noeuds renumÃ©rotÃ©s.
 
 void rcx_build_new_num_node( lofig_list *lofig )
 {
@@ -2574,7 +2574,7 @@ void rcx_build_new_num_node( lofig_list *lofig )
   }
 }
 
-// Libère les infos pour les signaux qui auront des noeuds renumérotés.
+// LibÃ¨re les infos pour les signaux qui auront des noeuds renumÃ©rotÃ©s.
 
 void rcx_clear_new_num_node( lofig_list *lofig )
 {
@@ -2610,7 +2610,7 @@ void rcx_clear_new_num_node( lofig_list *lofig )
   }
 }
 
-// Le losig est interne à une loins. Récupère le nom du signal à l'extérieur de
+// Le losig est interne Ã  une loins. RÃ©cupÃ¨re le nom du signal Ã  l'extÃ©rieur de
 // la loins.
 losig_list* rcx_get_out_ins_sig( losig_list *losig )
 {
@@ -2653,9 +2653,9 @@ void rcx_clear_node_base( losig_list *losig )
 }
 
 /******************************************************************************\
-Transfert au niveau supérieur les informations sur les drivers.
-Si au niveau supérieur il y a deja des informations de driver (cas multi driver
-due à la hiérarchie), alors on en prend aucune en compte. Pour indiquer ce cas,
+Transfert au niveau supÃ©rieur les informations sur les drivers.
+Si au niveau supÃ©rieur il y a deja des informations de driver (cas multi driver
+due Ã  la hiÃ©rarchie), alors on en prend aucune en compte. Pour indiquer ce cas,
 on utilise le flag MULTIDRIVER dans la vue RCX externe.
 \******************************************************************************/
 void rcx_trsfdriver( lofig_list *currentfig, losig_list *sigext, rcx_list *rcxext, losig_list *sigint, rcx_list *rcxint )
@@ -2727,7 +2727,7 @@ void rcx_trsfnodelocon( locon_list *locon, char where )
 }
 
 /******************************************************************************\
-Création d'une vue RCX sur une lofig, qui peut contenir des instances ou des
+CrÃ©ation d'une vue RCX sur une lofig, qui peut contenir des instances ou des
 transistors.
 \******************************************************************************/
 
@@ -2739,7 +2739,7 @@ lofig_list      *currentfig;
   // Ajoute une vue RCX sur tous les losigs.
   rcx_addsignal( currentfig );
 
-  // Récupère les informations correspondant aux instances.
+  // RÃ©cupÃ¨re les informations correspondant aux instances.
   for( scanins = currentfig->LOINS ; scanins ; scanins=scanins->NEXT )
     rcxparse( scanins, NULL, scanins->FIGNAME, NULL );
 
@@ -2750,7 +2750,7 @@ lofig_list      *currentfig;
   // vues RCX.
   rcx_addfigcon( currentfig );
 
-  // Sélectionne les signaux à sauvegarder dans le fichier RCX.
+  // SÃ©lectionne les signaux Ã  sauvegarder dans le fichier RCX.
   rcx_set_lofig_savesig( currentfig );
 }
 

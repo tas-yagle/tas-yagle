@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -62,8 +62,8 @@
  * Revision 1.6  2000/04/13 14:18:29  gregoire
  * Plein de petites choses :
  *
- *   Ajout de fonctions de libération des ressources utilisées.
- *   Traçage des chain_list pour détecter les blocs inutilisés.
+ *   Ajout de fonctions de libÃ©ration des ressources utilisÃ©es.
+ *   TraÃ§age des chain_list pour dÃ©tecter les blocs inutilisÃ©s.
  *   Debuggage de flatlofig.
  *
  * Revision 1.5  2000/02/22 13:58:15  syf

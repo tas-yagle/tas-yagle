@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                            */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
-/*    Auteur(s) : Grégoire Avot                                             */
+/*    Auteur(s) : GrÃ©goire Avot                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -20,22 +20,22 @@ Date     : $Date: 2002/12/06 14:52:38 $
 
 */
 
-/* Le champs data est défini par :
+/* Le champs data est dÃ©fini par :
 
         [ 0 1 2 ]
         [ 3 4 5 ]
         [ 6 7 8 ]
 
-  on accède à l'élément (ligne,colonne) par la macro 
+  on accÃ¨de Ã  l'Ã©lÃ©ment (ligne,colonne) par la macro 
   MATELEM( matrice, ligne, colonne )
 */
 
 #define MATELEM(a,l,c) (a->data[c+l*a->col]) 
 
 /*
- * La réservation mémoire est unique, elle correspond à une matrice de dimension
- * MAT_ALLOCLINE et MAT_ALLOCCOL. Seule une partie correspondant à la taille 
- * rééelle de la matrice est utilisée. */
+ * La rÃ©servation mÃ©moire est unique, elle correspond Ã  une matrice de dimension
+ * MAT_ALLOCLINE et MAT_ALLOCCOL. Seule une partie correspondant Ã  la taille 
+ * rÃ©Ã©elle de la matrice est utilisÃ©e. */
 
 #define MAT_ALLOCLINE 10
 #define MAT_ALLOCCOL  10

@@ -17,7 +17,7 @@
 
 /******************************************************************************\
 
-Bibliothèque de manipulation des objets mathématiques MBK.
+BibliothÃ¨que de manipulation des objets mathÃ©matiques MBK.
 
 \******************************************************************************/
 
@@ -40,7 +40,7 @@ mbk_pwl_point_list* mbk_pwl_alloc_point( void )
 
 /******************************************************************************\
 mbk_pwl_free_point()
-Libère une structure mbk_pwl_point_list.
+LibÃ¨re une structure mbk_pwl_point_list.
 \******************************************************************************/
 void mbk_pwl_free_point( mbk_pwl_point_list *pt )
 {
@@ -49,7 +49,7 @@ void mbk_pwl_free_point( mbk_pwl_point_list *pt )
 
 /******************************************************************************\
 mbk_pwl_free_point_list()
-Libère une liste de structures.
+LibÃ¨re une liste de structures.
 \******************************************************************************/
 void mbk_pwl_free_point_list( mbk_pwl_point_list *head )
 {
@@ -92,7 +92,7 @@ void mbk_pwl_free_pwl( mbk_pwl *pt )
 
 /******************************************************************************\
 mbk_pwl_alloc_param()
-Alloue une structure de paramètre
+Alloue une structure de paramÃ¨tre
 \******************************************************************************/
 mbk_pwl_param* mbk_pwl_alloc_param( void )
 {
@@ -103,7 +103,7 @@ mbk_pwl_param* mbk_pwl_alloc_param( void )
 
 /******************************************************************************\
 mbk_pwl_free_param()
-Libère une structure de paramètre
+LibÃ¨re une structure de paramÃ¨tre
 \******************************************************************************/
 void mbk_pwl_free_param( mbk_pwl_param *param )
 {
@@ -113,7 +113,7 @@ void mbk_pwl_free_param( mbk_pwl_param *param )
 
 /******************************************************************************\
 mbk_pwl_get_default_param()
-Crée des paramètres par défaut.
+CrÃ©e des paramÃ¨tres par dÃ©faut.
 \******************************************************************************/
 mbk_pwl_param* mbk_pwl_get_default_param( char (*fn)(void*, double, double*),
                                           void *data,
@@ -142,7 +142,7 @@ mbk_pwl_param* mbk_pwl_get_default_param( char (*fn)(void*, double, double*),
 
 /******************************************************************************\
 mbk_pwl_get_surface_param()
-Crée des paramètres par défaut.
+CrÃ©e des paramÃ¨tres par dÃ©faut.
 \******************************************************************************/
 mbk_pwl_param* mbk_pwl_get_surface_param( char (*fn)(void*, double, double*),
                                           void *data,
@@ -170,7 +170,7 @@ mbk_pwl_param* mbk_pwl_get_surface_param( char (*fn)(void*, double, double*),
 
 /******************************************************************************\
 mbk_pwl_add_param_point()
-Ajoute un point de passage obligé sur la courbe
+Ajoute un point de passage obligÃ© sur la courbe
 \******************************************************************************/
 void mbk_pwl_add_param_point( mbk_pwl_param *param, double x )
 {
@@ -183,7 +183,7 @@ void mbk_pwl_add_param_point( mbk_pwl_param *param, double x )
 
 /******************************************************************************\
 mbk_pwl_free_param_point()
-Libère une liste de point de passage obligé sur la courbe
+LibÃ¨re une liste de point de passage obligÃ© sur la courbe
 \******************************************************************************/
 void mbk_pwl_free_param_point_list( mbk_pwl_param_point_list *head )
 {
@@ -196,7 +196,7 @@ void mbk_pwl_free_param_point_list( mbk_pwl_param_point_list *head )
 
 /******************************************************************************\
 mbk_pwl_calc_deriv()
-Calcul la dérivée de y=fn(x) entre deux points proches x0 et x1.
+Calcul la dÃ©rivÃ©e de y=fn(x) entre deux points proches x0 et x1.
 \******************************************************************************/
 char mbk_pwl_calc_deriv( char (*fn)(void*, double, double*), 
                          void *data,
@@ -293,9 +293,9 @@ mbk_pwl* mbk_pwl_create( char (*fn)(void*, double, double*),
 
 /******************************************************************************\
 mbk_pwl_fill_point()
-Remplis les champs numérique d'un point.
+Remplis les champs numÃ©rique d'un point.
 x      : abscisse du point
-x1, x2 : intervalle sur lequel calculer la dérivée.
+x1, x2 : intervalle sur lequel calculer la dÃ©rivÃ©e.
 renvoie 1 si ok, 0 si ko.
 \******************************************************************************/
 char mbk_pwl_fill_point( char (*fn)(void*, double, double*),
@@ -336,9 +336,9 @@ int mbk_qsort_dbl_cmp( double *x1, double *x2 )
 
 /******************************************************************************\
 mbk_pwl_param_point_to_point()
-transforme un liste de points de passage obligés configurés dans le param en une
-liste de points pour la détermination des intervales.
-Renvoie au moins les 2 points extrèmes, et NULL en cas d'erreur.
+transforme un liste de points de passage obligÃ©s configurÃ©s dans le param en une
+liste de points pour la dÃ©termination des intervales.
+Renvoie au moins les 2 points extrÃ¨mes, et NULL en cas d'erreur.
 \******************************************************************************/
 mbk_pwl_point_list* mbk_pwl_param_point_to_point( 
                                         char (*fn)(void*, double, double* ),
@@ -369,11 +369,11 @@ mbk_pwl_point_list* mbk_pwl_param_point_to_point(
     return NULL;
   }
 
-  // Crée un tableau des points de passage obligés et le trie
+  // CrÃ©e un tableau des points de passage obligÃ©s et le trie
   n=2;
   for( scan = param->POINTS ; scan ; scan = scan->NEXT ) {
     // Cette comparaison permet de ne garder que les points compris entre
-    // x0 et x1, et dont le calcul de la dérivée est également compris dans
+    // x0 et x1, et dont le calcul de la dÃ©rivÃ©e est Ã©galement compris dans
     // cette zone.
     if( scan->X - dx2 > x0 && scan->X + dx2 < x1 )
       n++;
@@ -498,11 +498,11 @@ static char mbk_pwl_create_default_rec( char (*fn)(void*, double, double*),
   
   if( ( p2->X - p1->X ) >= (param->PARAM.DEFAULT.DELTAXMIN/OPTIM13) ) {
 
-    // Test d'intersection des deux dérivées.
+    // Test d'intersection des deux dÃ©rivÃ©es.
 
     xm = (p2->X + p1->X)/2;
 
-    // Test de l'ecart entre l'intersection des deux dérivées et la fonction.
+    // Test de l'ecart entre l'intersection des deux dÃ©rivÃ©es et la fonction.
     if( !fn( data, xm, &y ) )
       return 0;
 
@@ -527,7 +527,7 @@ static char mbk_pwl_create_default_rec( char (*fn)(void*, double, double*),
   }
   else {
   
-    // On vérifie si on est pas sur une droite entre les deux points.
+    // On vÃ©rifie si on est pas sur une droite entre les deux points.
 
     xm = ( p1->X + p2->X ) / 2.0 ;
     if( !fn( data, xm, &y ) )
@@ -566,13 +566,13 @@ static char mbk_pwl_create_default_rec( char (*fn)(void*, double, double*),
   
   if( ( p2->X - p1->X ) >= param->PARAM.DEFAULT.DELTAXMIN ) {
 
-    // Test d'intersection des deux dérivées.
+    // Test d'intersection des deux dÃ©rivÃ©es.
 
     xm = ( p2->O - p1->O ) / ( p1->P - p2->P ) ;
 
     if( finite( xm ) && xm > p1->X && xm < p2->X ) {
      
-      // Test de l'ecart entre l'intersection des deux dérivées et la fonction.
+      // Test de l'ecart entre l'intersection des deux dÃ©rivÃ©es et la fonction.
       if( !fn( data, xm, &y ) )
         return 0;
 
@@ -618,7 +618,7 @@ static char mbk_pwl_create_default_rec( char (*fn)(void*, double, double*),
     }
     else {
     
-      // On vérifie si on est pas sur une droite entre les deux points.
+      // On vÃ©rifie si on est pas sur une droite entre les deux points.
 
       xm = ( p1->X + p2->X ) / 2.0 ;
       if( !fn( data, xm, &y ) )
@@ -682,7 +682,7 @@ mbk_pwl* mbk_pwl_create_default( char (*fn)(void*, double, double*),
         break;
   }
 
-  // Crée la structure finale
+  // CrÃ©e la structure finale
   if( p1 == last ) 
     list = mbk_pwl_point_to_pwl( head );
   else
@@ -695,7 +695,7 @@ mbk_pwl* mbk_pwl_create_default( char (*fn)(void*, double, double*),
 
 /******************************************************************************\
 mbk_pwl_get_value()
-Calcule la valeur y d'une fonction représentée sous la forme d'une structure 
+Calcule la valeur y d'une fonction reprÃ©sentÃ©e sous la forme d'une structure 
 mbk_pwl.
 Renvoie : MBK_PWL_ERROR, MBK_PWL_FOUND ou MBK_PWL_EXTPL
 \******************************************************************************/
@@ -708,7 +708,7 @@ int mbk_pwl_get_value( mbk_pwl *pwl, double x, double *y )
   if( pwl->N == 0 )
     return MBK_PWL_ERROR ;
 
-  /* Vérification extrapolation */
+  /* VÃ©rification extrapolation */
   if( x < pwl->DATA[0].X0 ) {
     ret = MBK_PWL_EXTPL ;
     i = 0;
@@ -740,7 +740,7 @@ int mbk_pwl_get_value( mbk_pwl *pwl, double x, double *y )
 
 /******************************************************************************\
 mbk_pwl_get_inv_value()
-Calcule la première valeur x d'une fonction représentée sous la forme d'une 
+Calcule la premiÃ¨re valeur x d'une fonction reprÃ©sentÃ©e sous la forme d'une 
 structure mbk_pwl.
 \******************************************************************************/
 
@@ -776,7 +776,7 @@ char mbk_pwl_get_inv_value( mbk_pwl *pwl, double y, double *x )
 
 /******************************************************************************\
 mbk_pwl_gnuplot()
-crée un fichier au format gnuplot d'une structure pwl.
+crÃ©e un fichier au format gnuplot d'une structure pwl.
 \******************************************************************************/
 void mbk_pwl_gnuplot( mbk_pwl *lines, double tstart, double tstop, char *fname )
 {
@@ -802,7 +802,7 @@ void mbk_pwl_gnuplot( mbk_pwl *lines, double tstart, double tstop, char *fname )
 
 /******************************************************************************\
 mbk_create_pwl_with_tanh()
-Calcul la structure pwl qui pourra être transformée en un ensemble de tanh.
+Calcul la structure pwl qui pourra Ãªtre transformÃ©e en un ensemble de tanh.
 \******************************************************************************/
 mbk_pwl* mbk_create_pwl_according_tanh( char (*fn)(void*, float, float*), 
                                         void *data,
@@ -868,7 +868,7 @@ mbk_laplace* mbk_alloc_laplace( int n, int size )
 
 /******************************************************************************\
 mbk_free_laplace
-Libération d'une structure laplace.
+LibÃ©ration d'une structure laplace.
 \******************************************************************************/
 void mbk_free_laplace( mbk_laplace *pt )
 {
@@ -879,10 +879,10 @@ void mbk_free_laplace( mbk_laplace *pt )
 
 /******************************************************************************\
 mbk_pwl_to_laplace
-Calcule une structure appropriée pour manipuler des transformées de laplace de
-fonctions approximées par un ensemble de droites. La taille la structure 
-utilisateur pour chaque segment de droite doit être fournie par 'size'.
-Le premier champs de la structure utilsateur DOIT être :
+Calcule une structure appropriÃ©e pour manipuler des transformÃ©es de laplace de
+fonctions approximÃ©es par un ensemble de droites. La taille la structure 
+utilisateur pour chaque segment de droite doit Ãªtre fournie par 'size'.
+Le premier champs de la structure utilsateur DOIT Ãªtre :
   mbk_laplace_data  unnomquivabien;
 \******************************************************************************/
 
@@ -912,7 +912,7 @@ mbk_laplace* mbk_pwl_to_laplace( mbk_pwl *lines, int size )
 
 /******************************************************************************\
 mbk_pwl_get_value_bytabindex ()
-Calcule la valeur y d'une fonction représentée sous la forme d'une structure 
+Calcule la valeur y d'une fonction reprÃ©sentÃ©e sous la forme d'une structure 
 mbk_pwl.
 Renvoie : MBK_PWL_ERROR, MBK_PWL_FOUND ou MBK_PWL_EXTPL
 \******************************************************************************/
@@ -932,18 +932,18 @@ int mbk_pwl_get_value_bytabindex( mbk_pwl *pwl, double x, double *y , int *tabin
   /* On utilise le dernier intervalle connu */
   if( *tabindex >= 0 ) {
     
-    /* Détermination de la borne sup de cet intervalle */
+    /* DÃ©termination de la borne sup de cet intervalle */
     if( *tabindex == pwl->N - 1 )
       x1 = pwl->X1 ;
     else
       x1 = pwl->DATA[ *tabindex + 1 ].X0 ;
 
-    /* On vérifie si on est dans cet intervalle */
+    /* On vÃ©rifie si on est dans cet intervalle */
     if( x >= pwl->DATA[ *tabindex ].X0 && x <= x1 ) {
       ret = MBK_PWL_FOUND ;
     }
     else {
-      /* On détermine le sens de la recherche et l'intervalle de départ */
+      /* On dÃ©termine le sens de la recherche et l'intervalle de dÃ©part */
       if( x < pwl->DATA[ *tabindex ].X0 ) {
         if( *tabindex > 0 ) 
           (*tabindex)--;
@@ -962,7 +962,7 @@ int mbk_pwl_get_value_bytabindex( mbk_pwl *pwl, double x, double *y , int *tabin
     dir = +1 ;
   }
 
-  /* Teste si la solution recherchée est en dehors des intervalles */
+  /* Teste si la solution recherchÃ©e est en dehors des intervalles */
   if( ret == MBK_PWL_ERROR ) {
   
     if( x < pwl->DATA[0].X0 ) {
@@ -981,7 +981,7 @@ int mbk_pwl_get_value_bytabindex( mbk_pwl *pwl, double x, double *y , int *tabin
   if( ret == MBK_PWL_ERROR ) {
   
     while( 1 ) {
-      /* Détermination de la borne sup de cet intervalle */
+      /* DÃ©termination de la borne sup de cet intervalle */
       if( *tabindex == pwl->N - 1 )
         x1 = pwl->X1 ;
       else
@@ -1002,30 +1002,30 @@ int mbk_pwl_get_value_bytabindex( mbk_pwl *pwl, double x, double *y , int *tabin
 /******************************************************************************\
 mbk_dichotomie()
 
-Résolution d'une équation par dichotomie f(x)=0.
+RÃ©solution d'une Ã©quation par dichotomie f(x)=0.
 
-fn :       Fonction à résoudre. Code de retour : 1 ok, 0, ko.
-fnd :      Sa dérivée, utilisée uniquement si MBK_DICHO_DERIV.
-data :     Les paramètres utilisés par fn.
+fn :       Fonction Ã  rÃ©soudre. Code de retour : 1 ok, 0, ko.
+fnd :      Sa dÃ©rivÃ©e, utilisÃ©e uniquement si MBK_DICHO_DERIV.
+data :     Les paramÃ¨tres utilisÃ©s par fn.
 *x0, *x1 : Les bornes de l'interval initial. A la fin de l'execution, elles
            contiennent l'interval final.
 mode :     MBK_DICHO_EQUAL
            MBK_DICHO_PROP
            MBK_DICHO_NR
            MBK_DICHO_DERIV  (fnd requiered).
-*itmax :   Nombre maximum d'itérations, 0=illimité. A la fin de l'execution,
-           contient le nb d'itérations effectivement réalisées.
-epsilonx : largeur minimale de l'interval x (DBL_MAX si pas ce critère).
-epsilony : ecart absolue de la solution (DBL_MAX si pas ce critère).
+*itmax :   Nombre maximum d'itÃ©rations, 0=illimitÃ©. A la fin de l'execution,
+           contient le nb d'itÃ©rations effectivement rÃ©alisÃ©es.
+epsilonx : largeur minimale de l'interval x (DBL_MAX si pas ce critÃ¨re).
+epsilony : ecart absolue de la solution (DBL_MAX si pas ce critÃ¨re).
 *x :       Solution.
 
-l'algo s'arrète dès que la condition sur epsilonx OU epsilony est rencontrée.
+l'algo s'arrÃ¨te dÃ¨s que la condition sur epsilonx OU epsilony est rencontrÃ©e.
 
 Code de retour.
 
-MBK_DICHO_OK    : La solution est trouvée.
-MBK_DICHO_ERRFN : La fonction fn ou fnd a renvoyée 0.
-MBK_DICHO_MAXIT : Le nombre maximum d'itération est atteind.
+MBK_DICHO_OK    : La solution est trouvÃ©e.
+MBK_DICHO_ERRFN : La fonction fn ou fnd a renvoyÃ©e 0.
+MBK_DICHO_MAXIT : Le nombre maximum d'itÃ©ration est atteind.
 MBK_DICHO_ERR :   Autres erreurs.
 \******************************************************************************/
 int mbk_dichotomie( int   (*fn)(void*, double, double*),
@@ -1146,7 +1146,7 @@ int mbk_dichotomie( int   (*fn)(void*, double, double*),
     }
   }
 
-  /* la solution suivante est fausse si l'écart x1-x0 est
+  /* la solution suivante est fausse si l'Ã©cart x1-x0 est
   grand mais que le x choisi tombe juste */
   // *x = ( *x0 + *x1 )/ 2.0 ;
   
@@ -1156,8 +1156,8 @@ int mbk_dichotomie( int   (*fn)(void*, double, double*),
 
 /******************************************************************************\
 mbk_make_tab_equi
-Converti un tableau de valeur (x,y) à pas variable en x en un tableau dont les 
-x sont répartis de manière equidistants.
+Converti un tableau de valeur (x,y) Ã  pas variable en x en un tableau dont les 
+x sont rÃ©partis de maniÃ¨re equidistants.
 \******************************************************************************/
 void mbk_make_tab_equi( double *tabinx, 
                         double *tabiny, 
@@ -1182,7 +1182,7 @@ void mbk_make_tab_equi( double *tabinx,
       x = ((double)nout)*pas + x0 ;
     }
     else {
-      /* pour éviter des erreurs d'arrondis qui nous ferait rater le 1° point */
+      /* pour Ã©viter des erreurs d'arrondis qui nous ferait rater le 1Â° point */
       x = x0;
     }
     
@@ -1200,17 +1200,17 @@ void mbk_make_tab_equi( double *tabinx,
 }
 
 /******************************************************************************\
-Fonctions d'approximation de nombres par des intervalles de précision controlée.
+Fonctions d'approximation de nombres par des intervalles de prÃ©cision controlÃ©e.
 
-  precis : precision demandée. ex 5% -> precis = 0.05.
+  precis : precision demandÃ©e. ex 5% -> precis = 0.05.
 
 mbk_float_approx_interval()
-  Renvoie un entier représentant l'intervalle d'un nombre x strictement positif.
-  L'intervale renvoyé peut être positif (x>1) ou négatif(x<1).
+  Renvoie un entier reprÃ©sentant l'intervalle d'un nombre x strictement positif.
+  L'intervale renvoyÃ© peut Ãªtre positif (x>1) ou nÃ©gatif(x<1).
   Renvoie INT_MAX (limits.h) si une erreur est survenue.
 
 mbk_float_approx_limits()
-  Calcule dans ll et lh les limites de l'intervalle correspondant à n.
+  Calcule dans ll et lh les limites de l'intervalle correspondant Ã  n.
 
 exemple :
 

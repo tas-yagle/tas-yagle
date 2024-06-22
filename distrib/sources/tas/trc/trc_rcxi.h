@@ -1,5 +1,5 @@
 /******************************************************************************\
-Fonctions visibles depuis l'extérieur.
+Fonctions visibles depuis l'extÃ©rieur.
 \******************************************************************************/
 
 extern char rcxi_error[1024] ;

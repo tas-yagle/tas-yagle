@@ -77,7 +77,7 @@ void stm_modscm_dual_modifslope(double vddin, double vt, double F, double vdd, d
     // *te = F * atanh( ( vdd/2 - vt ) / vddin );
     // Ve = vddin * tanh( *te / F) + vt + rbr * rbr * imax * cbr / Fs * ( 1.0 - exp(-(*te) / (rbr * cbr)) - (*te>Fs?(1.0 - exp(-(*te - Fs) / (rbr * cbr))):0.0));
     
-    /* Instant ou la tension d'entrée passe au millieu de son excursion : (vddin-vt)/2+vt */
+    /* Instant ou la tension d'entrÃ©e passe au millieu de son excursion : (vddin-vt)/2+vt */
     *te = F * 0.549 ; 
     Ve = vddin * tanh( *te / F) + vt + stm_modscm_dual_voltage_rc( *te, rbr, cbr, imax, Fs );
     *Fm = *te / atanh( (Ve - vt) / vddin );
@@ -112,20 +112,20 @@ double stm_modscm_dual_get_ir( double t,
     double ir ;
     double i ;
 
-    /* Valeurs rapportées */
+    /* Valeurs rapportÃ©es */
     Vr = Ur * tanh( t / Fr );
 
-    /* Valeurs réélles */
+    /* Valeurs rÃ©Ã©lles */
     V  = vin * tanh( t / F) ;
     b  = stm_modscm_dual_voltage_rc( t, rbr, cbr, imax, Fs );
 
-    /* Valeur du bruit rapporté proportionnel à Vm / Vr */
+    /* Valeur du bruit rapportÃ© proportionnel Ã  Vm / Vr */
     br = b * Vr / V ;
 
     if( !finite( br ) )
       return 0.0 ;
     
-    /* Nouvelle tension d'entrée rapportée */
+    /* Nouvelle tension d'entrÃ©e rapportÃ©e */
     Vr = Vr + br ;
     ir = A * Vr * Vr / ( 1.0 + B * Vr );
 
@@ -451,7 +451,7 @@ float stm_modscm_dual_slew_old (dualparams *params, float slew, float load)
 
     /* Note :
        On n'appelle pas deux fois la fonction culcule du ts avec deux seuils 
-       différents car on souhaite conserver la même caractéristique.
+       diffÃ©rents car on souhaite conserver la mÃªme caractÃ©ristique.
     */
 
     if((rbr > 0.0) && (cbr > 0.0)){
@@ -786,13 +786,13 @@ void  stm_modscm_dual_fill_param( dualparams            *params,
       }
     }
 
-    /*     fin :  front d'entrée réel original.
-           Fr :   front d'entrée rapporté sans prendre en compte le cbr.
-           Ur :   tension d'entrée rapporté sans prendre en compte le cbr.
-           Fs :   instant où on considère que le courant atteint imax.
-           Fm :   front d'entrée réel prenant en compte le cbr.
-           F :    front d'entrée rapporté prenant en compte cbr.
-           U :    tension d'entrée rapporté prenant en compte cbr.
+    /*     fin :  front d'entrÃ©e rÃ©el original.
+           Fr :   front d'entrÃ©e rapportÃ© sans prendre en compte le cbr.
+           Ur :   tension d'entrÃ©e rapportÃ© sans prendre en compte le cbr.
+           Fs :   instant oÃ¹ on considÃ¨re que le courant atteint imax.
+           Fm :   front d'entrÃ©e rÃ©el prenant en compte le cbr.
+           F :    front d'entrÃ©e rapportÃ© prenant en compte cbr.
+           U :    tension d'entrÃ©e rapportÃ© prenant en compte cbr.
            t0 :   estimation ts sortie en vdd/2
            fout : estimation f sortie
            
@@ -814,7 +814,7 @@ void  stm_modscm_dual_fill_param( dualparams            *params,
   
     /* Prise en compte de la modification du front d'entree due au capai.
        Pour l'instant, nous l'appliquons que les technos pour lesquelles le
-       vt est superieur à vdd/2 */
+       vt est superieur Ã  vdd/2 */
     paramtiming->NEWCTKMODEL = 0 ;
     paramtiming->EVTIN       = '-' ;
     paramtiming->VIN         = -1.0 ;
@@ -854,7 +854,7 @@ void  stm_modscm_dual_fill_param( dualparams            *params,
     }
 
     if( driver ) {
-      /* retire la capa de couplage comptée dans la capa d'entrée */
+      /* retire la capa de couplage comptÃ©e dans la capa d'entrÃ©e */
       cin = driver->c - capao ;
     }
     else {
@@ -865,8 +865,8 @@ void  stm_modscm_dual_fill_param( dualparams            *params,
 
     if( driver ) {
       if( V_BOOL_TAB[ __STM_RDRIVER_FROM_SLOPE ].VALUE ) {
-        /* resistance du driver du front d'entrée : modèle integrales à 
-           l'infinie égales */
+        /* resistance du driver du front d'entrÃ©e : modÃ¨le integrales Ã  
+           l'infinie Ã©gales */
         if( V_BOOL_TAB[ __AVT_BUG_RDRIVER ].VALUE )
           rdriver = 0.693*fin/(driver->c/1000.0)/4.0 ;
         else
@@ -878,7 +878,7 @@ void  stm_modscm_dual_fill_param( dualparams            *params,
     else
       rdriver = -1.0 ;
 
-    /* calcul de l'écart entre le référentiel de l'entrée et de la sortie */
+    /* calcul de l'Ã©cart entre le rÃ©fÃ©rentiel de l'entrÃ©e et de la sortie */
     if( threshold > vt )
       ts = fout*atanh( (threshold-vt)/(vddmax-vt));
     else
@@ -886,8 +886,8 @@ void  stm_modscm_dual_fill_param( dualparams            *params,
     dt = t0-ts ;
 
     if( !integnumeric && ( (driver && driver->r > 0.0 && driver->c > 0.0 && cin > 0.0 ) || usecapaie ) ) {
-      /* Calcule du dV de tensions sur l'entrée à partir de l'estimation du front de sortie : 
-         Comme on ne connait pas la transformée de laplace de la tanh, on passe en pwl */
+      /* Calcule du dV de tensions sur l'entrÃ©e Ã  partir de l'estimation du front de sortie : 
+         Comme on ne connait pas la transformÃ©e de laplace de la tanh, on passe en pwl */
       tanhdata.F   = fout ;
       tanhdata.VDD = vddmax ;
       tanhdata.VT  = vt ;
@@ -932,11 +932,11 @@ void  stm_modscm_dual_fill_param( dualparams            *params,
        
         switch( ctkmodel ) {
         
-        case 1 : /* méthode du pwl equivalent */
-        case 2 : /* méthode du pwl equivalent, limite haute */
-        case 3 : /* méthode du pwl equivalent, limite basse */
+        case 1 : /* mÃ©thode du pwl equivalent */
+        case 2 : /* mÃ©thode du pwl equivalent, limite haute */
+        case 3 : /* mÃ©thode du pwl equivalent, limite basse */
 
-          /* Determine le stm_pwl de l'entrée en retranchant les dv */
+          /* Determine le stm_pwl de l'entrÃ©e en retranchant les dv */
           pwldv      = (stm_pwl*)mbkalloc( sizeof(stm_pwl));
           pwldv->TAB = (float*)mbkalloc(sizeof(float)*2*V_INT_TAB[ __STM_INPUT_NB_PWL ].VALUE);
       
@@ -970,12 +970,12 @@ void  stm_modscm_dual_fill_param( dualparams            *params,
           pwldv->N = nbdv ;
 
           /* ecrasement du pwlin. a faire : calculer la forme de la tension
-             d'entrée en prenant en compte le dv */
+             d'entrÃ©e en prenant en compte le dv */
 
           pwlin = pwldv ;
           localpwlin = 1 ;
           break ;
-        case 4 : /* méthode du front equivalent */
+        case 4 : /* mÃ©thode du front equivalent */
           lt = 0.0 ;
           ldv = 0.0 ;
           s  = 0.0 ;
@@ -998,7 +998,7 @@ void  stm_modscm_dual_fill_param( dualparams            *params,
       }
     }
 
-    /* transforme le pwl d'entrée proportionnellement au passage de 
+    /* transforme le pwl d'entrÃ©e proportionnellement au passage de 
        vddin, fin -> U, F. */
     paramtiming->NTHSHRK = 0;
     if( pwlin ) {
@@ -1014,9 +1014,9 @@ void  stm_modscm_dual_fill_param( dualparams            *params,
     }
 
     if( V_BOOL_TAB[ __STM_QINIT_FOR_DT_CONF ].VALUE && icf0>0.0 ) {
-      /* calcule l'instant où la sortie vaut 0, après absorbtion de l'overshoot */
+      /* calcule l'instant oÃ¹ la sortie vaut 0, aprÃ¨s absorbtion de l'overshoot */
       strans = stm_modscm_dual_calts (imax, an, bn, U, 0.0, 0.0, F, 0.0, vt, vddin, capaie[0], NULL, NULL, fin, NULL, 0, qinit, 0.0, 0.0, NULL );
-      /* vérifie si cet instant est inférieur à l'instant où la branche conflictuelle se coupe */
+      /* vÃ©rifie si cet instant est infÃ©rieur Ã  l'instant oÃ¹ la branche conflictuelle se coupe */
       te = stm_modscm_dual_calte (vddin, vt, vt0c, (double)fin);
       if( te < strans )
         strans = te ;
@@ -1064,7 +1064,7 @@ void  stm_modscm_dual_fill_param( dualparams            *params,
       t0   = stm_modscm_dual_calts (imax, an, bn, U, threshold, capa0+load, F, 0.0, vt, vddin, capai, NULL, NULL, fin, NULL, 0, 0.0, 0.0, 0.0, NULL );
 
     if( integnumeric == 0 && (rbr > 0.0) && (cbr > 0.0)){
-        // Calcule de la charge supplémentaire due à l'overshoot
+        // Calcule de la charge supplÃ©mentaire due Ã  l'overshoot
         fout = stm_modscm_dual_calslew( imax, an, bn, U, vt, vddmax, capa+load, fin, F, t0);
         k4Q  = stm_modscm_dual_get_k4Q( an, bn, vddin, fin, Ur, Fr, U, F, rbr, cbr, im, Fs, vddmax, rsat, rlin, rint, vint, vt );
         Q    = stm_modscm_dual_get_Q( t0, k4Q, an, bn, vddin, fin, Ur, Fr, U, F, rbr, cbr, im, Fs, tm, vddmax, vt, rsat, rlin, rint, vint, fout, threshold );
@@ -1145,7 +1145,7 @@ double stm_modscm_dual_get_qsat2( stm_dual_param_timing *param, double seuil, do
   else 
     tst = param->FOUT * (param->THRESHOLD-param->VT)/(param->VDDMAX-param->VT) ;
   
-  dt  = (param->T0-param->DTPWL)-tst;   // Ecart entre le référentiel de l'entrée et de la sortie
+  dt  = (param->T0-param->DTPWL)-tst;   // Ecart entre le rÃ©fÃ©rentiel de l'entrÃ©e et de la sortie
   
   if( seuil > param->VT )
     tout = param->FOUT * atanh( (seuil-param->VT)/(param->VDDMAX-param->VT) ) ;
@@ -1217,7 +1217,7 @@ void evalnewslope( double vt,
   *fnew  = (t1-t2)/(k1-k2);
 }
 
-/* résolution de q(t)=c.vs+ci.vi+qinit */
+/* rÃ©solution de q(t)=c.vs+ci.vi+qinit */
 double stm_modscm_dual_calts_newctk( stm_dual_param_timing *param, 
                                      double threshold, 
                                      double capasup,
@@ -1551,8 +1551,8 @@ double stm_modscm_dual_calts_with_param_timing_classic( stm_dual_param_timing *p
     needceqrsat = 0 ;
   }
   
-  /* pour assurer la compatibilité avec ancien modèle, on maintient le bug
-     où l'on calcul ceqrsat à threshold, sans le borner par vsat */
+  /* pour assurer la compatibilitÃ© avec ancien modÃ¨le, on maintient le bug
+     oÃ¹ l'on calcul ceqrsat Ã  threshold, sans le borner par vsat */
   if( paramtiming->COMPAT30P3 /* && ! paramtiming->NEWCTKMODEL */ )
     stm_modscm_dual_calts_qsat( paramtiming, threshold, NULL, &qsat, &ceqrsat, needceqrsat ? &ceqrsat0 : NULL );
   else 
@@ -1736,9 +1736,9 @@ void stm_modscm_dual_calts_qsat_v( stm_dual_param_timing *paramtiming, stm_qsat_
   qsat->QSAT0 = paramtiming->QSAT_Q0 ;
 }
 
-/* Calcule le modèle de charge de saturation. Rempli la structure qsat suivant la configuration. Si le modèle ceqrsat est retenu,
-qsat est configuré de façon à renvoyer 0.
-si le pointeur ceqrsat0 est défini, il contiendra le ceqrsat intermédiaire utilisé pour configurer qsat */
+/* Calcule le modÃ¨le de charge de saturation. Rempli la structure qsat suivant la configuration. Si le modÃ¨le ceqrsat est retenu,
+qsat est configurÃ© de faÃ§on Ã  renvoyer 0.
+si le pointeur ceqrsat0 est dÃ©fini, il contiendra le ceqrsat intermÃ©diaire utilisÃ© pour configurer qsat */
 void stm_modscm_dual_calts_qsat( stm_dual_param_timing *paramtiming, 
                                  double threshold, 
                                  stm_qsat_v *qsatv, 
@@ -1939,7 +1939,7 @@ double stm_modscm_dual_calts_with_param_timing( stm_dual_param_timing *paramtimi
 
       stm_estim_output( paramtiming, ltiabs, lvout );
 
-      /* calcule de la charge initiale de l'intervalle courant. le modèle enhanced n'est activé 
+      /* calcule de la charge initiale de l'intervalle courant. le modÃ¨le enhanced n'est activÃ© 
       que sur l'intervalle courant, pas avant */
       if( i > 0 ) 
         q = q - stm_modscm_dual_calts_qbranch( paramtiming, NULL, lvout, paramtiming->PWTHSHRK[i-1].T+paramtiming->PWTHSHRK[i-1].DT-paramtiming->PWTHSHRK[i].DT ) ;
@@ -1947,7 +1947,7 @@ double stm_modscm_dual_calts_with_param_timing( stm_dual_param_timing *paramtimi
 
       if( te < tiabs ) {
      
-        /* détermination de la tension de sortie à partir de laquelle on utilise le modèle enhanced */
+        /* dÃ©termination de la tension de sortie Ã  partir de laquelle on utilise le modÃ¨le enhanced */
         if( i>0 && te < paramtiming->PWTHSHRK[i-1].T+paramtiming->PWTHSHRK[i-1].DT ) 
           te = paramtiming->PWTHSHRK[i-1].T+paramtiming->PWTHSHRK[i-1].DT ;
         vout_enh = stm_compute_vout( paramtiming, &te, &vqsat, NULL );
@@ -1956,15 +1956,15 @@ double stm_modscm_dual_calts_with_param_timing( stm_dual_param_timing *paramtimi
           break ;
         }
         else {
-          /* il faut calculer les paramètres enhanced avant le calcul de la charge initiale car ce modèle
-          peut se déclencher avant l'intervalle courant */
+          /* il faut calculer les paramÃ¨tres enhanced avant le calcul de la charge initiale car ce modÃ¨le
+          peut se dÃ©clencher avant l'intervalle courant */
           paramtiming->QSAT_TE = te ;
           paramtiming->QSAT_VE = vout_enh ;
           paramtiming->QSAT_Q0 = vqsat ;
           stm_modscm_dual_calts_qsat_v( paramtiming, &qsat );
           ptqsat = &qsat ;
 
-          /* détermination de la tension de sortie à la fin de l'intervalle courant */
+          /* dÃ©termination de la tension de sortie Ã  la fin de l'intervalle courant */
           if( i==paramtiming->NTHSHRK-1 )
             vout = paramtiming->VDDMAX ;
           else
@@ -1976,7 +1976,7 @@ double stm_modscm_dual_calts_with_param_timing( stm_dual_param_timing *paramtimi
       }
       else {
 
-        /* détermination de la tension de sortie à la fin de l'intervalle courant */
+        /* dÃ©termination de la tension de sortie Ã  la fin de l'intervalle courant */
         if( i==paramtiming->NTHSHRK-1 )
           vout = paramtiming->VDDMAX ;
         else
@@ -2032,7 +2032,7 @@ double stm_modscm_dual_calts_with_param_timing( stm_dual_param_timing *paramtimi
   return tf ;
 }
 
-/* Renvoie 0 pour le modèle enhanced. Le tsatmax n'est pas pris en compte. */
+/* Renvoie 0 pour le modÃ¨le enhanced. Le tsatmax n'est pas pris en compte. */
 double stm_get_qsat_derivative( stm_qsat *qsat, double t )
 {
   double dq ;
@@ -2176,44 +2176,44 @@ double stm_modscm_dual_calculduts_threshold (dualparams *params, float slew, flo
         }
 
 
-    /*     slew : front d'entrée réel original.
-           Fr :   front d'entrée rapporté sans prendre en compte le cbr.
-           Fs :   instant où on considère que le courant atteint imax.
-           Fm :   front d'entrée réel prenant en compte le cbr.
-           F :    front d'entrée rapporté prenant en compte cbr.
+    /*     slew : front d'entrÃ©e rÃ©el original.
+           Fr :   front d'entrÃ©e rapportÃ© sans prendre en compte le cbr.
+           Fs :   instant oÃ¹ on considÃ¨re que le courant atteint imax.
+           Fm :   front d'entrÃ©e rÃ©el prenant en compte le cbr.
+           F :    front d'entrÃ©e rapportÃ© prenant en compte cbr.
 
-           Les équations de courant instantané sont :
+           Les Ã©quations de courant instantanÃ© sont :
 
            Le courant avec prise en compte explicite de rbr, cbr :
            
-             stm_modscm_dual_get_ir( t, A, B, Vin, Fin, Ur, Fr, rbr, cbr, imax, Fs)    <--- eqt approchée
+             stm_modscm_dual_get_ir( t, A, B, Vin, Fin, Ur, Fr, rbr, cbr, imax, Fs)    <--- eqt approchÃ©e
              
-           Le courant équivalent :
+           Le courant Ã©quivalent :
 
              stm_modscm_dual_get_ia( t, A, B, Ua, Fa )
     */
     
     
-    /* A décommenter pour revenir à l'ancienne version */
+    /* A dÃ©commenter pour revenir Ã  l'ancienne version */
     /* rbr=-1.0 ; cbr = -1.0 ; */ 
 
     if((rbr > 0.0) && (cbr > 0.0)){
-        /* Determine une approximation du courant dans la branche complète. Cela revient
-           à la méthode Amjad : an et bn sont les paramètres équivalent à la branche vers
-           la source, et U et Fr sont les paramètres rapportés équivalent à la branche vers
+        /* Determine une approximation du courant dans la branche complÃ¨te. Cela revient
+           Ã  la mÃ©thode Amjad : an et bn sont les paramÃ¨tres Ã©quivalent Ã  la branche vers
+           la source, et U et Fr sont les paramÃ¨tres rapportÃ©s Ã©quivalent Ã  la branche vers
            le drain. 
         */
         stm_modscm_dual_cal_UF (imax, an, bn, vddin, 0.0, (double)slew, &Ur, &Fr);
         stm_modscm_dual_slopei(0.7, bn, Ur, imax, Fr, rsat, vddmax, vddmax, &im, &Fs);
 
-        /* Calcule la modification du front d'entrée. */
+        /* Calcule la modification du front d'entrÃ©e. */
         stm_modscm_dual_modifslope( vddin, vt, slew, vddmax, rbr, cbr, im, Fs, &tm, &Fm);
     }
     else {
         Fm = (double)slew;
     }
 
-    /* Calcule le front d'entrée rapporté. */
+    /* Calcule le front d'entrÃ©e rapportÃ©. */
     stm_modscm_dual_cal_UF (imax, an, bn, vddin, 0.0, Fm, &U, &F);
 
     koshoot = 0.0 ;
@@ -2235,7 +2235,7 @@ double stm_modscm_dual_calculduts_threshold (dualparams *params, float slew, flo
 
    
     if((rbr > 0.0) && (cbr > 0.0)){
-        // Calcule de la charge supplémentaire due à l'overshoot
+        // Calcule de la charge supplÃ©mentaire due Ã  l'overshoot
         fout = stm_modscm_dual_calslew( imax, an, bn, U, vt, vddmax, capa, slew, F, t0);
         k4Q = stm_modscm_dual_get_k4Q( an, bn, vddin, slew, Ur, Fr, U, F, rbr, cbr, im, Fs, vddmax, rsat, rlin, rint, vint, vt );
         Q = stm_modscm_dual_get_Q( t0, k4Q, an, bn, vddin, slew, Ur, Fr, U, F, rbr, cbr, im, Fs, tm, vddmax, vt, rsat, rlin, rint, vint, fout, threshold );
@@ -2535,9 +2535,9 @@ double stm_modscm_dual_calts_old (double imax,
     long   i = 0, j = 0;
     float ltt;
 
-    /* calcul de la tension rapportée à partir de :
+    /* calcul de la tension rapportÃ©e Ã  partir de :
     
-              an.U²
+              an.UÂ²
        imax = ------
               1+bn.U
     */
@@ -2550,26 +2550,26 @@ double stm_modscm_dual_calts_old (double imax,
 
     /* Dans ce qui suit, on a un changement de variable t = t/F 
 
-    Résolution de :
+    RÃ©solution de :
     
-          (         ln(2).b²u²-ln(1+b.u) )
+          (         ln(2).bÂ²uÂ²-ln(1+b.u) )
      imax.( f.t - f.-------------------- )
-          (              b²u²-b.u        )
+          (              bÂ²uÂ²-b.u        )
 
              (    (     1-b.u          )                                )
              (  ln( 1 + -----.exp(-2t) )                                )
              (    (     1+b.u          )   (      1  )                  )
     + f.imax.(  ------------------------ + ( 1 + --- ).ln( 1+exp(-2t) ) )
-             (        b²u² - b.u           (     b.u )                  )
+             (        bÂ²uÂ² - b.u           (     b.u )                  )
 
     = c.seuil
 
 
-    Solution initiale : on néglige la seconde ligne de l'expression
+    Solution initiale : on nÃ©glige la seconde ligne de l'expression
 
-             ln(2).b²u²-ln(1+b.u)     c.seuil
+             ln(2).bÂ²uÂ²-ln(1+b.u)     c.seuil
          t - --------------------   = -------
-                  b²u²-b.u            f.imax
+                  bÂ²uÂ²-b.u            f.imax
                   
                      |                   |
 
@@ -2585,9 +2585,9 @@ double stm_modscm_dual_calts_old (double imax,
     /* Puis on trouve par convergence :
                                             (     1-b.u          )
                                           ln( 1 + -----.exp(-2t) )
-         c.seuil   ln(2).b²u²-ln(1+b.u)     (     1+b.u          )
+         c.seuil   ln(2).bÂ²uÂ²-ln(1+b.u)     (     1+b.u          )
     t =  ------- + -------------------- - ------------------------
-         f.imax         b²u²-b.u                b²u² - b.u        
+         f.imax         bÂ²uÂ²-b.u                bÂ²uÂ² - b.u        
 
            (      1  )
          - ( 1 + --- ).ln( 1+exp(-2t) )
@@ -2606,7 +2606,7 @@ double stm_modscm_dual_calts_old (double imax,
     }
     while( (fabs((ltt-tt)/tt) > STM_MCC_EPSILON) && (i < 20) );
 
-    /* On défait le changement de variable */
+    /* On dÃ©fait le changement de variable */
     tt *= F;
     ti = tt;
 
@@ -3311,7 +3311,7 @@ double stm_modscm_dual_calts_final (double    imax,
   }
 
   an=0.0 ;
-  /* if status2 == CALTS_DICHO_KO, revenir à modèle ceqrsat */
+  /* if status2 == CALTS_DICHO_KO, revenir Ã  modÃ¨le ceqrsat */
   return t ; 
 }
 
@@ -3347,9 +3347,9 @@ int    stm_modscm_dual_calts_amjad (double    imax,
     double tin ;
     
 
-    /* calcul de la tension rapportée à partir de :
+    /* calcul de la tension rapportÃ©e Ã  partir de :
     
-              an.U²
+              an.UÂ²
        imax = ------
               1+bn.U
     */
@@ -3362,26 +3362,26 @@ int    stm_modscm_dual_calts_amjad (double    imax,
 
     /* Dans ce qui suit, on a un changement de variable t = t/F 
 
-    Résolution de :
+    RÃ©solution de :
     
-          (         ln(2).b²u²-ln(1+b.u) )
+          (         ln(2).bÂ²uÂ²-ln(1+b.u) )
      imax.( f.t - f.-------------------- )
-          (              b²u²-b.u        )
+          (              bÂ²uÂ²-b.u        )
 
              (    (     1-b.u          )                                )
              (  ln( 1 + -----.exp(-2t) )                                )
              (    (     1+b.u          )   (      1  )                  )
     + f.imax.(  ------------------------ + ( 1 + --- ).ln( 1+exp(-2t) ) )
-             (        b²u² - b.u           (     b.u )                  )
+             (        bÂ²uÂ² - b.u           (     b.u )                  )
 
     = c.seuil + qsat2*t*t + ci * ( vt + vddin.th(t) ) + qinit + icf0*(t-t*t/(2*strans))
 
 
-    Solution initiale : on néglige la seconde ligne de l'expression
+    Solution initiale : on nÃ©glige la seconde ligne de l'expression
 
-             ln(2).b²u²-ln(1+b.u)     c.seuil   ci.vt    qinit
+             ln(2).bÂ²uÂ²-ln(1+b.u)     c.seuil   ci.vt    qinit
          t - --------------------   = ------- + ------ + ------
-                  b²u²-b.u            f.imax    f.imax   f.imax
+                  bÂ²uÂ²-b.u            f.imax    f.imax   f.imax
                   
                      |                   |
 
@@ -3402,9 +3402,9 @@ int    stm_modscm_dual_calts_amjad (double    imax,
     /* Puis on trouve par convergence :
                                             (     1-b.u          )
                                           ln( 1 + -----.exp(-2t) )
-         c.seuil   ln(2).b²u²-ln(1+b.u)     (     1+b.u          )
+         c.seuil   ln(2).bÂ²uÂ²-ln(1+b.u)     (     1+b.u          )
     t =  ------- + -------------------- - ------------------------
-         f.imax         b²u²-b.u                b²u² - b.u        
+         f.imax         bÂ²uÂ²-b.u                bÂ²uÂ² - b.u        
 
            (      1  )
          - ( 1 + --- ).ln( 1+exp(-2t) )
@@ -3412,7 +3412,7 @@ int    stm_modscm_dual_calts_amjad (double    imax,
           
     */
    
-    /* pas sur que le critère de Lipschitz soit bon suite à l'introduction de qsat2 */
+    /* pas sur que le critÃ¨re de Lipschitz soit bon suite Ã  l'introduction de qsat2 */
     do {
         i++;
         ltt = tt;
@@ -3431,7 +3431,7 @@ int    stm_modscm_dual_calts_amjad (double    imax,
     }
     while( (fabs((F*ltt-F*tt)/(F*tt+dtin)) > STM_MCC_EPSILON) && tt < 10.0*tinit && (i < 20) );
 
-    /* On défait le changement de variable */
+    /* On dÃ©fait le changement de variable */
     *t = tt * F;
 
     if( i>=20 || tt >= 10.0*tinit )
@@ -3483,7 +3483,7 @@ inline double stm_modscm_dual_calts_dicho_q( double imax,
   return q ;
 }
 
-/* une solution estimée doit être donnée dans *t */
+/* une solution estimÃ©e doit Ãªtre donnÃ©e dans *t */
 int    stm_modscm_dual_calts_dichotomie( double    imax,
                                          double    bn,
                                          double    U,
@@ -3611,7 +3611,7 @@ int    stm_modscm_dual_calts_dichotomie( double    imax,
         ret = CALTS_DICHO_NOSOL ;
     }
 
-    /* dichotomie classique d'une fonction croissante à une seule racine, Qmin et Qmax sont valides */
+    /* dichotomie classique d'une fonction croissante Ã  une seule racine, Qmin et Qmax sont valides */
 
     if( ret == CALTS_DICHO_OK ) {
 
@@ -3643,7 +3643,7 @@ int    stm_modscm_dual_calts_dichotomie( double    imax,
 /****************************************************************************/
 
 /* 
-  Calcule rsat d'un transistor lorsqu'on a un VGS différent de VDD.
+  Calcule rsat d'un transistor lorsqu'on a un VGS diffÃ©rent de VDD.
   Voir les explications dans mon classeur, chapitre rsat.
 */
 
@@ -3863,21 +3863,21 @@ double stm_modscm_dual_ceqrsat_numeric( stm_dual_param_timing *param, double seu
 /****************************************************************************/
 
 /* 
-  Calcule une capacité equivalente à la charge perdue dans rsat lors d'une 
-  transition. La transition est modélisée par une tangente hyperbolique.
+  Calcule une capacitÃ© equivalente Ã  la charge perdue dans rsat lors d'une 
+  transition. La transition est modÃ©lisÃ©e par une tangente hyperbolique.
   
-  vt, vmax, f : paramètres de la tangente hyperbolique de sortie.
-  rsat :        valeur de la résistance.
-  seuil :       tension où l'on réalise la mesure
+  vt, vmax, f : paramÃ¨tres de la tangente hyperbolique de sortie.
+  rsat :        valeur de la rÃ©sistance.
+  seuil :       tension oÃ¹ l'on rÃ©alise la mesure
   threshold :   seuil logique de la porte : vdd/2
-  te :          instant de commutation de l'entrée minimum à partir duquel
+  te :          instant de commutation de l'entrÃ©e minimum Ã  partir duquel
                 on compte rsat
-  ts :          instant de commutation de la sortie à threshold
+  ts :          instant de commutation de la sortie Ã  threshold
   fout :        estimation du front de sortie.
 
-  retour :      capacité equivalente.
+  retour :      capacitÃ© equivalente.
 
-  ATTENTION : cette fonction ne doit pas s'utiliser si on a un modèle de
+  ATTENTION : cette fonction ne doit pas s'utiliser si on a un modÃ¨le de
   switch utilisant RINT.
 */
   
@@ -3896,11 +3896,11 @@ double stm_modscm_dual_ceqrsat( double imax,
                                 double te,
                                 double ts)
 {
-  double ta,     // Instant de début de la commutation.
+  double ta,     // Instant de dÃ©but de la commutation.
          tb,     // Instant de fin de la commutation.
          qsat,   // Charge equivalente.
-         ceq,    // Capacité equivalente.
-         dt,     // Ecart entre les deux référentiels
+         ceq,    // CapacitÃ© equivalente.
+         dt,     // Ecart entre les deux rÃ©fÃ©rentiels
          tee,    // Instant de commutation de la sortie
          tst;
   int    i, n ;
@@ -3917,7 +3917,7 @@ double stm_modscm_dual_ceqrsat( double imax,
     seuil = 0.97 * vmax ;
 
   /*
-  modèle de front :
+  modÃ¨le de front :
     t>=0 : v=vt+(vdd-vt)*tanh(t/f)
     t<0  : v=(vdd-vt)*t/f+vt
   */
@@ -3934,11 +3934,11 @@ double stm_modscm_dual_ceqrsat( double imax,
   else 
     tst = f * (threshold-vt)/(vmax-vt) ;
 
-  // On vérifie si on est bien après l'entrée.
-  dt  = ts-tst;   // Ecart entre le référentiel de l'entrée et de la sortie
-  tee = dt+ta;    // Début de commutation de la sortie dans le référentiel de l'entrée
+  // On vÃ©rifie si on est bien aprÃ¨s l'entrÃ©e.
+  dt  = ts-tst;   // Ecart entre le rÃ©fÃ©rentiel de l'entrÃ©e et de la sortie
+  tee = dt+ta;    // DÃ©but de commutation de la sortie dans le rÃ©fÃ©rentiel de l'entrÃ©e
   if( tee < te ) {
-    ta = te-dt;   // Début de commutation de la sortie
+    ta = te-dt;   // DÃ©but de commutation de la sortie
   }
  
   if( ta < tb ) {
@@ -3957,8 +3957,8 @@ double stm_modscm_dual_ceqrsat( double imax,
       
       if( vgsa < 0.01*vmax ) {
       
-        /* lorsque vgsb devient très faible, le calcul de tsb est impossible (atanh(1)=inf).
-           On considère dans ce cas qu'on est sur la dernière borne qui va jusqu'à tb */
+        /* lorsque vgsb devient trÃ¨s faible, le calcul de tsb est impossible (atanh(1)=inf).
+           On considÃ¨re dans ce cas qu'on est sur la derniÃ¨re borne qui va jusqu'Ã  tb */
         i    = n ;
         vgsa = 0.0 ;
         vgsb = 0.0 ;
@@ -3973,8 +3973,8 @@ double stm_modscm_dual_ceqrsat( double imax,
         vgsb  = vgsa + dve ;
       
         if( vgsb < 0.01*vmax ) {
-          /* lorsque vgsb devient très faible, le calcul de tsb est impossible (atanh(1)=inf).
-             On considère dans ce cas qu'on est sur la dernière borne qui va jusqu'à tb */
+          /* lorsque vgsb devient trÃ¨s faible, le calcul de tsb est impossible (atanh(1)=inf).
+             On considÃ¨re dans ce cas qu'on est sur la derniÃ¨re borne qui va jusqu'Ã  tb */
           i = n ;
           vgsb = 0.0 ;
           tsb   = tb ;
@@ -4056,7 +4056,7 @@ double stm_modscm_dual_calts_rsat_full_range (double capai,
       tf = stm_modscm_dual_calts( imax, an, bn, U, seuil, capa, F, 0.0, VT, vddin, capai, NULL, NULL, fin, ptpwth, npwth, 0.0, 0.0, 0.0, NULL );
     else {
       tsat = stm_modscm_dual_calts( imax, an, bn, U, vsat, capa, F, 0.0, VT, vddin, capai, NULL, NULL, fin, ptpwth, npwth, 0.0, 0.0, 0.0, NULL );
-      /* bonne relation, mise en commentaire en attendant que soit résulu le pb de modélisation des slopes
+      /* bonne relation, mise en commentaire en attendant que soit rÃ©sulu le pb de modÃ©lisation des slopes
          qui rend certains bench d'ifx defectueux 
       tf = tsat - rlin * c/1000.0 * log( 1.0 - ( seuil - vsat ) / ( vddmax - vsat ) );
       */
@@ -4127,17 +4127,17 @@ long stm_modscm_dual_calslope (double imax,
     long   i = 0;
     float  ltt;
 
-    /* calcul de la tension rapportée */
+    /* calcul de la tension rapportÃ©e */
     U = (imax * bn + sqrt (pow ((imax * bn), 2) + 4 * an * imax)) / (2 * an);
 
-    /* calcul du front rapporté */
+    /* calcul du front rapportÃ© */
     F = fin * U / vddin;
 
     an1 = an / bn;
     bn1 = 1 / (U * bn);
     c1 = c;
     
-    /* calcul des deux premiers termes de l'équation de charge Qn(t) */
+    /* calcul des deux premiers termes de l'Ã©quation de charge Qn(t) */
     z = ((seuil / 1000) * c1) / (F * an1 * U); 
     tt = (1.0 + bn1) * z;
     rc = tt ;

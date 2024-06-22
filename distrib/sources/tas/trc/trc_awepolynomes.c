@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                            */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
-/*    Auteur(s) : Grégoire Avot                                             */
+/*    Auteur(s) : GrÃ©goire Avot                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -33,7 +33,7 @@ RCXFLOAT poly_gauss( RCXFLOAT*, int, RCXFLOAT, char* );
 void  poly_display( RCXFLOAT*, int );
 
 /******************************************************************************\
-* Affiche un polynome de degrès n.                                             *
+* Affiche un polynome de degrÃ¨s n.                                             *
 \******************************************************************************/
 
 void poly_display( RCXFLOAT *poly, int n )
@@ -58,10 +58,10 @@ void poly_display( RCXFLOAT *poly, int n )
 }
 
 /******************************************************************************\
-* Récupère les n racines réelles d'un polynome à coéfficients réel de degrès   *
-* n. poly[i] = coefficient de degrè n.                                         *
-* Utilise l'algorithme de déflation combiné avec un algorithme de Gauss.       *
-* Le tableau root contiendra les racines. Il doit faire n éléments             *
+* RÃ©cupÃ¨re les n racines rÃ©elles d'un polynome Ã  coÃ©fficients rÃ©el de degrÃ¨s   *
+* n. poly[i] = coefficient de degrÃ¨ n.                                         *
+* Utilise l'algorithme de dÃ©flation combinÃ© avec un algorithme de Gauss.       *
+* Le tableau root contiendra les racines. Il doit faire n Ã©lÃ©ments             *
 \******************************************************************************/
 
 int poly_findroot( RCXFLOAT *poly, int n, RCXFLOAT *root )
@@ -71,10 +71,10 @@ int poly_findroot( RCXFLOAT *poly, int n, RCXFLOAT *root )
   RCXFLOAT r;
   char status;
   
-  // printf( "    Recherche des racines pour le polynôme :\n" );
+  // printf( "    Recherche des racines pour le polynÃ´me :\n" );
   for( i=n ; i>0 ; i-- )
   {
-    // printf( "    Polynôme de degrè %d :\n", i );
+    // printf( "    PolynÃ´me de degrÃ¨ %d :\n", i );
     // poly_display( poly, i );
 
     r = poly_gauss( poly, i, 1e-6, &status );
@@ -101,9 +101,9 @@ int poly_findroot( RCXFLOAT *poly, int n, RCXFLOAT *root )
 
 
 /******************************************************************************\
-* Récupère une racine réelle du polynome de degrès n. Ce polynome doit avoir   *
-* n racines réelle. Il ne faut pas utiliser cet algorithme si le polynome      *
-* ne comporte pas n racines réelles.                                           *
+* RÃ©cupÃ¨re une racine rÃ©elle du polynome de degrÃ¨s n. Ce polynome doit avoir   *
+* n racines rÃ©elle. Il ne faut pas utiliser cet algorithme si le polynome      *
+* ne comporte pas n racines rÃ©elles.                                           *
 \******************************************************************************/
 
 RCXFLOAT poly_gauss( RCXFLOAT *poly, int n, RCXFLOAT epsilon, char *status )
@@ -143,7 +143,7 @@ RCXFLOAT poly_gauss( RCXFLOAT *poly, int n, RCXFLOAT epsilon, char *status )
     }
   }
   
-  xs = 0.0 ;/* solution estimée */
+  xs = 0.0 ;/* solution estimÃ©e */
   r  = 1;
 
   do

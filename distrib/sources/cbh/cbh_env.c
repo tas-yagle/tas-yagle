@@ -24,21 +24,21 @@
 void cbh_spiceload(filename)
 char *filename ;
 {
-  avt_error("library", -1, AVT_INFO, "loading SPICE '¤2%s¤.'\n", filename);
+  avt_error("library", -1, AVT_INFO, "loading SPICE 'Â¤2%sÂ¤.'\n", filename);
   parsespice(filename) ;
 }
 
 void cbh_spfload(filename)
 char *filename ;
 {
-  avt_error("library", -1, AVT_INFO, "loading DSPF  '¤2%s¤.'\n", filename);
+  avt_error("library", -1, AVT_INFO, "loading DSPF  'Â¤2%sÂ¤.'\n", filename);
   parsespf(filename) ;
 }
 
 void cbh_spefload(filename)
 char *filename ;
 {
-  avt_error("library", -1, AVT_INFO, "loading SPEF  '¤2%s¤.'\n", filename);
+  avt_error("library", -1, AVT_INFO, "loading SPEF  'Â¤2%sÂ¤.'\n", filename);
   spef_quiet=1;
   parsespef(filename) ;
   spef_quiet=0;
@@ -49,7 +49,7 @@ char *filename ;
 {
   befig_list *befig ;
 
-  avt_error("library", -1, AVT_INFO, "loading VHDL  '¤2%s¤.'\n", filename);
+  avt_error("library", -1, AVT_INFO, "loading VHDL  'Â¤2%sÂ¤.'\n", filename);
 
   parsevhdlnetlist(filename);
   befig = NULL ;
@@ -61,7 +61,7 @@ char *filename ;
 {
   befig_list *befig ;
 
-  avt_error("library", -1, AVT_INFO, "loading VRLOG '¤2%s¤.'\n", filename);
+  avt_error("library", -1, AVT_INFO, "loading VRLOG 'Â¤2%sÂ¤.'\n", filename);
 
   parseverilognetlist(filename);
 }
@@ -69,7 +69,7 @@ char *filename ;
 void cbh_infload(filename)
 char *filename ;
 {
-  avt_error("library", -1, AVT_INFO, "loading INF   '¤2%s¤.'\n", filename);
+  avt_error("library", -1, AVT_INFO, "loading INF   'Â¤2%sÂ¤.'\n", filename);
 
   _infRead(".unknown.", filename, 0);
 }

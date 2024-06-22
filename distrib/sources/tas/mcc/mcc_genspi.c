@@ -2189,8 +2189,8 @@ void mcc_calcul_rst( int type, elp_lotrs_param *lotrsparam_n, elp_lotrs_param *l
   trs.RS       = 0.0 ;
   trs.RD       = 0.0 ;
 
-  /* Pour l'instant, on ne calcule ces valeurs que si le vt est supérieur à vdd/2.
-     C'est parce lorsqu'on les calcules proprement, ça fait sortir certains bench
+  /* Pour l'instant, on ne calcule ces valeurs que si le vt est supÃ©rieur Ã  vdd/2.
+     C'est parce lorsqu'on les calcules proprement, Ã§a fait sortir certains bench
      d'infineon de [-4%:4%]. 
   */
 

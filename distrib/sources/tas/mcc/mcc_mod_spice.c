@@ -208,8 +208,8 @@ int mcc_get_modeltype ( mcc_modellist *ptmodel, char *name )
   }
   
   if( !md ) {
-    /* cas ou on a pas trouvé : peut etre que le simtoolmodel n'est pas
-       positionné. dans ce cas on essaye de trouver une correspondance. */
+    /* cas ou on a pas trouvÃ© : peut etre que le simtoolmodel n'est pas
+       positionnÃ©. dans ce cas on essaye de trouver une correspondance. */
     for( m = mcc_getmodcfg() ; m ; m = m->NEXT ) {
       for( md = m->MODLIST ; md ; md = md->NEXT ) {
         if( md->CRITERION == MCC_CRIT_PARAM ) {

@@ -739,7 +739,7 @@ int CheckModelInstances(model_list *model)
 	}
     }
 
-  // one more optimization : marquer les signaux uniquement connecté a l'interface
+  // one more optimization : marquer les signaux uniquement connectÃ© a l'interface
 
   {
     losig_list *ls;
@@ -757,7 +757,7 @@ int CheckModelInstances(model_list *model)
                 else counti++;
               }
             if (counte>0 && counti==1) ls->FLAGS=1; // une connexion a l'interface
-            else if (counte==0 && counti==1) ls->FLAGS=2; // uniquement interne non connecté a +ieurs lofig
+            else if (counte==0 && counti==1) ls->FLAGS=2; // uniquement interne non connectÃ© a +ieurs lofig
             else ls->FLAGS=0;
           }
         else ls->FLAGS=0;

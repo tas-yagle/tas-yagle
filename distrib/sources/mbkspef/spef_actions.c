@@ -503,10 +503,10 @@ losig_list *spef_NewNet(char *sig, float capa)
 
   if (!SPEF_IN_CACHE) spef_examine_set_nodes(ls);
   
-  /* Mis en commentaire par Grégoire le 2/01/03
-  Cause : la capacité dans le fichier ne correspond pas à la somme totale
-  des capacités que l'on trouve. Dans le cas le plus simple, ce n'est pas la
-  même unité (capa des RC en pf et capa totale en fF !!!), et dans certains cas,
+  /* Mis en commentaire par GrÃ©goire le 2/01/03
+  Cause : la capacitÃ© dans le fichier ne correspond pas Ã  la somme totale
+  des capacitÃ©s que l'on trouve. Dans le cas le plus simple, ce n'est pas la
+  mÃªme unitÃ© (capa des RC en pf et capa totale en fF !!!), et dans certains cas,
   il n'y a aucuns rapport. Il vaut donc mieux le recalculer proprement.
   
   rcn_setcapa(ls, capa);

@@ -99,7 +99,7 @@ static APICallFunc *buildcallfunc(char **tab, int cnt)
           int j;
           strcpy(temp, &tab[i][1]);
           temp[strlen(temp)-1]='\0';
-          for (j=0; temp[j]!='\0'; j++) if (temp[j]=='ù') temp[j]=' ';
+          for (j=0; temp[j]!='\0'; j++) if (temp[j]=='Ã¹') temp[j]=' ';
           cl=APIAddPointerTARG(cl, "?", "char", 1, sensitive_namealloc(temp));
         }
       else if (strchr(tab[i],'.')!=NULL)
@@ -221,7 +221,7 @@ static int ParseCorresp(char *tmp, int process)
           if (__crt==NULL)
             {
               avt_errmsg(GNS_ERRMSG, "068", AVT_ERROR, msl_line);
-              //avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, transistor out of context\n",msl_line);
+              //avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, transistor out of context\n",msl_line);
               ret=1;
             }
           else
@@ -230,7 +230,7 @@ static int ParseCorresp(char *tmp, int process)
               if ((l=gethtitem(ALL_TRS, c))==EMPTYHT)
                 {
                   avt_errmsg(GNS_ERRMSG, "069", AVT_ERROR, msl_line, tab[4]);
-                  //avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, could not find transistor '%s' in original netlist\n",msl_line, tab[4]);
+                  //avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, could not find transistor '%s' in original netlist\n",msl_line, tab[4]);
                   ret=1;
                 }
               else
@@ -245,7 +245,7 @@ static int ParseCorresp(char *tmp, int process)
           if (__crt==NULL)
             {
               avt_errmsg(GNS_ERRMSG, "070", AVT_ERROR, msl_line);
-              //avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, signal out of context\n",msl_line);
+              //avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, signal out of context\n",msl_line);
               ret=1;
             }
           else
@@ -254,7 +254,7 @@ static int ParseCorresp(char *tmp, int process)
               if ((l=gethtitem(ALL_SIG, c))==EMPTYHT)
                 {
                   avt_errmsg(GNS_ERRMSG, "071", AVT_ERROR, msl_line, tab[4]);
-//                  avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, could not find signal '%s' in original netlist\n",msl_line, tab[4]);
+//                  avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, could not find signal '%s' in original netlist\n",msl_line, tab[4]);
                   ret=1;
                 }
               else
@@ -270,7 +270,7 @@ static int ParseCorresp(char *tmp, int process)
           if (__crt==NULL)
             {
               avt_errmsg(GNS_ERRMSG, "072", AVT_ERROR, msl_line);
-              avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, instance out of context\n",msl_line);
+              avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, instance out of context\n",msl_line);
               ret=1;
             }
           else
@@ -279,7 +279,7 @@ static int ParseCorresp(char *tmp, int process)
               if ((l=gethtitem(ALL_CRT, c))==EMPTYHT)
                 {
                   avt_errmsg(GNS_ERRMSG, "073", AVT_ERROR, msl_line, tab[4]);
-                  //avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, could not find instance correspondance '%s' table\n",msl_line, tab[4]);
+                  //avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, could not find instance correspondance '%s' table\n",msl_line, tab[4]);
                   ret=1;
                 }
               else
@@ -301,7 +301,7 @@ static int ParseCorresp(char *tmp, int process)
           if ((l=gethtitem(ALL_CRT, c))==EMPTYHT)
             {
               avt_errmsg(GNS_ERRMSG, "074", AVT_ERROR, msl_line);
-              //avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, could not find instance correspondance table\n",msl_line);
+              //avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, could not find instance correspondance table\n",msl_line);
               ret=1;
             }
           else
@@ -321,7 +321,7 @@ static int ParseCorresp(char *tmp, int process)
           if (__crt==NULL)
             {
               avt_errmsg(GNS_ERRMSG, "075", AVT_ERROR, msl_line);
-              //avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, variables out of context\n",msl_line);
+              //avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, variables out of context\n",msl_line);
               ret=1;
             }
           else
@@ -344,7 +344,7 @@ static int ParseCorresp(char *tmp, int process)
           if (dicotab==NULL)
             {
               avt_errmsg(GNS_ERRMSG, "076", AVT_FATAL, msl_line);
-              //avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, dictionary entry without dictionary mode\n",msl_line);
+              //avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, dictionary entry without dictionary mode\n",msl_line);
               EXIT(1);
             }
           for (i=3;i<cnt;i++)
@@ -352,7 +352,7 @@ static int ParseCorresp(char *tmp, int process)
               if (dicoindex==dicosize)
                 {
                   avt_errmsg(GNS_ERRMSG, "077", AVT_FATAL, msl_line);
-//                  avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, too many entries in dictionary\n",msl_line);
+//                  avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, too many entries in dictionary\n",msl_line);
                   EXIT(1);
                 }
               dicotab[dicoindex++]=namealloc(tab[i]);
@@ -363,7 +363,7 @@ static int ParseCorresp(char *tmp, int process)
           if (__crt==NULL)
             {
               avt_errmsg(GNS_ERRMSG, "068", AVT_ERROR, msl_line);
-//              avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, transistor out of context\n",msl_line);
+//              avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, transistor out of context\n",msl_line);
               ret=1;
             }
           else
@@ -374,7 +374,7 @@ static int ParseCorresp(char *tmp, int process)
                   if ((l=gethtitem(ALL_TRS, c))==EMPTYHT)
                     {
                       avt_errmsg(GNS_ERRMSG, "069", AVT_ERROR, msl_line, c);
-                      //avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, could not find transistor '%s' in original netlist\n",msl_line, c);
+                      //avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, could not find transistor '%s' in original netlist\n",msl_line, c);
                       ret=1;
                     }
                   else
@@ -390,7 +390,7 @@ static int ParseCorresp(char *tmp, int process)
           if (__crt==NULL)
             {
               avt_errmsg(GNS_ERRMSG, "070", AVT_ERROR, msl_line);
-              //avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, signal out of context\n",msl_line);
+              //avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, signal out of context\n",msl_line);
               ret=1;
             }
           else
@@ -401,7 +401,7 @@ static int ParseCorresp(char *tmp, int process)
                   if ((l=gethtitem(ALL_SIG, c))==EMPTYHT)
                     {
                       avt_errmsg(GNS_ERRMSG, "071", AVT_ERROR, msl_line, c);
-//                      avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, could not find signal '%s' in original netlist\n",msl_line, c);
+//                      avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, could not find signal '%s' in original netlist\n",msl_line, c);
                       ret=1;
                     }
                   else
@@ -418,7 +418,7 @@ static int ParseCorresp(char *tmp, int process)
           if (__crt==NULL)
             {
               avt_errmsg(GNS_ERRMSG, "072", AVT_ERROR, msl_line);
-//              avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, instance out of context\n",msl_line);
+//              avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, instance out of context\n",msl_line);
               ret=1;
             }
           else
@@ -429,7 +429,7 @@ static int ParseCorresp(char *tmp, int process)
                   if ((l=gethtitem(ALL_CRT, c))==EMPTYHT)
                     {
                       avt_errmsg(GNS_ERRMSG, "073", AVT_ERROR, msl_line, c);
-                      //avt_fprintf(stderr,"[¤6¤+Error¤.] While parsing correspondance tables, line %d, could not find instance correspondance '%s' table\n",msl_line, c);
+                      //avt_fprintf(stderr,"[Â¤6Â¤+ErrorÂ¤.] While parsing correspondance tables, line %d, could not find instance correspondance '%s' table\n",msl_line, c);
                       ret=1;
                     }
                   else
@@ -461,7 +461,7 @@ static int ParseCorresp(char *tmp, int process)
         if (!parseMetho(tab, cnt))
           {
             avt_errmsg(GNS_ERRMSG, "078", AVT_ERROR, msl_line);
-//            avt_fprintf(stderr,"[¤4¤+Warning¤.] While parsing correspondance tables, line %d ignored\n",msl_line);
+//            avt_fprintf(stderr,"[Â¤4Â¤+WarningÂ¤.] While parsing correspondance tables, line %d ignored\n",msl_line);
           }
     }
   

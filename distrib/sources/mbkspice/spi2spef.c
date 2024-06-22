@@ -436,7 +436,7 @@ static void CreateSpeforAnyOther(spifile *sf, chain_list *cl)
               df_temp=0;
               if (avt_terminal(stdout))
                 {
-                  sprintf(temp,"[¤+%08d¤.]",sf->msl_line);
+                  sprintf(temp,"[Â¤+%08dÂ¤.]",sf->msl_line);
                   avt_fprintf(stdout,temp);
                   fflush(stdout);
                   avt_back_fprintf(stdout, strlen(temp)-4);

@@ -1825,7 +1825,7 @@ void    XtasSimuPathCallback (widget, client_data, call_data)
         n = 0;
         form = XtCreateManagedWidget ("XtasForm", xmFormWidgetClass, row_w, args, n);
 
-        motif_str = XmStringCreateSimple ("°C");
+        motif_str = XmStringCreateSimple ("Â°C");
         n = 0;
         XtSetArg ( args[n], XmNlabelString,     motif_str               ); n++;
         XtSetArg ( args[n], XmNrightAttachment, XmATTACH_FORM           ); n++;

@@ -2834,7 +2834,7 @@ long type ;
 /*                        function tas_freercxfig()                          */
 /* parametres :                                                              */
 /*                                                                           */
-/* ajoute les signaux à charger dans les fils                                */
+/* ajoute les signaux Ã  charger dans les fils                                */
 /*****************************************************************************/
 void tas_freercxfig(ttvfig)
 ttvfig_list *ttvfig ;
@@ -2854,7 +2854,7 @@ ttvfig_list *ttvfig ;
 /*                        function tas_loadrcxfig()                          */
 /* parametres :                                                              */
 /*                                                                           */
-/* ajoute les signaux à charger dans les fils                                */
+/* ajoute les signaux Ã  charger dans les fils                                */
 /*****************************************************************************/
 void tas_loadrcxfig(ttvfig)
 ttvfig_list *ttvfig ;
@@ -2890,7 +2890,7 @@ ttvfig_list *ttvfig ;
 /*                        function tas_addsigrcxload()                       */
 /* parametres :                                                              */
 /*                                                                           */
-/* ajoute les signaux à charger dans les fils                                */
+/* ajoute les signaux Ã  charger dans les fils                                */
 /*****************************************************************************/
 void tas_addsigrcxload(ttvsig)
 ttvsig_list *ttvsig ;

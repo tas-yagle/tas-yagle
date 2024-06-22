@@ -23,7 +23,7 @@ losig_list	*ptsig_src;
 
   addlorcnet( ptsig_dest );
   
-  /* Capacité du signal */
+  /* CapacitÃ© du signal */
   rcn_setcapa( ptsig_dest, rcn_getcapa( NULL, ptsig_src ) );
   
   /* Wire constituant le signal */
@@ -653,8 +653,8 @@ chain_list *rcn_get_a_r_way(losig_list *ptsig, long org, long dest)
 void rcn_dumprcn( losig_list *losig, 
                   long start, 
                   char *fname,       /* nom du fichier ou null pour stdout */
-                  lowire_list *wire, /* a mettre à NULL */
-                  FILE *file         /* a mettre à NULL */
+                  lowire_list *wire, /* a mettre Ã  NULL */
+                  FILE *file         /* a mettre Ã  NULL */
                 )
 {
   lonode_list   *curnode;
@@ -745,7 +745,7 @@ void rcn_dumprcn( losig_list *losig,
   }
 }
 
-// Marque un noeud. Renvoie 1 si il état déjà marqué, et 0 sinon.
+// Marque un noeud. Renvoie 1 si il Ã©tat dÃ©jÃ  marquÃ©, et 0 sinon.
 
 int rcn_testandmarknode( lonode_list *ptnode )
 {
@@ -757,35 +757,35 @@ int rcn_testandmarknode( lonode_list *ptnode )
 
 
 /******************************************************************************\
-Fonctions permettant de mémoriser de l'information entre deux losig. L'ordre
+Fonctions permettant de mÃ©moriser de l'information entre deux losig. L'ordre
 victime agresseur est significatif.
-La variable 'ptype' sert à différencier plusieurs informations différentes. 
-C'est un identifiant de ptype ordinaire, mais dont le dernier bit est géré par 
+La variable 'ptype' sert Ã  diffÃ©rencier plusieurs informations diffÃ©rentes. 
+C'est un identifiant de ptype ordinaire, mais dont le dernier bit est gÃ©rÃ© par 
 ces fonctions. 
 ex : le ptype 1702  ( 11010100110 ) devient dans le USER des losig 1702 ou 1703.
-L'argument data doit être différent de EMPTYHT.
+L'argument data doit Ãªtre diffÃ©rent de EMPTYHT.
 
 ********************************************************************************
 
 Principe :
 
-Dans beaucoups de cas, il y a très peu de couplage. Une ptype_list pour stocker
+Dans beaucoups de cas, il y a trÃ¨s peu de couplage. Une ptype_list pour stocker
 l'agresseur (champs DATA) et l'information (champs TYPE) est donc satisfaisante.
-Si on récupère successivement toutes les informations de couplage, cela conduit
-à un algos en n².
+Si on rÃ©cupÃ¨re successivement toutes les informations de couplage, cela conduit
+Ã  un algos en nÂ².
 
-Lorsque le n² devient inacceptable ( RCN_MAXCHAIN²), les ptype_list sont
-remplacées par des tables de hash. Le gain est double : la consomation mémoire
+Lorsque le nÂ² devient inacceptable ( RCN_MAXCHAINÂ²), les ptype_list sont
+remplacÃ©es par des tables de hash. Le gain est double : la consomation mÃ©moire
 ( la table de hash est un tableau de 2 valeurs, il n'y a pas de champs NEXT)
-et le temps de calcul sont réduit.
+et le temps de calcul sont rÃ©duit.
 
-Q : Pourquoi ne pas avoir utilisé alors systématiquement une table de hash ?
+Q : Pourquoi ne pas avoir utilisÃ© alors systÃ©matiquement une table de hash ?
 
-Parceque le malloc() standard utilisé par défaut dans addht() consomme en
-réalité 24 octets au lieu de 12, et si on prend un petit nombre initial (par
+Parceque le malloc() standard utilisÃ© par dÃ©faut dans addht() consomme en
+rÃ©alitÃ© 24 octets au lieu de 12, et si on prend un petit nombre initial (par
 exemple 2), le malloc des htitem consomme 24 octets au lieu de 16. Pour les 
-petits nombres d'agresseurs actifs (jusqu'à 6), la table de hash est donc plus 
-coûteuse en mémoire, pour un temps CPU plus grand à cause de la fonction de
+petits nombres d'agresseurs actifs (jusqu'Ã  6), la table de hash est donc plus 
+coÃ»teuse en mÃ©moire, pour un temps CPU plus grand Ã  cause de la fonction de
 hash.
 
 \******************************************************************************/
@@ -921,16 +921,16 @@ void rcn_freecoupledinformation( losig_list *losig, long ptype )
 }
 
 /******************************************************************************\
-Fonctions de parcours générique des arbres rc.
+Fonctions de parcours gÃ©nÃ©rique des arbres rc.
 renvoie :
- RCNTREETRIPOK     : tout s'est bien passé
- RCNTREETRIPUSERKO : une fonction utilisateur a renvoyée 0
- RCNTREETRIPLOOP   : une boucle a été détectée.
+ RCNTREETRIPOK     : tout s'est bien passÃ©
+ RCNTREETRIPUSERKO : une fonction utilisateur a renvoyÃ©e 0
+ RCNTREETRIPLOOP   : une boucle a Ã©tÃ© dÃ©tectÃ©e.
 
-Algo iteratif sur les résistances mises bout à bout pour éviter trop
-de recursion qui peuvent provoquer un débordement de pile.
-Au retour, tous les noeuds parcourus ont l'indicateur RCN_FLAG_PASS positionné.
-maxdepth est la profondeur de parcours maximum. Si 0, le parcours est illimité.
+Algo iteratif sur les rÃ©sistances mises bout Ã  bout pour Ã©viter trop
+de recursion qui peuvent provoquer un dÃ©bordement de pile.
+Au retour, tous les noeuds parcourus ont l'indicateur RCN_FLAG_PASS positionnÃ©.
+maxdepth est la profondeur de parcours maximum. Si 0, le parcours est illimitÃ©.
 \******************************************************************************/
 int  rcn_treetrip( losig_list  *losig,
                    lonode_list *lonode,
@@ -1075,7 +1075,7 @@ int  rcn_treetrip_rec( losig_list  *losig,
   }
   while( doitagain );
   
-  /******* Intersection de plusieurs résistances ******************************/
+  /******* Intersection de plusieurs rÃ©sistances ******************************/
 
   /* propagation montante */
 
@@ -1221,7 +1221,7 @@ int  rcn_treetrip_rec( losig_list  *losig,
     }
   }
  
-  /* lé ménache */
+  /* lÃ© mÃ©nache */
   if( htpack ) {
       freechain(headpack);
       headpack = GetAllHTElems( htpack );
@@ -1278,8 +1278,8 @@ int  rcn_treetrip_rec( losig_list  *losig,
 }
 
 /******************************************************************************\
-Renvoie tous les noeuds à l'exterieur d'un pack contenant les résistances 
-données dans hwire.
+Renvoie tous les noeuds Ã  l'exterieur d'un pack contenant les rÃ©sistances 
+donnÃ©es dans hwire.
 \******************************************************************************/
 chain_list* rcn_expandpack( losig_list *losig, 
                             lonode_list *node, 
@@ -1356,7 +1356,7 @@ chain_list* rcn_expandpack( losig_list *losig,
 }
 
 /******************************************************************************\
-Pour gérer les ensembles de résistance dans les arbres RC.
+Pour gÃ©rer les ensembles de rÃ©sistance dans les arbres RC.
 \******************************************************************************/
 void rcn_setpack( losig_list *losig, lowire_list *wire, void *pack )
 {
@@ -1397,20 +1397,20 @@ void rcn_clearpack( losig_list *losig, lowire_list *wire )
 }
 
 /******************************************************************************\
-Pour gérer les résistances en parallèle dans les réseaux RC.
+Pour gÃ©rer les rÃ©sistances en parallÃ¨le dans les rÃ©seaux RC.
 
-Parmis n resistances parallèles, une seule est à conserver. Elle contient un
-ptype RCNPARA qui contient une chain_list des autres résistances en parallèles.
-Ces autres résistances sont marquées RCN_FLAG_IGNORE.
-Marque aussi les résistances entre deux même noeud avec RCN_FLAG_IGNORE.
+Parmis n resistances parallÃ¨les, une seule est Ã  conserver. Elle contient un
+ptype RCNPARA qui contient une chain_list des autres rÃ©sistances en parallÃ¨les.
+Ces autres rÃ©sistances sont marquÃ©es RCN_FLAG_IGNORE.
+Marque aussi les rÃ©sistances entre deux mÃªme noeud avec RCN_FLAG_IGNORE.
 
 La construction de cette information se fait avec rcn_build_para(). Il faut la
-libérer avec rcn_clean_para().
+libÃ©rer avec rcn_clean_para().
 
-Problème avec l'utilisation des caches RC : cette information ne doit pas
-être conservée. Pour ne pas reconstruire plusieurs fois cette information si 
-ce n'est pas nécessaire, on utilise le flag RCNCACHEFLAG_NOPARA dans le losig
-pour indiquer que la recherche a déjà été effectuée et qu'elle n'a rien donnée.
+ProblÃ¨me avec l'utilisation des caches RC : cette information ne doit pas
+Ãªtre conservÃ©e. Pour ne pas reconstruire plusieurs fois cette information si 
+ce n'est pas nÃ©cessaire, on utilise le flag RCNCACHEFLAG_NOPARA dans le losig
+pour indiquer que la recherche a dÃ©jÃ  Ã©tÃ© effectuÃ©e et qu'elle n'a rien donnÃ©e.
 \******************************************************************************/
 
 void rcn_build_para( losig_list *losig )
@@ -1453,7 +1453,7 @@ int rcn_build_para_from_node( losig_list *losig, lonode_list *lonode )
     inode = (wire->NODE1 == lonode->INDEX ? wire->NODE2 : wire->NODE1 );
     
     if( inode == lonode->INDEX ) {
-      /* Résistance sur un seul noeud */
+      /* RÃ©sistance sur un seul noeud */
       RCN_SETFLAG( wire->FLAG, RCN_FLAG_IGNORE ) ;
       found = 1 ;
       continue ;
@@ -1476,7 +1476,7 @@ int rcn_build_para_from_node( losig_list *losig, lonode_list *lonode )
         if( retwire->NODE1 == lonode->INDEX || 
             retwire->NODE2 == lonode->INDEX    ) {
 
-          /* Résistance retwire et parallele avec wire */
+          /* RÃ©sistance retwire et parallele avec wire */
           ptl = getptype( wire->USER, RCNPARA ) ;
           if( ptl ) 
             ptl->DATA = addchain( (chain_list*)ptl->DATA, retwire );
@@ -1530,13 +1530,13 @@ float rcn_get_resi_para( lowire_list *wire )
 }
 
 /******************************************************************************\
-Applique la fonction fn() sur toutes les résistances d'un réseau RC accessibles
+Applique la fonction fn() sur toutes les rÃ©sistances d'un rÃ©seau RC accessibles
 depuis le noeud start. L'ordre de parcour est en profondeur d'abord, sauf si des
-boucles sont présentes.
+boucles sont prÃ©sentes.
 Au retour de la fonction, tous les noeuds parcourus ont l'indicateur
-RCN_FLAG_PASS positionné.
-Algo iteratif sur les résistances mises bout à bout pour éviter trop
-de recursion qui peuvent provoquer un débordement de pile.
+RCN_FLAG_PASS positionnÃ©.
+Algo iteratif sur les rÃ©sistances mises bout Ã  bout pour Ã©viter trop
+de recursion qui peuvent provoquer un dÃ©bordement de pile.
 
 code de retour : RCNTRIPCONNEXE_OK ou RCNTRIPCONNEXE_USERKO.
 fn doit renvoyer 1 si ok, ou 0 si ko.

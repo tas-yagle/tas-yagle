@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                            */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
-/*    Auteur(s) : Grégoire AVOT                                             */
+/*    Auteur(s) : GrÃ©goire AVOT                                             */
 /*                                                                          */
 /*                                                                          */
 /****************************************************************************/
@@ -114,9 +114,9 @@ int stb_ctk_get_coef_activity()
 
 /******************************************************************************\
 stb_ctk_set_coef_score()
-Initialise les 4 coefficients de pondérations. 
-Les valeurs négatives ne modifient pas le coefficients.
-Les valeurs sont bornées à 10.
+Initialise les 4 coefficients de pondÃ©rations. 
+Les valeurs nÃ©gatives ne modifient pas le coefficients.
+Les valeurs sont bornÃ©es Ã  10.
 \******************************************************************************/
 void stb_ctk_set_coef_score( int noise, int ctk, int interval, int activity )
 {
@@ -208,8 +208,8 @@ int stb_ctk_score_noise( stbfig_list *stbfig, stb_ctk_detail *detail )
 /******************************************************************************\
 stb_ctk_score_interval()
 
-Note l'impact de la simultanéité des agresseurs. C'est la part maximum de 
-crosstalk qui peut etre activée à un instant donné.
+Note l'impact de la simultanÃ©itÃ© des agresseurs. C'est la part maximum de 
+crosstalk qui peut etre activÃ©e Ã  un instant donnÃ©.
 \******************************************************************************/
 int stb_ctk_score_interval( stbfig_list *stbfig, stb_ctk_detail *detail )
 {
@@ -240,14 +240,14 @@ int stb_ctk_score_interval( stbfig_list *stbfig, stb_ctk_detail *detail )
         ccalways[i] = ccalways[i] + agr->CC ;
     }
 
-    /* Prend en compte les agresseurs considérés comme toujours actifs */
+    /* Prend en compte les agresseurs considÃ©rÃ©s comme toujours actifs */
     for( chain = ctkgap->OTHERDOMAIN ; chain ; chain = chain->NEXT ) {
       agr = stb_ctk_get_node_detail( ((ttvevent_list*)chain->DATA)->ROOT );
       if( agr ) 
         ccalways[i] = ccalways[i] + agr->CC ;
     }
 
-    /* Récupère le crosstalk maximum sur les différents gap */
+    /* RÃ©cupÃ¨re le crosstalk maximum sur les diffÃ©rents gap */
     for( gap = ctkgap->GAPACTIF ; gap ; gap = gap->NEXT ) {
       cgap = 0.0 ;
       for( chain = gap->SIGNALS ; chain ; chain = chain->NEXT ) {
@@ -280,7 +280,7 @@ int stb_ctk_score_interval( stbfig_list *stbfig, stb_ctk_detail *detail )
 /******************************************************************************\
 stb_ctk_score_ctk()
 
-Repère les signaux dont le crosstalk est majoritairement due à un nombre
+RepÃ¨re les signaux dont le crosstalk est majoritairement due Ã  un nombre
 reduit d'agresseurs.
 \******************************************************************************/
 int stb_ctk_score_ctk( stbfig_list *stbfig, stb_ctk_detail *detail )
@@ -330,15 +330,15 @@ int stb_ctk_score_ctk( stbfig_list *stbfig, stb_ctk_detail *detail )
 /******************************************************************************\
 stb_ctk_score_activity()
 
-Evalue l'impact de l'activité d'un agresseur.
-Pour l'instant, seules les clock ont une activité à peu près connue.
-La note renvoyée sur 10 correspond à la part de crosstalk due aux agresseurs
-considérés comme systématiquement actifs.
+Evalue l'impact de l'activitÃ© d'un agresseur.
+Pour l'instant, seules les clock ont une activitÃ© Ã  peu prÃ¨s connue.
+La note renvoyÃ©e sur 10 correspond Ã  la part de crosstalk due aux agresseurs
+considÃ©rÃ©s comme systÃ©matiquement actifs.
 
-Idée :
+IdÃ©e :
 
-Voir si il ne faut pas affecter une note intermédiaire aux agresseurs pour
-lesquels l'activité n'est pas connue, une note maximum si l'activité est
+Voir si il ne faut pas affecter une note intermÃ©diaire aux agresseurs pour
+lesquels l'activitÃ© n'est pas connue, une note maximum si l'activitÃ© est
 certaine et une note minimum si il n'est pas actif.
 \******************************************************************************/
 int stb_ctk_score_activity( stbfig_list *stbfig, stb_ctk_detail *detail )
@@ -437,7 +437,7 @@ int stb_ctk_qsort_float( float *f1, float *f2 )
 /******************************************************************************\
 stb_ctk_signal_threshold()
 Calcule la tension admissible au maximum sur un signal.
-si <0, c'est qu'on a pas pu la déterminer (cas d'une sortie).
+si <0, c'est qu'on a pas pu la dÃ©terminer (cas d'une sortie).
 \******************************************************************************/
 
 float stb_ctk_signal_threshold( stbfig_list *stbfig, ttvevent_list *event )
@@ -605,8 +605,8 @@ float stb_ctk_signal_threshold_from_input( stbfig_list *stbfig,
 }
 
 /******************************************************************************\
-Fonction de comparaison pour trier les tableaux de statistiques. Le critère
-de trie doit être mis dans la variable globale STB_CTK_STAT_COMPARE.
+Fonction de comparaison pour trier les tableaux de statistiques. Le critÃ¨re
+de trie doit Ãªtre mis dans la variable globale STB_CTK_STAT_COMPARE.
 \******************************************************************************/
 int stb_ctk_score_compare( stb_ctk_tab_stat *n1, stb_ctk_tab_stat *n2 )
 {

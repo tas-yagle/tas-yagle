@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Procédure automatique qui:
+# ProcÃ©dure automatique qui:
 #     - Ecrit ou lit un fichier contenant pour chaque fichier sa version CVS
 #     - menu Help sur ligne commande de commande vide
 #     - Demande nawk sur la machine
@@ -87,7 +87,7 @@ dup_cvs_list()
 }
 
 ##########################################################################
-#  compare_files : compare deux fichiers generés par le script
+#  compare_files : compare deux fichiers generÃ©s par le script
 #
 ##########################################################################
 
@@ -174,7 +174,7 @@ compare_files()
       echo "<tr><td>$diff_file</td><td><center>$diff_old</center></td><td><center>$diff_new</center></td></tr>" >> $HTML_COMP
     done
   else
-    echo "<tr><td colspan='3'><p>Pas de différence de version détectée dans les fichiers parcourus.</p></td></tr>">> $HTML_COMP
+    echo "<tr><td colspan='3'><p>Pas de diffÃ©rence de version dÃ©tectÃ©e dans les fichiers parcourus.</p></td></tr>">> $HTML_COMP
   fi
   echo "<tr><td colspan='3'><br><b>Nouveaux Fichiers:</b><br><hr></td></tr>" >> $HTML_COMP
   if [ "$CURRENT_UNMATCH" != "" ] ; then
@@ -187,7 +187,7 @@ compare_files()
   else
     echo "<tr><td colspan='3'><p>Pas de nouveaux fichiers</p></td></tr>" >> $HTML_COMP
   fi
-  echo "<tr><td colspan='3'><br><b>Fichiers Effacés:</b><br><hr></td></tr>" >> $HTML_COMP
+  echo "<tr><td colspan='3'><br><b>Fichiers EffacÃ©s:</b><br><hr></td></tr>" >> $HTML_COMP
   if [ "$PREVIOUS_UNMATCH" != "" ] ; then
     for diff in  $PREVIOUS_UNMATCH ; do
       diff_file="`echo $diff | awk -F\; '{ print $1 }'`"
@@ -196,7 +196,7 @@ compare_files()
       echo "<tr><td>$diff_file</td><td><center>$diff_old</center></td><td><center>$diff_new</center></td></tr>" >> $HTML_COMP
     done
   else
-    echo "<tr><td colspan='3'><p>Pas de fichiers effacés</p></td></tr>" >> $HTML_COMP
+    echo "<tr><td colspan='3'><p>Pas de fichiers effacÃ©s</p></td></tr>" >> $HTML_COMP
   fi
   echo "</table>" >> $HTML_COMP
   echo "</body></html>" >> $HTML_COMP

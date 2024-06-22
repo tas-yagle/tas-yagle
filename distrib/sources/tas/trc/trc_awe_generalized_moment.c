@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                            */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
-/*    Auteur(s) : Grégoire Avot                                             */
+/*    Auteur(s) : GrÃ©goire Avot                                             */
 /*                                                                          */
 /****************************************************************************/
 
@@ -1078,9 +1078,9 @@ void awe_buildinfomatrix_hybrid( losig_list       *losig,
     awe_error(9,AVT_FATAL);
   }
 
-  /* Par construction, les noeuds externes vont de 0 à base-1, et les noeuds
-     internes ont des index au delà. Pour construire la matrice des moments des
-     noeuds internes, il faut décaler leur noeuds internes de la valeur base. */
+  /* Par construction, les noeuds externes vont de 0 Ã  base-1, et les noeuds
+     internes ont des index au delÃ . Pour construire la matrice des moments des
+     noeuds internes, il faut dÃ©caler leur noeuds internes de la valeur base. */
      
   for( scan = hybrid->HYBRID->INTNODELIST, n=0 ; 
        scan ; 

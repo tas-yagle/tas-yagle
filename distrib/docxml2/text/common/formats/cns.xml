@@ -31,7 +31,7 @@
 </section>
 <section niv='4'><title>A Cone and its Elements</title>
 
-<p>The fundamental object of CNS is the cone, this is the disassembled equivalent of a logical gate. It is made up (as described in ง9.3.2) of branches, a branch corresponding to a path from the node on which the cone is built to an external port across transistor source-drain junctions.
+<p>The fundamental object of CNS is the cone, this is the disassembled equivalent of a logical gate. It is made up (as described in ยง9.3.2) of branches, a branch corresponding to a path from the node on which the cone is built to an external port across transistor source-drain junctions.
 </p>
 <p>Each cone contains up to four sets of branches but at least one. These sets correspond to the type of external port on which the branch ends. The four types are: VDD, VSS, EXT and GND, corresponding to branches terminating on Vdd or Vss power supplies, external connectors, or ground (for GaAs compatibility) respectively. Note that for external connector branches, the final link of the branch points to the corresponding connector.</p>
 <p>The connectivity between cones is represented by edges. Each cone contains two lists of edges: one for the inputs, and one for the outputs. An edge contains a pointer to an object to which the cone is connected (cone or external connector) and a type indicating the type of object and certain characteristics of the connection.</p>
@@ -54,7 +54,7 @@
 <section niv='2'><title>CNS - Data Structures</title>
 <section niv='3'><title>The CNS Figure</title>
 
-<p>A detailed explanation of the various parts of the CNS figure is given in ง9.4.1. The figure is defined as a cnsfig_list structure which is summarized in table 9.1.</p>
+<p>A detailed explanation of the various parts of the CNS figure is given in ยง9.4.1. The figure is defined as a cnsfig_list structure which is summarized in table 9.1.</p>
 <glossary>
 <row><article>Field Name</article><def>Description</def></row>
 <row><article>NEXT</article><def>link to next CNS figure in list</def></row>
@@ -131,7 +131,7 @@
 <row type="split"><article>CNS_NOT_FUNCTIONAL</article><def>A branch which does not contribute to the functionality of the cone, for example: a pull-up resistance or a bleeder.</def></row>
 <row type='split'><article>CNS_BLEEDER</article><def>A branch corresponding to one of the forms of figure 5a.</def></row>
 <row type='split'><article>CNS_DEGRADED</article><def>A branch which degrades the output level of the cone, i.e. a Vdd branch containing an N-type transistor or a Vss branch containing a P-type transistor.</def></row>
-<row type='split'><article>CNS_PARALLEL</article><def>A branch for which there exists one or more parallel branches within the cone. See ง9.3.2 for the definition of parallel branches</def></row>
+<row type='split'><article>CNS_PARALLEL</article><def>A branch for which there exists one or more parallel branches within the cone. See ยง9.3.2 for the definition of parallel branches</def></row>
 <row type='split'><article>CNS_PARALLEL_INS</article><def>For any given set of parallel branches, all but one are marked with the type PARALLEL_INS. This allows algorithms which traverse the list of branches to consider only one of the set of parallel branches by ignoring those of type PARALLEL_INS.</def></row>
 <row type='split'><article>CNS_FEEDBACK</article><def>A branch which corresponds to part of the feedback loop in a latch cone.</def></row>
 </glossary>

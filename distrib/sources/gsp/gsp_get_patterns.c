@@ -1782,8 +1782,8 @@ chain_list * gsp_calcconetransfer (char *figname,cone_list  *ptcone,char corner,
         freechain (detect_switch);
       }
 
-      /* remplace dans les abl les switchs pour imposer que leurs entrées
-         sont complémentaire. si ce n'est pas fait, gsp_SpiceFindInput()
+      /* remplace dans les abl les switchs pour imposer que leurs entrÃ©es
+         sont complÃ©mentaire. si ce n'est pas fait, gsp_SpiceFindInput()
          n'a aucune raison de prendre en compte cette contrainte */
       gsp_constraint_abl_with_switch( switchcmd, sup_abl, sdn_abl );
       gsp_constraint_abl_with_Correlations(gsp_simple_correlation_list, sup_abl, sdn_abl);

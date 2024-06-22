@@ -75,7 +75,7 @@ void patchlofig_if_needed(lofig_list *lf)
 
   if (getptype(lf->USER, GEN_VISITED_PTYPE)!=NULL) return;
 
-//  avt_fprintf(stdout,"¤6¤~    PATCH RCX    ¤...."); fflush(stdout);
+//  avt_fprintf(stdout,"Â¤6Â¤~    PATCH RCX    Â¤...."); fflush(stdout);
   
   for (ls=lf->LOSIG; ls!=NULL; ls=ls->NEXT)
     {
@@ -97,7 +97,7 @@ void patchlofig_if_needed(lofig_list *lf)
         }
     }
 
-//  avt_fprintf(stdout," DONE¤.\n"); fflush(stdout);
+//  avt_fprintf(stdout," DONEÂ¤.\n"); fflush(stdout);
   
   lf->USER=addptype(lf->USER, GEN_VISITED_PTYPE, NULL);
 }
@@ -2726,7 +2726,7 @@ void gen_leftunconcatname(char *name, char **left, char **right, char separ)
   int   i;
   char  str[2048];
 
-  // On recherche le premier séparateur.
+  // On recherche le premier sÃ©parateur.
 
   for( i=0;
        name[i] != separ && name[i]!= 0 ;
@@ -2735,7 +2735,7 @@ void gen_leftunconcatname(char *name, char **left, char **right, char separ)
   str[i]=0;
 
   if( name[i] != separ ) {
-    // Il n'y a plus de séparateur : il ne reste donc que le right.
+    // Il n'y a plus de sÃ©parateur : il ne reste donc que le right.
     *right = name;
     *left  =NULL;
   } else {
@@ -2752,13 +2752,13 @@ void gen_rightunconcatname(char *name, char **left, char **right, char separ)
   int   i, m;
   char  str[2048];
 
-  // Positionne sur le dernier caractère;
+  // Positionne sur le dernier caractÃ¨re;
   for( i=0, m=-1 ; name[i] ; i++)
     if( name[i] == separ )
       m=i;
 
   if( m == -1 ) {
-    // Il n'y a plus de séparateur : il ne reste donc que le left
+    // Il n'y a plus de sÃ©parateur : il ne reste donc que le left
     *right = NULL;
     *left  = name;
   } else {

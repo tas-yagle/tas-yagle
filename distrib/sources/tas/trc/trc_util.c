@@ -627,13 +627,13 @@ lofig_list *lofig;
   char buffer[BUFSIZE] ;
   int  l, i, j ;
 
-  // Vérifie si la chaine se termine par RCXFILEEXTENTION
+  // VÃ©rifie si la chaine se termine par RCXFILEEXTENTION
   for( i=strlen( lofig->NAME )-1, j=strlen( RCXLOFIGEXTENSION )-1 ;
        i>=0 && j>=0 && lofig->NAME[i] == RCXLOFIGEXTENSION[j] ;
        i--, j-- 
      );
   
-  if( j<0 )  {// On a retrouvé le RCXLOFIGEXTENTION en fin de nom
+  if( j<0 )  {// On a retrouvÃ© le RCXLOFIGEXTENTION en fin de nom
     l = strlen( lofig->NAME ) - strlen( RCXLOFIGEXTENSION ) ;
     strncpy( buffer, lofig->NAME, l );
     buffer[l]='\0';
@@ -783,8 +783,8 @@ chain_list* rcx_getoriginlist( losig_list *losig )
   return (chain_list*)ptl->DATA;
 }
 
-/* Renvoie 1 si le connecteur externe du signal connecté au locon passé en 
- * paramètre porte le nom 'name' */
+/* Renvoie 1 si le connecteur externe du signal connectÃ© au locon passÃ© en 
+ * paramÃ¨tre porte le nom 'name' */
 int testrcxloconname(locon,name)
 locon_list *locon ;
 char *name ;
@@ -876,13 +876,13 @@ void rcx_delalllosigrcx( lofig_list *lofig )
 }
 
 /* Construit un tableau des agresseurs du signal victime. Un agresseur est
-un losig qui possède une vue RCX typée. La taille de la structure d'un élément
-du tableau doit être mise dans selem. La structure DOIT avoir les trois premiers
-champs definis de la façon suivante :
+un losig qui possÃ¨de une vue RCX typÃ©e. La taille de la structure d'un Ã©lÃ©ment
+du tableau doit Ãªtre mise dans selem. La structure DOIT avoir les trois premiers
+champs definis de la faÃ§on suivante :
 {
   losig_list*   : Le signal agresseur,
-  RCXFLOAT         : Les capacités de couplage GLOBALES de cet agresseur,
-  RCXFLOAT         : Les capacités de couplage LOCALES de cet agresseur,
+  RCXFLOAT         : Les capacitÃ©s de couplage GLOBALES de cet agresseur,
+  RCXFLOAT         : Les capacitÃ©s de couplage LOCALES de cet agresseur,
   ...           : Le reste de la structure.
 }
 A partir d'un signal, il est possible de connaitre son emplacement dans le
@@ -923,7 +923,7 @@ void* rcx_buildtabagr( lofig_list *lofig,
     ptl    = getptype( sigagr->USER, RCX_REALAGRESSOR );
     
     if( !ptl ) {
-      // Capacité à la masse
+      // CapacitÃ© Ã  la masse
       if( rcn_ctcnode( loctc, victime ) ) *cm = *cm + loctc->CAPA;
       continue;
     }
@@ -960,7 +960,7 @@ void* rcx_buildtabagr( lofig_list *lofig,
     return NULL;
   }
 
-  // Création et remplissage du tableau
+  // CrÃ©ation et remplissage du tableau
 
   tableau = (char*)mbkalloc( selem * maxagr );
   
@@ -1062,8 +1062,8 @@ void rcx_setsigname( losig_list *losig, char *name )
 }
 
 /******************************************************************************\
-Fonctions utilisées lorsque les modèles classiques de crosstalk ne fonctionnent
-pas. Dans ce cas il faut utiliser un modèle basique, le 0C/1C/2C.
+Fonctions utilisÃ©es lorsque les modÃ¨les classiques de crosstalk ne fonctionnent
+pas. Dans ce cas il faut utiliser un modÃ¨le basique, le 0C/1C/2C.
 \******************************************************************************/
 
 char backup_ctk_model=RCX_MILLER_NONE;
@@ -1142,8 +1142,8 @@ char *rcx_getinsname( loins_list *loins )
 
 /******************************************************************************\
 rcx_levelize_node()
-Ajoute dans les nodes d'un réseau RC un entier représentant le plus petit
-nombre de résistances depuis l'émetteur.
+Ajoute dans les nodes d'un rÃ©seau RC un entier reprÃ©sentant le plus petit
+nombre de rÃ©sistances depuis l'Ã©metteur.
 C'est un parcours en largeur d'abord.
 \******************************************************************************/
 
@@ -1201,8 +1201,8 @@ int rcx_getlevel_node( lonode_list *ptnode )
 
 /******************************************************************************\
 rcx_testandsetlevel_node()
-Positionne le level d'un node uniquement si il n'en a pas déjà un.
-Renvoie 1 si on l'a positionné, 0 sinon.
+Positionne le level d'un node uniquement si il n'en a pas dÃ©jÃ  un.
+Renvoie 1 si on l'a positionnÃ©, 0 sinon.
 \******************************************************************************/
 int rcx_testandsetlevel_node( lonode_list *ptnode, int index )
 {
@@ -1218,8 +1218,8 @@ int rcx_testandsetlevel_node( lonode_list *ptnode, int index )
 
 /******************************************************************************\
 rcx_cleanlevel_node()
-Positionne le level d'un node uniquement si il n'en a pas déjà un.
-Renvoie 1 si on l'a positionné, 0 sinon.
+Positionne le level d'un node uniquement si il n'en a pas dÃ©jÃ  un.
+Renvoie 1 si on l'a positionnÃ©, 0 sinon.
 \******************************************************************************/
 void rcx_cleanlevel_node( losig_list *losig )
 {
@@ -1240,8 +1240,8 @@ void rcx_cleanlevel_node( losig_list *losig )
 rcx_triangle_search()
 Renvoie les deux wires w2 et wt qui permettent de partir de lonode par wire
 et d'y revenir sans passer par from. Ne donne pas de solution si il y a 
-plusieurs possibilités.
-Renvoie 1 si la solution a été trouvée, 0 sinon.
+plusieurs possibilitÃ©s.
+Renvoie 1 si la solution a Ã©tÃ© trouvÃ©e, 0 sinon.
 \******************************************************************************/
 
 int rcx_triangle_search( losig_list *losig,
@@ -1431,8 +1431,8 @@ rcx_build_tr* rcx_build_node( losig_list  *losig,
 
 /******************************************************************************\
 rcx_find_real_one()
-Complete une structure rcx_build_tr en continuant sur les autres côtés si 
-possible. La structure test contient un seul élément.
+Complete une structure rcx_build_tr en continuant sur les autres cÃ´tÃ©s si 
+possible. La structure test contient un seul Ã©lÃ©ment.
 \******************************************************************************/
 rcx_build_tr* rcx_find_real_one( losig_list *losig, 
                                  rcx_build_tr *test, 
@@ -1478,7 +1478,7 @@ rcx_build_tr* rcx_find_real_one( losig_list *losig,
       wc = wt ;
       wp = w2 ;
     }
-    /* Les triangles crées ici sont temporaires : on a le droit de
+    /* Les triangles crÃ©es ici sont temporaires : on a le droit de
        repasser par dessus */
     for( pt_bip = pt_build[i]->LIST ; pt_bip ; pt_bip = pt_bip->NEXT ) {
       RCN_CLEARFLAG( pt_bip->RWIRE->FLAG, RCXNODEINTR );
@@ -1551,8 +1551,8 @@ rcx_build_tr* rcx_find_real_one( losig_list *losig,
 
 /******************************************************************************\
 rcx_find_real_two()
-Complete une structure rcx_build_tr en continuant sur les autres côtés si 
-possible. La structure test contient deux éléments.
+Complete une structure rcx_build_tr en continuant sur les autres cÃ´tÃ©s si 
+possible. La structure test contient deux Ã©lÃ©ments.
 \******************************************************************************/
 rcx_build_tr* rcx_find_real_two( losig_list *losig, 
                                  rcx_build_tr *test, 
@@ -1648,8 +1648,8 @@ rcx_build_tr* rcx_find_real_two( losig_list *losig,
 
 /******************************************************************************\
 rcx_find_real()
-Complete une structure rcx_build_tr en continuant sur les autres côtés si 
-possible. La structure test contient un ou deux éléments.
+Complete une structure rcx_build_tr en continuant sur les autres cÃ´tÃ©s si 
+possible. La structure test contient un ou deux Ã©lÃ©ments.
 \******************************************************************************/
 rcx_build_tr* rcx_find_real( losig_list *losig, 
                              rcx_build_tr *test, 
@@ -1778,9 +1778,9 @@ rcx_triangle* rcx_build_to_triangle_approx( losig_list   *losig,
     }
   }
   else {
-    /* lonode est sur le coté opposé. On doit choisir l'une des deux extrémités du
-    triangle pour n0 : c'est celle qui rapproche plus de lonode, c'est à dire qui a
-    la résistance la plus petite. */
+    /* lonode est sur le cotÃ© opposÃ©. On doit choisir l'une des deux extrÃ©mitÃ©s du
+    triangle pour n0 : c'est celle qui rapproche plus de lonode, c'est Ã  dire qui a
+    la rÃ©sistance la plus petite. */
     
     r = 0.0 ;
     for( bip = pt_build->LIST ; bip ; bip = bip->NEXT ) {
@@ -1888,7 +1888,7 @@ void rcx_display_triangle( rcx_triangle *triangle )
 
 /******************************************************************************\
 rcx_build_to_triangle()
-Construit la structure triangle finale qui sera utilisée dans rcx_rcnload() et
+Construit la structure triangle finale qui sera utilisÃ©e dans rcx_rcnload() et
 pour AWE.
 \******************************************************************************/
 rcx_triangle* rcx_build_to_triangle( losig_list   *losig, 
@@ -1935,7 +1935,7 @@ rcx_triangle* rcx_build_to_triangle( losig_list   *losig,
                                              );
     }
     else {
-      if( n==2 ) { /* on essaye de voir ce que ça donne si on arrive de l'autre côté */
+      if( n==2 ) { /* on essaye de voir ce que Ã§a donne si on arrive de l'autre cÃ´tÃ© */
       
         tmp                   = pt_build->LIST->EWIRE ;
         pt_build->LIST->EWIRE = pt_build->LIST->RWIRE ;
@@ -1984,7 +1984,7 @@ rcx_triangle_node()
 Renvoie tous les triangles sur lonode.
 Les wires qui partent du lonode et qui sont sur des triangles renvoient la
 structure triangle correspondante avec la fonction rcx_gettriangle_wire().
-L'algo peut être coûteux si le réseau RC est localement fortement connecté.
+L'algo peut Ãªtre coÃ»teux si le rÃ©seau RC est localement fortement connectÃ©.
 \******************************************************************************/
 
 rcx_triangle* rcx_triangle_node( losig_list *losig, 
@@ -2086,8 +2086,8 @@ void rcx_cleantriangle_node( losig_list *losig,
 
 /******************************************************************************\
 rcx_isonlytriangle()
-renvoie 1 si le réseau ne comporte comme boucle que des triangles qu'on
-sait convertir en étoiles.
+renvoie 1 si le rÃ©seau ne comporte comme boucle que des triangles qu'on
+sait convertir en Ã©toiles.
 \******************************************************************************/
 
 int rcx_isreconvergence_node( losig_list *losig, lonode_list *lonode )

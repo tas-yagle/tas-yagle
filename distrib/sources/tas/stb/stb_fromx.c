@@ -5,7 +5,7 @@
 /*    Produit : AVERTEC global tools                                        */
 /*    Fichier : stb_fromx.c                                                 */
 /*                                                                          */
-/*    © copyright 2000 AVERTEC                                              */
+/*    Â© copyright 2000 AVERTEC                                              */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
 /*    Auteur(s) : Antony PINTO                                              */

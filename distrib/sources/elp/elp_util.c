@@ -3192,16 +3192,16 @@ return ;
 
 /****************************************************************************/
 /*                        fonction elpLotrsResiCanal()                      */
-/* Calcule la rÈsistance en petit signaux du transistor passÈ en parametre. */
-/* HypothËse : le transistor est bien s˚r supposÈ Ítre en rÈgime linÈaire.  */
+/* Calcule la r√©sistance en petit signaux du transistor pass√© en parametre. */
+/* Hypoth√®se : le transistor est bien s√ªr suppos√© √™tre en r√©gime lin√©aire.  */
 /*                                                                          */
 /* Parametres en entree:                                                    */
 /* --------------------                                                     */
-/*    1) lotrs: Transistor dont on veut obtenir la rÈsistance.              */
+/*    1) lotrs: Transistor dont on veut obtenir la r√©sistance.              */
 /*                                                                          */
 /* Parametre en sortie:                                                     */
 /* -------------------                                                      */
-/*    La rÈsistance en ohms.                                                */
+/*    La r√©sistance en ohms.                                                */
 /****************************************************************************/
 
 elpFCT double elpLotrsResiCanal(lotrs,transcase)
@@ -3225,9 +3225,9 @@ int transcase;
   l = ((float)elpGetShrinkedLength(lotrs,model))/((float)SCALE_X)*1e-6 ;
 
   if( a == 0.0 || b == 0.0 || c == 0.0 )
-    r = model->elpModel[elpRT]*l/w;     /* ModËle approchÈ utilisant MCC     */
+    r = model->elpModel[elpRT]*l/w;     /* Mod√®le approch√© utilisant MCC     */
   else
-    r = ( a*l + b ) / ( c*w + 1.0 ) ;   /* ModËle fin                        */
+    r = ( a*l + b ) / ( c*w + 1.0 ) ;   /* Mod√®le fin                        */
 
   return r ;
 }
@@ -3485,8 +3485,8 @@ elpFCT float elpGetCapaFromLocon (locon,capatype,transcase)
 }
 
 /******************************************************************************\
-elpGetCapaSig : Renvoie la capacitÈ mÈmorisÈe sur un signal, ou 0.0 si rien n'a
-                ÈtÈ mÈmorisÈ.
+elpGetCapaSig : Renvoie la capacit√© m√©moris√©e sur un signal, ou 0.0 si rien n'a
+                √©t√© m√©moris√©.
 \******************************************************************************/
 
 elpFCT float elpGetCapaSig ( lofig, losig, type )
@@ -3542,7 +3542,7 @@ elpFCT float elpGetCapaSig ( lofig, losig, type )
 
 
 /******************************************************************************\
-elpGetTotalCapaSig : Renvoie toutes les capacitÈs sur un signal.
+elpGetTotalCapaSig : Renvoie toutes les capacit√©s sur un signal.
 \******************************************************************************/
 
 elpFCT float elpGetTotalCapaSig( lofig, losig, type )
@@ -3561,7 +3561,7 @@ elpFCT float elpGetTotalCapaSig( lofig, losig, type )
 }
 
 /******************************************************************************\
-elpSetCapaSig : MÈmorise une capacitÈ sur un signal.
+elpSetCapaSig : M√©morise une capacit√© sur un signal.
 \******************************************************************************/
 
 elpFCT void elpSetCapaSig ( lofig, losig, capa, type )
@@ -3678,7 +3678,7 @@ elpFCT void elpSetCapaSig ( lofig, losig, capa, type )
 }
 
 /******************************************************************************\
-elpIsCapaSig : Renvoie 1 si on a dÈj‡ mÈmorisÈ une capacitÈ sur le signal.
+elpIsCapaSig : Renvoie 1 si on a d√©j√† m√©moris√© une capacit√© sur le signal.
 \******************************************************************************/
 
 elpFCT char elpIsCapaSig( lofig, losig, type )
@@ -3733,7 +3733,7 @@ elpFCT char elpIsCapaSig( lofig, losig, type )
 }
 
 /******************************************************************************\
-elpAddCapaSig : Ajoute une capacitÈ sur un signal dans la capacitÈ mÈmorisÈe.
+elpAddCapaSig : Ajoute une capacit√© sur un signal dans la capacit√© m√©moris√©e.
 \******************************************************************************/
 
 elpFCT float elpAddCapaSig( lofig, losig, capa, type )
@@ -3751,7 +3751,7 @@ elpFCT float elpAddCapaSig( lofig, losig, capa, type )
 }
 
 /******************************************************************************\
-elpFreeCapaLofig : Efface toutes les capacitÈs de la lofig
+elpFreeCapaLofig : Efface toutes les capacit√©s de la lofig
 \******************************************************************************/
 elpFCT void elpFreeCapaLofig( lofig )
     lofig_list *lofig;
@@ -4046,7 +4046,7 @@ elpFCT void elpLotrsGetShrinkDim (lotrs,length_s,width_s,xs_s,xd_s,
               Ps et pd sont les dimensions efficace. Dans les champs PS et PD du
               lotrs, ce sont les dimensions telles qu'elles apparaissent dans le 
               fichier Spice.
-              Le passage de l'un ‡ l'autre s'effectue ‡ l'aide le la relation 
+              Le passage de l'un √† l'autre s'effectue √† l'aide le la relation 
               de la doc bsim4v30.pdf p 115.
               */
 
@@ -4081,7 +4081,7 @@ elpFCT void elpLotrsGetShrinkDim (lotrs,length_s,width_s,xs_s,xd_s,
               Ps et pd sont les dimensions efficace. Dans les champs PS et PD du
               lotrs, ce sont les dimensions telles qu'elles apparaissent dans le 
               fichier Spice.
-              Le passage de l'un ‡ l'autre s'effectue ‡ l'aide le la relation 
+              Le passage de l'un √† l'autre s'effectue √† l'aide le la relation 
               de la doc bsim4v30.pdf p 115.
               */
 

@@ -8,7 +8,7 @@
 /*    (c) copyright 2000 AVERTEC                                             */
 /*    Tous droits reserves                                                   */
 /*                                                                           */
-/*    Auteur(s) : Grégoire AVOT                                              */
+/*    Auteur(s) : GrÃ©goire AVOT                                              */
 /*                                                                           */
 /*****************************************************************************/
 
@@ -18,7 +18,7 @@
 /* Enought room for a 500 points (x,y) = 1000 */
 #define TABSIZE 1000
 
-/* Pour les générateurs de courant                                            */
+/* Pour les gÃ©nÃ©rateurs de courant                                            */
 typedef struct drive_current {
   struct drive_current *NEXT;
   char                 *MEASPINNAME;
@@ -26,7 +26,7 @@ typedef struct drive_current {
   sim_measure          *MEAS;
 } drive_current;
 
-/* Toutes les variables utilisées pour le drive. */
+/* Toutes les variables utilisÃ©es pour le drive. */
 typedef struct drive_spice{
   sim_model     *MODEL;
   FILE          *PTF;

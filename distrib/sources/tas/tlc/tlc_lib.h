@@ -2,7 +2,7 @@
 *                                                                              *
 *                           Alliance VLSI CAD system                           *
 *    +---+                                                                     *
-*   / \ / \           Laboratoire LIP6 - Département ASIM                      *
+*   / \ / \           Laboratoire LIP6 - DÃ©partement ASIM                      *
 *  /   /   \        Universite Paris 6 - Pierre et Marie Curie                 *
 * +---+ \   \                                                                  *
 *  \   \ +---+                 Address : LIP6                                  *

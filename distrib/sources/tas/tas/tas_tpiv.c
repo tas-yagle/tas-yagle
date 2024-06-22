@@ -9,7 +9,7 @@
 /*    Tous droits reserves                                                  */
 /*    Support : e-mail alliance-support@asim.lip6.fr                        */
 /*                                                                          */
-/*    Auteur(s) : Grégoire Avot                                             */
+/*    Auteur(s) : GrÃ©goire Avot                                             */
 /*                                                                          */
 /****************************************************************************/
 /* calcul des temps de propagation entre une sortie de cone                 */
@@ -147,7 +147,7 @@ void tpiv_addtransmcc_switch( tpiv *br, stm_solver_maillon *stmm, link_list *lin
 
 /******************************************************************************\
 Convertie une branche au format CNS vers le format stm_solver()
-Les tensions sur les grilles sont initialisées à vdd.
+Les tensions sur les grilles sont initialisÃ©es Ã  vdd.
 \******************************************************************************/
 tpiv* tpiv_createbranch( link_list *head, char transtype )
 {
@@ -256,7 +256,7 @@ tpiv* tpiv_createbranch( link_list *head, char transtype )
 }
 
 /******************************************************************************\
-Crée une branche pour le calcul du leakage dont le transistor activelink est bloque
+CrÃ©e une branche pour le calcul du leakage dont le transistor activelink est bloque
 \******************************************************************************/
 tpiv* tpiv_createbranch_leakage( link_list *head, link_list *activelink, char transtype )
 {
@@ -409,7 +409,7 @@ tpiv* tpiv_createbranch_leakage_2( link_list *head, link_list *activelink, char 
   return br;
 }
 /******************************************************************************\
-Libère une branche 
+LibÃ¨re une branche 
 \******************************************************************************/
 void tpiv_freebranch( tpiv *br )
 {
@@ -443,16 +443,16 @@ void tpiv_freebranch( tpiv *br )
 }
 
 /******************************************************************************\
-Crée un modèle timing_iv de la branche CNS passée en paramètre.
-Pour l'instant, le conflit modélisé par une capacité calculée avec MCC.
+CrÃ©e un modÃ¨le timing_iv de la branche CNS passÃ©e en paramÃ¨tre.
+Pour l'instant, le conflit modÃ©lisÃ© par une capacitÃ© calculÃ©e avec MCC.
 head    Premier maillon de la branche
 active  Maillon qui commute
 vref    Polarisation de la branche (vdd ou vss)
-pconf0  Paramètre pour le calcul de la capacité
-pconf1  Paramètre pour le calcul de la capacité
-fin_vi  Entrée : tension initiale
-fin_vf  Entrée : tension finale
-fin_vs  Entrée : seuil logique
+pconf0  ParamÃ¨tre pour le calcul de la capacitÃ©
+pconf1  ParamÃ¨tre pour le calcul de la capacitÃ©
+fin_vi  EntrÃ©e : tension initiale
+fin_vf  EntrÃ©e : tension finale
+fin_vs  EntrÃ©e : seuil logique
 vouti   Sortie : tension initiale
 \******************************************************************************/
 timing_iv *tpiv_dualmodel( cone_list *cone,
@@ -525,7 +525,7 @@ timing_iv *tpiv_dualmodel( cone_list *cone,
     d.ACTIVE = maillon ;
     d.TRS    = link->ULINK.LOTRS ;
 
-    // Polarise le dernier élément
+    // Polarise le dernier Ã©lÃ©ment
     for( maillon = br->HEAD ; maillon->NEXT ; maillon = maillon->NEXT );
     maillon->MAILLON->VS=vref;
 
@@ -636,8 +636,8 @@ float tpiv_get_voltage_driving_lotrs( lotrs_list *lotrs )
       }
     }
   
-    /* solution provisoire : ici, on prend la dégradation du maillon courant,
-       pas celle du cone d'entrée. */
+    /* solution provisoire : ici, on prend la dÃ©gradation du maillon courant,
+       pas celle du cone d'entrÃ©e. */
 
     if( MLO_IS_TRANSN( lotrs->TYPE) &&
         ((cone_avant->TECTYPE & CNS_VDD_DEGRADED) == CNS_VDD_DEGRADED) ) {
@@ -912,8 +912,8 @@ float     *imax;
   return r;
 }
 /******************************************************************************\
-Renvoie le courant d'une branche lorsque tous les maillons commandés par le même
-signal que celui qui controle activelink valent vin. Les autres sont drivés par 
+Renvoie le courant d'une branche lorsque tous les maillons commandÃ©s par le mÃªme
+signal que celui qui controle activelink valent vin. Les autres sont drivÃ©s par 
 les tensions des cones d'avant.
 \******************************************************************************/
 int tpiv_get_i_multi_input( link0, activelink, vout, valim, vin, vinopp, trmodel, imax )
@@ -958,7 +958,7 @@ float     *imax;
 
 /******************************************************************************\
 Trace dans un fichier le courant d'un branche lorsque le maillon 'actif' varie
-de 'vin_d' a 'vin_f', et lorsque la la tension de sortie varie de 'vout_d' à 'vout_f'
+de 'vin_d' a 'vin_f', et lorsque la la tension de sortie varie de 'vout_d' Ã  'vout_f'
 Calcul le courant maximum dans une branche en utilisant stm_solver.
 \******************************************************************************/
 void tpiv_i_trace_brdual( filename, head, actif, brtype, vin_d, vin_f, vout_d, vout_f, valim, vdd )
@@ -1072,7 +1072,7 @@ tpiv* tpiv_alloc( void )
 }
 
 /******************************************************************************\
-Libère une structure tpiv
+LibÃ¨re une structure tpiv
 \******************************************************************************/
 void tpiv_free( tpiv *s )
 {
@@ -1700,7 +1700,7 @@ void tpiv_carac_static( lotrs_list *lotrs,
                         float       vdd,
                         float       vdsmax,
                         float       vgsmax,
-                        float       vb, /* uniquement pris en compte pour modèle spice */
+                        float       vb, /* uniquement pris en compte pour modÃ¨le spice */
                         float       vs
                       )
 {

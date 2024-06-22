@@ -5,7 +5,7 @@
 /*    Produit : AVERTEC global tools                                        */
 /*    Fichier : inf_stb.h                                                   */
 /*                                                                          */
-/*    © copyright 2004 AVERTEC                                              */
+/*    Â© copyright 2004 AVERTEC                                              */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
 /*    Auteur(s) : Antony PINTO                                              */

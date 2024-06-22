@@ -5,7 +5,7 @@ typedef struct st_rcncacheline {
 }
 rcncacheline;
 
-/* Les réseaux RC */
+/* Les rÃ©seaux RC */
 
 extern lorcnet_list*    addlorcnet(losig_list*);
 extern lorcnet_list*    givelorcnet(losig_list*);
@@ -15,7 +15,7 @@ extern int	        rclevel(losig_list*);
        void             freercnet(lorcnet_list*);
        void             chkrcn(losig_list*);
 
-/* La capacité due aux RC */
+/* La capacitÃ© due aux RC */
 
 extern float            rcn_getcapa(lofig_list*, losig_list*);
 extern float            rcn_setcapa(losig_list*, float);

@@ -44,7 +44,7 @@ argv="qdint_0"
     0.10000       0.       
     0.20000    -1.134e-16  
 
-Hypothèse : l'ordre d'apparition des résultat est le meme que celui des .print.
+HypothÃ¨se : l'ordre d'apparition des rÃ©sultat est le meme que celui des .print.
 */
 
 int sim_get_number( char *s, double *n )

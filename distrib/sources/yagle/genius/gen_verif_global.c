@@ -1094,7 +1094,7 @@ extern ptype_list *Verif_All(tree)
                 char *file=FILE_NAME(entity);
                 //            tree_list *new_entity=PUT_TRI(GEN_TOKEN_ENTITY,Duplicate_Tree(entity->DATA),Duplicate_Tree(entity->NEXT->DATA),Duplicate_Tree(entity->NEXT->NEXT->DATA));
                 tree_list *new_entity=PUT_QUA(GEN_TOKEN_ENTITY,Duplicate_Tree(entity->DATA),Duplicate_Tree(entity->NEXT->DATA),Duplicate_Tree(entity->NEXT->NEXT->DATA),Duplicate_Tree(entity->NEXT->NEXT->NEXT->DATA));
-                // [!] zinaps: les informartions de symétrie ne sont pas dupliquées
+                // [!] zinaps: les informartions de symÃ©trie ne sont pas dupliquÃ©es
 //                tree_list *new_action=NULL;
                 if (Act) {
 #if 0

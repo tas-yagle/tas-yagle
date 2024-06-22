@@ -47,7 +47,7 @@ char *mbk_index_regex(char *r)
   regex_cache[regex_cnt].orig=nr;
 
   tui[0]='%';
-  tui[1]='°';
+  tui[1]='Â°';
   tui[2]=((regex_cnt>>8) & 0xff) + 1;
   tui[3]=regex_cnt & 0xff;
   tui[4]='\0';
@@ -61,7 +61,7 @@ char *mbk_index_regex(char *r)
 int mbk_get_index_regex(char *refname)
 {
   int index;
-  if (regex_cache_index!=NULL && refname[0]=='°')
+  if (regex_cache_index!=NULL && refname[0]=='Â°')
     {
       index=((unsigned char)refname[2]) | (((unsigned char)refname[1]-1)<<8);
       return index;

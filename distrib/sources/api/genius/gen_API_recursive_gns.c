@@ -25,7 +25,7 @@ ALL_FOR_GNS *gns_RunGNS(lofig_list *lf, char *celldir, char *libname)
   char buf[128];
   inffig_list *ifl;
   
-  avt_fprintf(stdout,"¤1____ Start of GNS sub execution on '%s' ____¤.\n",lf->NAME);
+  avt_fprintf(stdout,"Â¤1____ Start of GNS sub execution on '%s' ____Â¤.\n",lf->NAME);
   curctx=mbkCreateContext();
 
   transfert_needed_lofigs(lf, curctx);
@@ -43,7 +43,7 @@ ALL_FOR_GNS *gns_RunGNS(lofig_list *lf, char *celldir, char *libname)
       mbk_StartChrono(&mc);
       flatOutsideList(lf);
       mbk_StopChrono(&mc);
-      avt_fprintf(stderr, " (¤3%s¤.)\n", mbk_GetUserChrono(&mc, buf));
+      avt_fprintf(stderr, " (Â¤3%sÂ¤.)\n", mbk_GetUserChrono(&mc, buf));
     }
   ifl=getinffig(lf->NAME);
   
@@ -56,7 +56,7 @@ ALL_FOR_GNS *gns_RunGNS(lofig_list *lf, char *celldir, char *libname)
   // demarquer les trans //
   mbkSwitchContext(curctx);
 
-  avt_fprintf(stdout,"¤1____ End of GNS sub execution for '%s' ____¤.\n",lf->NAME);
+  avt_fprintf(stdout,"Â¤1____ End of GNS sub execution for '%s' ____Â¤.\n",lf->NAME);
   new_run=LATEST_GNS_RUN;
   LATEST_GNS_RUN=old_run;
   return new_run;

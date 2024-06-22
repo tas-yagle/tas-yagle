@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -1630,7 +1630,7 @@ void flattenlofig_bypointer (lofig_list * ptfig, chain_list * ptinslist, Advance
                ptptype = getptype( ptcon->SIG->USER, LOFIGCHAIN );
                for( scanchain = (chain_list*)ptptype->DATA ; scanchain ; scanchain = scanchain->NEXT ) {
                  eptcon = (locon_list*)scanchain->DATA ;
-                 if( !eptcon->PNODE ) // inutile de le vérifier, mais bon...
+                 if( !eptcon->PNODE ) // inutile de le vÃ©rifier, mais bon...
                    eptcon->PNODE = addnum( NULL, 1l );
                }
                nblorc++;
@@ -1646,7 +1646,7 @@ void flattenlofig_bypointer (lofig_list * ptfig, chain_list * ptinslist, Advance
                ptptype = getptype( scanlosig->USER, LOFIGCHAIN );
                for( scanchain = (chain_list*)ptptype->DATA ; scanchain ; scanchain = scanchain->NEXT ) {
                  eptcon = (locon_list*)scanchain->DATA ;
-                 if( !eptcon->PNODE ) // inutile de le vérifier, mais bon...
+                 if( !eptcon->PNODE ) // inutile de le vÃ©rifier, mais bon...
                    eptcon->PNODE = addnum( NULL, 1l );
                }
                nblorc++;
@@ -2479,7 +2479,7 @@ void flattenlofig_bypointer (lofig_list * ptfig, chain_list * ptinslist, Advance
 
 
 
-   // Greg, le 30/09/02 : il faut assurer la cohérence des champs PREV dans les 
+   // Greg, le 30/09/02 : il faut assurer la cohÃ©rence des champs PREV dans les 
    // ctc.... gros bordel.
 
    if (!GROUP_MODE) {

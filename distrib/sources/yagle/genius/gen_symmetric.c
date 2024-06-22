@@ -161,7 +161,7 @@ void SwapLoconWithSym(locon_list *syms_locon, locon_list *circuit_con)
   tmpsig=syms_locon->SIG; syms_locon->SIG=circuit_con->SIG; circuit_con->SIG=tmpsig;
   user=syms_locon->USER; syms_locon->USER=circuit_con->USER; circuit_con->USER=user;
 
-  // les LOFIGCHAINs doivent etre updatées
+  // les LOFIGCHAINs doivent etre updatÃ©es
 
   fastswaplofigchain(syms_locon->SIG, circuit_con, syms_locon, 0);
   fastswaplofigchain(circuit_con->SIG, syms_locon, circuit_con, 0);
@@ -1658,7 +1658,7 @@ static void swap_locon(locon_list *syms_locon, locon_list *circuit_con)
   tmpsig=syms_locon->SIG; syms_locon->SIG=circuit_con->SIG; circuit_con->SIG=tmpsig;
   user=syms_locon->USER; syms_locon->USER=circuit_con->USER; circuit_con->USER=user;
   
-  // les LOFIGCHAINs doivent etre updatées
+  // les LOFIGCHAINs doivent etre updatÃ©es
 
   fastswaplofigchain(syms_locon->SIG, circuit_con, syms_locon, 0);
   fastswaplofigchain(circuit_con->SIG, syms_locon, circuit_con, 0);

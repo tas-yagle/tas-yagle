@@ -305,7 +305,7 @@ static int ttv_check_false_path_simple(ttvfig_list *tvf, chain_list *grps, inffi
               }
             if (tc->CAPA<0) ptype=addptype(ptype, INF_CK, namealloc("^")); // HZ
             else if ((tc2->SIGTYPE & TTV_SIG_R)!=0 || (tc2->SIGTYPE & TTV_SIG_CT)==TTV_SIG_CT)
-                   ptype=addptype(ptype, INF_CK, namealloc("°")); // NOT HZ
+                   ptype=addptype(ptype, INF_CK, namealloc("Â°")); // NOT HZ
               
             ptype=(ptype_list *)reverse((chain_list *)ptype);
 

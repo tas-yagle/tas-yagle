@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -42,43 +42,43 @@ typedef struct shashelem
 
 typedef struct sthash
 {
-  int		  entree;       /* Nombre d'entrées dans la table de hash 2^n */
+  int		  entree;       /* Nombre d'entrÃ©es dans la table de hash 2^n */
   int		  nbelem;	/* Nombre d'element dans les liste            */
   hashelem	**table;	/* informations dans la table                 */
   hashelem	 *tete;		/* Blocs libre pour allocation par tat        */
-  chain_list	 *libere;	/* Pointeurs pour les libérations             */
+  chain_list	 *libere;	/* Pointeurs pour les libÃ©rations             */
 } thash;
 
 thash* creatthash __P(( ));
 /* 
-  Crée une nouvelle table de hash. Le parametre d'entrée est le nombre
+  CrÃ©e une nouvelle table de hash. Le parametre d'entrÃ©e est le nombre
 d'entrees de la nouvelle table
 */
 
 void   freethash __P(( thash *pt ));
 /*
-  Libère une table de hash précédement allouée
+  LibÃ¨re une table de hash prÃ©cÃ©dement allouÃ©e
 */
 
 void   addthashelem __P(( char *nouveau, void *ptr, thash *table ));
 /*
-  Ajoute un élément dans la table de hash. Le premier parametre est
-la chaine identifiant l'élément, le second est l'élément que l'on place dans
-la table et finalement le troisième est l'élément vers la table de hash
+  Ajoute un Ã©lÃ©ment dans la table de hash. Le premier parametre est
+la chaine identifiant l'Ã©lÃ©ment, le second est l'Ã©lÃ©ment que l'on place dans
+la table et finalement le troisiÃ¨me est l'Ã©lÃ©ment vers la table de hash
 */
 
 void*  getthashelem __P(( char *elem, thash *table, int *status ));
 /*
-  Récupère un élément dans la table de hash à partir de son identificateur
-passé en premier paramètre. Le second argument est la table de hash sur laquelle
-la recherche est effectuée. Si le troisième élément est différent de NULL,
-la valeur 1 est plcée à cette adresse si l'élément est trouvé, 0 sinon. La
-valeur renvoyée est celle de l'élément recherché.
+  RÃ©cupÃ¨re un Ã©lÃ©ment dans la table de hash Ã  partir de son identificateur
+passÃ© en premier paramÃ¨tre. Le second argument est la table de hash sur laquelle
+la recherche est effectuÃ©e. Si le troisiÃ¨me Ã©lÃ©ment est diffÃ©rent de NULL,
+la valeur 1 est plcÃ©e Ã  cette adresse si l'Ã©lÃ©ment est trouvÃ©, 0 sinon. La
+valeur renvoyÃ©e est celle de l'Ã©lÃ©ment recherchÃ©.
 */
 
 int    thashsignature __P(( char *c, int l ));
 /*
-  Utilisé en interne
+  UtilisÃ© en interne
 */
 
 void	resizetable    __P(( thash*, int ));

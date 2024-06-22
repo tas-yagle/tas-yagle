@@ -14,7 +14,7 @@
 /****************************************************************************/
 
 extern int AWECACHE ;
-// Lorsque cette variable est à 1, le cache est actif.
+// Lorsque cette variable est Ã  1, le cache est actif.
 
 extern char RCX_AWESTRAIGHT;
 extern char RCX_STEPTANH;
@@ -48,7 +48,7 @@ extern losig_list *AWE_DEBUG_NET ;
 extern locon_list *AWE_DEBUG_DRIVER ;
 extern locon_list *AWE_DEBUG_RECEIVER ;
 
-/* Ordre d'évalutation par défaut pour AWE */
+/* Ordre d'Ã©valutation par dÃ©faut pour AWE */
 #define AWE_MAX_ORDER  3
 #define AWE_MAX_MOMENT 5
 
@@ -62,7 +62,7 @@ extern locon_list *AWE_DEBUG_RECEIVER ;
 #define AWEDWMAXINFO 0x30000004
 #define AWEDWMININFO 0x30000005
 
-/* Information ajoutée dans les losig, accessible par le ptype AWEINFO */
+/* Information ajoutÃ©e dans les losig, accessible par le ptype AWEINFO */
 
 typedef struct sawefiltre {
   RCXFLOAT     POLE[AWE_MAX_ORDER] ;
@@ -129,7 +129,7 @@ typedef struct {
 
 #define AWESIZEINFO 16
 
-/* Information ajoutée dans les noeuds des réseaux RC */
+/* Information ajoutÃ©e dans les noeuds des rÃ©seaux RC */
 
 typedef struct sawetabnode {
   RCXFLOAT     CAPA ;
@@ -152,9 +152,9 @@ typedef struct {
 #define AWESUMRESI 0x5243581F
 
 
-#define AWESIZETABNODE 200               // Taille d'un bloc alloué
+#define AWESIZETABNODE 200               // Taille d'un bloc allouÃ©
 
-// Mémoire pour le calcul des moments. Allocation par bloc, sans libération
+// MÃ©moire pour le calcul des moments. Allocation par bloc, sans libÃ©ration
 // (pas de free)
 awetabnode* aweallocnodes( void );
 void aweunallocnodes( awetabnode* );
@@ -192,7 +192,7 @@ void awemoment( losig_list*,
 RCXFLOAT awedownstream( losig_list *, lonode_list*, lowire_list*, int );
 RCXFLOAT awemaxmoment( losig_list*, lonode_list* );
 
-// Mémorisation des moments ou des coéfficients du filtre. Allocation par bloc, sans libération.
+// MÃ©morisation des moments ou des coÃ©fficients du filtre. Allocation par bloc, sans libÃ©ration.
 aweinfo_list* aweaddnodeinfo( losig_list*, 
                               locon_list*, 
                               long , 
@@ -223,7 +223,7 @@ void aweselectaweinfo( losig_list *losig, long type );
 // Transformation des moments en filtre.
 void awemomentfiltre( aweinfo_list* );
 
-// Calcul des délais et des fronts.
+// Calcul des dÃ©lais et des fronts.
 RCXFLOAT awevoltage_straight( aweinfo_list *awe, 
 		               RCXFLOAT t,
 		               RCXFLOAT vmax, 

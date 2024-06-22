@@ -9,7 +9,7 @@
 /*    Tous droits reserves                                                   */
 /*                                                                           */
 /*    Auteur(s) : Gilles Augustins                                           */
-/*                Grégoire Avot                                              */
+/*                GrÃ©goire Avot                                              */
 /*                                                                           */
 /*****************************************************************************/
 

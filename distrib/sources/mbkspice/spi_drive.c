@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Alliance CAD System
- * Copyright (C) Laboratoire LIP6 - Département ASIM
+ * Copyright (C) Laboratoire LIP6 - DÃ©partement ASIM
  * Universite Pierre et Marie Curie
  * 
  * Home page          : http://www-asim.lip6.fr/alliance/
@@ -131,7 +131,7 @@ locon_list* spi_getextlocon( losig_list *losig )
 /******************************************************************************\
 spi_makename()
 Renvoie un pointeur sur un buffer statique contenant un nom compatible avec
-Spice, c'est à dire sans caractère séparateur.
+Spice, c'est Ã  dire sans caractÃ¨re sÃ©parateur.
 \******************************************************************************/
 char* spi_makename( char *alc_name )
 {
@@ -356,9 +356,9 @@ char 		*vss;
   if( drivewirenotconnected=='u' ) {
 
     /* variable temporaire permettant de contourner le bug de sim qui
-       drive des netlists avec des noeuds connectés à un seul wire, ce
-       qui n'est pas supporté par titan. solution bourrin car ca ne prend
-       pas en compte un ensemble de résistances arrivant nul part. */
+       drive des netlists avec des noeuds connectÃ©s Ã  un seul wire, ce
+       qui n'est pas supportÃ© par titan. solution bourrin car ca ne prend
+       pas en compte un ensemble de rÃ©sistances arrivant nul part. */
 
     env = NULL; //getenv("MBK_SPI_DRIVE_WIRE_NOT_CONNECTED");
     if( env ) {
@@ -368,7 +368,7 @@ char 		*vss;
         drivewirenotconnected = 'n';
     }
     if( drivewirenotconnected == 'u' )
-      drivewirenotconnected = 'y' ; // défaut.
+      drivewirenotconnected = 'y' ; // dÃ©faut.
   }
 
   nbctc = 0;
@@ -398,7 +398,7 @@ char 		*vss;
           ptnode1 = getlonode( scanlosig, scanlowire->NODE1 );
           ptnode2 = getlonode( scanlosig, scanlowire->NODE2 );
 
-          /* Teste si cette resistance est connectée à quelque chose. */
+          /* Teste si cette resistance est connectÃ©e Ã  quelque chose. */
           if(  RCN_GETFLAG( ptnode1->FLAG, RCN_FLAG_ONE )   &&
               !RCN_GETFLAG( ptnode1->FLAG, RCN_FLAG_LOCON ) &&
                scanlowire->CAPA == 0.0                      &&
@@ -562,7 +562,7 @@ lofig_list	*ptfig;
     nouveau->sig     = scanlosig;
     nouveau->premier = dernier;
 
-    /* Evaluation de gauche à droite */
+    /* Evaluation de gauche Ã  droite */
     if( scanlosig->PRCN && scanlosig->PRCN->NBNODE > 0 )
       dernier += scanlosig->PRCN->NBNODE ;
     else
@@ -711,7 +711,7 @@ FILE		*df;
 
       spi_print( df, "* %s ", SPI_NETNAME );
 
-      /* Evaluation de gauche à droite */
+      /* Evaluation de gauche Ã  droite */
       if( scanlosig->PRCN && scanlosig->PRCN->NBNODE > 1 )
       {
         noeudunique = creattableint();
@@ -855,7 +855,7 @@ FILE		*df;
   {
     spi_print( df, "x%s ", scanloins->INSNAME );
     
-    /* L'ordre des connecteurs entre la lofig et sa version instanciée n'est 
+    /* L'ordre des connecteurs entre la lofig et sa version instanciÃ©e n'est 
        pas le meme */
 
     pt = getptype( scanloins->USER, PH_INTERF );    
@@ -1871,14 +1871,14 @@ void spi_print( FILE *fd, ...)
     lgcurrent = 0;
 }
 
-/* Fonctions d'accès pour insérer des mesures dans le fichier de sortie sur les
-locons sans avoir à modifier la lofig.
+/* Fonctions d'accÃ¨s pour insÃ©rer des mesures dans le fichier de sortie sur les
+locons sans avoir Ã  modifier la lofig.
 
    locon->PNODE =  1  2  3
           INODE = 12 13 14
 
-Les inodes sont drivés en priorités par rapport aux pnodes. Ensuite, la 
-fonction utilisateur est appellés avant le .ends. C'est l'utilisateur qui
+Les inodes sont drivÃ©s en prioritÃ©s par rapport aux pnodes. Ensuite, la 
+fonction utilisateur est appellÃ©s avant le .ends. C'est l'utilisateur qui
 doit placer les mesures entre chaque paire de noeud pnode/inode :
 
   exemple pour des mesures de courant :
@@ -1953,7 +1953,7 @@ void spi_clearinode( locon_list *locon )
 
   if( locon->SIG ) {
     ptl = getptype( locon->SIG->USER, SPI_SIG_INODE );
-    if( ptl ) { // C'est obligé...
+    if( ptl ) { // C'est obligÃ©...
       (*(long *)&ptl->DATA)--;
       if( ((long)ptl->DATA)==0 )
         locon->SIG->USER = delptype( locon->SIG->USER, SPI_SIG_INODE );
@@ -1961,8 +1961,8 @@ void spi_clearinode( locon_list *locon )
   }
 }
 
-/* renvoie un locon sur le signal pour la détermination d'un nom de
-signal représentatif. renvoie NULL pas de solution. */
+/* renvoie un locon sur le signal pour la dÃ©termination d'un nom de
+signal reprÃ©sentatif. renvoie NULL pas de solution. */
 
 static char *nameofdevice(locon_list *lc)
 {

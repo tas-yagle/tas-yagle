@@ -84,7 +84,7 @@
 </err>
 <err>
     <lib>TTVAPI-</lib><num>017</num>
-    <msg>could not find timing figure '%s' with temperature=%g° and voltage=%gV\n</msg>
+    <msg>could not find timing figure '%s' with temperature=%gÂ° and voltage=%gV\n</msg>
     <doc></doc>
 </err>
 <err>

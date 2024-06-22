@@ -1362,7 +1362,7 @@ checkSections(FILE *f, inffig_list *ifl, char *token, int level, chain_list *dat
                 done=1;
               if (!done)
                 avt_errmsg(INF_ERRMSG, "023", AVT_WARNING, (char *)c1->DATA,level==1?"connector":level==2?"net":"cone");
-//                avt_error("inf",-1,AVT_ERROR,"name '¤2%s¤.' doesn't match any signal in circuit\n",(char *)c1->DATA);
+//                avt_error("inf",-1,AVT_ERROR,"name 'Â¤2%sÂ¤.' doesn't match any signal in circuit\n",(char *)c1->DATA);
               addhtitem(th,c1->DATA,done);
             }
         }
@@ -1395,7 +1395,7 @@ checkSections(FILE *f, inffig_list *ifl, char *token, int level, chain_list *dat
                 done=1;
               if (!done)
                 avt_errmsg(INF_ERRMSG, "023", AVT_WARNING, (char *)c1->DATA,level==1?"connector":level==2?"net":"cone");
-//                avt_error("inf",-1,AVT_ERROR,"%name '¤2%s¤.' doesn't match any signal in circuit\n",(char *)c1->DATA);
+//                avt_error("inf",-1,AVT_ERROR,"%name 'Â¤2%sÂ¤.' doesn't match any signal in circuit\n",(char *)c1->DATA);
               addhtitem(th,c1->DATA,done);
             }
         }
@@ -1489,7 +1489,7 @@ inf_CheckRegistry(FILE *f, inffig_list *ifl, int level, chain_list *data)
         }
         if (!done)
           avt_errmsg(INF_ERRMSG, "023", AVT_WARNING, key,level==1?"connector":level==2?"net":"cone");
-//          avt_error("inf",-1,AVT_ERROR,"name '¤2%s¤.' doesn't match any signal in circuit\n",key);
+//          avt_error("inf",-1,AVT_ERROR,"name 'Â¤2%sÂ¤.' doesn't match any signal in circuit\n",key);
       }
     }
   }

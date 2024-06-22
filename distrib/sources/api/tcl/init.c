@@ -198,7 +198,7 @@ elTclPrompt(EditLine *el)
 	 strncat(buf, " > ", sizeof(buf));
 	 prompt = buf;
       } else
-	 prompt = "» ";
+	 prompt = "Â» ";
 
    } else {
       code = Tcl_EvalObj(iinfo->interp, promptCmdPtr);

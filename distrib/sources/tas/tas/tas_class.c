@@ -3000,7 +3000,7 @@ ttvfig_list *ttvfig ;
 }
 
 /* tas_rcxsetnodebytransition()
-Informe rcx des noeuds à prendre pour le calcul des délais rc suivant la 
+Informe rcx des noeuds Ã  prendre pour le calcul des dÃ©lais rc suivant la 
 transition.
 Version light : ne calcule cette information que sur les grilles des 
 transistors.
@@ -3030,7 +3030,7 @@ void tas_rcxsetnodebytransition( cone_list *cone )
 
     chainin = tas_reducechaincon( (chain_list *)ptypeincone->DATA ) ;
   
-    /* premiere passe : récupère la liste des node up et down */
+    /* premiere passe : rÃ©cupÃ¨re la liste des node up et down */
     headup = NULL ;
     headdn = NULL ;
     currentsig = NULL ;
@@ -3059,7 +3059,7 @@ void tas_rcxsetnodebytransition( cone_list *cone )
       }
     }
 
-    /* seconde passe : met à jour les infos rcx */
+    /* seconde passe : met Ã  jour les infos rcx */
     if( headup && headdn && !chain ) {
       for( chain = chainin ; chain ; chain = chain->NEXT ) {
         locon = (locon_list*)chain->DATA ;
@@ -6441,7 +6441,7 @@ void tasdebuglotrs()
 }
 
 /*****************************************************************************
-* Fonctions de mémorisation temporaire des caractéristiques de sortie        *
+* Fonctions de mÃ©morisation temporaire des caractÃ©ristiques de sortie        *
 * d'une porte.                                                               *
 *****************************************************************************/
 

@@ -1054,7 +1054,7 @@ ck             : T_NAME
   if (strcasecmp($2,"HZ")==0)
     $$ = addptype(NULL,INF_CK,infTasVectName("^")) ;
   else if (strcasecmp($2,"NOTHZ")==0)
-    $$ = addptype(NULL,INF_CK,infTasVectName("°")) ;
+    $$ = addptype(NULL,INF_CK,infTasVectName("Â°")) ;
   else
     $$ = addptype(NULL,INF_CK,infTasVectName($2)) ; // error?
 }

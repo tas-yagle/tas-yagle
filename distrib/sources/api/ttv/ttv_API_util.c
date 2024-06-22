@@ -5,7 +5,7 @@
 /*    Produit : AVERTEC global tools                                        */
 /*    Fichier : ttv_API_util.c                                              */
 /*                                                                          */
-/*    © copyright 2004 AVERTEC                                              */
+/*    Â© copyright 2004 AVERTEC                                              */
 /*    Tous droits reserves                                                  */
 /*                                                                          */
 /*    Auteur(s) : Antony PINTO                                              */
@@ -147,7 +147,7 @@ cnsfig_list *ttvutil_cnsload(char *figname, inffig_list *ifl)
       if (where!=NULL)
         {
           avt_log(LOGFILEACCESS, 0, "Loading Cone netlist \"%s\"\n", where);
-          //avt_error("library", -1, AVT_INFO, "loading CNS '¤2%s¤.'\n", where);
+          //avt_error("library", -1, AVT_INFO, "loading CNS 'Â¤2%sÂ¤.'\n", where);
           cf=getcnsfig(figname, NULL);
           cns_addmultivoltage(ifl, cf);
         }
