@@ -39,23 +39,23 @@ working_dirs : $(AVT_DISTRIB_DIR) $(FULL_NAME_WORK_DIRS)
 
 build : $(ALL_DIRS_COMP)
 	@echo ""
-	@echo "           [1;30;47m##########################################[0m"
-	@echo "           [1;30;47m###########                  #############[0m"
-	@echo "           [1;30;47m###########       O K        #############[0m"
-	@echo "           [1;30;47m###########                  #############[0m"
-	@echo "           [1;30;47m##########################################[0m"
+	@echo "           ##########################################"
+	@echo "           ###########                  #############"
+	@echo "           ###########       O K        #############"
+	@echo "           ###########                  #############"
+	@echo "           ##########################################"
 	@echo ""
 
 $(ALL_DIRS_HEADERS) : $(AVT_DISTRIB_DIR) $(FULL_NAME_WORK_DIRS)
-	@echo "           [1;30;47m%%%%%%%%% creating HEADERS for" `echo $(@:%.$(XXX_H)=%)|sed 's/\..*//'` "%%%%%%%%%[0m"
+	@echo "           %%%%%%%%% creating HEADERS for" `echo $(@:%.$(XXX_H)=%)|sed 's/\..*//'` "%%%%%%%%%"
 	@$(MAKE) -C `echo $(@:%.$(XXX_H)=%)|sed 's/\..*//'` headers
-	@echo "           [1;30;47m%%%%%%%%% HEADERS for" `echo $(@:%.$(XXX_H)=%)|sed 's/\..*//'` "done %%%%%%%%%[0m"
+	@echo "           %%%%%%%%% HEADERS for" `echo $(@:%.$(XXX_H)=%)|sed 's/\..*//'` "done %%%%%%%%%"
 	@echo ""
 
 $(ALL_DIRS_COMP) :
-	@echo "           [1;37;47m%%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%[0m"
-	@echo "           [1;30;47m%%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%[0m"
-	@echo "           [1;37;47m%%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%[0m"
+	@echo "           %%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%"
+	@echo "           %%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%"
+	@echo "           m%%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%"
 	@$(MAKE) -j2 -C `echo $(@:%.$(XXX_C)=%)|sed 's/\..*//'` `echo $(@:%.$(XXX_C)=%)|sed 's/[^\.]*\.*//'`
 	@echo ""
 
@@ -66,7 +66,7 @@ $(ALL_DIRS_REALCLEAN) :
 	@$(MAKE) -j2 -C `echo $(@:%.$(XXX_R)=%)|sed 's/\..*//'` realclean
 
 $(AVT_DISTRIB_DIR) $(FULL_NAME_WORK_DIRS): 
-	@echo "           [1;42m%%%%%%%%% creating directory $@[0m"
+	@echo "           %%%%%%%%% creating directory $@"
 	@mkdir  $@
 
 # only for debug (create static libraries for apis)
@@ -113,13 +113,13 @@ help :
 	@echo "  api_link  : compile and relink all binaries with apis in static"
 
 color :
-	$(MAKE) -e XXC_W="[1;30;47m" XXB_W="[0;37;47m" XXC_G="[1;42m" XXR_0="[0m"
+	$(MAKE) -e XXC_W="" XXB_W="" XXC_G="" XXR_0=""
 
 % :
-	echo "[1;30;41m$@[0m"
+	echo "[1;30;41m$@"
 	@for FILE in $(ALL_DIRS)        ;\
 	do rules=`echo $$FILE|sed 's/\..*//'` ;\
-	echo "           [1;30;41m$$rules $$FILE[0m" ;\
+	echo "           $$rules $$FILE" ;\
     if [ "$$rules" = "$$FILE" ] ;\
      then $(MAKE) -C `echo $$FILE|sed 's/\..*//'` $@       ;\
 	fi                  ;\

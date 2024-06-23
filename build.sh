@@ -21,7 +21,7 @@ for dir in ${buildDirs}; do
 	mkdir -p ${dir}
 done
 
-CFLAGS="-g -O3 -Wno-implicit-function-declaration -Wno-knr-promoted-parameter -Wno-deprecated-non-prototype -I${localInstall}/include"
+CFLAGS="-g -O3 -Wno-knr-promoted-parameter -I${localInstall}/include"
 CPPFLAGS="-g -O3 -I${localInstall}/include"
 pushd sources
 make --print-directory WITH_FLEXLM=NOFLEX            \
