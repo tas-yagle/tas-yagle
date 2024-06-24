@@ -93,6 +93,8 @@ extern void avt_trace     __P((int level, FILE *output, const char *fmt, ...));
 extern void avt_trace_va  __P((int level, FILE *output, const char *fmt, va_list pa));
 extern void avt_date      __P((char *date));
 extern void avt_error     __P((const char *lib, int code, int severity, const char *fmt, ...));
+extern int avt_text_real_length(const char *buf);
+
 
 extern void avt_fprintf(FILE *output, const char *fmt, ...);
 void avt_format_text(char *resbuf, const char *origbuf, int decal, int max);

@@ -3,6 +3,7 @@
 #include "../mcc/mcc_util.h"
 #include "../mcc/mcc_genspi.h"
 #include "../mcc/mcc_debug.h"
+#include "../mcc/mcc_curv.h"
 #include TTV_H
 #include TAS_H
 
@@ -443,7 +444,7 @@ char *argv[];
 #endif
 
 		if (plot != 0)
-			mcc_printplot ((fit == 1) ? MCC_FIT : MCC_PARAM, -1000, -1000);
+			mcc_printplot ((fit == 1) ? MCC_FIT : MCC_PARAM, 0, -1000, -1000, modeln, modelp);
 
 		if (MCC_MODE != MCC_FAST_MODE)
 			MCC_MODE = MCC_NEXT_MODE;

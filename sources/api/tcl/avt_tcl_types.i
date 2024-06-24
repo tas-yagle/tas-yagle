@@ -748,6 +748,8 @@
     if ((str = Tcl_GetString ($input))) {
         val=avt_parse_unit(str, 't');
         $1=val;
+    } else {
+        return TCL_ERROR;
     }
 }
 
@@ -758,6 +760,8 @@
     if ((str = Tcl_GetString ($input))) {
         val=avt_parse_unit(str, 'c');
         $1=val;
+    } else {
+        return TCL_ERROR;
     }
 }
 
@@ -768,6 +772,8 @@
     if ((str = Tcl_GetString ($input))) {
         val=avt_parse_unit(str, 'v');
         $1=val;
+    } else {
+        return TCL_ERROR;
     }
 }
 

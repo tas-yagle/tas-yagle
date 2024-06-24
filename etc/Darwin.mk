@@ -64,7 +64,7 @@ ARFLAGS          = rv
 
 SWIG             = $(shell brew --prefix swig)/bin/swig
 
-TCL_H            = -L$(shell brew --prefix tcl-tk)/include
+TCL_H            = -I$(shell brew --prefix tcl-tk)/include/tcl-tk  -DHAVE_UNISTD_H
 TCL_L            = -L$(shell brew --prefix tcl-tk)/lib -ltcl8.6
 
 WHOLE            = -all_load -Wl,-no_warn_duplicate_libraries

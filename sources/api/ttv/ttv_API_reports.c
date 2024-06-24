@@ -1379,7 +1379,7 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
   
                   if (!hidectk) error=(deltactk-deltasim)*100/errorref;
                   else error=(deltaref-deltasim)*100/errorref;
-                  if (!finite(error)) strcpy(buf1,".....");
+                  if (!isfinite(error)) strcpy(buf1,".....");
                   else if (fabs(error)>9999) sprintf(buf1,"" AVT_RED "....." AVT_RESET "%s", colcode);
                   else 
                     {
@@ -1408,11 +1408,11 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
               if (detail!=detailbase)
               {
                 error=(deltactk-deltaref)*100/deltaref;
-                if (finite(error)) sprintf(buf1, "%+.1f", error);
+                if (isfinite(error)) sprintf(buf1, "%+.1f", error);
                 else sprintf(buf1, "....");
                 _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_ACC, b, COL_REF_LAG_ACC, buf1);
                 error=(slopectk-sloperef)*100/sloperef;
-                if (finite(error)) sprintf(buf1, "%+.1f", error);
+                if (isfinite(error)) sprintf(buf1, "%+.1f", error);
                 else sprintf(buf1, "....");
                 _ttv_Board_SetValue(DT_CONFIG_SHOW, COL_REF_LAG_DELTA, b, COL_REF_LAG_DELTA, buf1);
               }
@@ -1607,7 +1607,7 @@ void ttv_DisplayCompletePathDetail(FILE *f, int num, ttvpath_list *tp, chain_lis
          {
            error=(tasval_cmp-simval_cmp)*100/(simval_cmp-start_cmp);
          }
-      if (!finite(error)) strcpy(buf1,".....");
+      if (!isfinite(error)) strcpy(buf1,".....");
       else if (fabs(error)>9999) sprintf(buf1,"" AVT_RED "....." AVT_RESET "%s", colcode);
       else 
         {

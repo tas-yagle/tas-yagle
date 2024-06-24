@@ -1,3 +1,4 @@
+#include <stdlib.h>
 
 #include AVT_H
 #include MUT_H

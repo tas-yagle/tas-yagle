@@ -34,9 +34,10 @@ extern int   strcmp (const char *dest, const char *src);
 extern char *strdup (const char *src);
 extern int   strlen (const char *src);
 int          fputs  (const char *s, FILE *stream);
-void myfflush(FILE *f);
 
 #endif
+
+extern int myfflush(FILE *f);
 
 /*
     MAN runStatHiTas

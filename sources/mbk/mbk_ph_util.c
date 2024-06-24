@@ -31,6 +31,7 @@
 #ident  "$Id: mbk_ph_util.c,v 1.2 2003/06/30 08:02:13 fabrice Exp $"
 
 #include <unistd.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 
