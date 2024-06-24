@@ -256,6 +256,7 @@ extern int delflaggedloins(lofig_list *ptfig); // flag => loins->INSNAME=NULL
   extern           void  lofigchain_local __P((lofig_list *ptfig));
   extern           void  dellofigchain_local __P((lofig_list *ptfig));
   extern           void  viewlo __P(());
+  extern           void  viewlosig __P((losig_list *ptsig));
   extern           void  setsigsize __P((lofig_list*, int));
   extern            int  getsigsize __P((lofig_list* ));
   extern            int  getnumberoflosig __P(( lofig_list* ));

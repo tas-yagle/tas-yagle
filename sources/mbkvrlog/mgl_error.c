@@ -13,6 +13,7 @@
 /*                                                                          */
 /****************************************************************************/
 
+#include <stdlib.h>
 #include <stdio.h>
 #include MUT_H
 #include MLO_H

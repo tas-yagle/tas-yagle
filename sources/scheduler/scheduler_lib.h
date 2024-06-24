@@ -44,6 +44,7 @@ void Scheduler_RunSimulator(Scheduler *S, long Date);
 void Scheduler_RegisterObject(Scheduler *S, int objectindex, void *object);
 void *Scheduler_GetRegisterObject(Scheduler *S, int objectindex);
 void Scheduler_AddTransaction(Scheduler *S, int ObjectIndex, long Date, void *data);
+long Scheduler_GetNextDate(Scheduler *S);
 
 // debug
 void debugtrans(Scheduler *S, int objindex);

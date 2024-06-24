@@ -1168,17 +1168,17 @@ yagStmBranchCurrent(branch_list *ptbranch, float vin, float vout, float vsupply,
             elp_lotrs_param_get(ptlink->ULINK.LOTRS,NULL,NULL, NULL,  NULL,NULL, NULL, NULL, NULL, NULL, &vbulk, NULL, NULL, NULL, NULL);
         }
         else vbulk = vsupply;
-        tas_tpiv_set_vb( ptstmlink->MAILLON, vbulk );
+        tas_tpiv_set_vb( ptstmlink->MAILLON, brtype, vbulk );
 
         if ((ptlink->ULINK.LOTRS->TYPE & CNS_TN) == CNS_TN) {
             prevcone = (cone_list *)getptype(ptlink->ULINK.LOTRS->USER, CNS_DRIVINGCONE)->DATA;
             power=cns_get_multivoltage(prevcone);
             if (power) {
-                tas_tpiv_set_vg( ptstmlink->MAILLON, power->VDDMAX - power->VSSMIN );
+                tas_tpiv_set_vg( ptstmlink->MAILLON, brtype, power->VDDMAX - power->VSSMIN );
                 continue;
             }
         }
-        tas_tpiv_set_vg( ptstmlink->MAILLON, vin );
+        tas_tpiv_set_vg( ptstmlink->MAILLON, brtype, vin );
     }
 
     result = stm_solver_i(ptstmbranch->HEAD, vout, ptcurrent);

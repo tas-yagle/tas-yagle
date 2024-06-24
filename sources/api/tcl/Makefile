@@ -122,12 +122,12 @@ WRAPPER = avt_API_wrap.c
 
 # static Shell TCL
 $(AVT_SHELL): headers $(STATIC_SWIG_OBJ) $(OBJ) 
-	$(CPLUSPLUS)  $(CFLAGS) $(DYNAMIC) $(STATIC_SWIG_OBJ) $(OBJ) $(FLEXOBJS) $(API_STATICLIB) $(FLEXLIBS) -o $(AVT_SHELL)
+	$(CPLUSPLUS)  $(CFLAGS) $(DYNAMIC) $(STATIC_SWIG_OBJ) $(OBJ) $(FLEXOBJS) $(API_STATICLIB) $(FLEXLIBS) $(TCL_H) $(TCL_L) -o $(AVT_SHELL)
 	$(STRIP) $(AVT_SHELL)
 
 # Shell TCL
 dynamic_link: $(SWIG_OBJ) $(WRAPPER) $(OBJ)
-	$(CPLUSPLUS)  $(CFLAGS) $(DYNAMIC) $(SWIG_OBJ) $(OBJ) $(TCL_L) $(FLEXOBJS) $(WHOLE) $(LIB) $(NOWHOLE) $(FLEXLIBS) -o $(AVT_SHELL)
+	$(CPLUSPLUS)  $(CFLAGS) $(DYNAMIC) $(SWIG_OBJ) $(OBJ) $(TCL_H) $(TCL_L) $(FLEXOBJS) $(WHOLE) $(LIB) $(NOWHOLE) $(FLEXLIBS) -o $(AVT_SHELL)
 	$(STRIP) $(AVT_SHELL)
 
 headers: $(TARGET_API_INCLUDE)/avt_API_types.h
@@ -140,10 +140,10 @@ $(TARGET_API_INCLUDE)/avt_API_types.h: avt_API_types.h
 	$(CC) -DBUILDNUM=$(BUILDNUM) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $<
 
 $(STATIC_SWIG_OBJ) :  $(STATIC_TCL_RUNTIME)
-	$(CC) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) -Dmain=shell_main $<
+	$(CC) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $(TCL_H) -Dmain=shell_main $<
 
 $(SWIG_OBJ) :  $(TCL_RUNTIME)
-	$(CC) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) -Dmain=shell_main $<
+	$(CC) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $(TCL_H) -Dmain=shell_main $<
 
 $(WRAPPER): avt_API.h
 	#$(WRAP) -online avt_API_COMMANDS.c avt_API.h
@@ -151,7 +151,7 @@ $(WRAPPER): avt_API.h
 
 # Main 
 $(TCL_RUNTIME): avtshell_tclsh.i avt.i
-	$(SWIG) -o $(TCL_RUNTIME) -tcl8 -l./avtshell_tclsh.i avt.i
+	$(SWIG) -o $(TCL_RUNTIME) -tcl -tcl8 -htcl tcl-tk/tcl.h -l./avtshell_tclsh.i avt.i
 
 $(STATIC_TCL_RUNTIME): avtshell_tclsh.i avt_static.i
 	$(SWIG) -o $(STATIC_TCL_RUNTIME) -tcl8 -l./avtshell_tclsh.i avt_static.i
