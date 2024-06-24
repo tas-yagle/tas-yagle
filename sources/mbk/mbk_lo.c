@@ -108,8 +108,7 @@ void delalllofig()
 /*******************************************************************************
  * function addlofig()                                                          *
  *******************************************************************************/
-lofig_list *addlofig(name)
-     char *name;
+lofig_list *addlofig(char *name)
 {
   lofig_list *ptfig;
 
@@ -153,9 +152,7 @@ lofig_list *addlofig(name)
  * function addlomodel()                                                        *
  * used by the parsers to construct a temporary model                           *
  *******************************************************************************/
-lofig_list *addlomodel(model, name)
-     lofig_list *model;
-     char *name;
+lofig_list *addlomodel(lofig_list *model, char *name)
 {
   lofig_list *fig;
 
@@ -190,8 +187,7 @@ lofig_list *addlomodel(model, name)
 /*******************************************************************************
  * function getloadedlofig()                                                    *
  *******************************************************************************/
-lofig_list *getloadedlofig(figname)
-     char *figname;
+lofig_list *getloadedlofig(char *figname)
 {
   lofig_list *ptfig;
 
@@ -267,14 +263,7 @@ freelofigparams(lofig_list *ptlofig)
 /*******************************************************************************
  * function addlotrs()                                                          *
  *******************************************************************************/
-lotrs_list *addlotrs(ptfig, type, x, y, width, length, ps, pd, xs, xd, ptgrid,
-                     ptsource, ptdrain, ptbulk, name)
-     lofig_list *ptfig;
-     char type;
-     long x, y;
-     long width, length, ps, pd, xs, xd;
-     losig_list *ptgrid, *ptsource, *ptdrain, *ptbulk;
-     char *name;
+extern lotrs_list *addlotrs (lofig_list *ptfig, char type, long x, long y, long width, long length, long ps, long pd, long xs, long xd, losig_list *ptgrid, losig_list *ptsource, losig_list *ptdrain, losig_list *ptbulk, char *name)
 {
   lotrs_list  *pttrs;
   locon_list  *ptcon;
@@ -464,14 +453,14 @@ getlotrsparam(lotrs_list *ptlotrs, void *param, char **expr, int *status)
 void
 freelotrsparams(lotrs_list *ptlotrs)
 {
-    optparam_list *ptparam;
-    optparam_list *ptnextparam;
     ptype_list    *ptuser;
 
     ptuser = getptype(ptlotrs->USER, OPT_PARAMS);
     if (ptuser != NULL) {
         freeoptparams(ptuser->DATA);
         /*
+        optparam_list *ptparam;
+        optparam_list *ptnextparam;
         for (ptparam = (optparam_list *)ptuser->DATA; ptparam; ptparam = ptnextparam) {
             ptnextparam = ptparam->NEXT;
             mbkfree(ptparam);
@@ -483,9 +472,7 @@ freelotrsparams(lotrs_list *ptlotrs)
 /*******************************************************************************
  * function addlotrsmodel()                                                     *
  *******************************************************************************/
-short addlotrsmodel(lotrs,model)
-     lotrs_list *lotrs ;
-     char *model ;
+short addlotrsmodel(lotrs_list *lotrs, char *model)
 {
   char *pt ;
   short index ;
@@ -510,8 +497,7 @@ short addlotrsmodel(lotrs,model)
 /*******************************************************************************
  * function getlotrsmodel()                                                     *
  *******************************************************************************/
-char *getlotrsmodel(lotrs)
-     lotrs_list *lotrs ;
+char *getlotrsmodel(lotrs_list *lotrs)
 {
   if((VT_MODNAMEINDEX == NULL) || (HT_MODINDEXNAME == NULL) ||
      (lotrs->MODINDEX == EMPTYHT))
@@ -531,11 +517,7 @@ char *getlotrsmodel(lotrs)
 /*******************************************************************************
  * function addloins()                                                          *
  *******************************************************************************/
-loins_list *addloins(ptfig, insname, ptnewfig, sigchain)
-     lofig_list *ptfig;
-     char *insname;
-     lofig_list *ptnewfig;
-     chain_list *sigchain;
+loins_list *addloins(lofig_list *ptfig, char *insname, lofig_list *ptnewfig, chain_list *sigchain)
 {
   locon_list *ptcon = NULL;
   locon_list *ptnewcon = NULL;
@@ -688,11 +670,7 @@ freeloinsparams(loins_list *ptloins)
 /*******************************************************************************
  * function addlocon()                                                          *
  *******************************************************************************/
-locon_list *addlocon(ptfig, name, ptsig, dir)
-     lofig_list *ptfig;
-     char *name;
-     losig_list *ptsig;
-     char dir;
+locon_list *addlocon( lofig_list *ptfig, char *name, losig_list *ptsig, char dir)
 {
   locon_list *ptcon;
 
@@ -738,20 +716,16 @@ locon_list *addlocon(ptfig, name, ptsig, dir)
  * function addlosig()                                                       *
  *******************************************************************************/
 
-losig_list *addlosig(ptfig, index, namechain, type)
-     lofig_list *ptfig;
-     long index;
-     chain_list *namechain;
-     char type;
+losig_list *addlosig(lofig_list *ptfig, long index, chain_list *namechain, char type)
 {
   losig_list *ptsig;
-  losig_list *pthead;
-  ptype_list *pt;
   chain_list *ptchain;
 /*  int high;
   int low;
   int i;
   int sigsize;
+  losig_list *pthead;
+  ptype_list *pt;
 
   sigsize = getsigsize( ptfig );
 
@@ -840,7 +814,6 @@ int freelofig(lofig_list *ptfig)
   loins_list *ptins;
   locon_list *ptcon;
   lotrs_list *pttrs;
-  ptype_list *pt;
 
   void *ptold=NULL,*ptt; /* Nom sponsorise par France Telecon */
 
@@ -874,7 +847,9 @@ int freelofig(lofig_list *ptfig)
   }
 
   mbk_free_NewBKSIG(&ptfig->BKSIG);
-/*  for (pt = ptfig->BKSIG; pt; pt = pt->NEXT) {
+/* 
+  ptype_list *pt;
+  for (pt = ptfig->BKSIG; pt; pt = pt->NEXT) {
     mbkfree((void *)pt->DATA);
   }
   freeptype(ptfig->BKSIG);*/
@@ -913,8 +888,7 @@ int freelofig(lofig_list *ptfig)
 /*******************************************************************************
  * function  freelomodel()                                                      *
  *******************************************************************************/
-void freelomodel(ptmodel)
-     lofig_list *ptmodel;
+void freelomodel(lofig_list *ptmodel)
 {
   lofig_list *ptfig;
   locon_list *ptcon;
@@ -943,9 +917,7 @@ void freelomodel(ptmodel)
 /*******************************************************************************
  * function  dellosig()                                                         *
  *******************************************************************************/
-int dellosig(ptfig, index)
-     lofig_list *ptfig;
-     long index;
+int dellosig( lofig_list *ptfig, long index)
 {
   losig_list *ptsav=NULL;
   losig_list *ptsig;
@@ -981,9 +953,7 @@ int dellosig(ptfig, index)
 /*******************************************************************************
  * function dellotrs()                                                          *
  *******************************************************************************/
-int dellotrs(ptfig, pttrs)
-     lofig_list  *ptfig;
-     lotrs_list  *pttrs;
+int dellotrs( lofig_list  *ptfig, lotrs_list  *pttrs)
 {
   lotrs_list  *pt;
   lotrs_list  *ptsav=NULL;
@@ -1031,9 +1001,7 @@ int dellotrs(ptfig, pttrs)
   return 1;
 }  
 
-int delflaggedlotrs(ptfig, flagname)
-     lofig_list  *ptfig;
-     char *flagname;
+int delflaggedlotrs( lofig_list  *ptfig, char *flagname)
 {
   lotrs_list  *pt, *next;
   lotrs_list  *ptsav=NULL;
@@ -1080,9 +1048,7 @@ int delflaggedlotrs(ptfig, flagname)
 /*******************************************************************************
  * function delloins()                                                          *
  *******************************************************************************/
-int delloins(ptfig, insname)
-     lofig_list *ptfig;
-     char *insname;
+int delloins( lofig_list *ptfig, char *insname)
 {
   loins_list *ptins;
   locon_list *ptcon;
@@ -1198,9 +1164,7 @@ int delflaggedloins(lofig_list *ptfig)
 /*******************************************************************************
  * function dellocon()                                                          *
  *******************************************************************************/
-int dellocon(ptfig, name)
-     lofig_list *ptfig;
-     char *name;
+int dellocon( lofig_list *ptfig, char *name)
 {
   locon_list *ptcon;
   locon_list *ptsav=NULL;
@@ -1233,9 +1197,7 @@ int dellocon(ptfig, name)
  * function getlomodel                              *
  * gives a pointer to a model or NULL if it doesn't exist             *
  *******************************************************************************/
-lofig_list *getlomodel(ptmodel, name)
-     lofig_list *ptmodel;
-     char *name;
+lofig_list *getlomodel( lofig_list *ptmodel, char *name)
 {
   lofig_list *ptfig;
 
@@ -1249,9 +1211,7 @@ lofig_list *getlomodel(ptmodel, name)
 /*******************************************************************************
  * function getloins()                                                          *
  *******************************************************************************/
-loins_list *getloins(ptfig, name)
-     lofig_list *ptfig;
-     char *name;
+loins_list *getloins( lofig_list *ptfig, char *name)
 {
   loins_list *ptins;
 
@@ -1268,9 +1228,7 @@ loins_list *getloins(ptfig, name)
 /*******************************************************************************
  * function getlotrs()                                                          *
  *******************************************************************************/
-lotrs_list *getlotrs(ptfig, name)
-     lofig_list  *ptfig;
-     char   *name;
+lotrs_list *getlotrs( lofig_list *ptfig, char *name)
 {
   lotrs_list  *pttrs;
 
@@ -1287,9 +1245,7 @@ lotrs_list *getlotrs(ptfig, name)
 /*******************************************************************************
  * function getlocon()                                                          *
  *******************************************************************************/
-locon_list *getlocon(ptfig, name)
-     lofig_list  *ptfig;
-     char   *name;
+locon_list *getlocon( lofig_list *ptfig, char *name)
 {
   locon_list  *ptcon;
 
@@ -1308,9 +1264,10 @@ locon_list *getlocon(ptfig, name)
  *******************************************************************************/
 losig_list *getlosig(lofig_list *ptfig, long index)
 {
+
+/*
   losig_list *ptsig;
-  
-/*  ptype_list *pt;
+  ptype_list *pt;
   int low;
   int high;
   int sigsize;
@@ -1341,8 +1298,7 @@ losig_list *getlosig(lofig_list *ptfig, long index)
  * This provide the "dual" representation of the net-list                       *
  *******************************************************************************/
 
-void dellofigchain_local(ptfig)
-     lofig_list *ptfig;
+void dellofigchain_local( lofig_list *ptfig)
 {
   losig_list *ptsig = NULL;
   ptype_list *ptype = NULL;
@@ -1361,8 +1317,7 @@ void dellofigchain_local(ptfig)
   }
 }
 
-void lofigchain_local(ptfig)
-     lofig_list *ptfig;
+void lofigchain_local(lofig_list *ptfig)
 {
   locon_list *ptcon = NULL;
   losig_list *ptsig = NULL;
@@ -1515,8 +1470,7 @@ freeoptparams(optparam_list *ptheadparam)
  * the code "LOFIGCHAIN")                                                       *
  * This provide the "dual" representation of the net-list                       *
  *******************************************************************************/
-void lofigchain(ptfig)
-     lofig_list *ptfig;
+void lofigchain(lofig_list *ptfig)
 {
   locon_list *ptcon = NULL;
   losig_list *ptsig = NULL;
@@ -1598,8 +1552,7 @@ void lofigchain(ptfig)
  * function getsigname()                                                        *
  * choose the least concatened signal name                                      *
  *******************************************************************************/
-char *getsigname(ptsig)
-     losig_list *ptsig;
+char *getsigname(losig_list *ptsig)
 {
   chain_list *ptscan;
   char *ptchar;
@@ -1640,7 +1593,7 @@ char *getsigname(ptsig)
  * function mbkisgnalname()                                                     *
  * Return 1 if signal is named 'name', 0 else. name must be nameallocated.      *
  *******************************************************************************/
-int mbkissignalname( losig_list *losig, char *name )
+int mbkissignalname(losig_list *losig, char *name)
 {
   chain_list *chain ;
   
@@ -1674,8 +1627,7 @@ void viewlo()
  * function viewlofig()                                                         *
  * display on screen the content of logical figure ptfig                        *
  *******************************************************************************/
-void viewlofig(ptfig)
-     lofig_list  *ptfig;
+void viewlofig(lofig_list *ptfig)
 {
   locon_list *ptcon;
   losig_list *ptsig;
@@ -1736,9 +1688,8 @@ void viewlofig(ptfig)
 /*******************************************************************************
  * function viewlofigcon()                                                      *
  *******************************************************************************/
-void viewlofigcon(ptcon)
-     locon_list  *ptcon; 
-{ 
+void viewlofigcon(locon_list *ptcon)
+{
   num_list	*scannum;
   ptype_list      *scanptype;
   chain_list      *scanchain;
@@ -1896,9 +1847,8 @@ void viewlosig(losig_list *ptsig)
 /*******************************************************************************
  * function viewloins()                                                         *
  *******************************************************************************/
-void viewloins(ptins)
-     loins_list  *ptins;
-{ 
+void viewloins(loins_list *ptins)
+{
   locon_list  *ptcon;
   chain_list *scanchain;
   ptype_list *pt;
@@ -1934,9 +1884,8 @@ void viewloins(ptins)
 /*******************************************************************************
  * function viewlotrs()                                                         *
  *******************************************************************************/
-void viewlotrs(pttrs)
-     lotrs_list  *pttrs;
-{ 
+void viewlotrs(lotrs_list *pttrs)
+{
   (void)printf("   |---transistor\n");
   if (MLO_IS_TRANSN(pttrs->TYPE))
     (void)printf("   |   |---type  : TRANSN \n");
@@ -1985,8 +1934,7 @@ void viewlotrs(pttrs)
 /*******************************************************************************
  * function viewloinscon()                                                      *
  *******************************************************************************/
-void viewloinscon(ptcon)
-     locon_list  *ptcon;
+void viewloinscon(locon_list *ptcon)
 {
   num_list	*scannum;
   ptype_list      *scanptype;
@@ -2047,8 +1995,7 @@ void viewloinscon(ptcon)
  * function getsigsize()                                                        *
  *******************************************************************************/
 
-int getsigsize( ptfig )
-     lofig_list *ptfig;
+int getsigsize(lofig_list *ptfig)
 {
   ptype_list    *ptl;
 
@@ -2063,9 +2010,7 @@ int getsigsize( ptfig )
  * function setsigsize()                                                        *
  *******************************************************************************/
 
-void setsigsize( ptfig, nb )
-     lofig_list *ptfig;
-     int         nb;
+void setsigsize(lofig_list *ptfig, int nb)
 {
   ptype_list    *ptl;
 
@@ -2082,20 +2027,19 @@ void setsigsize( ptfig, nb )
 }
 
 
-int getnumberoflosig( ptfig )
-     lofig_list *ptfig;
+int getnumberoflosig(lofig_list *ptfig)
 {
-  long        bkmax;
+
+  if (!ptfig->BKSIG.TAB ) return 0;
+  return ptfig->BKSIG.maxindex;
+  /*
   long        max;
+  long        bkmax;
   long        bkmaxmax;
   losig_list *blk;
   long        sz;
   long        i;
   ptype_list *ptl;
-
-  if (!ptfig->BKSIG.TAB ) return 0;
-  return ptfig->BKSIG.maxindex;
-  /*
   sz    = getsigsize( ptfig );
   bkmax = LONG_MAX;
   max   = -1;
@@ -2130,25 +2074,19 @@ int getnumberoflosig( ptfig )
  * function for cleaning USER field of structures.                              *
  *******************************************************************************/
 
-void delloconuser( ptlocon )
-     locon_list *ptlocon;
+void delloconuser(locon_list *ptlocon)
 {
   ptype_list *scanptype;
   ptype_list *next;
-  ptype_list *prev;
-  int         del;
 
-  prev = NULL;
   for( scanptype = ptlocon->USER ; scanptype ; scanptype = next )
     {
       next = scanptype->NEXT;
-      del  = 0;
-    
+
       switch( scanptype->TYPE )
         {
         case PNODENAME:
           freechain( scanptype->DATA );
-          del = 1;
           break;
         default:
 #ifdef MBK_TRACE_BAD_PTYPE
@@ -2159,6 +2097,9 @@ void delloconuser( ptlocon )
           break;
         }
 /*
+  int         del=0;
+      ptype_list *prev;
+      prev = NULL;
       if( del )
         {
           if( !prev )
@@ -2178,19 +2119,14 @@ void delloconuser( ptlocon )
 //typedef struct  eqt_param eqt_param;
 //extern void     eqt_free_param  (eqt_param *param);
 
-void dellofiguser( ptlofig )
-     lofig_list *ptlofig;
+void dellofiguser(lofig_list *ptlofig)
 {
   ptype_list *scanptype;
   ptype_list *next;
-  ptype_list *prev;
-  int         del;
 
-  prev = NULL;
   for( scanptype = ptlofig->USER ; scanptype ; scanptype = next )
     {
       next = scanptype->NEXT;
-      del  = 0;
 
       switch( scanptype->TYPE )
         {
@@ -2203,17 +2139,14 @@ void dellofiguser( ptlofig )
         case PH_REAL_INTERF:
         case PH_INTERF:
           freechain( scanptype->DATA );
-          del = 1;
           break;
         case PTSIGSIZE:
         case LOFIG_LOCK:
-          del = 1;
           break;
         case LOFIG_QUICK_SIG_HT:
         case LOFIG_QUICK_INS_HT:
         case LOFIG_QUICK_TRS_HT:
           delht_v2((ht_v2 *)scanptype->DATA );
-          del=1;
           break;
         case LOFIG_INFO:
           mbkfree(scanptype->DATA);
@@ -2246,19 +2179,14 @@ void dellofiguser( ptlofig )
   freeptype(ptlofig->USER); ptlofig->USER=NULL;
 }
 
-void delloinsuser( ptloins )
-     loins_list *ptloins;
+void delloinsuser(loins_list *ptloins)
 {
   ptype_list *scanptype;
   ptype_list *next;
-  ptype_list *prev;
-  int         del;
 
-  prev = NULL;
   for( scanptype = ptloins->USER ; scanptype ; scanptype = next )
     {
       next = scanptype->NEXT;
-      del  = 0;
 
       switch( scanptype->TYPE )
         {
@@ -2268,7 +2196,6 @@ void delloinsuser( ptloins )
         case PH_INTERF:
         case PH_REAL_INTERF: // should not happen for now, perhaps later
           freechain( scanptype->DATA );
-          del = 1;
           break;
         default:
 #ifdef MBK_TRACE_BAD_PTYPE
@@ -2279,6 +2206,11 @@ void delloinsuser( ptloins )
           break;
         }
 /*
+ *
+  ptype_list *prev;
+
+  prev = NULL;
+      int         del;
       if( del )
         {
           if( !prev )
@@ -2295,19 +2227,14 @@ void delloinsuser( ptloins )
   freeptype(ptloins->USER); ptloins->USER=NULL;
 }
 
-void dellotrsuser( ptlotrs )
-     lotrs_list *ptlotrs;
+void dellotrsuser(lotrs_list *ptlotrs)
 {
   ptype_list *scanptype;
   ptype_list *next;
-  ptype_list *prev;
-  int         del;
- 
-  prev = NULL; 
+
   for( scanptype = ptlotrs->USER ; scanptype ; scanptype = next )
     {
       next = scanptype->NEXT;
-      del  = 0;
 
       switch( scanptype->TYPE )
         {
@@ -2329,6 +2256,9 @@ void dellotrsuser( ptlotrs )
           break;
         }
 /*
+      ptype_list *prev;
+      prev = NULL; 
+      int         del;
       if( del )
         {
           if( !prev )
@@ -2345,30 +2275,23 @@ void dellotrsuser( ptlotrs )
   freeptype(ptlotrs->USER); ptlotrs->USER=NULL;
 }
 
-void dellosiguser( ptlosig )
-     losig_list *ptlosig;
+void dellosiguser(losig_list *ptlosig)
 {
   ptype_list *scanptype;
   ptype_list *next;
-  ptype_list *prev;
   chain_list *cl;
-  int         del;
 
-  prev = NULL;
   for( scanptype = ptlosig->USER ; scanptype ; scanptype = next )
     {
       next = scanptype->NEXT;
-      del  = 0;
 
       switch( scanptype->TYPE )
         {
         case LOSIGALIM:
-          del = 1;
           break ;
         case LOFIGCHAIN:
         case LOFIGCHAIN_LOCAL:
           freechain( scanptype->DATA );
-          del = 1;
           break;
         case MBK_VCARD_NODES:
           for (cl=(chain_list *)scanptype->DATA; cl!=NULL; cl=cl->NEXT)
@@ -2384,6 +2307,8 @@ void dellosiguser( ptlosig )
           break;
         }
 /*
+      ptype_list *prev;
+      int         del;
       if( del )
         {
           if( !prev )
@@ -2857,9 +2782,7 @@ void mbk_SetLosigVSS(losig_list *ls)
 /*  Function : duplosigalim()                                           */
 /*##------------------------------------------------------------------##*/
 
-void duplosigalim (losig_ptr, losig_rpt)
-losig_list *losig_ptr;
-losig_list *losig_rpt;
+void duplosigalim (losig_list *losig_ptr, losig_list *losig_rpt)
 {
    float alim=0;
    char *expr;

@@ -377,9 +377,7 @@ const char *avt_supertokenmatch(const char* token)
 /*                                                                          */
 /*                                                                          */
 /****************************************************************************/
-int avt_givetoken(env,tool)
-char *env;
-char *tool;
+int avt_givetoken(const char *env, const char *tool)
 {
   const char *token = avt_tokenmatch(tool);
   const char *sptoken = avt_supertokenmatch(token);

@@ -136,7 +136,7 @@ $(TARGET_API_INCLUDE)/avt_API_types.h: avt_API_types.h
 	cp avt_API_types.h $(TARGET_API_INCLUDE)
 
 # Objects
-.c.o : avt_API.h
+%.o : %.c avt_API.h
 	$(CC) -DBUILDNUM=$(BUILDNUM) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $<
 
 $(STATIC_SWIG_OBJ) :  $(STATIC_TCL_RUNTIME)

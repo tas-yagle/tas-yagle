@@ -470,26 +470,29 @@ int mbk_ascii_encrypt(char *inname, char *outname);
 /*******************************************************************************
 * externals for mbk_fake.c  or parsers drivers functions                       *
 *******************************************************************************/
-extern void vtiloadphfig();
-extern void vtiloadlofig();
-extern void alcloadphfig();
-extern void alcloadlofig();
-extern void spiceloadlofig();
-extern void vhdlloadlofig();
-extern void verilogloadlofig();
-extern void hiloloadlofig();
-extern void edifloadlofig();
-extern void vtisavephfig();
-extern void vtisavelofig();
-extern void alcsavephfig();
-extern void alcsavelofig();
-extern void spicesavelofig();
-extern void vhdlsavelofig(struct lofig *, FILE *);
-extern void hilosavelofig();
-extern void edifsavelofig();
-extern void vlogsavelofig(struct lofig *, FILE *);
-extern void mgnloadphfig();
-extern void mgnsavephfig();
+typedef struct phfig phfig_list;
+typedef struct lofig lofig_list;
+
+extern void vtiloadphfig(phfig_list *ptfig, char *figname, char mode);
+extern void vtiloadlofig(lofig_list *ptfig, char *figname, char mode);
+extern void alcloadphfig(phfig_list *ptfig, char *figname, char mode);
+extern void alcloadlofig(lofig_list *ptfig, char *figname, char mode);
+extern void spiceloadlofig(lofig_list *ptfig, char *figname, char mode);
+extern void vhdlloadlofig(lofig_list *ptfig, char *figname, char mode);
+extern void verilogloadlofig(lofig_list *ptfig, char *figname, char mode);
+extern void hiloloadlofig(lofig_list *ptfig, char *figname, char mode);
+extern void edifloadlofig(lofig_list *ptfig, char *figname, char mode);
+extern void vtisavephfig(phfig_list *ptfig);
+extern void vtisavelofig(lofig_list *ptfig);
+extern void alcsavephfig(phfig_list *ptfig);
+extern void alcsavelofig(lofig_list *ptfig);
+extern void spicesavelofig(lofig_list *ptfig);
+extern void vhdlsavelofig(lofig_list *ptfig, FILE *file);
+extern void hilosavelofig(lofig_list *ptfig);
+extern void edifsavelofig(lofig_list *ptfig);
+extern void vlogsavelofig(lofig_list *ptfig, FILE *file);
+extern void mgnloadphfig(phfig_list *ptfig, char *figname, char mode);
+extern void mgnsavephfig(phfig_list *ptfig);
 
 void parseverilognetlist(char *libname);
 void parsevhdlnetlist(char *libname);

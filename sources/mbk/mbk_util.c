@@ -159,7 +159,7 @@ char              MBK_VECTOR_OPEN[256];
 char              MBK_VECTOR_CLOSE[256];
 char              MBK_VECTOR_SINGLE[256];
 
-int namealloc_ok()
+int namealloc_ok(void)
 {
   return NAME_HASHTABLE!=NULL;
 }
@@ -173,7 +173,8 @@ void mbk_commit_errors(char *filename)
    MBK_PARSE_ERROR.NB_RESI=MBK_PARSE_ERROR.NB_CAPA=MBK_PARSE_ERROR.NB_LOTRS=MBK_PARSE_ERROR.NB_NET=MBK_PARSE_ERROR.NB_INSTANCE=MBK_PARSE_ERROR.NB_DIODE=0;
 }
 
-void mbk_reset_errors()
+void 
+mbk_reset_errors (void)
 {
   chain_list *cl;
   for (cl=MBK_ALL_PARSE_ERROR; cl!=NULL; cl=cl->NEXT) mbkfree(cl->DATA);
@@ -307,24 +308,23 @@ int mbk_decodvectorconfig(const char *env )
 /*******************************************************************************
  * fonction mbkenv()                                                            *
  *******************************************************************************/
-void mbkenv()
+void 
+mbkenv (void)
 {
   const char *str, *env;
-  const char          *pttok;
   long nchar;
   struct sigaction sgct;
   sigset_t ens;
   char          buf[1024];
-  int           n ;
   static int protect_mbkenv=0;
   static char MBK_RAND_SEED[] =
     {
       0x62, 0x37, 0x34, 0x30, 0x30, 0x32, 0x31, 0x38, 0x61, 0x31, 0x37, 0x34,
       0x64, 0x34, 0x64, 0x36, 0x36, 0x65, 0x32, 0x35, 0x38, 0x30, 0x34, 0x63,
-      0x31, 0x36, 0x32, 0x38, 0x34, 0x65, 0x37, 0x61 
+      0x31, 0x36, 0x32, 0x38, 0x34, 0x65, 0x37, 0x61
     } ;
-  
-  
+
+
  if (!protect_mbkenv)
   {
 #ifdef MALLOC_HISTOGRAM
@@ -655,10 +655,8 @@ void mbkenv()
 /*******************************************************************************
  * fonction readlibfile()                                                       *
  *******************************************************************************/
-void readlibfile(type,fonc,reload)
-     char *type ;
-     void (*fonc)(char *) ;
-     int reload ;
+void 
+readlibfile (char *type, void (*fonc)(char *), int reload)
 {
   FILE *file ;
   char buftype[64] ;
@@ -727,9 +725,8 @@ void readlibfile(type,fonc,reload)
  * return a string that is the concatenation of the name argument, the mbk      *
  * separator, and an index                                                      *
  *******************************************************************************/
-char *nameindex(name, index)
-     char *name;
-     long index;
+char *
+nameindex (char *name, long index)
 {
   char str[1024];
 
@@ -741,9 +738,7 @@ char *nameindex(name, index)
  * fonction addnum()                                                            *
  * num list specialized allocator to avoid too many mallocs                     *
  *******************************************************************************/
-num_list *addnum(ptnum, data)
-     num_list *ptnum;
-     long data;
+num_list *addnum(num_list *ptnum, long data)
 {
   num_list *pt;
   register int i;
@@ -780,9 +775,7 @@ num_list *addnum(ptnum, data)
  * fonction getnum()                                                            *
  * get pointer to num list element from data                                    *
  *******************************************************************************/
-num_list *getnum(ptnum, data)
-     num_list *ptnum;
-     long data;
+num_list *getnum(num_list *ptnum, long data)
 {
   num_list *pt;
 
@@ -796,8 +789,7 @@ num_list *getnum(ptnum, data)
  * function freenum()                                                           *
  * gives back freed block to the num memory allocator                           *
  *******************************************************************************/
-void freenum(pt)
-     num_list *pt;
+void freenum(num_list *pt)
 {
 #ifdef BASE_STAT
   {
@@ -833,9 +825,7 @@ num_list* dupnumlst( num_list *head )
  * function addchain()                                                          *
  * chain list specialized allocator to avoid too many mallocs                   *
  *******************************************************************************/
-chain_list *addchain(pthead, ptdata)
-     chain_list *pthead;
-     void *ptdata;
+chain_list *addchain(chain_list *pthead, const void *ptdata)
 {
   chain_list *pt;
   register int i;
@@ -882,11 +872,10 @@ chain_list *getchain(chain_list *ptchain, void *data)
  * function freechain()                                                         *
  * gives back freed block or blocks to the chain_list memory allocator          *
  *******************************************************************************/
-void freechain(pt)
-     chain_list *pt;
+void freechain(chain_list *pt)
 {
-  chain_list *scan;
 #ifdef BASE_STAT
+  chain_list *scan;
   for( scan=pt ; scan ; scan=scan->NEXT) i_nbchain++;
 #endif
 #ifdef NOHEAPALLOC
@@ -906,9 +895,7 @@ void freechain(pt)
  * function delchain()                                                          *
  * delete a single element of a chain_list and gives it back to freechain       *
  *******************************************************************************/
-chain_list *delchain(pthead, ptdel)
-     chain_list *pthead;
-     chain_list *ptdel;
+chain_list *delchain(chain_list *pthead, chain_list *ptdel)
 {
   chain_list *pt;
   chain_list *ptsav = NULL; /* To make gcc -Wall silent */
@@ -980,9 +967,7 @@ int countchain(chain_list *doubl)
  * function delchaindata()                                                      *
  * delete a single element of a chain_list and gives it back to freechain       *
  *******************************************************************************/
-chain_list *delchaindata(pthead, ptdeldata)
-     chain_list *pthead;
-     void       *ptdeldata;
+chain_list *delchaindata(chain_list *pthead, void *ptdeldata)
 {
   chain_list *pt;
   chain_list *ptsav = NULL; /* To make gcc -Wall silent */
@@ -1022,8 +1007,7 @@ chain_list *delchaindata(pthead, ptdeldata)
 /*  called func. : reverse(), mbkalloc(),                               */
 /*##------------------------------------------------------------------##*/
 
-ptype_list *dupptypelst(ptype_ptr)
-     ptype_list *ptype_ptr;
+ptype_list *dupptypelst(ptype_list *ptype_ptr)
 {
   ptype_list *ptype_rpt = NULL;         /* Returned chain pointer       */
 
@@ -1043,8 +1027,7 @@ ptype_list *dupptypelst(ptype_ptr)
 /*  called func. : reverse(), mbkalloc(),                               */
 /*##------------------------------------------------------------------##*/
 
-chain_list *dupchainlst(chain_ptr)
-     chain_list *chain_ptr;
+chain_list *dupchainlst(chain_list *chain_ptr)
 {
   chain_list *chain_rpt = NULL;         /* Returned chain pointer       */
 
@@ -1060,10 +1043,7 @@ chain_list *dupchainlst(chain_ptr)
 /*******************************************************************************
  * function addptype()                                                          *
  *******************************************************************************/
-ptype_list *addptype(pthead,type,ptdata)
-     ptype_list *pthead;
-     long type;
-     void *ptdata;
+ptype_list *addptype(ptype_list *pthead, long type, void *ptdata)
 {
   ptype_list *pt;
   register int i;
@@ -1100,9 +1080,7 @@ ptype_list *addptype(pthead,type,ptdata)
 /*******************************************************************************
  * function testanddelptype()                                                  *
  *******************************************************************************/
-ptype_list *testanddelptype(pthead, type)
-     ptype_list *pthead;
-     long type;
+ptype_list *testanddelptype(ptype_list *pthead, long type)
 {
   ptype_list *pt;
   ptype_list *ptsav = NULL; /* To make gcc -Wall silent */
@@ -1132,9 +1110,7 @@ ptype_list *testanddelptype(pthead, type)
 /*******************************************************************************
  * function delptype()                                                          *
  *******************************************************************************/
-ptype_list *delptype(pthead, type)
-     ptype_list *pthead;
-     long type;
+ptype_list *delptype(ptype_list *pthead, long type)
 {
   ptype_list *pt;
   ptype_list *ptsav = NULL; /* To make gcc -Wall silent */
@@ -1174,11 +1150,10 @@ ptype_list *delptype(pthead, type)
 /*******************************************************************************
  * function freeptype()                                                         *
  *******************************************************************************/
-void freeptype(pt)
-     ptype_list  *pt;
+void freeptype(ptype_list  *pt)
 {
-  ptype_list *scan;
 #ifdef BASE_STAT
+  ptype_list *scan;
   for( scan = pt ; scan ; scan = scan->NEXT ) i_nbptype++;
 #endif
 #ifdef NOHEAPALLOC
@@ -1197,9 +1172,7 @@ void freeptype(pt)
 /*******************************************************************************
  * function getptype()                                                          *
  *******************************************************************************/
-ptype_list *getptype(pthead, type)
-     ptype_list *pthead;
-     long type;
+ptype_list *getptype(ptype_list *pthead, long type)
 {
   ptype_list  *pt;
 
@@ -1212,8 +1185,7 @@ ptype_list *getptype(pthead, type)
 /*******************************************************************************
  * function append()                                                            *
  *******************************************************************************/
-chain_list *append(pt1, pt2)
-     chain_list *pt1,*pt2;   
+chain_list *append(chain_list *pt1, chain_list *pt2)
 {
   chain_list *pt;
 
@@ -1443,7 +1415,8 @@ char *min_namefind(const char *name)
   return temp;
 }
 
-static void namealloc_rehash()
+static void 
+namealloc_rehash (void)
 {
   chain_list **nn, *cl;
   int i, code;
@@ -1474,8 +1447,8 @@ static void namealloc_rehash()
 
 
 
-char *namealloc(inputname)
-     const char *inputname;
+char *
+namealloc (const char *inputname)
 {
   chain_list *pt;
   char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
@@ -1527,8 +1500,8 @@ char *namealloc(inputname)
 /*******************************************************************************
  * function namefind()                                                         *
  *******************************************************************************/
-char *namefind(inputname)
-     char *inputname;
+char *
+namefind (const char *inputname)
 {
   chain_list *pt;
   char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
@@ -1562,8 +1535,7 @@ char *namefind(inputname)
 /*******************************************************************************
  * function downstr()                                                           *
  *******************************************************************************/
-void downstr(s, t)
-     char *s, *t;
+void downstr (const char *s, char *t)
 {
   for (; *s; s++, t++)
     *t = tolowertable[(int)*s];
@@ -1573,8 +1545,8 @@ void downstr(s, t)
 /*******************************************************************************
  * function upstr()                                                             *
  *******************************************************************************/
-void upstr(s, t)
-     char *s, *t;
+void 
+upstr (char *s, char *t)
 {
   for (; *s; s++, t++)
     *t = touppertable[(int)*s];
@@ -1585,8 +1557,8 @@ void upstr(s, t)
  * function endstr() : match occurence of find at the end of string             *
  *******************************************************************************/
 
-char *endstr(s, find)
-     char *s, *find ;
+char *
+endstr (char *s, char *find)
 {
   int ls, lf, i ;
 
@@ -1612,8 +1584,7 @@ char *endstr(s, find)
  * function beginstr() : match occurence of find  at the beginnig of string     *
  *******************************************************************************/
 
-char *beginstr (s, find, separ)
-     char *s, *find, separ ;
+char *beginstr (char *s, char *find, char separ)
 {
   char *t ;
   int lf, ls, i ;
@@ -1647,7 +1618,7 @@ char *beginstr (s, find, separ)
 int wildstrstr (char *s, char *find)
 {
   char  buff[1024], *buf = buff;
-  int i, j, match;
+  int i, j;
 
   i = 0;
   while (find[i] != '\0') {
@@ -1661,15 +1632,13 @@ int wildstrstr (char *s, char *find)
   }
 
   return 0;
-  
 }
 
 /*******************************************************************************
  * function vectorize : builds a legal mbk vector from a name and an index      *
  *******************************************************************************/
-char *vectorize(radical, index)
-     char *radical;
-     long index;
+char *
+vectorize (char *radical, long index)
 {
   char str[BUFSIZ];
   (void)sprintf(str,"%s %ld", radical, index);
@@ -1679,8 +1648,8 @@ char *vectorize(radical, index)
 /*******************************************************************************
  * function vectorradical : returns the radical of an mbk vector                *
  *******************************************************************************/
-char *vectorradical(name)
-     char *name;
+char *
+vectorradical (char *name)
 {
   char str[BUFSIZ];
   char *s;
@@ -1772,8 +1741,8 @@ int mbk_VectorIndex(char *name, char *openb, char *closeb)
 /*******************************************************************************
  * function vectorindex : returns the index of an mbk vector                    *
  *******************************************************************************/
-int vectorindex(name)
-     char *name;
+int 
+vectorindex (char *name)
 {
   char *s = strchr(name, ' ');
 
@@ -1788,8 +1757,8 @@ int vectorindex(name)
  *  unlike strcmp, ensure that 10 > 2 for vectorized strings.                   *
  *  first, check strings, then check numerical values as numbers, not strings.  *
  *******************************************************************************/
-int naturalstrcmp(s, t)
-     char *s, *t;
+int 
+naturalstrcmp (char *s, char *t)
 {
   char *spt, *tpt , *st = s, *tt = t;
   int u, ls, lt;
@@ -1818,8 +1787,8 @@ int naturalstrcmp(s, t)
 /*******************************************************************************
  * function concatname()                                                        *
  *******************************************************************************/
-char *concatname(name1, name2)
-     char *name1, *name2;
+char *
+concatname (char *name1, char *name2)
 {
   char str[BUFSIZ];
   (void)sprintf(str,"%s%c%s", name1, SEPAR, name2);
@@ -1833,8 +1802,8 @@ char *concatname(name1, name2)
  * left="AAA" or NULL                                                           *
  * right="BBB.CCC.DDD"                                                          *
  *******************************************************************************/
-void leftunconcatname(name, left, right)
-     char *name, **left, **right;
+void 
+leftunconcatname (char *name, char **left, char **right)
 {
   char str[BUFSIZ];
   int   i;
@@ -1864,8 +1833,8 @@ void leftunconcatname(name, left, right)
  * left="AAA.BBB.CCC"                                                           *
  * right="DDD" or NULL                                                          *
  *******************************************************************************/
-void rightunconcatname(name, left, right)
-     char *name, **left, **right;
+void 
+rightunconcatname (char *name, char **left, char **right)
 {
   char str[BUFSIZ];
   int   i, m;
@@ -1893,8 +1862,8 @@ void rightunconcatname(name, left, right)
 /*******************************************************************************
  * mbkstrdup : since brain damaged system we aim at do not have it              *
  *******************************************************************************/
-char *mbkstrdup(s)
-     const char *s;
+char *
+mbkstrdup (const char *s)
 {
   char *t;
 
@@ -1920,8 +1889,7 @@ int mbk_charcmp(char orig, char dest)
 /*******************************************************************************
  * function reverse                                                             *
  *******************************************************************************/
-chain_list *reverse(head)
-     chain_list *head;
+chain_list *reverse(chain_list *head)
 {
   chain_list *p;
   chain_list *q = (chain_list *)NULL;
@@ -1941,9 +1909,10 @@ chain_list *reverse(head)
  * function pstrcmp                                                             *
  * used for qsort and bsearch use for catalog sorting and acessing              *
  *******************************************************************************/
-static int pstrcmp(s, t)
-     char **s, **t;
+static int pstrcmp (const void *s_v, const void *t_v)
 {
+  const char * const *s = s_v;
+  const char * const *t = t_v;
   return strcmp(*s, *t);
 }
 
@@ -1951,8 +1920,8 @@ static int pstrcmp(s, t)
  * function incatalogfeed                                                       *
  * tests if a model is present in the catalog with the F attribut               *
  *******************************************************************************/
-int incatalogfeed(figname)
-     char *figname;
+int 
+incatalogfeed (char *figname)
 {
   static int size;
   static char **table;
@@ -1967,8 +1936,8 @@ int incatalogfeed(figname)
  * function incataloggds                                                        *
  * tests if a model is present in the catalog with the G attribut               *
  *******************************************************************************/
-int incataloggds(figname)
-     char *figname;
+int 
+incataloggds (char *figname)
 {
   static int size;
   static char **table;
@@ -1983,8 +1952,8 @@ int incataloggds(figname)
  * function inlibcatalog                                                        *
  * tests if a model is present in the lib catalog with the C attribut           *
  *******************************************************************************/
-int inlibcatalog(figname)
-     char *figname;
+int 
+inlibcatalog (char *figname)
 {
   if(LIB_CATAL != NULL) {
     if(gethtitem(LIB_CATAL,figname) != EMPTYHT)
@@ -1998,8 +1967,8 @@ int inlibcatalog(figname)
  * function incatalog                                                           *
  * tests if a model is present in the catalog with the C attribut               *
  *******************************************************************************/
-int incatalog(figname)
-     char *figname;
+int 
+incatalog (char *figname)
 {
   static int size;
   static char **table;
@@ -2019,8 +1988,8 @@ int incatalog(figname)
  * function incatalogdelete                                                     *
  * tests if a model is present in the catalog with the D attribut               *
  *******************************************************************************/
-int incatalogdelete(figname)
-     char *figname;
+int 
+incatalogdelete (char *figname)
 {
   static int size;
   static char **table;
@@ -2035,8 +2004,8 @@ int incatalogdelete(figname)
  * function addcatalog                                                          *
  * add a cell in the catalog                                                    *
  *******************************************************************************/
-void addcatalog(figname)
-     char *figname;
+void 
+addcatalog (char *figname)
 {
   if(LIB_CATAL == NULL)
     {
@@ -2073,10 +2042,7 @@ void setcataloglist(chain_list *cl)
  * read the catalog from disk checking the given type                           *
  *******************************************************************************/
 
-static void loadcatalog(table, size, type)
-     char ***table;
-     int *size;
-     char type;
+void loadcatalog (char ***table, int *size, int type)
 {
   void *pt;
   char attrib;
@@ -2197,7 +2163,8 @@ static void loadcatalog(table, size, type)
  * function read_lib()                                                          *
  * fills an array of char * in order to have a list of names as CATA_LIB        *
  *******************************************************************************/
-static void read_lib()
+static void 
+read_lib (void)
 {
   const char *str, *stc;
   char *s, *c;
@@ -2262,8 +2229,8 @@ static void read_lib()
  * new dilution function for the table accesses. G. Augustins 18.XII.2001       *
  *******************************************************************************/
 
-unsigned long hash(p)
-     void *p;
+unsigned long 
+hash (void *p)
 {
   unsigned long key ;
   unsigned long bit0 = (long)p & (long)0xff ;
@@ -2288,8 +2255,7 @@ unsigned long hash(p)
 /*******************************************************************************
  * function addht, create a hash table                                          *
  *******************************************************************************/
-ht *addht(len)
-     unsigned long len;
+ht *addht(unsigned long len)
 {
   ht *pTable;
   htitem *pEl;
@@ -2336,8 +2302,7 @@ ht *dupht(ht *orig)
 /*******************************************************************************
  * function delht, delete a hash table                                          *
  *******************************************************************************/
-void delht(pTable)
-     ht *pTable;
+void delht(ht *pTable)
 {
   htitem * pEl;
 
@@ -2355,9 +2320,7 @@ void delht(pTable)
 /*******************************************************************************
  * function gethtitem, get an element in a hash table                            *
  *******************************************************************************/
-long gethtitem(pTable, key)
-     ht *pTable;
-     void *key;
+long gethtitem(ht *pTable, void *key)
 {
   long co = 0;
   long indice = 0;
@@ -2388,10 +2351,7 @@ long gethtitem(pTable, key)
 /*******************************************************************************
  * function addhtitem, get an element in a hash table                            *
  *******************************************************************************/
-long addhtitem(pTable, key, value)
-     ht *pTable;
-     void *key;
-     long value;
+long addhtitem(ht *pTable, void *key, long value)
 {
   int indice = 0;
   htitem *pEl, *FirstDEL=NULL;
@@ -2545,10 +2505,7 @@ long controlled_addhtitem(ht *pTable, void *key, long (*func)(int newone, long o
   } while (1);
 }
 
-long sethtitem(pTable, key, value)
-     ht *pTable;
-     void *key;
-     long value;
+long sethtitem(ht *pTable, void *key, long value)
 {
   int indice = 0;
   htitem *pEl, *FirstDEL=NULL;
@@ -2599,9 +2556,7 @@ long sethtitem(pTable, key, value)
 /*******************************************************************************
  * function delhtitem, delete an element in a hash table                         *
  *******************************************************************************/
-long delhtitem(pTable, key)
-     ht *pTable;
-     void *key;
+long delhtitem(ht *pTable, void *key)
 {
   int indice = 0;
   htitem *pEl;
@@ -2640,11 +2595,7 @@ first call).
 end is reached when nextitem contain EMPTYHT.
  *******************************************************************************/
 
-void scanhtkey(pTable, first, nextkey, nextitem)
-     ht    *pTable;
-     int    first;
-     void **nextkey;
-     long  *nextitem;
+void scanhtkey(ht *pTable, int first, void **nextkey, long  *nextitem)
 {
   long indice = 0;
   htitem * pEl;
@@ -2697,9 +2648,7 @@ void scanhtkey(pTable, first, nextkey, nextitem)
 /*******************************************************************************
  * display contents of an hash table                                            *
  *******************************************************************************/
-void viewht(pTable, pout)
-     ht *pTable;
-     char *(*pout)();
+void viewht(ht *pTable, char *(*pout)(void *key))
 {
   long i;
   htitem *pEl = pTable->pElem;
@@ -2721,8 +2670,7 @@ void viewht(pTable, pout)
 /*******************************************************************************
  * realloc space to adapt hash table size to number of entries                  *
  *******************************************************************************/
-static void reallocht(pTable)
-     ht *pTable;
+static void reallocht(ht *pTable)
 {
   ht *tabBis;
   htitem *pEl;
@@ -2751,8 +2699,7 @@ static void reallocht(pTable)
 /*******************************************************************************
  * function addvt, create a pointer table                                       *
  *******************************************************************************/
-voidt *addvt(length)
-     unsigned int length ;
+voidt *addvt(unsigned int length)
 {
   voidt *ptvt ;
   int i ;
@@ -2773,8 +2720,7 @@ voidt *addvt(length)
 /*******************************************************************************
  * function delvt, delete a pointer table                                       *
  *******************************************************************************/
-void delvt(table)
-     voidt *table ;
+void delvt(voidt *table)
 {
   if (table->data != NULL) mbkfree(table->data);
   mbkfree(table);
@@ -2783,9 +2729,7 @@ void delvt(table)
 /*******************************************************************************
  * function addvtitem, add an element in a pointer table                        *
  *******************************************************************************/
-int addvtitem(table,data)
-     voidt *table;
-     void *data ;
+int addvtitem(voidt *table, void *data)
 {
   int i ;
 
@@ -2803,10 +2747,7 @@ int addvtitem(table,data)
 /*******************************************************************************
  * function setvtitem, set an element in a pointer table                        *
  *******************************************************************************/
-void setvtitem(table,item,data)
-     voidt *table;
-     int item ;
-     void *data ;
+void setvtitem(voidt *table, int item , void *data)
 {
   int i ;
 
@@ -2825,9 +2766,7 @@ void setvtitem(table,item,data)
 /*******************************************************************************
  * function getvtitem, get an element in a pointer table                        *
  *******************************************************************************/
-void *getvtitem(table,item)
-     voidt *table;
-     int item ;
+void *getvtitem(voidt *table, int item)
 {
   if(item >= table->length)
     return((void *)EMPTYHT) ;
@@ -2838,9 +2777,7 @@ void *getvtitem(table,item)
 /*******************************************************************************
  * function delvtitem, del an element in a interger table                       *
  *******************************************************************************/
-void delvtitem(table,item)
-     voidt *table;
-     int item ;
+void delvtitem(voidt *table, int item)
 {
   if(item >= table->length)
     return ;
@@ -2851,8 +2788,7 @@ void delvtitem(table,item)
 /*******************************************************************************
  * function addit, create a integer table                                       *
  *******************************************************************************/
-it *addit(length)
-     unsigned int length ;
+it *addit(unsigned int length)
 {
   it *ptit ;
   int i ;
@@ -2873,8 +2809,7 @@ it *addit(length)
 /*******************************************************************************
  * function delit, delete a integer table                                       *
  *******************************************************************************/
-void delit(table)
-     it *table ;
+void delit(it *table)
 {
   if (table->data != NULL) mbkfree(table->data);
   mbkfree(table);
@@ -2883,9 +2818,7 @@ void delit(table)
 /*******************************************************************************
  * function addititem, add an element in a interger table                       *
  *******************************************************************************/
-int addititem(table,data)
-     it *table;
-     long data ;
+int addititem(it *table, long data)
 {
   int i ;
 
@@ -2903,10 +2836,7 @@ int addititem(table,data)
 /*******************************************************************************
  * function setititem, set an element in a interger table                       *
  *******************************************************************************/
-void setititem(table,item,data)
-     it *table;
-     int item ;
-     long data ;
+void setititem(it *table, int item , long data)
 {
   int i ;
 
@@ -2925,9 +2855,7 @@ void setititem(table,item,data)
 /*******************************************************************************
  * function getititem, add an element in a interger table                       *
  *******************************************************************************/
-long getititem(table,item)
-     it *table;
-     int item ;
+long getititem(it *table, int item)
 {
   if(item >= table->length)
     return((long)EMPTYHT) ;
@@ -2938,9 +2866,7 @@ long getititem(table,item)
 /*******************************************************************************
  * function delititem, del an element in a interger table                       *
  *******************************************************************************/
-void delititem(table,item)
-     it *table;
-     int item ;
+void delititem(it *table, int item)
 {
   if(item >= table->length)
     return ;
@@ -2951,8 +2877,7 @@ void delititem(table,item)
 /*******************************************************************************
  * function adddt, create a integer table                                       *
  *******************************************************************************/
-dt *adddt(length)
-     unsigned int length ;
+dt *adddt(unsigned int length)
 {
   dt *ptdt ;
   int i ;
@@ -2973,8 +2898,7 @@ dt *adddt(length)
 /*******************************************************************************
  * function deldt, delete a integer table                                       *
  *******************************************************************************/
-void deldt(table)
-     dt *table ;
+void deldt(dt *table)
 {
   if (table->data != NULL) mbkfree(table->data);
   mbkfree(table);
@@ -2983,9 +2907,7 @@ void deldt(table)
 /*******************************************************************************
  * function adddtitem, add an element in a interger table                       *
  *******************************************************************************/
-int adddtitem(table,data)
-     dt *table;
-     double data ;
+int adddtitem(dt *table, double data)
 {
   int i ;
 
@@ -3003,10 +2925,7 @@ int adddtitem(table,data)
 /*******************************************************************************
  * function setdtitem, set an element in a interger table                       *
  *******************************************************************************/
-void setdtitem(table,item,data)
-     dt *table;
-     int item ;
-     double data ;
+void setdtitem(dt *table, int item , double data)
 {
   int i ;
 
@@ -3025,9 +2944,7 @@ void setdtitem(table,item,data)
 /*******************************************************************************
  * function getdtitem, add an element in a interger table                       *
  *******************************************************************************/
-double getdtitem(table,item)
-     dt *table;
-     int item ;
+double getdtitem(dt *table, int item)
 {
   if(item >= table->length)
     return((double)EMPTYHT) ;
@@ -3038,9 +2955,7 @@ double getdtitem(table,item)
 /*******************************************************************************
  * function deldtitem, del an element in a interger table                       *
  *******************************************************************************/
-void deldtitem(table,item)
-     dt *table;
-     int item ;
+void deldtitem(dt *table, int item)
 {
   if(item >= table->length)
     return ;
@@ -3058,8 +2973,7 @@ void deldtitem(table,item)
 #define ASCENT 13
 static char screen[LINES][WINDOW_SIZE];
 
-static int indx(c)
-     char c;
+static int indx (int c)
 {
   return c >= '0' && c <= '9' ? (int)c - '0'
     : isupper((int)c) ? (int)10 + c - 'A'
@@ -3067,14 +2981,10 @@ static int indx(c)
     : -1;
 }
 
-static void banner(s, police, nl)
-     char *s;
-     char *police[][62];
-     int nl;
+static void banner (char *s, char *police[][62], int nl)
 {
   int i, j, k, l, m;
   char *line;
-  char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
 
   /* rince off :
      the buffer is filled with nul characteres. */
@@ -3124,8 +3034,7 @@ static void banner(s, police, nl)
   }
 }
 
-static void cartouche(tool, tv, comment, date, av, authors, contrib)
-     char *tool, *tv, *comment, *date, *av, *authors, *contrib;
+static void cartouche (char *tool, char *tv, char *comment, char *date, char *av, char *authors, char *contrib)
 {
   int i, j, k, l;
   static char *msg[6] = {
@@ -3141,7 +3050,6 @@ static void cartouche(tool, tv, comment, date, av, authors, contrib)
   time_t timer;
   char day[4], month[4];
   int year, nday, hour, minute, second;
-  char buffer[BUFSIZ];                    /* buffer for namealloc strcpy */
 
   (void)time(&timer);
   (void)sscanf(ctime(&timer), "%s %s %d %d:%d:%d %d",
@@ -3207,22 +3115,22 @@ static void cartouche(tool, tv, comment, date, av, authors, contrib)
   putc('\n', stdout);
 }
 
-void alliancebanner_with_contrib( tool, tv, comment, date, av, authors, contrib)
-     char *tool, *tv, *comment, *date, *av, *authors, *contrib;
+void 
+alliancebanner_with_contrib (char *tool, char *tv, char *comment, char *date, char *av, char *authors, char *contrib)
 {
   banner(tool, Unknown_Bold_Normal_14, 15);
   cartouche(tool, tv, comment, date, av, authors,contrib);
 }
 
-void alliancebanner_with_authors( tool, tv, comment, date, av, authors)
-     char *tool, *tv, *comment, *date, *av, *authors;
+void 
+alliancebanner_with_authors (char *tool, char *tv, char *comment, char *date, char *av, char *authors)
 {
   alliancebanner_with_contrib( tool, tv, comment, date, av, authors, NULL );
 }
 
 
-void alliancebanner(tool, tv, comment, date, av)
-     char *tool, *tv, *comment, *date, *av;
+void 
+alliancebanner (char *tool, char *tv, char *comment, char *date, char *av)
 {
   alliancebanner_with_contrib( tool, tv, comment, date, av, NULL, NULL );
 }
@@ -3233,7 +3141,8 @@ void alliancebanner(tool, tv, comment, date, av)
 ptype_list *HEAD_MBKDEBUG = NULL;
 char        MBK_DEBUG_ON  = 0;
 
-static void trapdebug()
+static void 
+trapdebug (int sig)
 {
   ptype_list *ScanDebug;
 
@@ -3253,7 +3162,8 @@ static void trapdebug()
   signal( SIGILL , SIG_DFL      );
 }
 
-void mbkdebug()
+void 
+mbkdebug (void)
 {
   signal( SIGSEGV, trapdebug );
   signal( SIGBUS,  trapdebug );
@@ -3288,22 +3198,23 @@ void mbkexit( ExitValue )
 
 #ifdef SunOS
 
-void *dlopen(path, mode)
-     char *path; int mode;
+void *
+dlopen (char *path, int mode)
 {
 }
 
-void *dlsym(handle, symbol)
-     void *handle; char *symbol;
+void *
+dlsym (void *handle, char *symbol)
 {
 }
 
-char *dlerror()
+char *
+dlerror (void)
 {
 }
 
-int dlclose(handle)
-     void *handle;
+int 
+dlclose (void *handle)
 {
 }
 
@@ -3636,8 +3547,8 @@ void scanhtkey_v2( ht_v2 *h, int first, void **nextkey, long *nextitem )
 
   if( !item ) {
 
-    for( i=i ; i<h->size && !h->ITEM_HASHTABLE[i] ; i++ );
-    
+    for( ; i<h->size && !h->ITEM_HASHTABLE[i] ; i++ );
+
     if( i==h->size ) {
       *nextkey  = NULL ;
       *nextitem = EMPTYHT ;
@@ -3794,7 +3705,8 @@ void ht_v2Stat(ht_v2 *h)
 #undef free
 #undef realloc
 
-void malloc_hook_error()
+void 
+malloc_hook_error (void)
 {
 
 }
@@ -3909,14 +3821,16 @@ void *my_realloc_hook(char *file, int line, void *block, size_t size)
 }
 
 
-void setup_malloc_hook()
+void 
+setup_malloc_hook (void)
 {
   if (MALLOC_HISTO_mutex) return;
   MALLOC_HISTO=addht_v2(19);
   MALLOC_HISTO_mutex=1;
 }
 
-void reset_malloc_hook()
+void 
+reset_malloc_hook (void)
 {
   if (!MALLOC_HISTO_mutex) return;
   MALLOC_HISTO_mutex=0;
@@ -4105,7 +4019,6 @@ char *mbk_devect(char *name, char *leftb, char *rightb)
 
 char *mbk_vect_sub(char *name, char leftb, char rightb, char *buf)
 {
-  char *c;
   int i, j, done=0;
 
   i=j=0;
@@ -4173,11 +4086,12 @@ int mbk_ReadFlags(int varnum, mbk_options_pack_struct *gen_opack, int nbopt, int
   return GEN_OPTIONS_PACK;
 }
 
-char* mbk_getvssname()
+char *
+mbk_getvssname (void)
 {
   static char  *ptvss=NULL ;
   char          buffer[BUFSIZE] ;
-  int           i, l, p ;
+  int           i, l, p=0 ;
   
   if( !ptvss ) {
   
@@ -4188,13 +4102,11 @@ char* mbk_getvssname()
          i < l && ( GLOBAL_VSS[i] == ':' || GLOBAL_VSS[i] == '*' ) ;
          i++ 
          );
-    
+
     if( i < l ) {
       /* retiens tous les caractères différents de ':' ou '*' */
-      for( p = 0 ; 
-           i < l && GLOBAL_VSS[i] != ':' && GLOBAL_VSS[i] != '*' ;
-           i++, p++ 
-           ) buffer[p] = GLOBAL_VSS[i] ;
+      for( ; i < l && GLOBAL_VSS[i] != ':' && GLOBAL_VSS[i] != '*' ; i++, p++ )
+          buffer[p] = GLOBAL_VSS[i] ;
     }
 
     buffer[p] = '\0' ;
@@ -4204,11 +4116,12 @@ char* mbk_getvssname()
   return ptvss ;
 }
 
-char* mbk_getvddname()
+char *
+mbk_getvddname (void)
 {
   static char  *ptvdd=NULL ;
   char          buffer[BUFSIZE] ;
-  int           i, l, p ;
+  int           i, l, p=0 ;
   
   if( !ptvdd ) {
   
@@ -4219,13 +4132,11 @@ char* mbk_getvddname()
          i < l && ( GLOBAL_VDD[i] == ':' || GLOBAL_VDD[i] == '*' ) ;
          i++ 
          );
-    
+
     if( i < l ) {
       /* retiens tous les caractères différents de ':' ou '*' */
-      for( p = 0 ; 
-           i < l && GLOBAL_VDD[i] != ':' && GLOBAL_VDD[i] != '*' ;
-           i++, p++ 
-           ) buffer[p] = GLOBAL_VDD[i] ;
+      for( ; i < l && GLOBAL_VDD[i] != ':' && GLOBAL_VDD[i] != '*' ; i++, p++ )
+          buffer[p] = GLOBAL_VDD[i] ;
     }
 
     buffer[p] = '\0' ;
@@ -4246,7 +4157,8 @@ void mbk_dumpfile(FILE *infile, FILE *outfile, int level)
   avt_log(LOGCONFIG, level, "\n");
 }
 
-unsigned int mbk_get_a_seed()
+unsigned int 
+mbk_get_a_seed (void)
 {
   struct timeval tp;
   if (!gettimeofday(&tp, NULL))

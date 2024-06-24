@@ -35,7 +35,7 @@ make --print-directory WITH_FLEXLM=NOFLEX            \
   AVT_DISTRIB_DIR=${buildDir}      \
   PACKAGING_TOP=${localInstall}    \
   LEX=${localInstall}/bin/flex     \
-  JAVA_HOME=/usr/lib/jvm/default   \
+  JAVA_HOME=/usr/lib/jvm/default-java   \
   CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" STRIP=true \
   SAXON="java -jar ${buildDir}/distrib_extras/saxon9.jar" \
   2>&1 | tee ../build.log
