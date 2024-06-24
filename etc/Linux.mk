@@ -13,6 +13,7 @@
 UNAME_S = $(shell uname -s)
 UNAME_R = $(shell uname -r)
 UNAME_M = $(shell uname -m)
+OS_RELEASE = $(shell awk -F= '/^NAME/{print $2}' /etc/os-release)
 
 LIB_SUFFIX  = ""
 LIB_SUFFIX_ = ""
@@ -33,6 +34,9 @@ ifeq ($(UNAME_S),Linux)
     BUILD_VARIANT    = Linux.el7
   endif
   ifneq ($(findstring ubuntu.,$(UNAME_R)),)
+    BUILD_VARIANT    = Linux.ubuntu
+  endif
+  ifneq ($(findstring Ubuntu.,$(OS_RELEASE)),)
     BUILD_VARIANT    = Linux.ubuntu
   endif
 endif

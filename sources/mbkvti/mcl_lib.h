@@ -23,11 +23,6 @@
 
 #ifndef _MCL_H
 #define _MCL_H
-#ifdef __STDC__
 extern void vtiloadlofig(lofig_list *, char *, char);
 extern void vtisavelofig(lofig_list *);
-#else
-extern void vtiloadlofig();
-extern void vtisavelofig();
-#endif
 #endif

@@ -44,44 +44,44 @@
 #define HMAX_CALLS  20
 
 
-  extern    chain_list * addchain __P((chain_list *pthead, const void *ptdata));
-  extern      num_list * addnum __P((num_list *ptnum, long data));
-  extern    ptype_list * addptype __P((ptype_list *pthead, long type, void *ptdata));
-  extern    chain_list * append __P((chain_list *pt1, chain_list *pt2));
-  extern          char * concatname __P((char *name1, char *name2));
-  extern    chain_list * delchaindata __P((chain_list *pthead, void *ptdeldata));
-  extern    chain_list * delchain __P((chain_list *pthead, chain_list *ptdel));
-  extern    ptype_list * delptype __P((ptype_list *pthead, long type));
-  extern           void  downstr __P((const char *s, char *t));
-  extern           void  freechain __P((chain_list *pt));
-  extern           void  freenum __P((num_list *pt));
-  extern           void  freeptype __P((ptype_list *pt));
-  extern    ptype_list * getptype __P((ptype_list *pthead, long type));
-  extern            int  inlibcatalog __P((char *figname));
-  extern            int  incatalog __P((char *figname));
-  extern            void addcatalog __P((char *figname));
-  extern            int  incataloggds __P((char *figname));
-  extern            int  incatalogfeed __P((char *figname));
-  extern            int  incatalogdelete __P((char *figname));
-static void loadcatalog();
-  extern           void  mbkenv __P(());
-  extern           void  readlibfile __P((char *type,void (*fonc)(char *),int reload));
-  extern          char * namealloc __P((const char *inputname));
-  extern          char * nameindex __P((char *name, long index));
+  extern    chain_list * addchain (chain_list *pthead, const void *ptdata);
+  extern      num_list * addnum (num_list *ptnum, long data);
+  extern    ptype_list * addptype (ptype_list *pthead, long type, void *ptdata);
+  extern    chain_list * append (chain_list *pt1, chain_list *pt2);
+  extern          char * concatname (char *name1, char *name2);
+  extern    chain_list * delchaindata (chain_list *pthead, void *ptdeldata);
+  extern    chain_list * delchain (chain_list *pthead, chain_list *ptdel);
+  extern    ptype_list * delptype (ptype_list *pthead, long type);
+  extern           void  downstr (const char *s, char *t);
+  extern           void  freechain (chain_list *pt);
+  extern           void  freenum (num_list *pt);
+  extern           void  freeptype (ptype_list *pt);
+  extern    ptype_list * getptype (ptype_list *pthead, long type);
+  extern            int  inlibcatalog (char *figname);
+  extern            int  incatalog (char *figname);
+  extern            void addcatalog (char *figname);
+  extern            int  incataloggds (char *figname);
+  extern            int  incatalogfeed (char *figname);
+  extern            int  incatalogdelete (char *figname);
+  extern            void loadcatalog (char ***table, int *size, int type);
+  extern           void  mbkenv ();
+  extern           void  readlibfile (char *type,void (*fonc)(char *),int reload);
+  extern          char * namealloc (const char *inputname);
+  extern          char * nameindex (char *name, long index);
 static void read_lib();
-  extern    chain_list * reverse __P((chain_list *head));
-  extern           void  upstr __P((char *s, char *t));
-  extern            ht * addht __P((unsigned long len));
+  extern    chain_list * reverse (chain_list *head);
+  extern           void  upstr (char *s, char *t);
+  extern            ht * addht (unsigned long len);
 int gethtelm() ;
 int addhtelm() ;
 int sethtelm() ;
 int delhtelm();
-  extern           void  viewht __P((ht *pTable, char *(*pout)()));
-  extern           void  delht __P((ht *pTable));
-static void reallocht();
-static void banner();
-static void cartouche();
-static int indx();
+  extern           void  viewht (ht *pTable, char *(*pout)());
+  extern           void  delht (ht *pTable);
+  static void reallocht(ht *pTable);
+  static void banner (char *s, char *police[][62], int nl);
+  static void cartouche (char *tool, char *tv, char *comment, char *date, char *av, char *authors, char *contrib);
+  static int indx (int c);
 
 /* Font definition for the banner
 

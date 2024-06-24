@@ -1269,7 +1269,8 @@ static int matchline(char *head, extract_rules *rule, label_ref *ref, int usemc)
 /****************************************************************************/
 static int matchtableline(char *head, extract_rules *rule)
 {
-  char          *token, label[1024], is /*what is*/;
+  char          *token, label[1024];
+  unsigned char  is /*what is*/;
   int            i, offset, res;
   double         value;
 

@@ -67,9 +67,7 @@ static int bl_loaded = 0;
 * if mode == 'A'  all the figure is needed                                     *
 * if mode == 'P'  interface only is needed                                     *
 *****************************************************************************/
-lofig_list *getlofig (figname, mode)
-char *figname;
-char mode;
+lofig_list *getlofig (char *figname, char mode)
 {
    lofig_list *ptfig;
    int locked = 0;
@@ -125,9 +123,7 @@ char mode;
 /*******************************************************************************
 * function givelosig()                                                         *
 *******************************************************************************/
-losig_list *givelosig (ptfig, index)
-lofig_list *ptfig;
-long index;
+losig_list *givelosig (lofig_list *ptfig, long index)
 {
    losig_list *ptsig = NULL;
 /*   ptype_list *pt = NULL;
@@ -2670,10 +2666,7 @@ void debugctc (losig_list * headlosig, int niveau)
 /*******************************************************************************
 * function loadlofig                                                           *
 *******************************************************************************/
-void loadlofig (ptfig, name, mode)
-lofig_list *ptfig;
-char *name;
-char mode;
+void loadlofig (lofig_list *ptfig, char *name, char mode)
 {
    if (TRACE_MODE == 'Y')
       (void)fprintf (stdout, "--- mbk --- loadlofig : reading file %s.%s mode %c\n", name, IN_LO, mode);
@@ -2722,28 +2715,27 @@ char mode;
 * function savelofig                                                           *
 *******************************************************************************/
 
-void savelofig (ptfig)
-lofig_list *ptfig;
+void savelofig(lofig_list *lofig)
 {
    if ((!strcmp (OUT_LO, "hns")) || (!strcmp (OUT_LO, "fne"))
       || (!strcmp (OUT_LO, "hdn")) || (!strcmp (OUT_LO, "fdn")))
-      vtisavelofig (ptfig);
+      vtisavelofig (lofig);
    else if ((!strcmp (OUT_LO, "al")) || (!strcmp (OUT_LO, "alx")))
-      alcsavelofig (ptfig);
+      alcsavelofig (lofig);
    else if (!strcmp (OUT_LO, "spi") || !strcmp (OUT_LO, "sp") || !strcmp (OUT_LO, "cir"))
-      spicesavelofig (ptfig);
+      spicesavelofig (lofig);
    else if (!strcmp (OUT_LO, "edi"))
-      edifsavelofig (ptfig);
+      edifsavelofig (lofig);
    else if (!strcmp (OUT_LO, "vst"))
-      vhdlsavelofig (ptfig,NULL);
+      vhdlsavelofig (lofig,NULL);
    else if (!strcmp (OUT_LO, "vhd"))
-      vhdlsavelofig (ptfig,NULL);
+      vhdlsavelofig (lofig,NULL);
    else if (!strcmp (OUT_LO, "cct"))
-      hilosavelofig (ptfig);
+      hilosavelofig (lofig);
    else if (!strcmp (OUT_LO, "vlg"))
-      vlogsavelofig (ptfig,NULL);
+      vlogsavelofig (lofig,NULL);
    else if (!strcmp (OUT_LO, "v"))
-      vlogsavelofig (ptfig,NULL);
+      vlogsavelofig (lofig,NULL);
    else {
       (void)fflush (stdout);
       (void)fprintf (stderr, "*** mbk error ***\n");
@@ -2927,10 +2919,11 @@ static void hierFlatOutsideList (lofig_list * ptlofig, AdvancedNameAllocator * a
            if ((p0 = getptype (ptloins->USER, LF_HIERNAME_TO_NAMEALLOC)) != NULL) 
            {
              AdvancedNameAllocName (ana, (int)(long)p0->DATA, buf);
-             sprintf(buf1, "%s`%s",ptloins->FIGNAME,buf);
+             snprintf(buf1, 512, "%s`%s",ptloins->FIGNAME,buf);
            }
-           else
-            sprintf(buf1, "%s`%s",ptloins->FIGNAME,ptloins->INSNAME);
+           else {
+             snprintf(buf1, 512, "%s`%s",ptloins->FIGNAME,ptloins->INSNAME);
+	   }
            ptloins->USER=addptype(ptloins->USER, BBOX_AS_UNUSED, namealloc(buf1));
          }
       }
