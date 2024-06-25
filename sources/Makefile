@@ -38,11 +38,11 @@ all : print_info working_dirs $(ALL_DIRS_HEADERS) build
 
 working_dirs : $(AVT_DISTRIB_DIR) $(FULL_NAME_WORK_DIRS)
 
-.PHONY: print_info
 print_info:
 	@echo "           %%%%%%%%% Building for $(AVERTEC_OS) $(BUILD_VARIANT) %%%%%%%%%"
 	@echo " Graphical build: $(GRAPHICAL)"
 	@echo " 64 bit build: $(AVT_COMPILATION_64BIT)"	
+.PHONY: print_info
 
 build : $(ALL_DIRS_COMP) 
 	@echo ""
@@ -52,6 +52,7 @@ build : $(ALL_DIRS_COMP)
 	@echo "           ###########                  #############"
 	@echo "           ##########################################"
 	@echo ""
+.PHONY: build 
 
 $(ALL_DIRS_HEADERS) : $(AVT_DISTRIB_DIR) $(FULL_NAME_WORK_DIRS)
 	@echo "           %%%%%%%%% creating HEADERS for" `echo $(@:%.$(XXX_H)=%)|sed 's/\..*//'` "%%%%%%%%%"
@@ -91,21 +92,25 @@ dynamic_link : working_dirs $(ALL_DIRS_HEADERS) $(ALL_DIRS_API_BUILD)
 	$(MAKE) -j2 -C tas/stb
 	$(MAKE) -j2 -C api/tcl dynamic_link
 
+.PHONY: dynamic_link
+
 $(BIN_LIST_DEL) :
 	$(RM) $(AVT_DISTRIB_DIR)/bin/$(@:%.del=%)
 
 link : $(BIN_LIST_DEL) all
+.PHONY: link
 	
 
 clean : $(ALL_DIRS_CLEAN)
+.PHONY: clean
 	
 
 realclean : $(ALL_DIRS_REALCLEAN) $(BIN_LIST_DEL)
+.PHONY: realclean
 	
-
 headers : $(ALL_DIRS_HEADERS)
-	
-.PHONY: help color
+.PHONY: headers
+
 help : 
 	@echo "Makefile usage:"
 	@echo "make [all|clean|realclean|headers|build|link|api_link]:"
@@ -118,20 +123,9 @@ help :
 	@echo "              WARNING it need that headers have been done once"
 	@echo "  link      : compile and relink all binaries"
 	@echo "  api_link  : compile and relink all binaries with apis in static"
+.PHONY: help
 
 color :
 	$(MAKE) -e XXC_W="" XXB_W="" XXC_G="" XXR_0=""
-
-% :
-	echo "[1;30;41m$@"
-	@for FILE in $(ALL_DIRS)        ;\
-	do rules=`echo $$FILE|sed 's/\..*//'` ;\
-	echo "           $$rules $$FILE" ;\
-    if [ "$$rules" = "$$FILE" ] ;\
-     then $(MAKE) -C `echo $$FILE|sed 's/\..*//'` $@       ;\
-	fi                  ;\
-	if [ $$? -ne 0 ]            ;\
-	  then  exit 1              ;\
-	fi                  ;\
-	done
+.PHONY: color
 
