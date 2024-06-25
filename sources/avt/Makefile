@@ -61,9 +61,9 @@ $(TARGET_LIB)/$(AVT_LIB) : $(AVT_RPC) $(AVT_OBJ_LIB) $(AVT_LIC_OBJ)
 $(TARGET_INCLUDE)/$(AVT_H) : $(AVT_HEADER)
 	$(CP) $(AVT_HEADER) $(TARGET_INCLUDE)/$(AVT_H)
 
-$(ERR_FILE) : $(XML_ERR) $(AVT_HEADER) ./generrmsg_tab.csh $(XML_ERR_FILE_LIST)
+$(ERR_FILE) : $(XML_ERR) $(AVT_HEADER) ./generrmsg_tab.sh $(XML_ERR_FILE_LIST)
 	$(SAXON) $(XML_ERR) h.xsl > $(ERR_FILE)
-	./generrmsg_tab.csh
+	AWK='$(AWK)' ./generrmsg_tab.sh
 
 .c.o :
 	$(CC) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $<
