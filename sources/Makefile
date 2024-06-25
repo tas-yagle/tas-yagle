@@ -5,6 +5,8 @@
 # Makefile v3.0 : added flexibility rules like build
 #
 
+include $(AVERTEC_TOP)/etc/$(AVERTEC_OS).mk
+
 XXX_H = header
 XXX_C = compilation
 XXX_Cl = clean
@@ -31,13 +33,18 @@ FULL_NAME_WORK_DIRS = $(WORK_DIRS:%=$(AVT_DISTRIB_DIR)/%)
 BIN_LIST = avt_shell avtreserve gnshr x2v avtdeltoken avttool gnstest xtas avtgenkey cnsdiff license_api ttvdiff xyagle avtinfo netutil ttvren avtlicense genapi router ttvtest avtlog genelp  val avtman gentest wrap yargle hitas
 BIN_LIST_DEL = $(BIN_LIST:%=%.del)
 
-all : working_dirs $(ALL_DIRS_HEADERS) build
+all : print_info working_dirs $(ALL_DIRS_HEADERS) build
 	
 
 working_dirs : $(AVT_DISTRIB_DIR) $(FULL_NAME_WORK_DIRS)
-	
 
-build : $(ALL_DIRS_COMP)
+.PHONY: print_info
+print_info:
+	@echo "           %%%%%%%%% Building for $(AVERTEC_OS) $(BUILD_VARIANT) %%%%%%%%%"
+	@echo " Graphical build: $(GRAPHICAL)"
+	@echo " 64 bit build: $(AVT_COMPILATION_64BIT)"	
+
+build : $(ALL_DIRS_COMP) 
 	@echo ""
 	@echo "           ##########################################"
 	@echo "           ###########                  #############"
@@ -98,7 +105,7 @@ realclean : $(ALL_DIRS_REALCLEAN) $(BIN_LIST_DEL)
 
 headers : $(ALL_DIRS_HEADERS)
 	
-
+.PHONY: help color
 help : 
 	@echo "Makefile usage:"
 	@echo "make [all|clean|realclean|headers|build|link|api_link]:"
