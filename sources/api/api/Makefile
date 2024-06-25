@@ -97,10 +97,10 @@ gen_library_lexer.c: gen_library_lexer.l gen_library_parser.h
 	        $(LEX) -Pgen_library_parser -t $<  >  $@
 
 %.o: %.cc $(TARGET_INCLUDE)/$(API_H) $(PRE_OBJ) headers.inc
-	$(CPLUSPLUS) $(CFLAGS) $(LOCAL_CPPFLAGS) $(WRP_CPPFLAGS) $<
+	$(CPLUSPLUS) $(CFLAGS) $(LOCAL_CPPFLAGS) $(TCL_H) $(WRP_CPPFLAGS) $<
 
 %.o: %.c $(TARGET_INCLUDE)/$(API_H) $(PRE_OBJ)
-	$(CC) $(CFLAGS) $(WRP_CPPFLAGS) $<
+	$(CC) $(CFLAGS) $(TCL_H) $(WRP_CPPFLAGS) $<
 
 headers.inc: $(TARGET_INCLUDE)/$(AVT_H) api_lib.h
 	\grep "^GRAB_IT" $(TARGET_INCLUDE)/$(AVT_H) | sed -e "s/^GRAB_IT /Printf(f_header, \"/g" -e "s/$$/\\\\n\");/g" > tmp

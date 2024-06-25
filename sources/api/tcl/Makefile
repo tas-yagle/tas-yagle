@@ -120,6 +120,8 @@ STATIC_TCL_RUNTIME = avt_static_TCL_wrap.c
 AVT_SHELL = $(TARGET_BIN)/avt_shell
 WRAPPER = avt_API_wrap.c
 
+all: $(AVT_SHELL)
+
 # static Shell TCL
 $(AVT_SHELL): headers $(STATIC_SWIG_OBJ) $(OBJ) 
 	$(CPLUSPLUS)  $(CFLAGS) $(DYNAMIC) $(STATIC_SWIG_OBJ) $(OBJ) $(FLEXOBJS) $(API_STATICLIB) $(FLEXLIBS) $(TCL_H) $(TCL_L) -o $(AVT_SHELL)
@@ -129,11 +131,13 @@ $(AVT_SHELL): headers $(STATIC_SWIG_OBJ) $(OBJ)
 dynamic_link: $(SWIG_OBJ) $(WRAPPER) $(OBJ)
 	$(CPLUSPLUS)  $(CFLAGS) $(DYNAMIC) $(SWIG_OBJ) $(OBJ) $(TCL_H) $(TCL_L) $(FLEXOBJS) $(WHOLE) $(LIB) $(NOWHOLE) $(FLEXLIBS) -o $(AVT_SHELL)
 	$(STRIP) $(AVT_SHELL)
+.PHONY: dynamic_link
 
 headers: $(TARGET_API_INCLUDE)/avt_API_types.h
 
 $(TARGET_API_INCLUDE)/avt_API_types.h: avt_API_types.h
 	cp avt_API_types.h $(TARGET_API_INCLUDE)
+.PHONY: headers
 
 # Objects
 %.o : %.c avt_API.h
