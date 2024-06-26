@@ -80,11 +80,10 @@ it     *TAB_INDEX=NULL ;
 /* -------------------                                                      */
 /*    La fonction renvoie -1 en cas de probleme, 0 sinon.                   */
 /****************************************************************************/
-int tas_TechnoParameters()
-
+int tas_TechnoParameters(void)
 {
-long front;
-int valeur = 0;
+ long front;
+ int valeur = 0;
 
  if(elpLoadOnceElp()) /* si probleme dans la lecture techno */
      valeur = 1;

@@ -16,8 +16,8 @@
 /* les structures et base de donnees de TAS                                 */
 /****************************************************************************/
 
-#ifndef TAS
-#define TAS
+#ifndef _TAS_LIB_H_
+#define _TAS_LIB_H_
 
 //#define USEOLDTEMP
 
@@ -674,4 +674,4 @@ int ttv_path_is_activable(ttvfig_list *tvf, cnsfig_list *cf, ttvpath_list *tc, c
 float tas_get_cone_output_capacitance(cone_list *cone);
 ttvfig_list *hitas_tcl (char *figname);
 
-#endif
+#endif //_TAS_LIB_H_
