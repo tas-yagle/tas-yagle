@@ -325,7 +325,7 @@ void beh_debug(void *head_pnt, char *type)
 
 	printf ("\n\nCOMMAND > ");
 
-	gets (line);
+	fgets (line, sizeof(line), stdin);
 	if (strcmp (line ,"."))
 	{
 	  wrdcnt = splitline (words, line);
