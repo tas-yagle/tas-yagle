@@ -8,10 +8,19 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, macos-latest]
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build
-      run: ./build.sh
+      - name: Install dependencies
+        uses: ConorMacBride/install-package@v1
+        with:
+          brew: bison flex openmotif gawk tcl-tk swig
+          apt: bison default-jdk libcrypt-dev libedit-dev libncurses-dev swig tcl-dev libfl-dev
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        run: ./build.sh
