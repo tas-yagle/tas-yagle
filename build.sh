@@ -1,19 +1,6 @@
 #!/usr/bin/env bash
 set -ex
 
-# Build patched flex, if needed
-mkdir -p localinstall
-pushd localinstall
-localInstall="`pwd`"
-if [[ ! -d "flex-2.5.4" ]]; then
-	tar -xf ../distrib_extras/flex-2.5.4_patch.tar.gz
-fi
-pushd flex-2.5.4
-CFLAGS="-g -O3 -Wno-implicit-function-declaration -Wno-knr-promoted-parameter" ./configure --prefix=${localInstall}
-make install
-popd
-popd
-
 # Create build subdirectories
 buildDir="`pwd`"
 buildDirs="api_include api_lib bin lib include man/man3 doc"
@@ -21,8 +8,6 @@ for dir in ${buildDirs}; do
 	mkdir -p ${dir}
 done
 
-CFLAGS="-g -O3 -Wno-knr-promoted-parameter -I${localInstall}/include"
-CPPFLAGS="-g -O3 -I${localInstall}/include"
 pushd sources
 make --print-directory WITH_FLEXLM=NOFLEX            \
   ALLIANCE_TOP=${buildDir}         \
@@ -34,13 +19,11 @@ make --print-directory WITH_FLEXLM=NOFLEX            \
   AVT_COMPILATION_TYPE=distrib     \
   AVT_DISTRIB_DIR=${buildDir}      \
   PACKAGING_TOP=${localInstall}    \
-  LEX=${localInstall}/bin/flex     \
-  JAVA_HOME=/usr/lib/jvm/default-java   \
-  CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" STRIP=true \
   SAXON="java -jar ${buildDir}/distrib_extras/saxon9.jar" \
   2>&1 | tee ../build.log
 popd
 
+#  LEX=${localInstall}/bin/flex     \
 
 # 'Install'
 mkdir -p install

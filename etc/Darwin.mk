@@ -46,18 +46,19 @@ MAKEFLAGS        =
 CC               = /usr/bin/gcc -fno-common
 SCC              = $(CC)
 CPLUSPLUS        = /usr/bin/g++
-CFLAGS           = -O3
 CPPFLAGS         ?= 
 
 OPTIM            = -O2 -Wall
 
 PURIFY           = purify
 
-YACC             = /usr/bin/env bison
+YACC             = $(shell brew --prefix bison)/bin/bison
 YACCFLAGS        =
+YACC_L           = -L$(shell brew --prefix bison)/lib
 
-LEX              = /usr/bin/env flex
-LEXFLAGS         =
+LEX              = $(shell brew --prefix flex)/bin/flex
+LEX_H            = -I$(shell brew --prefix flex)/include
+LEX_L            = -L$(shell brew --prefix flex)/lib
 
 AR               = /usr/bin/env ar
 ARFLAGS          = rv
@@ -70,4 +71,5 @@ TCL_L            = -L$(shell brew --prefix tcl-tk)/lib -ltcl8.6
 WHOLE            = -all_load -Wl,-no_warn_duplicate_libraries
 NOWHOLE          = -Wl,-no_warn_duplicate_libraries
 
+CFLAGS           = $(TCL_H) $(LEX_H) -O3 -Wno-knr-promoted-parameter
 # EOF

@@ -18,8 +18,6 @@
 %option yyclass="mgl_scomplexer"
 
 %{
-static YY_BUFFER_STATE yy_current_buffer = 0;
-
 #include <stdio.h>
 #include <iostream>
 #include <cstring>
