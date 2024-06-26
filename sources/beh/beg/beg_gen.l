@@ -20,7 +20,7 @@
 
 #define ECHO // fprintf(stderr,"\n-=<{oo}>=- %s\n",yytext)
 #define YY_NO_UNPUT
-/* static YY_BUFFER_STATE yy_current_buffer = 0; */
+static YY_BUFFER_STATE yy_current_buffer = 0;
 
 extern char   *BEG_GEN_STR ;
 

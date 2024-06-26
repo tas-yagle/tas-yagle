@@ -41,11 +41,9 @@ extern "C" {
 #include "bgl_util.h"
 #include "bgl_class.h"
 
-#if 0
 int yyFlexLexer::yywrap() {
     return (1);
 }
-#endif
 
 void bgl_bcomplexer::embedded_yylex(int& result, YYSTYPE *lvalp, bgl_bcompcontext *local_context) {
     context = local_context;

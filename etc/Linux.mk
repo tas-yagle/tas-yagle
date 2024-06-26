@@ -78,7 +78,6 @@ MAKEFLAGS        =
 CC               = /usr/bin/env gcc -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE
 SCC              = /usr/bin/env gcc -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE
 CPLUSPLUS        = /usr/bin/env g++
-CFLAGS           = -I${PACKAGING_TOP}/include
 CPPFLAGS         =
 
 TCL_H            = $(shell pkg-config --cflags tcl)
@@ -99,6 +98,7 @@ ifeq ($(shell uname -m),riscv64)
 endif
 
 
+CFLAGS           = -I${PACKAGING_TOP}/include $(TCL_H)
 
 OPTIM            = -O3
 
