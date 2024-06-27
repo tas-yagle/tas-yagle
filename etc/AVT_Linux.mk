@@ -17,4 +17,4 @@ FLEXOSLIBS =
 endif
 
 LICENSE_API =license_api
-EDITLINELIBS = "-ledit -ltermcap"
+EDITLINELIBS = $(shell pkg-config --libs libedit)
