@@ -6,6 +6,7 @@
 #include TRC_H
 #define API_USE_REAL_TYPES
 #include "trc_API.h"
+#include STM_H
 
 int trc_GetDelayAWE( Netlist *netlist, Connector *begin, Connector *end, double smax, double smin, double *tmax, double *tmin, double *fmax, double *fmin )
 {

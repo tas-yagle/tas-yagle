@@ -16,8 +16,8 @@
 /* les structures et base de donnees de TAS                                 */
 /****************************************************************************/
 
-#ifndef TAS
-#define TAS
+#ifndef _TAS_LIB_H_
+#define _TAS_LIB_H_
 
 //#define USEOLDTEMP
 
@@ -665,6 +665,8 @@ extern void                tpiv_freebranch( tpiv *br );
 extern tpiv*               tpiv_alloc( void );
 extern void                tpiv_free( tpiv *s );
 extern void                tpiv_carac_static( lotrs_list *lotrs, float vdd, float vdsmax, float vgsmax, float vb, float vs );
+extern void                tas_tpiv_set_vg( stm_solver_maillon *maillon, char brtype, float vg );
+extern void                tas_tpiv_set_vb( stm_solver_maillon *maillon, char brtype, float vb );
 extern void                tas_update_mcctemp (inffig_list *ifl);
 extern float tas_get_current_leakage_2( branch_list *branch, link_list *head, link_list *activelink );
 
@@ -672,4 +674,4 @@ int ttv_path_is_activable(ttvfig_list *tvf, cnsfig_list *cf, ttvpath_list *tc, c
 float tas_get_cone_output_capacitance(cone_list *cone);
 ttvfig_list *hitas_tcl (char *figname);
 
-#endif
+#endif //_TAS_LIB_H_

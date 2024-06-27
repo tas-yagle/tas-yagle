@@ -3,7 +3,7 @@
 <section niv='1'><title>Master-Slave Flip-Flop</title>
 <p>This example presents how &tool; performs timing checks upon a sequential design. The example given here
 is a simple master-slave flip-flop (<f>msdp2_y</f> diagram below). It takes place in the directory <f>ms/</f></p>
-<imgsize namehtml="ms_diagram.gif" namepdf="ms_diagram.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="ms_diagram.gif" namepdf="ms_diagram.svg"/>
 
 <section niv='2'><title>Timing Checks</title>
 <section niv='3'><title>Principles</title>

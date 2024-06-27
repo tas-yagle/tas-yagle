@@ -1,9 +1,0 @@
-
-       int hitas_pvt_count();
-
-DDEESSCCRRIIPPTTIIOONN
-       Returns the number of PVT errors encountered in the last hitas run.
-
-AARRGGUUMMEENNTTSS
-       EEXXAAMMPPLLEE       _s_e_t _p_v_t_e_r_r_o_r_s _[_h_i_t_a_s___p_v_t___c_o_u_n_t_]
-

@@ -101,6 +101,7 @@ static char avtshell_initScript[] =
 extern int		MacintoshInit _ANSI_ARGS_((void));
 #endif
 
+#include <tclInt.h>
 #include "eltclsh.h"
 #include AVT_H
 

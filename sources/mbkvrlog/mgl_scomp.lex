@@ -18,8 +18,6 @@
 %option yyclass="mgl_scomplexer"
 
 %{
-static YY_BUFFER_STATE yy_current_buffer = 0;
-
 #include <stdio.h>
 #include <iostream>
 #include <cstring>
@@ -35,7 +33,9 @@ extern "C" {
 }
 
 #include "mgl_type.h"
-#include "mgl_scomp.tab.h"
+extern "C" {
+  #include "mgl_scomp.tab.h"
+}
 #include "mgl_parse.h"
 #include "mgl_util.h"
 #include "mgl_class.h"

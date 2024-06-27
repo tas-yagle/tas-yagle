@@ -16,6 +16,9 @@
 /* fichier header a inclure dans tous les fichiers .c                       */
 /****************************************************************************/
 
+#ifndef _TAS_H_
+#define _TAS_H_
+
 /* les inclusions systemes */
 #include <stdio.h>
 #include <stdlib.h>
@@ -123,3 +126,5 @@
 #include "tas_noise.h"
 #include "tas_models.h"
 #include "tas_cnsmemory.h"
+
+#endif //_TAS_H_

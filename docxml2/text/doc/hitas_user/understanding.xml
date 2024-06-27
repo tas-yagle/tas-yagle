@@ -8,7 +8,7 @@ first step is the generation of a Unified Timing Database (UTD) from the design 
 following diagram). The second step is the exploitation of the database, in order to perform Static 
 Timing Analysis, Signal Integrity Analysis, and Timing abstraction (right-hand side of the
 following diagram).</p>
-<imgsize namehtml="hitas_flow.gif" namepdf="hitas_flow.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="hitas_flow.gif" namepdf="hitas_flow.svg"/>
 <p>The timing database represents the intrinsic timing characteristics of the design, 
 for a given corner, or multi-corner configuration (processes, voltages and temperatures). 
 Those characteristics are such as gate timing arcs, gate and interconnect delay models, timing paths.</p>
@@ -57,7 +57,7 @@ by following source-drain connections.</p>
 identifying all the current paths between the node N and a voltage source (Vdd or Vss), as illustrated 
 in the following diagram.</p>
 
-<imgsize namehtml="partitioning.gif" namepdf="partitioning.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="partitioning.gif" namepdf="partitioning.svg"/>
 
 <p>Each cone has a unique output and a certain number of inputs: the nodes controlling the gates of 
 the cone's transistors.</p>
@@ -71,7 +71,7 @@ phase (partitioning phase). Timing graph also includes RC networks. The timing g
 edges are rising or falling events (logic transitions) on an input or output of a cone. Arcs are possible 
 causality relations between events. Causality relations are also called timing arcs.</p>
 
-<imgsize namehtml="timing_arcs.gif" namepdf="timing_arcs.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="timing_arcs.gif" namepdf="timing_arcs.svg"/>
 </section>
 
 <section niv='3'><title>Timing Models</title>
@@ -106,7 +106,7 @@ the possible timing paths in the design are saved into the database.</p>
 <section niv='3'><title>Database Analysis Flow</title>
 <p>The diagram below presents the set of functionalities of the &tool; platform, for complete timing and
 SI analysis, allowing to performing frequency optimization and violations repairs.</p>
-<imgsize namehtml="UTD_analysis.gif" namepdf="UTD_analysis.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="UTD_analysis.gif" namepdf="UTD_analysis.svg"/>
 <glossary>
 <row><article>Timing Constraints</article> <def>Input connectors arrival times, output connectors departure times, clocks specifications</def></row>
 <row><article>STA and SI</article> <def>STA is optionally coupled with the SI analysis</def></row>

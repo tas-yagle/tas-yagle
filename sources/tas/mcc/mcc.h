@@ -133,3 +133,4 @@ extern void mcc_genspi                  __P(( int ,
                                               elp_lotrs_param*,
                                               elp_lotrs_param*
                                            )) ;
+extern int mcc_genelp                      (int spice, int vt, double tec, int aut, int fit, mcc_modellist **modeln, mcc_modellist **modelp,elp_lotrs_param *lotrsparam_n,elp_lotrs_param *lotrsparam_p);

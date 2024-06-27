@@ -1,9 +1,0 @@
-
-       int ctk_GetNumberOfCtkStatLine(StabilityFigure *stbfig);
-
-DDEESSCCRRIIPPTTIIOONN
-       Returns the number crosstalk delay statistics
-
-AARRGGUUMMEENNTTSS
-       ssttbbffiigg        Pointer on a stability figure
-

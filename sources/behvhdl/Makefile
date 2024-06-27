@@ -3,7 +3,7 @@ include $(AVERTEC_TOP)/etc/libraries.mk
 include $(AVERTEC_TOP)/etc/Avertec.mk
 
 LOCAL_CFLAGS    = $(CFLAGS)
-LOCAL_YACCFLAGS = $(YACCFLAGS) -d
+LOCAL_YACCFLAGS = $(YACCFLAGS) -y -d
 LOCAL_LEXFLAGS  = $(LEXFLAGS)
 LOCAL_ARFLAGS   = $(ARFLAGS)
 

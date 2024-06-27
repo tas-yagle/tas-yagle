@@ -1416,3 +1416,4 @@ void sim_DefineInclude(SimulationContext *sc, char *filename);
 */
 void cpe_DefineCorrelation(void);
 
+void gsp_AddCorrelation(char *name0, char *name1, int tog);

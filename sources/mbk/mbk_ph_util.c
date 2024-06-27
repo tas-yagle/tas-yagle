@@ -31,6 +31,7 @@
 #ident  "$Id: mbk_ph_util.c,v 1.2 2003/06/30 08:02:13 fabrice Exp $"
 
 #include <unistd.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 
@@ -44,11 +45,9 @@
 * if mode == 'A' all the figure is requested                                   *
 * if mode != 'A' interface only is requested                                   *
 *******************************************************************************/
-phfig_list *getphfig(figname, mode)
-char *figname;
-char mode;
+phfig_list *getphfig(char *figname, char mode)
 {
-phfig_list   *ptfig;
+	phfig_list   *ptfig;
 
 	figname = namealloc(figname);
 
@@ -99,26 +98,23 @@ phfig_list   *ptfig;
 * fonction flattenphfig                                                        *
 * newtrsf = trsf o ptins->TRANSF
 *******************************************************************************/
-void flattenphfig(ptfig, insname, concat)
-phfig_list *ptfig;
-char *insname;
-char concat;
+void flattenphfig(phfig_list *ptfig, char *insname, char concat)
 {
-phins_list *ptins = NULL;
-phseg_list *ptseg = NULL;
-phvia_list *ptvia = NULL;
-phref_list *ptref = NULL;
-phins_list *ptinstbf = NULL;
-phfig_list *ptfigtbf = NULL;
-phfig_list *pt = NULL;
-long x1, y1, x2, y2;
-long xins, yins;
-long xab1, yab1, xab2, yab2;
-long dx, dy;
-long vx1, vx2, vy1, vy2;
-char trsf;
-char newtrsf = 0;
-int  Layer;
+	phins_list *ptins = NULL;
+	phseg_list *ptseg = NULL;
+	phvia_list *ptvia = NULL;
+	phref_list *ptref = NULL;
+	phins_list *ptinstbf = NULL;
+	phfig_list *ptfigtbf = NULL;
+	phfig_list *pt = NULL;
+	long x1, y1, x2, y2;
+	long xins, yins;
+	long xab1, yab1, xab2, yab2;
+	long dx, dy;
+	long vx1, vx2, vy1, vy2;
+	char trsf;
+	char newtrsf = 0;
+	int  Layer;
 
 	ptinstbf = getphins(ptfig, insname);
 	ptfigtbf = getphfig(ptinstbf->FIGNAME, 'A');
@@ -353,10 +349,7 @@ int  Layer;
 /*******************************************************************************
 * fonction loadphfig                                                           *
 *******************************************************************************/
-void loadphfig(ptfig, figname, mode)
-phfig_list *ptfig;
-char *figname;
-char mode;
+void loadphfig(phfig_list *ptfig, char *figname, char mode)
 {
 	if (TRACE_MODE == 'Y')
 		(void)fprintf(stdout,
@@ -383,8 +376,7 @@ char mode;
 /*******************************************************************************
 * fonction  savephfig                                                          *
 *******************************************************************************/
-void savephfig(ptfig)
-phfig_list *ptfig;
+void savephfig(phfig_list *ptfig)
 {
 	if (!strcmp(OUT_PH, "cp"))
 		vtisavephfig(ptfig);
@@ -402,11 +394,9 @@ phfig_list *ptfig;
 /*******************************************************************************
 * function rflattenphfig                                                       *
 *******************************************************************************/
-void rflattenphfig(ptfig, concat, catal)
-phfig_list *ptfig;
-char concat, catal;
+void rflattenphfig(phfig_list *ptfig, char concat, char catal)
 {
-struct phins *p;
+	struct phins *p;
 
 	catal = catal == NO ? 0 : 1;
 	for (p = ptfig->PHINS; p != NULL;) {
@@ -423,8 +413,7 @@ struct phins *p;
 * function instanceface                                                        *
 * return the orientation of a model connector knowing its face and symetry     *
 *******************************************************************************/
-char instanceface(face, sym)
-char face, sym;
+char instanceface(char face, char sym)
 {
 	switch (sym) {
 		case NOSYM :
@@ -527,14 +516,11 @@ char face, sym;
 * the envelop of the bigvia is calculated, and then its center is placed       *
 * as close as possible of the x, y coordinates given as arguments.             *
 *******************************************************************************/
-void bigvia(f, via, x, y, dx, dy)
-phfig_list *f;
-char via;
-long x, y, dx, dy;
+void bigvia(phfig_list *f, char via, long x, long  y, long dx, long dy)
 {
-int i, j;
-long stepx, stepy, xv, yv, dxv, dyv;
-char slayer = 0, blayer = 0; /* small and big layers */
+	int i, j;
+	long stepx, stepy, xv, yv, dxv, dyv;
+	char slayer = 0, blayer = 0; /* small and big layers */
 
 	if (dx < 0 || dy < 0) {
 		fflush(stdout);
@@ -716,14 +702,10 @@ struct typoin				/* structure used by dast_dbg	*/
 
 #define VHD_MAXDFN 42
 
-static int vhd_getcmd();
-static int vhd_hash();
+static int vhd_getcmd (char prvcmd[3][20]);
+static int vhd_hash(const char* string);
 
-void mphdebug(head_pnt,stru_name)
-
-void  *head_pnt;
-char  *stru_name;
-
+void mphdebug (void *head_pnt, char *stru_name)
   {
 
   int		 i;
@@ -1178,11 +1160,8 @@ char  *stru_name;
   }
 
 
-static int vhd_getcmd (prvcmd)
-
-char prvcmd[3][20];
-
-  {
+static int vhd_getcmd (char prvcmd[3][20])
+{
   char readstr[60];
   char comd0[20];
   char comd1[20];
@@ -1193,8 +1172,11 @@ char prvcmd[3][20];
   comd0[0] = '\0';
   comd1[0] = '\0';
   comd2[0] = '\0';
-  (void)fgets( readstr, 60, stdin );
-  (void)sscanf (readstr,"%s%s%s",comd0,comd1,comd2);
+  if (fgets( readstr, 60, stdin ) == NULL)
+    return -1;
+  
+  if (sscanf (readstr,"%s%s%s",comd0,comd1,comd2) <0)
+    return -1;
 
   if (strcmp(comd0,"."))
     {
@@ -1210,10 +1192,7 @@ char prvcmd[3][20];
 
 
 
-static int vhd_hash (str)
-
-char *str;
-
+static int vhd_hash (const char *str)
   {
   int code = 0;
 

@@ -152,7 +152,7 @@ LOCAL_CPPFLAGS = $(CPPFLAGS) -c $(LOCAL_INC) \
                  -DMLO_H='<$(MLO_H)>' \
                  -DMUT_H='<$(MUT_H)>'
 
-LOCAL_YFLAGS = $(YACCFLAGS) -d  #-t -v
+LOCAL_YFLAGS = $(YACCFLAGS) -y -d  #-t -v
 
 all : $(TARGET_INCLUDE)/$(STM_H) $(TARGET_LIB)/$(STM_LIB)
 

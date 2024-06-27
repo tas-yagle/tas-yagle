@@ -10,7 +10,7 @@
 #include "eqt_util.h"
 #define ECHO /*fprintf(stderr,"\ntoken %s\n",yytext)*/
 #define YY_NO_UNPUT
-/*static YY_BUFFER_STATE yy_current_buffer = 0;*/
+static YY_BUFFER_STATE yy_current_buffer = 0;
 
 extern eqt_ctx *EQT_CTX;
 static char    *var;

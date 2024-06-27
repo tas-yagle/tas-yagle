@@ -29,7 +29,7 @@ TBG_OBJ_LIB = tbg_Assign.o \
               lex.vhdl.o \
               y.tab.o
 
-LOCAL_YFLAGS = $(YACCFLAGS) -d  -t -v
+LOCAL_YFLAGS = $(YACCFLAGS) -y -d  -t -v
 
 LOCAL_INC = -I$(TARGET_INCLUDE)
 			

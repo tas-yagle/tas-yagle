@@ -1,9 +1,0 @@
-
-       void ctk_BuildCtkStat(StabilityFigure *stbfig);
-
-DDEESSCCRRIIPPTTIIOONN
-       Builds the internal crosstalk table of statistics for events and delays
-
-AARRGGUUMMEENNTTSS
-       ssttbbffiigg        Pointer on the stability figure associated
-

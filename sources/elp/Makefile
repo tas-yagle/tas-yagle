@@ -49,7 +49,7 @@ LOCAL_LIB  = -L$(TARGET_LIB) \
              $(RPC_L) \
              -lm
 
-LOCAL_YFLAGS = $(YACCFLAGS) -d
+LOCAL_YFLAGS = $(YACCFLAGS) -y -d
 
 all : lib
 

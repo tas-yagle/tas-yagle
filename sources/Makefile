@@ -5,6 +5,8 @@
 # Makefile v3.0 : added flexibility rules like build
 #
 
+include $(AVERTEC_TOP)/etc/$(AVERTEC_OS).mk
+
 XXX_H = header
 XXX_C = compilation
 XXX_Cl = clean
@@ -31,31 +33,37 @@ FULL_NAME_WORK_DIRS = $(WORK_DIRS:%=$(AVT_DISTRIB_DIR)/%)
 BIN_LIST = avt_shell avtreserve gnshr x2v avtdeltoken avttool gnstest xtas avtgenkey cnsdiff license_api ttvdiff xyagle avtinfo netutil ttvren avtlicense genapi router ttvtest avtlog genelp  val avtman gentest wrap yargle hitas
 BIN_LIST_DEL = $(BIN_LIST:%=%.del)
 
-all : working_dirs $(ALL_DIRS_HEADERS) build
+all : print_info working_dirs $(ALL_DIRS_HEADERS) build
 	
 
 working_dirs : $(AVT_DISTRIB_DIR) $(FULL_NAME_WORK_DIRS)
-	
 
-build : $(ALL_DIRS_COMP)
+print_info:
+	@echo "           %%%%%%%%% Building for $(AVERTEC_OS) $(BUILD_VARIANT) %%%%%%%%%"
+	@echo " Graphical build: $(GRAPHICAL)"
+	@echo " 64 bit build: $(AVT_COMPILATION_64BIT)"	
+.PHONY: print_info
+
+build : $(ALL_DIRS_COMP) 
 	@echo ""
-	@echo "           [1;30;47m##########################################[0m"
-	@echo "           [1;30;47m###########                  #############[0m"
-	@echo "           [1;30;47m###########       O K        #############[0m"
-	@echo "           [1;30;47m###########                  #############[0m"
-	@echo "           [1;30;47m##########################################[0m"
+	@echo "           ##########################################"
+	@echo "           ###########                  #############"
+	@echo "           ###########       O K        #############"
+	@echo "           ###########                  #############"
+	@echo "           ##########################################"
 	@echo ""
+.PHONY: build 
 
 $(ALL_DIRS_HEADERS) : $(AVT_DISTRIB_DIR) $(FULL_NAME_WORK_DIRS)
-	@echo "           [1;30;47m%%%%%%%%% creating HEADERS for" `echo $(@:%.$(XXX_H)=%)|sed 's/\..*//'` "%%%%%%%%%[0m"
+	@echo "           %%%%%%%%% creating HEADERS for" `echo $(@:%.$(XXX_H)=%)|sed 's/\..*//'` "%%%%%%%%%"
 	@$(MAKE) -C `echo $(@:%.$(XXX_H)=%)|sed 's/\..*//'` headers
-	@echo "           [1;30;47m%%%%%%%%% HEADERS for" `echo $(@:%.$(XXX_H)=%)|sed 's/\..*//'` "done %%%%%%%%%[0m"
+	@echo "           %%%%%%%%% HEADERS for" `echo $(@:%.$(XXX_H)=%)|sed 's/\..*//'` "done %%%%%%%%%"
 	@echo ""
 
 $(ALL_DIRS_COMP) :
-	@echo "           [1;37;47m%%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%[0m"
-	@echo "           [1;30;47m%%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%[0m"
-	@echo "           [1;37;47m%%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%[0m"
+	@echo "           %%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%"
+	@echo "           %%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%"
+	@echo "           m%%%%%%%%% compiling $(@:%.$(XXX_C)=%) %%%%%%%%%"
 	@$(MAKE) -j2 -C `echo $(@:%.$(XXX_C)=%)|sed 's/\..*//'` `echo $(@:%.$(XXX_C)=%)|sed 's/[^\.]*\.*//'`
 	@echo ""
 
@@ -66,7 +74,7 @@ $(ALL_DIRS_REALCLEAN) :
 	@$(MAKE) -j2 -C `echo $(@:%.$(XXX_R)=%)|sed 's/\..*//'` realclean
 
 $(AVT_DISTRIB_DIR) $(FULL_NAME_WORK_DIRS): 
-	@echo "           [1;42m%%%%%%%%% creating directory $@[0m"
+	@echo "           %%%%%%%%% creating directory $@"
 	@mkdir  $@
 
 # only for debug (create static libraries for apis)
@@ -84,20 +92,24 @@ dynamic_link : working_dirs $(ALL_DIRS_HEADERS) $(ALL_DIRS_API_BUILD)
 	$(MAKE) -j2 -C tas/stb
 	$(MAKE) -j2 -C api/tcl dynamic_link
 
+.PHONY: dynamic_link
+
 $(BIN_LIST_DEL) :
 	$(RM) $(AVT_DISTRIB_DIR)/bin/$(@:%.del=%)
 
 link : $(BIN_LIST_DEL) all
+.PHONY: link
 	
 
 clean : $(ALL_DIRS_CLEAN)
+.PHONY: clean
 	
 
 realclean : $(ALL_DIRS_REALCLEAN) $(BIN_LIST_DEL)
+.PHONY: realclean
 	
-
 headers : $(ALL_DIRS_HEADERS)
-	
+.PHONY: headers
 
 help : 
 	@echo "Makefile usage:"
@@ -111,20 +123,9 @@ help :
 	@echo "              WARNING it need that headers have been done once"
 	@echo "  link      : compile and relink all binaries"
 	@echo "  api_link  : compile and relink all binaries with apis in static"
+.PHONY: help
 
 color :
-	$(MAKE) -e XXC_W="[1;30;47m" XXB_W="[0;37;47m" XXC_G="[1;42m" XXR_0="[0m"
-
-% :
-	echo "[1;30;41m$@[0m"
-	@for FILE in $(ALL_DIRS)        ;\
-	do rules=`echo $$FILE|sed 's/\..*//'` ;\
-	echo "           [1;30;41m$$rules $$FILE[0m" ;\
-    if [ "$$rules" = "$$FILE" ] ;\
-     then $(MAKE) -C `echo $$FILE|sed 's/\..*//'` $@       ;\
-	fi                  ;\
-	if [ $$? -ne 0 ]            ;\
-	  then  exit 1              ;\
-	fi                  ;\
-	done
+	$(MAKE) -e XXC_W="" XXB_W="" XXC_G="" XXR_0=""
+.PHONY: color
 

@@ -52,25 +52,25 @@ String *get_proto (const char *name, WIGType *d, ParmList *l)
         arg_name = Char (WIGType_name (pt, 0));
 
         if (Getnext (p)) {
-            if (WIGType_ispointer (pt))    
-                sprintf (buf, "%s%s, ", Char (arg_type), Char (arg_name));
+            if (WIGType_ispointer (pt))
+                snprintf (buf, sizeof(buf), "%s%s, ", Char (arg_type), Char (arg_name));
             else
-                sprintf (buf, "%s %s, ", Char (arg_type), Char (arg_name));
+                snprintf (buf, sizeof(buf), "%s %s, ", Char (arg_type), Char (arg_name));
         } else {
-            if (WIGType_ispointer (pt))    
-                sprintf (buf, "%s%s", Char (arg_type), Char (arg_name));
+            if (WIGType_ispointer (pt))
+                snprintf (buf, sizeof(buf), "%s%s", Char (arg_type), Char (arg_name));
             else
-                sprintf (buf, "%s %s", Char (arg_type), Char (arg_name));
+                snprintf (buf, sizeof(buf), "%s %s", Char (arg_type), Char (arg_name));
         }
-       
-        sprintf (params, "%s%s", buf2, buf);
-        sprintf (buf2, "%s", params);
+
+        snprintf (params, sizeof(params), "%s%s", buf2, buf);
+        snprintf (buf2, sizeof(buf2), "%s", params);
     }
-    
+
     if (WIGType_ispointer (d))
-        sprintf (prototype, "%s%s(%s)", return_type, name, params);
+        snprintf (prototype, sizeof(prototype), "%s%s(%s)", return_type, name, params);
     else
-        sprintf (prototype, "%s %s(%s)", return_type, name, params);
+        snprintf (prototype, sizeof(prototype), "%s %s(%s)", return_type, name, params);
 
     return strdup (prototype);
 }
@@ -96,18 +96,18 @@ String *get_short_proto (const char *name, WIGType *d, ParmList *l)
         arg_name = Char (WIGType_name (pt, 0));
 
         if (Getnext (p))
-            sprintf (buf, "%s, ", Char (arg_type));
+            snprintf (buf, sizeof(buf), "%s, ", Char (arg_type));
         else
-            sprintf (buf, "%s", Char (arg_type));
-       
-        sprintf (params, "%s%s", buf2, buf);
-        sprintf (buf2, "%s", params);
+            snprintf (buf, sizeof(buf), "%s", Char (arg_type));
+
+        snprintf (params,  sizeof(params), "%s%s", buf2, buf);
+        snprintf (buf2, sizeof(buf2), "%s", params);
     }
-    
+
     if (WIGType_ispointer (d))
-        sprintf (prototype, "%-15s %s(%s)", return_type, name, params);
+        snprintf (prototype, sizeof(prototype), "%-15s %s(%s)", return_type, name, params);
     else
-        sprintf (prototype, "%-15s %s(%s)", return_type, name, params);
+        snprintf (prototype, sizeof(prototype), "%-15s %s(%s)", return_type, name, params);
 
     return strdup (prototype);
 }
@@ -171,7 +171,7 @@ void GENIUS::create_online (char *name, WIGType *d, ParmList *l, functionman *ma
       }
     if (!MANPATH) return;
 
-    sprintf (fname, "%s/%s.3", MANPATH, name);
+    snprintf (fname, sizeof(fname), "%s/%s.3", MANPATH, name);
     if (!(f = fopen (fname, "w+"))) {
         fprintf (stderr, "[API WAR] Can't open file %s for writing\n", fname);
         fflush(stderr);

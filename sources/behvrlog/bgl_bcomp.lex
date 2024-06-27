@@ -34,16 +34,16 @@ extern "C" {
 }
 
 #include "bgl_type.h"
-#include "bgl_bcomp.tab.h"
+extern "C" {
+  #include "bgl_bcomp.tab.h"
+}
 #include "bgl_parse.h"
 #include "bgl_util.h"
 #include "bgl_class.h"
 
-#if 0
 int yyFlexLexer::yywrap() {
     return (1);
 }
-#endif
 
 void bgl_bcomplexer::embedded_yylex(int& result, YYSTYPE *lvalp, bgl_bcompcontext *local_context) {
     context = local_context;

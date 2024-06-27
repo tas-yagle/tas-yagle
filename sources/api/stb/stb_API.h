@@ -605,4 +605,5 @@ void stb_DisplayHoldTimeReport (FILE *f, StabilityPath *spath, char datadir);
 void stb_trackstbpath (StabilityFigure *stbfig, char *nodename, char dir, double timeo);
 StabilitySlack *stb_ComputeOneSlack(int setup, TimingPath *data, TimingPath *clock, TimeValue margin, int nextcycle, int nosync);
 double stb_synchronized_slopes_move(StabilityFigure *ptstbfig, TimingEvent *startnode, TimingEvent *endclock);
-
+void stb_compute_local_margins(StabilityFigure *stbfig);
+int path_false_slack_check(TimingPath *tp, TimingEvent *opencmd, TimingEvent *topopenclock);

@@ -4,8 +4,8 @@ include $(AVERTEC_TOP)/etc/Avertec.mk
 
 LOCAL_INC      = -I. -I../yagle -I$(TARGET_INCLUDE)
 
-LOCAL_CFLAGS   =  $(CFLAGS) 
-LOCAL_YACCFLAGS = $(YACCFLAGS) -d  
+LOCAL_CFLAGS   =  $(CFLAGS) $(TCL_H)
+LOCAL_YACCFLAGS = $(YACCFLAGS) -y -d
 LOCAL_CPPFLAGS = $(CPPFLAGS) $(LOCAL_INC) \
                  -DAVERTEC -D$(AVERTEC_LICENSE) \
                  -DAVT_H='"$(AVT_H)"' \
@@ -41,7 +41,7 @@ REGULAR_LIB 	= $(YAG_L) $(TAS_L) $(STB_L) $(RPC_L) $(SIM_L) \
 				  $(BEG_L) $(BHL_L) $(BEH_L) $(LOG_L) $(RCN_L) \
 				  $(MUT_L) 
 
-LIB =  $(FLEXOBJS) -L$(TARGET_LIB) $(WHOLE) $(REGULAR_LIB) -lm $(NOWHOLE) -ldl $(FLEXLIBS)
+LIB =  $(FLEXOBJS) -L$(TARGET_LIB) $(WHOLE) $(REGULAR_LIB) -lm $(NOWHOLE) -ldl $(FLEXLIBS) $(TCL_L)
 
 OBJ = gen_lofig.o gen_corresp.o gen_globals.o gen_drive_corresp.o gen_parse_corresp.o\
       gen_verif_utils.o gen_verif_exp_VHDL.o gen_verif_vector.o \

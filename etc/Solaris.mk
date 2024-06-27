@@ -32,16 +32,16 @@ MV		= /bin/mv
 RM		= /bin/rm
 MKDIR		= /bin/mkdir
 FIND		= /bin/find
-SED		= /usr/ucb/sed
-AWK		= /usr/local/bin/gawk
-TR		= /usr/ucb/tr
-TOUCH		= /usr/ucb/touch
+SED		= /usr/bin/env sed
+AWK		= /usr/bin/env gawk
+TR		= /usr/bin/env tr
+TOUCH		= /usr/bin/env touch
 ECHO            = /bin/echo
-STRIP		= /usr/local/bin/strip
-RANLIB		= /usr/local/bin/ranlib
+STRIP		= /usr/bin/env strip
+RANLIB		= /usr/bin/env ranlib
 
-MAKE             = /usr/local/bin/make
-MAKEFLAGS        = 
+MAKE             = /usr/bin/env make
+MAKEFLAGS        =
 
 CC               = /usr/local/gcc346_staticlibs/bin/gcc
 SCC              = /usr/local/gcc346_staticlibs/bin/gcc
@@ -56,16 +56,16 @@ OPTIM            = -O3
 
 PURIFY           = purify
 
-YACC             = /usr/local/bin/bison
-YACCFLAGS        = -y 
+YACC             = /usr/bin/env bison
+YACCFLAGS        =
 
-LEX              = /usr/local/bin/flex
-LEXFLAGS         = 
+LEX              = /usr/bin/env flex
+LEXFLAGS         =
 
-AR               = /usr/local/bin/ar
+AR               = /usr/bin/env ar
 ARFLAGS          = rv
 
-SWIG             = /usr/local/bin/swig
+SWIG             = /usr/bin/env swig
 
 WHOLE            = -Xlinker -z -Xlinker allextract
 NOWHOLE          = -Xlinker -z -Xlinker defaultextract

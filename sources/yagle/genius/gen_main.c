@@ -626,7 +626,7 @@ tree_list *Read_All(lib_entry *files_list)
                     nb=fread(r,sizeof(char),1000000, f);
                     r[nb]='\0';
                     if (Tcl_EvalEx((Tcl_Interp *)TCL_INTERPRETER, r, -1, TCL_EVAL_GLOBAL)==TCL_ERROR)
-                        avt_errmsg(GNS_ERRMSG, "165", AVT_ERROR, p->name, ((Tcl_Interp *)TCL_INTERPRETER)->errorLine, Tcl_GetStringResult((Tcl_Interp *)TCL_INTERPRETER));
+                        avt_errmsg(GNS_ERRMSG, "165", AVT_ERROR, p->name, Tcl_GetErrorLine((Tcl_Interp *)TCL_INTERPRETER), Tcl_GetStringResult((Tcl_Interp *)TCL_INTERPRETER));
                     mbkfree(r);
                    }
                    else

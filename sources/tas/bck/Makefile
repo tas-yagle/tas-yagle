@@ -68,10 +68,10 @@ LOCAL_CPPFLAGS = $(CPPFLAGS) -c $(LOCAL_INC) \
                  -DELP_H='<$(ELP_H)>' \
                  -DTLC_H='<$(TLC_H)>' \
                  -DTRC_H='<$(TRC_H)>' \
-                 -DTTV_H='"$(TTV_H)"' 
-                 
+                 -DTTV_H='"$(TTV_H)"'
 
-LOCAL_YFLAGS = $(YACCFLAGS) -d 
+
+LOCAL_YFLAGS = $(YACCFLAGS) -y -d
 
 all : $(TARGET_INCLUDE)/$(BCK_H) $(TARGET_LIB)/$(BCK_LIB)
 

@@ -23,11 +23,6 @@
  
 #ifndef _MCP_H
 #define _MCP_H
-#ifdef __STDC__
 extern void vtiloadphfig(phfig_list *ptfig, char *figname, char mode);
 extern void vtisavephfig(phfig_list *ptfig);
-#else
-extern void vtiloadphfig();
-extern void vtisavephfig();
-#endif
 #endif

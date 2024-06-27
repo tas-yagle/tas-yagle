@@ -1,5 +1,6 @@
 
 #include <ctype.h>
+#include <time.h>
 #include "avt_env.h"
 #include MUT_H
 #include "avt_init_funcs.h"

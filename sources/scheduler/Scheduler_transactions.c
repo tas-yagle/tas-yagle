@@ -1,4 +1,4 @@
-
+#include <stdlib.h>
 #include MUT_H
 #include SDLR_H
 #include "Scheduler_transactions.h"

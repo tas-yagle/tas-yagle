@@ -1130,7 +1130,7 @@ int get_printlist()
        if((n >= m) && (path->NEXT != NULL))
         {
          fprintf(stdout,"---return for more, s to stop or n for next reference---\n") ;
-         gets(c) ;
+         fgets(c, sizeof(c), stdin) ;
          if((*c == 's') && (*(c+1) == '\0'))
           {
            fflush(stdout) ;
@@ -1151,7 +1151,7 @@ int get_printlist()
      if(chain->NEXT != NULL)
       {
        fprintf(stdout,"---return for more or s with return to stop---\n") ;
-       gets(c) ;
+       fgets(c, sizeof(c), stdin) ;
        if((*c == 's') && (*(c+1) == '\0'))
         {
          fflush(stdout) ;
@@ -1199,7 +1199,7 @@ int get_printlist()
    if((i >= j) && (chain->NEXT != NULL))
     {
      fprintf(stdout,"---return for more or s with return to stop---\n") ;
-     gets(c) ;
+     fgets(c, sizeof(c), stdin) ;
      if((*c == 's') && (*(c+1) == '\0'))
       {
        fflush(stdout) ;

@@ -132,6 +132,8 @@ extern void mcc_calcul_k            __P((int,elp_lotrs_param*)) ;
 extern void mcc_calcul_abr          __P((int,double,double,elp_lotrs_param*,elp_lotrs_param*)) ;
 extern void mcc_calcul_vti          __P((int,elp_lotrs_param*,elp_lotrs_param*)) ;
 extern void mcc_calcul_vdeg         __P((int,elp_lotrs_param*,elp_lotrs_param*)) ;
+extern void mcc_calcul_sat_parameter    (int type, elp_lotrs_param *lotrsparam, mcc_corner_info *info );
+extern void mcc_calcul_rst_better       (int type, elp_lotrs_param *lotrsparam_n, elp_lotrs_param *lotrsparam_p, mcc_corner_info *infos);
 extern void mcc_drvspitab           __P((int,
                                          double**,
                                          int,

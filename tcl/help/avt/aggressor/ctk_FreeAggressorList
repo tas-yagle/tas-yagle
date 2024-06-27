@@ -1,9 +1,0 @@
-
-       void ctk_FreeAggressorList(AggressorList *list);
-
-DDEESSCCRRIIPPTTIIOONN
-       Frees the list given by _c_t_k___G_e_t_A_g_g_r_e_s_s_o_r_L_i_s_t
-
-AARRGGUUMMEENNTTSS
-       lliisstt          Pointer on the aggressor list to be freed
-

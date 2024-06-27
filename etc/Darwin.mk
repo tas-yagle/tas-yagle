@@ -32,13 +32,13 @@ MV		= /bin/mv
 RM		= /bin/rm
 MKDIR		= /bin/mkdir
 FIND		= /bin/find
-SED		= /usr/bin/sed
+SED		= /usr/bin/env sed
 AWK		= /usr/bin/env gawk
-TR		= /usr/bin/tr
+TR		= /usr/bin/env tr
 TOUCH		= /usr/bin/touch
 ECHO            = /bin/echo
-STRIP		= /usr/bin/strip
-RANLIB		= /usr/bin/ranlib
+STRIP		= /usr/bin/env strip
+RANLIB		= /usr/bin/env ranlib
 
 MAKE             = /usr/bin/make
 MAKEFLAGS        = 
@@ -46,28 +46,30 @@ MAKEFLAGS        =
 CC               = /usr/bin/gcc -fno-common
 SCC              = $(CC)
 CPLUSPLUS        = /usr/bin/g++
-CFLAGS           = -O3
 CPPFLAGS         ?= 
 
 OPTIM            = -O2 -Wall
 
 PURIFY           = purify
 
-YACC             = /usr/bin/bison
-YACCFLAGS        = -y 
+YACC             = $(shell brew --prefix bison)/bin/bison
+YACCFLAGS        =
+YACC_L           = -L$(shell brew --prefix bison)/lib
 
-LEX              = /usr//bin/lex
-LEXFLAGS         = 
+LEX              = $(shell brew --prefix flex)/bin/flex
+LEX_H            = -I$(shell brew --prefix flex)/include
+LEX_L            = -L$(shell brew --prefix flex)/lib
 
-AR               = /usr/bin/ar
+AR               = /usr/bin/env ar
 ARFLAGS          = rv
 
 SWIG             = $(shell brew --prefix swig)/bin/swig
 
-TCL_H            = -L$(shell brew --prefix tcl-tk)/include
+TCL_H            = -I$(shell brew --prefix tcl-tk)/include/tcl-tk  -DHAVE_UNISTD_H
 TCL_L            = -L$(shell brew --prefix tcl-tk)/lib -ltcl8.6
 
 WHOLE            = -all_load -Wl,-no_warn_duplicate_libraries
 NOWHOLE          = -Wl,-no_warn_duplicate_libraries
 
+CFLAGS           = $(TCL_H) $(LEX_H) -O3 -Wno-knr-promoted-parameter
 # EOF

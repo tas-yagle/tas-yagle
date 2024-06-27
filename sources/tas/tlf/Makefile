@@ -83,7 +83,7 @@ LOCAL_CPPFLAGS = $(CPPFLAGS) -c $(LOCAL_INC) \
                  -DCBH_H='<$(CBH_H)>' \
                  -DTUT_H='<$(TUT_H)>'
 
-LOCAL_YFLAGS = $(YACCFLAGS) -d #-v
+LOCAL_YFLAGS = $(YACCFLAGS) -y -d #-v
 
 all : $(TARGET_INCLUDE)/$(TLF_H) $(TARGET_LIB)/$(TLF_LIB)
 

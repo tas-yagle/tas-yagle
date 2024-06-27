@@ -125,8 +125,7 @@ phfig_list *HEAD_PHFIG;                        /* logical figure list head    */
 /*******************************************************************************
 * fonction addphfig                                                            *
 *******************************************************************************/
-phfig_list *addphfig(figname)
-char *figname;
+phfig_list *addphfig(char *figname)
 {
 phfig_list *ptfig;
 
@@ -169,18 +168,13 @@ phfig_list *ptfig;
 /*******************************************************************************
 * fonction addphins                                                            *
 *******************************************************************************/
-phins_list *addphins(ptfig, figname, insname, sym, x, y)
-phfig_list *ptfig;
-char *figname;
-char *insname;
-char sym;
-long x, y;
+phins_list *addphins (phfig_list *ptfig, char *_figname, char *_insname, char sym, long x, long y)
 {
-phins_list *ptins;
-chain_list *ptchain;
+   phins_list *ptins;
+   chain_list *ptchain;
 
-   insname = namealloc(insname);
-   figname = namealloc(figname);
+   char *insname = namealloc(_insname);
+   char *figname = namealloc(_figname);
 
    /*  check  consistency    */
    if (FAST_MODE != 'Y' && strcmp(insname, "*")) {
@@ -241,14 +235,9 @@ chain_list *ptchain;
 /*******************************************************************************
 * fonction addphvia                                                            *
 *******************************************************************************/
-phvia_list *addphvia(ptfig, viatype, x, y, dx, dy, name)
-phfig_list *ptfig;
-char viatype;
-long x, y;
-long dx, dy;
-char *name;
+phvia_list *addphvia(phfig_list *ptfig, char viatype, long x, long y, long dx, long dy, char *name)
 {
-phvia_list *ptvia;
+   phvia_list *ptvia;
 
    name = namealloc(name);
 /*  check  consistency    */
@@ -282,11 +271,7 @@ phvia_list *ptvia;
 /*******************************************************************************
 * fonction addphref                                                            *
 *******************************************************************************/
-phref_list *addphref(ptfig, type, name, x, y)
-phfig_list *ptfig;
-char *type;
-char *name;
-long x, y;
+phref_list *addphref(phfig_list *ptfig, char *type, char *name, long x, long y)
 {
 phref_list *ptref;
 
@@ -313,14 +298,9 @@ phref_list *ptref;
 /*******************************************************************************
 * fonction addphseg                                                            *
 *******************************************************************************/
-phseg_list *addphseg(ptfig, layer, width, x1, y1, x2, y2, nodename)
-phfig_list *ptfig;
-char layer;
-long width;
-long x1, y1, x2, y2;
-char *nodename;
+phseg_list *addphseg(phfig_list *ptfig, char layer, long width, long x1, long y1, long x2, long y2, char *nodename)
 {
-phseg_list *ptseg;
+   phseg_list *ptseg;
 
    if (layer < 0 || layer > LAST_LAYER) {
       (void)fflush(stdout);
@@ -396,11 +376,9 @@ phseg_list *ptseg;
 /*******************************************************************************
 * fonction addsorted                                                           *
 *******************************************************************************/
-static chain_list *addsorted(pa, pco)
-chain_list *pa;
-phcon_list *pco;
+static chain_list *addsorted(chain_list *pa, phcon_list *pco)
 {
-chain_list *ptc, *oldp;
+   chain_list *ptc, *oldp;
 
    if (pa == NULL) /* first connector */
       return addchain((chain_list *)NULL, (void *)pco);
@@ -460,17 +438,11 @@ chain_list *ptc, *oldp;
 /*******************************************************************************
 * fonction addphcon                                                            *
 *******************************************************************************/
-phcon_list *addphcon(ptfig, orient, conname, x, y, layer, width)
-phfig_list *ptfig;
-char orient;
-char *conname;
-long x, y;
-char layer;
-long width;
+phcon_list *addphcon(phfig_list *ptfig, char orient, char *conname, long x, long y, char layer, long width)
 {
-phcon_list *ptcon, *ptscan;
-chain_list *pt, *ptchain = NULL;
-long index;
+   phcon_list *ptcon, *ptscan;
+   chain_list *pt, *ptchain = NULL;
+   long index;
 
    conname = namealloc(conname);
    /* check consistency */
@@ -535,9 +507,7 @@ long index;
 /*******************************************************************************
 * fonction defab                                                               *
 *******************************************************************************/
-void defab(ptfig, x1, y1, x2, y2)
-phfig_list    *ptfig;
-long           x1, y1, x2, y2;
+void defab(phfig_list *ptfig, long x1, long  y1, long x2, long y2)
 {
    ptfig->XAB1 = x1;
    ptfig->YAB1 = y1;
@@ -554,11 +524,9 @@ long           x1, y1, x2, y2;
 /*******************************************************************************
 * fonction getphins                                                            *
 *******************************************************************************/
-phins_list *getphins(ptfig, insname)
-phfig_list *ptfig;
-char *insname;
+phins_list *getphins(phfig_list *ptfig, char *insname)
 {
-phins_list *ptins;
+   phins_list *ptins;
 
    insname = namealloc(insname);
    for (ptins = ptfig->PHINS; ptins; ptins = ptins->NEXT)
@@ -575,13 +543,10 @@ phins_list *ptins;
 /*******************************************************************************
 * fonction getphcon                                                            *
 *******************************************************************************/
-phcon_list *getphcon(ptfig, conname, index)
-phfig_list *ptfig;
-char *conname;
-long index;
+phcon_list *getphcon(phfig_list *ptfig, char *conname, long index)
 {
-phcon_list *ptcon;
- 
+   phcon_list *ptcon;
+
    conname = namealloc(conname);
  
    if (ptfig->PHCON != NULL)
@@ -600,11 +565,9 @@ phcon_list *ptcon;
 /*******************************************************************************
 * fonction getphref                                                            *
 *******************************************************************************/
-phref_list *getphref(ptfig, refname)
-phfig_list *ptfig;
-char *refname;
+phref_list *getphref(phfig_list *ptfig, char *refname)
 {
-phref_list *ptref;
+   phref_list *ptref;
 
    refname = namealloc(refname);
    for (ptref = ptfig->PHREF; ptref; ptref = ptref->NEXT)
@@ -621,16 +584,14 @@ phref_list *ptref;
 /*******************************************************************************
 * fonction delphcon                                                            *
 *******************************************************************************/
-int delphcon(ptfig, ptdelcon)
-phfig_list *ptfig;
-phcon_list *ptdelcon;
+int delphcon(phfig_list *ptfig, phcon_list *ptdelcon)
 {
-phcon_list *ptsav = NULL;
-phcon_list *ptcon, *ptscan;
-chain_list *pt, *ptchain = NULL;
-long index;
-char  *conname;
- 
+   phcon_list *ptsav = NULL;
+   phcon_list *ptcon, *ptscan;
+   chain_list *pt, *ptchain = NULL;
+   long index;
+   char  *conname;
+
    for (ptcon = ptfig->PHCON; ptcon; ptcon = ptcon->NEXT) {
       if (ptcon == ptdelcon)
          break;
@@ -665,12 +626,10 @@ char  *conname;
 /*******************************************************************************
 * fonction delphseg                                                            *
 *******************************************************************************/
-int delphseg(ptfig, ptseg)
-phfig_list *ptfig;
-phseg_list *ptseg;
+int delphseg(phfig_list *ptfig, phseg_list *ptseg)
 {
-phseg_list *ptsav = NULL;
-phseg_list *pttmp;
+   phseg_list *ptsav = NULL;
+   phseg_list *pttmp;
 
    for (pttmp = ptfig->PHSEG; pttmp; pttmp = pttmp->NEXT) {
       if (pttmp == ptseg)
@@ -697,12 +656,10 @@ phseg_list *pttmp;
 /*******************************************************************************
 * fonction delphvia                                                            *
 *******************************************************************************/
-int delphvia(ptfig, ptvia)
-phfig_list *ptfig;
-phvia_list *ptvia;
+int delphvia(phfig_list *ptfig, phvia_list *ptvia)
 {
-phvia_list *ptsav = NULL;
-phvia_list *pttmp;
+   phvia_list *ptsav = NULL;
+   phvia_list *pttmp;
 
    for (pttmp = ptfig->PHVIA; pttmp; pttmp = pttmp->NEXT) {
       if (pttmp == ptvia)
@@ -728,12 +685,10 @@ phvia_list *pttmp;
 /*******************************************************************************
 * fonction delphref                                                            *
 *******************************************************************************/
-int delphref(ptfig, ptref)
-phfig_list *ptfig;
-phref_list *ptref;
+int delphref(phfig_list *ptfig, phref_list *ptref)
 {
-phref_list *ptsav = NULL;
-phref_list *pttmp;
+   phref_list *ptsav = NULL;
+   phref_list *pttmp;
 
    for (pttmp = ptfig->PHREF; pttmp; pttmp = pttmp->NEXT) {
       if (pttmp == ptref)
@@ -759,15 +714,13 @@ phref_list *pttmp;
 /*******************************************************************************
 * fonction delphins                                                            *
 *******************************************************************************/
-int delphins(ptfig, insname)
-phfig_list *ptfig;
-char *insname;
+int delphins(phfig_list *ptfig, char *insname)
 {
-phins_list *ptsav = NULL;
-phins_list *ptins;
-chain_list *ptchain;
-chain_list *pttmpchain = NULL;
-char *figname;
+   phins_list *ptsav = NULL;
+   phins_list *ptins;
+   chain_list *ptchain;
+   chain_list *pttmpchain = NULL;
+   char *figname;
 
    insname = namealloc(insname);
 
@@ -813,21 +766,20 @@ char *figname;
 /*******************************************************************************
 * fonction delphfig                                                            *
 *******************************************************************************/
-int delphfig(name)
-char *name;
+int delphfig(char *name)
 {
-phfig_list *ptfig;
-phcon_list *ptcon;
-phseg_list *ptseg;
-phvia_list *ptvia;
-phins_list *ptins;
-phref_list *ptref;
-phfig_list *ptfig_sav = NULL;
-phcon_list *ptcon_sav;
-phseg_list *ptseg_sav;
-phvia_list *ptvia_sav;
-phins_list *ptins_sav;
-phref_list *ptref_sav;
+   phfig_list *ptfig;
+   phcon_list *ptcon;
+   phseg_list *ptseg;
+   phvia_list *ptvia;
+   phins_list *ptins;
+   phref_list *ptref;
+   phfig_list *ptfig_sav = NULL;
+   phcon_list *ptcon_sav;
+   phseg_list *ptseg_sav;
+   phvia_list *ptvia_sav;
+   phins_list *ptins_sav;
+   phref_list *ptref_sav;
 
    name = namealloc(name);
 
@@ -874,12 +826,7 @@ phref_list *ptref_sav;
 /*******************************************************************************
 * fonction xyflat                                                              *
 *******************************************************************************/
-void xyflat(xout, yout, x, y, xins, yins, x1, y1, x2, y2, trsf)
-long *xout, *yout;
-long x, y;
-long xins, yins;
-long x1, y1, x2, y2;
-char trsf;
+void xyflat(long *xout, long *yout, long x, long y, long xins, long yins, long x1, long y1, long x2, long y2, char trsf)
 {
    switch (trsf) {
       case NOSYM :
@@ -1012,15 +959,14 @@ phfig_list  *pt_fig     = NULL;
 *                                                                      *
 * display on screen the content of physical figure ptfig              *
 ************************************************************************/
-void viewphfig(pt_fig)
-phfig_list *pt_fig;
+void viewphfig(phfig_list *pt_fig)
 {
-phcon_list *pt_con = NULL;
-phins_list *pt_ins = NULL;
-chain_list *pt_chain = NULL;
-phseg_list *pt_seg = NULL;
-phvia_list *pt_via = NULL;
-phref_list *pt_ref = NULL;
+   phcon_list *pt_con = NULL;
+   phins_list *pt_ins = NULL;
+   chain_list *pt_chain = NULL;
+   phseg_list *pt_seg = NULL;
+   phvia_list *pt_via = NULL;
+   phref_list *pt_ref = NULL;
 
    if (!pt_fig)
       return;
@@ -1078,9 +1024,8 @@ phref_list *pt_ref = NULL;
 
 /******************************************************************************/
 
-void viewphcon(pt_con)
-phcon_list  *pt_con; 
-{ 
+void viewphcon(phcon_list  *pt_con)
+{
    if (pt_con == NULL) {
       (void)printf("!!! viewphcon : null connector pointer !!!\n");
       return;
@@ -1102,9 +1047,8 @@ phcon_list  *pt_con;
 }
 
 /******************************************************************************/
-void viewphseg(pt_seg)
-phseg_list  *pt_seg;
-{ 
+void viewphseg(phseg_list  *pt_seg)
+{
    if (pt_seg == NULL) {
       (void)printf("!!! viewphseg : null segment pointer !!!\n");
       return;
@@ -1128,8 +1072,7 @@ phseg_list  *pt_seg;
    (void)printf(" | \n");
 }
 
-void viewphvia(pt_via) 
-phvia_list *pt_via;
+void viewphvia(phvia_list *pt_via)
 {
    if (pt_via == NULL) {
       (void)printf("!!! viewphvia : null via pointeur !!!\n");
@@ -1144,9 +1087,8 @@ phvia_list *pt_via;
    (void)printf(" | \n");
 }
 
-void viewphins(pt_ins)
-phins_list *pt_ins;
-{ 
+void viewphins(phins_list *pt_ins)
+{
    if (pt_ins == NULL) {
       (void)printf("!!! viewphins : null instance pointer !!! \n");
       return;
@@ -1199,8 +1141,7 @@ phins_list *pt_ins;
    (void)printf(" | \n");
 }
 
-void viewphref(pt_ref) 
-phref_list *pt_ref;
+void viewphref(phref_list *pt_ref)
 {
    if (pt_ref == NULL) {
       (void)printf("!!! viewphref : null reference pointer !!!\n");

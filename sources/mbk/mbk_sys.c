@@ -355,9 +355,7 @@ FILE *mbksysfopen( char *name, char *mode, char access )
 // Ouvre un fichier. Le nom UNIX de ce fichier est stocké dans la variable 
 // global MBKFOPEN_NAME.
 
-FILE *mbkfopentrace(name, extension, mode, access, allowcompress)
-char *name, *extension, *mode;
-char access, allowcompress ;
+FILE *mbkfopentrace(const char *name, const char *extension, const char *mode, char access, char allowcompress)
 {
   FILE *in;
   FILE *infilter;
@@ -521,8 +519,7 @@ char access, allowcompress ;
 
 /* unlink :
    ensures that only files in the working library may be erased. */
-int mbkunlink(name, extension)
-char *name, *extension;
+int mbkunlink(const char *name, const char *extension)
 {
 	if (!CATA_LIB || !WORK_LIB)
 		mbkenv(); /* not done yet */
@@ -1043,6 +1040,7 @@ unsigned long mbkprocessmemoryusage()
 {
   #ifdef Linux
   char temp[100];
+  int ret = 0;
   pid_t pid;
   FILE *f;
   int cnt;
@@ -1050,7 +1048,7 @@ unsigned long mbkprocessmemoryusage()
   pid=getpid();
   sprintf(temp,"/proc/%d/stat",pid);
   if ((f=fopen(temp,"rt"))==NULL) return (unsigned long)sbrk(0);
-  for (cnt=1;cnt<=23;cnt++) fscanf(f,"%s",temp);
+  for (cnt=1;cnt<=23 && ret!=EOF;cnt++) ret = fscanf(f,"%s",temp);
   size=strtoul(temp,NULL,10);
   fclose(f);
   return size;
@@ -1203,10 +1201,17 @@ pid_t mbkpcreate(int *file_des_write, int *file_des_read)
   pid_t      son_id;
   int        server_to_client[2];
   int        client_to_server[2];
+  int        ret;
   
-  pipe(server_to_client);
-  pipe(client_to_server);
-  
+  ret = pipe(server_to_client);
+  if (ret >=0)
+    ret = pipe(client_to_server);
+ 
+  if (ret <0) {
+    perror("pipe");
+    exit(EXIT_FAILURE);
+  }
+ 
   switch ((son_id = fork()))
   {
     case -1 :

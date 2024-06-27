@@ -14,7 +14,9 @@ WRP_BIN_NOLIC = wrap_nolicense
 
 I_DIR = ./avtwig
 
-LOCAL_YACCFLAGS = $(YACCFLAGS) -d -t 
+LOCAL_YACCFLAGS = $(YACCFLAGS) -y -d -t
+
+LOCAL_CFLAGS = $(CFLAGS) $(TCL_H)
 
 SHELL = /bin/sh
 WRP_INC = -I. -I$(I_DIR) -I$(TARGET_INCLUDE)
@@ -61,12 +63,12 @@ $(TARGET_INCLUDE)/api_communication.h: api_communication.h
 	cp api_communication.h $(TARGET_INCLUDE)
 
 $(TARGET_BIN)/$(WRP_BIN): $(WIG_LIB) $(WRP_OBJ) $(TARGET_LIB)/$(API_LIB) $(WIG_LIB)
-	$(CPLUSPLUS) $(CFLAGS) $(WRP_OBJ) $(WRP_INC) $(WRP_LIB) -lm -o $(TARGET_BIN)/$(WRP_BIN)
+	$(CPLUSPLUS) $(LOCAL_CFLAGS) $(WRP_OBJ) $(WRP_INC) $(WRP_LIB) -lm -o $(TARGET_BIN)/$(WRP_BIN)
 	$(STRIP)  $(TARGET_BIN)/$(WRP_BIN)
 	$(CP) $(API_BIN) $(TARGET_BIN)
 
 $(TARGET_BIN)/$(WRP_BIN_NOLIC): $(WIG_LIB) $(WRP_OBJ) $(TARGET_LIB)/$(API_LIB) $(WIG_LIB)
-	$(CPLUSPLUS) $(CFLAGS) $(WRP_OBJ) $(WRP_INC) $(WRP_LIB) -lm -o $(TARGET_BIN)/$(WRP_BIN_NOLIC)
+	$(CPLUSPLUS) $(LOCAL_CFLAGS) $(WRP_OBJ) $(WRP_INC) $(WRP_LIB) -lm -o $(TARGET_BIN)/$(WRP_BIN_NOLIC)
 	cp $(TARGET_BIN)/$(WRP_BIN_NOLIC) $(TARGET_BIN)/$(WRP_BIN)
 	#-rm subdir_license
 	$(STRIP)  $(TARGET_BIN)/$(WRP_BIN)
@@ -97,10 +99,10 @@ gen_library_lexer.c: gen_library_lexer.l gen_library_parser.h
 	        $(LEX) -Pgen_library_parser -t $<  >  $@
 
 %.o: %.cc $(TARGET_INCLUDE)/$(API_H) $(PRE_OBJ) headers.inc
-	$(CPLUSPLUS) $(CFLAGS) $(LOCAL_CPPFLAGS) $(WRP_CPPFLAGS) $<
+	$(CPLUSPLUS) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $(WRP_CPPFLAGS) $<
 
 %.o: %.c $(TARGET_INCLUDE)/$(API_H) $(PRE_OBJ)
-	$(CC) $(CFLAGS) $(WRP_CPPFLAGS) $<
+	$(CC) $(LOCAL_CFLAGS) $(WRP_CPPFLAGS) $<
 
 headers.inc: $(TARGET_INCLUDE)/$(AVT_H) api_lib.h
 	\grep "^GRAB_IT" $(TARGET_INCLUDE)/$(AVT_H) | sed -e "s/^GRAB_IT /Printf(f_header, \"/g" -e "s/$$/\\\\n\");/g" > tmp
@@ -128,7 +130,7 @@ realclean: clean
 	$(MAKE) -C $(I_DIR) realclean
 
 dep: $(SOURCES_LIB) $(SOURCES)
-	$(SCC) -MM $(CFLAGS) $(WRP_CPPFLAGS) $(SOURCES_LIB) > .depend
+	$(SCC) -MM $(LOCAL_CFLAGS) $(WRP_CPPFLAGS) $(SOURCES_LIB) > .depend
 
 -include .depend
 

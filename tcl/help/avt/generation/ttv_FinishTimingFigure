@@ -1,8 +1,0 @@
-
-       TimingFigure *ttv_FinishTimingFigure();
-
-DDEESSCCRRIIPPTTIIOONN
-       Returns the finished timing figure currently in creation. No more modi-
-       fication will be
-           permitted on the timing figure after this step.
-
