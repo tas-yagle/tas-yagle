@@ -51,18 +51,18 @@
 <section niv='2'><title>&tool; Digital Structures</title>
 <section niv='3'><title>CMOS Gates</title>
 <p>&tool; is applicable to all basic CMOS gates regardless of the implementation (invertors, buffers, NAND, NOR, etc). All kinds of exclusive or gates, including the implementation shown in the following figure, can be handled directly using &tool;. No special configuration is necessary.</p>
-<imgsize namehtml="scope_4.gif" namepdf="scope_4.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="scope_4.gif" namepdf="scope_4.svg"/>
 </section>
 
 <section niv='3'><title>Pass-Transistor and Transmission Gate Logic</title>
 <p>&tool; is applicable to custom digital designs using pass-transistor or transmission gate logic. This often occurs in multiplexer implementations such as those shown in the following figure.</p>
-<imgsize namehtml="scope_5.gif" namepdf="scope_5.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="scope_5.gif" namepdf="scope_5.svg"/>
 <p>These structures are handled automatically by &tool;. However, care must sometimes be taken that the partitioning is performed correctly. &tool; may require information about the correlation between selector inputs if this correlation is not present in the block under analysis.</p>
 </section>
 
 <section niv='3'><title>Clocked CMOS Logic</title>
 <p>&tool; is applicable to high-speed custom techniques such as clocked CMOS logic. In particular &tool; is well suited to the analysis of Domino-Precharge based designs. Figure 6 shows a typical Domino precharge architecture handled by &tool;.</p>
-<imgsize namehtml="scope_6.gif" namepdf="scope_6.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="scope_6.gif" namepdf="scope_6.svg"/>
 <p>Each precharge stage is sometimes followed by a keeper or level hold structure. These pose no problem for &tool;.</p>
 <p>For full handling of this kind of logic it is necessary to activate the automatic precharge detection for the partitioning phase as well as precharge verification during the static timing analysis phase.</p>
 </section>
@@ -71,13 +71,13 @@
 <p>&tool; incorporates, during the partitioning phase, an advanced algorithm to automatically detect any kind of fully static latch designed using an active feedback loop.</p>
 <p>Both conflictual (e.g. inverter feedback) and non-conflictual (e.g. tristate feedback) latches are handled.</p>
 <p>Latches can contain any number of clock inputs as well as asynchronous set and reset inputs. All these input types are identified automatically. Following figure shows a number of different latch types handled by &tool;. </p>
-<imgsize namehtml="scope_7.gif" namepdf="scope_7.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="scope_7.gif" namepdf="scope_7.svg"/>
 <p>Flip-flops are treated as two separate latches (master and slave). &tool; has an option to automatically detect flip-flops. This option can be used simply to report to the user the nodes recognised as the master nodes and the slave nodes. Alternatively, it is possible, for some flip-flops, to group the master and slave and perform a simplified flip-flop timing verification.</p>
 </section>
 
 <section niv='3'><title>Dynamic Latches</title>
 <p>&tool; can also be used to recognise dynamic latches such as the simple example shown in the following figure.</p>
-<imgsize namehtml="scope_8.gif" namepdf="scope_8.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="scope_8.gif" namepdf="scope_8.svg"/>
 <p>Recognition of dynamic latches is a configuration option of &tool;. Some care should be taken as there is can be ambiguity with a tristate bus.</p>
 <p>&tool; uses the functional analysis of the partitioning phase to determine whether a node can be a dynamic latch. An internal node for which all drivers can be deactivated is considered to be a dynamic latch unless &tool; is told explicitly otherwise.</p>
 </section>
@@ -88,20 +88,20 @@
 <p>In this section we review a selection of typical analog structures which &tool; cannot handle directly.</p>
 <section niv='3'><title>Sense Amplifier</title>
 <p>Following figure shows a typical sense amplifier building block. This structure, typically found in memories, senses a difference in potential between two inputs and provides an output of 1 or 0 depending which is the greater.</p>
-<imgsize namehtml="scope_9.gif" namepdf="scope_9.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="scope_9.gif" namepdf="scope_9.svg"/>
 <p>It should be quite clear from the &tool; assumptions that this structure cannot be handled. In effect it requires two input to switch simultaneously and neither of these inputs are full-swing.</p>
 </section>
 
 <section niv='3'><title>Differential Amplifier</title>
 <p>Following figure shows a typical long-tailed pair implementation of a differential amplifier. The operation is very similar to the sense amplifier. This is a basic analog amplifier building block but can also be found in high-speed digital logic styles such as CML.</p>
 <p>Again the basic &tool; assumptions are not respected here since two inputs switch simultaneously even though they may be full-swing (for differential digital logic).</p>
-<imgsize namehtml="scope_10.gif" namepdf="scope_10.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="scope_10.gif" namepdf="scope_10.svg"/>
 </section>
 
 <section niv='3'><title>Voltage Generator</title>
 <p>&tool; cannot calculate static power supply values produced by internal voltage generator circuits. The values of the voltages must be provided explicitly to &tool; using Vcard directives in the spice netlist.</p>
 <p>For example, following figure shows a simple voltage divider circuit. This may occur in a netlist to provide a secondary lower power supply value to reduce power consumption. Here, the user is required to specify a Vcard at the output of this voltage divider to specify its effect.</p>
-<imgsize namehtml="scope_11.gif" namepdf="scope_11.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="scope_11.gif" namepdf="scope_11.svg"/>
 </section>
 
 <section niv='3'><title>Typical Analog Devices</title>

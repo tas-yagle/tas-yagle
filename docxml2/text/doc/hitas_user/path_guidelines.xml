@@ -3,17 +3,17 @@
 
 <section niv='2'><title>Timing DB</title>
 <p>The following diagram gives the principal Tcl functions for timing database manipulation and path browsing. These are sorted according to their principal argument type.</p>
-<imgsize namehtml="TimingDB1.gif" namepdf="TimingDB1.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="TimingDB1.gif" namepdf="TimingDB1.svg"/>
 </section>
 
 <section niv='2'><title>Details Browsing</title>
 <p>The following diagram gives the principal Tcl functions for detailed browsing of timing database elements. These are sorted according to their principal argument type.</p>
-<imgsize namehtml="TimingDB2.gif" namepdf="TimingDB2.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="TimingDB2.gif" namepdf="TimingDB2.svg"/>
 </section>
 
 <section niv='2'><title>STA Browsing</title>
 <p>The following diagram gives Tcl functions for browsing the results of an STA or crosstalk analysis. These are sorted according to their principal argument type.</p>
-<imgsize namehtml="TimingDB3.gif" namepdf="TimingDB3.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="TimingDB3.gif" namepdf="TimingDB3.svg"/>
 </section>
 
 </section></chapter>

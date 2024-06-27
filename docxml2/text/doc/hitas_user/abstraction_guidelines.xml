@@ -10,7 +10,7 @@ the following formulas:</p>
 <cl>hold = clock_path_max - data_path_min</cl>
 </code>
 <p>The following diagram gives an example of clock path and data path.</p>
-<imgsize namehtml="Intrinsic.gif" namepdf="Intrinsic.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="Intrinsic.gif" namepdf="Intrinsic.svg"/>
 <list>
 <item>Clock path: from <f>ck</f> to <f>com</f> (the command of the latch)</item> 
 <item>Data path: from <f>data</f> to <f>mem</f> (the memory point itself).</item>

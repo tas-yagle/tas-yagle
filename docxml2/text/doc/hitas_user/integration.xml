@@ -5,13 +5,13 @@
 <section niv='2'><title>Transistor-Level Analysis</title>
 <p>For a block up to 1M transistors, &tool; performs a flat transistor-level analysis, and generates a flat timing 
 database of the block, taking into account the interconnect parasitics (RC networks).</p>
-<imgsize namehtml="hitas_transistor.gif" namepdf="hitas_transistor.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="hitas_transistor.gif" namepdf="hitas_transistor.svg"/>
 </section>
 
 <section niv='2'><title>Full-Chip Analysis</title>
 <p>In the hierarchical analysis mode, &tool; uses existing timing views of instantiated blocks to work out the 
 timing database of the whole circuit, taking into account the interconnects between blocks.</p>
-<imgsize namehtml="hitas_fullchip.gif" namepdf="hitas_fullchip.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="hitas_fullchip.gif" namepdf="hitas_fullchip.svg"/>
 </section>
 
 <section niv='2'><title>Input Files</title>

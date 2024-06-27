@@ -74,7 +74,7 @@ In such a case, correlations (mutual exclusion) should be set externally with IN
 is not ensured by the design. There is no way for the tool to identify inputs and outputs, and it constructs
 false current paths. In the right-hand design, the mutual exclusion between
 <f>sel</f> and <f>nsel</f> is ensured by the invertor, and therefore the tool correctly models the multiplexer. </p>
-<imgsize namehtml="mux.gif" namepdf="mux.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="mux.gif" namepdf="mux.svg"/>
 <p>To avoid the construction of false current paths in the left-hand design, the following mutual exclusion
 configuration should be set:</p>
 <code>
@@ -82,7 +82,7 @@ configuration should be set:</p>
 </code>
 <p>If the transmission gate toppology is more complex, and setting of mutual exclusion constraints
 become too much difficult, another orientation mechanism is available. Let's consider the next design:</p>
-<imgsize namehtml="mux2.gif" namepdf="mux2.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="mux2.gif" namepdf="mux2.svg"/>
 <p>Here orientation can be done by setting levels on signals <f>i0</f>, <f>i1</f>, <f>s</f> and <f>out</f>.
 The transistors are oriented by assuming the current is going from the signals with the higher level to
 the signals with the lower level. Levels should be set as follow:</p>

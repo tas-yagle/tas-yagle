@@ -24,7 +24,7 @@
 
 <section niv='2'><title>Integration Flows</title>
 <p>Yagle integrates in the most common design flows, as illustrated in the following diagram:</p>
-<imgsize namehtml="yagtraining_flow_diagram.gif" namepdf="yagtraining_flow_diagram.gif" wpdf="480pt" />
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_flow_diagram.gif" namepdf="yagtraining_flow_diagram.gif" wpdf="480pt" />
 </section>
 
 <section niv='2'><title>Tool Setup and Execution</title>
@@ -75,7 +75,7 @@
 <p>The base object of the methodology is the "cone". Disassembly can be seen as a conversion of a network of non-oriented transistors into a network of oriented cones.</p>
 <p>The starting point of any partitioning strategy is the identification of the nodes on which we intend to build a sub-network. The idea of Yagle disassembly is to build sub-networks between which there is no charge transfer. Therefore, the signals controlling transistor gates define the interface between two sub-networks, and the nodes for which a sub-network is extracted during the partitioning are the nodes driving at less one transistor gate.</p>
 <p>The extracted sub-networks are called cones. A cone is a DC-connected object: it contains all the paths that link the node to a voltage source through the source-drain connections of the transistors.</p>
-<imgsize namehtml="partitioning.gif" namepdf="partitioning.svg"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="partitioning.gif" namepdf="partitioning.svg"/>
 <p>Each cone has a unique output and a certain number of inputs: the signals controlling the gates of the cone's transistors.</p>
 <p>The construction of a cone on a node N consists in identifying all the current paths between the node N and a voltage source (Vdd or Vss). We call a "branch" a path that links the node N to a voltage source.</p>
 </section>
@@ -83,7 +83,7 @@
 <section niv='2'><title>False Branches Detection</title>
 <p>The symmetric nature of MOS transistors has a significant impact on the construction of branches. Without knowing the transistors orientation, we must construct all the paths towards the voltage sources. It is possible that the correlations on the signals controlling the gates block some current paths. We call those current paths "false branches".</p>
 <p>As we can see in the next figure, it is the logical context -i.e. the correlations between the inputs of the cone- that allows to establish rigorously the transistors orientation. This logical context also allows the elimination of false branches.</p>
-<imgsize namehtml="yagtraining_falsebranch.gif" namepdf="yagtraining_falsebranch.gif" wpdf="252pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_falsebranch.gif" namepdf="yagtraining_falsebranch.gif" wpdf="252pt"/>
 </section>
 </section>
 </chapter>
@@ -93,7 +93,7 @@
 <section niv='2'><title>Functional Characterization</title>
 <p>The functional characterization of a cone is computed from the branch structure. A Boolean expression is generated for all the branches leading to Vdd. It gives the set condition of the node. Another expression is constructed for all the branches leading to Vss. It gives the reset condition of the node.</p>
 <p>Each branch is considered as a chain of switches. For a N-Channel transistor, the switch is off when the gate signal is high. For a P-Channel transistor, the switch is off when the gate signal is low.</p>
-<imgsize namehtml="yagtraining_funcchar.gif" namepdf="yagtraining_funcchar.gif" wpdf="315pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_funcchar.gif" namepdf="yagtraining_funcchar.gif" wpdf="315pt"/>
 <p>For the signal E, the set condition is Eup, the reset condition is Edn. With those two expressions, it is possible to analyze the functionality of the cone. We must verify their orthogonality and their completeness.</p>
 <p>If the two expressions are orthogonal, it exists no combination of the inputs for which a Vdd branch is active simultaneously as a Vss branch, i.e. if Eup+Edn = 0, the cone is non-conflictual. If the two expressions are complete, it exists no combination of the inputs for which no branch is active, i.e. if Eup+Edn = 1, the cone is non-HZ.</p>
 <p>A cone that respects the orthogonality and completeness conditions is said to be CMOS DUAL. </p>
@@ -103,31 +103,31 @@
 
 <section niv='2'><title>Timing Back-annotation</title>
 <p>The timing characterization of a cone is also computed from the branch structure, and then it perfectly maps on the functional characterization. Let's take the cone E of the following figure as an example. </p>
-<imgsize namehtml="yagtraining_backannotation.gif" namepdf="yagtraining_backannotation.gif" wpdf="124pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_backannotation.gif" namepdf="yagtraining_backannotation.gif" wpdf="124pt"/>
 <p>A propagation time is associated to a couple of signals: the output E of the cone, and one of its inputs (C or D). Actually, the switching of C or D does not always lead to the switching of E: the rising of C leads to the falling of E only if D has the logical value 1.</p>
 <p>The computation of the propagation time CE is made under the hypothesis that the switching of the E is induced par the switching of C.</p>
 <p>The value of the propagation time is then computed by a mixed analytical-numerical method, based on the IV curves and capacitances of the MOS transistors BSIM3/BSIM4 technology models.</p>
 <p>Each possible propagation of a input transition towards a transition on the output is characterized; the cones are then characterized as follow: </p>
-<imgsize namehtml="yagtraining_backannotation2.gif" namepdf="yagtraining_backannotation2.gif" wpdf="392pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_backannotation2.gif" namepdf="yagtraining_backannotation2.gif" wpdf="392pt"/>
 </section>
 
 <section niv='2'><title>VHDL and Verilog Description</title>
 <p>The VHDL|Verilog characterization is done by translating the behavioral models of the cones into VHDL|Verilog syntax:</p>
-<imgsize namehtml="yagtraining_vhdldesc.gif" namepdf="yagtraining_vhdldesc.gif" wpdf="382pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_vhdldesc.gif" namepdf="yagtraining_vhdldesc.gif" wpdf="382pt"/>
 <p>For CMOS DUAL cones, a single signal assignment is generated, for example for the cone E as demonstrated in the first column (left), for non-CMOS DUAL cones, a process is built, listing all the possible assignations as it can be seen in the second column (right).</p>
 <p>The final VHDL|Verilog is generated by mapping the timing characterization on the functional characterization. </p>
 <p>For CMOS DUAL cones, three levels of precision are available. Let's take the cone E as an example: in term of behavior, the reduction of the expressions Eup and Edn to a single expression E = not C or not D is lossless. It is not the case in terms of timing: there are different timings associated with each expression and with each event occurring on a variable of the expression. </p>
 <p>First level of precision:</p>
 <p>If we intend to keep a compact VHDL|Verilog (i.e. the expression E = not C or not D), we must choose one timing among all the different timings characterizing the cone E. Typically, in Yagle, it is possible to choose between the maximum timing, the minimum timing, and the average timing. With choosing the maximum timing, this first level of precision leads to the following expression:</p>
-<imgsize namehtml="yagtraining_vhdl1lev.gif" namepdf="yagtraining_vhdl1lev.gif" wpdf="312pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_vhdl1lev.gif" namepdf="yagtraining_vhdl1lev.gif" wpdf="312pt"/>
 <p>Second level of precision:</p>
 <p>Second and third levels of precision are obtained through splitting the expression E into Eup and Edn expressions. The second level of precision does not take into account the events on the variables of the expressions. The maximum, minimum or average timing can be chosen for up and down expression.</p>
 <p>With choosing the maximum timing, this second level of precision leads to the following expression:</p>
-<imgsize namehtml="yagtraining_vhdl2lev.gif" namepdf="yagtraining_vhdl2lev.gif" wpdf="312pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_vhdl2lev.gif" namepdf="yagtraining_vhdl2lev.gif" wpdf="312pt"/>
 <p>Third level of precision:</p>
 <p>The third level performs the complete timing characterization of the cone. A timing is associated with each event of each variable of each expression of the cone:</p>
 <p>For non-CMOS DUAL cones, as the up and down expressions are not reduced to a single expression, only the second and third levels of precision are available. </p>
-<imgsize namehtml="yagtraining_vhdl3lev.gif" namepdf="yagtraining_vhdl3lev.gif" wpdf="312pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_vhdl3lev.gif" namepdf="yagtraining_vhdl3lev.gif" wpdf="312pt"/>
 </section>
 
 </section>
@@ -143,7 +143,7 @@
 <section niv='2'><title>Comb Design</title>
 <p>This example intends to illustrate the concepts previously described (functional abstraction mechanisms, VHDL|Verilog generation and timing back-annotation) and to give a first glance at Yagle's setup and execution modes. </p>
 <p>This example is based on the combinational design below:</p>
-<imgsize namehtml="yagtraining_combdesign.gif" namepdf="yagtraining_combdesign.gif" wpdf="236pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_combdesign.gif" namepdf="yagtraining_combdesign.gif" wpdf="236pt"/>
 <p>This design contains basic CMOS gates (nor, inverters, or) and a multiplexer based on pass-transistors. The design is described in the file comb.spi as a flat transistor netlist.</p>
 </section>
 
@@ -177,7 +177,7 @@
 <p>Both files formats syntaxes are documented in the Yagle User Guide. Browsing the Cone Netlist Structure is far more convenient using the XYagle GUI. </p>
 <code>&gt; xyagle &amp;</code>
 <p>Selecting the file <f>comb.cns</f> in the dialog box will lead open the following window:</p>
-<imgsize namehtml="yagtraining_combwindow.gif" namepdf="yagtraining_combwindow.gif" wpdf="302pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_combwindow.gif" namepdf="yagtraining_combwindow.gif" wpdf="302pt"/>
 </section>
 
 <section niv='3'><title>Disabling VHDL and Verilog Generation</title>
@@ -219,13 +219,13 @@
 
 <section niv='2'><title>Glitcher Design</title>
 <p>This example intends to illustrate the utility of timing back-annotating an abstracted behavioral model. In this lab, we are going to perform the abstraction of the glitcher design described  below.</p>
-<imgsize namehtml="yagtraining_glitcherdesign.gif" namepdf="yagtraining_glitcherdesign.gif" wpdf="326pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_glitcherdesign.gif" namepdf="yagtraining_glitcherdesign.gif" wpdf="326pt"/>
 <p>We will perform functional abstraction with and without timing back-annotation. We will see from simulation results of the behavioral models, that they do not present the same behavior. Actually, we will see that the zero-delay model simply doesn't work.</p>
 </section>
 
 <section niv='2'><title>Normal Operating</title>
 <p>The glitcher design includes a delay cell (<f>dly4x1</f>), in order to render the path going through the signals Idly and IdlyN longer than the path going through the signals <f>S0</f>,  <f>S1</f>,  <f>S2</f>,  <f>S3</f>,  <f>S4</f>,  <f>S5</f>. The operating timing diagram is then as follow: </p>
-<imgsize namehtml="yagtraining_glitcherdiagram.gif" namepdf="yagtraining_glitcherdiagram.gif" wpdf="265pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_glitcherdiagram.gif" namepdf="yagtraining_glitcherdiagram.gif" wpdf="265pt"/>
 <p>The glitch on <f>S6</f> is implied by the falling transition of <f>I</f>.</p>
 </section>
 
@@ -233,14 +233,14 @@
 <p>The zero-delay behavioral model is obtained by running the command:</p>
 <code>&gt; run.tcl</code>
 <p>Yagle generates the <f>glitcher.vhd</f> file. The result of the simulation is saved in the <f>glitcher.vcd</f> file, displayed in the following window.</p>
-<imgsize namehtml="yagtraining_glitcher0delay.gif" namepdf="yagtraining_glitcher0delay.gif" wpdf="382pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_glitcher0delay.gif" namepdf="yagtraining_glitcher0delay.gif" wpdf="382pt"/>
 <p>The simulation of the zero-delay model makes the glitch on <f>S6</f> appear at the rising transition of the input  signal <f>I</f>, which is false.</p>
 </section>
 
 <section niv='2'><title>With-delay Model</title>
 <p>The with-delay behavioral model is obtained by setting the variable <f>yagleTasTiming</f> to <f>max</f>.</p>
 <p>To observe the glitch, it is necessary to have a second level precision. The variable <f>yagleSplitTimingRatio</f> is positioned to 1.</p>
-<imgsize namehtml="yagtraining_glitcherwithdelay.gif" namepdf="yagtraining_glitcherwithdelay.gif" wpdf="382pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_glitcherwithdelay.gif" namepdf="yagtraining_glitcherwithdelay.gif" wpdf="382pt"/>
 <p>We can observe on the simulation trace (<f>glitcher_timed.vcd</f>) the correct behavior of the glitcher: the glitch is implied by the falling edge of <f>I</f>.</p>
 </section>
 
@@ -286,7 +286,7 @@
 
 <section niv='2'><title>Addaccu Design</title>
 <p>The addaccu chip consists of a four-bit adder, a four-bit register, and a 2 to 1 four-bit multiplexer. </p>
-<imgsize namehtml="yagtraining_addaccudesign.gif" namepdf="yagtraining_addaccudesign.gif" wpdf="273pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_addaccudesign.gif" namepdf="yagtraining_addaccudesign.gif" wpdf="273pt"/>
 <p>The circuit performs an addition between either the <f>b[3:0]</f> and <f>a[3:0]</f> inputs when sel is set to 0, or between <f>b[3:0]</f> and the content of the four-bit register when sel is set to 1. The content of the register is overwritten by the values of the outputs <f>s[3:0]</f> on each falling edge of the clock, ck..</p>
 </section>
 
@@ -296,7 +296,7 @@
 <p>The tool is invoked in the classical way:</p>
 <code>&gt; run.tcl</code>
 <p>For example, let's consider the signal <f>s(1)</f>, in the optimized and non-optimized VHDLs:</p>
-<imgsize namehtml="yagtraining_addaccuS1.gif" namepdf="yagtraining_addaccuS1.gif" wpdf="200pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_addaccuS1.gif" namepdf="yagtraining_addaccuS1.gif" wpdf="200pt"/>
 <p>In the non-optimized VHDL, the signal <f>s(1)</f> is assigned through the first chain of inverters, and through the second simple assignment in optimized VHDL (where 1981 = 259 + 768 + 533 + 421):</p>
 </section>
 
@@ -306,7 +306,7 @@
 <p>The tool is invoked in the classical way:</p>
 <code>&gt; run.tcl</code>
 <p>For example, let's consider the signal <f>n37</f>, in the optimized and non-optimized VHDLs:</p>
-<imgsize namehtml="yagtraining_addaccuN37.gif" namepdf="yagtraining_addaccuN37.gif" wpdf="308pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_addaccuN37.gif" namepdf="yagtraining_addaccuN37.gif" wpdf="308pt"/>
 <p>In the non-optimized VHDL, the signal <f>n37</f> is assigned by the first code line, in the optimized VHDL, the signal <f>n37</f> is assigned by a more compact expression as displayed on the second code line of the example.</p>
 </section>
 
@@ -325,7 +325,7 @@
 <section niv='1'><title>Shifter Example</title>
 <section niv='2'><title>Shifter Design</title>
 <p>This example intends to illustrate the false branches detection mechanism included in Yagle. A shifter is the typical design leading to the construction of false branches. This example is limited to 3 bits, but it is already possible to see that a simple depth-first search leads to the construction of a large number of branches having a large number of transistors.</p>
-<imgsize namehtml="yagtraining_shifterdesign.gif" namepdf="yagtraining_shifterdesign.gif" wpdf="308pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_shifterdesign.gif" namepdf="yagtraining_shifterdesign.gif" wpdf="308pt"/>
 <p>In this example, we are going to study the behavior of Yagle on two shifters: a 4-bit shifter and a 32-bit shifter.</p>
 </section>
 
@@ -386,7 +386,7 @@
 <p>The <f>run.tcl</f> commands generate the VHDL behavioral descriptions <f>r256x8_1.vhd</f>, <f>r256x8_1.vhd</f> and <f>r256x8_6.vhd</f>.</p>
 <p>The content of the ROM can then be retrieved with a simple logic simulation. </p>
 <p>The following screenshot displays the simulation trace <f>r256x8_1.vcd</f> of  <f>r256x8_1.vhd</f> (data = address).</p>
-<imgsize namehtml="yagtraining_romdisplay.gif" namepdf="yagtraining_romdisplay.gif" wpdf="462pt"/>
+<imgsize xmlns="http://www.w3.org/2000/svg" namehtml="yagtraining_romdisplay.gif" namepdf="yagtraining_romdisplay.gif" wpdf="462pt"/>
 </section>
 
 
