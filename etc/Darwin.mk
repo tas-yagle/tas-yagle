@@ -32,13 +32,13 @@ MV		= /bin/mv
 RM		= /bin/rm
 MKDIR		= /bin/mkdir
 FIND		= /bin/find
-SED		= /usr/bin/sed
+SED		= /usr/bin/env sed
 AWK		= /usr/bin/env gawk
-TR		= /usr/bin/tr
+TR		= /usr/bin/env tr
 TOUCH		= /usr/bin/touch
 ECHO            = /bin/echo
-STRIP		= /usr/bin/strip
-RANLIB		= /usr/bin/ranlib
+STRIP		= /usr/bin/env strip
+RANLIB		= /usr/bin/env ranlib
 
 MAKE             = /usr/bin/make
 MAKEFLAGS        = 
@@ -53,13 +53,13 @@ OPTIM            = -O2 -Wall
 
 PURIFY           = purify
 
-YACC             = /usr/bin/bison
-YACCFLAGS        = -y 
+YACC             = /usr/bin/env bison
+YACCFLAGS        =
 
-LEX              = /usr//bin/lex
-LEXFLAGS         = 
+LEX              = /usr/bin/env flex
+LEXFLAGS         =
 
-AR               = /usr/bin/ar
+AR               = /usr/bin/env ar
 ARFLAGS          = rv
 
 SWIG             = $(shell brew --prefix swig)/bin/swig
