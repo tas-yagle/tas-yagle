@@ -5,10 +5,8 @@ OSCFLAGS = -fno-inline
 
 DYNAMIC = -rdynamic
 
-GENDOCS = /users10/chaos1/avertec/gendocs
-
-FOP = export JAVA_HOME=$(JAVA_HOME);/usr/bin/fop
-
+FOP = /usr/bin/env fop
+SAXON = /usr/bin/env saxon
 
 ifndef FLEX_HEARTBEAT
 FLEXOSLIBS = -lpthread

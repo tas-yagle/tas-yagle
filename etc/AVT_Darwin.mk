@@ -2,8 +2,8 @@ LDL = -ldl
 BIN_EXT=
 DYNAMIC = 
 
-FOP = /Users/anthony/dev/doctools/fop-0.95/fop
-SAXON = /usr/bin/java -jar /Users/anthony/dev/doctools/saxonb9-1-0-2j/saxon9.jar
+FOP = /usr/bin/env fop
+SAXON = /usr/bin/env saxon
 
 WITH_FLEXLM = NOFLEX
 ifndef WITH_FLEXLM
