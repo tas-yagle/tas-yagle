@@ -1,7 +1,3 @@
-RPC_L = -lcrypt
-RPCGEN = /usr/bin/rpcgen
-RPCGENFLAGS = -C
-
 LDL = -ldl
 BIN_EXT=
 
