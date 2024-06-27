@@ -3,14 +3,14 @@ include $(AVERTEC_TOP)/etc/AVT_$(AVERTEC_OS).mk
 
 WRAP = wrap_nolicense
 
-DOCXML     = $(AVERTEC_TOP)/../docxml2
+DOCXML     = $(AVERTEC_TOP)/docxml2
 COMPILED   = $(DOCXML)/compiled
 TEXT       = $(DOCXML)/text
 PICT_HTML  = $(DOCXML)/imgs_html
 PICT_PDF   = $(DOCXML)/imgs_pdf
 HTML       = $(DOCXML)/html
 PDF        = $(DOCXML)/pdf
-API_SRCDIR = $(DOCXML)/../sources/api
+API_SRCDIR = $(AVERTEC_TOP)/sources/api
 DATE       = $(DOCXML)/date
 
 INF        = $(TEXT)/common/inf/*.xml

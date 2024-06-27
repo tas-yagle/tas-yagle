@@ -3,8 +3,8 @@ include $(AVERTEC_TOP)/etc/Avertec.mk
 WRAP = wrap_nolicense
 
 HELPDIR    = $(AVERTEC_TOP)/tcl/help/avt
-DOCXML     = $(AVERTEC_TOP)/../docxml2
-API_SRCDIR = $(DOCXML)/../sources/api
+DOCXML     = $(AVERTEC_TOP)/docxml2
+API_SRCDIR = $(AVERTEC_TOP)/sources/api
 COMPILED   = compiled
 PICT_HTML  = imgs_html
 HTML       = html
@@ -51,15 +51,10 @@ pictures: directory
 
 
 directory:
-	@if [ ! -d $(COMPILED) ] ; then \
-	  echo %%%%%%%%% creating directory $(COMPILED) ;\
-	  mkdir  $(COMPILED) ;\
-	  mkdir  $(COMPILED)/dochtml ;\
-	  mkdir  $(COMPILED)/docpdf ;\
-	  mkdir  $(COMPILED)/dochtml/imgs ;\
-	else \
-	  echo %%%%%%%%% existing directory $(COMPILED) ;\
-	fi ;\
+	mkdir -p $(COMPILED) ;\
+	mkdir -p $(COMPILED)/dochtml ;\
+	mkdir -p $(COMPILED)/docpdf ;\
+	mkdir -p $(COMPILED)/dochtml/imgs ;\
 
 help:
 	$(WRAP) -online tcl $(HELPDIR) $(API_SRCDIR)/sim/sim_API.h
@@ -86,3 +81,4 @@ clean:
 	-@rm -rf $(COMPILED)
 	-@rm -rf $(HELPDIR)/*
 
+.PHONY: all directory html pdf help pictures
