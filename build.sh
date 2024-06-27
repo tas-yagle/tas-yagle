@@ -3,7 +3,7 @@ set -ex
 
 # Create build subdirectories
 buildDir="`pwd`"
-buildDirs="api_include api_lib bin lib include man/man3 doc"
+buildDirs="api_include api_lib bin lib include man/man3"
 for dir in ${buildDirs}; do
 	mkdir -p ${dir}
 done
@@ -23,7 +23,20 @@ make --print-directory WITH_FLEXLM=NOFLEX            \
   2>&1 | tee ../build.log
 popd
 
-#  LEX=${localInstall}/bin/flex     \
+pushd docxml2
+make --print-directory WITH_FLEXLM=NOFLEX            \
+  ALLIANCE_TOP=${buildDir}         \
+  AVERTEC_TOP=${buildDir}          \
+  AVERTEC_OS=`uname -s`            \
+  AVERTEC_LICENSE=AVERTEC_DUMMY    \
+  AVT_LICENSE_SERVER=house         \
+  AVT_LICENSE_FILE=27009@house     \
+  AVT_COMPILATION_TYPE=distrib     \
+  AVT_DISTRIB_DIR=${buildDir}      \
+  PACKAGING_TOP=${localInstall}    \
+  SAXON="java -jar ${buildDir}/distrib_extras/saxon9.jar" \
+  2>&1 | tee ../build-docs.log
+popd
 
 # 'Install'
 mkdir -p install
@@ -47,6 +60,7 @@ done
 
 cp -r tcl ${installDir}/share/tasyag
 
-echo "AVERTEC_TOP=`pwd`/install/share/tasyag" > "${installDir}/avt_env.sh"
-echo 'PATH=${AVERTEC_TOP}/tcl:${PATH}' >> "${installDir}/avt_env.sh"
-echo 'export AVERTEC_TOP' >> "${installDir}/avt_env.sh"
+mkdir -p ${installDir}/share/tasyag/doc
+cp -r docxml2/html  ${installDir}/share/tasyag/doc
+cp -r docxml2/pdf ${installDir}/share/tasyag/doc
+
