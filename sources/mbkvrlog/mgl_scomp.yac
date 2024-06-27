@@ -21,9 +21,6 @@
 
 #define MGL_CONTEXT(x) ((mgl_getcontext(parm))->x)
 
-#undef yyerror
-#define yyerror(x) mgl_scomperror(x, (mgl_getcontext(parm)))
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -38,28 +35,16 @@
 #include "mgl_util.h"
 #include "mgl_error.h"
 
-#undef __GNUC__ /* to get round a bug in bison.simple */
-
 /*****************************************************************************
 * function declarations                                                      *
 *****************************************************************************/
 
-void mgl_scompclean();
-int mgl_scomperror();
-int mgl_scomplex();
-
 %}
 
-%pure_parser
-
-%union {
-    double      decimal;
-    int         integer;
-    int         base;
-    char       *text;
-    mgl_name    name;
-    mgl_expr    expr;
-};
+%define api.pure full
+%define api.prefix {mgl_scomp}
+%param {void* parm}
+%define api.value.type yystype
 
 %expect 1
 
@@ -1845,11 +1830,11 @@ system_timing_check : SYS_SETUP
 /* ###--------------------------------------------------------------### */
 
 int
-mgl_scomperror(char *str, mgl_scompcontext *context)
+mgl_scomperror(char *str, void *parm)
 {
-    context->ERRFLG++;
+    MGL_CONTEXT(ERRFLG)++;
     
-    avt_errmsg(MGL_ERRMSG, "001", AVT_ERROR, context->LINENUM);
+    avt_errmsg(MGL_ERRMSG, "001", AVT_ERROR, MGL_CONTEXT(LINENUM));
 
     return 1;
 }

@@ -50,7 +50,7 @@ LOCAL_CPPFLAGS = $(CPPFLAGS) -c $(LOCAL_INC) \
                  -DMUT_H='"$(MUT_H)"'
                  
 
-LOCAL_YFLAGS = $(YACCFLAGS) -d # -t -v
+LOCAL_YFLAGS = $(YACCFLAGS) -y -d # -t -v
 
 lib : $(TARGET_INCLUDE)/$(VCD_H) $(TARGET_LIB)/$(VCD_LIB) 
 

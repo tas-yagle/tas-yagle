@@ -24,6 +24,15 @@ extern FILE    *mgl_scompin;
 
 extern int      mgl_scompdebug;
 
+typedef union YYSTYPE {
+    double      decimal;
+    int         integer;
+    int         base;
+    char       *text;
+    mgl_name    name;
+    mgl_expr    expr;
+} YYSTYPE;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -32,6 +41,8 @@ void              mgl_delparser(void *parm);
 mgl_scompcontext *mgl_getcontext(void *parm);
 int               mgl_scompparse(void *parm);
 void 	          mgl_scompclean(mgl_scompcontext *context);
+int               mgl_scomplex(YYSTYPE *lvalp, void *parm);
+int               mgl_scomperror(char *str, void *parm);
 #ifdef __cplusplus
 }
 #endif

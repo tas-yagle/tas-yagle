@@ -34,7 +34,9 @@ extern "C" {
 }
 
 #include "bgl_type.h"
-#include "bgl_bcomp.tab.h"
+extern "C" {
+  #include "bgl_bcomp.tab.h"
+}
 #include "bgl_parse.h"
 #include "bgl_util.h"
 #include "bgl_class.h"

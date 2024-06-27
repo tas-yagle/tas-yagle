@@ -21,9 +21,6 @@
 
 #define BGL_CONTEXT(x) ((bgl_getcontext(parm))->x)
 
-#undef yyerror
-#define yyerror(x) bgl_bcomperror(x, (bgl_getcontext(parm)))
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -40,41 +37,20 @@
 #include "bgl_error.h"
 #include "bgl_action.h"
 
-#undef __GNUC__ /* to get round a bug in bison.simple */
-
-extern int yylex(void *lvalp, void *parm);
-
 /*****************************************************************************
 * function declarations                                                      *
 *****************************************************************************/
-
-int bgl_bcomperror(char *str, bgl_bcompcontext *context);
 
 chain_list *CUSTOM_GATES=NULL;
 chain_list *CONTEXT_LIST=NULL;
 
 %}
 
-%pure_parser
+%define api.pure full
+%define api.prefix {bgl_bcomp}
+%param {void* parm}
+%define api.value.type yystype
 
-%union {
-    double      decimal;
-    struct {
-        int value;
-        int size;
-    }           integer;
-    int         base;
-    char       *text;
-    char        car;
-    bgl_name    name;
-    bgl_expr    expr;
-    biabl_list *biabl;
-    chain_list *list;
-    doe delay_or_event;
-    custom_gate_instance *gateinstance;
-    zero_un_if z_u_i;
-    zero_un_if *ptz_u_i;
-};
 
 %expect 1
 
@@ -526,7 +502,7 @@ combinational_entry_eclr : combinational_entry
 combinational_entry : input_list ':' output_symbol ';'
                         {
                                 chain_list *input,*abl=NULL;
-                                char name[5];
+                                char name[20];
                                 int count;
                                 if ($3=='1')
                                 {
@@ -534,7 +510,7 @@ combinational_entry : input_list ':' output_symbol ';'
                                 // les numéros sont des terminaux à expanser
                                 for (input=BGL_CONTEXT(NM2LST),count=0;input!=NULL;input=input->NEXT,count++)
                                 {
-                                        sprintf(name,"%d",count);
+                                        snprintf(name, sizeof(name), "%d",count);
                                         switch((int)((long)input->DATA))
                                         {
                                                 case '0':
@@ -2611,12 +2587,11 @@ system_timing_check : SYS_SETUP
 /* ###--------------------------------------------------------------### */
 
 int
-bgl_bcomperror(char *str, bgl_bcompcontext *context)
+bgl_bcomperror(char *str, void *parm)
 {
-    context->ERRFLG++;
+    BGL_CONTEXT(ERRFLG)++;
     
-    avt_errmsg(BGL_ERRMSG,"037",AVT_ERROR,context->FILENAME,context->LINENUM,str);
-//    fprintf(stderr, "`%s` Error line %d : %s\n", context->FILENAME, context->LINENUM, str);
+    avt_errmsg(BGL_ERRMSG,"037",AVT_ERROR,BGL_CONTEXT(FILENAME),BGL_CONTEXT(LINENUM),str);
     return 1;
 }
 
