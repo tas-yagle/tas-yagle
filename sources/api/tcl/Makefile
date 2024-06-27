@@ -9,7 +9,8 @@ BUILDNUM = $(shell date +%Y%m%d)
 #TCL_L = -ltcl8.3g
 LOCAL_INC = -I$(TARGET_INCLUDE) -I$(TARGET_API_INCLUDE)
 
-LOCAL_CFLAGS   = $(CFLAGS) -c
+LOCAL_CFLAGS = $(CFLAGS) $(TCL_H) $(TCL_PRIVATE_H)
+
 LOCAL_CPPFLAGS = $(CPPFLAGS) $(LOCAL_INC) \
                  -DAVERTEC \
 				 -D$(AVERTEC_LICENSE) \
@@ -124,12 +125,12 @@ all: $(AVT_SHELL)
 
 # static Shell TCL
 $(AVT_SHELL): headers $(STATIC_SWIG_OBJ) $(OBJ) 
-	$(CPLUSPLUS)  $(CFLAGS) $(DYNAMIC) $(STATIC_SWIG_OBJ) $(OBJ) $(FLEXOBJS) $(API_STATICLIB) $(FLEXLIBS) $(TCL_H) $(TCL_L) -o $(AVT_SHELL)
+	$(CPLUSPLUS)  $(LOCAL_CFLAGS) $(DYNAMIC) $(STATIC_SWIG_OBJ) $(OBJ) $(FLEXOBJS) $(API_STATICLIB) $(FLEXLIBS) $(TCL_L) -o $(AVT_SHELL)
 	$(STRIP) $(AVT_SHELL)
 
 # Shell TCL
 dynamic_link: $(SWIG_OBJ) $(WRAPPER) $(OBJ)
-	$(CPLUSPLUS)  $(CFLAGS) $(DYNAMIC) $(SWIG_OBJ) $(OBJ) $(TCL_H) $(TCL_L) $(FLEXOBJS) $(WHOLE) $(LIB) $(NOWHOLE) $(FLEXLIBS) -o $(AVT_SHELL)
+	$(CPLUSPLUS)  $(LOCAL_CFLAGS) $(DYNAMIC) $(SWIG_OBJ) $(OBJ) $(TCL_L) $(FLEXOBJS) $(WHOLE) $(LIB) $(NOWHOLE) $(FLEXLIBS) -o $(AVT_SHELL)
 	$(STRIP) $(AVT_SHELL)
 .PHONY: dynamic_link
 
@@ -141,13 +142,13 @@ $(TARGET_API_INCLUDE)/avt_API_types.h: avt_API_types.h
 
 # Objects
 %.o : %.c avt_API.h
-	$(CC) -DBUILDNUM=$(BUILDNUM) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $<
+	$(CC) -c -DBUILDNUM=$(BUILDNUM) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $<
 
 $(STATIC_SWIG_OBJ) :  $(STATIC_TCL_RUNTIME)
-	$(CC) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $(TCL_H) -Dmain=shell_main $<
+	$(CC) -c $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) -Dmain=shell_main $<
 
 $(SWIG_OBJ) :  $(TCL_RUNTIME)
-	$(CC) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $(TCL_H) -Dmain=shell_main $<
+	$(CC) -c $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) -Dmain=shell_main $<
 
 $(WRAPPER): avt_API.h
 	#$(WRAP) -online avt_API_COMMANDS.c avt_API.h
