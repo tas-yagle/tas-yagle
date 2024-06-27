@@ -107,7 +107,7 @@ LOCAL_CPPFLAGS = $(CPPFLAGS) -c $(LOCAL_INC) \
                  -DINF_H='<$(INF_H)>'
 		 
 
-LOCAL_YFLAGS = $(YACCFLAGS) -d #-t
+LOCAL_YFLAGS = $(YACCFLAGS) -y -d #-t
 LOCAL_LFLAGS = $(LEXFLAGS) #-t
 
 all : lib

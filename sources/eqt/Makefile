@@ -29,7 +29,7 @@ LOCAL_LIB  	   = -L$(TARGET_LIB) \
 LOCAL_CFLAGS   = $(CFLAGS)
 LOCAL_CPPFLAGS = $(CPPFLAGS) -c $(LOCAL_INC) -D$(AVERTEC_OS)
                                 
-LOCAL_YFLAGS   = $(YACCFLAGS) -d
+LOCAL_YFLAGS   = $(YACCFLAGS) -y -d
 
 all : $(TARGET_INCLUDE)/$(EQT_H) $(TARGET_LIB)/$(EQT_LIB)
 

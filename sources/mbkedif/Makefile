@@ -46,7 +46,7 @@ $(TARGET_LIB)/$(EDIF_LIB) : $(EDIF_OBJ)
 	$(RANLIB) $(TARGET_LIB)/$(EDIF_LIB)
 
 parser_yac.o : parser.yac
-	$(YACC) $(YACCFLAGS) -d parser.yac
+	$(YACC) $(YACCFLAGS) -y -d parser.yac
 	echo "s/yy/edifl/g" > transy
 	echo "s/YY/EDIFL/g" >> transy
 	$(SED) -f transy y.tab.c > parser_yac.c

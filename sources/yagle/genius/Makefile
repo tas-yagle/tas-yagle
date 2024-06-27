@@ -4,8 +4,8 @@ include $(AVERTEC_TOP)/etc/Avertec.mk
 
 LOCAL_INC      = -I. -I../yagle -I$(TARGET_INCLUDE)
 
-LOCAL_YACCFLAGS = $(YACCFLAGS) -d  
 LOCAL_CFLAGS   =  $(CFLAGS) $(TCL_H)
+LOCAL_YACCFLAGS = $(YACCFLAGS) -y -d
 LOCAL_CPPFLAGS = $(CPPFLAGS) $(LOCAL_INC) \
                  -DAVERTEC -D$(AVERTEC_LICENSE) \
                  -DAVT_H='"$(AVT_H)"' \

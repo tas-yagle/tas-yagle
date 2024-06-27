@@ -57,7 +57,7 @@ DISABLE_STATIC  = -Xlinker -Bdynamic
 PURIFY          = purify
 
 YACC            = /usr/bin/bison
-YACCFLAGS       = -y 
+YACCFLAGS       =
 
 LEX             = /usr/bin/flex
 LEXFLAGS        = 

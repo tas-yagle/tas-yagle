@@ -53,7 +53,7 @@ LOCAL_CPPFLAGS    = $(CPPFLAGS) $(LOCAL_INC) \
                   -DRCN_H='<$(RCN_H)>' \
                   -DMUT_H='<$(MUT_H)>'
 
-LOCAL_YFLAGS = $(YACCFLAGS) -d -t
+LOCAL_YFLAGS = $(YACCFLAGS) -y -d -t
 
 LOCAL_LIB  = $(FLEXOBJS) $(STATIC_LIB) \
              -L$(TARGET_LIB) \

@@ -61,7 +61,7 @@ $(TARGET_LIB)/$(MGL_LIB) : $(OBJ)
 mgl_scomp.tab.h : mgl_scomp.tab.c
 
 mgl_scomp.tab.c : mgl_scomp.yac
-	$(YACC) $(LOCAL_YFLAGS) -p mgl_scomp -o mgl_scomp.tab.c mgl_scomp.yac
+	$(YACC) $(LOCAL_YFLAGS) -o mgl_scomp.tab.c mgl_scomp.yac
 
 mgl_scomp.tab.o : mgl_scomp.tab.c
 	$(CC) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $<

@@ -40,7 +40,7 @@ $(TARGET_LIB)/$(BGL_LIB) : $(OBJ)
 bgl_bcomp.tab.h : bgl_bcomp.tab.c
 
 bgl_bcomp.tab.c : bgl_bcomp.yac
-	$(YACC) $(LOCAL_YFLAGS) -p bgl_bcomp -o bgl_bcomp.tab.c bgl_bcomp.yac
+	$(YACC) $(LOCAL_YFLAGS) -o bgl_bcomp.tab.c bgl_bcomp.yac
 
 bgl_bcomp.tab.o : bgl_bcomp.tab.c
 	$(CC) $(LOCAL_CFLAGS) $(LOCAL_CPPFLAGS) $<

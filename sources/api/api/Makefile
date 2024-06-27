@@ -14,7 +14,7 @@ WRP_BIN_NOLIC = wrap_nolicense
 
 I_DIR = ./avtwig
 
-LOCAL_YACCFLAGS = $(YACCFLAGS) -d -t 
+LOCAL_YACCFLAGS = $(YACCFLAGS) -y -d -t
 
 LOCAL_CFLAGS = $(CFLAGS) $(TCL_H)
 

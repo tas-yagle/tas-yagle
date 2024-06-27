@@ -33,7 +33,7 @@ LOCAL_CPPFLAGS = $(CPPFLAGS) $(LOCAL_INC) \
                  -DMLO_H='"$(MLO_H)"' \
                  -g
 
-LOCAL_YFLAGS = $(YACCFLAGS) -d -v -t 
+LOCAL_YFLAGS = $(YACCFLAGS) -y -d -v -t
 
 all : $(TARGET_INCLUDE)/$(SPF_H) $(TARGET_LIB)/$(SPF_LIB)
 
