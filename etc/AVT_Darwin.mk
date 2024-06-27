@@ -1,7 +1,3 @@
-RPC_L = 
-RPCGEN = /usr/bin/rpcgen
-RPCGENFLAGS = -C 
-
 LDL = -ldl
 BIN_EXT=
 DYNAMIC = 

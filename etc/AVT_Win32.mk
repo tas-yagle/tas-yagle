@@ -1,7 +1,4 @@
-RPC_L = -lrpc -lcrypt
-RPCGEN = /usr/bin/rpcgen
 LDL = 
-RPCGENFLAGS =
 
 OSCFLAGS = -fno-inline
 BIN_EXT =.exe
