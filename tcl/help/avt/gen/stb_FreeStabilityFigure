@@ -1,9 +1,0 @@
-
-       void stb_FreeStabilityFigure(StabilityFigure *sf);
-
-DDEESSCCRRIIPPTTIIOONN
-       Deletes a stability figure from memory
-
-AARRGGUUMMEENNTTSS
-       ssff            Pointer on the stability figure to be freed
-

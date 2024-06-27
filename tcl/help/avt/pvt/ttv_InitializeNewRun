@@ -1,8 +1,0 @@
-
-       void ttv_InitializeNewRun();
-
-DDEESSCCRRIIPPTTIIOONN
-       Initializes  the  environment  to  enable  the use of the TTV computing
-       functions like _t_t_v___C_o_m_p_u_t_e_M_a_x_P_a_t_h_D_e_l_a_y  or  _t_t_v___L_o_a_d_T_i_m_i_n_g_F_i_g_u_r_e.  This
-       function cleans up all the previously loaded timing figures.
-

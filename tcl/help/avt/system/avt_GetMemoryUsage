@@ -1,9 +1,0 @@
-
-       long avt_GetMemoryUsage();
-
-DDEESSCCRRIIPPTTIIOONN
-       Returns an integer with the memory usage of the program in bytes
-
-AARRGGUUMMEENNTTSS
-       EEXXAAMMPPLLEE       _s_e_t _m_e_m_o_r_y _[_a_v_t___G_e_t_M_e_m_o_r_y_U_s_a_g_e_]
-

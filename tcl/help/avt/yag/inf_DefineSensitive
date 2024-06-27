@@ -1,9 +1,0 @@
-
-       void inf_DefineSensitive(char *name);
-
-DDEESSCCRRIIPPTTIIOONN
-       Sets a signal as a timing sensitive net.
-
-AARRGGUUMMEENNTTSS
-       nnaammee          Signal's name
-

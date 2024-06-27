@@ -1,6 +1,0 @@
-
-       void ttv_TerminateRun();
-
-DDEESSCCRRIIPPTTIIOONN
-       Cleans up all the timing figures loaded with _t_t_v___L_o_a_d_T_i_m_i_n_g_F_i_g_u_r_e.
-

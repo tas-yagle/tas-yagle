@@ -1,9 +1,0 @@
-
-       int ctk_GetNumberOfCtkStatNode(StabilityFigure *stbfig);
-
-DDEESSCCRRIIPPTTIIOONN
-       Returns the number crosstalk node statistics
-
-AARRGGUUMMEENNTTSS
-       ssttbbffiigg        Pointer on a stability figure
-
