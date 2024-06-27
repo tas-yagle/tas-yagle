@@ -136,7 +136,7 @@ else
       SAXON     = $(JAVA) -jar /usr/share/java/saxon.jar
     else
       ifeq ($(BUILD_VARIANT),Linux.ubuntu)
-	JAVA_HOME = $(shell dirname $$(dirname $$(update-alternatives --list javac 2>&1 | head -n 1)))
+        JAVA_HOME = $(shell dirname $$(dirname $$(update-alternatives --list javac 2>&1 | head -n 1)))
         JAVA      = $(JAVA_HOME)/bin/java
         SAXON     = saxonb-xslt -ext:on
        #SAXON     = CLASSPATH=/usr/share/java/saxonb.jar $(JAVA) net.sf.saxon.Transform
