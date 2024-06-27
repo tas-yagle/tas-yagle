@@ -83,7 +83,9 @@ CPPFLAGS         =
 
 TCL_H            = $(shell pkg-config --cflags tcl)
 TCL_L            = $(shell pkg-config --libs tcl)
-
+TCL_PRIVATE      = $(shell grep -hoP '^TCL_SRC_DIR=\K.+' `pkg-config --variable=libdir tcl`/tclConfig.sh | sed "s/'\(.*\)'/\1/")
+TCL_DEFS         = $(shell grep -hoP '^TCL_DEFS=\K.+' `pkg-config --variable=libdir tcl`/tclConfig.sh | sed "s/'\(.*\)'/\1/")
+TCL_PRIVATE_H    = $(TCL_DEFS) -I$(TCL_PRIVATE)/generic -I$(TCL_PRIVATE)/unix
 ifeq ($(shell uname -m),x86_64)
   AVT_COMPILATION_64BIT = yes
 endif
