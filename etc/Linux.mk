@@ -63,47 +63,40 @@ CAT              = /bin/cat
 MV               = /bin/mv
 RM               = /bin/rm
 MKDIR            = /bin/mkdir
-FIND             = /usr/bin/find
-SED              = /bin/sed
-ifeq ($(findstring Ubuntu,$(shell uname -v)),Ubuntu)
-AWK              = /usr/bin/awk
-else			 
-AWK              = /bin/awk
-endif			 
-TR               = /usr/bin/tr
+FIND             = /usr/bin/env find
+SED              = /usr/bin/env sed
+AWK              = /usr/bin/env awk
+TR               = /usr/bin/env tr
 TOUCH            = /bin/touch
 ECHO             = /bin/echo
-STRIP            = /usr/bin/strip
-RANLIB           = /usr/bin/ranlib
+STRIP            = /usr/bin/env strip
+RANLIB           = /usr/bin/env ranlib
 
-MAKE             = /usr/bin/make
-MAKEFLAGS        = 
+MAKE             = /usr/bin/env make
+MAKEFLAGS        =
 
-CC               = /usr/bin/gcc -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE
-SCC              = /usr/bin/gcc -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE
-CPLUSPLUS        = /usr/bin/g++
-CFLAGS           =
+CC               = /usr/bin/env gcc -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE
+SCC              = /usr/bin/env gcc -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE
+CPLUSPLUS        = /usr/bin/env g++
+CFLAGS           = -I${PACKAGING_TOP}/include
 CPPFLAGS         =
 
-ifeq ($(findstring Ubuntu,$(shell uname -v)),Ubuntu)
-  CC            += -I/usr/include/tcl8.5 
-  SCC           += -I/usr/include/tcl8.5 
-  CPLUSPLUS     += -I/usr/include/tcl8.5 
-endif
-
-ifeq ($(PACKAGING_TOP),)
-  CC            += -I${HOME}/softs/$(BUILD_VARIANT)$(LIB_SUFFIX_)/install/include
-  SCC           += -I${HOME}/softs/$(BUILD_VARIANT)$(LIB_SUFFIX_)/install/include
-  CPLUSPLUS     += -I${HOME}/softs/$(BUILD_VARIANT)$(LIB_SUFFIX_)/install/include
-else
-  CC            += -I${PACKAGING_TOP}/include
-  SCC           += -I${PACKAGING_TOP}/include
-  CPLUSPLUS     += -I${PACKAGING_TOP}/include
-endif
+TCL_H            = $(shell pkg-config --cflags tcl)
+TCL_L            = $(shell pkg-config --libs tcl)
 
 ifeq ($(shell uname -m),x86_64)
   AVT_COMPILATION_64BIT = yes
 endif
+
+ifeq ($(shell uname -m),aarch64)
+  AVT_COMPILATION_64BIT = yes
+endif
+
+ifeq ($(shell uname -m),riscv64)
+  AVT_COMPILATION_64BIT = yes
+endif
+
+
 
 OPTIM            = -O3
 
@@ -112,21 +105,68 @@ DISABLE_STATIC   = -Xlinker -Bdynamic
 
 PURIFY           = purify
 
-YACC             = /usr/bin/bison
+YACC             = /usr/bin/env bison
 YACCFLAGS        = -y 
 
-#LEX             = flex
-LEX              = ${HOME}/softs/$(BUILD_VARIANT)$(LIB_SUFFIX_)/install/bin/flex
+LEX              = /usr/bin/env flex
 LEXFLAGS         =
 
-AR               = /usr/bin/ar
+AR               = /usr/bin/env ar
 ARFLAGS          = rv
 
-SWIG             = /usr/bin/swig
+SWIG             = /usr/bin/env swig
 
 WHOLE            = -Xlinker --whole-archive
 NOWHOLE          = -Xlinker --no-whole-archive
 
-TCL_L            = -ltcl8.5
+
+ifeq ($(BUILD_VARIANT)$(LIB_SUFFIX_),Linux.slsoc6x_64)
+  JAVA_HOME = /usr/lib/jvm/java-1.6.0-openjdk.x86_64
+  JAVA      = $(JAVA_HOME)/bin/java
+  SAXON     = $(JAVA) -jar /usr/share/java/saxon9.jar
+else
+  ifeq ($(BUILD_VARIANT)$(LIB_SUFFIX_),Linux.slsoc6x)
+    JAVA_HOME = /usr/lib/jvm/java-1.6.0-openjdk
+    JAVA      = $(JAVA_HOME)/bin/java
+    SAXON     = $(JAVA) -jar /usr/share/java/saxon9.jar
+  else
+    ifeq ($(BUILD_VARIANT),Linux.el7)
+      JAVA_HOME = /usr/lib/jvm/java-1.7.0-openjdk
+      JAVA      = $(JAVA_HOME)/bin/java
+      SAXON     = $(JAVA) -jar /usr/share/java/saxon.jar
+    else
+      ifeq ($(BUILD_VARIANT),Linux.ubuntu)
+	JAVA_HOME = $(shell dirname $$(dirname $$(update-alternatives --list javac 2>&1 | head -n 1)))
+        JAVA      = $(JAVA_HOME)/bin/java
+        SAXON     = saxonb-xslt -ext:on
+       #SAXON     = CLASSPATH=/usr/share/java/saxonb.jar $(JAVA) net.sf.saxon.Transform
+      else
+        JAVA_HOME = /usr/lib/jvm/java-1.6.0-openjdk
+        JAVA      = $(JAVA_HOME)/bin/java
+        SAXON     = $(JAVA) -jar /usr/share/java/saxon9.jar
+      endif
+    endif
+  endif
+endif
+
+RPC_L = -lcrypt
+RPCGEN = /usr/bin/env rpcgen
+RPCGENFLAGS = -C
+
+LDL = -ldl
+BIN_EXT=
+
+OSCFLAGS = -fno-inline
+
+DYNAMIC = -rdynamic
+
+GENDOCS = /users10/chaos1/avertec/gendocs
+
+FOP = export JAVA_HOME=$(JAVA_HOME);/usr/bin/fop
+
+
+ifndef FLEX_HEARTBEAT
+FLEXOSLIBS = -lpthread
+endif
 
 # EOF
